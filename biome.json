@@ -6,12 +6,23 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": []
+		"ignoreUnknown": true,
+		"ignore": [
+			".next/**",
+			"node_modules/**",
+			"dist/**",
+			"build/**",
+			"src/components/*.tsx",
+			"src/components/ui/*.tsx",
+			"src/components/magicui/*.tsx"
+		]
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"formatWithErrors": true
 	},
 	"organizeImports": {
 		"enabled": true
@@ -19,12 +30,34 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
-		}
+			"recommended": true,
+			"suspicious": {
+				"noSparseArray": "off"
+			},
+			"style": {
+				"useTemplate": "off",
+				"noNonNullAssertion": "off",
+				"useShorthandArrayType": "off"
+			},
+			"a11y": {
+				"useValidAnchor": "off"
+			}
+		},
+		"ignore": [
+			".next/**",
+			"node_modules/**",
+			"dist/**",
+			"build/**",
+			"src/components/*.tsx",
+			"src/components/ui/*.tsx",
+			"src/components/magicui/*.tsx"
+		]
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "double"
+			"quoteStyle": "double",
+			"trailingCommas": "es5",
+			"semicolons": "always"
 		}
 	}
 }
