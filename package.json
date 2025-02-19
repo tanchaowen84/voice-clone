@@ -29,6 +29,7 @@
     "lucide-react": "^0.475.0",
     "motion": "^12.4.3",
     "next": "15.1.7",
+    "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rehype-autolink-headings": "^7.1.0",
@@ -37,6 +38,7 @@
     "remark-code-import": "^1.2.0",
     "remark-gfm": "^4.0.1",
     "shiki": "^2.4.2",
+    "sonner": "^2.0.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7"
   },
