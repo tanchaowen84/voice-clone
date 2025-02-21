@@ -1,0 +1,9 @@
+---
+description: Best practices for React component development
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+- Use functional components with hooks instead of class components
+- Implement proper state management using `useState` and `useReducer`
+- Utilize `useCallback` and `useMemo` for performance optimization
+- Leverage `react-hook-form` for efficient form handling and validation

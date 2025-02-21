@@ -1,0 +1,9 @@
+---
+description: Best practices for form handling with React Hook Form
+globs: **/*.{ts,tsx}
+---
+
+- Use the `useForm` hook with TypeScript for better type safety.
+- Implement validation using Zod or Yup for complex form schemas.
+- Utilize the `Controller` component for controlled inputs.
+- Use `formState` to handle form state changes efficiently.

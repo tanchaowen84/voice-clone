@@ -1,0 +1,9 @@
+---
+description: Best practices for styling with Tailwind CSS
+globs: **/*.{ts,tsx,css}
+---
+
+- Use utility-first approach for rapid development and maintainability
+- Implement responsive design using Tailwind's responsive modifiers
+- Utilize `tailwind-merge` for efficient class merging and overriding
+- Leverage `tailwindcss-animate` for easy animation implementation

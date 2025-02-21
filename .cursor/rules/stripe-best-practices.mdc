@@ -1,0 +1,9 @@
+---
+description: Best practices for integrating Stripe payments
+globs: **/*.{ts,tsx}
+---
+
+- Use `@stripe/stripe-js` for client-side Stripe integration
+- Implement proper error handling and user feedback for payment flows
+- Utilize Stripe's Elements for secure and customizable payment forms
+- Follow Stripe's best practices for PCI compliance and security
