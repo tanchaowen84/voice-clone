@@ -1,6 +1,6 @@
 import type { ObjectValues } from '@/types/object-values';
 
-import packageInfo from '../../../package.json';
+import packageInfo from '../../package.json';
 
 /**
  * TODO: update

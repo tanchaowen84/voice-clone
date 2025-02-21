@@ -1,4 +1,4 @@
-import { AppInfo } from "@/app/constants/app-info";
+import { AppInfo } from "@/constants/app-info";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

@@ -1,47 +1,21 @@
-import "@/styles/globals.css";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from "next-themes";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
+import { marketingConfig } from "@/config/marketing";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-interface RootLayoutProps {
+interface MarketingLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function MarketingLayout({
+  children,
+}: MarketingLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background antialiased",
-          `${geistSans.variable} ${geistMono.variable}`
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
+    <div className="flex flex-col min-h-screen">
+      <Navbar scroll={true} config={marketingConfig} />
 
-          <Toaster richColors position="top-right" offset={64} />
+      <main className="flex-1">{children}</main>
 
-          <TailwindIndicator />
-        </ThemeProvider>
-      </body>
-    </html>
+      <Footer />
+    </div>
   );
 }
