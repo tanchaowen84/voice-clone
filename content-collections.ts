@@ -68,6 +68,7 @@ export const posts = defineCollection({
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
+    image: z.string(),
     date: z.string().datetime(),
     published: z.boolean().default(true),
     categories: z.array(z.string()),
@@ -95,6 +96,7 @@ export const posts = defineCollection({
       ...data,
       author: blogAuthor,
       categories: blogCategories,
+      image: getBaseUrl() + data.image,
       slug: `/${data._meta.path}`,
       slugAsParams: data._meta.path.split(path.sep).slice(1).join('/'),
       body: {

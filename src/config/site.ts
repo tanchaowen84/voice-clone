@@ -6,9 +6,9 @@ export const siteConfig: SiteConfig = {
   name: "MkSaaS",
   title: "MkSaaS - The Best AI SaaS Boilerplate",
   tagline:
-    "Launch AI SaaS websites in minutes, simply and effortlessly",
+    "Launch AI SaaS Websites in hours, simply and effortlessly",
   description:
-    "MkSaaS is the best AI SaaS boilerplate. Launch AI SaaS websites in minutes, simply and effortlessly",
+    "MkSaaS is the best AI SaaS boilerplate. Launch AI SaaS websites in hours, simply and effortlessly",
   keywords: [
     "SaaS",
     "SaaS Website",

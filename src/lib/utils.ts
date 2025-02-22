@@ -51,3 +51,14 @@ export function getInitials(name: string): string {
     .map((v) => v && v[0].toUpperCase())
     .join('');
 }
+
+/**
+ * get locale date string, like "2024/10/01"
+ */
+export function getLocaleDate(input: string | number): string {
+  const date = new Date(input);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}/${month}/${day}`;
+}
