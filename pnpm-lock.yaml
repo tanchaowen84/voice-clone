@@ -14,9 +14,6 @@ importers:
       '@hookform/resolvers':
         specifier: ^4.1.0
         version: 4.1.0(react-hook-form@7.54.2(react@19.0.0))
-      '@neondatabase/serverless':
-        specifier: ^0.10.4
-        version: 0.10.4
       '@radix-ui/react-accordion':
         specifier: ^1.2.3
         version: 1.2.3(@types/react-dom@19.0.3(@types/react@19.0.9))(@types/react@19.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -4299,6 +4296,7 @@ snapshots:
   '@neondatabase/serverless@0.10.4':
     dependencies:
       '@types/pg': 8.11.6
+    optional: true
 
   '@next/env@15.1.7': {}
 
@@ -4969,6 +4967,7 @@ snapshots:
       '@types/node': 20.17.19
       pg-protocol: 1.7.1
       pg-types: 4.0.2
+    optional: true
 
   '@types/react-dom@19.0.3(@types/react@19.0.9)':
     dependencies:
