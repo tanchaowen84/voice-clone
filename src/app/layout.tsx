@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import {
+	fontBricolageGrotesque,
+	fontSourceSans,
+	fontSourceSerif,
+	fontWorkSans,
+  } from "@/assets/fonts";
 
 export const metadata: Metadata = constructMetadata();
 
@@ -25,10 +31,15 @@ export default function RootLayout({ children }: PropsWithChildren) {
 		<html lang="en" suppressHydrationWarning>
 			<head />
 			<body
-				className={cn(
-					"min-h-screen bg-background antialiased"
-				)}
-			>
+        className={cn(
+          "min-h-screen bg-background antialiased",
+          fontBricolageGrotesque.className,
+          fontSourceSerif.variable,
+          fontSourceSans.variable,
+          fontWorkSans.variable,
+          fontBricolageGrotesque.variable,
+        )}
+      >
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
