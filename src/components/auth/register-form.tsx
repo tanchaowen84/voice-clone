@@ -1,6 +1,5 @@
 "use client";
 
-// import { register } from "@/actions/register";
 import { AuthCard } from "@/components/auth/auth-card";
 import { Icons } from "@/components/icons/icons";
 import { FormError } from "@/components/shared/form-error";
@@ -15,8 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { RegisterSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -24,7 +25,8 @@ import type * as z from "zod";
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -35,27 +37,38 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    setError("");
-    setSuccess("");
-
-    // startTransition(() => {
-    //   register(values)
-    //     .then((data) => {
-    //       if (data.status === "error") {
-    //         console.log("register, error:", data.message);
-    //         setError(data.message);
-    //       }
-    //       if (data.status === "success") {
-    //         console.log("register, success:", data.message);
-    //         setSuccess(data.message);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("register, error:", error);
-    //       setError("Something went wrong");
-    //     });
-    // });
+  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+    // 1. if requireEmailVerification is true, callbackURL will be used in the verification email, 
+    // the user will be redirected to the callbackURL after the email is verified.
+    // 2. if requireEmailVerification is false, the user will not be redirected to the callbackURL,
+    // we should redirect to the callbackURL manually in the onSuccess callback.
+    const { data, error } = await authClient.signUp.email({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      callbackURL: "/dashboard",
+    }, {
+      onRequest: (ctx) => {
+        console.log("register, request:", ctx.url);
+        setIsPending(true);
+        setError("");
+        setSuccess("");
+      },
+      onResponse: (ctx) => {
+        console.log("register, response:", ctx.response);
+        setIsPending(false);
+      },
+      onSuccess: (ctx) => {
+        // sign up success, user information stored in ctx.data
+        // console.log("register, success:", ctx.data);
+        setSuccess('Please check your email for verification');
+      },
+      onError: (ctx) => {
+        // sign up fail, display the error message
+        console.log("register, error:", ctx.error.message);
+        setError(ctx.error.message);
+      },
+    });
   };
 
   return (

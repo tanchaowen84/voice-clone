@@ -9,7 +9,28 @@ export const metadata = constructMetadata({
 });
 
 const LoginPage = () => {
-  return <LoginForm className="border-none" />;
+  return (
+    <div className="flex h-screen flex-col items-center justify-center gap-4">
+      <LoginForm />
+      <div className="text-balance text-center text-xs text-muted-foreground">
+        By clicking continue, you agree to our{" "}
+        <a
+          href="/terms-of-service"
+          className="underline underline-offset-4 hover:text-primary"
+        >
+          Terms of Service
+        </a>{" "}
+        and{" "}
+        <a
+          href="/privacy-policy"
+          className="underline underline-offset-4 hover:text-primary"
+        >
+          Privacy Policy
+        </a>
+        .
+      </div>
+    </div>
+  );
 };
 
 export default LoginPage;

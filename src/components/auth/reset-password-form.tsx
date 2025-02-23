@@ -1,6 +1,5 @@
 "use client";
 
-// import { newPassword } from "@/actions/new-password";
 import { AuthCard } from "@/components/auth/auth-card";
 import { Icons } from "@/components/icons/icons";
 import { FormError } from "@/components/shared/form-error";
@@ -15,50 +14,60 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { NewPasswordSchema } from "@/lib/schemas";
+import { authClient } from "@/lib/auth-client";
+import { ResetPasswordSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
-export const NewPasswordForm = () => {
+export const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  if (!token) {
+    // TODO: Handle the error
+    return <div>Invalid token</div>;
+  }
+
+  const router = useRouter();
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
-    resolver: zodResolver(NewPasswordSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setError("");
-    setSuccess("");
-
-    // startTransition(() => {
-    //   newPassword(values, token)
-    //     .then((data) => {
-    //       if (data?.status === "error") {
-    //         console.log("newPassword, error:", data.message);
-    //         setError(data.message);
-    //       }
-
-    //       if (data?.status === "success") {
-    //         console.log("newPassword, success:", data.message);
-    //         setSuccess(data.message);
-    //       }
-    //     })
-    //     .catch(() => {
-    //       console.log("newPassword, error:", error);
-    //       setError("Something went wrong");
-    //     });
-    // });
+  const onSubmit = async (values: z.infer<typeof ResetPasswordSchema>) => {
+    const { data, error } = await authClient.resetPassword({
+      newPassword: values.password,
+      token,
+    }, {
+      onRequest: (ctx) => {
+        // console.log("resetPassword, request:", ctx.url);
+        setIsPending(true);
+        setError("");
+        setSuccess("");
+      },
+      onResponse: (ctx) => {
+        // console.log("resetPassword, response:", ctx.response);
+        setIsPending(false);
+      },
+      onSuccess: (ctx) => {
+        // console.log("resetPassword, success:", ctx.data);
+        // setSuccess("Password reset successfully");
+        router.push("/auth/login");
+      },
+      onError: (ctx) => {
+        console.log("resetPassword, error:", ctx.error);
+        setError(ctx.error.message);
+      },
+    });
   };
 
   return (

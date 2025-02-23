@@ -1,6 +1,5 @@
 "use client";
 
-// import { reset } from "@/actions/reset";
 import { AuthCard } from "@/components/auth/auth-card";
 import { FormError } from "@/components/shared/form-error";
 import { FormSuccess } from "@/components/shared/form-success";
@@ -14,46 +13,50 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetSchema } from "@/lib/schemas";
+import { ForgotPasswordSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
-import { Icons } from "../icons/icons";
+import { Icons } from "@/components/icons/icons";
+import { authClient } from "@/lib/auth-client";
 
-export const ResetForm = () => {
+export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<z.infer<typeof ResetSchema>>({
-    resolver: zodResolver(ResetSchema),
+  const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
+    resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setError("");
-    setSuccess("");
-
-    // startTransition(() => {
-    //   reset(values)
-    //     .then((data) => {
-    //       if (data.status === "error") {
-    //         console.log("reset, error:", data.message);
-    //         setError(data.message);
-    //       }
-    //       if (data.status === "success") {
-    //         console.log("reset, success:", data.message);
-    //         setSuccess(data.message);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("reset, error:", error);
-    //       setError("Something went wrong");
-    //     });
-    // });
+  const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
+    const { data, error } = await authClient.forgetPassword({
+      email: values.email,
+      redirectTo: "/auth/reset-password",
+    }, {
+      onRequest: (ctx) => {
+        // console.log("forgotPassword, request:", ctx.url);
+        setIsPending(true);
+        setError("");
+        setSuccess("");
+      },
+      onResponse: (ctx) => {
+        // console.log("forgotPassword, response:", ctx.response);
+        setIsPending(false);
+      },
+      onSuccess: (ctx) => {
+        // console.log("forgotPassword, success:", ctx.data);
+        setSuccess("Please check your email inbox");
+      },
+      onError: (ctx) => {
+        console.log("forgotPassword, error:", ctx.error);
+        setError(ctx.error.message);
+      },
+    });
   };
 
   return (
@@ -98,7 +101,7 @@ export const ResetForm = () => {
             ) : (
               ""
             )}
-            <span>Send reset email</span>
+            <span>Send reset password email</span>
           </Button>
         </form>
       </Form>
