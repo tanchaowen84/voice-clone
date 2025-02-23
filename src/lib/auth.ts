@@ -21,8 +21,21 @@ export const auth = betterAuth({
       verification: verification,
     },
   }),
+  session: {
+    // https://www.better-auth.com/docs/concepts/session-management#cookie-cache
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60 // Cache duration in seconds
+    },
+    // https://www.better-auth.com/docs/concepts/session-management#session-expiration
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
+    // https://www.better-auth.com/docs/concepts/session-management#session-freshness
+    freshAge: 60 * 5 // 5 minutes (the session is fresh if created within the last 5 minutes)
+  },
   emailAndPassword: {
     enabled: true,
+    // https://www.better-auth.com/docs/concepts/email#2-require-email-verification
     requireEmailVerification: true,
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
     async sendResetPassword({ user, url }) {
@@ -35,6 +48,8 @@ export const auth = betterAuth({
 		},
   },
   emailVerification: {
+    // https://www.better-auth.com/docs/concepts/email#auto-signin-after-verification
+    autoSignInAfterVerification: true,
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ( { user, url, token }, request) => {
       await resend.emails.send({
@@ -46,8 +61,8 @@ export const auth = betterAuth({
     },
   },
   socialProviders: {
+    // https://www.better-auth.com/docs/authentication/github
     github: {
-      enabled: true,
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }
