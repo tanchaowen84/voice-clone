@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 interface BottomButtonProps {
   href: string;
@@ -16,7 +15,9 @@ export const BottomButton = ({ href, label }: BottomButtonProps) => {
       size="sm"
       asChild
     >
-      <Link href={href}>{label}</Link>
+      <a href={href} className="hover:underline underline-offset-4 hover:text-primary">
+        {label}
+      </a>
     </Button>
   );
 };

@@ -7,13 +7,11 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
+  CardHeader
 } from "@/components/ui/card";
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Logo } from "../logo";
+import { Logo } from "@/components/logo";
 
 interface AuthCardProps {
   children: React.ReactNode;

@@ -18,9 +18,8 @@ import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
@@ -119,9 +118,12 @@ export const LoginForm = ({ className }: { className?: string }) => {
                       asChild
                       className="px-0 font-normal text-muted-foreground"
                     >
-                      <Link href="/auth/forgot-password" className="text-xs underline">
+                      <a
+                        href="/auth/forgot-password"
+                        className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
+                      >
                         Forgot password?
-                      </Link>
+                      </a>
                     </Button>
                   </div>
                   <FormControl>
