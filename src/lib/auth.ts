@@ -4,7 +4,7 @@ import db from "@/db/index";
 import { user, session, account, verification } from "@/db/schema";
 import { siteConfig } from "@/config/site";
 import { resend } from "@/lib/email/resend";
-import { admin } from "better-auth/plugins";
+import { admin, customSession } from "better-auth/plugins";
 
 const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
 
@@ -66,8 +66,20 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    },
+    // https://www.better-auth.com/docs/authentication/google
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }
   },
+  account: {
+    // https://www.better-auth.com/docs/concepts/users-accounts#account-linking
+		accountLinking: {
+      enabled: true,
+			trustedProviders: ["google", "github"],
+		},
+	},
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
     // user role and user banned status
