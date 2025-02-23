@@ -7,20 +7,16 @@ import localFont from "next/font/local";
  * 2. Add font file to the assets/fonts folder
  * 3. Add font variable to the font object
  */
+// https://gwfh.mranftl.com/fonts/source-serif-4?subsets=latin
 export const fontSourceSerif = localFont({
   src: "./source-serif-4-v8-latin-regular.woff2",
   variable: "--font-source-serif",
 });
 
+// https://gwfh.mranftl.com/fonts/source-sans-3?subsets=latin
 export const fontSourceSans = localFont({
   src: "./source-sans-3-v15-latin-regular.woff2",
   variable: "--font-source-sans",
-});
-
-// https://gwfh.mranftl.com/fonts/work-sans?subsets=latin
-export const fontWorkSans = localFont({
-  src: "./work-sans-v19-latin-regular.woff2",
-  variable: "--font-work-sans",
 });
 
 // https://gwfh.mranftl.com/fonts/bricolage-grotesque?subsets=latin
