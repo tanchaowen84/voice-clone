@@ -10,7 +10,7 @@ export const metadata = constructMetadata({
 
 const LoginPage = () => {
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-4">
+    <div className="flex flex-col gap-4">
       <LoginForm />
       <div className="text-balance text-center text-xs text-muted-foreground">
         By clicking continue, you agree to our{" "}
