@@ -9,7 +9,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import {
 	fontBricolageGrotesque,
 	fontSourceSans,
-	fontSourceSerif,
+	fontSourceSerif4,
 } from "@/assets/fonts";
 
 export const metadata: Metadata = constructMetadata();
@@ -32,8 +32,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			<body
 				className={cn(
 					"min-h-screen bg-background antialiased",
-					fontSourceSans.className,
-					fontSourceSerif.variable,
+					fontBricolageGrotesque.className,
+					fontSourceSerif4.variable,
 					fontSourceSans.variable,
 					fontBricolageGrotesque.variable,
 				)}

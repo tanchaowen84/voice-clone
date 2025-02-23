@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-
+import { Source_Serif_4 } from "next/font/google";
 /**
  * use local font
  *
@@ -8,10 +8,10 @@ import localFont from "next/font/local";
  * 3. Add font variable to the font object
  */
 // https://gwfh.mranftl.com/fonts/source-serif-4?subsets=latin
-export const fontSourceSerif = localFont({
-  src: "./source-serif-4-v8-latin-regular.woff2",
-  variable: "--font-source-serif",
-});
+// export const fontSourceSerif = localFont({
+//   src: "./source-serif-4-v8-latin-regular.woff2",
+//   variable: "--font-source-serif",
+// });
 
 // https://gwfh.mranftl.com/fonts/source-sans-3?subsets=latin
 export const fontSourceSans = localFont({
@@ -34,8 +34,8 @@ export const fontBricolageGrotesque = localFont({
  * 2. CSS and font files are downloaded at build time and self-hosted with the rest of your static assets.
  * https://nextjs.org/docs/app/building-your-application/optimizing/fonts#google-fonts
  */
-// export const fontSourceSerif4 = Source_Serif_4({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: "--font-source-serif",
-// })
+export const fontSourceSerif4 = Source_Serif_4({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: "--font-source-serif",
+})
