@@ -15,14 +15,14 @@ const LoginPage = () => {
       <div className="text-balance text-center text-xs text-muted-foreground">
         By clicking continue, you agree to our{" "}
         <a
-          href="/terms-of-service"
+          href="/terms"
           className="underline underline-offset-4 hover:text-primary"
         >
           Terms of Service
         </a>{" "}
         and{" "}
         <a
-          href="/privacy-policy"
+          href="/privacy"
           className="underline underline-offset-4 hover:text-primary"
         >
           Privacy Policy

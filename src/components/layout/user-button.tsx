@@ -26,6 +26,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import { authClient } from "@/lib/auth-client";
 
 export function UserButton() {
   const router = useRouter();
@@ -91,14 +92,13 @@ export function UserButton() {
                     key={item.href}
                     className="rounded-lg text-foreground hover:bg-muted"
                   >
-                    <Link
-                      href={item.href}
+                    <a href={item.href}
                       onClick={closeDrawer}
                       className="flex w-full items-center gap-3 px-2.5 py-2"
                     >
                       <Icon className="size-4" />
                       <p className="text-sm">{item.title}</p>
-                    </Link>
+                    </a>
                   </li>
                 );
               })}
@@ -106,21 +106,29 @@ export function UserButton() {
                 key="logout"
                 className="rounded-lg text-foreground hover:bg-muted"
               >
-                <Link
-                  href="#"
-                  onClick={(event) => {
+                <a href="#"
+                  onClick={async (event) => {
                     event.preventDefault();
                     closeDrawer();
-                    // signOut({
-                    //   callbackUrl: `${window.location.origin}/`,
-                    //   redirect: true,
-                    // });
+
+                    await authClient.signOut({
+                      fetchOptions: {
+                        onSuccess: () => {
+                          console.log("sign out success");
+                          router.push("/auth/login");
+                        },
+                        onError: (error) => {
+                          console.error("sign out error:", error);
+                          // TODO: show error message
+                        },
+                      },
+                    });
                   }}
                   className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
                   <LogOutIcon className="size-4" />
                   <p className="text-sm">Log out</p>
-                </Link>
+                </a>
               </li>
             </ul>
           </DrawerContent>
@@ -175,12 +183,21 @@ export function UserButton() {
 
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={(event) => {
+          onSelect={async (event) => {
             event.preventDefault();
-            // signOut({
-            //   callbackUrl: `${window.location.origin}/`,
-            //   redirect: true,
-            // });
+
+            await authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  console.log("sign out success");
+                  router.push("/auth/login");
+                },
+                onError: (error) => {
+                  console.error("sign out error:", error);
+                  // TODO: show error message
+                },
+              },
+            });
           }}
         >
           <div className="flex items-center space-x-2.5">
