@@ -22,6 +22,7 @@ import {
   LayoutGridIcon,
   LayoutPanelLeftIcon,
   Loader2Icon,
+  LockKeyholeIcon,
   type LucideIcon,
   MailCheckIcon,
   MailIcon,
@@ -117,6 +118,8 @@ export const Icons = {
   shieldCheck: ShieldCheckIcon,
   workflow: WorkflowIcon,
   squareChartGantt: SquareChartGanttIcon,
+
+  admin: LockKeyholeIcon,
 
   github: FaBrandsGitHub,
   google: FaBrandsGoogle,

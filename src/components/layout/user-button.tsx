@@ -36,6 +36,8 @@ export function UserButton() {
   //   );
   // }
 
+  const isAdmin = user?.role === "admin";
+
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -110,6 +112,22 @@ export function UserButton() {
                   </li>
                 );
               })}
+
+              {isAdmin && (
+                <li
+                  key='admin'
+                  className="rounded-lg text-foreground hover:bg-muted"
+                >
+                  <a href="/admin"
+                    onClick={closeDrawer}
+                    className="flex w-full items-center gap-3 px-2.5 py-2"
+                  >
+                    <Icons.admin className="size-4" />
+                    <p className="text-sm">Admin</p>
+                  </a>
+                </li>
+              )}
+
               <li
                 key="logout"
                 className="rounded-lg text-foreground hover:bg-muted"
@@ -175,8 +193,23 @@ export function UserButton() {
           );
         })}
 
-        <DropdownMenuSeparator />
+        {isAdmin && (
+          <DropdownMenuItem
+            key="admin"
+            asChild
+            className="cursor-pointer"
+            onClick={() => {
+              router.push("/admin");
+            }}
+          >
+            <div className="flex items-center space-x-2.5">
+              <Icons.admin className="size-4" />
+              <p className="text-sm">Admin</p>
+            </div>
+          </DropdownMenuItem>
+        )}
 
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
           onSelect={async (event) => {

@@ -1,10 +1,10 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import db from "@/db/index";
 import { user, session, account, verification } from "@/db/schema";
 import { siteConfig } from "@/config/site";
 import { resend } from "@/lib/email/resend";
-import { admin, customSession } from "better-auth/plugins";
+import { admin } from "better-auth/plugins";
+import db from "@/db/index";
 
 const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
 
@@ -82,7 +82,6 @@ export const auth = betterAuth({
 	},
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
-    // user role and user banned status
     admin(),
   ]
 });
