@@ -48,7 +48,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
 					<Toaster richColors position="top-right" offset={64} />
 
-					<TailwindIndicator />
+					{/* <TailwindIndicator /> */}
 				</ThemeProvider>
 			</body>
 		</html>

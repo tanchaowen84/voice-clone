@@ -11,11 +11,6 @@ export const userButtonConfig: UserButtonConfig = {
       title: "Settings",
       href: "/settings",
       icon: "settings",
-    },
-    {
-      title: "Submit Directory",
-      href: "/submit",
-      icon: "submit",
-    },
+    }
   ],
 };

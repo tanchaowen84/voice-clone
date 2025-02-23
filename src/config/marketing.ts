@@ -18,16 +18,6 @@ export const marketingConfig: MarketingConfig = {
       icon: "blog",
     },
     {
-      title: "Documentation",
-      href: "/docs",
-      icon: "docs",
-    },
-    {
-      title: "Login",
-      href: "/auth/login",
-      icon: "user",
-    },
-    {
       title: "Dashboard",
       href: "/dashboard",
       icon: "dashboard",
