@@ -17,7 +17,15 @@ import { LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { Drawer } from "vaul";
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 
 export function UserButton() {
   const router = useRouter();
@@ -43,83 +51,83 @@ export function UserButton() {
   // }
 
   // Mobile View, use Drawer
-  // if (isMobile) {
-  //   return (
-  //     <Drawer.Root open={open} onClose={closeDrawer}>
-  //       <Drawer.Trigger onClick={() => setOpen(true)}>
-  //         <UserAvatar
-  //           name={user.name || null}
-  //           image={user.image || null}
-  //           className="size-8 border"
-  //         />
-  //       </Drawer.Trigger>
-  //       <Drawer.Portal>
-  //         <Drawer.Overlay
-  //           className="fixed inset-0 z-40 h-full bg-background/80 backdrop-blur-sm"
-  //           onClick={closeDrawer}
-  //         />
-  //         <Drawer.Content className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
-  //           <div className="sticky top-0 z-20 flex w-full items-center justify-center bg-inherit">
-  //             <div className="my-3 h-1.5 w-16 rounded-full bg-muted-foreground/20" />
-  //           </div>
+  if (isMobile) {
+    return (
+      <Drawer open={open} onClose={closeDrawer}>
+        <DrawerTrigger onClick={() => setOpen(true)}>
+          <UserAvatar
+            name={user.name || undefined}
+            image={user.image || undefined}
+            className="size-8 border"
+          />
+        </DrawerTrigger>
+        <DrawerPortal>
+          <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
+          <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
+            <DrawerHeader>
+              <DrawerTitle></DrawerTitle>
+            </DrawerHeader>
+            <div className="flex items-center justify-start gap-4 p-2">
+              <UserAvatar
+                name={user.name || undefined}
+                image={user.image || undefined}
+                className="size-8 border"
+              />
+              <div className="flex flex-col">
+                {user.name && <p className="font-medium">{user.name}</p>}
+                {user.email && (
+                  <p className="w-[200px] truncate text-muted-foreground">
+                    {user?.email}
+                  </p>
+                )}
+              </div>
+            </div>
 
-  //           <div className="flex items-center justify-start gap-2 p-2">
-  //             <div className="flex flex-col">
-  //               {user.name && <p className="font-medium">{user.name}</p>}
-  //               {user.email && (
-  //                 <p className="w-[200px] truncate text-muted-foreground">
-  //                   {user?.email}
-  //                 </p>
-  //               )}
-  //             </div>
-  //           </div>
-
-  //           <ul className="mb-14 mt-1 w-full text-muted-foreground">
-  //             {userButtonConfig.menus.map((item) => {
-  //               const Icon = Icons[item.icon || "arrowRight"];
-  //               return (
-  //                 <li
-  //                   key={item.href}
-  //                   className="rounded-lg text-foreground hover:bg-muted"
-  //                 >
-  //                   <Link
-  //                     href={item.href}
-  //                     onClick={closeDrawer}
-  //                     className="flex w-full items-center gap-3 px-2.5 py-2"
-  //                   >
-  //                     <Icon className="size-4" />
-  //                     <p className="text-sm">{item.title}</p>
-  //                   </Link>
-  //                 </li>
-  //               );
-  //             })}
-  //             <li
-  //               key="logout"
-  //               className="rounded-lg text-foreground hover:bg-muted"
-  //             >
-  //               <Link
-  //                 href="#"
-  //                 onClick={(event) => {
-  //                   event.preventDefault();
-  //                   closeDrawer();
-  //                   // signOut({
-  //                   //   callbackUrl: `${window.location.origin}/`,
-  //                   //   redirect: true,
-  //                   // });
-  //                 }}
-  //                 className="flex w-full items-center gap-3 px-2.5 py-2"
-  //               >
-  //                 <LogOutIcon className="size-4" />
-  //                 <p className="text-sm">Log out</p>
-  //               </Link>
-  //             </li>
-  //           </ul>
-  //         </Drawer.Content>
-  //         <Drawer.Overlay />
-  //       </Drawer.Portal>
-  //     </Drawer.Root>
-  //   );
-  // }
+            <ul className="mb-14 mt-1 w-full text-muted-foreground">
+              {userButtonConfig.menus.map((item) => {
+                const Icon = Icons[item.icon || "arrowRight"];
+                return (
+                  <li
+                    key={item.href}
+                    className="rounded-lg text-foreground hover:bg-muted"
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={closeDrawer}
+                      className="flex w-full items-center gap-3 px-2.5 py-2"
+                    >
+                      <Icon className="size-4" />
+                      <p className="text-sm">{item.title}</p>
+                    </Link>
+                  </li>
+                );
+              })}
+              <li
+                key="logout"
+                className="rounded-lg text-foreground hover:bg-muted"
+              >
+                <Link
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    closeDrawer();
+                    // signOut({
+                    //   callbackUrl: `${window.location.origin}/`,
+                    //   redirect: true,
+                    // });
+                  }}
+                  className="flex w-full items-center gap-3 px-2.5 py-2"
+                >
+                  <LogOutIcon className="size-4" />
+                  <p className="text-sm">Log out</p>
+                </Link>
+              </li>
+            </ul>
+          </DrawerContent>
+        </DrawerPortal>
+      </Drawer>
+    );
+  }
 
   // Desktop View, use DropdownMenu
   return (
