@@ -1,7 +1,6 @@
 "use client";
 
 import { AuthCard } from "@/components/auth/auth-card";
-import { Icons } from "@/components/icons/icons";
 import { FormError } from "@/components/shared/form-error";
 import { FormSuccess } from "@/components/shared/form-success";
 import { Button } from "@/components/ui/button";
@@ -14,57 +13,47 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
-import { NewPasswordSchema } from "@/lib/schemas";
+import { ForgotPasswordSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
+import { Icons } from "@/components/icons/icons";
+import { authClient } from "@/lib/auth-client";
 
-export const NewPasswordForm = () => {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-  if (!token) {
-    // TODO: Handle the error
-    return <div>Invalid token</div>;
-  }
-
-  const router = useRouter();
-
+export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
-    resolver: zodResolver(NewPasswordSchema),
+  const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
+    resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
-      password: "",
+      email: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
-    const { data, error } = await authClient.resetPassword({
-      newPassword: values.password,
-      token,
+  const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
+    const { data, error } = await authClient.forgetPassword({
+      email: values.email,
+      redirectTo: "/auth/reset-password",
     }, {
       onRequest: (ctx) => {
-        // console.log("resetPassword, request:", ctx.url);
+        // console.log("forgotPassword, request:", ctx.url);
         setIsPending(true);
         setError("");
         setSuccess("");
       },
       onResponse: (ctx) => {
-        // console.log("resetPassword, response:", ctx.response);
+        // console.log("forgotPassword, response:", ctx.response);
         setIsPending(false);
       },
       onSuccess: (ctx) => {
-        // console.log("resetPassword, success:", ctx.data);
-        // setSuccess("Password reset successfully");
-        router.push("/auth/login");
+        // console.log("forgotPassword, success:", ctx.data);
+        setSuccess("Please check your email inbox");
       },
       onError: (ctx) => {
-        console.log("resetPassword, error:", ctx.error);
+        console.log("forgotPassword, error:", ctx.error);
         setError(ctx.error.message);
       },
     });
@@ -72,7 +61,7 @@ export const NewPasswordForm = () => {
 
   return (
     <AuthCard
-      headerLabel="Reset password"
+      headerLabel="Froget password?"
       bottomButtonLabel="Back to login"
       bottomButtonHref="/auth/login"
       className="border-none"
@@ -82,16 +71,16 @@ export const NewPasswordForm = () => {
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="password"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPending}
-                      placeholder="******"
-                      type="password"
+                      placeholder="name@example.com"
+                      type="email"
                     />
                   </FormControl>
                   <FormMessage />
@@ -112,7 +101,7 @@ export const NewPasswordForm = () => {
             ) : (
               ""
             )}
-            <span>Reset password</span>
+            <span>Send reset password email</span>
           </Button>
         </form>
       </Form>

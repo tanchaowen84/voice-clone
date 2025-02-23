@@ -158,13 +158,13 @@ export type UserPasswordData = z.infer<typeof UserPasswordSchema>;
 /**
  * auth related schemas
  */
-export const NewPasswordSchema = z.object({
+export const ResetPasswordSchema = z.object({
   password: z.string().min(8, {
     message: "Minimum 8 characters required",
   }),
 });
 
-export const ResetPasswordSchema = z.object({
+export const ForgotPasswordSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),

@@ -1,15 +1,15 @@
-import { ResetPasswordForm } from "@/components/auth/reset-form";
+import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
   title: "Reset Password",
-  description: "Reset your password",
-  canonicalUrl: `${siteConfig.url}/auth/reset`,
+  description: "Set a new password",
+  canonicalUrl: `${siteConfig.url}/auth/reset-password`,
 });
 
-const ResetPage = () => {
+const ResetPasswordPage = () => {
   return <ResetPasswordForm />;
 };
 
-export default ResetPage;
+export default ResetPasswordPage;
