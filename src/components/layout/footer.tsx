@@ -17,7 +17,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
 
   return (
     <footer className={cn("border-t", className)}>
-      <Container>
+      <Container className="px-4">
         <div className="grid grid-cols-2 gap-8 py-12 md:grid-cols-6">
           <div className="flex flex-col items-start col-span-full md:col-span-2">
             <div className="space-y-4">
@@ -134,7 +134,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       </Container>
 
       <div className="border-t py-4">
-        <Container className="flex items-center justify-between">
+        <Container className="px-4 flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
             Copyright &copy; {new Date().getFullYear()} All Rights Reserved.
           </span>
