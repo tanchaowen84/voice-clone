@@ -16,17 +16,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { RegisterSchema } from "@/lib/schemas";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
 export const RegisterForm = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+  
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, setIsPending] = useState(false);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -46,7 +49,7 @@ export const RegisterForm = () => {
       email: values.email,
       password: values.password,
       name: values.name,
-      callbackURL: "/dashboard",
+      callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     }, {
       onRequest: (ctx) => {
         console.log("register, request:", ctx.url);

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FaBrandsGitHub } from "@/components/icons/github";
 import { FaBrandsGoogle } from "@/components/icons/google";
 import { authClient } from "@/lib/auth-client";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 /**
  * social login buttons
@@ -17,24 +18,17 @@ export const SocialLoginButton = () => {
   const [isLoading, setIsLoading] = useState<"google" | "github" | null>(null);
 
   const onClick = async (provider: "google" | "github") => {
-    // setIsLoading(provider);
-    // signIn(provider, {
-    //   callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-    // });
-    // no need to reset the loading state, keep loading before webpage redirects
-    // setIsLoading(null);
-
     await authClient.signIn.social({
       /**
        * The social provider id
-       * @example "github", "google", "apple"
+       * @example "github", "google"
        */
-      provider: "github",
+      provider: provider,
       /**
        * a url to redirect after the user authenticates with the provider
        * @default "/"
        */
-      callbackURL: "/dashboard",
+      callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       /**
        * a url to redirect if an error occurs during the sign in process
        */
@@ -48,6 +42,23 @@ export const SocialLoginButton = () => {
        * @default false
        */
       // disableRedirect: true,
+    }, {
+      onRequest: (ctx) => {
+        // console.log("onRequest", ctx);
+        setIsLoading(provider);
+      },
+      onResponse: (ctx) => {
+        // console.log("onResponse", ctx.response);
+        setIsLoading(null);
+      },
+      onSuccess: (ctx) => {
+        // console.log("onSuccess", ctx.data);
+        setIsLoading(null);
+      },
+      onError: (ctx) => {
+        console.log("onError", ctx.error.message);
+        setIsLoading(null);
+      },
     });
   };
 
@@ -58,7 +69,7 @@ export const SocialLoginButton = () => {
         className="w-full"
         variant="outline"
         onClick={() => onClick("google")}
-      // disabled={isLoading === "google"}
+        disabled={isLoading === "google"}
       >
         {isLoading === "google" ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />
@@ -72,7 +83,7 @@ export const SocialLoginButton = () => {
         className="w-full"
         variant="outline"
         onClick={() => onClick("github")}
-      // disabled={isLoading === "github"}
+        disabled={isLoading === "github"}
       >
         {isLoading === "github" ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />

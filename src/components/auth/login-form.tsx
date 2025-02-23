@@ -17,8 +17,9 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -26,12 +27,7 @@ import type * as z from "zod";
 export const LoginForm = ({ className }: { className?: string }) => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider!"
-      : "";
-
-  const router = useRouter();
+  const urlError = searchParams.get("error");
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -52,7 +48,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
     const { data, error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
-      callbackURL: callbackUrl || "/dashboard",
+      callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     }, {
       onRequest: (ctx) => {
         // console.log("login, request:", ctx.url);
