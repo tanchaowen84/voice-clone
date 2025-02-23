@@ -8,6 +8,13 @@
       "when": 1740226999095,
       "tag": "0000_secret_silver_centurion",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1740323860731,
+      "tag": "0001_shocking_wild_pack",
+      "breakpoints": true
     }
   ]
 }

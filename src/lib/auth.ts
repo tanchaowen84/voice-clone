@@ -4,6 +4,7 @@ import db from "@/db/index";
 import { user, session, account, verification } from "@/db/schema";
 import { siteConfig } from "@/config/site";
 import { resend } from "@/lib/email/resend";
+import { admin } from "better-auth/plugins";
 
 const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
 
@@ -67,4 +68,9 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }
   },
+  plugins: [
+    // https://www.better-auth.com/docs/plugins/admin
+    // user role and user banned status
+    admin(),
+  ]
 });
