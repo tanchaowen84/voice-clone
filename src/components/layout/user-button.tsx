@@ -76,7 +76,7 @@ export function UserButton() {
           <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
           <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
             <DrawerHeader>
-              <DrawerTitle></DrawerTitle>
+              <DrawerTitle />
             </DrawerHeader>
             <div className="flex items-center justify-start gap-4 p-2">
               <UserAvatar

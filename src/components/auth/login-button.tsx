@@ -6,10 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/auth/auth-dialog";
+} from "@/components/ui/dialog";
 import { LoginForm } from "@/components/auth/login-form";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { AUTH_ROUTE_LOGIN } from "@/routes";
+import { AUTH_ROUTE_LOGIN, authRoutes } from "@/routes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -35,33 +35,31 @@ export const LoginWrapper = ({
   };
 
   // Close the modal on route change
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
+  useEffect(() => {
     setIsModalOpen(false);
   }, [pathname, searchParams]);
 
-  // don't open the modal if the user is already in the auth pages
-  // keep isTablet or isDesktop open, if user resizes the window
-  
-  // TODO: add auth routes
-  // const isAuthRoute = authRoutes.includes(pathname);
-  if (mode === "modal" && /* !isAuthRoute &&  */(isTablet || isDesktop)) {
+  // 1. don't open the modal if the user is already in the auth pages
+  // 2. keep isTablet or isDesktop open, if user resizes the window
+  const isAuthRoute = authRoutes.includes(pathname);
+  if (mode === "modal" && !isAuthRoute && (isTablet || isDesktop)) {
     return (
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
-        <DialogContent className="p-0 bg-transparent border-none">
+        <DialogTrigger asChild={asChild}>
+          {children}
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[400px] p-0">
           <DialogHeader>
             {/* `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users. */}
             <DialogTitle />
           </DialogHeader>
-          <LoginForm />
+          <LoginForm className="" />
         </DialogContent>
       </Dialog>
     );
   }
 
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
     <span onClick={handleLogin} className="cursor-pointer">
       {children}
     </span>
