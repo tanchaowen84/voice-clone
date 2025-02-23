@@ -3,21 +3,6 @@
 import { Icons } from "@/components/icons/icons";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { userButtonConfig } from "@/config/user-button";
-// import { useCurrentUser } from "@/hooks/use-current-user";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { LogOutIcon } from "lucide-react";
-// import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import {
   Drawer,
   DrawerTrigger,
   DrawerContent,
@@ -26,18 +11,47 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { userButtonConfig } from "@/config/user-button";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { LogOutIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
 export function UserButton() {
-  const router = useRouter();
-  // const user = useCurrentUser();
-  // console.log('UserButton, user:', user);
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    image: "https://example.com/john.jpg",
+  const { data: session, error } = authClient.useSession();
+  const user = session?.user;
+  console.log('UserButton, user:', user);
+  // if (error) {
+  //   console.error("UserButton, error:", error);
+  //   return (
+  //     <div className="size-8 animate-pulse rounded-full border bg-muted" />
+  //   );
+  // }
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          console.log("sign out success");
+          router.push("/");
+        },
+        onError: (error) => {
+          console.error("sign out error:", error);
+          // TODO: show error message
+        },
+      },
+    });
   };
 
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const closeDrawer = () => {
     setOpen(false);
@@ -45,20 +59,14 @@ export function UserButton() {
 
   const { isMobile } = useMediaQuery();
 
-  // if (!user) {
-  //   return (
-  //     <div className="size-8 animate-pulse rounded-full border bg-muted" />
-  //   );
-  // }
-
   // Mobile View, use Drawer
   if (isMobile) {
     return (
       <Drawer open={open} onClose={closeDrawer}>
         <DrawerTrigger onClick={() => setOpen(true)}>
           <UserAvatar
-            name={user.name || undefined}
-            image={user.image || undefined}
+            name={user?.name || undefined}
+            image={user?.image || undefined}
             className="size-8 border"
           />
         </DrawerTrigger>
@@ -70,13 +78,13 @@ export function UserButton() {
             </DrawerHeader>
             <div className="flex items-center justify-start gap-4 p-2">
               <UserAvatar
-                name={user.name || undefined}
-                image={user.image || undefined}
+                name={user?.name || undefined}
+                image={user?.image || undefined}
                 className="size-8 border"
               />
               <div className="flex flex-col">
-                {user.name && <p className="font-medium">{user.name}</p>}
-                {user.email && (
+                {user?.name && <p className="font-medium">{user.name}</p>}
+                {user?.email && (
                   <p className="w-[200px] truncate text-muted-foreground">
                     {user?.email}
                   </p>
@@ -110,19 +118,7 @@ export function UserButton() {
                   onClick={async (event) => {
                     event.preventDefault();
                     closeDrawer();
-
-                    await authClient.signOut({
-                      fetchOptions: {
-                        onSuccess: () => {
-                          console.log("sign out success");
-                          router.push("/auth/login");
-                        },
-                        onError: (error) => {
-                          console.error("sign out error:", error);
-                          // TODO: show error message
-                        },
-                      },
-                    });
+                    handleSignOut();
                   }}
                   className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
@@ -142,16 +138,16 @@ export function UserButton() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
         <UserAvatar
-          name={user.name || undefined}
-          image={user.image || undefined}
+          name={user?.name || undefined}
+          image={user?.image || undefined}
           className="size-8 border"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user.name && <p className="font-medium">{user.name}</p>}
-            {user.email && (
+            {user?.name && <p className="font-medium">{user.name}</p>}
+            {user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
                 {user?.email}
               </p>
@@ -185,19 +181,8 @@ export function UserButton() {
           className="cursor-pointer"
           onSelect={async (event) => {
             event.preventDefault();
-
-            await authClient.signOut({
-              fetchOptions: {
-                onSuccess: () => {
-                  console.log("sign out success");
-                  router.push("/auth/login");
-                },
-                onError: (error) => {
-                  console.error("sign out error:", error);
-                  // TODO: show error message
-                },
-              },
-            });
+            setOpen(false);
+            handleSignOut();
           }}
         >
           <div className="flex items-center space-x-2.5">

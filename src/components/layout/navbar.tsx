@@ -25,6 +25,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
 import { Logo } from "@/components/logo";
+import { authClient } from "@/lib/auth-client";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -33,13 +34,9 @@ interface NavBarProps {
 
 export function Navbar({ scroll = false, config }: NavBarProps) {
   const scrolled = useScroll(50);
-  // const user = useCurrentUser();
-  // console.log(`navbar: user:`, user);
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    image: "https://example.com/john.jpg",
-  };
+  const { data: session, error } = authClient.useSession();
+  const user = session?.user;
+  console.log(`Navbar, user:`, user);
 
   const pathname = usePathname();
   // console.log(`Navbar, pathname: ${pathname}`);
@@ -73,15 +70,15 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
           scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b",
         )}
       >
-        <Container className="flex h-16 items-center">
+        <Container className="flex h-16 items-center px-4">
           {/* navbar left show logo and links */}
           <div className="flex items-center gap-6 md:gap-10">
             {/* logo */}
-            <Link href="/" className="flex items-center space-x-2">
+            <a href="/" className="flex items-center space-x-2">
               <Logo />
 
               <span className="text-xl font-bold">{siteConfig.name}</span>
-            </Link>
+            </a>
           </div>
 
           {/* links */}
@@ -119,28 +116,16 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                 <UserButton />
               </div>
             ) : (
-              <>
-                {/* <LoginWrapper mode="modal" asChild>
-                  <Button
-                    className="flex gap-2 px-5 rounded-full"
-                    variant="default"
-                    size="default"
-                  >
-                    <span>Sign In</span>
-                    <ArrowRightIcon className="size-4" />
-                  </Button>
-                </LoginWrapper> */}
-                {/* <Button
-                  className="rounded-full"
+              <LoginWrapper mode="modal" asChild>
+                <Button
+                  className="flex gap-2 px-5 rounded-full"
                   variant="default"
                   size="default"
-                  asChild
                 >
-                  <Link href="/submit">
-                    <span>Submit</span>
-                  </Link>
-                </Button> */}
-              </>
+                  <span>Sign In</span>
+                  <ArrowRightIcon className="size-4" />
+                </Button>
+              </LoginWrapper>
             )}
 
             <ModeToggle />
@@ -167,15 +152,14 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
               <SheetContent side="left" className="flex flex-col p-0">
                 <div className="flex h-screen flex-col">
                   {/* logo */}
-                  <Link
-                    href="/"
+                  <a href="/"
                     className="flex items-center space-x-2 pl-4 pt-4"
                     onClick={() => setOpen(false)}
                   >
                     <Logo />
 
                     <span className="text-xl font-bold">{siteConfig.name}</span>
-                  </Link>
+                  </a>
 
                   <nav className="flex flex-1 flex-col gap-2 p-2 pt-8 font-medium">
                     {links.map((item) => {
@@ -194,7 +178,7 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                               ? "bg-muted text-foreground"
                               : "text-muted-foreground hover:text-foreground",
                             item.disabled &&
-                              "cursor-not-allowed opacity-80 hover:bg-transparent hover:text-muted-foreground",
+                            "cursor-not-allowed opacity-80 hover:bg-transparent hover:text-muted-foreground",
                           )}
                         >
                           <Icon className="size-5" />
@@ -208,15 +192,14 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
             </Sheet>
 
             {/* logo */}
-            <Link
-              href="/"
+            <a href="/"
               className="flex items-center space-x-2"
               onClick={() => setOpen(false)}
             >
               <Logo className="size-8" />
 
               <span className="text-xl font-bold">{siteConfig.name}</span>
-            </Link>
+            </a>
           </div>
 
           {/* mobile navbar right show sign in or account */}
@@ -226,28 +209,16 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                 <UserButton />
               </div>
             ) : (
-              <>
-                {/* <LoginWrapper mode="redirect" asChild>
-                  <Button
-                    className="flex gap-2 px-5 rounded-full"
-                    variant="default"
-                    size="default"
-                  >
-                    <span>Sign In</span>
-                    <ArrowRightIcon className="size-4" />
-                  </Button>
-                </LoginWrapper> */}
-                {/* <Button
-                  className="rounded-full"
+              <LoginWrapper mode="redirect" asChild>
+                <Button
+                  className="flex gap-2 px-5 rounded-full"
                   variant="default"
                   size="default"
-                  asChild
                 >
-                  <Link href="/submit">
-                    <span>Submit</span>
-                  </Link>
-                </Button> */}
-              </>
+                  <span>Sign In</span>
+                  <ArrowRightIcon className="size-4" />
+                </Button>
+              </LoginWrapper>
             )}
 
             <ModeToggle />
