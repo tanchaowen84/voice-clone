@@ -1,4 +1,4 @@
-import { ResetForm } from "@/components/auth/reset-form";
+import { ResetPasswordForm } from "@/components/auth/reset-form";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -9,7 +9,7 @@ export const metadata = constructMetadata({
 });
 
 const ResetPage = () => {
-  return <ResetForm />;
+  return <ResetPasswordForm />;
 };
 
 export default ResetPage;

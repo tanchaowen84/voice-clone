@@ -1,6 +1,5 @@
 "use client";
 
-// import { login } from "@/actions/login";
 import { AuthCard } from "@/components/auth/auth-card";
 import { Icons } from "@/components/icons/icons";
 import { FormError } from "@/components/shared/form-error";
@@ -15,11 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -32,9 +32,11 @@ export const LoginForm = ({ className }: { className?: string }) => {
       ? "Email already in use with different provider!"
       : "";
 
+  const router = useRouter();
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -44,36 +46,35 @@ export const LoginForm = ({ className }: { className?: string }) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
-
-    // startTransition(() => {
-    //   login(values, callbackUrl)
-    //     .then((data) => {
-    //       // console.log('login, data:', data);
-    //       if (data?.status === "error") {
-    //         console.log("login, error:", data.message);
-    //         form.reset();
-    //         setError(data.message);
-    //       }
-
-    //       if (data?.status === "success") {
-    //         console.log("login, success:", data.message);
-    //         form.reset();
-    //         setSuccess(data.message);
-
-    //         // if success without redirect url, means sent confirmation email
-    //         if (data.redirectUrl) {
-    //           window.location.href = data.redirectUrl;
-    //         }
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("login, error:", error);
-    //       setError("Something went wrong");
-    //     });
-    // });
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    // 1. if callbackUrl is provided, user will be redirected to the callbackURL after login successfully.
+    // if user email is not verified, a new verification email will be sent to the user with the callbackURL.
+    // 2. if callbackUrl is not provided, we should redirect manually in the onSuccess callback.
+    const { data, error } = await authClient.signIn.email({
+      email: values.email,
+      password: values.password,
+      callbackURL: callbackUrl || "/dashboard",
+    }, {
+      onRequest: (ctx) => {
+        // console.log("login, request:", ctx.url);
+        setIsPending(true);
+        setError("");
+        setSuccess("");
+      },
+      onResponse: (ctx) => {
+        // console.log("login, response:", ctx.response);
+        setIsPending(false);
+      },
+      onSuccess: (ctx) => {
+        // console.log("login, success:", ctx.data);
+        // setSuccess("Login successful");
+        // router.push(callbackUrl || "/dashboard");
+      },
+      onError: (ctx) => {
+        console.log("login, error:", ctx.error);
+        setError(ctx.error.message);
+      },
+    });
   };
 
   return (
@@ -118,7 +119,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
                       asChild
                       className="px-0 font-normal text-muted-foreground"
                     >
-                      <Link href="/auth/reset" className="text-xs underline">
+                      <Link href="/auth/reset-password" className="text-xs underline">
                         Forgot password?
                       </Link>
                     </Button>

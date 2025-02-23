@@ -103,14 +103,14 @@ export type UserLinkData = z.infer<typeof UserLinkSchema>;
 
 export const UserPasswordSchema = z
   .object({
-    password: z.string().min(6, {
-      message: "Minimum of 6 characters required",
+    password: z.string().min(8, {
+      message: "Minimum 8 characters required",
     }),
-    newPassword: z.string().min(6, {
-      message: "Minimum of 6 characters required",
+    newPassword: z.string().min(8, {
+      message: "Minimum 8 characters required",
     }),
-    confirmPassword: z.string().min(6, {
-      message: "Minimum of 6 characters required",
+    confirmPassword: z.string().min(8, {
+      message: "Minimum 8 characters required",
     }),
   })
   .refine(
@@ -159,12 +159,12 @@ export type UserPasswordData = z.infer<typeof UserPasswordSchema>;
  * auth related schemas
  */
 export const NewPasswordSchema = z.object({
-  password: z.string().min(6, {
-    message: "Minimum of 6 characters required",
+  password: z.string().min(8, {
+    message: "Minimum 8 characters required",
   }),
 });
 
-export const ResetSchema = z.object({
+export const ResetPasswordSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
@@ -183,8 +183,8 @@ export const RegisterSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
-  password: z.string().min(6, {
-    message: "Minimum 6 characters required",
+  password: z.string().min(8, {
+    message: "Minimum 8 characters required",
   }),
   name: z.string().min(1, {
     message: "Name is required",
