@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { RegisterSchema } from "@/lib/schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AUTH_ROUTE_LOGIN, DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -78,7 +78,7 @@ export const RegisterForm = () => {
     <AuthCard
       headerLabel="Create an account"
       bottomButtonLabel="Already have an account? Sign in"
-      bottomButtonHref="/auth/login"
+      bottomButtonHref={`${AUTH_ROUTE_LOGIN}`}
       showSocialLoginButton
       className="border-none"
     >

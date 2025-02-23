@@ -5,10 +5,9 @@
  */
 export const publicRoutes = [
   "/",
-
-  "/about(/.*)?",
   "/terms(/.*)?",
   "/privacy(/.*)?",
+  "/about(/.*)?",
   "/changelog(/.*)?",
 
   // blog
@@ -17,10 +16,10 @@ export const publicRoutes = [
   // docs
   "/docs(/.*)?",
 
-  // unsubscribe
+  // unsubscribe newsletter
   "/unsubscribe(/.*)?",
 
-  // stripe webhook must be public, otherwise can not receive stripe events
+  // stripe webhook
   "/api/webhook",
 
   // og images
@@ -32,12 +31,18 @@ export const publicRoutes = [
  * These routes will redirect logged in users to /dashboard
  * @type {string[]}
  */
+export const AUTH_ROUTE_LOGIN = "/auth/login";
+export const AUTH_ROUTE_REGISTER = "/auth/register";
+export const AUTH_ROUTE_ERROR = "/auth/error";
+export const AUTH_ROUTE_FORGOT_PASSWORD = "/auth/forgot-password";
+export const AUTH_ROUTE_RESET_PASSWORD = "/auth/reset-password";
+
 export const authRoutes = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/error",
-  "/auth/forgot-password",
-  "/auth/reset-password",
+  AUTH_ROUTE_LOGIN,
+  AUTH_ROUTE_REGISTER,
+  AUTH_ROUTE_ERROR,
+  AUTH_ROUTE_FORGOT_PASSWORD,
+  AUTH_ROUTE_RESET_PASSWORD,
 ];
 
 /**

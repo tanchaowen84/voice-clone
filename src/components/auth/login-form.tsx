@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AUTH_ROUTE_FORGOT_PASSWORD, AUTH_ROUTE_REGISTER, DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -76,7 +76,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
     <AuthCard
       headerLabel="Welcome back"
       bottomButtonLabel="Don't have an account? Sign up"
-      bottomButtonHref="/auth/register"
+      bottomButtonHref={`${AUTH_ROUTE_REGISTER}`}
       showSocialLoginButton
       className={cn("", className)}
     >
@@ -115,7 +115,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
                       className="px-0 font-normal text-muted-foreground"
                     >
                       <a
-                        href="/auth/forgot-password"
+                        href={`${AUTH_ROUTE_FORGOT_PASSWORD}`}
                         className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
                       >
                         Forgot password?
@@ -135,7 +135,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
               )}
             />
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error || urlError || undefined} />
           <FormSuccess message={success} />
           <Button
             disabled={isPending}

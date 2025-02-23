@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { siteConfig } from "@/config/site";
-// import { useCurrentUser } from "@/hooks/use-current-user";
 import { useScroll } from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import type { DashboardConfig, MarketingConfig } from "@/types";

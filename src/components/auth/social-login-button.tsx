@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FaBrandsGitHub } from "@/components/icons/github";
 import { FaBrandsGoogle } from "@/components/icons/google";
 import { authClient } from "@/lib/auth-client";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AUTH_ROUTE_ERROR, DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 /**
  * social login buttons
@@ -32,7 +32,7 @@ export const SocialLoginButton = () => {
       /**
        * a url to redirect if an error occurs during the sign in process
        */
-      errorCallbackURL: "/auth/error",
+      errorCallbackURL: `${AUTH_ROUTE_ERROR}`,
       /**
        * a url to redirect if the user is newly registered
        */

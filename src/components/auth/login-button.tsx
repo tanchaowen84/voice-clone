@@ -9,7 +9,7 @@ import {
 } from "@/components/auth/auth-dialog";
 import { LoginForm } from "@/components/auth/login-form";
 import { useMediaQuery } from "@/hooks/use-media-query";
-// import { authRoutes } from "@/routes";
+import { AUTH_ROUTE_LOGIN } from "@/routes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -31,7 +31,7 @@ export const LoginWrapper = ({
   const { isTablet, isDesktop } = useMediaQuery();
 
   const handleLogin = () => {
-    router.push("/auth/login");
+    router.push(`${AUTH_ROUTE_LOGIN}`);
   };
 
   // Close the modal on route change

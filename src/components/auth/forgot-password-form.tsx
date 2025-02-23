@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import type * as z from "zod";
 import { Icons } from "@/components/icons/icons";
 import { authClient } from "@/lib/auth-client";
+import { AUTH_ROUTE_LOGIN, AUTH_ROUTE_RESET_PASSWORD } from "@/routes";
 
 export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -36,7 +37,7 @@ export const ForgotPasswordForm = () => {
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
     const { data, error } = await authClient.forgetPassword({
       email: values.email,
-      redirectTo: "/auth/reset-password",
+      redirectTo: `${AUTH_ROUTE_RESET_PASSWORD}`,
     }, {
       onRequest: (ctx) => {
         // console.log("forgotPassword, request:", ctx.url);
@@ -63,7 +64,7 @@ export const ForgotPasswordForm = () => {
     <AuthCard
       headerLabel="Froget password?"
       bottomButtonLabel="Back to login"
-      bottomButtonHref="/auth/login"
+      bottomButtonHref={`${AUTH_ROUTE_LOGIN}`}
       className="border-none"
     >
       <Form {...form}>
