@@ -12,7 +12,6 @@
       "node_modules/**",
       "dist/**",
       "build/**",
-      "src/components/*.tsx",
       "src/components/ui/*.tsx",
       "src/components/magicui/*.tsx",
       "tailwind.config.ts"
@@ -49,7 +48,6 @@
       "node_modules/**",
       "dist/**",
       "build/**",
-      "src/components/*.tsx",
       "src/components/ui/*.tsx",
       "src/components/magicui/*.tsx",
       "tailwind.config.ts"
