@@ -14,11 +14,6 @@ export type SiteConfig = {
   url: string;
   image: string;
   mail: string;
-  utm: {
-    source: string;
-    medium: string;
-    campaign: string;
-  };
   links: {
     github?: string;
     twitter?: string;

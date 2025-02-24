@@ -6,9 +6,9 @@ export const siteConfig: SiteConfig = {
   name: "MkSaaS",
   title: "MkSaaS - The Best AI SaaS Boilerplate",
   tagline:
-    "Make AI SaaS Websites in hours, simply and effortlessly",
+    "Make AI SaaS in hours, simply and effortlessly",
   description:
-    "MkSaaS is the best AI SaaS boilerplate. Make AI SaaS websites in hours, simply and effortlessly",
+    "MkSaaS is the best AI SaaS boilerplate. Make AI SaaS in hours, simply and effortlessly",
   keywords: [
     "SaaS",
     "SaaS Website",
@@ -20,11 +20,6 @@ export const siteConfig: SiteConfig = {
   url: SITE_URL ?? "",
   image: `${SITE_URL}/og.png`,
   mail: "support@mksaas.com",
-  utm: {
-    source: "mksaas.com",
-    medium: "referral",
-    campaign: "navigation",
-  },
   links: {
     twitter: "https://x.com/javay_hu",
     bluesky: "https://bsky.app/profile/javayhu.com",

@@ -121,7 +121,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <div className="mt-4">
+          <div className="mt-4 font-serif">
             <Mdx code={post.body.code} />
             {/* {markdownContent && <BlogCustomMdx source={markdownContent} />} */}
           </div>

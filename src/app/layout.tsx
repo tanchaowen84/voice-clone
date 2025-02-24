@@ -6,11 +6,9 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import {
-	fontBricolageGrotesque,
-	fontSourceSans,
-	fontSourceSerif4,
-} from "@/assets/fonts";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { fontSourceSans, fontSourceSerif4 } from "@/assets/fonts";
 
 export const metadata: Metadata = constructMetadata();
 
@@ -32,10 +30,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			<body
 				className={cn(
 					"min-h-screen bg-background antialiased",
-					fontBricolageGrotesque.className,
+					GeistSans.className,
 					fontSourceSerif4.variable,
 					fontSourceSans.variable,
-					fontBricolageGrotesque.variable,
+					GeistSans.variable,
+					GeistMono.variable,
 				)}
 			>
 				<ThemeProvider

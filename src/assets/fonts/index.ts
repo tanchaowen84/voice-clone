@@ -1,32 +1,23 @@
 import localFont from "next/font/local";
 import { Source_Serif_4 } from "next/font/google";
+
 /**
- * use local font
+ * This file shows how to customize the font by using local font and google font
+ *
+ * [1] use local font
  *
  * 1. Get font file from https://gwfh.mranftl.com/fonts
  * 2. Add font file to the assets/fonts folder
  * 3. Add font variable to the font object
  */
-// https://gwfh.mranftl.com/fonts/source-serif-4?subsets=latin
-// export const fontSourceSerif = localFont({
-//   src: "./source-serif-4-v8-latin-regular.woff2",
-//   variable: "--font-source-serif",
-// });
-
 // https://gwfh.mranftl.com/fonts/source-sans-3?subsets=latin
 export const fontSourceSans = localFont({
   src: "./source-sans-3-v15-latin-regular.woff2",
   variable: "--font-source-sans",
 });
 
-// https://gwfh.mranftl.com/fonts/bricolage-grotesque?subsets=latin
-export const fontBricolageGrotesque = localFont({
-  src: "./bricolage-grotesque-v7-latin-regular.woff2",
-  variable: "--font-bricolage",
-});
-
 /**
- * use google font
+ * [2] use google font
  *
  * 1. You can browser fonts at Google Fonts
  * https://fonts.google.com
