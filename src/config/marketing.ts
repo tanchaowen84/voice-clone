@@ -18,9 +18,9 @@ export const marketingConfig: MarketingConfig = {
       icon: "blog",
     },
     {
-      title: "Dashboard",
-      href: "/dashboard",
-      icon: "dashboard",
-    },
+      title: "About",
+      href: "/about",
+      icon: "about",
+    },    
   ],
 };

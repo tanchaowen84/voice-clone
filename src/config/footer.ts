@@ -1,5 +1,4 @@
 import type { FooterConfig } from "@/types";
-import { siteConfig } from "./site";
 
 export const footerConfig: FooterConfig = {
   links: [
@@ -12,26 +11,26 @@ export const footerConfig: FooterConfig = {
       ],
     },
     {
-      title: "Resources",
+      title: "Solution",
       items: [
-        { title: "Showcase", href: "/showcase" },
         { title: "Blog", href: "/blog" },
         { title: "Documentation", href: "/docs", },
-      ],
-    },
-    {
-      title: "Support",
-      items: [
-        ...(siteConfig.links.twitter ? [{ title: "Twitter", href: siteConfig.links.twitter, external: true }] : []),
-        ...(siteConfig.links.bluesky ? [{ title: "Bluesky", href: siteConfig.links.bluesky, external: true }] : []),
-        ...(siteConfig.links.youtube ? [{ title: "Youtube", href: siteConfig.links.youtube, external: true }] : []),
+        { title: "Changelog", href: "/changelog" },
       ],
     },
     {
       title: "Company",
       items: [
         { title: "About Us", href: "/about" },
+        { title: "Contact Us", href: "/contact" },
+        { title: "Careers", href: "/careers" },
+      ],
+    },
+    {
+      title: "Legal",
+      items: [
         { title: "Privacy Policy", href: "/privacy" },
+        { title: "Cookie Policy", href: "/cookie" },
         { title: "Terms of Service", href: "/terms" },
       ],
     },

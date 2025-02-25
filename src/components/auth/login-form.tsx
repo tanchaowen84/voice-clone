@@ -148,7 +148,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
             ) : (
               ""
             )}
-            <span>Login</span>
+            <span>Sign in</span>
           </Button>
         </form>
       </Form>

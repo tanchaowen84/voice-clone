@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import { Source_Serif_4 } from "next/font/google";
 
 /**
- * This file shows how to customize the font by using local font and google font
+ * This file shows how to customize the font by using local font or google font
  *
  * [1] use local font
  *

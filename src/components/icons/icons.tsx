@@ -2,6 +2,7 @@ import {
   ArrowRightIcon,
   BadgeDollarSignIcon,
   BookOpenIcon,
+  Building2Icon,
   ChartLineIcon,
   ChartNoAxesCombinedIcon,
   CircleDollarSignIcon,
@@ -120,6 +121,7 @@ export const Icons = {
   squareChartGantt: SquareChartGanttIcon,
 
   admin: LockKeyholeIcon,
+  about: Building2Icon,
 
   github: FaBrandsGitHub,
   google: FaBrandsGoogle,

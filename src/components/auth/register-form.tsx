@@ -148,7 +148,7 @@ export const RegisterForm = () => {
             ) : (
               ""
             )}
-            <span>Create an account</span>
+            <span>Sign up</span>
           </Button>
         </form>
       </Form>

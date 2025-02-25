@@ -13,7 +13,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
 import { siteConfig } from "@/config/site";
 import { useScroll } from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
@@ -149,6 +149,9 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="flex flex-col p-0">
+                <SheetHeader>
+                  <SheetTitle />
+                </SheetHeader>
                 <div className="flex h-screen flex-col">
                   {/* logo */}
                   <a href="/"
