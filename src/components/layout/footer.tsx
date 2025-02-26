@@ -1,7 +1,6 @@
 "use client";
 
 import { Icons } from "@/components/icons/icons";
-import { ModeToggle } from "@/components/layout/mode-toggle";
 import { footerConfig } from "@/config/footer";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";

@@ -21,9 +21,9 @@ export const footerConfig: FooterConfig = {
     {
       title: "Company",
       items: [
+        { title: "Waitlist", href: "/waitlist" },
         { title: "About Us", href: "/about" },
         { title: "Contact Us", href: "/contact" },
-        { title: "Careers", href: "/careers" },
       ],
     },
     {
