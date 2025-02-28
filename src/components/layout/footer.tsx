@@ -10,6 +10,8 @@ import type * as React from "react";
 import Container from "@/components/container";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
+import { ModeToggleHorizontal } from "@/components/layout/mode-toggle-horizontal";
+import { ModeToggle } from "./mode-toggle";
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const { theme } = useTheme();
@@ -29,8 +31,80 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               <p className="text-muted-foreground text-base p4-4 md:pr-12">
                 {siteConfig.tagline}
               </p>
-              
+
               <BuiltWithButton />
+
+              {/* social links */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  {siteConfig.links.github && (
+                    <Link
+                      href={siteConfig.links.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="GitHub"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.github className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                  {siteConfig.links.twitter && (
+                    <Link
+                      href={siteConfig.links.twitter}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Twitter"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.twitter className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                  {siteConfig.links.twitter_cn && (
+                    <Link
+                      href={siteConfig.links.twitter_cn}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Twitter(CN)"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.twitter className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                  {siteConfig.links.bluesky && (
+                    <Link
+                      href={siteConfig.links.bluesky}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Bluesky"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.bluesky className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                  {siteConfig.links.youtube && (
+                    <Link
+                      href={siteConfig.links.youtube}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="YouTube"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.youtube className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                  {siteConfig.mail && (
+                    <Link
+                      href={`mailto:${siteConfig.mail}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Email"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.email className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -69,76 +143,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             &copy; {new Date().getFullYear()} All Rights Reserved.
           </span>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              {siteConfig.links.github && (
-                <Link
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.github className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-              {siteConfig.links.twitter && (
-                <Link
-                  href={siteConfig.links.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Twitter"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.twitter className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-              {siteConfig.links.twitter_cn && (
-                <Link
-                  href={siteConfig.links.twitter_cn}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Twitter(CN)"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.twitter className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-              {siteConfig.links.bluesky && (
-                <Link
-                  href={siteConfig.links.bluesky}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Bluesky"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.bluesky className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-              {siteConfig.links.youtube && (
-                <Link
-                  href={siteConfig.links.youtube}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="YouTube"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.youtube className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-              {siteConfig.mail && (
-                <Link
-                  href={`mailto:${siteConfig.mail}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Email"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icons.email className="size-4" aria-hidden="true" />
-                </Link>
-              )}
-            </div>
-          </div>
+          <ModeToggleHorizontal />
         </Container>
       </div>
     </footer>

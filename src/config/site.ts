@@ -23,8 +23,8 @@ export const siteConfig: SiteConfig = {
   links: {
     twitter: "https://x.com/javay_hu",
     bluesky: "https://bsky.app/profile/javayhu.com",
-    github: "https://github.com/MkSaaS",
-    youtube: "https://www.youtube.com/@MkSaaS",
+    github: "https://github.com/MkSaaSHQ",
+    youtube: "https://www.youtube.com/@MkSaaSHQ",
     docs: "https://docs.mksaas.com",
     demo: "https://demo.mksaas.com",
     studio: "https://demo.mksaas.com/studio",

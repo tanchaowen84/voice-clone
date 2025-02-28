@@ -28,7 +28,7 @@ import { authClient } from "@/lib/auth-client";
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
-  console.log('UserButton, user:', user);
+  // console.log('UserButton, user:', user);
   // if (error) {
   //   console.error("UserButton, error:", error);
   //   return (
