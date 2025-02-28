@@ -49,7 +49,8 @@ import {
 import { FaBrandsGitHub } from "../icons/github";
 import { FaBrandsGoogle } from "../icons/google";
 import { LogosProductHunt } from "../icons/product-hunt";
-import { FaBrandsXTwitter } from "../icons/twitter";
+import { FaBrandsTwitter } from "../icons/twitter";
+import { FaBrandsXTwitter } from "../icons/x";
 import AuthJSIcon from "./authjs";
 import { Fa6BrandsBluesky } from "./bluesky";
 import { NextjsIcon } from "./nextjs";
@@ -125,7 +126,8 @@ export const Icons = {
 
   github: FaBrandsGitHub,
   google: FaBrandsGoogle,
-  twitter: FaBrandsXTwitter,
+  twitter: FaBrandsTwitter,
+  x: FaBrandsXTwitter,
   bluesky: Fa6BrandsBluesky,
   youtube: IonLogoYoutube,
   productHunt: LogosProductHunt,

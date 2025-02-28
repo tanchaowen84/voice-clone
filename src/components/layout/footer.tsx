@@ -11,7 +11,6 @@ import Container from "@/components/container";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
 import { ModeToggleHorizontal } from "@/components/layout/mode-toggle-horizontal";
-import { ModeToggle } from "./mode-toggle";
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const { theme } = useTheme();
@@ -32,7 +31,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                 {siteConfig.tagline}
               </p>
 
-              <BuiltWithButton />
+              
 
               {/* social links */}
               <div className="flex items-center gap-3">
@@ -54,17 +53,6 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Twitter"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <Icons.twitter className="size-4" aria-hidden="true" />
-                    </Link>
-                  )}
-                  {siteConfig.links.twitter_cn && (
-                    <Link
-                      href={siteConfig.links.twitter_cn}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Twitter(CN)"
                       className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
                     >
                       <Icons.twitter className="size-4" aria-hidden="true" />
@@ -105,6 +93,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                   )}
                 </div>
               </div>
+
+              <BuiltWithButton />
             </div>
           </div>
 

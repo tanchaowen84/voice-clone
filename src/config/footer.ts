@@ -11,7 +11,7 @@ export const footerConfig: FooterConfig = {
       ],
     },
     {
-      title: "Solution",
+      title: "Resources",
       items: [
         { title: "Blog", href: "/blog" },
         { title: "Documentation", href: "/docs", },
@@ -29,8 +29,8 @@ export const footerConfig: FooterConfig = {
     {
       title: "Legal",
       items: [
-        { title: "Privacy Policy", href: "/privacy" },
         { title: "Cookie Policy", href: "/cookie" },
+        { title: "Privacy Policy", href: "/privacy" },
         { title: "Terms of Service", href: "/terms" },
       ],
     },
