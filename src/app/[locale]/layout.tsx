@@ -1,21 +1,18 @@
 import "@/app/globals.css";
-import { fontSourceSans, fontSourceSerif4 } from "@/assets/fonts";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/marketing/navbar";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { LangAttributeSetter } from "@/components/layout/lang-attribute-setter";
 import { Toaster } from "@/components/ui/sonner";
+import { marketingConfig } from "@/config/marketing";
 import { routing } from '@/i18n/routing';
 import { constructMetadata } from "@/lib/metadata";
-import { cn } from "@/lib/utils";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Providers } from "./providers";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/marketing/navbar";
-import { marketingConfig } from "@/config/marketing";
 
 export const metadata: Metadata = constructMetadata();
 
@@ -59,35 +56,26 @@ export default async function LocaleLayout(props: LocaleLayoutProps) {
 	// side is the easiest way to get started
 	const messages = await getMessages();
 
-	// TODO: body min-h-screen -> size-full, check if this is correct on mobile
+	// Apply all the classes and providers without the html/body tags
+	// as those are now handled by the root layout
 	return (
-		<html lang={locale} suppressHydrationWarning>
-			<body
-				className={cn(
-					"size-full antialiased",
-					GeistSans.className,
-					fontSourceSerif4.variable,
-					fontSourceSans.variable,
-					GeistSans.variable,
-					GeistMono.variable,
-				)}
-			>
-				<NextIntlClientProvider messages={messages}>
-					<Providers>
-						{/* {children} */}
+		<>
+			{/* Client component that sets the lang attribute on the html element */}
+			<LangAttributeSetter locale={locale} />
+			
+			<NextIntlClientProvider messages={messages}>
+				<Providers>
+					<div className="flex flex-col min-h-screen">
+						<Navbar scroll={true} config={marketingConfig} />
+						<main className="flex-1">{children}</main>
+						<Footer />
+					</div>
 
-						<div className="flex flex-col min-h-screen">
-							<Navbar scroll={true} config={marketingConfig} />
-							<main className="flex-1">{children}</main>
-							<Footer />
-						</div>
+					<Toaster richColors position="top-right" offset={64} />
 
-						<Toaster richColors position="top-right" offset={64} />
-
-						<TailwindIndicator />
-					</Providers>
-				</NextIntlClientProvider>
-			</body>
-		</html>
+					<TailwindIndicator />
+				</Providers>
+			</NextIntlClientProvider>
+		</>
 	);
 }

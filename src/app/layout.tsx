@@ -4,12 +4,13 @@ import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-// Since we have a `not-found.tsx` page on the root, a layout file
-// is required, even if it's just passing children through.
+/**
+ * 1. Root layout must include html and body tags.
+ * 2. We can't directly access the locale here.
+ * 3. The locale layout will set the correct lang attribute on the html element
+ * via data attributes (@/components/layout/lang-attribute-setter.tsx).
+ */
 export default function RootLayout({ children }: PropsWithChildren) {
-  // Root layout must include html and body tags
-  // But keep them as minimal as possible since the actual styling
-  // and content will be handled by the [locale] layout
   return (
     <html suppressHydrationWarning>
       <body className={cn(
