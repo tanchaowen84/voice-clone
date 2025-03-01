@@ -1,7 +1,7 @@
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Logo } from "@/components/logo";
-import { buttonVariants } from "@/components/ui/button";
+import { MkSaaSLogo } from "@/components/logo-mksaas";
 
 export default function BuiltWithButton() {
   return (
@@ -15,7 +15,7 @@ export default function BuiltWithButton() {
     >
       <span>Built with</span>
       <span>
-        <Logo className="size-5 rounded-full" />
+        <MkSaaSLogo className="size-5 rounded-full" />
       </span>
       <span className="font-semibold">MkSaaS</span>
     </Link>
