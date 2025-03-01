@@ -3,16 +3,25 @@
  */
 export enum Routes {
   Root = '/',
-  Contact = '/contact',
-  Roadmap = 'https://achromatic.canny.io',
-  Docs = '/docs',
-  Pricing = '/pricing',
-  Blog = '/blog',
-  Story = '/story',
-  Careers = '/careers',
+  
+  Features = '/#features',
+  Pricing = '/#pricing',
+  FAQ = '/#faq',
+
   TermsOfUse = '/terms-of-use',
   PrivacyPolicy = '/privacy-policy',
   CookiePolicy = '/cookie-policy',
+
+  Blog = '/blog',
+  Docs = '/docs',
+  Changelog = '/changelog',
+  Roadmap = 'https://mksaas.canny.io',
+
+  About = '/about',
+  Contact = '/contact',
+  Waitlist = '/waitlist',
+  Story = '/story',
+  Careers = '/careers',
 
   Login = '/auth/login',
   Register = '/auth/register',

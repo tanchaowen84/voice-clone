@@ -1,37 +1,39 @@
 import type { FooterConfig } from "@/types";
+import { Routes } from "@/routes";
 
 export const footerConfig: FooterConfig = {
   links: [
     {
       title: "Product",
       items: [
-        { title: "Features", href: "/#features" },
-        { title: "Pricing", href: "/#pricing" },
-        { title: "FAQ", href: "/#faq" },
+        { title: "Features", href: Routes.Features },
+        { title: "Pricing", href: Routes.Pricing },
+        { title: "FAQ", href: Routes.FAQ },
       ],
     },
     {
       title: "Resources",
       items: [
-        { title: "Blog", href: "/blog" },
-        { title: "Documentation", href: "/docs", },
-        { title: "Changelog", href: "/changelog" },
+        { title: "Blog", href: Routes.Blog },
+        { title: "Documentation", href: Routes.Docs },
+        { title: "Changelog", href: Routes.Changelog },
+        { title: "Roadmap", href: Routes.Roadmap },
       ],
     },
     {
       title: "Company",
       items: [
-        { title: "Waitlist", href: "/waitlist" },
-        { title: "About Us", href: "/about" },
-        { title: "Contact Us", href: "/contact" },
+        { title: "Waitlist", href: Routes.Waitlist },
+        { title: "About Us", href: Routes.About },
+        { title: "Contact Us", href: Routes.Contact },
       ],
     },
     {
       title: "Legal",
       items: [
-        { title: "Cookie Policy", href: "/cookie" },
-        { title: "Privacy Policy", href: "/privacy" },
-        { title: "Terms of Service", href: "/terms" },
+        { title: "Cookie Policy", href: Routes.CookiePolicy },
+        { title: "Privacy Policy", href: Routes.PrivacyPolicy },
+        { title: "Terms of Service", href: Routes.TermsOfUse },
       ],
     },
   ],

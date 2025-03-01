@@ -33,48 +33,53 @@ export const MENU_LINKS = [
     external: false
   },
   {
+    title: 'Docs',
+    href: Routes.Docs,
+    external: false
+  },
+  {
     title: 'AI',
     items: [
       {
         title: 'Features',
         description: 'Short description here',
         icon: <CubeIcon className="size-5 shrink-0" />,
-        href: '#',
+        href: Routes.Features,
         external: false
       },
       {
         title: 'Pricing',
         description: 'Short description here',
         icon: <PlayIcon className="size-5 shrink-0" />,
-        href: '#',
-        external: false
-      },
-      {
-        title: 'Testimonials',
-        description: 'Short description here',
-        icon: <CircuitBoardIcon className="size-5 shrink-0" />,
-        href: '#',
+        href: Routes.Pricing,
         external: false
       },
       {
         title: 'FAQ',
         description: 'Short description here',
         icon: <LayoutIcon className="size-5 shrink-0" />,
-        href: '#',
+        href: Routes.FAQ,
         external: false
       },
       {
         title: 'Roadmap',
         description: 'Short description here',
         icon: <FileBarChartIcon className="size-5 shrink-0" />,
-        href: '#',
-        external: false
+        href: Routes.Roadmap,
+        external: true
       }
     ]
   },
   {
     title: 'Pages',
     items: [
+      {
+        title: 'About',
+        description: 'Short description here',
+        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        href: Routes.About,
+        external: false
+      },
       {
         title: 'Contact',
         description: 'Short description here',
@@ -83,17 +88,10 @@ export const MENU_LINKS = [
         external: false
       },
       {
-        title: 'Roadmap',
-        description: 'Short description here',
-        icon: <LayoutIcon className="size-5 shrink-0" />,
-        href: Routes.Roadmap,
-        external: true
-      },
-      {
         title: 'Waitlist',
         description: 'Short description here',
         icon: <BookOpenIcon className="size-5 shrink-0" />,
-        href: Routes.Docs,
+        href: Routes.Waitlist,
         external: false
       }
     ]
