@@ -28,7 +28,7 @@ export default async function HomePage(props: HomePageProps) {
   setRequestLocale(locale);
 
   // Use getTranslations instead of useTranslations for async server components
-  const t = await getTranslations('HomePage');
+  const t = await getTranslations('IndexPage');
 
   return (
     <>
@@ -36,7 +36,7 @@ export default async function HomePage(props: HomePageProps) {
 
       <div className="mt-12 flex flex-col gap-16">
 
-        <div>
+        <div className="text-center">
           <h1>{t('title')}</h1>
           {/* <Link href="/about">{t('about')}</Link> */}
         </div>

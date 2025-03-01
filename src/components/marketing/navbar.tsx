@@ -26,6 +26,7 @@ import { MarketingConfig } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRightIcon } from 'lucide-react';
+import LocaleSwitcher from '../LocaleSwitcher';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -171,6 +172,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
             )}
 
             <ThemeSwitcher />
+            <LocaleSwitcher />
           </div>
         </nav>
 

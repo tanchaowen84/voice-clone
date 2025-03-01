@@ -11,9 +11,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/marketing/blog/mdx-component';
-
-import '@/app/mdx.css';
 import AllPostsButton from '@/components/blog/all-posts-button';
+import '@/app/styles/mdx.css';
 
 /**
  * Gets the blog post from the params

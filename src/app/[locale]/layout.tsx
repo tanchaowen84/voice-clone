@@ -1,48 +1,41 @@
-import "@/app/globals.css";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/marketing/navbar";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { LangAttributeSetter } from "@/components/layout/lang-attribute-setter";
-import { Toaster } from "@/components/ui/sonner";
-import { marketingConfig } from "@/config/marketing";
+import { fontSourceSans, fontSourceSerif4 } from "@/assets/fonts";
+import { Footer } from '@/components/layout/footer';
+import { Navbar } from '@/components/marketing/navbar';
+import { TailwindIndicator } from '@/components/tailwind-indicator';
+import { marketingConfig } from '@/config/marketing';
 import { routing } from '@/i18n/routing';
-import { constructMetadata } from "@/lib/metadata";
-import type { Metadata, Viewport } from "next";
+import { cn } from "@/lib/utils";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
-import { Providers } from "./providers";
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { ReactNode } from 'react';
+import { Toaster } from 'sonner';
+import { Providers } from './providers';
 
-export const metadata: Metadata = constructMetadata();
-
-export const viewport: Viewport = {
-	width: 'device-width',
-	initialScale: 1,
-	minimumScale: 1,
-	maximumScale: 1,
-	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: 'white' },
-		{ media: '(prefers-color-scheme: dark)', color: 'black' }
-	]
-};
-
-export function generateStaticParams() {
-	return routing.locales.map((locale) => ({ locale }));
-}
+import '@/app/styles/globals.css';
 
 interface LocaleLayoutProps {
 	children: ReactNode;
 	params: Promise<{ locale: string }>;
 };
 
-/**
- * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#layout
- */
-export default async function LocaleLayout(props: LocaleLayoutProps) {
-	const { children } = props;
-	const params = await props.params;
-	const { locale } = params;
+export function generateStaticParams() {
+	return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata(props: Omit<LocaleLayoutProps, 'children'>) {
+	const { locale } = await props.params;
+	const t = await getTranslations({ locale, namespace: 'LocaleLayout' });
+
+	return {
+		title: t('title')
+	};
+}
+
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+	const { locale } = await params;
 
 	// Ensure that the incoming `locale` is valid
 	if (!routing.locales.includes(locale as any)) {
@@ -56,26 +49,30 @@ export default async function LocaleLayout(props: LocaleLayoutProps) {
 	// side is the easiest way to get started
 	const messages = await getMessages();
 
-	// Apply all the classes and providers without the html/body tags
-	// as those are now handled by the root layout
 	return (
-		<>
-			{/* Client component that sets the lang attribute on the html element */}
-			<LangAttributeSetter locale={locale} />
-			
-			<NextIntlClientProvider messages={messages}>
-				<Providers>
-					<div className="flex flex-col min-h-screen">
-						<Navbar scroll={true} config={marketingConfig} />
-						<main className="flex-1">{children}</main>
-						<Footer />
-					</div>
+		<html lang={locale} suppressHydrationWarning>
+			<body className={cn(
+				"size-full antialiased",
+				GeistSans.className,
+				fontSourceSerif4.variable,
+				fontSourceSans.variable,
+				GeistSans.variable,
+				GeistMono.variable,
+			)}>
+				<NextIntlClientProvider messages={messages}>
+					<Providers>
+						<div className="flex flex-col min-h-screen">
+							<Navbar scroll={true} config={marketingConfig} />
+							<main className="flex-1">{children}</main>
+							<Footer />
+						</div>
 
-					<Toaster richColors position="top-right" offset={64} />
+						<Toaster richColors position="top-right" offset={64} />
 
-					<TailwindIndicator />
-				</Providers>
-			</NextIntlClientProvider>
-		</>
+						<TailwindIndicator />
+					</Providers>
+				</NextIntlClientProvider>
+			</body>
+		</html>
 	);
 }
