@@ -1,55 +1,8 @@
-import "@/app/globals.css";
-import type { Metadata, Viewport } from "next";
-import type { PropsWithChildren } from "react";
-import { constructMetadata } from "@/lib/metadata";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from "next-themes";
-import { Toaster } from "@/components/ui/sonner";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { fontSourceSans, fontSourceSerif4 } from "@/assets/fonts";
+import { PropsWithChildren } from 'react';
 
-export const metadata: Metadata = constructMetadata();
-
-export const viewport: Viewport = {
-	width: 'device-width',
-	initialScale: 1,
-	minimumScale: 1,
-	maximumScale: 1,
-	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: 'white' },
-		{ media: '(prefers-color-scheme: dark)', color: 'black' }
-	]
-};
-
+// Since we have a `not-found.tsx` page on the root, a layout file
+// is required, even if it's just passing children through.
 export default function RootLayout({ children }: PropsWithChildren) {
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<head />
-			<body
-				className={cn(
-					"min-h-screen bg-background antialiased",
-					GeistSans.className,
-					fontSourceSerif4.variable,
-					fontSourceSans.variable,
-					GeistSans.variable,
-					GeistMono.variable,
-				)}
-			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					{children}
-
-					<Toaster richColors position="top-right" offset={64} />
-
-					{/* <TailwindIndicator /> */}
-				</ThemeProvider>
-			</body>
-		</html>
-	);
+  // Simply pass children through - the [locale] layout will handle the HTML structure
+  return children;
 }

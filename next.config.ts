@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
 import { withContentCollections } from "@content-collections/next";
 
+/**
+ * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#next-config
+ */
+const withNextIntl = createNextIntlPlugin();
+
+/**
+ * https://nextjs.org/docs/app/api-reference/config/next-config-js
+ */
 const nextConfig: NextConfig = {
   /* config options here */
   
@@ -13,11 +22,13 @@ const nextConfig: NextConfig = {
   images: {
     // https://vercel.com/docs/image-optimization/managing-image-optimization-costs#minimizing-image-optimization-costs
     // vercel has limits on image optimization, 1000 images per month
-    unoptimized: true,
+    // unoptimized: true,
+    
     // https://medium.com/@niniroula/nextjs-upgrade-next-image-and-dangerouslyallowsvg-c934060d79f8
     // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
     // but dangerouslyAllowSVG is disabled
-    dangerouslyAllowSVG: true,
+    // dangerouslyAllowSVG: true,
+
     remotePatterns: [
       {
         protocol: "https",
@@ -31,18 +42,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "randomuser.me",
       },
-      {
-        protocol: "https",
-        hostname: "cdn.sanity.io", // https://www.sanity.io/learn/course/day-one-with-sanity-studio/bringing-content-to-a-next-js-front-end
-      },
-      {
-        protocol: "https",
-        hostname: "via.placeholder.com", // https://www.sanity.io/learn/course/day-one-with-sanity-studio/bringing-content-to-a-next-js-front-end
-      },
     ],
   },
 };
 
-// https://www.content-collections.dev/docs/quickstart/next
-// withContentCollections must be the outermost plugin
-export default withContentCollections(nextConfig);
+/**
+ * withContentCollections must be the outermost plugin
+ * 
+ * https://www.content-collections.dev/docs/quickstart/next
+ */
+export default withContentCollections(withNextIntl(nextConfig));

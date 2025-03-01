@@ -4,6 +4,8 @@ import { siteConfig } from '@/config/site';
 /**
  * Generates the Web App Manifest for the application
  * 
+ * TODO: https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/manifest.ts
+ * 
  * The manifest.json provides metadata used when the web app is installed on a
  * user's mobile device or desktop. See https://web.dev/add-manifest/
  * 
