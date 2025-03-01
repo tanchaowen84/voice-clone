@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { ResetPasswordSchema } from "@/lib/schemas";
-import { AUTH_ROUTE_LOGIN } from "@/routes";
+import { Routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -62,7 +62,7 @@ export const ResetPasswordForm = () => {
       onSuccess: (ctx) => {
         // console.log("resetPassword, success:", ctx.data);
         // setSuccess("Password reset successfully");
-        router.push(`${AUTH_ROUTE_LOGIN}`);
+        router.push(`${Routes.Login}`);
       },
       onError: (ctx) => {
         console.log("resetPassword, error:", ctx.error);
@@ -75,7 +75,7 @@ export const ResetPasswordForm = () => {
     <AuthCard
       headerLabel="Reset password"
       bottomButtonLabel="Back to login"
-      bottomButtonHref={`${AUTH_ROUTE_LOGIN}`}
+      bottomButtonHref={`${Routes.Login}`}
       className="border-none"
     >
       <Form {...form}>

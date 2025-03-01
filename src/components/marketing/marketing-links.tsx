@@ -9,12 +9,13 @@ import {
   LayoutIcon,
   PlayIcon
 } from 'lucide-react';
-import { Routes } from '@/constants/routes';
+import { Routes } from '@/routes';
 import { FacebookIcon } from '@/components/icons/facebook';
 import { InstagramIcon } from '@/components/icons/instagram';
 import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { XTwitterIcon } from '@/components/icons/x';
+
 export const MENU_LINKS = [
   {
     title: 'Features',

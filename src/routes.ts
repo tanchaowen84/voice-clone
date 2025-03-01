@@ -1,4 +1,70 @@
 /**
+ * The routes for the application
+ */
+export enum Routes {
+  Root = '/',
+  Contact = '/contact',
+  Roadmap = 'https://achromatic.canny.io',
+  Docs = '/docs',
+  Pricing = '/pricing',
+  Blog = '/blog',
+  Story = '/story',
+  Careers = '/careers',
+  TermsOfUse = '/terms-of-use',
+  PrivacyPolicy = '/privacy-policy',
+  CookiePolicy = '/cookie-policy',
+
+  Login = '/auth/login',
+  Register = '/auth/register',
+  AuthError = '/auth/error',
+  ForgotPassword = '/auth/forgot-password',
+  ResetPassword = '/auth/reset-password',
+
+  Auth = '/auth',
+  Logout = '/auth/logout',
+  Totp = '/auth/totp',
+  RecoveryCode = '/auth/recovery-code',
+  ChangeEmail = '/auth/change-email',
+  ChangeEmailRequest = '/auth/change-email/request',
+  ChangeEmailInvalid = '/auth/change-email/invalid',
+  ChangeEmailExpired = '/auth/change-email/expired',
+  // ForgotPassword = '/auth/forgot-password',
+  ForgotPasswordSuccess = '/auth/forgot-password/success',
+  // ResetPassword = '/auth/reset-password',
+  ResetPasswordRequest = '/auth/reset-password/request',
+  ResetPasswordExpired = '/auth/reset-password/expired',
+  ResetPasswordSuccess = '/auth/reset-password/success',
+  VerifyEmail = '/auth/verify-email',
+  VerifyEmailRequest = '/auth/verify-email/request',
+  VerifyEmailExpired = '/auth/verify-email/expired',
+  VerifyEmailSuccess = '/auth/verify-email/success',
+
+  Dashboard = '/dashboard',
+  Home = '/dashboard/home',
+  Contacts = '/dashboard/contacts',
+  Settings = '/dashboard/settings',
+  Account = '/dashboard/settings/account',
+  Profile = '/dashboard/settings/account/profile',
+  Security = '/dashboard/settings/account/security',
+  Notifications = '/dashboard/settings/account/notifications',
+  Organization = '/dashboard/settings/organization',
+  OrganizationInformation = '/dashboard/settings/organization/information',
+  Members = '/dashboard/settings/organization/members',
+  Billing = '/dashboard/settings/organization/billing',
+  Developers = '/dashboard/settings/organization/developers',
+
+  Invitations = '/invitations',
+  InvitationRequest = '/invitations/request',
+  InvitationAlreadyAccepted = '/invitations/already-accepted',
+  InvitationRevoked = '/invitations/revoked',
+  InvitationLogOutToAccept = '/invitations/log-out-to-accept',
+
+  Onboarding = '/onboarding',
+
+  DefaultLoginRedirect = '/dashboard',
+}
+
+/**
  * An array of routes that are accessible to the public
  * These routes do not require authentication
  * @type {string[]}
@@ -27,22 +93,14 @@ export const publicRoutes = [
 ];
 
 /**
- * An array of routes that are used for authentication
- * These routes will redirect logged in users to /dashboard
- * @type {string[]}
+ * The routes for the authentication pages
  */
-export const AUTH_ROUTE_LOGIN = "/auth/login";
-export const AUTH_ROUTE_REGISTER = "/auth/register";
-export const AUTH_ROUTE_ERROR = "/auth/error";
-export const AUTH_ROUTE_FORGOT_PASSWORD = "/auth/forgot-password";
-export const AUTH_ROUTE_RESET_PASSWORD = "/auth/reset-password";
-
 export const authRoutes = [
-  AUTH_ROUTE_LOGIN,
-  AUTH_ROUTE_REGISTER,
-  AUTH_ROUTE_ERROR,
-  AUTH_ROUTE_FORGOT_PASSWORD,
-  AUTH_ROUTE_RESET_PASSWORD,
+  Routes.Login,
+  Routes.Register,
+  Routes.AuthError,
+  Routes.ForgotPassword,
+  Routes.ResetPassword,
 ];
 
 /**

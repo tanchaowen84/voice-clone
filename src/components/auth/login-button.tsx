@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { LoginForm } from "@/components/auth/login-form";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { AUTH_ROUTE_LOGIN, authRoutes } from "@/routes";
+import { Routes, authRoutes } from "@/routes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -31,7 +31,7 @@ export const LoginWrapper = ({
   const { isTablet, isDesktop } = useMediaQuery();
 
   const handleLogin = () => {
-    router.push(`${AUTH_ROUTE_LOGIN}`);
+    router.push(`${Routes.Login}`);
   };
 
   // Close the modal on route change
@@ -41,7 +41,8 @@ export const LoginWrapper = ({
 
   // 1. don't open the modal if the user is already in the auth pages
   // 2. keep isTablet or isDesktop open, if user resizes the window
-  const isAuthRoute = authRoutes.includes(pathname);
+  // 3. TODO: pathname as Routes ???
+  const isAuthRoute = authRoutes.includes(pathname as Routes);
   if (mode === "modal" && !isAuthRoute && (isTablet || isDesktop)) {
     return (
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

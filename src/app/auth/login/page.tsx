@@ -1,12 +1,12 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
-import { AUTH_ROUTE_LOGIN } from "@/routes";
+import { Routes } from "@/routes";
 
 export const metadata = constructMetadata({
   title: "Login",
   description: "Login to your account",
-  canonicalUrl: `${siteConfig.url}${AUTH_ROUTE_LOGIN}`,
+  canonicalUrl: `${siteConfig.url}${Routes.Login}`,
 });
 
 const LoginPage = () => {

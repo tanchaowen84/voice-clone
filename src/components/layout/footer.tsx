@@ -10,7 +10,7 @@ import type * as React from "react";
 import Container from "@/components/container";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
-import { ThemeSwitcherHorizontal } from "@/components/layout/mode-toggle-horizontal";
+import { ThemeSwitcherHorizontal } from "@/components/layout/theme-switcher-horizontal";
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const { theme } = useTheme();

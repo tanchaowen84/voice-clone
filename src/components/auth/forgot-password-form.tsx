@@ -37,7 +37,7 @@ export const ForgotPasswordForm = () => {
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
     const { data, error } = await authClient.forgetPassword({
       email: values.email,
-      redirectTo: `${AUTH_ROUTE_RESET_PASSWORD}`,
+      redirectTo: `${Routes.ResetPassword}`,
     }, {
       onRequest: (ctx) => {
         // console.log("forgotPassword, request:", ctx.url);
@@ -64,7 +64,7 @@ export const ForgotPasswordForm = () => {
     <AuthCard
       headerLabel="Froget password?"
       bottomButtonLabel="Back to login"
-      bottomButtonHref={`${AUTH_ROUTE_LOGIN}`}
+      bottomButtonHref={`${Routes.Login}`}
       className="border-none"
     >
       <Form {...form}>

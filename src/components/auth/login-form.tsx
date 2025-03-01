@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-import { AUTH_ROUTE_FORGOT_PASSWORD, AUTH_ROUTE_REGISTER, DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { Routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -48,7 +48,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
     const { data, error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
-      callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      callbackURL: callbackUrl || Routes.DefaultLoginRedirect,
     }, {
       onRequest: (ctx) => {
         // console.log("login, request:", ctx.url);
@@ -76,7 +76,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
     <AuthCard
       headerLabel="Welcome back"
       bottomButtonLabel="Don't have an account? Sign up"
-      bottomButtonHref={`${AUTH_ROUTE_REGISTER}`}
+      bottomButtonHref={`${Routes.Register}`}
       showSocialLoginButton
       className={cn("border-none", className)}
     >
@@ -115,7 +115,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
                       className="px-0 font-normal text-muted-foreground"
                     >
                       <a
-                        href={`${AUTH_ROUTE_FORGOT_PASSWORD}`}
+                        href={`${Routes.ForgotPassword}`}
                         className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
                       >
                         Forgot password?

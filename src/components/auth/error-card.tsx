@@ -1,12 +1,12 @@
 import { AuthCard } from "@/components/auth/auth-card";
-import { AUTH_ROUTE_LOGIN } from "@/routes";
+import { Routes } from "@/routes";
 import { TriangleAlertIcon } from "lucide-react";
 
 export const ErrorCard = () => {
   return (
     <AuthCard
       headerLabel="Something went wrong!"
-      bottomButtonHref={`${AUTH_ROUTE_LOGIN}`}
+      bottomButtonHref={`${Routes.Login}`}
       bottomButtonLabel="Back to login"
       className="border-none"
     >

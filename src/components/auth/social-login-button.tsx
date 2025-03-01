@@ -7,7 +7,7 @@ import { useState } from "react";
 import { GitHubIcon } from "@/components/icons/github";
 import { GoogleIcon } from "@/components/icons/google";
 import { authClient } from "@/lib/auth-client";
-import { AUTH_ROUTE_ERROR, DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { Routes } from "@/routes";
 
 /**
  * social login buttons
@@ -28,11 +28,11 @@ export const SocialLoginButton = () => {
        * a url to redirect after the user authenticates with the provider
        * @default "/"
        */
-      callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      callbackURL: callbackUrl || Routes.DefaultLoginRedirect,
       /**
        * a url to redirect if an error occurs during the sign in process
        */
-      errorCallbackURL: `${AUTH_ROUTE_ERROR}`,
+      errorCallbackURL: Routes.AuthError,
       /**
        * a url to redirect if the user is newly registered
        */
