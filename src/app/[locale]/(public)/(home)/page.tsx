@@ -32,8 +32,6 @@ export default async function HomePage(props: HomePageProps) {
 
   return (
     <>
-      {/* <PromotekitScript /> */}
-
       <div className="mt-12 flex flex-col gap-16">
 
         <div className="text-center">

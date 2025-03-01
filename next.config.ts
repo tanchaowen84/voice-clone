@@ -4,15 +4,17 @@ import { withContentCollections } from "@content-collections/next";
 
 /**
  * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#next-config
+ * 
+ * Explicitly specify the path to the request config file
  */
 const withNextIntl = createNextIntlPlugin();
 
-module.exports = {
-  experimental: {
-    // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-    missingSuspenseWithCSRBailout: false,
-  },
-}
+// module.exports = {
+//   experimental: {
+//     // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+//     missingSuspenseWithCSRBailout: false,
+//   },
+// }
 
 /**
  * https://nextjs.org/docs/app/api-reference/config/next-config-js

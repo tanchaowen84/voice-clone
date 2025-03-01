@@ -67,11 +67,11 @@ export async function generateMetadata(
   };
 }
 
-export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post.slugAsParams.split('/')
-  }));
-}
+// export async function generateStaticParams() {
+//   return allPosts.map((post) => ({
+//     slug: post.slugAsParams.split('/')
+//   }));
+// }
 
 export default async function BlogPostPage(props: NextPageProps) {
   const post = await getBlogPostFromParams(props);
