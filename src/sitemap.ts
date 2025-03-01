@@ -1,0 +1,29 @@
+import { MetadataRoute } from 'next';
+import { routing, Locale } from '@/i18n/routing';
+import { getPathname } from '@/i18n/navigation';
+import { siteConfig } from './config/site';
+
+export default function sitemap(): MetadataRoute.Sitemap {
+    return [...getEntries('/')];
+}
+
+type Href = Parameters<typeof getPathname>[0]['href'];
+
+/**
+ * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/sitemap.ts
+ */
+function getEntries(href: Href) {
+    return routing.locales.map((locale) => ({
+        url: getUrl(href, locale),
+        alternates: {
+            languages: Object.fromEntries(
+                routing.locales.map((cur) => [cur, getUrl(href, cur)])
+            )
+        }
+    }));
+}
+
+function getUrl(href: Href, locale: Locale) {
+    const pathname = getPathname({ locale, href });
+    return siteConfig.url + pathname;
+}
