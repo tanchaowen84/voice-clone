@@ -17,8 +17,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { Icons } from '../icons/icons';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
+import { ExternalLinkIcon } from '../icons/external-link';
 
 export function NavbarMobile({
   className,
@@ -158,7 +158,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="flex h-8 w-full items-center justify-between text-left"
+                      className="flex w-full items-center justify-between text-left"
                     >
                       <span className="text-base font-medium">
                         {item.title}
@@ -184,19 +184,16 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                             }
                             className={cn(
                               buttonVariants({ variant: 'ghost' }),
-                              'm-0 h-auto w-full justify-start gap-4 p-2'
+                              'group h-auto w-full justify-start gap-4 p-2'
                             )}
                             onClick={onLinkClicked}
                           >
                             <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
                               {subItem.icon}
                             </div>
-                            <div>
+                            <div className="flex-1">
                               <span className="text-sm font-medium">
                                 {subItem.title}
-                                {subItem.external && (
-                                  <Icons.externalLink className="-mt-2 ml-1 inline text-muted-foreground" />
-                                )}
                               </span>
                               {subItem.description && (
                                 <p className="text-xs text-muted-foreground">
@@ -204,6 +201,9 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                                 </p>
                               )}
                             </div>
+                            {subItem.external && (
+                              <ExternalLinkIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                            )}
                           </Link>
                         </li>
                       ))}

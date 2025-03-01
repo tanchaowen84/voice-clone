@@ -2,8 +2,7 @@
 
 import { LoginWrapper } from '@/components/auth/login-button';
 import Container from '@/components/container';
-import { Icons } from '@/components/icons/icons';
-import { ThemeSwitcher } from '@/components/layout/theme-swticher';
+import { ThemeSwitcher } from '@/components/layout/theme-switcher';
 import { UserButton } from '@/components/layout/user-button';
 import { Logo } from '@/components/logo';
 import { MENU_LINKS } from '@/components/marketing/marketing-links';
@@ -26,6 +25,7 @@ import { Routes } from '@/routes';
 import { MarketingConfig } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ExternalLinkIcon } from '../icons/external-link';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -83,9 +83,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
                               <NavigationMenuLink asChild>
                                 <Link
                                   href={subItem.href || '#'}
-                                  target={
-                                    subItem.external ? '_blank' : undefined
-                                  }
+                                  target={ subItem.external ? '_blank' : undefined }
                                   rel={
                                     subItem.external
                                       ? 'noopener noreferrer'
@@ -96,12 +94,9 @@ export function Navbar({ scroll, config }: NavBarProps) {
                                   <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
                                     {subItem.icon}
                                   </div>
-                                  <div>
+                                  <div className="flex-1">
                                     <div className="text-sm font-medium">
                                       {subItem.title}
-                                      {subItem.external && (
-                                        <Icons.externalLink className="-mt-2 ml-1 inline text-muted-foreground" />
-                                      )}
                                     </div>
                                     {subItem.description && (
                                       <div className="text-sm text-muted-foreground">
@@ -109,6 +104,9 @@ export function Navbar({ scroll, config }: NavBarProps) {
                                       </div>
                                     )}
                                   </div>
+                                  {subItem.external && (
+                                    <ExternalLinkIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                                  )}
                                 </Link>
                               </NavigationMenuLink>
                             </li>
