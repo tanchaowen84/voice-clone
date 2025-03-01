@@ -10,7 +10,7 @@ import {
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-export function ModeToggle() {
+export function ThemeSwitcher() {
   const { setTheme } = useTheme();
 
   return (

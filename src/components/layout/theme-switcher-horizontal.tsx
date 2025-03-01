@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
-export function ModeToggleHorizontal() {
+export function ThemeSwitcherHorizontal() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
