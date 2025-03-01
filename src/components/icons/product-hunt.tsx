@@ -3,7 +3,7 @@ import type { SVGProps } from "react";
 /**
  * https://icon-sets.iconify.design/logos/producthunt/
  */
-export function LogosProductHunt(props: SVGProps<SVGSVGElement>) {
+export function ProductHuntIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

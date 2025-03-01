@@ -4,7 +4,7 @@ import type { SVGProps } from "react";
 /**
  * https://icon-sets.iconify.design/fa6-brands/github/
  */
-export function FaBrandsGitHub(props: SVGProps<SVGSVGElement>) {
+export function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

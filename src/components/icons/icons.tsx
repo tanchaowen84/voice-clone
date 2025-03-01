@@ -46,21 +46,24 @@ import {
   WorkflowIcon,
   WrenchIcon
 } from "lucide-react";
-import { FaBrandsGitHub } from "../icons/github";
-import { FaBrandsGoogle } from "../icons/google";
-import { LogosProductHunt } from "../icons/product-hunt";
-import { FaBrandsTwitter } from "../icons/twitter";
-import { FaBrandsXTwitter } from "../icons/x";
-import AuthJSIcon from "./authjs";
-import { Fa6BrandsBluesky } from "./bluesky";
+import { GitHubIcon } from "../icons/github";
+import { GoogleIcon } from "../icons/google";
+import { ProductHuntIcon } from "../icons/product-hunt";
+import { TwitterIcon } from "../icons/twitter";
+import { XTwitterIcon } from "../icons/x";
+import { BlueskyIcon } from "./bluesky";
 import { NextjsIcon } from "./nextjs";
-import { SimpleIconsResend } from "./resend";
-import { SimpleIconsSanity } from "./sanity";
-import { SimpleIconsShadcnui } from "./shadcnui";
-import { SimpleIconsStripe } from "./stripe";
-import { SimpleIconsTailwindcss } from "./tailwindcss";
-import { SimpleIconsVercel } from "./vercel";
-import { IonLogoYoutube } from "./youtube";
+import { ResendIcon } from "./resend";
+import { ShadcnuiIcon } from "./shadcnui";
+import { StripeIcon } from "./stripe";
+import { TailwindcssIcon } from "./tailwindcss";
+import { VercelIcon } from "./vercel";
+import { YouTubeIcon } from "./youtube";
+import { ExternalLinkIcon } from "./external-link";
+import { TikTokIcon } from "./tiktok";
+import { LinkedInIcon } from "./linkedin";
+import { InstagramIcon } from "./instagram";
+import { FacebookIcon } from "./facebook";
 
 export type Icon = LucideIcon;
 
@@ -123,20 +126,24 @@ export const Icons = {
 
   admin: LockKeyholeIcon,
   about: Building2Icon,
+  externalLink: ExternalLinkIcon,
 
-  github: FaBrandsGitHub,
-  google: FaBrandsGoogle,
-  twitter: FaBrandsTwitter,
-  x: FaBrandsXTwitter,
-  bluesky: Fa6BrandsBluesky,
-  youtube: IonLogoYoutube,
-  productHunt: LogosProductHunt,
+  github: GitHubIcon,
+  google: GoogleIcon,
+  twitter: TwitterIcon,
+  x: XTwitterIcon,
+  bluesky: BlueskyIcon,
+  youtube: YouTubeIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  linkedin: LinkedInIcon,
+  tiktok: TikTokIcon,
+
+  productHunt: ProductHuntIcon,
   nextjs: NextjsIcon,
-  authjs: AuthJSIcon,
-  shadcnui: SimpleIconsShadcnui,
-  tailwindcss: SimpleIconsTailwindcss,
-  sanity: SimpleIconsSanity,
-  resend: SimpleIconsResend,
-  stripe: SimpleIconsStripe,
-  vercel: SimpleIconsVercel,
+  shadcnui: ShadcnuiIcon,
+  tailwindcss: TailwindcssIcon,
+  resend: ResendIcon,
+  stripe: StripeIcon,
+  vercel: VercelIcon,
 };

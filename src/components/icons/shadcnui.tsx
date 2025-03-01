@@ -4,7 +4,7 @@ import type { SVGProps } from "react";
 /**
  * https://icon-sets.iconify.design/simple-icons/shadcnui/
  */
-export function SimpleIconsShadcnui(props: SVGProps<SVGSVGElement>) {
+export function ShadcnuiIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

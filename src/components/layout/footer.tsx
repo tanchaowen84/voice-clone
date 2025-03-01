@@ -10,7 +10,7 @@ import type * as React from "react";
 import Container from "@/components/container";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
-import { ModeToggleHorizontal } from "@/components/layout/mode-toggle-horizontal";
+import { ThemeSwitcherHorizontal } from "@/components/layout/mode-toggle-horizontal";
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const { theme } = useTheme();
@@ -21,21 +21,31 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="grid grid-cols-2 gap-8 py-16 md:grid-cols-6">
           <div className="flex flex-col items-start col-span-full md:col-span-2">
             <div className="space-y-4">
+              {/* logo and name */}
               <div className="items-center space-x-2 flex">
                 <Logo />
-
-                <span className="text-xl font-bold">{siteConfig.name}</span>
+                <span className="text-xl font-semibold">{siteConfig.name}</span>
               </div>
 
-              <p className="text-muted-foreground text-base p4-4 md:pr-12">
+              {/* tagline */}
+              <p className="text-muted-foreground text-base py-2 md:pr-12">
                 {siteConfig.tagline}
               </p>
 
-              
-
               {/* social links */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4 py-1">
                 <div className="flex items-center gap-2">
+                  {siteConfig.mail && (
+                    <Link
+                      href={`mailto:${siteConfig.mail}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Email"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Icons.email className="size-4" aria-hidden="true" />
+                    </Link>
+                  )}
                   {siteConfig.links.github && (
                     <Link
                       href={siteConfig.links.github}
@@ -80,20 +90,10 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                       <Icons.youtube className="size-4" aria-hidden="true" />
                     </Link>
                   )}
-                  {siteConfig.mail && (
-                    <Link
-                      href={`mailto:${siteConfig.mail}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Email"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <Icons.email className="size-4" aria-hidden="true" />
-                    </Link>
-                  )}
                 </div>
               </div>
 
+              {/* built with button */}
               <BuiltWithButton />
             </div>
           </div>
@@ -133,7 +133,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             &copy; {new Date().getFullYear()} All Rights Reserved.
           </span>
 
-          <ModeToggleHorizontal />
+          <ThemeSwitcherHorizontal />
         </Container>
       </div>
     </footer>

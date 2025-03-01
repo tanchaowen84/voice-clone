@@ -4,8 +4,8 @@ import { Icons } from "@/components/icons/icons";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { FaBrandsGitHub } from "@/components/icons/github";
-import { FaBrandsGoogle } from "@/components/icons/google";
+import { GitHubIcon } from "@/components/icons/github";
+import { GoogleIcon } from "@/components/icons/google";
 import { authClient } from "@/lib/auth-client";
 import { AUTH_ROUTE_ERROR, DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
@@ -74,7 +74,7 @@ export const SocialLoginButton = () => {
         {isLoading === "google" ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />
         ) : (
-          <FaBrandsGoogle className="size-5 mr-2" />
+          <GoogleIcon className="size-5 mr-2" />
         )}
         <span>Login with Google</span>
       </Button>
@@ -88,7 +88,7 @@ export const SocialLoginButton = () => {
         {isLoading === "github" ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />
         ) : (
-          <FaBrandsGitHub className="size-5 mr-2" />
+          <GitHubIcon className="size-5 mr-2" />
         )}
         <span>Login with GitHub</span>
       </Button>
