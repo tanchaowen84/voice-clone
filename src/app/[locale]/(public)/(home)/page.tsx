@@ -17,10 +17,11 @@ export const metadata = constructMetadata({
 });
 
 interface HomePageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
-export default async function HomePage({ params }: HomePageProps) {
+export default async function HomePage(props: HomePageProps) {
+  const params = await props.params;
   const { locale } = params;
 
   // Enable static rendering

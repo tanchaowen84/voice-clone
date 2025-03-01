@@ -13,6 +13,9 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Providers } from "./providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/marketing/navbar";
+import { marketingConfig } from "@/config/marketing";
 
 export const metadata: Metadata = constructMetadata();
 
@@ -33,13 +36,15 @@ export function generateStaticParams() {
 
 interface LocaleLayoutProps {
 	children: ReactNode;
-	params: { locale: string };
+	params: Promise<{ locale: string }>;
 };
 
 /**
  * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#layout
  */
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout(props: LocaleLayoutProps) {
+	const { children } = props;
+	const params = await props.params;
 	const { locale } = params;
 
 	// Ensure that the incoming `locale` is valid
@@ -69,7 +74,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 			>
 				<NextIntlClientProvider messages={messages}>
 					<Providers>
-						{children}
+						{/* {children} */}
+
+						<div className="flex flex-col min-h-screen">
+							<Navbar scroll={true} config={marketingConfig} />
+							<main className="flex-1">{children}</main>
+							<Footer />
+						</div>
 
 						<Toaster richColors position="top-right" offset={64} />
 

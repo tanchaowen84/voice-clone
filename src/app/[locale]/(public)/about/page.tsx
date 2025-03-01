@@ -1,10 +1,11 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface AboutPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
-export default async function AboutPage({ params }: AboutPageProps) {
+export default async function AboutPage(props: AboutPageProps) {
+  const params = await props.params;
   const { locale } = params;
 
   // Enable static rendering

@@ -36,7 +36,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
-  console.log(`Navbar, user:`, user);
+  // console.log(`Navbar, user:`, user);
 
   const pathname = usePathname();
 
