@@ -17,7 +17,6 @@ export type SiteConfig = {
   links: {
     github?: string;
     twitter?: string;
-    twitter_cn?: string;
     bluesky?: string;
     youtube?: string;
     docs?: string;
@@ -54,11 +53,11 @@ export type HeroConfig = {
 };
 
 export type MarketingConfig = {
-  menus: NavItem[];
+  menus: NestedNavItem[];
 };
 
 export type DashboardConfig = {
-  menus: NavItem[];
+  menus: NestedNavItem[];
 };
 
 export type UserButtonConfig = {
@@ -81,7 +80,11 @@ export type NavItem = {
 
 export type NestedNavItem = {
   title: string;
-  items: NavItem[];
+  items?: NavItem[];
+  href?: string;
+  badge?: number;
+  disabled?: boolean;
+  external?: boolean;
   authorizeOnly?: UserRole;
   icon?: keyof typeof Icons;
 };

@@ -3,28 +3,29 @@
 import { LoginWrapper } from "@/components/auth/login-button";
 import Container from "@/components/container";
 import { Icons } from "@/components/icons/icons";
-import { ModeToggle } from "@/components/layout/mode-toggle";
 import { UserButton } from "@/components/layout/user-button";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTitle, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { siteConfig } from "@/config/site";
 import { useScroll } from "@/hooks/use-scroll";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import type { DashboardConfig, MarketingConfig } from "@/types";
-import { ArrowRightIcon, MenuIcon } from "lucide-react";
+import type { DashboardConfig, MarketingConfig, NestedNavItem } from "@/types";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
+import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import React from "react";
-import { Logo } from "@/components/logo";
-import { authClient } from "@/lib/auth-client";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -39,10 +40,9 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
 
   const pathname = usePathname();
   // console.log(`Navbar, pathname: ${pathname}`);
-  const links = config.menus;
-  // console.log(`Navbar, links: ${links.map((link) => link.title)}`);
+  const menus = config.menus;
 
-  const isLinkActive = (href: string) => {
+  const isMenuActive = (href: string) => {
     if (href === "/") {
       return pathname === "/";
     }
@@ -82,27 +82,10 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
 
           {/* links */}
           <div className="flex-1 flex justify-center">
-            {links && links.length > 0 ? (
+            {menus && menus.length > 0 ? (
               <NavigationMenu>
                 <NavigationMenuList>
-                  {links.map((item) => (
-                    <NavigationMenuItem key={item.title}>
-                      <NavigationMenuLink
-                        href={item.disabled ? "#" : item.href}
-                        target={item.external ? "_blank" : ""}
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "px-4 bg-transparent focus:bg-transparent text-base",
-                          isLinkActive(item.href)
-                            ? "text-foreground font-semibold"
-                            : "text-foreground/60",
-                          item.disabled && "cursor-not-allowed opacity-80",
-                        )}
-                      >
-                        {item.title}
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
+                  {menus.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
               </NavigationMenu>
             ) : null}
@@ -117,17 +100,17 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
             ) : (
               <LoginWrapper mode="modal" asChild>
                 <Button
-                  className="flex gap-2 px-5 rounded-full"
+                  className="flex gap-2"
                   variant="default"
-                  size="default"
+                  size="sm"
                 >
-                  <span>Sign In</span>
-                  <ArrowRightIcon className="size-4" />
+                  <span>Login</span>
+                  {/* <ArrowRightIcon className="size-4" /> */}
                 </Button>
               </LoginWrapper>
             )}
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </div>
         </Container>
       </header>
@@ -148,47 +131,26 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                   <span className="sr-only">Toggle navigation menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="flex flex-col p-0">
+              <SheetContent side="left" className="overflow-y-auto">
                 <SheetHeader>
-                  <SheetTitle />
+                  <SheetTitle>
+                    <a href="/"
+                      className="flex items-center space-x-2"
+                      onClick={() => setOpen(false)}
+                    >
+                      <Logo />
+                      <span className="text-xl font-bold">{siteConfig.name}</span>
+                    </a>
+                  </SheetTitle>
                 </SheetHeader>
-                <div className="flex h-screen flex-col">
-                  {/* logo */}
-                  <a href="/"
-                    className="flex items-center space-x-2 pl-4 pt-4"
-                    onClick={() => setOpen(false)}
+                <div className="my-6 flex flex-col gap-6">
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="flex w-full flex-col gap-4"
                   >
-                    <Logo />
-
-                    <span className="text-xl font-bold">{siteConfig.name}</span>
-                  </a>
-
-                  <nav className="flex flex-1 flex-col gap-2 p-2 pt-8 font-medium">
-                    {links.map((item) => {
-                      const Icon = Icons[item.icon || "arrowRight"];
-                      return (
-                        <Link
-                          key={item.title}
-                          href={item.disabled ? "#" : item.href}
-                          target={item.external ? "_blank" : ""}
-                          onClick={() => {
-                            if (!item.disabled) setOpen(false);
-                          }}
-                          className={cn(
-                            "flex items-center rounded-md gap-2 p-2 text-sm font-medium hover:bg-muted",
-                            isLinkActive(item.href)
-                              ? "bg-muted text-foreground"
-                              : "text-muted-foreground hover:text-foreground",
-                            item.disabled &&
-                            "cursor-not-allowed opacity-80 hover:bg-transparent hover:text-muted-foreground",
-                          )}
-                        >
-                          <Icon className="size-5" />
-                          {item.title}
-                        </Link>
-                      );
-                    })}
-                  </nav>
+                    {menus.map((item) => renderMobileMenuItem(item))}
+                  </Accordion>
                 </div>
               </SheetContent>
             </Sheet>
@@ -204,7 +166,7 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
             </a>
           </div>
 
-          {/* mobile navbar right show sign in or account */}
+          {/* mobile navbar right show sign in or user button */}
           <div className="flex items-center gap-x-4">
             {user ? (
               <div className="flex items-center">
@@ -213,20 +175,116 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
             ) : (
               <LoginWrapper mode="redirect" asChild>
                 <Button
-                  className="flex gap-2 px-5 rounded-full"
+                  className="flex gap-2"
                   variant="default"
-                  size="default"
+                  size="sm"
                 >
-                  <span>Sign In</span>
-                  <ArrowRightIcon className="size-4" />
+                  <span>Login</span>
+                  {/* <ArrowRightIcon className="size-4" /> */}
                 </Button>
               </LoginWrapper>
             )}
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </div>
         </div>
       </header>
     </div>
   );
 }
+
+const renderMenuItem = (item: NestedNavItem) => {
+  if (item.items) {
+    return (
+      <NavigationMenuItem key={item.title} className="text-muted-foreground">
+        <NavigationMenuTrigger className="text-base">
+          {item.title}
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="w-80 p-4">
+            <NavigationMenuLink>
+              {item.items.map((subItem) => {
+                const CustomMenuIcon = Icons[subItem.icon || "arrowRight"];
+                return (
+                  <li key={subItem.title}>
+                    <a
+                      className="flex items-center select-none gap-4 rounded-md p-4 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
+                      href={subItem.href}
+                    >
+                      {subItem.icon && <CustomMenuIcon className="size-4 shrink-0" />}
+                      <div>
+                        <div className="text-base text-foreground/60 hover:text-foreground">
+                          {subItem.title}
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </NavigationMenuLink>
+          </ul>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    );
+  }
+
+  return (
+    <NavigationMenuItem key={item.title}>
+      <Link
+        href={item.disabled ? "#" : item.href || "#"}
+        target={item.external ? "_blank" : ""}
+        className={cn(
+          navigationMenuTriggerStyle(),
+          "px-4 bg-transparent focus:bg-transparent text-base",
+          "text-foreground/60 hover:text-foreground",
+          item.disabled && "cursor-not-allowed opacity-80"
+        )}
+      >
+        {item.title}
+      </Link>
+    </NavigationMenuItem>
+  );
+};
+
+const renderMobileMenuItem = (item: NestedNavItem) => {
+  console.log(`renderMobileMenuItem, item:`, item, `, items:`, item.items);
+  if (item.items) {
+    return (
+      <AccordionItem key={item.title} value={item.title} className="border-b-0">
+        <AccordionTrigger className="py-0 hover:no-underline">
+          {item.title}
+        </AccordionTrigger>
+        <AccordionContent className="mt-2">
+          {item.items.map((subItem) => {
+            const CustomMenuIcon = Icons[subItem.icon || "arrowRight"];
+            return (
+              <Link
+                key={subItem.title}
+                className="flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
+                href={subItem.disabled ? "#" : subItem.href}
+              >
+                {subItem.icon && <CustomMenuIcon className="size-4 shrink-0" />}
+                <div>
+                  <div className="text-sm font-semibold">{subItem.title}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </AccordionContent>
+      </AccordionItem>
+    );
+  }
+
+  const CustomMenuIcon = Icons[item.icon || "arrowRight"];
+  return (
+    <Link
+      key={item.title}
+      href={item.disabled ? "#" : item.href || "#"}
+      target={item.external ? "_blank" : ""}
+      className="flex items-center rounded-md gap-2 p-2 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground"
+    >
+      {item.icon && <CustomMenuIcon className="size-4 shrink-0" />}
+      {item.title}
+    </Link>
+  );
+};

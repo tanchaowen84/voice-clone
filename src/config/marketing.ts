@@ -18,9 +18,26 @@ export const marketingConfig: MarketingConfig = {
       icon: "blog",
     },
     {
-      title: "About",
-      href: "/about",
+      title: "Pages",
+      href: "#",
       icon: "about",
-    },    
+      items: [
+        {
+          title: "Waitlist",
+          href: "/waitlist",
+          icon: "about",
+        },
+        {
+          title: "Contact",
+          href: "/contact",
+          icon: "about",
+        },
+        {
+          title: "About",
+          href: "/about",
+          icon: "about",
+        },
+      ],
+    },
   ],
 };
