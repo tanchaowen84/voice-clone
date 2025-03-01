@@ -9,7 +9,7 @@ import {
   CollapsibleTrigger
 } from '@/components/ui/collapsible';
 import { siteConfig } from '@/config/site';
-import { Routes } from '@/constants/routes';
+import { Routes } from '@/routes';
 import { cn } from '@/lib/utils';
 import { Portal } from '@radix-ui/react-portal';
 import { ChevronDown, ChevronUp, MenuIcon, X } from 'lucide-react';
@@ -126,7 +126,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
             Log in
           </Link>
           <Link
-            href={Routes.SignUp}
+            href={Routes.Register}
             className={cn(
               buttonVariants({
                 variant: 'default',

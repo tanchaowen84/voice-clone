@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import type * as z from "zod";
 import { Icons } from "@/components/icons/icons";
 import { authClient } from "@/lib/auth-client";
-import { AUTH_ROUTE_LOGIN, AUTH_ROUTE_RESET_PASSWORD } from "@/routes";
+import { Routes } from "@/routes";
 
 export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");

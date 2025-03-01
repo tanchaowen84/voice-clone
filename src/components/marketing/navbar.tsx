@@ -22,7 +22,7 @@ import { siteConfig } from '@/config/site';
 import { useScroll } from "@/hooks/use-scroll";
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
-import { AUTH_ROUTE_REGISTER } from '@/routes';
+import { Routes } from '@/routes';
 import { MarketingConfig } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -165,7 +165,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
                   size="sm"
                   asChild
                 >
-                  <a href={AUTH_ROUTE_REGISTER}>
+                  <a href={Routes.Register}>
                     Sign up
                   </a>
                 </Button>

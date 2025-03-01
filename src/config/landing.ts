@@ -317,7 +317,7 @@ export const powereds: PoweredLdg[] = [
     title: "Auth.js",
     description: "Open source authentication library for Next.js.",
     link: "https://authjs.dev/",
-    icon: "authjs",
+    icon: "nextjs",
   },
   {
     title: "Shadcn UI",
@@ -335,7 +335,7 @@ export const powereds: PoweredLdg[] = [
     title: "Sanity",
     description: "Headless CMS for modern websites.",
     link: "https://www.sanity.io/",
-    icon: "sanity",
+    icon: "nextjs",
   },
   {
     title: "Resend",
