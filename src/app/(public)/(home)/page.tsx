@@ -14,6 +14,16 @@
 // import { HomeShowcase } from "@/components/home/home-showcase";
 // import { HomeTestimonials } from "@/components/home/home-testimonials";
 // import HomeVideo from "@/components/home/home-video";
+import CallToAction from "@/components/nsui/call-to-action";
+import ContentSection from "@/components/nsui/content-2";
+import FAQs from "@/components/nsui/faqs";
+import Features from "@/components/nsui/features-2";
+import FeaturesSection from "@/components/nsui/features-8";
+import HeroSection from "@/components/nsui/hero-section";
+import LogoCloud from "@/components/nsui/logo-cloud";
+import Pricing from "@/components/nsui/pricing";
+import StatsSection from "@/components/nsui/stats";
+import WallOfLoveSection from "@/components/nsui/testimonials";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -28,6 +38,27 @@ export default async function HomePage() {
       {/* <PromotekitScript /> */}
 
       <div className="mt-12 flex flex-col gap-16">
+
+        <HeroSection />
+
+        <LogoCloud />
+
+        {/* <Features /> */}
+
+        <FeaturesSection />
+
+        <ContentSection />
+
+        <Pricing />
+
+        <FAQs />
+
+        <WallOfLoveSection />
+
+        <StatsSection />
+
+        <CallToAction />
+
         {/* <HomeHero /> */}
 
         {/* <HomeVideo /> */}
