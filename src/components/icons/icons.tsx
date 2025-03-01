@@ -59,7 +59,6 @@ import { StripeIcon } from "./stripe";
 import { TailwindcssIcon } from "./tailwindcss";
 import { VercelIcon } from "./vercel";
 import { YouTubeIcon } from "./youtube";
-import { ExternalLinkIcon } from "./external-link";
 import { TikTokIcon } from "./tiktok";
 import { LinkedInIcon } from "./linkedin";
 import { InstagramIcon } from "./instagram";
@@ -126,7 +125,6 @@ export const Icons = {
 
   admin: LockKeyholeIcon,
   about: Building2Icon,
-  externalLink: ExternalLinkIcon,
 
   github: GitHubIcon,
   google: GoogleIcon,

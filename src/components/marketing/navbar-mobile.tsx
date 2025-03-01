@@ -12,13 +12,12 @@ import { siteConfig } from '@/config/site';
 import { Routes } from '@/routes';
 import { cn } from '@/lib/utils';
 import { Portal } from '@radix-ui/react-portal';
-import { ChevronDown, ChevronUp, MenuIcon, X } from 'lucide-react';
+import { ArrowUpRightIcon, ChevronDown, ChevronUp, MenuIcon, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
-import { ExternalLinkIcon } from '../icons/external-link';
 
 export function NavbarMobile({
   className,
@@ -202,7 +201,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                               )}
                             </div>
                             {subItem.external && (
-                              <ExternalLinkIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                              <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
                             )}
                           </Link>
                         </li>

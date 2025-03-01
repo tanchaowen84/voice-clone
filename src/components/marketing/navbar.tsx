@@ -25,7 +25,7 @@ import { Routes } from '@/routes';
 import { MarketingConfig } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ExternalLinkIcon } from '../icons/external-link';
+import { ArrowUpRightIcon } from 'lucide-react';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -105,7 +105,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
                                     )}
                                   </div>
                                   {subItem.external && (
-                                    <ExternalLinkIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                                    <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
                                   )}
                                 </Link>
                               </NavigationMenuLink>
