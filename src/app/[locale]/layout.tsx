@@ -59,6 +59,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 				GeistSans.variable,
 				GeistMono.variable,
 			)}>
+				{/* https://next-intl.dev/docs/usage/configuration#nextintlclientprovider */}
 				<NextIntlClientProvider messages={messages}>
 					<Providers>
 						<div className="flex flex-col min-h-screen">

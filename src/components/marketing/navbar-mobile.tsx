@@ -18,6 +18,7 @@ import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
+import LocaleSelector from '@/components/layout/locale-selector';
 
 export function NavbarMobile({
   className,
@@ -100,9 +101,9 @@ export function NavbarMobile({
   );
 }
 
-type MainMobileMenuProps = {
+interface MainMobileMenuProps {
   onLinkClicked: () => void;
-};
+}
 
 function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
@@ -228,8 +229,8 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
         </ul>
 
         {/* bottom buttons */}
-        <div className="flex w-full items-center justify-between gap-2 border-t border-border/40 p-4">
-          <div className="text-base font-medium"></div>
+        <div className="flex w-full items-center justify-between gap-4 border-t border-border/40 py-4">
+          <LocaleSelector />
           <ThemeSwitcherHorizontal />
         </div>
       </div>
@@ -237,7 +238,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   );
 }
 
-type DocsMobileMenuProps = {
+interface DocsMobileMenuProps {
   onLinkClicked: () => void;
 };
 
@@ -302,8 +303,8 @@ function DocsMobileMenu({
             </li>
           ))}
         </ul>
-        <div className="flex w-full items-center justify-between gap-2 border-y border-border/40 p-4">
-          <div className="text-base font-medium"></div>
+        <div className="flex w-full items-center justify-between gap-2 border-y border-border/40 py-4">
+          <LocaleSelector />
           <ThemeSwitcherHorizontal />
         </div>
       </div>

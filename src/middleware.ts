@@ -3,9 +3,16 @@ import { routing } from './i18n/routing';
 
 export default createMiddleware(routing);
 
+/**
+ * Next.js internationalized routing
+ * 
+ * https://next-intl.dev/docs/routing#base-path
+ */
 export const config = {
+  // The `matcher` is relative to the `basePath`
   matcher: [
-    // Enable a redirect to a matching locale at the root
+    // This entry handles the root of the base
+    // path and should always be included
     '/',
 
     // Set a cookie to remember the previous locale for
@@ -13,7 +20,7 @@ export const config = {
     '/(zh|en)/:path*',
 
     // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/en/pathnames`)
+    // (e.g. `/pathnames` -> `/zh/pathnames`)
     '/((?!_next|_vercel|.*\\..*).*)'
   ]
 };
