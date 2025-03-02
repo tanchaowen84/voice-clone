@@ -1,18 +1,17 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { allPosts } from 'content-collections';
-import { BlogPost } from '@/components/blog/blog-post';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
-import type { NextPageProps } from '@/types/next-page-props';
-import BlogGrid from '@/components/blog/blog-grid';
-import { getTableOfContents } from '@/lib/toc';
-import { getLocaleDate } from '@/lib/utils';
-import Link from 'next/link';
-import Image from 'next/image';
+import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/marketing/blog/mdx-component';
-import AllPostsButton from '@/components/blog/all-posts-button';
-import '@/app/styles/mdx.css';
+import { getTableOfContents } from '@/lib/toc';
+import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { getLocaleDate } from '@/lib/utils';
+import type { NextPageProps } from '@/types/next-page-props';
+import { allPosts } from 'content-collections';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
+import '@/styles/mdx.css';
 
 /**
  * Gets the blog post from the params

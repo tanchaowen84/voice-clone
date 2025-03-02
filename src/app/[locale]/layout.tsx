@@ -14,7 +14,7 @@ import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Providers } from './providers';
 
-import '@/app/styles/globals.css';
+import '@/styles/globals.css';
 
 interface LocaleLayoutProps {
 	children: ReactNode;
