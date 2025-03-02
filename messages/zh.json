@@ -12,7 +12,7 @@
   },
   "LocaleSwitcher": {
     "label": "更改语言",
-    "locale": "{locale, select, de {🇩🇪 德语} en {🇺🇸 英语} zh {🇨🇳 中文} other {未知}}"
+    "locale": "{locale, select, en {🇺🇸 英语} zh {🇨🇳 中文} other {未知}}"
   },
   "Manifest": {
     "name": "next-intl 示例"
