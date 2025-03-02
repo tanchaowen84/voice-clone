@@ -32,11 +32,11 @@ export const MENU_LINKS = [
     href: Routes.Blog,
     external: false
   },
-  {
-    title: 'Docs',
-    href: Routes.Docs,
-    external: false
-  },
+  // {
+  //   title: 'Docs',
+  //   href: Routes.Docs,
+  //   external: false
+  // },
   {
     title: 'AI',
     items: [

@@ -14,7 +14,6 @@ import {
   routing,
 } from "@/i18n/routing";
 import { useLocaleStore } from "@/stores/locale-store";
-import { Globe, GlobeIcon } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useTransition } from "react";
@@ -48,7 +47,8 @@ export default function LocaleSelector() {
       value={currentLocale}
       onValueChange={onSelectChange}
     >
-      <SelectTrigger className="w-fit">
+      {/* w-[120px] is better than w-fit */}
+      <SelectTrigger className="w-[120px]">
         <SelectValue placeholder="🌐" />
       </SelectTrigger>
       <SelectContent>
