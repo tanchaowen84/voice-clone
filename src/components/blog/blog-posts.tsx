@@ -9,8 +9,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FillRemainingSpace } from '@/components/fill-remaining-space';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { getInitials } from '@/lib/utils';
+import { useLocale } from 'next-intl';
 
 export function BlogPosts(): React.JSX.Element {
+  const locale = useLocale();
+
+  // Filter posts by current locale
+  const localizedPosts = allPosts
+    .filter(post => post.published && post.locale === locale)
+    .slice()
+    .sort((a, b) => (isBefore(a.date, b.date) ? 1 : -1));
+
   return (
     <GridSection>
       <div className="container space-y-20 py-20">
@@ -20,11 +29,7 @@ export function BlogPosts(): React.JSX.Element {
           description="Learn more about our products and the latest news."
         />
         <div className="grid gap-x-12 gap-y-6 divide-y md:grid-cols-2 md:gap-x-6 md:divide-none xl:grid-cols-3">
-          {allPosts
-            .filter((post) => post.published)
-            .slice()
-            .sort((a, b) => (isBefore(a.date, b.date) ? 1 : -1))
-            .map((post, index) => (
+          {localizedPosts.map((post, index) => (
               <Link
                 key={index}
                 href={`${getBaseUrl()}${post.slug}`}

@@ -8,8 +8,9 @@ import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import '@/styles/mdx.css';
 
@@ -19,30 +20,43 @@ import '@/styles/mdx.css';
  * @returns The blog post
  * 
  * How it works:
- * 1. /blog/first-post:
+ * 1. /[locale]/blog/first-post:
  * params.slug = ["first-post"]
  * slug becomes "first-post" after join('/')
- * Matches post where slugAsParams === "first-post"
+ * Matches post where slugAsParams === "first-post" AND locale === params.locale
  * 
- * 2. /blog/2023/year-review:
+ * 2. /[locale]/blog/2023/year-review:
  * params.slug = ["2023", "year-review"]
  * slug becomes "2023/year-review" after join('/')
- * Matches post where slugAsParams === "2023/year-review"
+ * Matches post where slugAsParams === "2023/year-review" AND locale === params.locale
  */
 async function getBlogPostFromParams(props: NextPageProps) {
   const params = await props.params;
   if (!params) {
     return null;
   }
+  
+  const locale = params.locale as string;
   const slug =
     (Array.isArray(params.slug) ? params.slug?.join('/') : params.slug) || '';
+  
+  // Find post with matching slug and locale
   const post = allPosts.find(
-    (post) =>
-      post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')
+    (post) => 
+      (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')) && 
+      post.locale === locale
   );
+  
   if (!post) {
-    return null;
+    // If no post found with the current locale, try to find one with the default locale
+    const defaultPost = allPosts.find(
+      (post) => 
+        (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index'))
+    );
+    
+    return defaultPost;
   }
+  
   return post;
 }
 
@@ -66,27 +80,14 @@ export async function generateMetadata(
   };
 }
 
-// export async function generateStaticParams() {
-//   return allPosts.map((post) => ({
-//     slug: post.slugAsParams.split('/')
-//   }));
-// }
-
 export default async function BlogPostPage(props: NextPageProps) {
   const post = await getBlogPostFromParams(props);
   if (!post) {
     return notFound();
   }
-  // return <BlogPost post={post} />;
 
-  // console.log("PostPage, post", post);
-  // const imageProps = post?.image ? urlForImage(post?.image) : null;
-  // const imageBlurDataURL = post?.image?.blurDataURL || null;
   const publishDate = post.date;
   const date = getLocaleDate(publishDate);
-  // const markdownContent = portableTextToMarkdown(post.body);
-  // console.log("markdownContent", markdownContent);
-
   const toc = await getTableOfContents(post.content);
 
   return (
@@ -121,7 +122,6 @@ export default async function BlogPostPage(props: NextPageProps) {
           {/* blog post content */}
           <div className="mt-4 font-serif">
             <Mdx code={post.body.code} />
-            {/* {markdownContent && <BlogCustomMdx source={markdownContent} />} */}
           </div>
 
           <div className="flex items-center justify-start mt-16">
@@ -161,7 +161,10 @@ export default async function BlogPostPage(props: NextPageProps) {
                 {post.categories?.map((category) => (
                   <li key={category.slug}>
                     <Link
-                      href={`/blog/category/${category.slug}`}
+                      href={{
+                        pathname: "/blog/category/[slug]",
+                        params: { slug: category.slug }
+                      }}
                       className="text-sm link-underline"
                     >
                       {category.name}
@@ -181,20 +184,6 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
         </div>
       </div>
-
-      {/* Footer section shows related posts */}
-      {/* {post.relatedPosts && post.relatedPosts.length > 0 && (
-        <div className="flex flex-col gap-8 mt-8">
-          <div className="flex items-center gap-2">
-            <FileTextIcon className="w-4 h-4 text-indigo-500" />
-            <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
-              More Posts
-            </h2>
-          </div>
-
-          <BlogGrid posts={post.relatedPosts} />
-        </div>
-      )} */}
     </div>
   );
-}
+} 
