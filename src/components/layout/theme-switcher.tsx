@@ -10,6 +10,9 @@ import {
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
+/**
+ * Theme switcher component, used in the navbar, switch theme by CSS transitions
+ */
 export function ThemeSwitcher() {
   const { setTheme } = useTheme();
 

@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { createHighlighter } from 'shiki';
 import path from "path";
 import { getBaseUrl } from "@/lib/urls/get-base-url";
+import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
 
 /**
  * Content Collections documentation
@@ -26,11 +27,18 @@ export const authors = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    avatar: z.string()
+    avatar: z.string(),
+    locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
+    // Determine the locale from the file path or use the provided locale
+    const pathParts = data._meta.path.split(path.sep);
+    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
+    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    
     return {
       ...data,
+      locale,
       avatar: getBaseUrl() + data.avatar
     };
   }
@@ -46,25 +54,44 @@ export const categories = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    description: z.string()
-  })
+    description: z.string(),
+    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+  }),
+  transform: async (data, context) => {
+    // Determine the locale from the file path or use the provided locale
+    const pathParts = data._meta.path.split(path.sep);
+    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
+    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    
+    return {
+      ...data,
+      locale
+    };
+  }
 });
 
 /**
  * Blog Post collection
  * 
- * 1. For a blog post file at content/blog/2023/year-review.mdx:
+ * 1. For a blog post file at content/en/blog/2023/year-review.mdx:
+ * locale: en
  * slug: /blog/2023/year-review
  * slugAsParams: 2023/year-review
  * 
- * 2. For a blog post at content/blog/first-post.mdx:
+ * 2. For a blog post at content/en/blog/first-post.mdx:
+ * locale: en
+ * slug: /blog/first-post
+ * slugAsParams: first-post
+ * 
+ * 3. For a blog post at content/zh/blog/first-post.mdx:
+ * locale: zh
  * slug: /blog/first-post
  * slugAsParams: first-post
  */
 export const posts = defineCollection({
   name: 'post',
   directory: 'content',
-  include: '**/blog/*.mdx',
+  include: '**/blog/**/*.mdx',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
@@ -72,7 +99,8 @@ export const posts = defineCollection({
     date: z.string().datetime(),
     published: z.boolean().default(true),
     categories: z.array(z.string()),
-    author: z.string()
+    author: z.string(),
+    locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
     const body = await compileMDX(context, data, {
@@ -92,13 +120,32 @@ export const posts = defineCollection({
     const blogCategories = context
       .documents(categories)
       .filter((c) => data.categories.includes(c.slug));
+    
+    // Determine the locale from the file path or use the provided locale
+    const pathParts = data._meta.path.split(path.sep);
+    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
+    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    
+    // Create a slug without the locale in the path
+    let slugPath = data._meta.path;
+    if (localeFromPath) {
+      // Remove the locale from the path for the slug
+      const pathWithoutLocale = pathParts.slice(1).join(path.sep);
+      slugPath = pathWithoutLocale;
+    }
+    
+    // Create slugAsParams without the locale
+    const slugParamsParts = slugPath.split(path.sep).slice(1);
+    const slugAsParams = slugParamsParts.join('/');
+    
     return {
       ...data,
+      locale,
       author: blogAuthor,
       categories: blogCategories,
       image: getBaseUrl() + data.image,
-      slug: `/${data._meta.path}`,
-      slugAsParams: data._meta.path.split(path.sep).slice(1).join('/'),
+      slug: `/${slugPath}`,
+      slugAsParams,
       body: {
         raw: data.content,
         code: body

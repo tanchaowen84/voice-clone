@@ -8,7 +8,7 @@ export enum Routes {
   Pricing = '/#pricing',
   FAQ = '/#faq',
 
-  TermsOfUse = '/terms-of-use',
+  TermsOfService = '/terms-of-service',
   PrivacyPolicy = '/privacy-policy',
   CookiePolicy = '/cookie-policy',
 

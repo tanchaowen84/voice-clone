@@ -6,6 +6,9 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
+/**
+ * Theme switcher component, used in the footer, switch theme by theme variable
+ */
 export function ThemeSwitcherHorizontal() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -39,7 +42,7 @@ export function ThemeSwitcherHorizontal() {
       >
         <SunIcon className="size-4" />
       </Button>
-      
+
       <Button
         variant="ghost"
         size="icon"
@@ -52,7 +55,7 @@ export function ThemeSwitcherHorizontal() {
       >
         <MoonIcon className="size-4" />
       </Button>
-      
+
       <Button
         variant="ghost"
         size="icon"

@@ -32,11 +32,11 @@ export const MENU_LINKS = [
     href: Routes.Blog,
     external: false
   },
-  {
-    title: 'Docs',
-    href: Routes.Docs,
-    external: false
-  },
+  // {
+  //   title: 'Docs',
+  //   href: Routes.Docs,
+  //   external: false
+  // },
   {
     title: 'AI',
     items: [
@@ -128,7 +128,7 @@ export const FOOTER_LINKS = [
   {
     title: 'Legal',
     links: [
-      { name: 'Terms of Use', href: Routes.TermsOfUse, external: false },
+      { name: 'Terms of Use', href: Routes.TermsOfService, external: false },
       { name: 'Privacy Policy', href: Routes.PrivacyPolicy, external: false },
       { name: 'Cookie Policy', href: Routes.CookiePolicy, external: false }
     ]

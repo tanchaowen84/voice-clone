@@ -1,46 +1,61 @@
 {
-  "Error": {
-    "description": "<p>很抱歉，我们遇到了一个错误。</p><p>您可以尝试<retry>重新加载</retry>您正在访问的页面。</p>",
-    "title": "出错了！"
-  },
-  "IndexPage": {
-    "description": "这是一个基础示例，展示了如何在 Next.js App Router 中使用 <code>next-intl</code>。尝试在右上角更改语言，看看内容如何变化。",
+  "HomePage": {
     "title": "next-intl 示例"
-  },
-  "LocaleLayout": {
-    "title": "next-intl 示例"
-  },
-  "LocaleSwitcher": {
-    "label": "更改语言",
-    "locale": "{locale, select, de {🇩🇪 德语} en {🇺🇸 英语} zh {🇨🇳 中文} other {未知}}"
-  },
-  "Manifest": {
-    "name": "next-intl 示例"
-  },
-  "Navigation": {
-    "home": "首页",
-    "pathnames": "路径名称"
   },
   "NotFoundPage": {
-    "description": "请检查浏览器地址栏或使用导航前往已知页面。",
-    "title": "页面未找到"
+    "title": "404",
+    "message": "抱歉，您正在寻找的页面不存在。",
+    "backToHome": "返回首页"
   },
-  "PageLayout": {
-    "links": {
-      "docs": {
-        "description": "在官方文档中了解更多关于 next-intl 的信息。",
-        "href": "https://next-intl.dev",
-        "title": "文档"
-      },
-      "source": {
-        "description": "在 GitHub 上浏览此示例的源代码。",
-        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-app-router",
-        "title": "源代码"
-      }
+  "ErrorPage": {
+    "title": "哎呀！出错了！",
+    "tryAgain": "重试",
+    "backToHome": "返回首页"
+  },
+  "AuthPage": {
+    "login": {
+      "title": "登录",
+      "welcomeBack": "欢迎回来",
+      "email": "邮箱",
+      "password": "密码",
+      "signIn": "登录",
+      "signUp": "没有账号？注册",
+      "forgotPassword": "忘记密码？",
+      "signInWithGoogle": "使用 Google 登录",
+      "signInWithGitHub": "使用 GitHub 登录",
+      "termsOfService": "服务条款",
+      "privacyPolicy": "隐私政策",
+      "byClickingContinue": "点击继续即表示您同意我们的",
+      "and": "和"
+    },
+    "register": {
+      "title": "注册",
+      "createAccount": "创建账号",
+      "name": "姓名",
+      "email": "邮箱",
+      "password": "密码",
+      "signUp": "注册",
+      "signIn": "已经有账号？登录",
+      "checkEmail": "请检查您的邮箱"
+    },
+    "forgotPassword": {
+      "title": "忘记密码",
+      "email": "邮箱",
+      "send": "发送",
+      "backToLogin": "返回登录",
+      "checkEmail": "请检查您的邮箱"
+    },
+    "resetPassword": {
+      "title": "重置密码",
+      "password": "密码",
+      "reset": "重置",
+      "backToLogin": "返回登录"
+    },
+    "error": {
+      "title": "哎呀！出错了！",
+      "tryAgain": "请重试。",
+      "backToLogin": "返回登录",
+      "checkEmail": "请检查您的邮箱"
     }
-  },
-  "PathnamesPage": {
-    "description": "<p>路径名称也是国际化的。</p><p>如果您使用默认语言英语，您将在此页面的浏览器地址栏中看到 <code>/en/pathnames</code>。</p><p>如果您将语言更改为中文，URL 将相应地本地化（例如 <code>/cn/路径名称</code>）。</p>",
-    "title": "路径名称"
-  }
+  }  
 }

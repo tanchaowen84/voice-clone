@@ -18,6 +18,7 @@ import { authClient } from "@/lib/auth-client";
 import { ResetPasswordSchema } from "@/lib/schemas";
 import { Routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -32,10 +33,10 @@ export const ResetPasswordForm = () => {
   }
 
   const router = useRouter();
-
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, setIsPending] = useState(false);
+  const t = useTranslations("AuthPage.resetPassword");
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
@@ -73,8 +74,8 @@ export const ResetPasswordForm = () => {
 
   return (
     <AuthCard
-      headerLabel="Reset password"
-      bottomButtonLabel="Back to login"
+      headerLabel={t("title")}
+      bottomButtonLabel={t("backToLogin")}
       bottomButtonHref={`${Routes.Login}`}
       className="border-none"
     >
@@ -86,7 +87,7 @@ export const ResetPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -113,7 +114,7 @@ export const ResetPasswordForm = () => {
             ) : (
               ""
             )}
-            <span>Reset password</span>
+            <span>{t("reset")}</span>
           </Button>
         </form>
       </Form>

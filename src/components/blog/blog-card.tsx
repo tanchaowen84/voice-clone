@@ -5,9 +5,9 @@ import { Post } from "content-collections";
 import Image from "next/image";
 import Link from "next/link";
 
-type BlogCardProps = {
+interface BlogCardProps {
   post: Post;
-};
+}
 
 export default function BlogCard({ post }: BlogCardProps) {
   const publishDate = post.date;
