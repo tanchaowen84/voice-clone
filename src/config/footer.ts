@@ -33,7 +33,7 @@ export const footerConfig: FooterConfig = {
       items: [
         { title: "Cookie Policy", href: Routes.CookiePolicy },
         { title: "Privacy Policy", href: Routes.PrivacyPolicy },
-        { title: "Terms of Service", href: Routes.TermsOfUse },
+        { title: "Terms of Service", href: Routes.TermsOfService },
       ],
     },
   ],

@@ -11,6 +11,9 @@ export const metadata = constructMetadata({
   canonicalUrl: `${siteConfig.url}${Routes.Login}`,
 });
 
+/**
+ * TODO: href={Routes.TermsOfService as any}
+ */
 const LoginPage = () => {
   const t = useTranslations("AuthPage.login");
 
@@ -20,14 +23,14 @@ const LoginPage = () => {
       <div className="text-balance text-center text-xs text-muted-foreground">
         {t("byClickingContinue")}
         <Link
-          href={Routes.TermsOfService}
+          href={Routes.TermsOfService as any}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t("termsOfService")}
         </Link>{" "}
         {t("and")}{" "}
         <Link
-          href={Routes.PrivacyPolicy}
+          href={Routes.PrivacyPolicy as any}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t("privacyPolicy")}
