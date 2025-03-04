@@ -1,11 +1,11 @@
 import { defineRouting } from "next-intl/routing";
 
-export const LOCALES = ["en", "zh"];
 export const DEFAULT_LOCALE = "en";
 export const LOCALE_LIST: Record<string, string> = {
   en: "🇬🇧 English",
   zh: "🇨🇳 中文",
 };
+export const LOCALES = Object.keys(LOCALE_LIST);
 
 /**
  * Next.js internationalized routing
@@ -27,6 +27,15 @@ export const routing = defineRouting({
   // https://next-intl.dev/docs/routing#pathnames
   pathnames: {
     "/": "/",
+    "/blog": "/blog",
+    "/blog/[...slug]": "/blog/[...slug]",
+    "/blog/category/[slug]": "/blog/category/[slug]",
+    // 认证相关路径
+    "/auth/login": "/auth/login",
+    "/auth/register": "/auth/register",
+    "/auth/forgot-password": "/auth/forgot-password",
+    "/auth/reset-password": "/auth/reset-password",
+    "/auth/error": "/auth/error",
   },
 });
 

@@ -1,23 +1,25 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
+import { ComponentProps } from "react";
 
 interface BottomButtonProps {
-  href: string;
+  href: string
   label: string;
 }
 
 export const BottomButton = ({ href, label }: BottomButtonProps) => {
   return (
-    <Button
-      variant="link"
-      className="font-normal w-full text-muted-foreground"
-      size="sm"
-      asChild
+    <Link
+      href={href as ComponentProps<typeof Link>["href"]}
+      className={cn(
+        buttonVariants({ variant: "link", size: "sm" }),
+        "font-normal w-full text-muted-foreground hover:underline underline-offset-4 hover:text-primary"
+      )}
     >
-      <a href={href} className="hover:underline underline-offset-4 hover:text-primary">
-        {label}
-      </a>
-    </Button>
+      {label}
+    </Link>
   );
 };

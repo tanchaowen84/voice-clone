@@ -1,7 +1,9 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { siteConfig } from "@/config/site";
+import { Link } from "@/i18n/navigation";
 import { constructMetadata } from "@/lib/metadata";
 import { Routes } from "@/routes";
+import { useTranslations } from "next-intl";
 
 export const metadata = constructMetadata({
   title: "Login",
@@ -10,25 +12,26 @@ export const metadata = constructMetadata({
 });
 
 const LoginPage = () => {
+  const t = useTranslations("AuthPage.login");
+
   return (
     <div className="flex flex-col gap-4">
       <LoginForm />
       <div className="text-balance text-center text-xs text-muted-foreground">
-        By clicking continue, you agree to our{" "}
-        <a
-          href="/terms"
+        {t("byClickingContinue")}
+        <Link
+          href={Routes.TermsOfService}
           className="underline underline-offset-4 hover:text-primary"
         >
-          Terms of Service
-        </a>{" "}
-        and{" "}
-        <a
-          href="/privacy"
+          {t("termsOfService")}
+        </Link>{" "}
+        {t("and")}{" "}
+        <Link
+          href={Routes.PrivacyPolicy}
           className="underline underline-offset-4 hover:text-primary"
         >
-          Privacy Policy
-        </a>
-        .
+          {t("privacyPolicy")}
+        </Link>
       </div>
     </div>
   );

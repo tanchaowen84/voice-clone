@@ -7,14 +7,7 @@ import LogoCloud from "@/components/nsui/logo-cloud";
 import Pricing from "@/components/nsui/pricing";
 import StatsSection from "@/components/nsui/stats";
 import WallOfLoveSection from "@/components/nsui/testimonials";
-import { siteConfig } from "@/config/site";
-import { constructMetadata } from "@/lib/metadata";
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-
-export const metadata = constructMetadata({
-  title: "",
-  canonicalUrl: `${siteConfig.url}/`,
-});
+import { getTranslations } from 'next-intl/server';
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -23,21 +16,11 @@ interface HomePageProps {
 export default async function HomePage(props: HomePageProps) {
   const params = await props.params;
   const { locale } = params;
-
-  // Enable static rendering
-  setRequestLocale(locale);
-
-  // Use getTranslations instead of useTranslations for async server components
   const t = await getTranslations('HomePage');
 
   return (
     <>
       <div className="mt-12 flex flex-col gap-16">
-
-        <div className="text-center">
-          <h1>{t('title')}</h1>
-        </div>
-
         <HeroSection />
 
         <LogoCloud />

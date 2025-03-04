@@ -8,6 +8,7 @@ import { GitHubIcon } from "@/components/icons/github";
 import { GoogleIcon } from "@/components/icons/google";
 import { authClient } from "@/lib/auth-client";
 import { Routes } from "@/routes";
+import { useTranslations } from "next-intl";
 
 /**
  * social login buttons
@@ -16,6 +17,7 @@ export const SocialLoginButton = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const [isLoading, setIsLoading] = useState<"google" | "github" | null>(null);
+  const t = useTranslations("AuthPage.login");
 
   const onClick = async (provider: "google" | "github") => {
     await authClient.signIn.social({
@@ -76,7 +78,7 @@ export const SocialLoginButton = () => {
         ) : (
           <GoogleIcon className="size-5 mr-2" />
         )}
-        <span>Login with Google</span>
+        <span>{t("signInWithGoogle")}</span>
       </Button>
       <Button
         size="lg"
@@ -90,7 +92,7 @@ export const SocialLoginButton = () => {
         ) : (
           <GitHubIcon className="size-5 mr-2" />
         )}
-        <span>Login with GitHub</span>
+        <span>{t("signInWithGitHub")}</span>
       </Button>
     </div>
   );

@@ -14,11 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Link } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { Routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +30,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError = searchParams.get("error");
+  const t = useTranslations("AuthPage.login");
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -74,8 +77,8 @@ export const LoginForm = ({ className }: { className?: string }) => {
 
   return (
     <AuthCard
-      headerLabel="Welcome back"
-      bottomButtonLabel="Don't have an account? Sign up"
+      headerLabel={t("welcomeBack")}
+      bottomButtonLabel={t("signUp")}
       bottomButtonHref={`${Routes.Register}`}
       showSocialLoginButton
       className={cn("border-none", className)}
@@ -88,7 +91,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -107,19 +110,19 @@ export const LoginForm = ({ className }: { className?: string }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex justify-between items-center">
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <Button
                       size="sm"
                       variant="link"
                       asChild
                       className="px-0 font-normal text-muted-foreground"
                     >
-                      <a
+                      <Link
                         href={`${Routes.ForgotPassword}`}
                         className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
                       >
-                        Forgot password?
-                      </a>
+                        {t("forgotPassword")}
+                      </Link>
                     </Button>
                   </div>
                   <FormControl>
@@ -148,7 +151,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
             ) : (
               ""
             )}
-            <span>Sign in</span>
+            <span>{t("signIn")}</span>
           </Button>
         </form>
       </Form>

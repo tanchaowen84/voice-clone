@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
@@ -21,19 +21,13 @@ interface LocaleLayoutProps {
 	params: Promise<{ locale: string }>;
 };
 
-// export function generateStaticParams() {
-// 	return routing.locales.map((locale) => ({ locale }));
-// }
-
-// export async function generateMetadata(props: Omit<LocaleLayoutProps, 'children'>) {
-// 	const { locale } = await props.params;
-// 	const t = await getTranslations({ locale, namespace: 'LocaleLayout' });
-
-// 	return {
-// 		title: t('title')
-// 	};
-// }
-
+/**
+ * 1. Locale Layout
+ * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#layout
+ * 
+ * 2. NextIntlClientProvider
+ * https://next-intl.dev/docs/usage/configuration#nextintlclientprovider
+ */
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
 	const { locale } = await params;
 
@@ -42,11 +36,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 		notFound();
 	}
 
-	// Enable static rendering
-	setRequestLocale(locale);
-
-	// Providing all messages to the client
-	// side is the easiest way to get started
+	// Providing all messages to the client side
 	const messages = await getMessages();
 
 	return (
@@ -59,14 +49,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 				GeistSans.variable,
 				GeistMono.variable,
 			)}>
-				{/* https://next-intl.dev/docs/usage/configuration#nextintlclientprovider */}
 				<NextIntlClientProvider messages={messages}>
 					<Providers>
-						<div className="flex flex-col min-h-screen">
-							<Navbar scroll={true} config={marketingConfig} />
-							<main className="flex-1">{children}</main>
-							<Footer />
-						</div>
+						{children}
 
 						<Toaster richColors position="top-right" offset={64} />
 

@@ -1,5 +1,61 @@
 {
   "HomePage": {
     "title": "next-intl 示例"
-  }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "抱歉，您正在寻找的页面不存在。",
+    "backToHome": "返回首页"
+  },
+  "ErrorPage": {
+    "title": "哎呀！出错了！",
+    "tryAgain": "重试",
+    "backToHome": "返回首页"
+  },
+  "AuthPage": {
+    "login": {
+      "title": "登录",
+      "welcomeBack": "欢迎回来",
+      "email": "邮箱",
+      "password": "密码",
+      "signIn": "登录",
+      "signUp": "没有账号？注册",
+      "forgotPassword": "忘记密码？",
+      "signInWithGoogle": "使用 Google 登录",
+      "signInWithGitHub": "使用 GitHub 登录",
+      "termsOfService": "服务条款",
+      "privacyPolicy": "隐私政策",
+      "byClickingContinue": "点击继续即表示您同意我们的",
+      "and": "和"
+    },
+    "register": {
+      "title": "注册",
+      "createAccount": "创建账号",
+      "name": "姓名",
+      "email": "邮箱",
+      "password": "密码",
+      "signUp": "注册",
+      "signIn": "已经有账号？登录",
+      "checkEmail": "请检查您的邮箱"
+    },
+    "forgotPassword": {
+      "title": "忘记密码",
+      "email": "邮箱",
+      "send": "发送",
+      "backToLogin": "返回登录",
+      "checkEmail": "请检查您的邮箱"
+    },
+    "resetPassword": {
+      "title": "重置密码",
+      "password": "密码",
+      "reset": "重置",
+      "backToLogin": "返回登录"
+    },
+    "error": {
+      "title": "哎呀！出错了！",
+      "tryAgain": "请重试。",
+      "backToLogin": "返回登录",
+      "checkEmail": "请检查您的邮箱"
+    }
+  }  
 }

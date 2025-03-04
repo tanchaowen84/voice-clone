@@ -3,20 +3,6 @@ import createNextIntlPlugin from 'next-intl/plugin';
 import { withContentCollections } from "@content-collections/next";
 
 /**
- * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#next-config
- * 
- * Explicitly specify the path to the request config file
- */
-const withNextIntl = createNextIntlPlugin();
-
-// module.exports = {
-//   experimental: {
-//     // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-//     missingSuspenseWithCSRBailout: false,
-//   },
-// }
-
-/**
  * https://nextjs.org/docs/app/api-reference/config/next-config-js
  */
 const nextConfig: NextConfig = {
@@ -29,16 +15,11 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    // https://vercel.com/docs/image-optimization/managing-image-optimization-costs#minimizing-image-optimization-costs
-    // vercel has limits on image optimization, 1000 images per month
-    // unoptimized: true,
-    
-    // https://medium.com/@niniroula/nextjs-upgrade-next-image-and-dangerouslyallowsvg-c934060d79f8
-    // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
-    // but dangerouslyAllowSVG is disabled
-    // dangerouslyAllowSVG: true,
-
     remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
@@ -54,6 +35,13 @@ const nextConfig: NextConfig = {
     ],
   },
 };
+
+/**
+ * You can specify the path to the request config file or use the default one (@/i18n/request.ts)
+ * 
+ * https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing#next-config
+ */
+const withNextIntl = createNextIntlPlugin();
 
 /**
  * withContentCollections must be the outermost plugin

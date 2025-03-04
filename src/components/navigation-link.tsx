@@ -7,6 +7,8 @@ import { ComponentProps } from "react";
 
 /**
  * This component is used to render a link in the navigation bar.
+ * 
+ * https://next-intl.dev/docs/routing/navigation#link
  */
 export default function NavigationLink({
   href,

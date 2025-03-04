@@ -21,11 +21,14 @@ import type * as z from "zod";
 import { Icons } from "@/components/icons/icons";
 import { authClient } from "@/lib/auth-client";
 import { Routes } from "@/routes";
+import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
-export const ForgotPasswordForm = () => {
+export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, setIsPending] = useState(false);
+  const t = useTranslations("AuthPage.forgotPassword");
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -51,7 +54,7 @@ export const ForgotPasswordForm = () => {
       },
       onSuccess: (ctx) => {
         // console.log("forgotPassword, success:", ctx.data);
-        setSuccess("Please check your email inbox");
+        setSuccess(t("checkEmail"));
       },
       onError: (ctx) => {
         console.log("forgotPassword, error:", ctx.error);
@@ -62,10 +65,10 @@ export const ForgotPasswordForm = () => {
 
   return (
     <AuthCard
-      headerLabel="Froget password?"
-      bottomButtonLabel="Back to login"
+      headerLabel={t("title")}
+      bottomButtonLabel={t("backToLogin")}
       bottomButtonHref={`${Routes.Login}`}
-      className="border-none"
+      className={cn("border-none", className)}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -75,7 +78,7 @@ export const ForgotPasswordForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -102,7 +105,7 @@ export const ForgotPasswordForm = () => {
             ) : (
               ""
             )}
-            <span>Send reset password email</span>
+            <span>{t("send")}</span>
           </Button>
         </form>
       </Form>

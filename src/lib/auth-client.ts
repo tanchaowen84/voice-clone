@@ -7,4 +7,4 @@ export const authClient = createAuthClient({
     // https://www.better-auth.com/docs/plugins/admin#add-the-client-plugin
     adminClient(),
   ]
-})
+});
