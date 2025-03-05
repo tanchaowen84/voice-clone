@@ -71,9 +71,9 @@ export default function BlogCard({ post }: BlogCardProps) {
           </h3>
 
           {/* Post excerpt, hidden for now */}
-          <div className="hidden">
+          <div className="">
             {post.description && (
-              <p className="mt-2 line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-2 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                 <Link href={postUrl}>{post.description}</Link>
               </p>
             )}
@@ -83,7 +83,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         {/* Author and date */}
         <div className="mt-auto pt-4 flex items-center justify-between space-x-4 text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="relative h-5 w-5 flex-shrink-0">
+            <div className="relative h-8 w-8 flex-shrink-0">
               {post?.author?.avatar && (
                 <Image
                   src={post?.author?.avatar}

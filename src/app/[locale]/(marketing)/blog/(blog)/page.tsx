@@ -36,20 +36,6 @@ export default async function BlogPage({ params }: BlogPageProps) {
   );
 
   return (
-    <Container className="py-8 md:py-12">
-      <div className="">
-        <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
-          <div className="flex-1 space-y-4">
-            <h1 className="inline-block text-4xl font-bold tracking-tight lg:text-5xl">
-              Blog
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Latest news and updates from our team
-            </p>
-          </div>
-        </div>
-        <BlogGrid posts={sortedPosts} />
-      </div>
-    </Container>
+    <BlogGrid posts={sortedPosts} />
   );
 } 

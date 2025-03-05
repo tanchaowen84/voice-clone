@@ -92,9 +92,9 @@ export default async function BlogPostPage(props: NextPageProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Content section */}
+      {/* content section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left column */}
+        {/* left column (blog post content) */}
         <div className="lg:col-span-2 flex flex-col">
           {/* Basic information */}
           <div className="space-y-8">
@@ -129,7 +129,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
         </div>
 
-        {/* Right column (sidebar) */}
+        {/* right column (sidebar) */}
         <div>
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* author info */}
@@ -184,6 +184,9 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
         </div>
       </div>
+
+      {/* newsletter */}
+      {/* TODO: add newsletter */}
     </div>
   );
 } 
