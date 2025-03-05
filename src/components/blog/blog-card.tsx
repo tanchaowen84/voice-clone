@@ -1,5 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { getBaseUrl } from "@/lib/urls/get-base-url";
 import { getLocaleDate } from "@/lib/utils";
 import { Post } from "content-collections";
 import Image from "next/image";
@@ -12,14 +11,18 @@ interface BlogCardProps {
 export default function BlogCard({ post }: BlogCardProps) {
   const publishDate = post.date;
   const date = getLocaleDate(publishDate);
-  const postUrlPrefix = getBaseUrl();
-  const postUrl = `${postUrlPrefix}${post.slug}`;
+  
+  // Extract the slug parts for the Link component
+  const slugParts = post.slugAsParams.split('/');
 
   return (
     <div className="group cursor-pointer flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
       {/* Image container - fixed aspect ratio */}
       <div className="group overflow-hidden relative aspect-[16/9] w-full">
-        <Link href={postUrl as any}>
+        <Link href={{
+          pathname: "/blog/[...slug]",
+          params: { slug: slugParts }
+        }}>
           {post.image && (
             <div className="relative w-full h-full">
               <Image
@@ -35,7 +38,7 @@ export default function BlogCard({ post }: BlogCardProps) {
                   <div className="flex flex-wrap gap-1">
                     {post.categories.map((category, index) => (
                       <span
-                        key={category.slug}
+                        key={`${category.slug}-${index}`}
                         className="text-xs font-medium text-white bg-black bg-opacity-50 px-2 py-1 rounded-md"
                       >
                         {category.name}
@@ -54,7 +57,10 @@ export default function BlogCard({ post }: BlogCardProps) {
         <div>
           {/* Post title */}
           <h3 className="text-lg line-clamp-2 font-medium">
-            <Link href={postUrl as any}>
+            <Link href={{
+              pathname: "/blog/[...slug]",
+              params: { slug: slugParts }
+            }}>
               <span
                 className="bg-gradient-to-r from-green-200 to-green-100 
                   bg-[length:0px_10px] bg-left-bottom bg-no-repeat
@@ -73,7 +79,12 @@ export default function BlogCard({ post }: BlogCardProps) {
           <div className="mt-2">
             {post.description && (
               <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
-                <Link href={postUrl as any}>{post.description}</Link>
+                <Link href={{
+                  pathname: "/blog/[...slug]",
+                  params: { slug: slugParts }
+                }}>
+                  {post.description}
+                </Link>
               </p>
             )}
           </div>
