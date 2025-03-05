@@ -41,7 +41,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body className={cn(
+			<body suppressHydrationWarning className={cn(
 				"size-full antialiased",
 				GeistSans.className,
 				fontSourceSerif4.variable,
