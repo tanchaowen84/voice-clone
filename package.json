@@ -43,7 +43,7 @@
     "lucide-react": "^0.475.0",
     "mdast-util-toc": "^7.1.0",
     "motion": "^12.4.3",
-    "next": "15.1.7",
+    "next": "15.2.1",
     "next-intl": "^3.26.5",
     "next-plausible": "^3.12.4",
     "next-safe-action": "^7.10.4",
