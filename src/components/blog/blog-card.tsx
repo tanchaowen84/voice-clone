@@ -17,9 +17,9 @@ export default function BlogCard({ post }: BlogCardProps) {
   const postUrl = `${postUrlPrefix}${post.slug}`;
 
   return (
-    <div className="group cursor-pointer flex flex-col gap-4">
-      {/* Image container */}
-      <div className="group overflow-hidden relative aspect-[16/9] rounded-lg transition-all">
+    <div className="group cursor-pointer flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
+      {/* Image container - fixed aspect ratio */}
+      <div className="group overflow-hidden relative aspect-[16/9] w-full">
         <Link href={postUrl}>
           {post.image && (
             <div className="relative w-full h-full">
@@ -51,7 +51,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       </div>
 
       {/* Post info container */}
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col justify-between p-4 flex-1">
         <div>
           {/* Post title */}
           <h3 className="text-lg line-clamp-2 font-medium">
@@ -71,9 +71,9 @@ export default function BlogCard({ post }: BlogCardProps) {
           </h3>
 
           {/* Post excerpt, hidden for now */}
-          <div className="">
+          <div className="mt-2">
             {post.description && (
-              <p className="mt-2 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                 <Link href={postUrl}>{post.description}</Link>
               </p>
             )}
@@ -81,7 +81,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         </div>
 
         {/* Author and date */}
-        <div className="mt-auto pt-4 flex items-center justify-between space-x-4 text-muted-foreground">
+        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between space-x-4 text-muted-foreground">
           <div className="flex items-center gap-2">
             <div className="relative h-8 w-8 flex-shrink-0">
               {post?.author?.avatar && (
@@ -107,14 +107,22 @@ export default function BlogCard({ post }: BlogCardProps) {
 
 export function BlogCardSkeleton() {
   return (
-    <div className="group cursor-pointer flex flex-col gap-4">
-      <div className="group overflow-hidden relative aspect-[4/3] rounded-lg transition-all">
-        <Skeleton className="w-full aspect-[4/3] rounded-lg" />
+    <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
+      <div className="overflow-hidden relative aspect-[16/9] w-full">
+        <Skeleton className="w-full h-full" />
       </div>
-      <Skeleton className="h-12 w-full" />
-      <div className="flex items-center justify-between gap-2">
-        <Skeleton className="h-8 w-32" />
-        <Skeleton className="h-8 w-32" />
+      <div className="p-4 flex flex-col justify-between flex-1">
+        <div>
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-4 w-full mb-4" />
+        </div>
+        <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-4 w-24" />
+          </div>
+          <Skeleton className="h-4 w-20" />
+        </div>
       </div>
     </div>
   );
