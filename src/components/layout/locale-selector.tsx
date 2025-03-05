@@ -90,7 +90,7 @@ export default function LocaleSelector() {
       value={currentLocale}
       onValueChange={onSelectChange}
     >
-      {/* w-[120px] is better than w-fit */}
+      {/* fixed width w-[120px] is better than w-fit */}
       <SelectTrigger className="w-[120px]">
         <SelectValue placeholder="🌐" />
       </SelectTrigger>

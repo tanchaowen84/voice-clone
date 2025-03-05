@@ -33,7 +33,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               </p>
 
               {/* social links */}
-              <div className="flex items-center gap-4 py-1">
+              <div className="flex items-center gap-4 py-2">
                 <div className="flex items-center gap-2">
                   {siteConfig.mail && (
                     <Link

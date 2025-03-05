@@ -33,6 +33,11 @@ interface NavBarProps {
   config: MarketingConfig;
 }
 
+const customNavigationMenuTriggerStyle = cn(
+  navigationMenuTriggerStyle(),
+  "bg-transparent hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[active]:bg-transparent data-[active]:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary relative data-[active]:font-bold dark:text-gray-400 dark:hover:text-gray-300 dark:data-[active]:text-white"
+);
+
 export function Navbar({ scroll, config }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, error } = authClient.useSession();
@@ -72,11 +77,12 @@ export function Navbar({ scroll, config }: NavBarProps) {
                         data-active={
                           item.items.some((subItem) =>
                             pathname.startsWith(subItem.href)
-                          )
-                            ? ''
-                            : undefined
+                          ) ? "true" : undefined
                         }
-                        className="data-[active]:bg-accent"
+                        className={cn(
+                          customNavigationMenuTriggerStyle,
+                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
+                        )}
                       >
                         {item.title}
                       </NavigationMenuTrigger>
@@ -124,8 +130,8 @@ export function Navbar({ scroll, config }: NavBarProps) {
                         asChild
                         active={pathname.startsWith(item.href)}
                         className={cn(
-                          navigationMenuTriggerStyle(),
-                          'data-[active]:bg-accent'
+                          customNavigationMenuTriggerStyle,
+                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
                         )}
                       >
                         <Link
@@ -174,7 +180,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
               </div>
             )}
 
-            {/* <ThemeSwitcher /> */}
+            <ThemeSwitcher />
             <LocaleSelector />
           </div>
         </nav>
