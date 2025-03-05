@@ -43,8 +43,12 @@ export function Navbar({ scroll, config }: NavBarProps) {
 
   return (
     <section className={cn(
-      "sticky inset-x-0 top-0 z-40 bg-background py-4",
-      scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b"
+      "sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300",
+      scroll ? (
+        scrolled 
+          ? "bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60" 
+          : "bg-background"
+      ) : "border-b bg-background"
     )}>
       <Container className="px-4">
         {/* desktop navbar */}
@@ -77,7 +81,6 @@ export function Navbar({ scroll, config }: NavBarProps) {
                         {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        {/* set the width of the menu content to the width of the navigation menu */}
                         <ul className="w-96 list-none p-2">
                           {item.items.map((subItem, subIndex) => (
                             <li key={subIndex}>
