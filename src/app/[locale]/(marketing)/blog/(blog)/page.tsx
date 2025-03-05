@@ -1,8 +1,9 @@
 import { allPosts } from 'content-collections';
 import { Metadata } from 'next';
 import BlogGrid from '@/components/blog/blog-grid';
-import Container from '@/components/container';
-import { Separator } from '@/components/ui/separator';
+import EmptyGrid from '@/components/shared/empty-grid';
+import CustomPagination from '@/components/shared/pagination';
+import { POSTS_PER_PAGE } from '@/lib/constants';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -12,13 +13,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 interface BlogPageProps {
-  params: Promise<{
+  params: {
     locale: string;
-  }>;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default async function BlogPage({ params }: BlogPageProps) {
-  const { locale } = await params;
+export default async function BlogPage({ params, searchParams }: BlogPageProps) {
+  const { locale } = params;
+  const { page } = searchParams as { [key: string]: string };
+  const currentPage = page ? Number(page) : 1;
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
   
   // Filter posts by locale
   const localePosts = allPosts.filter(
@@ -26,16 +32,45 @@ export default async function BlogPage({ params }: BlogPageProps) {
   );
   
   // If no posts found for the current locale, show all published posts
-  const posts = localePosts.length > 0 
+  const filteredPosts = localePosts.length > 0 
     ? localePosts 
     : allPosts.filter((post) => post.published);
   
   // Sort posts by date (newest first)
-  const sortedPosts = [...posts].sort(
+  const sortedPosts = [...filteredPosts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  
+  // Paginate posts
+  const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
+  const totalCount = filteredPosts.length;
+  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
+  
+  console.log(
+    "BlogPage, totalCount",
+    totalCount,
+    ", totalPages",
+    totalPages,
   );
 
   return (
-    <BlogGrid posts={sortedPosts} />
+    <div>
+      {/* when no posts are found */}
+      {paginatedPosts.length === 0 && <EmptyGrid />}
+
+      {/* when posts are found */}
+      {paginatedPosts.length > 0 && (
+        <div>
+          <BlogGrid posts={paginatedPosts} />
+
+          <div className="mt-8 flex items-center justify-center">
+            <CustomPagination
+              routePreix="/blog"
+              totalPages={totalPages}
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 } 

@@ -57,5 +57,14 @@
       "backToLogin": "返回登录",
       "checkEmail": "请检查您的邮箱"
     }
-  }  
+  },
+  "BlogPage": {
+    "title": "博客",
+    "categories": {
+      "all": "全部",
+      "news": "新闻",
+      "guide": "指南",
+      "company": "公司"
+    }
+  }
 }

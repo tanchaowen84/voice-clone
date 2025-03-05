@@ -57,5 +57,14 @@
       "backToLogin": "Back to login",
       "checkEmail": "Please check your email inbox"
     }
+  },
+  "BlogPage": {
+    "title": "Blog",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "guide": "Guide",
+      "company": "Company"
+    }
   }
 }

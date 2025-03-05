@@ -1,10 +1,26 @@
+import { BlogCategoryFilter } from '@/components/blog/blog-category-filter';
 import Container from '@/components/container';
 import { HeaderSection } from '@/components/shared/header-section';
 import { PropsWithChildren } from 'react';
+import { allCategories } from 'content-collections';
 
-export default async function BlogListLayout({
+interface BlogListLayoutProps extends PropsWithChildren {
+  params: {
+    locale: string;
+  };
+}
+
+export default async function BlogListLayout({ 
   children,
-}: { children: React.ReactNode }) {
+  params 
+}: BlogListLayoutProps) {
+  const { locale } = params;
+  
+  // Filter categories by locale
+  const categoryList = allCategories.filter(
+    category => category.locale === locale
+  );
+  
   return (
     <div className="mb-16">
       <div className="mt-8 w-full flex flex-col items-center justify-center gap-8">
@@ -14,7 +30,7 @@ export default async function BlogListLayout({
           subtitle="Read our latest blog posts about MkSaaS"
         />
 
-        {/* <BlogCategoryFilter /> */}
+        <BlogCategoryFilter categoryList={categoryList} />
       </div>
 
       <Container className="mt-8 px-4">
