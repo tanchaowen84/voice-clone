@@ -25,8 +25,8 @@
       "signInWithGitHub": "使用 GitHub 登录",
       "termsOfService": "服务条款",
       "privacyPolicy": "隐私政策",
-      "byClickingContinue": "点击继续即表示您同意我们的",
-      "and": "和"
+      "byClickingContinue": "继续即表示您同意我们的 ",
+      "and": " 和 "
     },
     "register": {
       "title": "注册",

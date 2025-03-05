@@ -25,8 +25,8 @@
       "signInWithGitHub": "Sign In with GitHub",
       "termsOfService": "Terms of Service",
       "privacyPolicy": "Privacy Policy",
-      "byClickingContinue": "By clicking continue, you agree to our",
-      "and": "and"
+      "byClickingContinue": "By clicking continue, you agree to our ",
+      "and": " and "
     },
     "register": {
       "title": "Register",
@@ -34,8 +34,8 @@
       "name": "Name",
       "email": "Email",
       "password": "Password",
-      "signIn": "Sign In",
-      "signUp": "Already have an account? Sign in",
+      "signUp": "Sign Up",
+      "signIn": "Already have an account? Sign in",
       "checkEmail": "Please check your email inbox"
     },
     "forgotPassword": {
