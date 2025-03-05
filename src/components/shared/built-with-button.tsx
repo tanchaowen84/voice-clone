@@ -10,7 +10,7 @@ export default function BuiltWithButton() {
       href="https://mksaas.com?utm_source=mksaas&utm_medium=website&utm_campaign=built-with-mksaas-button&utm_content=built-with-mksaas"
       className={cn(
         buttonVariants({ variant: "outline", size: "sm" }),
-        "px-4 rounded-md",
+        "border border-border px-4 rounded-md",
       )}
     >
       <span>Built with</span>
