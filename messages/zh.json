@@ -61,11 +61,8 @@
   "BlogPage": {
     "title": "博客",
     "subtitle": "来自我们的团队最新新闻和更新",
-    "categories": {
-      "all": "全部",
-      "news": "新闻",
-      "guide": "指南",
-      "company": "公司"
-    }
+    "publisher": "发布者",
+    "categories": "分类",
+    "tableOfContents": "目录"
   }
 }

@@ -61,11 +61,8 @@
   "BlogPage": {
     "title": "Blog",
     "subtitle": "Latest news and updates from our team",
-    "categories": {
-      "all": "All",
-      "news": "News",
-      "guide": "Guide",
-      "company": "Company"
-    }
+    "publisher": "Publisher",
+    "categories": "Categories",
+    "tableOfContents": "Table of Contents"
   }
 }

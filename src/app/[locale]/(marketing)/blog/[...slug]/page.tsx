@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import '@/styles/mdx.css';
+import { getTranslations } from 'next-intl/server';
 
 /**
  * Gets the blog post from the params
@@ -89,6 +90,7 @@ export default async function BlogPostPage(props: NextPageProps) {
   const publishDate = post.date;
   const date = getLocaleDate(publishDate);
   const toc = await getTableOfContents(post.content);
+  const t = await getTranslations("BlogPage");
 
   return (
     <div className="flex flex-col gap-8">
@@ -120,7 +122,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <div className="mt-4 font-serif">
+          <div className="mt-4">
             <Mdx code={post.body.code} />
           </div>
 
@@ -134,7 +136,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* author info */}
             <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">Publisher</h2>
+              <h2 className="text-lg font-semibold mb-4">{t("publisher")}</h2>
               <div className="flex items-center gap-4">
                 <div className="relative h-12 w-12 flex-shrink-0">
                   {post.author?.avatar && (
@@ -156,7 +158,7 @@ export default async function BlogPostPage(props: NextPageProps) {
 
             {/* categories */}
             <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">Categories</h2>
+              <h2 className="text-lg font-semibold mb-4">{t("categories")}</h2>
               <ul className="flex flex-wrap gap-4">
                 {post.categories?.filter(Boolean).map((category) => (
                   category && (
@@ -178,7 +180,7 @@ export default async function BlogPostPage(props: NextPageProps) {
 
             {/* table of contents */}
             <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
-              <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
+              <h2 className="text-lg font-semibold mb-4">{t("tableOfContents")}</h2>
               <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
                 <BlogToc toc={toc} />
               </div>
