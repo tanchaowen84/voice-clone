@@ -19,6 +19,8 @@ import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
 
 /**
  * Blog Author collection
+ * 
+ * Authors are identified by their slug across all languages
  */
 export const authors = defineCollection({
   name: 'author',
@@ -46,6 +48,8 @@ export const authors = defineCollection({
 
 /**
  * Blog Category collection
+ * 
+ * Categories are identified by their slug across all languages
  */
 export const categories = defineCollection({
   name: 'category',
@@ -73,17 +77,12 @@ export const categories = defineCollection({
 /**
  * Blog Post collection
  * 
- * 1. For a blog post file at content/en/blog/2023/year-review.mdx:
- * locale: en
- * slug: /blog/2023/year-review
- * slugAsParams: 2023/year-review
- * 
- * 2. For a blog post at content/en/blog/first-post.mdx:
+ * 1. For a blog post at content/en/blog/first-post.mdx:
  * locale: en
  * slug: /blog/first-post
  * slugAsParams: first-post
  * 
- * 3. For a blog post at content/zh/blog/first-post.mdx:
+ * 2. For a blog post at content/zh/blog/first-post.mdx:
  * locale: zh
  * slug: /blog/first-post
  * slugAsParams: first-post
@@ -114,17 +113,32 @@ export const posts = defineCollection({
         [rehypePrettyCode, prettyCodeOptions]
       ]
     });
-    const blogAuthor = context
-      .documents(authors)
-      .find((a) => a.slug === data.author);
-    const blogCategories = context
-      .documents(categories)
-      .filter((c) => data.categories.includes(c.slug));
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
     const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
     const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    
+    // Find the author by matching slug
+    const blogAuthor = context
+      .documents(authors)
+      .find((a) => a.slug === data.author && a.locale === locale) || 
+      context
+      .documents(authors)
+      .find((a) => a.slug === data.author);
+    
+    // Find categories by matching slug
+    const blogCategories = data.categories.map(categorySlug => {
+      // Try to find a category with matching slug and locale
+      const category = context
+        .documents(categories)
+        .find(c => c.slug === categorySlug && c.locale === locale) || 
+        context
+        .documents(categories)
+        .find(c => c.slug === categorySlug);
+      
+      return category;
+    }).filter(Boolean); // Remove null values
     
     // Create a slug without the locale in the path
     let slugPath = data._meta.path;

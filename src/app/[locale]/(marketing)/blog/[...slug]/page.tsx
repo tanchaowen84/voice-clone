@@ -158,18 +158,20 @@ export default async function BlogPostPage(props: NextPageProps) {
             <div className="bg-muted/50 rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">Categories</h2>
               <ul className="flex flex-wrap gap-4">
-                {post.categories?.map((category) => (
-                  <li key={category.slug}>
-                    <Link
-                      href={{
-                        pathname: "/blog/category/[slug]",
-                        params: { slug: category.slug }
-                      }}
-                      className="text-sm link-underline"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
+                {post.categories?.filter(Boolean).map((category) => (
+                  category && (
+                    <li key={category.slug}>
+                      <Link
+                        href={{
+                          pathname: "/blog/category/[slug]",
+                          params: { slug: category.slug }
+                        }}
+                        className="text-sm link-underline"
+                      >
+                        {category.name}
+                      </Link>
+                    </li>
+                  )
                 ))}
               </ul>
             </div>

@@ -11,18 +11,19 @@ import { NextPageProps } from "@/types/next-page-props";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata | undefined> {
   const resolvedParams = await params;
-  const { slug } = resolvedParams;
+  const { slug, locale } = resolvedParams;
 
+  // Find category with matching slug and locale
   const category = allCategories.find(
-    (category) => category.slug === slug
+    (category) => category.slug === slug && category.locale === locale
   );
 
   if (!category) {
     console.warn(
-      `generateMetadata, category not found for slug: ${slug}`,
+      `generateMetadata, category not found for slug: ${slug}, locale: ${locale}`,
     );
     return;
   }
@@ -52,12 +53,21 @@ export default async function BlogCategoryPage({
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
 
+  // Find category with matching slug and locale
+  const category = allCategories.find(
+    (category) => category.slug === slug && category.locale === locale
+  );
+
   // Filter posts by category and locale
   const filteredPosts = allPosts.filter(
-    (post) =>
-      post.published &&
-      post.locale === locale &&
-      post.categories.some(category => category.slug === slug)
+    (post) => {
+      if (!post.published || post.locale !== locale) {
+        return false;
+      }
+      
+      // Check if any of the post's categories match the current category slug
+      return post.categories.some(category => category && category.slug === slug);
+    }
   );
 
   // Sort posts by date (newest first)

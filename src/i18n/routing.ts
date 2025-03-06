@@ -1,10 +1,10 @@
 import { defineRouting } from "next-intl/routing";
 
-export const DEFAULT_LOCALE = "en";
-export const LOCALE_LIST: Record<string, string> = {
-  en: "🇬🇧 English",
-  zh: "🇨🇳 中文",
+export const LOCALE_LIST: Record<string, { flag: string; name: string }> = {
+  en: { flag: "🇺🇸", name: "English" },
+  zh: { flag: "🇨🇳", name: "中文" },
 };
+export const DEFAULT_LOCALE = "en";
 export const LOCALES = Object.keys(LOCALE_LIST);
 
 /**
