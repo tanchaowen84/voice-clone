@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import {
+  DEFAULT_LOCALE,
   Locale,
   LOCALE_LIST,
   routing,
@@ -19,10 +20,11 @@ import { useParams } from "next/navigation";
 import { useEffect, useTransition } from "react";
 
 /**
- * 1. useRouter
+ * 1. LocaleSelector
+ * 
  * By combining usePathname with useRouter, you can change the locale for the current page 
  * programmatically by navigating to the same pathname, while overriding the locale.
- * Depending on if you’re using the pathnames setting, you optionally have to forward params 
+ * Depending on if you're using the pathnames setting, you optionally have to forward params 
  * to potentially resolve an internal pathname.
  * 
  * https://next-intl.dev/docs/routing/navigation#userouter
@@ -43,37 +45,6 @@ export default function LocaleSelector() {
     setCurrentLocale(nextLocale);
 
     startTransition(() => {
-      // // For root path, just use the string
-      // if (pathname === "/") {
-      //   router.replace("/", { locale: nextLocale });
-      //   return;
-      // }
-
-      // // For blog index
-      // if (pathname === "/blog") {
-      //   router.replace("/blog", { locale: nextLocale });
-      //   return;
-      // }
-
-      // // For dynamic routes, reconstruct with the correct params
-      // if (pathname.startsWith("/blog/")) {
-      //   if (pathname.includes("category")) {
-      //     router.replace({
-      //       pathname: "/blog/category/[slug]",
-      //       params: { slug: params.slug as string }
-      //     }, { locale: nextLocale });
-      //   } else {
-      //     router.replace({
-      //       pathname: "/blog/[...slug]",
-      //       params: { slug: Array.isArray(params.slug) ? params.slug : [params.slug as string] }
-      //     }, { locale: nextLocale });
-      //   }
-      //   return;
-      // }
-
-      // // Fallback for other routes
-      // router.replace("/", { locale: nextLocale });
-
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
@@ -90,15 +61,22 @@ export default function LocaleSelector() {
       value={currentLocale}
       onValueChange={onSelectChange}
     >
-      {/* fixed width w-[120px] is better than w-fit */}
-      <SelectTrigger className="w-[120px]">
-        <SelectValue placeholder="🌐" />
+      <SelectTrigger className="w-fit">
+        <SelectValue placeholder={<span className="text-lg">{LOCALE_LIST[DEFAULT_LOCALE].flag}</span>}>
+          {currentLocale && (
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{LOCALE_LIST[currentLocale].flag}</span>
+            </div>
+          )}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {routing.locales.map((cur) => (
-          <SelectItem key={cur} value={cur}
-            className="flex items-center">
-            {LOCALE_LIST[cur]}
+          <SelectItem key={cur} value={cur} className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{LOCALE_LIST[cur].flag}</span>
+              <span>{LOCALE_LIST[cur].name}</span>
+            </div>
           </SelectItem>
         ))}
       </SelectContent>
