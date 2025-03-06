@@ -30,7 +30,7 @@ export function BlogPost({ post }: BlogPostProps): React.JSX.Element {
           <div className="space-y-8">
             <div className="flex flex-row items-center justify-between gap-4 text-base text-muted-foreground">
               <span className="flex flex-row items-center gap-2">
-                {post.categories.map((c) => c.name).join(', ')}
+                {post.categories.map((c) => c?.name).join(', ')}
               </span>
               <span className="flex flex-row items-center gap-2">
                 <time dateTime={post.date}>

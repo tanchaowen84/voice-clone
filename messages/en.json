@@ -63,6 +63,8 @@
     "subtitle": "Latest news and updates from our team",
     "publisher": "Publisher",
     "categories": "Categories",
-    "tableOfContents": "Table of Contents"
+    "tableOfContents": "Table of Contents",
+    "all": "All",
+    "noPostsFound": "No posts found"
   }
 }

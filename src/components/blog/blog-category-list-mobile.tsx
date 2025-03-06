@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Drawer } from "vaul";
 import FilterItemMobile from "@/components/shared/filter-item-mobile";
+import { useTranslations } from "next-intl";
 
 export type BlogCategoryListMobileProps = {
   categoryList: Category[];
@@ -14,11 +15,12 @@ export type BlogCategoryListMobileProps = {
 export function BlogCategoryListMobile({
   categoryList,
 }: BlogCategoryListMobileProps) {
-  const [open, setOpen] = useState(false);
   const { slug } = useParams() as { slug?: string };
   const selectedCategory = categoryList.find(
     (category) => category.slug === slug,
   );
+  const [open, setOpen] = useState(false);
+  const t = useTranslations("BlogPage");
 
   const closeDrawer = () => {
     setOpen(false);
@@ -33,10 +35,10 @@ export function BlogCategoryListMobile({
         <div className="flex items-center justify-between w-full gap-4">
           <div className="flex items-center gap-2">
             <LayoutListIcon className="size-5" />
-            <span className="text-sm">Category</span>
+            <span className="text-sm">{t("categories")}</span>
           </div>
           <span className="text-sm">
-            {selectedCategory?.name ? `${selectedCategory?.name}` : "All"}
+            {selectedCategory?.name ? `${selectedCategory?.name}` : t("all")}
           </span>
         </div>
       </Drawer.Trigger>
@@ -46,14 +48,14 @@ export function BlogCategoryListMobile({
       />
       <Drawer.Portal>
         <Drawer.Content className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background">
-          <Drawer.Title className="sr-only">Category</Drawer.Title>
+          <Drawer.Title className="sr-only">{t("categories")}</Drawer.Title>
           <div className="sticky top-0 z-20 flex w-full items-center justify-center bg-inherit">
             <div className="my-3 h-1.5 w-16 rounded-full bg-muted-foreground/20" />
           </div>
 
           <ul className="mb-14 w-full p-3 text-muted-foreground">
             <FilterItemMobile
-              title="All"
+              title={t("all")}
               href="/blog"
               active={!slug}
               clickAction={closeDrawer}

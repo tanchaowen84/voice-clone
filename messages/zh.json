@@ -63,6 +63,8 @@
     "subtitle": "来自我们的团队最新新闻和更新",
     "publisher": "发布者",
     "categories": "分类",
-    "tableOfContents": "目录"
+    "tableOfContents": "目录",
+    "all": "全部",
+    "noPostsFound": "没有找到文章"
   }
 }

@@ -36,7 +36,7 @@ export function BlogPosts(): React.JSX.Element {
                 className="md:duration-2000 flex h-full flex-col space-y-4 text-clip border-dashed py-6 md:rounded-2xl md:px-6 md:shadow md:transition-shadow md:hover:shadow-xl dark:md:bg-accent/40 dark:md:hover:bg-accent"
               >
                 <div className="flex flex-row items-center justify-between text-muted-foreground">
-                  <span className="text-sm">{post.categories.map((c) => c.name).join(', ')}</span>
+                  <span className="text-sm">{post.categories.map((c) => c?.name).join(', ')}</span>
                   <time
                     className="text-sm"
                     dateTime={post.date}

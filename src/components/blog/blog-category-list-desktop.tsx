@@ -15,7 +15,7 @@ export function BlogCategoryListDesktop({
   categoryList,
 }: BlogCategoryListDesktopProps) {
   const { slug } = useParams() as { slug?: string };
-  const t = useTranslations("BlogPage.categories");
+  const t = useTranslations("BlogPage");
 
   return (
     <div>
@@ -54,6 +54,7 @@ export function BlogCategoryListDesktop({
               )}
               aria-label={`Toggle blog category of ${category.name}`}
             >
+              {/* TODO: fix as any */}
               <Link href={`/blog/category/${category.slug}` as any}>
                 <h2>{category.name}</h2>
               </Link>

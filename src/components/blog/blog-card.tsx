@@ -38,10 +38,10 @@ export default function BlogCard({ post }: BlogCardProps) {
                   <div className="flex flex-wrap gap-1">
                     {post.categories.map((category, index) => (
                       <span
-                        key={`${category.slug}-${index}`}
+                        key={`${category?.slug}-${index}`}
                         className="text-xs font-medium text-white bg-black bg-opacity-50 px-2 py-1 rounded-md"
                       >
-                        {category.name}
+                        {category?.name}
                       </span>
                     ))}
                   </div>
