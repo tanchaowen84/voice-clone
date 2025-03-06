@@ -1,6 +1,7 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/marketing/blog/mdx-component';
+import { Link } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/toc';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { getLocaleDate } from '@/lib/utils';
@@ -8,9 +9,7 @@ import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 
 import '@/styles/mdx.css';
 import { getTranslations } from 'next-intl/server';
@@ -141,7 +140,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                 <div className="relative h-12 w-12 flex-shrink-0">
                   {post.author?.avatar && (
                     <Image
-                      src={post?.author?.avatar}
+                      src={post.author.avatar}
                       alt={`avatar for ${post.author.name}`}
                       className="rounded-full object-cover border"
                       fill

@@ -1,7 +1,7 @@
 // import { DEFAULT_LOCALE } from '@/lib/i18n/locale';
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL ??
+  process.env.NEXT_PUBLIC_APP_URL ??
   `http://localhost:${process.env.PORT ?? 3000}`;
 
 export function getBaseUrl(): string {
