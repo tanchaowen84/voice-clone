@@ -41,14 +41,14 @@
     "forgotPassword": {
       "title": "忘记密码",
       "email": "邮箱",
-      "send": "发送",
+      "send": "发送重置密码链接",
       "backToLogin": "返回登录",
       "checkEmail": "请检查您的邮箱"
     },
     "resetPassword": {
       "title": "重置密码",
       "password": "密码",
-      "reset": "重置",
+      "reset": "重置密码",
       "backToLogin": "返回登录"
     },
     "error": {
@@ -60,6 +60,7 @@
   },
   "BlogPage": {
     "title": "博客",
+    "subtitle": "来自我们的团队最新新闻和更新",
     "categories": {
       "all": "全部",
       "news": "新闻",

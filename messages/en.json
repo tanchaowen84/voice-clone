@@ -41,14 +41,14 @@
     "forgotPassword": {
       "title": "Forgot Password",
       "email": "Email",
-      "send": "Send",
+      "send": "Send reset link",
       "backToLogin": "Back to login",
       "checkEmail": "Please check your email inbox"
     },
     "resetPassword": {
       "title": "Reset Password",
       "password": "Password",
-      "reset": "Reset",
+      "reset": "Reset password",
       "backToLogin": "Back to login"
     },
     "error": {
@@ -60,6 +60,7 @@
   },
   "BlogPage": {
     "title": "Blog",
+    "subtitle": "Latest news and updates from our team",
     "categories": {
       "all": "All",
       "news": "News",

@@ -108,7 +108,7 @@ interface MainMobileMenuProps {
 function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
   return (
-    <div className="fixed inset-0 z-50 mt-[72px] overflow-y-auto bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 animate-in fade-in-0">
+    <div className="fixed inset-0 z-50 mt-[72px] overflow-y-auto bg-background backdrop-blur-md animate-in fade-in-0">
       <div className="flex size-full flex-col items-start space-y-4 p-4">
         {/* action buttons */}
         <div className="flex w-full flex-col gap-2">

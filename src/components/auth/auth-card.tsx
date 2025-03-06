@@ -31,7 +31,7 @@ export const AuthCard = ({
   className,
 }: AuthCardProps) => {
   return (
-    <Card className={cn("shadow-none", className)}>
+    <Card className={cn("shadow-sm border border-border", className)}>
       <CardHeader className="items-center">
         <Link href="/" prefetch={false}>
           <Logo className="mb-2" />

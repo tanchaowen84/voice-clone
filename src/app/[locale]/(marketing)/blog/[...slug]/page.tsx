@@ -83,7 +83,7 @@ export async function generateMetadata(
 export default async function BlogPostPage(props: NextPageProps) {
   const post = await getBlogPostFromParams(props);
   if (!post) {
-    return notFound();
+    notFound();
   }
 
   const publishDate = post.date;

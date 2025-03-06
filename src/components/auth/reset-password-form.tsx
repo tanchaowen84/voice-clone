@@ -19,7 +19,7 @@ import { ResetPasswordSchema } from "@/lib/schemas";
 import { Routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -28,8 +28,7 @@ export const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   if (!token) {
-    // TODO: Handle the error
-    return <div>Invalid token</div>;
+    notFound();
   }
 
   const router = useRouter();
