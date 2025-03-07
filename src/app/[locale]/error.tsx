@@ -1,7 +1,7 @@
 "use client";
- 
-import {lazy} from "react";
- 
+
+import { lazy } from "react";
+
 /**
  * Move error content to a separate chunk and load it only when needed
  * 

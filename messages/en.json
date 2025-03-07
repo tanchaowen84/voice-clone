@@ -66,5 +66,27 @@
     "tableOfContents": "Table of Contents",
     "all": "All",
     "noPostsFound": "No posts found"
-  }
+  },
+  "mail": {
+		"common": {
+      "team": "{name} Team",
+      "copyright": "Copyright {year} All Rights Reserved."
+		},
+		"verifyEmail": {
+			"title": "Hi, {name}.",
+			"body": "Please click the link below to verify your email address.",
+			"confirmEmail": "Confirm email",
+			"subject": "Verify your email"
+		},
+		"forgotPassword": {
+			"title": "Hi, {name}.",
+			"body": "Please click the link below to reset your password.",
+			"resetPassword": "Reset password",
+			"subject": "Reset your password"
+		},
+		"subscribeNewsletter": {
+			"body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
+			"subject": "Thanks for subscribing"
+		}
+	}
 }

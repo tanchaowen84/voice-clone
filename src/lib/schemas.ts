@@ -191,17 +191,6 @@ export const RegisterSchema = z.object({
   }),
 });
 
-export const ActivateSchema = z.object({
-  name: z.string().min(1, {
-    message: "GitHub username is required",
-  }),
-  license: z.string().min(1, {
-    message: "License key is required",
-  }),
-});
-
-export type ActivateFormData = z.infer<typeof ActivateSchema>;
-
 /**
  * og image schema
  */

@@ -65,7 +65,7 @@ export const ResetPasswordForm = () => {
         router.push(`${Routes.Login}`);
       },
       onError: (ctx) => {
-        console.log("resetPassword, error:", ctx.error);
+        console.error("resetPassword, error:", ctx.error);
         setError(ctx.error.message);
       },
     });

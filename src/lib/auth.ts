@@ -1,14 +1,22 @@
+import { siteConfig } from "@/config/site";
+import db from "@/db/index";
+import { account, session, user, verification } from "@/db/schema";
+import { Locale, LOCALE_COOKIE_NAME, routing } from "@/i18n/routing";
+import { send } from "@/mail/send";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { user, session, account, verification } from "@/db/schema";
-import { siteConfig } from "@/config/site";
-import { resend } from "@/lib/mail";
 import { admin } from "better-auth/plugins";
-import db from "@/db/index";
-import ResetPasswordEmail from "../../emails/reset-password";
-import VerifyEmail from "../../emails/verify-email";
+import { parse as parseCookies } from "cookie";
 
-const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
+const from = process.env.RESEND_FROM || "delivered@resend.dev";
+
+const getLocaleFromRequest = (request?: Request) => {
+	const cookies = parseCookies(request?.headers.get("cookie") ?? "");
+	return (
+		(cookies[LOCALE_COOKIE_NAME] as Locale) ??
+		routing.defaultLocale
+	);
+};
 
 export const auth = betterAuth({
   appName: siteConfig.name,
@@ -32,22 +40,27 @@ export const auth = betterAuth({
     },
     // https://www.better-auth.com/docs/concepts/session-management#session-expiration
     expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
+    updateAge: 60 * 60 * 24, // every 1 day the session expiration is updated
     // https://www.better-auth.com/docs/concepts/session-management#session-freshness
-    freshAge: 60 * 5 // 5 minutes (the session is fresh if created within the last 5 minutes)
+    freshAge: 60 * 5 // the session is fresh if created within the last 5 minutes
   },
   emailAndPassword: {
     enabled: true,
     // https://www.better-auth.com/docs/concepts/email#2-require-email-verification
     requireEmailVerification: true,
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
-    async sendResetPassword({ user, url }) {
-			await resend.emails.send({
-				from,
-				to: user.email,
-				subject: "Reset your password",
-				react: ResetPasswordEmail({ userName: user.name, resetLink: url }),
-			});
+    async sendResetPassword({ user, url }, request) {
+      const locale = getLocaleFromRequest(request);
+      console.log("sendResetPassword, locale:", locale);
+      await send({
+        to: user.email,
+        templateId: "forgotPassword",
+        context: {
+          url,
+          name: user.name,
+        },
+        locale,
+      });
 		},
   },
   emailVerification: {
@@ -55,11 +68,16 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ( { user, url, token }, request) => {
-      await resend.emails.send({
-        from,
+      const locale = getLocaleFromRequest(request);
+      console.log("sendVerificationEmail, locale:", locale);
+      await send({
         to: user.email,
-        subject: "Confirm your email address",
-        react: VerifyEmail({ confirmLink: url }),
+        templateId: "verifyEmail",
+        context: {
+          url,
+          name: user.name,
+        },
+        locale,
       });
     },
   },

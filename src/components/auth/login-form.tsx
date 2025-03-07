@@ -69,7 +69,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
         // router.push(callbackUrl || "/dashboard");
       },
       onError: (ctx) => {
-        console.log("login, error:", ctx.error);
+        console.error("login, error:", ctx.error);
         setError(ctx.error.message);
       },
     });
