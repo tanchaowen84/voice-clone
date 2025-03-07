@@ -2,9 +2,11 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { user, session, account, verification } from "@/db/schema";
 import { siteConfig } from "@/config/site";
-import { resend } from "@/lib/email/resend";
+import { resend } from "@/lib/mail";
 import { admin } from "better-auth/plugins";
 import db from "@/db/index";
+import ResetPasswordEmail from "../../emails/reset-password";
+import VerifyEmail from "../../emails/verify-email";
 
 const from = process.env.BETTER_AUTH_EMAIL || "delivered@resend.dev";
 
@@ -44,7 +46,7 @@ export const auth = betterAuth({
 				from,
 				to: user.email,
 				subject: "Reset your password",
-				react: `Click the link to reset your password: ${url}`,
+				react: ResetPasswordEmail({ userName: user.name, resetLink: url }),
 			});
 		},
   },
@@ -56,8 +58,8 @@ export const auth = betterAuth({
       await resend.emails.send({
         from,
         to: user.email,
-        subject: "Verify your email address",
-        text: `Click the link to verify your email: ${url}`,
+        subject: "Confirm your email address",
+        react: VerifyEmail({ confirmLink: url }),
       });
     },
   },
