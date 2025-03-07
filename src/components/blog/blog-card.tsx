@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getLocaleDate } from "@/lib/utils";
 import { Post } from "content-collections";
 import Image from "next/image";
-import { Link } from "@/i18n/navigation";
+import { LocaleLink } from "@/i18n/navigation";
 
 interface BlogCardProps {
   post: Post;
@@ -16,13 +16,16 @@ export default function BlogCard({ post }: BlogCardProps) {
   const slugParts = post.slugAsParams.split('/');
 
   return (
-    <div className="group cursor-pointer flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
-      {/* Image container - fixed aspect ratio */}
-      <div className="group overflow-hidden relative aspect-[16/9] w-full">
-        <Link href={{
-          pathname: "/blog/[...slug]",
-          params: { slug: slugParts }
-        }}>
+    <LocaleLink 
+      href={{
+        pathname: "/blog/[...slug]",
+        params: { slug: slugParts }
+      }}
+      className="block h-full"
+    >
+      <div className="group flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
+        {/* Image container - fixed aspect ratio */}
+        <div className="group overflow-hidden relative aspect-[16/9] w-full">
           {post.image && (
             <div className="relative w-full h-full">
               <Image
@@ -49,18 +52,13 @@ export default function BlogCard({ post }: BlogCardProps) {
               )}
             </div>
           )}
-        </Link>
-      </div>
+        </div>
 
-      {/* Post info container */}
-      <div className="flex flex-col justify-between p-4 flex-1">
-        <div>
-          {/* Post title */}
-          <h3 className="text-lg line-clamp-2 font-medium">
-            <Link href={{
-              pathname: "/blog/[...slug]",
-              params: { slug: slugParts }
-            }}>
+        {/* Post info container */}
+        <div className="flex flex-col justify-between p-4 flex-1">
+          <div>
+            {/* Post title */}
+            <h3 className="text-lg line-clamp-2 font-medium">
               <span
                 className="bg-gradient-to-r from-green-200 to-green-100 
                   bg-[length:0px_10px] bg-left-bottom bg-no-repeat
@@ -72,46 +70,41 @@ export default function BlogCard({ post }: BlogCardProps) {
               >
                 {post.title}
               </span>
-            </Link>
-          </h3>
+            </h3>
 
-          {/* Post excerpt, hidden for now */}
-          <div className="mt-2">
-            {post.description && (
-              <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
-                <Link href={{
-                  pathname: "/blog/[...slug]",
-                  params: { slug: slugParts }
-                }}>
+            {/* Post excerpt */}
+            <div className="mt-2">
+              {post.description && (
+                <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                   {post.description}
-                </Link>
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Author and date */}
-        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between space-x-4 text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <div className="relative h-8 w-8 flex-shrink-0">
-              {post?.author?.avatar && (
-                <Image
-                  src={post?.author?.avatar}
-                  alt={`avatar for ${post?.author?.name}`}
-                  className="rounded-full object-cover border"
-                  fill
-                />
+                </p>
               )}
             </div>
-            <span className="truncate text-sm">{post?.author?.name}</span>
           </div>
 
-          <time className="truncate text-sm" dateTime={date}>
-            {date}
-          </time>
+          {/* Author and date */}
+          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between space-x-4 text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="relative h-8 w-8 flex-shrink-0">
+                {post?.author?.avatar && (
+                  <Image
+                    src={post?.author?.avatar}
+                    alt={`avatar for ${post?.author?.name}`}
+                    className="rounded-full object-cover border"
+                    fill
+                  />
+                )}
+              </div>
+              <span className="truncate text-sm">{post?.author?.name}</span>
+            </div>
+
+            <time className="truncate text-sm" dateTime={date}>
+              {date}
+            </time>
+          </div>
         </div>
       </div>
-    </div>
+    </LocaleLink>
   );
 }
 

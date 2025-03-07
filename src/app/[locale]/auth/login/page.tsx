@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { siteConfig } from "@/config/site";
-import { Link } from "@/i18n/navigation";
+import { LocaleLink } from "@/i18n/navigation";
 import { constructMetadata } from "@/lib/metadata";
 import { Routes } from "@/routes";
 import { useTranslations } from "next-intl";
@@ -22,19 +22,19 @@ const LoginPage = () => {
       <LoginForm />
       <div className="text-balance text-center text-xs text-muted-foreground">
         {t("byClickingContinue")}
-        <Link
+        <LocaleLink
           href={Routes.TermsOfService as any}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t("termsOfService")}
-        </Link>{" "}
+        </LocaleLink>{" "}
         {t("and")}{" "}
-        <Link
+        <LocaleLink
           href={Routes.PrivacyPolicy as any}
           className="underline underline-offset-4 hover:text-primary"
         >
           {t("privacyPolicy")}
-        </Link>
+        </LocaleLink>
       </div>
     </div>
   );

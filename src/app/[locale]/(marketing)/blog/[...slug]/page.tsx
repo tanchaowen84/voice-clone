@@ -1,7 +1,7 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/marketing/blog/mdx-component';
-import { Link } from '@/i18n/navigation';
+import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/toc';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { getLocaleDate } from '@/lib/utils';
@@ -10,9 +10,9 @@ import { allPosts } from 'content-collections';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import '@/styles/mdx.css';
-import { getTranslations } from 'next-intl/server';
 
 /**
  * Gets the blog post from the params
@@ -162,7 +162,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                 {post.categories?.filter(Boolean).map((category) => (
                   category && (
                     <li key={category.slug}>
-                      <Link
+                      <LocaleLink
                         href={{
                           pathname: "/blog/category/[slug]",
                           params: { slug: category.slug }
@@ -170,7 +170,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                         className="text-sm link-underline"
                       >
                         {category.name}
-                      </Link>
+                      </LocaleLink>
                     </li>
                   )
                 ))}

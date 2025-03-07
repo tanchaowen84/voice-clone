@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "@/i18n/navigation";
+import { LocaleLink } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth-client";
 import { LoginSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
@@ -117,12 +117,12 @@ export const LoginForm = ({ className }: { className?: string }) => {
                       asChild
                       className="px-0 font-normal text-muted-foreground"
                     >
-                      <Link
+                      <LocaleLink
                         href={`${Routes.ForgotPassword}`}
                         className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
                       >
                         {t("forgotPassword")}
-                      </Link>
+                      </LocaleLink>
                     </Button>
                   </div>
                   <FormControl>

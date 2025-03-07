@@ -24,10 +24,20 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
+/**
+ * https://www.better-auth.com/docs/authentication/email-password#forget-password
+ */
 export const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   if (!token) {
+    notFound();
+  }
+
+  // If the token is valid, the user will be redirected to this URL with the token in the query string. 
+  // If the token is invalid, the user will be redirected to this URL with an error message in the query string ?error=invalid_token.
+  // TODO: check if the token is valid, show error message instead of redirecting to the 404 page
+  if (searchParams.get("error") === "invalid_token") {
     notFound();
   }
 

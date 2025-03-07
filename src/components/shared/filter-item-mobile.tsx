@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Link } from "@/i18n/navigation";
+import { LocaleLink } from "@/i18n/navigation";
 
 interface FilterItemMobileProps {
   title: string;
@@ -18,8 +18,8 @@ export default function FilterItemMobile({
 }: FilterItemMobileProps) {
   return (
     <li className="mb-1 last:mb-0">
-      <Link
-        href={href as any}
+      <LocaleLink
+        href={href}
         onClick={clickAction}
         className={cn(
           "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-muted",
@@ -27,7 +27,7 @@ export default function FilterItemMobile({
         )}
       >
         {title}
-      </Link>
+      </LocaleLink>
     </li>
   );
 } 

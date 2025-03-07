@@ -45,12 +45,7 @@ export default async function BlogPage({
   const totalCount = filteredPosts.length;
   const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
 
-  console.log(
-    "BlogPage, totalCount",
-    totalCount,
-    ", totalPages",
-    totalPages,
-  );
+  // console.log("BlogPage, totalCount", totalCount, ", totalPages", totalPages,);
 
   return (
     <div>

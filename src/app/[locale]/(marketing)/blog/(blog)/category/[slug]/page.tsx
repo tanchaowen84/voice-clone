@@ -64,7 +64,7 @@ export default async function BlogCategoryPage({
       if (!post.published || post.locale !== locale) {
         return false;
       }
-      
+
       // Check if any of the post's categories match the current category slug
       return post.categories.some(category => category && category.slug === slug);
     }
@@ -80,12 +80,7 @@ export default async function BlogCategoryPage({
   const totalCount = filteredPosts.length;
   const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
 
-  console.log(
-    "BlogCategoryPage, totalCount",
-    totalCount,
-    ", totalPages",
-    totalPages,
-  );
+  // console.log("BlogCategoryPage, totalCount", totalCount, ", totalPages", totalPages);
 
   return (
     <div>

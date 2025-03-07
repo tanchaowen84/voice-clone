@@ -33,17 +33,10 @@ export const routing = defineRouting({
   localePrefix: "as-needed",
   // The pathnames for each locale
   // https://next-intl.dev/docs/routing#pathnames
+  // whenever use pathname in LocaleLink, you need to add it here
   pathnames: {
-    "/": "/",
-    "/blog": "/blog",
     "/blog/[...slug]": "/blog/[...slug]",
     "/blog/category/[slug]": "/blog/category/[slug]",
-    // 认证相关路径
-    "/auth/login": "/auth/login",
-    "/auth/register": "/auth/register",
-    "/auth/forgot-password": "/auth/forgot-password",
-    "/auth/reset-password": "/auth/reset-password",
-    "/auth/error": "/auth/error",
   },
 });
 
