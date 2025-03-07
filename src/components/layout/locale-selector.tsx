@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocalePathname, useLocaleRouter } from "@/i18n/navigation";
 import {
   DEFAULT_LOCALE,
   Locale,
@@ -30,8 +30,8 @@ import { useEffect, useTransition } from "react";
  * https://next-intl.dev/docs/routing/navigation#userouter
  */
 export default function LocaleSelector() {
-  const router = useRouter();
-  const pathname = usePathname();
+  const router = useLocaleRouter();
+  const pathname = useLocalePathname();
   const params = useParams();
   const locale = useLocale();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
