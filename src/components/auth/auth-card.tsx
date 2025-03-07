@@ -12,6 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { LocaleLink } from "@/i18n/navigation";
 
 interface AuthCardProps {
   children: React.ReactNode;
@@ -33,9 +34,9 @@ export const AuthCard = ({
   return (
     <Card className={cn("shadow-sm border border-border", className)}>
       <CardHeader className="items-center">
-        <Link href="/" prefetch={false}>
+        <LocaleLink href="/" prefetch={false}>
           <Logo className="mb-2" />
-        </Link>
+        </LocaleLink>
         <CardDescription>{headerLabel}</CardDescription>
       </CardHeader>
       <CardContent>

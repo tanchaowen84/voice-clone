@@ -19,6 +19,7 @@ import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
 import LocaleSelector from '@/components/layout/locale-selector';
+import { LocaleLink } from '@/i18n/navigation';
 
 export function NavbarMobile({
   className,
@@ -63,10 +64,10 @@ export function NavbarMobile({
         {...other}
       >
         {/* navbar left shows logo */}
-        <Link href={Routes.Root} className="flex items-center gap-2">
+        <LocaleLink href={Routes.Root as any} className="flex items-center gap-2">
           <Logo />
           <span className="text-xl font-semibold">{siteConfig.name}</span>
-        </Link>
+        </LocaleLink>
 
         {/* navbar right shows menu icon */}
         <Button
@@ -112,8 +113,8 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
       <div className="flex size-full flex-col items-start space-y-4 p-4">
         {/* action buttons */}
         <div className="flex w-full flex-col gap-2">
-          <Link
-            href={Routes.Login}
+          <LocaleLink
+            href={Routes.Login as any}
             onClick={onLinkClicked}
             className={cn(
               buttonVariants({
@@ -124,9 +125,9 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
             )}
           >
             Log in
-          </Link>
-          <Link
-            href={Routes.Register}
+          </LocaleLink>
+          <LocaleLink
+            href={Routes.Register as any}
             className={cn(
               buttonVariants({
                 variant: 'default',
@@ -137,7 +138,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
             onClick={onLinkClicked}
           >
             Sign up
-          </Link>
+          </LocaleLink>
         </div>
 
         {/* main menu */}

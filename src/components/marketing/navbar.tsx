@@ -27,6 +27,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRightIcon } from 'lucide-react';
 import LocaleSelector from '@/components/layout/locale-selector';
+import { LocaleLink } from '@/i18n/navigation';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -60,10 +61,10 @@ export function Navbar({ scroll, config }: NavBarProps) {
         <nav className="hidden lg:flex">
           {/* logo and name */}
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-2">
+            <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
               <span className="text-xl font-semibold">{siteConfig.name}</span>
-            </a>
+            </LocaleLink>
           </div>
 
           {/* menu links */}
@@ -173,9 +174,9 @@ export function Navbar({ scroll, config }: NavBarProps) {
                   size="sm"
                   asChild
                 >
-                  <a href={Routes.Register}>
+                  <LocaleLink href={Routes.Register as any}>
                     Sign up
-                  </a>
+                  </LocaleLink>
                 </Button>
               </div>
             )}
