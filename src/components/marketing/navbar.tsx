@@ -180,8 +180,8 @@ export function Navbar({ scroll, config }: NavBarProps) {
               </div>
             )}
 
-            {/* <ThemeSwitcher /> */}
             <LocaleSelector />
+            <ThemeSwitcher />
           </div>
         </nav>
 
