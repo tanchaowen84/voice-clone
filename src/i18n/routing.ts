@@ -35,6 +35,9 @@ export const routing = defineRouting({
   // https://next-intl.dev/docs/routing#pathnames
   // whenever use pathname in LocaleLink, you need to add it here
   pathnames: {
+    // used in sietmap.ts
+    "/": "/",
+    // used in blog pages
     "/blog/[...slug]": "/blog/[...slug]",
     "/blog/category/[slug]": "/blog/category/[slug]",
   },

@@ -6,5 +6,5 @@ import { routing } from "./routing";
  * 
  * https://next-intl.dev/docs/routing/navigation
  */
-export const { Link: LocaleLink, getPathname, redirect, usePathname, useRouter } =
+export const { Link: LocaleLink, getPathname: getLocalePathname, redirect, usePathname, useRouter } =
   createNavigation(routing);
