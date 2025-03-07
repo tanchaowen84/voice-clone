@@ -7,7 +7,6 @@ import { codeImport } from 'remark-code-import';
 import remarkGfm from 'remark-gfm';
 import { createHighlighter } from 'shiki';
 import path from "path";
-import { getBaseUrl } from "@/lib/urls/get-base-url";
 import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
 
 /**
@@ -41,7 +40,6 @@ export const authors = defineCollection({
     return {
       ...data,
       locale,
-      avatar: getBaseUrl() + data.avatar
     };
   }
 });
@@ -157,7 +155,6 @@ export const posts = defineCollection({
       locale,
       author: blogAuthor,
       categories: blogCategories,
-      image: getBaseUrl() + data.image,
       slug: `/${slugPath}`,
       slugAsParams,
       body: {
