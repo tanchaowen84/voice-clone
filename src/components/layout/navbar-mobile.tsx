@@ -189,7 +189,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                             onClick={onLinkClicked}
                           >
                             <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
-                              {subItem.icon}
+                              {subItem.icon ? subItem.icon : null}
                             </div>
                             <div className="flex-1">
                               <span className="text-sm font-medium">

@@ -4,7 +4,7 @@
   },
   "NotFoundPage": {
     "title": "404",
-    "message": "抱歉，您正在寻找的页面不存在。",
+    "message": "抱歉，您正在寻找的页面不存在",
     "backToHome": "返回首页"
   },
   "ErrorPage": {
@@ -53,7 +53,7 @@
     },
     "error": {
       "title": "哎呀！出错了！",
-      "tryAgain": "请重试。",
+      "tryAgain": "请重试",
       "backToLogin": "返回登录",
       "checkEmail": "请检查您的邮箱"
     }

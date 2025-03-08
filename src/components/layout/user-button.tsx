@@ -19,30 +19,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AVATAR_LINKS } from "@/config/marketing";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { LocaleLink, useLocaleRouter } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth-client";
 import { LogOutIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
-  // console.log('UserButton, user:', user);
-  // if (error) {
-  //   console.error("UserButton, error:", error);
-  //   return (
-  //     <div className="size-8 animate-pulse rounded-full border bg-muted" />
-  //   );
-  // }
-
-  const isAdmin = user?.role === "admin";
 
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
           console.log("sign out success");
-          router.push("/");
+          localeRouter.push("/");
         },
         onError: (error) => {
           console.error("sign out error:", error);
@@ -52,14 +43,14 @@ export function UserButton() {
     });
   };
 
-  const router = useRouter();
+  const localeRouter = useLocaleRouter();
   const [open, setOpen] = useState(false);
   const closeDrawer = () => {
     setOpen(false);
   };
 
   const { isMobile } = useMediaQuery();
-
+  
   // Mobile View, use Drawer
   if (isMobile) {
     return (
@@ -68,7 +59,7 @@ export function UserButton() {
           <UserAvatar
             name={user?.name || undefined}
             image={user?.image || undefined}
-            className="size-8 border"
+            className="size-10 border"
           />
         </DrawerTrigger>
         <DrawerPortal>
@@ -81,7 +72,7 @@ export function UserButton() {
               <UserAvatar
                 name={user?.name || undefined}
                 image={user?.image || undefined}
-                className="size-8 border"
+                className="size-10 border"
               />
               <div className="flex flex-col">
                 {user?.name && <p className="font-medium">{user.name}</p>}
@@ -96,16 +87,17 @@ export function UserButton() {
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
               {AVATAR_LINKS.map((item) => (
                 <li
-                  key={item.name}
+                  key={item.title}
                   className="rounded-lg text-foreground hover:bg-muted"
                 >
-                  <a href={item.href}
+                  <LocaleLink 
+                    href={item.href || "#"}
                     onClick={closeDrawer}
                     className="flex w-full items-center gap-3 px-2.5 py-2"
                   >
-                    {React.cloneElement(item.icon, { className: "size-4" })}
-                    <p className="text-sm">{item.name}</p>
-                  </a>
+                    {item.icon ? item.icon : null}
+                    <p className="text-sm">{item.title}</p>
+                  </LocaleLink>
                 </li>
               ))}
 
@@ -139,7 +131,7 @@ export function UserButton() {
         <UserAvatar
           name={user?.name || undefined}
           image={user?.image || undefined}
-          className="size-8 border"
+          className="size-10 border"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -157,16 +149,18 @@ export function UserButton() {
 
         {AVATAR_LINKS.map((item) => (
           <DropdownMenuItem
-            key={item.name}
+            key={item.title}
             asChild
             className="cursor-pointer"
             onClick={() => {
-              router.push(item.href);
+              if (item.href) {
+                localeRouter.push(item.href);
+              }
             }}
           >
             <div className="flex items-center space-x-2.5">
-              {React.cloneElement(item.icon, { className: "size-4" })}
-              <p className="text-sm">{item.name}</p>
+              {item.icon ? item.icon : null}
+              <p className="text-sm">{item.title}</p>
             </div>
           </DropdownMenuItem>
         ))}
