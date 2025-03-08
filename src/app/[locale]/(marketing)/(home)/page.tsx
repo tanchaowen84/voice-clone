@@ -27,19 +27,19 @@ export default async function HomePage(props: HomePageProps) {
 
         {/* <Features /> */}
 
-        <FeaturesSection />
+        {/* <FeaturesSection /> */}
 
-        <ContentSection />
+        {/* <ContentSection /> */}
 
         <Pricing />
 
-        <FAQs />
+        {/* <FAQs />
 
-        <WallOfLoveSection />
+        <WallOfLoveSection /> */}
 
-        <StatsSection />
+        {/* <StatsSection />
 
-        <CallToAction />
+        <CallToAction /> */}
       </div>
     </>
   );

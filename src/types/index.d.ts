@@ -1,4 +1,5 @@
 import type { Icons } from "@/components/icons/icons";
+import type { ReactNode } from "react";
 
 /**
  * utm parameters
@@ -14,17 +15,26 @@ export type SiteConfig = {
   url: string;
   image: string;
   mail: string;
-  links: {
-    github?: string;
-    twitter?: string;
-    bluesky?: string;
-    youtube?: string;
-    docs?: string;
-    demo?: string;
-    studio?: string;
-    showcase?: string;
-  };
 };
+
+export type MenuItem = {
+  title: string;
+  description?: string;
+  icon?: ReactNode;
+  href?: string;
+  external?: boolean;
+};
+
+export type NestedMenuItem = {
+  title: string;
+  description?: string;
+  icon?: ReactNode;
+  href?: string;
+  external?: boolean;
+  items?: MenuItem[];
+};
+
+// marketing config //
 
 export type HeroConfig = {
   title: {

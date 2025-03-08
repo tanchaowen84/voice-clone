@@ -3,6 +3,7 @@
  */
 export enum Routes {
   Root = '/',
+  DefaultLoginRedirect = '/dashboard',
   
   Features = '/#features',
   Pricing = '/#pricing',
@@ -13,15 +14,12 @@ export enum Routes {
   CookiePolicy = '/cookie-policy',
 
   Blog = '/blog',
-  Docs = '/docs',
   Changelog = '/changelog',
-  Roadmap = 'https://mksaas.canny.io',
+  Roadmap = 'https://mksaas.featurebase.app',
 
   About = '/about',
   Contact = '/contact',
   Waitlist = '/waitlist',
-  Story = '/story',
-  Careers = '/careers',
 
   Login = '/auth/login',
   Register = '/auth/register',
@@ -29,48 +27,13 @@ export enum Routes {
   ForgotPassword = '/auth/forgot-password',
   ResetPassword = '/auth/reset-password',
 
-  Auth = '/auth',
-  Logout = '/auth/logout',
-  Totp = '/auth/totp',
-  RecoveryCode = '/auth/recovery-code',
-  ChangeEmail = '/auth/change-email',
-  ChangeEmailRequest = '/auth/change-email/request',
-  ChangeEmailInvalid = '/auth/change-email/invalid',
-  ChangeEmailExpired = '/auth/change-email/expired',
-  // ForgotPassword = '/auth/forgot-password',
-  ForgotPasswordSuccess = '/auth/forgot-password/success',
-  // ResetPassword = '/auth/reset-password',
-  ResetPasswordRequest = '/auth/reset-password/request',
-  ResetPasswordExpired = '/auth/reset-password/expired',
-  ResetPasswordSuccess = '/auth/reset-password/success',
-  VerifyEmail = '/auth/verify-email',
-  VerifyEmailRequest = '/auth/verify-email/request',
-  VerifyEmailExpired = '/auth/verify-email/expired',
-  VerifyEmailSuccess = '/auth/verify-email/success',
-
   Dashboard = '/dashboard',
-  Home = '/dashboard/home',
-  Contacts = '/dashboard/contacts',
   Settings = '/dashboard/settings',
-  Account = '/dashboard/settings/account',
-  Profile = '/dashboard/settings/account/profile',
-  Security = '/dashboard/settings/account/security',
-  Notifications = '/dashboard/settings/account/notifications',
-  Organization = '/dashboard/settings/organization',
-  OrganizationInformation = '/dashboard/settings/organization/information',
-  Members = '/dashboard/settings/organization/members',
-  Billing = '/dashboard/settings/organization/billing',
-  Developers = '/dashboard/settings/organization/developers',
 
-  Invitations = '/invitations',
-  InvitationRequest = '/invitations/request',
-  InvitationAlreadyAccepted = '/invitations/already-accepted',
-  InvitationRevoked = '/invitations/revoked',
-  InvitationLogOutToAccept = '/invitations/log-out-to-accept',
-
-  Onboarding = '/onboarding',
-
-  DefaultLoginRedirect = '/dashboard',
+  AIText = '/dashboard/features/ai-text',
+  AIImage = '/dashboard/features/ai-image',
+  AIVideo = '/dashboard/features/ai-video',
+  AIAudio = '/dashboard/features/ai-audio',
 }
 
 /**
@@ -81,14 +44,11 @@ export enum Routes {
 export const publicRoutes = [
   "/",
 
-  // blog
-  "/blog(/.*)?",
-
   // pages
+  "/blog(/.*)?",
   "/terms-of-service(/.*)?",
   "/privacy-policy(/.*)?",
   "/cookie-policy(/.*)?",
-
   "/about(/.*)?",
   "/contact(/.*)?",
   "/waitlist(/.*)?",

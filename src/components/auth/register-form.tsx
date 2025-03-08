@@ -79,7 +79,7 @@ export const RegisterForm = () => {
   return (
     <AuthCard
       headerLabel={t("createAccount")}
-      bottomButtonLabel={t("signIn")}
+      bottomButtonLabel={t("signInHint")}
       bottomButtonHref={`${Routes.Login}`}
       showSocialLoginButton
       className="border-none"

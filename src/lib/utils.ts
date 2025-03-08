@@ -72,10 +72,26 @@ export function getLocaleDate(input: string | number): string {
  * @param request - The request to get the locale from
  * @returns The locale from the request or the default locale
  */
-export const getLocaleFromRequest = (request?: Request) => {
+export function getLocaleFromRequest(request?: Request): Locale {
   const cookies = parseCookies(request?.headers.get("cookie") ?? "");
   return (
     (cookies[LOCALE_COOKIE_NAME] as Locale) ??
     routing.defaultLocale
   );
 };
+
+/**
+ * Estimates the reading time of a text
+ * 
+ * @param text - The text to estimate the reading time of
+ * @param wordsPerMinute - The number of words per minute to use for the estimate
+ * @returns The estimated reading time
+ */
+export function estimateReadingTime(
+  text: string,
+  wordsPerMinute: number = 250
+): string {
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return minutes === 1 ? '1 minute read' : `${minutes} minutes read`;
+}

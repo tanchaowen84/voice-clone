@@ -1,6 +1,5 @@
+import { getBaseUrl } from "@/lib/urls/get-base-url";
 import type { SiteConfig } from "@/types";
-
-const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
 export const siteConfig: SiteConfig = {
   name: "MkSaaS",
@@ -17,17 +16,7 @@ export const siteConfig: SiteConfig = {
     "SaaS Website Builder",
   ],
   author: "MkSaaS",
-  url: SITE_URL ?? "",
-  image: `${SITE_URL}/og.png`,
+  url: getBaseUrl(),
+  image: `${getBaseUrl()}/og.png`,
   mail: "support@mksaas.com",
-  links: {
-    twitter: "https://x.com/javay_hu",
-    bluesky: "https://bsky.app/profile/javayhu.com",
-    github: "https://github.com/MkSaaSHQ",
-    youtube: "https://www.youtube.com/@MkSaaSHQ",
-    docs: "https://docs.mksaas.com",
-    demo: "https://demo.mksaas.com",
-    studio: "https://demo.mksaas.com/studio",
-    showcase: "https://mksaas.com/showcase",
-  },
 };

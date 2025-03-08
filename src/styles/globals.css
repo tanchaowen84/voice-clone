@@ -50,10 +50,22 @@
 }
 
 @layer base {
+  html {
+    /* prevent the layout from shifting when the scrollbar appears or disappears. */
+    scrollbar-gutter: stable;
+  }
+  
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .link-underline-animation {
+    @apply relative underline underline-offset-4 decoration-transparent decoration-2
+          hover:decoration-primary hover:text-primary transition-all duration-300 ease-in-out;
   }
 }

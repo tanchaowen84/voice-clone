@@ -1,16 +1,17 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
-import { Mdx } from '@/components/marketing/blog/mdx-component';
+import { Mdx } from '@/components/shared/mdx-component';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/toc';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
-import { getLocaleDate } from '@/lib/utils';
+import { estimateReadingTime, getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
+import { CalendarIcon, ClockIcon } from 'lucide-react';
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
 
 import '@/styles/mdx.css';
 
@@ -35,28 +36,28 @@ async function getBlogPostFromParams(props: NextPageProps) {
   if (!params) {
     return null;
   }
-  
+
   const locale = params.locale as string;
   const slug =
     (Array.isArray(params.slug) ? params.slug?.join('/') : params.slug) || '';
-  
+
   // Find post with matching slug and locale
   const post = allPosts.find(
-    (post) => 
-      (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')) && 
+    (post) =>
+      (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')) &&
       post.locale === locale
   );
-  
+
   if (!post) {
     // If no post found with the current locale, try to find one with the default locale
     const defaultPost = allPosts.find(
-      (post) => 
+      (post) =>
         (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index'))
     );
-    
+
     return defaultPost;
   }
-  
+
   return post;
 }
 
@@ -113,6 +114,18 @@ export default async function BlogPostPage(props: NextPageProps) {
               )}
             </div>
 
+            {/* blog post date */}
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="size-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">{date}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <ClockIcon className="size-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">{estimateReadingTime(post.body.raw)}</p>
+              </div>
+            </div>
+
             {/* blog post title */}
             <h1 className="text-3xl font-bold">{post.title}</h1>
 
@@ -135,9 +148,9 @@ export default async function BlogPostPage(props: NextPageProps) {
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* author info */}
             <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">{t("publisher")}</h2>
+              <h2 className="text-lg font-semibold mb-4">{t("author")}</h2>
               <div className="flex items-center gap-4">
-                <div className="relative h-12 w-12 flex-shrink-0">
+                <div className="relative h-8 w-8 flex-shrink-0">
                   {post.author?.avatar && (
                     <Image
                       src={post.author.avatar}
@@ -147,11 +160,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                     />
                   )}
                 </div>
-                <div>
-                  <span>{post.author?.name}</span>
-
-                  <p className="text-sm text-muted-foreground">{date}</p>
-                </div>
+                <span className="line-clamp-1">{post.author?.name}</span>
               </div>
             </div>
 
@@ -164,7 +173,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                     <li key={category.slug}>
                       <LocaleLink
                         href={`/blog/category/${category.slug}`}
-                        className="text-sm link-underline"
+                        className="text-sm link-underline-animation"
                       >
                         {category.name}
                       </LocaleLink>
