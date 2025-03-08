@@ -1,15 +1,14 @@
 "use client";
 
-import { Icons } from "@/components/icons/icons";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import {
   Drawer,
-  DrawerTrigger,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
   DrawerPortal,
-  DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
   DropdownMenu,
@@ -18,12 +17,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { userButtonConfig } from "@/config/user-button";
+import { AVATAR_LINKS } from "@/config/marketing";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { authClient } from "@/lib/auth-client";
 import { LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import React, { useState } from "react";
 
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
@@ -95,38 +94,20 @@ export function UserButton() {
             </div>
 
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
-              {userButtonConfig.menus.map((item) => {
-                const Icon = Icons[item.icon || "arrowRight"];
-                return (
-                  <li
-                    key={item.href}
-                    className="rounded-lg text-foreground hover:bg-muted"
-                  >
-                    <a href={item.href}
-                      onClick={closeDrawer}
-                      className="flex w-full items-center gap-3 px-2.5 py-2"
-                    >
-                      <Icon className="size-4" />
-                      <p className="text-sm">{item.title}</p>
-                    </a>
-                  </li>
-                );
-              })}
-
-              {isAdmin && (
+              {AVATAR_LINKS.map((item) => (
                 <li
-                  key='admin'
+                  key={item.name}
                   className="rounded-lg text-foreground hover:bg-muted"
                 >
-                  <a href="/admin"
+                  <a href={item.href}
                     onClick={closeDrawer}
                     className="flex w-full items-center gap-3 px-2.5 py-2"
                   >
-                    <Icons.admin className="size-4" />
-                    <p className="text-sm">Admin</p>
+                    {React.cloneElement(item.icon, { className: "size-4" })}
+                    <p className="text-sm">{item.name}</p>
                   </a>
                 </li>
-              )}
+              ))}
 
               <li
                 key="logout"
@@ -174,40 +155,21 @@ export function UserButton() {
         </div>
         <DropdownMenuSeparator />
 
-        {userButtonConfig.menus.map((item) => {
-          const Icon = Icons[item.icon || "arrowRight"];
-          return (
-            <DropdownMenuItem
-              key={item.href}
-              asChild
-              className="cursor-pointer"
-              onClick={() => {
-                router.push(item.href);
-              }}
-            >
-              <div className="flex items-center space-x-2.5">
-                <Icon className="size-4" />
-                <p className="text-sm">{item.title}</p>
-              </div>
-            </DropdownMenuItem>
-          );
-        })}
-
-        {isAdmin && (
+        {AVATAR_LINKS.map((item) => (
           <DropdownMenuItem
-            key="admin"
+            key={item.name}
             asChild
             className="cursor-pointer"
             onClick={() => {
-              router.push("/admin");
+              router.push(item.href);
             }}
           >
             <div className="flex items-center space-x-2.5">
-              <Icons.admin className="size-4" />
-              <p className="text-sm">Admin</p>
+              {React.cloneElement(item.icon, { className: "size-4" })}
+              <p className="text-sm">{item.name}</p>
             </div>
           </DropdownMenuItem>
-        )}
+        ))}
 
         <DropdownMenuSeparator />
         <DropdownMenuItem

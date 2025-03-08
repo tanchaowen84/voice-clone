@@ -2,11 +2,11 @@
 
 import { LoginWrapper } from '@/components/auth/login-button';
 import Container from '@/components/container';
+import LocaleSelector from '@/components/layout/locale-selector';
+import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { ThemeSwitcher } from '@/components/layout/theme-switcher';
 import { UserButton } from '@/components/layout/user-button';
 import { Logo } from '@/components/logo';
-import { MENU_LINKS } from '@/config/marketing-links';
-import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -17,21 +17,19 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
+import { MENU_LINKS } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
 import { useScroll } from "@/hooks/use-scroll";
+import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
-import { MarketingConfig } from '@/types';
+import { ArrowUpRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowUpRightIcon } from 'lucide-react';
-import LocaleSelector from '@/components/layout/locale-selector';
-import { LocaleLink } from '@/i18n/navigation';
 
 interface NavBarProps {
   scroll?: boolean;
-  config: MarketingConfig;
 }
 
 const customNavigationMenuTriggerStyle = cn(
@@ -39,7 +37,7 @@ const customNavigationMenuTriggerStyle = cn(
   "bg-transparent hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[active]:bg-transparent data-[active]:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary relative data-[active]:font-bold dark:text-gray-400 dark:hover:text-gray-300 dark:data-[active]:text-white"
 );
 
-export function Navbar({ scroll, config }: NavBarProps) {
+export function Navbar({ scroll }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
@@ -51,8 +49,8 @@ export function Navbar({ scroll, config }: NavBarProps) {
     <section className={cn(
       "sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300",
       scroll ? (
-        scrolled 
-          ? "bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60" 
+        scrolled
+          ? "bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60"
           : "bg-background"
       ) : "border-b bg-background"
     )}>
@@ -88,13 +86,13 @@ export function Navbar({ scroll, config }: NavBarProps) {
                         {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <ul className="w-96 list-none p-2">
+                        <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                           {item.items.map((subItem, subIndex) => (
                             <li key={subIndex}>
                               <NavigationMenuLink asChild>
                                 <Link
                                   href={subItem.href || '#'}
-                                  target={ subItem.external ? '_blank' : undefined }
+                                  target={subItem.external ? '_blank' : undefined}
                                   rel={
                                     subItem.external
                                       ? 'noopener noreferrer'
@@ -181,8 +179,8 @@ export function Navbar({ scroll, config }: NavBarProps) {
               </div>
             )}
 
-            <LocaleSelector />
             <ThemeSwitcher />
+            <LocaleSelector />
           </div>
         </nav>
 

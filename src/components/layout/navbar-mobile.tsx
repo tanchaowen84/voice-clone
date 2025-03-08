@@ -1,25 +1,26 @@
 'use client';
 
+import LocaleSelector from '@/components/layout/locale-selector';
+import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
 import { Logo } from '@/components/logo';
-import { MENU_LINKS } from '@/config/marketing-links';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger
 } from '@/components/ui/collapsible';
+import { MENU_LINKS } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
-import { Routes } from '@/routes';
+import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
 import { ArrowUpRightIcon, ChevronDown, ChevronUp, MenuIcon, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
-import LocaleSelector from '@/components/layout/locale-selector';
-import { LocaleLink } from '@/i18n/navigation';
+import { UserButton } from './user-button';
 
 export function NavbarMobile({
   className,
@@ -69,20 +70,23 @@ export function NavbarMobile({
         </LocaleLink>
 
         {/* navbar right shows menu icon */}
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-expanded={open}
-          aria-label="Toggle Mobile Menu"
-          onClick={handleToggleMobileMenu}
-          className="flex aspect-square h-fit select-none items-center justify-center rounded-md border"
-        >
-          {open ? (
-            <X className="size-8" />
-          ) : (
-            <MenuIcon className="size-8" />
-          )}
-        </Button>
+        <div className="flex items-center gap-4">
+          <UserButton />
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-expanded={open}
+            aria-label="Toggle Mobile Menu"
+            onClick={handleToggleMobileMenu}
+            className="flex aspect-square h-fit select-none items-center justify-center rounded-md border"
+          >
+            {open ? (
+              <X className="size-8" />
+            ) : (
+              <MenuIcon className="size-8" />
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* mobile menu */}

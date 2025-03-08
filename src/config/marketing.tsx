@@ -1,0 +1,238 @@
+import { BlueskyIcon } from '@/components/icons/bluesky';
+import { FacebookIcon } from '@/components/icons/facebook';
+import { GitHubIcon } from '@/components/icons/github';
+import { InstagramIcon } from '@/components/icons/instagram';
+import { LinkedInIcon } from '@/components/icons/linkedin';
+import { TikTokIcon } from '@/components/icons/tiktok';
+import { TwitterIcon } from '@/components/icons/twitter';
+import { YouTubeIcon } from '@/components/icons/youtube';
+import { Routes } from '@/routes';
+import { CubeIcon, DashboardIcon, PaperPlaneIcon } from '@radix-ui/react-icons';
+import {
+  BookOpenIcon,
+  FileBarChartIcon,
+  LayoutIcon,
+  MailIcon,
+  PlayIcon,
+  SettingsIcon,
+} from 'lucide-react';
+
+/**
+ * list all the menu links here, you can customize the links as you want
+ */
+export const MENU_LINKS = [
+  {
+    title: 'Features',
+    href: Routes.Pricing,
+    external: false
+  },
+  {
+    title: 'Pricing',
+    href: Routes.Pricing,
+    external: false
+  },
+  {
+    title: 'Blog',
+    href: Routes.Blog,
+    external: false
+  },
+  {
+    title: 'AI',
+    items: [
+      {
+        title: 'Features',
+        description: 'Short description here',
+        icon: <CubeIcon className="size-5 shrink-0" />,
+        href: Routes.Features,
+        external: false
+      },
+      {
+        title: 'Pricing',
+        description: 'Short description here',
+        icon: <PlayIcon className="size-5 shrink-0" />,
+        href: Routes.Pricing,
+        external: false
+      },
+      {
+        title: 'FAQ',
+        description: 'Short description here',
+        icon: <LayoutIcon className="size-5 shrink-0" />,
+        href: Routes.FAQ,
+        external: false
+      },
+      {
+        title: 'Roadmap',
+        description: 'Short description here',
+        icon: <FileBarChartIcon className="size-5 shrink-0" />,
+        href: Routes.Roadmap,
+        external: true
+      }
+    ]
+  },
+  {
+    title: 'Pages',
+    items: [
+      {
+        title: 'About',
+        description: 'Short description here',
+        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        href: Routes.About,
+        external: false
+      },
+      {
+        title: 'Contact',
+        description: 'Short description here',
+        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        href: Routes.Contact,
+        external: false
+      },
+      {
+        title: 'Waitlist',
+        description: 'Short description here',
+        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        href: Routes.Waitlist,
+        external: false
+      },
+      {
+        title: 'Changelog',
+        description: 'Short description here',
+        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        href: Routes.Changelog,
+        external: false
+      },
+      {
+        title: 'Roadmap',
+        description: 'Short description here',
+        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        href: Routes.Roadmap,
+        external: true
+      },
+      {
+        title: 'Cookie Policy',
+        description: 'Short description here',
+        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        href: Routes.CookiePolicy,
+        external: false
+      },
+      {
+        title: 'Privacy Policy',
+        description: 'Short description here',
+        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        href: Routes.PrivacyPolicy,
+        external: false
+      },
+      {
+        title: 'Terms of Service',
+        description: 'Short description here',
+        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        href: Routes.TermsOfService,
+        external: false
+      }
+    ]
+  },
+];
+
+/**
+ * list all the footer links here, you can customize the links as you want
+ */
+export const FOOTER_LINKS = [
+  {
+    title: 'Product',
+    links: [
+      { name: 'Features', href: Routes.Features, external: false },
+      { name: 'Pricing', href: Routes.Pricing, external: false },
+      { name: 'FAQ', href: Routes.FAQ, external: false },
+    ]
+  },
+  {
+    title: 'Resources',
+    links: [
+      { name: 'Blog', href: Routes.Blog, external: false },
+      { name: 'Changelog', href: Routes.Changelog, external: false },
+      { name: 'Roadmap', href: Routes.Roadmap, external: true },
+    ]
+  },
+  {
+    title: 'Company',
+    links: [
+      { name: 'About', href: Routes.About, external: false },
+      { name: 'Contact', href: Routes.Contact, external: false },
+      { name: 'Waitlist', href: Routes.Waitlist, external: false }
+    ]
+  },
+  {
+    title: 'Legal',
+    links: [
+      { name: 'Cookie Policy', href: Routes.CookiePolicy, external: false },
+      { name: 'Privacy Policy', href: Routes.PrivacyPolicy, external: false },
+      { name: 'Terms of Service', href: Routes.TermsOfService, external: false },
+    ]
+  }
+];
+
+/**
+ * list all the social links here, you can delete the ones that are not needed
+ */
+export const SOCIAL_LINKS = [
+  {
+    name: 'Email',
+    href: 'mailto:mksaas@gmail.com',
+    icon: <MailIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'GitHub',
+    href: 'https://github.com/MkSaaSHQ',
+    icon: <GitHubIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'Twitter',
+    href: 'https://twitter.com/mksaas',
+    icon: <TwitterIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'Bluesky',
+    href: 'https://bsky.app/profile/mksaas.com',
+    icon: <BlueskyIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'YouTube',
+    href: 'https://www.youtube.com/@MkSaaSHQ',
+    icon: <YouTubeIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/mksaas',
+    icon: <LinkedInIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/mksaas',
+    icon: <FacebookIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/mksaas',
+    icon: <InstagramIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'TikTok',
+    href: 'https://www.tiktok.com/@mksaas',
+    icon: <TikTokIcon className="size-4 shrink-0" />
+  }
+];
+
+/**
+ * list all the avatar links here, you can customize the links as you want
+ */
+export const AVATAR_LINKS = [
+  {
+    name: 'Dashboard',
+    href: Routes.Dashboard,
+    icon: <DashboardIcon className="size-4 shrink-0" />
+  },
+  {
+    name: 'Settings',
+    href: Routes.Settings,
+    icon: <SettingsIcon className="size-4 shrink-0" />
+  }
+];
