@@ -155,7 +155,10 @@
             "title": "Features组件"
           },
           "faq": {
-            "title": "Faq组件"
+            "title": "FAQ组件"
+          },
+          "testimonials": {
+            "title": "Testimonials组件"
           },
           "stats": {
             "title": "Stats组件"

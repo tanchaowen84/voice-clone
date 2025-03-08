@@ -22,18 +22,18 @@ export function VerifyEmail({
 
 	return (
 		<EmailLayout>
-			<Text>{t("mail.verifyEmail.title", { name })}</Text>
+			<Text>{t("Mail.verifyEmail.title", { name })}</Text>
 
-			<Text>{t("mail.verifyEmail.body")}</Text>
+			<Text>{t("Mail.verifyEmail.body")}</Text>
 
 			<EmailButton href={url}>
-				{t("mail.verifyEmail.confirmEmail")}
+				{t("Mail.verifyEmail.confirmEmail")}
 			</EmailButton>
 
 			<br /><br /><br />
 
-			<Text>{t("mail.common.team", { name: siteConfig.name })}</Text>
-			<Text>{t("mail.common.copyright", { year: new Date().getFullYear() })}</Text>
+			<Text>{t("Mail.common.team", { name: siteConfig.name })}</Text>
+			<Text>{t("Mail.common.copyright", { year: new Date().getFullYear() })}</Text>
 		</EmailLayout>
 	);
 }

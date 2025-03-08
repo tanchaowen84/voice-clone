@@ -1,6 +1,6 @@
-import Pricing3 from "@/components/nsui/pricing3";
-import Pricing4 from "@/components/nsui/pricing4";
-import Pricing5 from "@/components/nsui/pricing5";
+import Pricing3 from "@/components/blocks/pricing/pricing-3";
+import Pricing4 from "@/components/blocks/pricing/pricing-4";
+import Pricing5 from "@/components/blocks/pricing/pricing-5";
 import PricingComparator from "@/components/pricing-comparator";
 import { getTranslations } from 'next-intl/server';
 

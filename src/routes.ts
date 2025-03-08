@@ -39,6 +39,7 @@ export enum Routes {
   PricingBlocks = '/blocks/pricing',
   FeaturesBlocks = '/blocks/features',
   FAQBlocks = '/blocks/faq',
+  TestimonialsBlocks = '/blocks/testimonials',
   StatsBlocks = '/blocks/stats',
   CallToActionBlocks = '/blocks/call-to-action',
   ContentBlocks = '/blocks/content',

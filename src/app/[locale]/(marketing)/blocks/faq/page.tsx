@@ -1,16 +1,16 @@
-import HeroSection from "@/components/blocks/hero/hero-section";
+import FAQs from "@/components/blocks/faq/faqs";
 
-interface HeroPageProps {
+interface FAQPageProps {
   params: Promise<{ locale: string }>;
 };
 
-export default async function HeroPage(props: HeroPageProps) {
+export default async function FAQPage(props: FAQPageProps) {
   const params = await props.params;
 
   return (
     <>
       <div className="mt-8 flex flex-col gap-16 pb-16">
-        <HeroSection />
+        <FAQs />
       </div>
     </>
   );

@@ -22,18 +22,18 @@ export function ForgotPassword({
 
 	return (
 		<EmailLayout>
-			<Text>{t("mail.forgotPassword.title", { name })}</Text>
+			<Text>{t("Mail.forgotPassword.title", { name })}</Text>
 
-			<Text>{t("mail.forgotPassword.body")}</Text>
+			<Text>{t("Mail.forgotPassword.body")}</Text>
 
 			<EmailButton href={url}>
-				{t("mail.forgotPassword.resetPassword")}
+				{t("Mail.forgotPassword.resetPassword")}
 			</EmailButton>
 
 			<br /><br /><br />
 
-			<Text>{t("mail.common.team", { name: siteConfig.name })}</Text>
-			<Text>{t("mail.common.copyright", { year: new Date().getFullYear() })}</Text>
+			<Text>{t("Mail.common.team", { name: siteConfig.name })}</Text>
+			<Text>{t("Mail.common.copyright", { year: new Date().getFullYear() })}</Text>
 		</EmailLayout>
 	);
 }

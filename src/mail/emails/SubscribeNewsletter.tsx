@@ -16,9 +16,9 @@ export function SubscribeNewsletter({
 	return (
 		<EmailLayout>
 			<Heading className="text-xl">
-				{t("mail.subscribeNewsletter.subject")}
+				{t("Mail.subscribeNewsletter.subject")}
 			</Heading>
-			<Text>{t("mail.subscribeNewsletter.body")}</Text>
+			<Text>{t("Mail.subscribeNewsletter.body")}</Text>
 		</EmailLayout>
 	);
 }

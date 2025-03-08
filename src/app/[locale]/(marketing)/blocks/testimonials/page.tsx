@@ -1,0 +1,25 @@
+import Testimonials from "@/components/blocks/testimonials/testimonials";
+import Testimonials2 from "@/components/blocks/testimonials/testimonials-2";
+import Testimonials4 from "@/components/blocks/testimonials/testimonials-4";
+import Testimonials5 from "@/components/blocks/testimonials/testimonials-5";
+import Testimonials6 from "@/components/blocks/testimonials/testimonials-6";
+
+interface TestimonialsPageProps {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function TestimonialsPage(props: TestimonialsPageProps) {
+  const params = await props.params;
+
+  return (
+    <>
+      <div className="mt-8 flex flex-col gap-16 pb-16">
+        <Testimonials />
+        <Testimonials2 />
+        <Testimonials4 />
+        <Testimonials5 />
+        <Testimonials6 />
+      </div>
+    </>
+  );
+}

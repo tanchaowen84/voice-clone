@@ -158,7 +158,10 @@
             "title": "Features Blocks"
           },
           "faq": {
-            "title": "Faq Blocks"
+            "title": "FAQ Blocks"
+          },
+          "testimonials": {
+            "title": "Testimonials Blocks"
           },
           "stats": {
             "title": "Stats Blocks"

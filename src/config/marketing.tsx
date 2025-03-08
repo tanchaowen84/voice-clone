@@ -29,6 +29,7 @@ import {
   ShieldCheckIcon,
   SquareKanbanIcon,
   SquarePenIcon,
+  ThumbsUpIcon,
   WandSparklesIcon
 } from 'lucide-react';
 
@@ -196,6 +197,12 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           external: false
         },
         {
+          title: t('Marketing.navbar.blocks.items.testimonials.title'),
+          icon: <ThumbsUpIcon className="size-5 shrink-0" />,
+          href: Routes.TestimonialsBlocks,
+          external: false
+        },
+        {
           title: t('Marketing.navbar.blocks.items.stats.title'),
           icon: <ChartNoAxesCombinedIcon className="size-5 shrink-0" />,
           href: Routes.StatsBlocks,
@@ -269,43 +276,43 @@ export function getSocialLinks(): MenuItem[] {
       title: 'Email',
       href: 'mailto:mksaas@gmail.com',
       icon: <MailIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'GitHub',
-    href: 'https://github.com/MkSaaSHQ',
-    icon: <GitHubIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'Twitter',
-    href: 'https://twitter.com/mksaas',
-    icon: <TwitterIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'Bluesky',
-    href: 'https://bsky.app/profile/mksaas.com',
-    icon: <BlueskyIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'YouTube',
-    href: 'https://www.youtube.com/@MkSaaSHQ',
-    icon: <YouTubeIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/mksaas',
-    icon: <LinkedInIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'Facebook',
-    href: 'https://www.facebook.com/mksaas',
-    icon: <FacebookIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'Instagram',
-    href: 'https://www.instagram.com/mksaas',
-    icon: <InstagramIcon className="size-4 shrink-0" />
-  },
-  {
+    },
+    {
+      title: 'GitHub',
+      href: 'https://github.com/MkSaaSHQ',
+      icon: <GitHubIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'Twitter',
+      href: 'https://twitter.com/mksaas',
+      icon: <TwitterIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'Bluesky',
+      href: 'https://bsky.app/profile/mksaas.com',
+      icon: <BlueskyIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'YouTube',
+      href: 'https://www.youtube.com/@MkSaaSHQ',
+      icon: <YouTubeIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'LinkedIn',
+      href: 'https://www.linkedin.com/company/mksaas',
+      icon: <LinkedInIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'Facebook',
+      href: 'https://www.facebook.com/mksaas',
+      icon: <FacebookIcon className="size-4 shrink-0" />
+    },
+    {
+      title: 'Instagram',
+      href: 'https://www.instagram.com/mksaas',
+      icon: <InstagramIcon className="size-4 shrink-0" />
+    },
+    {
       title: 'TikTok',
       href: 'https://www.tiktok.com/@mksaas',
       icon: <TikTokIcon className="size-4 shrink-0" />
