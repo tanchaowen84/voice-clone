@@ -6,8 +6,8 @@ export enum Routes {
   DefaultLoginRedirect = '/dashboard',
   
   Features = '/#features',
-  Pricing = '/#pricing',
   FAQ = '/#faq',
+  Pricing = '/pricing',
 
   TermsOfService = '/terms-of-service',
   PrivacyPolicy = '/privacy-policy',

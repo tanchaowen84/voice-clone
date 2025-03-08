@@ -7,6 +7,9 @@
   "HomePage": {
     "title": "next-intl example"
   },
+  "PricingPage": {
+    "title": "Pricing"
+  },
   "NotFoundPage": {
     "title": "404",
     "message": "Sorry, the page you are looking for does not exist.",
