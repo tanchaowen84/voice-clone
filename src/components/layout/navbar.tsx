@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { LoginWrapper } from "@/components/auth/login-button";
-import Container from "@/components/container";
-import { Icons } from "@/components/icons/icons";
-import { UserButton } from "@/components/layout/user-button";
-import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
+import { LoginWrapper } from '@/components/auth/login-button';
+import Container from '@/components/container';
+import { ThemeSwitcher } from '@/components/layout/theme-switcher';
+import { UserButton } from '@/components/layout/user-button';
+import { Logo } from '@/components/logo';
+import { MENU_LINKS } from '@/config/marketing-links';
+import { NavbarMobile } from '@/components/layout/navbar-mobile';
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,274 +15,180 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { siteConfig } from "@/config/site";
+  navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu';
+import { siteConfig } from '@/config/site';
 import { useScroll } from "@/hooks/use-scroll";
-import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
-import type { DashboardConfig, MarketingConfig, NestedNavItem } from "@/types";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
-import { MenuIcon } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
+import { Routes } from '@/routes';
+import { MarketingConfig } from '@/types';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ArrowUpRightIcon } from 'lucide-react';
+import LocaleSelector from '@/components/layout/locale-selector';
+import { LocaleLink } from '@/i18n/navigation';
 
 interface NavBarProps {
   scroll?: boolean;
-  config: DashboardConfig | MarketingConfig;
+  config: MarketingConfig;
 }
 
-export function Navbar({ scroll = false, config }: NavBarProps) {
+const customNavigationMenuTriggerStyle = cn(
+  navigationMenuTriggerStyle(),
+  "bg-transparent hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[active]:bg-transparent data-[active]:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary relative data-[active]:font-bold dark:text-gray-400 dark:hover:text-gray-300 dark:data-[active]:text-white"
+);
+
+export function Navbar({ scroll, config }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
-  console.log(`Navbar, user:`, user);
+  // console.log(`Navbar, user:`, user);
 
   const pathname = usePathname();
-  // console.log(`Navbar, pathname: ${pathname}`);
-  const menus = config.menus;
-
-  const isMenuActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-    // console.log(`Navbar, href: ${href}, pathname: ${pathname}`);
-    return pathname.startsWith(href);
-  };
-
-  const [open, setOpen] = useState(false);
-  // prevent body scroll when modal is open
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [open]);
 
   return (
-    <div className="sticky top-0 z-40 w-full">
-      {/* Desktop View */}
-      <header
-        className={cn(
-          "hidden md:flex justify-center bg-background/60 backdrop-blur-xl transition-all",
-          scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b",
-        )}
-      >
-        <Container className="flex h-16 items-center px-4">
-          {/* navbar left show logo and links */}
-          <div className="flex items-center gap-6 md:gap-10">
-            {/* logo */}
-            <a href="/" className="flex items-center space-x-2">
+    <section className={cn(
+      "sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300",
+      scroll ? (
+        scrolled 
+          ? "bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60" 
+          : "bg-background"
+      ) : "border-b bg-background"
+    )}>
+      <Container className="px-4">
+        {/* desktop navbar */}
+        <nav className="hidden lg:flex">
+          {/* logo and name */}
+          <div className="flex items-center">
+            <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
-
-              <span className="text-xl font-bold">{siteConfig.name}</span>
-            </a>
+              <span className="text-xl font-semibold">{siteConfig.name}</span>
+            </LocaleLink>
           </div>
 
-          {/* links */}
-          <div className="flex-1 flex justify-center">
-            {menus && menus.length > 0 ? (
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menus.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            ) : null}
+          {/* menu links */}
+          <div className="flex-1 flex items-center justify-center space-x-2">
+            <NavigationMenu className="relative">
+              <NavigationMenuList className="flex items-center">
+                {MENU_LINKS.map((item, index) =>
+                  item.items ? (
+                    <NavigationMenuItem key={index} className="relative">
+                      <NavigationMenuTrigger
+                        data-active={
+                          item.items.some((subItem) =>
+                            pathname.startsWith(subItem.href)
+                          ) ? "true" : undefined
+                        }
+                        className={cn(
+                          customNavigationMenuTriggerStyle,
+                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
+                        )}
+                      >
+                        {item.title}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="w-96 list-none p-2">
+                          {item.items.map((subItem, subIndex) => (
+                            <li key={subIndex}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href={subItem.href || '#'}
+                                  target={ subItem.external ? '_blank' : undefined }
+                                  rel={
+                                    subItem.external
+                                      ? 'noopener noreferrer'
+                                      : undefined
+                                  }
+                                  className="group flex select-none flex-row items-center gap-4 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
+                                    {subItem.icon}
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="text-sm font-medium">
+                                      {subItem.title}
+                                    </div>
+                                    {subItem.description && (
+                                      <div className="text-sm text-muted-foreground">
+                                        {subItem.description}
+                                      </div>
+                                    )}
+                                  </div>
+                                  {subItem.external && (
+                                    <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                                  )}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  ) : (
+                    <NavigationMenuItem key={index}>
+                      <NavigationMenuLink
+                        asChild
+                        active={pathname.startsWith(item.href)}
+                        className={cn(
+                          customNavigationMenuTriggerStyle,
+                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
+                        )}
+                      >
+                        <Link
+                          href={item.href || '#'}
+                          target={item.external ? '_blank' : undefined}
+                          rel={
+                            item.external ? 'noopener noreferrer' : undefined
+                          }
+                        >
+                          {item.title}
+                        </Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
+                )}
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
-          {/* navbar right show sign in or account */}
+          {/* navbar right show sign in or user */}
           <div className="flex items-center gap-x-4">
             {user ? (
               <div className="flex items-center">
                 <UserButton />
               </div>
             ) : (
-              <LoginWrapper mode="modal" asChild>
-                <Button
-                  className="flex gap-2"
-                  variant="default"
-                  size="sm"
-                >
-                  <span>Login</span>
-                  {/* <ArrowRightIcon className="size-4" /> */}
-                </Button>
-              </LoginWrapper>
-            )}
-          </div>
-        </Container>
-      </header>
-
-      {/* Mobile View */}
-      <header className="md:hidden flex justify-center bg-background/60 backdrop-blur-xl transition-all">
-        <div className="w-full px-4 h-16 flex items-center justify-between">
-          {/* mobile navbar left show menu icon when closed & show sheet when menu is open */}
-          <div className="flex items-center gap-x-4">
-            <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="size-9 shrink-0"
-                >
-                  <MenuIcon className="size-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <a href="/"
-                      className="flex items-center space-x-2"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Logo />
-                      <span className="text-xl font-bold">{siteConfig.name}</span>
-                    </a>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="my-6 flex flex-col gap-6">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
+              <div className="flex items-center gap-x-4">
+                <LoginWrapper mode="modal" asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
                   >
-                    {menus.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
-                </div>
-              </SheetContent>
-            </Sheet>
+                    <span>Log in</span>
+                  </Button>
+                </LoginWrapper>
 
-            {/* logo */}
-            <a href="/"
-              className="flex items-center space-x-2"
-              onClick={() => setOpen(false)}
-            >
-              <Logo className="size-8" />
-
-              <span className="text-xl font-bold">{siteConfig.name}</span>
-            </a>
-          </div>
-
-          {/* mobile navbar right show sign in or user button */}
-          <div className="flex items-center gap-x-4">
-            {user ? (
-              <div className="flex items-center">
-                <UserButton />
-              </div>
-            ) : (
-              <LoginWrapper mode="redirect" asChild>
                 <Button
-                  className="flex gap-2"
                   variant="default"
                   size="sm"
+                  asChild
                 >
-                  <span>Login</span>
-                  {/* <ArrowRightIcon className="size-4" /> */}
+                  <LocaleLink href={Routes.Register}>
+                    Sign up
+                  </LocaleLink>
                 </Button>
-              </LoginWrapper>
+              </div>
             )}
+
+            <LocaleSelector />
+            <ThemeSwitcher />
           </div>
-        </div>
-      </header>
-    </div>
+        </nav>
+
+        {/* mobile navbar */}
+        <NavbarMobile className="lg:hidden" />
+      </Container>
+    </section>
   );
 }
-
-const renderMenuItem = (item: NestedNavItem) => {
-  if (item.items) {
-    return (
-      <NavigationMenuItem key={item.title} className="text-muted-foreground">
-        <NavigationMenuTrigger className="text-base">
-          {item.title}
-        </NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="w-80 p-4">
-            <NavigationMenuLink>
-              {item.items.map((subItem) => {
-                const CustomMenuIcon = Icons[subItem.icon || "arrowRight"];
-                return (
-                  <li key={subItem.title}>
-                    <a
-                      className="flex items-center select-none gap-4 rounded-md p-4 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
-                      href={subItem.href}
-                    >
-                      {subItem.icon && <CustomMenuIcon className="size-4 shrink-0" />}
-                      <div>
-                        <div className="text-base text-foreground/60 hover:text-foreground">
-                          {subItem.title}
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                );
-              })}
-            </NavigationMenuLink>
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    );
-  }
-
-  return (
-    <NavigationMenuItem key={item.title}>
-      <Link
-        href={item.disabled ? "#" : item.href || "#"}
-        target={item.external ? "_blank" : ""}
-        className={cn(
-          navigationMenuTriggerStyle(),
-          "px-4 bg-transparent focus:bg-transparent text-base",
-          "text-foreground/60 hover:text-foreground",
-          item.disabled && "cursor-not-allowed opacity-80"
-        )}
-      >
-        {item.title}
-      </Link>
-    </NavigationMenuItem>
-  );
-};
-
-const renderMobileMenuItem = (item: NestedNavItem) => {
-  console.log(`renderMobileMenuItem, item:`, item, `, items:`, item.items);
-  if (item.items) {
-    return (
-      <AccordionItem key={item.title} value={item.title} className="border-b-0">
-        <AccordionTrigger className="py-0 hover:no-underline">
-          {item.title}
-        </AccordionTrigger>
-        <AccordionContent className="mt-2">
-          {item.items.map((subItem) => {
-            const CustomMenuIcon = Icons[subItem.icon || "arrowRight"];
-            return (
-              <Link
-                key={subItem.title}
-                className="flex select-none gap-4 rounded-md p-3 leading-none outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
-                href={subItem.disabled ? "#" : subItem.href}
-              >
-                {subItem.icon && <CustomMenuIcon className="size-4 shrink-0" />}
-                <div>
-                  <div className="text-sm font-semibold">{subItem.title}</div>
-                </div>
-              </Link>
-            );
-          })}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  }
-
-  const CustomMenuIcon = Icons[item.icon || "arrowRight"];
-  return (
-    <Link
-      key={item.title}
-      href={item.disabled ? "#" : item.href || "#"}
-      target={item.external ? "_blank" : ""}
-      className="flex items-center rounded-md gap-2 p-2 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground"
-    >
-      {item.icon && <CustomMenuIcon className="size-4 shrink-0" />}
-      {item.title}
-    </Link>
-  );
-};

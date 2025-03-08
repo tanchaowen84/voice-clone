@@ -1,20 +1,16 @@
-import * as React from 'react';
-import { CubeIcon, PaperPlaneIcon } from '@radix-ui/react-icons';
-import {
-  BookIcon,
-  BookOpenIcon,
-  CircuitBoardIcon,
-  CuboidIcon,
-  FileBarChartIcon,
-  LayoutIcon,
-  PlayIcon
-} from 'lucide-react';
-import { Routes } from '@/routes';
 import { FacebookIcon } from '@/components/icons/facebook';
 import { InstagramIcon } from '@/components/icons/instagram';
 import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { XTwitterIcon } from '@/components/icons/x';
+import { Routes } from '@/routes';
+import { CubeIcon, PaperPlaneIcon } from '@radix-ui/react-icons';
+import {
+  BookOpenIcon,
+  FileBarChartIcon,
+  LayoutIcon,
+  PlayIcon
+} from 'lucide-react';
 
 export const MENU_LINKS = [
   {
@@ -32,11 +28,6 @@ export const MENU_LINKS = [
     href: Routes.Blog,
     external: false
   },
-  // {
-  //   title: 'Docs',
-  //   href: Routes.Docs,
-  //   external: false
-  // },
   {
     title: 'AI',
     items: [
@@ -160,35 +151,5 @@ export const SOCIAL_LINKS = [
     name: 'TikTok',
     href: '#',
     icon: <TikTokIcon className="size-4 shrink-0" />
-  }
-];
-
-export const DOCS_LINKS = [
-  {
-    title: 'Getting Started',
-    icon: <CuboidIcon className="size-4 shrink-0 text-muted-foreground" />,
-    items: [
-      {
-        title: 'Introduction',
-        href: '/docs',
-        items: []
-      },
-      {
-        title: 'Dependencies',
-        href: '/docs/dependencies',
-        items: []
-      }
-    ]
-  },
-  {
-    title: 'Guides',
-    icon: <BookIcon className="size-4 shrink-0 text-muted-foreground" />,
-    items: [
-      {
-        title: 'Using MDX',
-        href: '/docs/using-mdx',
-        items: []
-      }
-    ]
   }
 ];

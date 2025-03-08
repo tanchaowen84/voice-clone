@@ -65,7 +65,8 @@
     "categories": "Categories",
     "tableOfContents": "Table of Contents",
     "all": "All",
-    "noPostsFound": "No posts found"
+    "noPostsFound": "No posts found",
+    "allPosts": "All Posts"
   },
   "mail": {
 		"common": {

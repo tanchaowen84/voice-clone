@@ -1,8 +1,5 @@
 import { fontSourceSans, fontSourceSerif4 } from "@/assets/fonts";
-import { Footer } from '@/components/layout/footer';
-import { Navbar } from '@/components/marketing/navbar';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
-import { marketingConfig } from '@/config/marketing';
 import { routing } from '@/i18n/routing';
 import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";

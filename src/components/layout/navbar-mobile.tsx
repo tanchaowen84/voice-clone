@@ -1,7 +1,7 @@
 'use client';
 
 import { Logo } from '@/components/logo';
-import { DOCS_LINKS, MENU_LINKS } from '@/components/marketing/marketing-links';
+import { MENU_LINKS } from '@/config/marketing-links';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Collapsible,
@@ -27,7 +27,6 @@ export function NavbarMobile({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = React.useState<boolean>(false);
   const pathname = usePathname();
-  const isDocs = pathname.startsWith('/docs');
 
   React.useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -90,11 +89,7 @@ export function NavbarMobile({
       {open && (
         <Portal asChild>
           <RemoveScroll allowPinchZoom enabled>
-            {isDocs ? (
-              <DocsMobileMenu onLinkClicked={handleToggleMobileMenu} />
-            ) : (
-              <MainMobileMenu onLinkClicked={handleToggleMobileMenu} />
-            )}
+            <MainMobileMenu onLinkClicked={handleToggleMobileMenu} />
           </RemoveScroll>
         </Portal>
       )}
@@ -231,80 +226,6 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
 
         {/* bottom buttons */}
         <div className="flex w-full items-center justify-between gap-4 border-t border-border/40 py-4">
-          <LocaleSelector />
-          <ThemeSwitcherHorizontal />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-interface DocsMobileMenuProps {
-  onLinkClicked: () => void;
-};
-
-function DocsMobileMenu({
-  onLinkClicked
-}: DocsMobileMenuProps): React.JSX.Element {
-  const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
-  return (
-    <div className="fixed inset-0 z-50 mt-[69px] overflow-y-auto bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 animate-in fade-in-0">
-      <div className="flex size-full flex-col items-start space-y-3 p-4">
-        <ul className="w-full">
-          {DOCS_LINKS.map((item) => (
-            <li
-              key={item.title}
-              className="py-2"
-            >
-              <Collapsible
-                open={expanded[item.title.toLowerCase()]}
-                onOpenChange={(isOpen) =>
-                  setExpanded((prev) => ({
-                    ...prev,
-                    [item.title.toLowerCase()]: isOpen
-                  }))
-                }
-              >
-                <CollapsibleTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="flex h-9 w-full items-center justify-between px-4 text-left"
-                  >
-                    <div className="flex flex-row items-center gap-2 text-base font-medium">
-                      {item.icon}
-                      {item.title}
-                    </div>
-                    {expanded[item.title.toLowerCase()] ? (
-                      <ChevronUp className="size-4" />
-                    ) : (
-                      <ChevronDown className="size-4" />
-                    )}
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <ul className="mt-2 pl-4">
-                    {item.items.map((subItem) => (
-                      <li key={subItem.title}>
-                        <Link
-                          href={subItem.href || '#'}
-                          className={cn(
-                            buttonVariants({ variant: 'ghost' }),
-                            'm-0 h-auto w-full justify-start gap-4 p-1.5 text-sm font-medium'
-                          )}
-                          onClick={onLinkClicked}
-                        >
-                          {subItem.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </CollapsibleContent>
-              </Collapsible>
-            </li>
-          ))}
-        </ul>
-        <div className="flex w-full items-center justify-between gap-2 border-y border-border/40 py-4">
           <LocaleSelector />
           <ThemeSwitcherHorizontal />
         </div>

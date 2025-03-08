@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMDXComponent } from '@content-collections/mdx/react';
-import { Callout } from '@/components/marketing/blog/callout';
+import { Callout } from '@/components/shared/callout';
 import {
   Accordion,
   AccordionContent,

@@ -1,12 +1,19 @@
 "use client";
 
+import FilterItemMobile from "@/components/shared/filter-item-mobile";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Category } from "content-collections";
 import { LayoutListIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { Drawer } from "vaul";
-import FilterItemMobile from "@/components/shared/filter-item-mobile";
-import { useTranslations } from "next-intl";
 
 export type BlogCategoryListMobileProps = {
   categoryList: Category[];
@@ -27,8 +34,8 @@ export function BlogCategoryListMobile({
   };
 
   return (
-    <Drawer.Root open={open} onClose={closeDrawer}>
-      <Drawer.Trigger
+    <Drawer open={open} onClose={closeDrawer}>
+      <DrawerTrigger
         onClick={() => setOpen(true)}
         className="flex items-center w-full p-3 border-y text-foreground/90"
       >
@@ -41,14 +48,11 @@ export function BlogCategoryListMobile({
             {selectedCategory?.name ? `${selectedCategory?.name}` : t("all")}
           </span>
         </div>
-      </Drawer.Trigger>
-      <Drawer.Overlay
-        className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
-        onClick={closeDrawer}
-      />
-      <Drawer.Portal>
-        <Drawer.Content className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background">
-          <Drawer.Title className="sr-only">{t("categories")}</Drawer.Title>
+      </DrawerTrigger>
+      <DrawerPortal>
+        <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
+        <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background">
+          <DrawerTitle className="sr-only">{t("categories")}</DrawerTitle>
           <div className="sticky top-0 z-20 flex w-full items-center justify-center bg-inherit">
             <div className="my-3 h-1.5 w-16 rounded-full bg-muted-foreground/20" />
           </div>
@@ -71,9 +75,8 @@ export function BlogCategoryListMobile({
               />
             ))}
           </ul>
-        </Drawer.Content>
-        <Drawer.Overlay />
-      </Drawer.Portal>
-    </Drawer.Root>
+        </DrawerContent>
+      </DrawerPortal>
+    </Drawer>
   );
 }
