@@ -20,13 +20,12 @@ import {
 import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
 import { useScroll } from "@/hooks/use-scroll";
-import { LocaleLink } from '@/i18n/navigation';
+import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from "next-intl";
-import { usePathname } from 'next/navigation';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -34,7 +33,11 @@ interface NavBarProps {
 
 const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
-  "bg-transparent hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[active]:bg-transparent data-[active]:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary relative data-[active]:font-bold dark:text-gray-400 dark:hover:text-gray-300 dark:data-[active]:text-white"
+  "relative bg-transparent text-muted-foreground",
+  "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
+  "data-[active]:font-bold data-[active]:bg-transparent data-[active]:text-primary",
+  "data-[state=open]:bg-transparent data-[state=open]:text-primary",
+  "dark:hover:text-primary dark:data-[active]:text-primary-foreground"
 );
 
 export function Navbar({ scroll }: NavBarProps) {
@@ -45,9 +48,9 @@ export function Navbar({ scroll }: NavBarProps) {
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
   const commonTranslations = useTranslations("Common");
-  // console.log(`Navbar, user:`, user);
+  const localePathname = useLocalePathname();
 
-  const pathname = usePathname();
+  // console.log(`Navbar, user:`, user);
 
   return (
     <section className={cn(
@@ -73,25 +76,22 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex-1 flex items-center justify-center space-x-2">
             <NavigationMenu className="relative">
               <NavigationMenuList className="flex items-center">
-                {menuLinks.map((item, index) =>
+                {menuLinks && menuLinks.map((item, index) =>
                   item.items ? (
                     <NavigationMenuItem key={index} className="relative">
                       <NavigationMenuTrigger
                         data-active={
                           item.items.some((subItem) =>
-                            subItem.href && pathname.startsWith(subItem.href)
+                            subItem.href ? localePathname.startsWith(subItem.href) : false
                           ) ? "true" : undefined
                         }
-                        className={cn(
-                          customNavigationMenuTriggerStyle,
-                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
-                        )}
+                        className={customNavigationMenuTriggerStyle}
                       >
                         {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {item.items.map((subItem, subIndex) => (
+                          {item.items && item.items.map((subItem, subIndex) => (
                             <li key={subIndex}>
                               <NavigationMenuLink asChild>
                                 <LocaleLink
@@ -104,11 +104,11 @@ export function Navbar({ scroll }: NavBarProps) {
                                   }
                                   className="group flex select-none flex-row items-center gap-4 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
-                                  <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
+                                  <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground group-hover:text-primary">
                                     {subItem.icon ? subItem.icon : null}
                                   </div>
                                   <div className="flex-1">
-                                    <div className="text-sm font-medium">
+                                    <div className="text-sm font-medium group-hover:text-primary">
                                       {subItem.title}
                                     </div>
                                     {subItem.description && (
@@ -118,7 +118,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                     )}
                                   </div>
                                   {subItem.external && (
-                                    <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                                    <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground hover:text-primary-foreground" />
                                   )}
                                 </LocaleLink>
                               </NavigationMenuLink>
@@ -131,11 +131,8 @@ export function Navbar({ scroll }: NavBarProps) {
                     <NavigationMenuItem key={index}>
                       <NavigationMenuLink
                         asChild
-                        active={item.href && pathname.startsWith(item.href) ? true : undefined}
-                        className={cn(
-                          customNavigationMenuTriggerStyle,
-                          "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
-                        )}
+                        active={item.href ? localePathname.startsWith(item.href) : false}
+                        className={customNavigationMenuTriggerStyle}
                       >
                         <LocaleLink
                           href={item.href || '#'}
@@ -171,10 +168,9 @@ export function Navbar({ scroll }: NavBarProps) {
                   </Button>
                 </LoginWrapper>
 
-                <Button
-                  variant="default"
+                <Button asChild
                   size="sm"
-                  asChild
+                  variant="default"
                 >
                   <LocaleLink href={Routes.Register}>
                     {commonTranslations("signUp")}

@@ -91,7 +91,7 @@ export function UserButton() {
             </div>
 
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
-              {avatarLinks.map((item) => (
+              {avatarLinks && avatarLinks.map((item) => (
                 <li
                   key={item.title}
                   className="rounded-lg text-foreground hover:bg-muted"

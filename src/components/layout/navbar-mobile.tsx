@@ -11,14 +11,13 @@ import {
 } from '@/components/ui/collapsible';
 import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
-import { LocaleLink } from '@/i18n/navigation';
+import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
 import { ArrowUpRightIcon, ChevronDownIcon, ChevronUpIcon, MenuIcon, XIcon } from 'lucide-react';
 import { useTranslations } from "next-intl";
-import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { UserButton } from './user-button';
@@ -28,7 +27,7 @@ export function NavbarMobile({
   ...other
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = React.useState<boolean>(false);
-  const pathname = usePathname();
+  const localePathname = useLocalePathname();
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
 
@@ -42,7 +41,7 @@ export function NavbarMobile({
     };
 
     handleRouteChangeStart();
-  }, [pathname]);
+  }, [localePathname]);
 
   const handleChange = () => {
     const mediaQueryList = window.matchMedia('(min-width: 1024px)');
@@ -116,6 +115,8 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
   const commonTranslations = useTranslations("Common");
+  const localePathname = useLocalePathname();
+
   return (
     <div className="fixed inset-0 z-50 mt-[72px] overflow-y-auto bg-background backdrop-blur-md animate-in fade-in-0">
       <div className="flex size-full flex-col items-start space-y-4 p-4">
@@ -151,90 +152,111 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
 
         {/* main menu */}
         <ul className="w-full">
-          {menuLinks.map((item) => (
-            <li key={item.title} className="py-2">
-              {item.items ? (
-                <Collapsible
-                  open={expanded[item.title.toLowerCase()]}
-                  onOpenChange={(isOpen) =>
-                    setExpanded((prev) => ({
-                      ...prev,
-                      [item.title.toLowerCase()]: isOpen
-                    }))
-                  }
-                >
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="flex w-full items-center justify-between text-left"
-                    >
-                      <span className="text-base font-medium">
-                        {item.title}
-                      </span>
-                      {expanded[item.title.toLowerCase()] ? (
-                        <ChevronUpIcon className="size-4" />
-                      ) : (
-                        <ChevronDownIcon className="size-4" />
-                      )}
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <ul className="mt-2 pl-4 space-y-2">
-                      {item.items.map((subItem) => (
-                        <li key={subItem.title}>
-                          <LocaleLink
-                            href={subItem.href || '#'}
-                            target={subItem.external ? '_blank' : undefined}
-                            rel={
-                              subItem.external
-                                ? 'noopener noreferrer'
-                                : undefined
-                            }
-                            className={cn(
-                              buttonVariants({ variant: 'ghost' }),
-                              'group h-auto w-full justify-start gap-4 p-2'
-                            )}
-                            onClick={onLinkClicked}
-                          >
-                            <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors group-hover:text-foreground">
-                              {subItem.icon ? subItem.icon : null}
-                            </div>
-                            <div className="flex-1">
-                              <span className="text-sm font-medium">
-                                {subItem.title}
-                              </span>
-                              {subItem.description && (
-                                <p className="text-xs text-muted-foreground">
-                                  {subItem.description}
-                                </p>
-                              )}
-                            </div>
-                            {subItem.external && (
-                              <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-                            )}
-                          </LocaleLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </CollapsibleContent>
-                </Collapsible>
-              ) : (
-                <LocaleLink
-                  href={item.href || '#'}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noopener noreferrer' : undefined}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost' }),
-                    'w-full justify-start'
-                  )}
-                  onClick={onLinkClicked}
-                >
-                  <span className="text-base">{item.title}</span>
-                </LocaleLink>
-              )}
-            </li>
-          ))}
+          {menuLinks && menuLinks.map((item) => {
+            const isActive = item.href ? localePathname.startsWith(item.href) :
+              item.items?.some(subItem => subItem.href && localePathname.startsWith(subItem.href));
+
+            return (
+              <li key={item.title} className="py-2">
+                {item.items ? (
+                  <Collapsible
+                    open={expanded[item.title.toLowerCase()]}
+                    onOpenChange={(isOpen) =>
+                      setExpanded((prev) => ({
+                        ...prev,
+                        [item.title.toLowerCase()]: isOpen
+                      }))
+                    }
+                  >
+                    <CollapsibleTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className={cn(
+                          "flex w-full items-center justify-between text-left",
+                          "text-muted-foreground hover:text-primary",
+                          isActive && "font-bold text-primary dark:text-primary-foreground"
+                        )}
+                      >
+                        <span className="text-base">
+                          {item.title}
+                        </span>
+                        {expanded[item.title.toLowerCase()] ? (
+                          <ChevronUpIcon className="size-4" />
+                        ) : (
+                          <ChevronDownIcon className="size-4" />
+                        )}
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <ul className="mt-2 pl-4 space-y-2">
+                        {item.items.map((subItem) => {
+                          const isSubItemActive = subItem.href && localePathname.startsWith(subItem.href);
+
+                          return (
+                            <li key={subItem.title}>
+                              <LocaleLink
+                                href={subItem.href || '#'}
+                                target={subItem.external ? '_blank' : undefined}
+                                rel={
+                                  subItem.external
+                                    ? 'noopener noreferrer'
+                                    : undefined
+                                }
+                                className={cn(
+                                  buttonVariants({ variant: 'ghost' }),
+                                  'group h-auto w-full justify-start gap-4 p-2',
+                                  "text-muted-foreground hover:text-primary",
+                                  isSubItemActive && "font-bold text-primary dark:text-primary-foreground"
+                                )}
+                                onClick={onLinkClicked}
+                              >
+                                <div className={cn(
+                                  "flex size-8 shrink-0 items-center justify-center transition-colors",
+                                  "text-muted-foreground group-hover:text-primary",
+                                  isSubItemActive && "text-primary dark:text-primary-foreground"
+                                )}>
+                                  {subItem.icon ? subItem.icon : null}
+                                </div>
+                                <div className="flex-1">
+                                  <span className="text-sm font-medium">
+                                    {subItem.title}
+                                  </span>
+                                  {subItem.description && (
+                                    <p className="text-xs text-muted-foreground">
+                                      {subItem.description}
+                                    </p>
+                                  )}
+                                </div>
+                                {subItem.external && (
+                                  <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+                                )}
+                              </LocaleLink>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ) : (
+                  <LocaleLink
+                    href={item.href || '#'}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
+                    className={cn(
+                      buttonVariants({ variant: 'ghost' }),
+                      'w-full justify-start',
+                      "text-muted-foreground hover:text-primary",
+                      isActive && "font-bold text-primary dark:text-primary-foreground"
+                    )}
+                    onClick={onLinkClicked}
+                  >
+                    <span className="text-base">{item.title}</span>
+                  </LocaleLink>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* bottom buttons */}

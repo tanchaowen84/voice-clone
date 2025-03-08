@@ -4,7 +4,7 @@ import Container from "@/components/container";
 import { ThemeSwitcherHorizontal } from "@/components/layout/theme-switcher-horizontal";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
-import { createTranslator, getFooterLinks, SOCIAL_LINKS } from "@/config/marketing";
+import { createTranslator, getFooterLinks, getSocialLinks } from "@/config/marketing";
 import { siteConfig } from "@/config/site";
 import { LocaleLink } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const footerLinks = getFooterLinks(translator);
-  
+  const socialLinks = getSocialLinks();
+
   return (
     <footer className={cn("border-t", className)}>
       <Container className="px-4">
@@ -36,7 +37,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {/* social links */}
               <div className="flex items-center gap-4 py-2">
                 <div className="flex items-center gap-2">
-                  {SOCIAL_LINKS.map((link) => (
+                  {socialLinks && socialLinks.map((link) => (
                     <a
                       key={link.title}
                       href={link.href || "#"}
@@ -58,7 +59,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           </div>
 
           {/* footer links */}
-          {footerLinks.map((section) => (
+          {footerLinks && footerLinks.map((section) => (
             <div
               key={section.title}
               className="col-span-1 md:col-span-1 items-start"

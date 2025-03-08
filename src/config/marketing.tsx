@@ -11,11 +11,11 @@ import { MenuItem, NestedMenuItem } from '@/types';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
+  BuildingIcon,
   CookieIcon,
   FileTextIcon,
   FilmIcon,
   ImageIcon,
-  InfoIcon,
   ListChecksIcon,
   MailboxIcon,
   MailIcon,
@@ -105,7 +105,7 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
         {
           title: t('Marketing.menu.pages.items.about.title'),
           description: t('Marketing.menu.pages.items.about.description'),
-          icon: <InfoIcon className="size-5 shrink-0" />,
+          icon: <BuildingIcon className="size-5 shrink-0" />,
           href: Routes.About,
           external: false
         },
@@ -208,11 +208,12 @@ export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
 /**
  * list all the social links here, you can delete the ones that are not needed
  */
-export const SOCIAL_LINKS: MenuItem[] = [
-  {
-    title: 'Email',
-    href: 'mailto:mksaas@gmail.com',
-    icon: <MailIcon className="size-4 shrink-0" />
+export function getSocialLinks(): MenuItem[] {
+  return [
+    {
+      title: 'Email',
+      href: 'mailto:mksaas@gmail.com',
+      icon: <MailIcon className="size-4 shrink-0" />
   },
   {
     title: 'GitHub',
@@ -250,11 +251,12 @@ export const SOCIAL_LINKS: MenuItem[] = [
     icon: <InstagramIcon className="size-4 shrink-0" />
   },
   {
-    title: 'TikTok',
-    href: 'https://www.tiktok.com/@mksaas',
-    icon: <TikTokIcon className="size-4 shrink-0" />
-  }
-];
+      title: 'TikTok',
+      href: 'https://www.tiktok.com/@mksaas',
+      icon: <TikTokIcon className="size-4 shrink-0" />
+    }
+  ];
+}
 
 /**
  * Get avatar links with translations
