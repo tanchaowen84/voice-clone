@@ -17,16 +17,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AVATAR_LINKS } from "@/config/marketing";
+import { createTranslator, getAvatarLinks } from "@/config/marketing";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { LocaleLink, useLocaleRouter } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth-client";
+import { useTranslations } from "next-intl";
 import { LogOutIcon } from "lucide-react";
 import { useState } from "react";
 
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const avatarLinks = getAvatarLinks(translator);
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -85,7 +89,7 @@ export function UserButton() {
             </div>
 
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
-              {AVATAR_LINKS.map((item) => (
+              {avatarLinks.map((item) => (
                 <li
                   key={item.title}
                   className="rounded-lg text-foreground hover:bg-muted"
@@ -147,7 +151,7 @@ export function UserButton() {
         </div>
         <DropdownMenuSeparator />
 
-        {AVATAR_LINKS.map((item) => (
+        {avatarLinks.map((item) => (
           <DropdownMenuItem
             key={item.title}
             asChild

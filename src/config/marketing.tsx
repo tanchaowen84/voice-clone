@@ -25,158 +25,185 @@ import {
   SquarePenIcon
 } from 'lucide-react';
 
-/**
- * list all the menu links here, you can customize the links as you want
- */
-export const MENU_LINKS: NestedMenuItem[] = [
-  {
-    title: 'Features',
-    href: Routes.Pricing,
-    external: false
-  },
-  {
-    title: 'Pricing',
-    href: Routes.Pricing,
-    external: false
-  },
-  {
-    title: 'Blog',
-    href: Routes.Blog,
-    external: false
-  },
-  {
-    title: 'AI',
-    items: [
-      {
-        title: 'AI Tex',
-        description: 'show how to use AI to write stunning text',
-        icon: <SquarePenIcon className="size-5 shrink-0" />,
-        href: Routes.AIText,
-        external: false
-      },
-      {
-        title: 'AI Image',
-        description: 'show how to use AI to generate beautiful images',
-        icon: <ImageIcon className="size-5 shrink-0" />,
-        href: Routes.AIImage,
-        external: false
-      },
-      {
-        title: 'AI Video',
-        description: 'show how to use AI to generate amazing videos',
-        icon: <FilmIcon className="size-5 shrink-0" />,
-        href: Routes.AIVideo,
-        external: false
-      },
-      {
-        title: 'AI Audio',
-        description: 'show how to use AI to generate wonderful audio',
-        icon: <AudioLinesIcon className="size-5 shrink-0" />,
-        href: Routes.AIAudio,
-        external: false
-      }
-    ]
-  },
-  {
-    title: 'Pages',
-    items: [
-      {
-        title: 'About',
-        description: 'Learn more about our company, mission, and values',
-        icon: <InfoIcon className="size-5 shrink-0" />,
-        href: Routes.About,
-        external: false
-      },
-      {
-        title: 'Contact',
-        description: 'Get in touch with our team for support or inquiries',
-        icon: <MailIcon className="size-5 shrink-0" />,
-        href: Routes.Contact,
-        external: false
-      },
-      {
-        title: 'Waitlist',
-        description: 'Join our waitlist for latest news and updates',
-        icon: <MailboxIcon className="size-5 shrink-0" />,
-        href: Routes.Waitlist,
-        external: false
-      },
-      {
-        title: 'Changelog',
-        description: 'See the latest updates to our products',
-        icon: <ListChecksIcon className="size-5 shrink-0" />,
-        href: Routes.Changelog,
-        external: false
-      },
-      {
-        title: 'Roadmap',
-        description: 'Explore our future plans and upcoming features',
-        icon: <SquareKanbanIcon className="size-5 shrink-0" />,
-        href: Routes.Roadmap,
-        external: true
-      },
-      {
-        title: 'Cookie Policy',
-        description: 'Information about how we use cookies on our website',
-        icon: <CookieIcon className="size-5 shrink-0" />,
-        href: Routes.CookiePolicy,
-        external: false
-      },
-      {
-        title: 'Privacy Policy',
-        description: 'Details about how we protect and handle your data',
-        icon: <ShieldIcon className="size-5 shrink-0" />,
-        href: Routes.PrivacyPolicy,
-        external: false
-      },
-      {
-        title: 'Terms of Service',
-        description: 'The legal agreement between you and our company',
-        icon: <FileTextIcon className="size-5 shrink-0" />,
-        href: Routes.TermsOfService,
-        external: false
-      }
-    ]
-  },
-];
+type TranslationFunction = (key: string, ...args: any[]) => string;
 
 /**
- * list all the footer links here, you can customize the links as you want
+ * Creates a translation function that works with our menu functions
+ * @param t - The next-intl translation function
+ * @returns A translation function that accepts string keys
  */
-export const FOOTER_LINKS: NestedMenuItem[] = [
-  {
-    title: 'Product',
-    items: [
-      { title: 'Features', href: Routes.Features, external: false },
-      { title: 'Pricing', href: Routes.Pricing, external: false },
-      { title: 'FAQ', href: Routes.FAQ, external: false },
-    ]
-  },
-  {
-    title: 'Resources',
-    items: [
-      { title: 'Blog', href: Routes.Blog, external: false },
-      { title: 'Changelog', href: Routes.Changelog, external: false },
-      { title: 'Roadmap', href: Routes.Roadmap, external: true },
-    ]
-  },
-  {
-    title: 'Company',
-    items: [
-      { title: 'About', href: Routes.About, external: false },
-      { title: 'Contact', href: Routes.Contact, external: false },
-      { title: 'Waitlist', href: Routes.Waitlist, external: false }
-    ]
-  },
-  {
-    title: 'Legal',
-    items: [
-      { title: 'Cookie Policy', href: Routes.CookiePolicy, external: false },
-      { title: 'Privacy Policy', href: Routes.PrivacyPolicy, external: false },
-      { title: 'Terms of Service', href: Routes.TermsOfService, external: false },
-    ]
-  }
-];
+export function createTranslator(t: any): TranslationFunction {
+  return (key: string) => {
+    try {
+      // @ts-ignore - We know this is a valid key because we've defined it in our messages
+      return t(key);
+    } catch (error) {
+      console.error(`Translation key not found: ${key}`);
+      return key.split('.').pop() || key;
+    }
+  };
+}
+
+/**
+ * Get menu links with translations
+ * @param t - The translation function
+ * @returns The menu links with translated titles and descriptions
+ */
+export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
+  return [
+    {
+      title: t('Marketing.menu.features.title'),
+      href: Routes.Features,
+      external: false
+    },
+    {
+      title: t('Marketing.menu.pricing.title'),
+      href: Routes.Pricing,
+      external: false
+    },
+    {
+      title: t('Marketing.menu.blog.title'),
+      href: Routes.Blog,
+      external: false
+    },
+    {
+      title: t('Marketing.menu.ai.title'),
+      items: [
+        {
+          title: t('Marketing.menu.ai.items.text.title'),
+          description: t('Marketing.menu.ai.items.text.description'),
+          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          href: Routes.AIText,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.image.title'),
+          description: t('Marketing.menu.ai.items.image.description'),
+          icon: <ImageIcon className="size-5 shrink-0" />,
+          href: Routes.AIImage,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.video.title'),
+          description: t('Marketing.menu.ai.items.video.description'),
+          icon: <FilmIcon className="size-5 shrink-0" />,
+          href: Routes.AIVideo,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.audio.title'),
+          description: t('Marketing.menu.ai.items.audio.description'),
+          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          href: Routes.AIAudio,
+          external: false
+        }
+      ]
+    },
+    {
+      title: t('Marketing.menu.pages.title'),
+      items: [
+        {
+          title: t('Marketing.menu.pages.items.about.title'),
+          description: t('Marketing.menu.pages.items.about.description'),
+          icon: <InfoIcon className="size-5 shrink-0" />,
+          href: Routes.About,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.contact.title'),
+          description: t('Marketing.menu.pages.items.contact.description'),
+          icon: <MailIcon className="size-5 shrink-0" />,
+          href: Routes.Contact,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.waitlist.title'),
+          description: t('Marketing.menu.pages.items.waitlist.description'),
+          icon: <MailboxIcon className="size-5 shrink-0" />,
+          href: Routes.Waitlist,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.changelog.title'),
+          description: t('Marketing.menu.pages.items.changelog.description'),
+          icon: <ListChecksIcon className="size-5 shrink-0" />,
+          href: Routes.Changelog,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.roadmap.title'),
+          description: t('Marketing.menu.pages.items.roadmap.description'),
+          icon: <SquareKanbanIcon className="size-5 shrink-0" />,
+          href: Routes.Roadmap,
+          external: true
+        },
+        {
+          title: t('Marketing.menu.pages.items.cookiePolicy.title'),
+          description: t('Marketing.menu.pages.items.cookiePolicy.description'),
+          icon: <CookieIcon className="size-5 shrink-0" />,
+          href: Routes.CookiePolicy,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.privacyPolicy.title'),
+          description: t('Marketing.menu.pages.items.privacyPolicy.description'),
+          icon: <ShieldIcon className="size-5 shrink-0" />,
+          href: Routes.PrivacyPolicy,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.pages.items.termsOfService.title'),
+          description: t('Marketing.menu.pages.items.termsOfService.description'),
+          icon: <FileTextIcon className="size-5 shrink-0" />,
+          href: Routes.TermsOfService,
+          external: false
+        }
+      ]
+    },
+  ];
+}
+
+/**
+ * Get footer links with translations
+ * @param t - The translation function
+ * @returns The footer links with translated titles
+ */
+export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
+  return [
+    {
+      title: t('Marketing.footer.product.title'),
+      items: [
+        { title: t('Marketing.footer.product.items.features'), href: Routes.Features, external: false },
+        { title: t('Marketing.footer.product.items.pricing'), href: Routes.Pricing, external: false },
+        { title: t('Marketing.footer.product.items.faq'), href: Routes.FAQ, external: false },
+      ]
+    },
+    {
+      title: t('Marketing.footer.resources.title'),
+      items: [
+        { title: t('Marketing.footer.resources.items.blog'), href: Routes.Blog, external: false },
+        { title: t('Marketing.footer.resources.items.changelog'), href: Routes.Changelog, external: false },
+        { title: t('Marketing.footer.resources.items.roadmap'), href: Routes.Roadmap, external: true },
+      ]
+    },
+    {
+      title: t('Marketing.footer.company.title'),
+      items: [
+        { title: t('Marketing.footer.company.items.about'), href: Routes.About, external: false },
+        { title: t('Marketing.footer.company.items.contact'), href: Routes.Contact, external: false },
+        { title: t('Marketing.footer.company.items.waitlist'), href: Routes.Waitlist, external: false }
+      ]
+    },
+    {
+      title: t('Marketing.footer.legal.title'),
+      items: [
+        { title: t('Marketing.footer.legal.items.cookiePolicy'), href: Routes.CookiePolicy, external: false },
+        { title: t('Marketing.footer.legal.items.privacyPolicy'), href: Routes.PrivacyPolicy, external: false },
+        { title: t('Marketing.footer.legal.items.termsOfService'), href: Routes.TermsOfService, external: false },
+      ]
+    }
+  ];
+}
 
 /**
  * list all the social links here, you can delete the ones that are not needed
@@ -230,17 +257,21 @@ export const SOCIAL_LINKS: MenuItem[] = [
 ];
 
 /**
- * list all the avatar links here, you can customize the links as you want
+ * Get avatar links with translations
+ * @param t - The translation function
+ * @returns The avatar links with translated titles
  */
-export const AVATAR_LINKS: MenuItem[] = [
-  {
-    title: 'Dashboard',
-    href: Routes.Dashboard,
-    icon: <DashboardIcon className="size-4 shrink-0" />
-  },
-  {
-    title: 'Settings',
-    href: Routes.Settings,
-    icon: <SettingsIcon className="size-4 shrink-0" />
-  }
-];
+export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
+  return [
+    {
+      title: t('Marketing.avatar.dashboard'),
+      href: Routes.Dashboard,
+      icon: <DashboardIcon className="size-4 shrink-0" />
+    },
+    {
+      title: t('Marketing.avatar.settings'),
+      href: Routes.Settings,
+      icon: <SettingsIcon className="size-4 shrink-0" />
+    }
+  ];
+}

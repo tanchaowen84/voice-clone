@@ -9,14 +9,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from '@/components/ui/collapsible';
-import { MENU_LINKS } from '@/config/marketing';
+import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
+import { useTranslations } from "next-intl";
 import { Portal } from '@radix-ui/react-portal';
 import { ArrowUpRightIcon, ChevronDownIcon, ChevronUpIcon, MenuIcon, XIcon } from 'lucide-react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
@@ -107,6 +107,10 @@ interface MainMobileMenuProps {
 
 function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const menuLinks = getMenuLinks(translator);
+  const commonTranslations = useTranslations("Common");
   return (
     <div className="fixed inset-0 z-50 mt-[72px] overflow-y-auto bg-background backdrop-blur-md animate-in fade-in-0">
       <div className="flex size-full flex-col items-start space-y-4 p-4">
@@ -123,7 +127,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
               'w-full'
             )}
           >
-            Log in
+            {commonTranslations("login")}
           </LocaleLink>
           <LocaleLink
             href={Routes.Register}
@@ -136,13 +140,13 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
             )}
             onClick={onLinkClicked}
           >
-            Sign up
+            {commonTranslations("signUp")}
           </LocaleLink>
         </div>
 
         {/* main menu */}
         <ul className="w-full">
-          {MENU_LINKS.map((item) => (
+          {menuLinks.map((item) => (
             <li key={item.title} className="py-2">
               {item.items ? (
                 <Collapsible

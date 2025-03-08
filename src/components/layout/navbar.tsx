@@ -17,13 +17,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
-import { MENU_LINKS } from '@/config/marketing';
+import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
 import { useScroll } from "@/hooks/use-scroll";
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
+import { useTranslations } from "next-intl";
 import { ArrowUpRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -41,6 +42,10 @@ export function Navbar({ scroll }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const menuLinks = getMenuLinks(translator);
+  const commonTranslations = useTranslations("Common");
   // console.log(`Navbar, user:`, user);
 
   const pathname = usePathname();
@@ -69,13 +74,13 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex-1 flex items-center justify-center space-x-2">
             <NavigationMenu className="relative">
               <NavigationMenuList className="flex items-center">
-                {MENU_LINKS.map((item, index) =>
+                {menuLinks.map((item, index) =>
                   item.items ? (
                     <NavigationMenuItem key={index} className="relative">
                       <NavigationMenuTrigger
                         data-active={
                           item.items.some((subItem) =>
-                            pathname.startsWith(subItem.href)
+                            subItem.href && pathname.startsWith(subItem.href)
                           ) ? "true" : undefined
                         }
                         className={cn(
@@ -90,7 +95,7 @@ export function Navbar({ scroll }: NavBarProps) {
                           {item.items.map((subItem, subIndex) => (
                             <li key={subIndex}>
                               <NavigationMenuLink asChild>
-                                <Link
+                                <LocaleLink
                                   href={subItem.href || '#'}
                                   target={subItem.external ? '_blank' : undefined}
                                   rel={
@@ -116,7 +121,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                   {subItem.external && (
                                     <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
                                   )}
-                                </Link>
+                                </LocaleLink>
                               </NavigationMenuLink>
                             </li>
                           ))}
@@ -127,7 +132,7 @@ export function Navbar({ scroll }: NavBarProps) {
                     <NavigationMenuItem key={index}>
                       <NavigationMenuLink
                         asChild
-                        active={pathname.startsWith(item.href)}
+                        active={item.href && pathname.startsWith(item.href) ? true : undefined}
                         className={cn(
                           customNavigationMenuTriggerStyle,
                           "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
@@ -163,7 +168,7 @@ export function Navbar({ scroll }: NavBarProps) {
                     variant="outline"
                     size="sm"
                   >
-                    <span>Log in</span>
+                    {commonTranslations("login")}
                   </Button>
                 </LoginWrapper>
 
@@ -173,7 +178,7 @@ export function Navbar({ scroll }: NavBarProps) {
                   asChild
                 >
                   <LocaleLink href={Routes.Register}>
-                    Sign up
+                    {commonTranslations("signUp")}
                   </LocaleLink>
                 </Button>
               </div>

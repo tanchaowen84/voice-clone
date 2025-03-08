@@ -78,7 +78,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
   return (
     <AuthCard
       headerLabel={t("welcomeBack")}
-      bottomButtonLabel={t("signUp")}
+      bottomButtonLabel={t("signUpHint")}
       bottomButtonHref={`${Routes.Register}`}
       showSocialLoginButton
       className={cn("border-none", className)}

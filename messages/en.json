@@ -1,4 +1,8 @@
 {
+  "Common": {
+    "login": "Log in",
+    "signUp": "Sign up"
+  },
   "HomePage": {
     "title": "next-intl example"
   },
@@ -19,7 +23,7 @@
       "email": "Email",
       "password": "Password",
       "signIn": "Sign In",
-      "signUp": "Don't have an account? Sign up",
+      "signUpHint": "Don't have an account? Sign up",
       "forgotPassword": "Forgot Password?",
       "signInWithGoogle": "Sign In with Google",
       "signInWithGitHub": "Sign In with GitHub",
@@ -35,7 +39,7 @@
       "email": "Email",
       "password": "Password",
       "signUp": "Sign Up",
-      "signIn": "Already have an account? Sign in",
+      "signInHint": "Already have an account? Sign in",
       "checkEmail": "Please check your email inbox"
     },
     "forgotPassword": {
@@ -67,6 +71,115 @@
     "all": "All",
     "noPostsFound": "No posts found",
     "allPosts": "All Posts"
+  },
+  "Marketing": {
+    "menu": {
+      "features": {
+        "title": "Features"
+      },
+      "pricing": {
+        "title": "Pricing"
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "ai": {
+        "title": "AI",
+        "items": {
+          "text": {
+            "title": "AI Text",
+            "description": "Show how to use AI to write stunning text"
+          },
+          "image": {
+            "title": "AI Image",
+            "description": "Show how to use AI to generate beautiful images"
+          },
+          "video": {
+            "title": "AI Video",
+            "description": "Show how to use AI to generate amazing videos"
+          },
+          "audio": {
+            "title": "AI Audio",
+            "description": "Show how to use AI to generate wonderful audio"
+          }
+        }
+      },
+      "pages": {
+        "title": "Pages",
+        "items": {
+          "about": {
+            "title": "About",
+            "description": "Learn more about our company, mission, and values"
+          },
+          "contact": {
+            "title": "Contact",
+            "description": "Get in touch with our team for support or inquiries"
+          },
+          "waitlist": {
+            "title": "Waitlist",
+            "description": "Join our waitlist for latest news and updates"
+          },
+          "changelog": {
+            "title": "Changelog",
+            "description": "See the latest updates to our products"
+          },
+          "roadmap": {
+            "title": "Roadmap",
+            "description": "Explore our future plans and upcoming features"
+          },
+          "cookiePolicy": {
+            "title": "Cookie Policy",
+            "description": "Information about how we use cookies on our website"
+          },
+          "privacyPolicy": {
+            "title": "Privacy Policy",
+            "description": "Details about how we protect and handle your data"
+          },
+          "termsOfService": {
+            "title": "Terms of Service",
+            "description": "The legal agreement between you and our company"
+          }
+        }
+      }
+    },
+    "footer": {
+      "product": {
+        "title": "Product",
+        "items": {
+          "features": "Features",
+          "pricing": "Pricing",
+          "faq": "FAQ"
+        }
+      },
+      "resources": {
+        "title": "Resources",
+        "items": {
+          "blog": "Blog",
+          "changelog": "Changelog",
+          "roadmap": "Roadmap"
+        }
+      },
+      "company": {
+        "title": "Company",
+        "items": {
+          "about": "About",
+          "contact": "Contact",
+          "waitlist": "Waitlist"
+        }
+      },
+      "legal": {
+        "title": "Legal",
+        "items": {
+          "cookiePolicy": "Cookie Policy",
+          "privacyPolicy": "Privacy Policy",
+          "termsOfService": "Terms of Service"
+        }
+      }
+    },
+    "avatar": {
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    }
   },
   "mail": {
 		"common": {

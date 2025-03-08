@@ -4,13 +4,18 @@ import Container from "@/components/container";
 import { ThemeSwitcherHorizontal } from "@/components/layout/theme-switcher-horizontal";
 import { Logo } from "@/components/logo";
 import BuiltWithButton from "@/components/shared/built-with-button";
-import { FOOTER_LINKS, SOCIAL_LINKS } from "@/config/marketing";
+import { createTranslator, getFooterLinks, SOCIAL_LINKS } from "@/config/marketing";
 import { siteConfig } from "@/config/site";
 import { LocaleLink } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const footerLinks = getFooterLinks(translator);
+  
   return (
     <footer className={cn("border-t", className)}>
       <Container className="px-4">
@@ -53,7 +58,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           </div>
 
           {/* footer links */}
-          {FOOTER_LINKS.map((section) => (
+          {footerLinks.map((section) => (
             <div
               key={section.title}
               className="col-span-1 md:col-span-1 items-start"
@@ -85,7 +90,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       <div className="border-t py-8">
         <Container className="px-4 flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All Rights Reserved.
+            &copy; {new Date().getFullYear()} {siteConfig.name} All Rights Reserved.
           </span>
 
           <ThemeSwitcherHorizontal />

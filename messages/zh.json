@@ -1,4 +1,8 @@
 {
+  "Common": {
+    "login": "登录",
+    "signUp": "注册"
+  },
   "HomePage": {
     "title": "next-intl 示例"
   },
@@ -19,7 +23,7 @@
       "email": "邮箱",
       "password": "密码",
       "signIn": "登录",
-      "signUp": "没有账号？注册",
+      "signUpHint": "没有账号？注册",
       "forgotPassword": "忘记密码？",
       "signInWithGoogle": "使用 Google 登录",
       "signInWithGitHub": "使用 GitHub 登录",
@@ -35,7 +39,7 @@
       "email": "邮箱",
       "password": "密码",
       "signUp": "注册",
-      "signIn": "已经有账号？登录",
+      "signInHint": "已经有账号？登录",
       "checkEmail": "请检查您的邮箱"
     },
     "forgotPassword": {
@@ -68,10 +72,120 @@
     "noPostsFound": "没有找到文章",
     "allPosts": "全部文章"
   },
+  "Marketing": {
+    "menu": {
+      "features": {
+        "title": "功能"
+      },
+      "pricing": {
+        "title": "价格"
+      },
+      "blog": {
+        "title": "博客"
+      },
+      "ai": {
+        "title": "人工智能",
+        "items": {
+          "text": {
+            "title": "AI 文本",
+            "description": "展示如何使用 AI 生成精彩文本"
+          },
+          "image": {
+            "title": "AI 图像",
+            "description": "展示如何使用 AI 生成精美图像"
+          },
+          "video": {
+            "title": "AI 视频",
+            "description": "展示如何使用 AI 生成惊人视频"
+          },
+          "audio": {
+            "title": "AI 音频",
+            "description": "展示如何使用 AI 生成动听音频"
+          }
+        }
+      },
+      "pages": {
+        "title": "页面",
+        "items": {
+          "about": {
+            "title": "关于我们",
+            "description": "了解更多关于我们的公司、使命和价值观"
+          },
+          "contact": {
+            "title": "联系我们",
+            "description": "与我们的团队联系，以获取支持或咨询"
+          },
+          "waitlist": {
+            "title": "邮件列表",
+            "description": "加入我们的邮件列表，获取最新消息和更新"
+          },
+          "changelog": {
+            "title": "更新日志",
+            "description": "查看我们产品的更新历史，查看最新动态"
+          },
+          "roadmap": {
+            "title": "路线图",
+            "description": "探索我们的未来计划和即将推出的功能"
+          },
+          "cookiePolicy": {
+            "title": "Cookie 政策",
+            "description": "关于我们如何在网站上使用 Cookie 的信息"
+          },
+          "privacyPolicy": {
+            "title": "隐私政策",
+            "description": "关于我们将如何保护和处理您在网站上的数据"
+          },
+          "termsOfService": {
+            "title": "服务条款",
+            "description": "关于您与我们公司之间的法律协议和条款"
+          }
+        }
+      }
+    },
+    "footer": {
+      "product": {
+        "title": "产品",
+        "items": {
+          "features": "功能",
+          "pricing": "价格",
+          "faq": "常见问题"
+        }
+      },
+      "resources": {
+        "title": "资源",
+        "items": {
+          "blog": "博客",
+          "changelog": "更新日志",
+          "roadmap": "路线图"
+        }
+      },
+      "company": {
+        "title": "公司",
+        "items": {
+          "about": "关于我们",
+          "contact": "联系我们",
+          "waitlist": "邮件列表"
+        }
+      },
+      "legal": {
+        "title": "法律",
+        "items": {
+          "cookiePolicy": "Cookie 政策",
+          "privacyPolicy": "隐私政策",
+          "termsOfService": "服务条款"
+        }
+      }
+    },
+    "avatar": {
+      "dashboard": "工作台",
+      "settings": "设置",
+      "logout": "退出"
+    }
+  },
   "mail": {
 		"common": {
       "team": "{name} 团队",
-      "copyright": "版权所有 {year}"
+      "copyright": "版权所有 {year} All Rights Reserved."
 		},
 		"verifyEmail": {
 			"title": "你好, {name}.",
