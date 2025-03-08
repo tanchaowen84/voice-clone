@@ -11,11 +11,11 @@ import { parse as parseCookies } from "cookie";
 const from = process.env.RESEND_FROM || "delivered@resend.dev";
 
 const getLocaleFromRequest = (request?: Request) => {
-	const cookies = parseCookies(request?.headers.get("cookie") ?? "");
-	return (
-		(cookies[LOCALE_COOKIE_NAME] as Locale) ??
-		routing.defaultLocale
-	);
+  const cookies = parseCookies(request?.headers.get("cookie") ?? "");
+  return (
+    (cookies[LOCALE_COOKIE_NAME] as Locale) ??
+    routing.defaultLocale
+  );
 };
 
 export const auth = betterAuth({
@@ -61,13 +61,13 @@ export const auth = betterAuth({
         },
         locale,
       });
-		},
+    },
   },
   emailVerification: {
     // https://www.better-auth.com/docs/concepts/email#auto-signin-after-verification
     autoSignInAfterVerification: true,
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
-    sendVerificationEmail: async ( { user, url, token }, request) => {
+    sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
       console.log("sendVerificationEmail, locale:", locale);
       await send({
@@ -95,11 +95,11 @@ export const auth = betterAuth({
   },
   account: {
     // https://www.better-auth.com/docs/concepts/users-accounts#account-linking
-		accountLinking: {
+    accountLinking: {
       enabled: true,
-			trustedProviders: ["google", "github"],
-		},
-	},
+      trustedProviders: ["google", "github"],
+    },
+  },
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
     admin(),

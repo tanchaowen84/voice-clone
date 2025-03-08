@@ -21,6 +21,8 @@ export const config = {
 
     // Enable redirects that add missing locales
     // (e.g. `/pathnames` -> `/zh/pathnames`)
-    '/((?!_next|_vercel|.*\\..*).*)'
+    // Exclude API routes and other Next.js internal routes
+    // if not exclude api routes, auth routes will not work
+    '/((?!api|_next|_vercel|.*\\..*).*)'
   ]
 };
