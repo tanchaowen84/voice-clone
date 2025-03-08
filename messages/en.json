@@ -1,6 +1,6 @@
 {
   "Common": {
-    "login": "Log in",
+    "login": "Login",
     "logout": "Log out",
     "signUp": "Sign up"    
   },
@@ -130,11 +130,11 @@
           },
           "cookiePolicy": {
             "title": "Cookie Policy",
-            "description": "Information about how we use cookies on our website"
+            "description": "How we use the cookies on our website"
           },
           "privacyPolicy": {
             "title": "Privacy Policy",
-            "description": "Details about how we protect and handle your data"
+            "description": "How we protect and handle your data"
           },
           "termsOfService": {
             "title": "Terms of Service",
