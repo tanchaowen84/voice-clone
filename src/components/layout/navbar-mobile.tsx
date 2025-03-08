@@ -15,7 +15,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
-import { ArrowUpRightIcon, ChevronDown, ChevronUp, MenuIcon, X } from 'lucide-react';
+import { ArrowUpRightIcon, ChevronDownIcon, ChevronUpIcon, MenuIcon, XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -81,7 +81,7 @@ export function NavbarMobile({
             className="flex aspect-square h-fit select-none items-center justify-center rounded-md border"
           >
             {open ? (
-              <X className="size-8" />
+              <XIcon className="size-8" />
             ) : (
               <MenuIcon className="size-8" />
             )}
@@ -164,17 +164,17 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                         {item.title}
                       </span>
                       {expanded[item.title.toLowerCase()] ? (
-                        <ChevronUp className="size-4" />
+                        <ChevronUpIcon className="size-4" />
                       ) : (
-                        <ChevronDown className="size-4" />
+                        <ChevronDownIcon className="size-4" />
                       )}
                     </Button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <ul className="mt-2 pl-4">
+                    <ul className="mt-2 pl-4 space-y-2">
                       {item.items.map((subItem) => (
                         <li key={subItem.title}>
-                          <Link
+                          <LocaleLink
                             href={subItem.href || '#'}
                             target={subItem.external ? '_blank' : undefined}
                             rel={
@@ -204,14 +204,14 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                             {subItem.external && (
                               <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
                             )}
-                          </Link>
+                          </LocaleLink>
                         </li>
                       ))}
                     </ul>
                   </CollapsibleContent>
                 </Collapsible>
               ) : (
-                <Link
+                <LocaleLink
                   href={item.href || '#'}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
@@ -222,7 +222,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                   onClick={onLinkClicked}
                 >
                   <span className="text-base">{item.title}</span>
-                </Link>
+                </LocaleLink>
               )}
             </li>
           ))}

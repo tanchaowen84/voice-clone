@@ -74,7 +74,7 @@ export default function LocaleSelector() {
         {routing.locales.map((cur) => (
           <SelectItem key={cur} value={cur} className="cursor-pointer flex items-center gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-lg">{LOCALE_LIST[cur].flag}</span>
+              <span className="text-md">{LOCALE_LIST[cur].flag}</span>
               <span>{LOCALE_LIST[cur].name}</span>
             </div>
           </SelectItem>

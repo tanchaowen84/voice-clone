@@ -7,14 +7,21 @@ import { TikTokIcon } from '@/components/icons/tiktok';
 import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
 import { Routes } from '@/routes';
-import { CubeIcon, DashboardIcon, PaperPlaneIcon } from '@radix-ui/react-icons';
+import { DashboardIcon } from '@radix-ui/react-icons';
 import {
-  BookOpenIcon,
-  FileBarChartIcon,
-  LayoutIcon,
+  AudioLinesIcon,
+  CookieIcon,
+  FileTextIcon,
+  FilmIcon,
+  ImageIcon,
+  InfoIcon,
+  ListChecksIcon,
+  MailboxIcon,
   MailIcon,
-  PlayIcon,
   SettingsIcon,
+  ShieldIcon,
+  SquareKanbanIcon,
+  SquarePenIcon
 } from 'lucide-react';
 
 /**
@@ -40,32 +47,32 @@ export const MENU_LINKS = [
     title: 'AI',
     items: [
       {
-        title: 'Features',
-        description: 'Short description here',
-        icon: <CubeIcon className="size-5 shrink-0" />,
-        href: Routes.Features,
+        title: 'AI Tex',
+        description: 'show how to use AI to write stunning text',
+        icon: <SquarePenIcon className="size-5 shrink-0" />,
+        href: Routes.AIText,
         external: false
       },
       {
-        title: 'Pricing',
-        description: 'Short description here',
-        icon: <PlayIcon className="size-5 shrink-0" />,
-        href: Routes.Pricing,
+        title: 'AI Image',
+        description: 'show how to use AI to generate beautiful images',
+        icon: <ImageIcon className="size-5 shrink-0" />,
+        href: Routes.AIImage,
         external: false
       },
       {
-        title: 'FAQ',
-        description: 'Short description here',
-        icon: <LayoutIcon className="size-5 shrink-0" />,
-        href: Routes.FAQ,
+        title: 'AI Video',
+        description: 'show how to use AI to generate amazing videos',
+        icon: <FilmIcon className="size-5 shrink-0" />,
+        href: Routes.AIVideo,
         external: false
       },
       {
-        title: 'Roadmap',
-        description: 'Short description here',
-        icon: <FileBarChartIcon className="size-5 shrink-0" />,
-        href: Routes.Roadmap,
-        external: true
+        title: 'AI Audio',
+        description: 'show how to use AI to generate wonderful audio',
+        icon: <AudioLinesIcon className="size-5 shrink-0" />,
+        href: Routes.AIAudio,
+        external: false
       }
     ]
   },
@@ -74,57 +81,57 @@ export const MENU_LINKS = [
     items: [
       {
         title: 'About',
-        description: 'Short description here',
-        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        description: 'Learn more about our company, mission, and values',
+        icon: <InfoIcon className="size-5 shrink-0" />,
         href: Routes.About,
         external: false
       },
       {
         title: 'Contact',
-        description: 'Short description here',
-        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        description: 'Get in touch with our team for support or inquiries',
+        icon: <MailIcon className="size-5 shrink-0" />,
         href: Routes.Contact,
         external: false
       },
       {
         title: 'Waitlist',
-        description: 'Short description here',
-        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        description: 'Join our waitlist for latest news and updates',
+        icon: <MailboxIcon className="size-5 shrink-0" />,
         href: Routes.Waitlist,
         external: false
       },
       {
         title: 'Changelog',
-        description: 'Short description here',
-        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        description: 'See the latest updates to our products',
+        icon: <ListChecksIcon className="size-5 shrink-0" />,
         href: Routes.Changelog,
         external: false
       },
       {
         title: 'Roadmap',
-        description: 'Short description here',
-        icon: <PaperPlaneIcon className="size-5 shrink-0" />,
+        description: 'Explore our future plans and upcoming features',
+        icon: <SquareKanbanIcon className="size-5 shrink-0" />,
         href: Routes.Roadmap,
         external: true
       },
       {
         title: 'Cookie Policy',
-        description: 'Short description here',
-        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        description: 'Information about how we use cookies on our website',
+        icon: <CookieIcon className="size-5 shrink-0" />,
         href: Routes.CookiePolicy,
         external: false
       },
       {
         title: 'Privacy Policy',
-        description: 'Short description here',
-        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        description: 'Details about how we protect and handle your data',
+        icon: <ShieldIcon className="size-5 shrink-0" />,
         href: Routes.PrivacyPolicy,
         external: false
       },
       {
         title: 'Terms of Service',
-        description: 'Short description here',
-        icon: <BookOpenIcon className="size-5 shrink-0" />,
+        description: 'The legal agreement between you and our company',
+        icon: <FileTextIcon className="size-5 shrink-0" />,
         href: Routes.TermsOfService,
         external: false
       }
