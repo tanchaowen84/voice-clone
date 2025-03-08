@@ -34,6 +34,14 @@ export enum Routes {
   AIImage = '/dashboard/features/ai-image',
   AIVideo = '/dashboard/features/ai-video',
   AIAudio = '/dashboard/features/ai-audio',
+
+  HeroBlocks = '/blocks/hero',
+  PricingBlocks = '/blocks/pricing',
+  FeaturesBlocks = '/blocks/features',
+  FAQBlocks = '/blocks/faq',
+  StatsBlocks = '/blocks/stats',
+  CallToActionBlocks = '/blocks/call-to-action',
+  ContentBlocks = '/blocks/content',
 }
 
 /**

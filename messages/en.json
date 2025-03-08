@@ -2,7 +2,7 @@
   "Common": {
     "login": "Login",
     "logout": "Log out",
-    "signUp": "Sign up"    
+    "signUp": "Sign up"
   },
   "HomePage": {
     "title": "next-intl example"
@@ -77,7 +77,7 @@
     "allPosts": "All Posts"
   },
   "Marketing": {
-    "menu": {
+    "navbar": {
       "features": {
         "title": "Features"
       },
@@ -144,6 +144,32 @@
             "description": "The legal agreement between you and our company"
           }
         }
+      },
+      "blocks": {
+        "title": "Blocks",
+        "items": {
+          "hero": {
+            "title": "Hero Blocks"
+          },
+          "pricing": {
+            "title": "Pricing Blocks"
+          },
+          "features": {
+            "title": "Features Blocks"
+          },
+          "faq": {
+            "title": "Faq Blocks"
+          },
+          "stats": {
+            "title": "Stats Blocks"
+          },
+          "callToAction": {
+            "title": "Call to Action Blocks"
+          },
+          "content": {
+            "title": "Content Blocks"
+          }
+        }
       }
     },
     "footer": {
@@ -185,26 +211,26 @@
       "settings": "Settings"
     }
   },
-  "mail": {
-		"common": {
+  "Mail": {
+    "common": {
       "team": "{name} Team",
       "copyright": "Copyright {year} All Rights Reserved."
-		},
-		"verifyEmail": {
-			"title": "Hi, {name}.",
-			"body": "Please click the link below to verify your email address.",
-			"confirmEmail": "Confirm email",
-			"subject": "Verify your email"
-		},
-		"forgotPassword": {
-			"title": "Hi, {name}.",
-			"body": "Please click the link below to reset your password.",
-			"resetPassword": "Reset password",
-			"subject": "Reset your password"
-		},
-		"subscribeNewsletter": {
-			"body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
-			"subject": "Thanks for subscribing"
-		}
-	}
+    },
+    "verifyEmail": {
+      "title": "Hi, {name}.",
+      "body": "Please click the link below to verify your email address.",
+      "confirmEmail": "Confirm email",
+      "subject": "Verify your email"
+    },
+    "forgotPassword": {
+      "title": "Hi, {name}.",
+      "body": "Please click the link below to reset your password.",
+      "resetPassword": "Reset password",
+      "subject": "Reset your password"
+    },
+    "subscribeNewsletter": {
+      "body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
+      "subject": "Thanks for subscribing"
+    }
+  }
 }

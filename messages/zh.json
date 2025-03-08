@@ -74,7 +74,7 @@
     "allPosts": "全部文章"
   },
   "Marketing": {
-    "menu": {
+    "navbar": {
       "features": {
         "title": "功能"
       },
@@ -141,6 +141,32 @@
             "description": "关于您与我们公司之间的法律协议和条款"
           }
         }
+      },
+      "blocks": {
+        "title": "内置组件",
+        "items": {
+          "hero": {
+            "title": "Hero组件"
+          },
+          "pricing": {
+            "title": "Pricing组件"
+          },
+          "features": {
+            "title": "Features组件"
+          },
+          "faq": {
+            "title": "Faq组件"
+          },
+          "stats": {
+            "title": "Stats组件"
+          },
+          "callToAction": {
+            "title": "Call to Action组件"
+          },
+          "content": {
+            "title": "Content组件"
+          }
+        }
       }
     },
     "footer": {
@@ -183,7 +209,7 @@
       "logout": "退出"
     }
   },
-  "mail": {
+  "Mail": {
 		"common": {
       "team": "{name} 团队",
       "copyright": "版权所有 {year} All Rights Reserved."

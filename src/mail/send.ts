@@ -97,8 +97,8 @@ export async function getTemplate<T extends Template>({
 
 	// get the subject from the messages
 	const subject =
-		"subject" in messages.mail[template as keyof Messages["mail"]]
-			? messages.mail[template].subject
+		"subject" in messages.Mail[template as keyof Messages["Mail"]]
+			? messages.Mail[template].subject
 			: "";
 
 	const html = await render(email);

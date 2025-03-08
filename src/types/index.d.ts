@@ -2,8 +2,7 @@ import type { Icons } from "@/components/icons/icons";
 import type { ReactNode } from "react";
 
 /**
- * utm parameters
- * https://utmbuilder.com/
+ * site config
  */
 export type SiteConfig = {
   name: string;

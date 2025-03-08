@@ -12,17 +12,24 @@ import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
   BuildingIcon,
+  ChartNoAxesCombinedIcon,
+  CircleDollarSignIcon,
+  CircleHelpIcon,
   CookieIcon,
   FileTextIcon,
   FilmIcon,
+  FlameIcon,
   ImageIcon,
   ListChecksIcon,
   MailboxIcon,
   MailIcon,
+  NewspaperIcon,
+  RocketIcon,
   SettingsIcon,
   ShieldCheckIcon,
   SquareKanbanIcon,
-  SquarePenIcon
+  SquarePenIcon,
+  WandSparklesIcon
 } from 'lucide-react';
 
 type TranslationFunction = (key: string, ...args: any[]) => string;
@@ -53,47 +60,47 @@ export function createTranslator(t: any): TranslationFunction {
 export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
   return [
     {
-      title: t('Marketing.menu.features.title'),
+      title: t('Marketing.navbar.features.title'),
       href: Routes.Features,
       external: false
     },
     {
-      title: t('Marketing.menu.pricing.title'),
+      title: t('Marketing.navbar.pricing.title'),
       href: Routes.Pricing,
       external: false
     },
     {
-      title: t('Marketing.menu.blog.title'),
+      title: t('Marketing.navbar.blog.title'),
       href: Routes.Blog,
       external: false
     },
     {
-      title: t('Marketing.menu.ai.title'),
+      title: t('Marketing.navbar.ai.title'),
       items: [
         {
-          title: t('Marketing.menu.ai.items.text.title'),
-          description: t('Marketing.menu.ai.items.text.description'),
+          title: t('Marketing.navbar.ai.items.text.title'),
+          description: t('Marketing.navbar.ai.items.text.description'),
           icon: <SquarePenIcon className="size-5 shrink-0" />,
           href: Routes.AIText,
           external: false
         },
         {
-          title: t('Marketing.menu.ai.items.image.title'),
-          description: t('Marketing.menu.ai.items.image.description'),
+          title: t('Marketing.navbar.ai.items.image.title'),
+          description: t('Marketing.navbar.ai.items.image.description'),
           icon: <ImageIcon className="size-5 shrink-0" />,
           href: Routes.AIImage,
           external: false
         },
         {
-          title: t('Marketing.menu.ai.items.video.title'),
-          description: t('Marketing.menu.ai.items.video.description'),
+          title: t('Marketing.navbar.ai.items.video.title'),
+          description: t('Marketing.navbar.ai.items.video.description'),
           icon: <FilmIcon className="size-5 shrink-0" />,
           href: Routes.AIVideo,
           external: false
         },
         {
-          title: t('Marketing.menu.ai.items.audio.title'),
-          description: t('Marketing.menu.ai.items.audio.description'),
+          title: t('Marketing.navbar.ai.items.audio.title'),
+          description: t('Marketing.navbar.ai.items.audio.description'),
           icon: <AudioLinesIcon className="size-5 shrink-0" />,
           href: Routes.AIAudio,
           external: false
@@ -101,66 +108,113 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
       ]
     },
     {
-      title: t('Marketing.menu.pages.title'),
+      title: t('Marketing.navbar.pages.title'),
       items: [
         {
-          title: t('Marketing.menu.pages.items.about.title'),
-          description: t('Marketing.menu.pages.items.about.description'),
+          title: t('Marketing.navbar.pages.items.about.title'),
+          description: t('Marketing.navbar.pages.items.about.description'),
           icon: <BuildingIcon className="size-5 shrink-0" />,
           href: Routes.About,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.contact.title'),
-          description: t('Marketing.menu.pages.items.contact.description'),
+          title: t('Marketing.navbar.pages.items.contact.title'),
+          description: t('Marketing.navbar.pages.items.contact.description'),
           icon: <MailIcon className="size-5 shrink-0" />,
           href: Routes.Contact,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.waitlist.title'),
-          description: t('Marketing.menu.pages.items.waitlist.description'),
+          title: t('Marketing.navbar.pages.items.waitlist.title'),
+          description: t('Marketing.navbar.pages.items.waitlist.description'),
           icon: <MailboxIcon className="size-5 shrink-0" />,
           href: Routes.Waitlist,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.changelog.title'),
-          description: t('Marketing.menu.pages.items.changelog.description'),
+          title: t('Marketing.navbar.pages.items.changelog.title'),
+          description: t('Marketing.navbar.pages.items.changelog.description'),
           icon: <ListChecksIcon className="size-5 shrink-0" />,
           href: Routes.Changelog,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.roadmap.title'),
-          description: t('Marketing.menu.pages.items.roadmap.description'),
+          title: t('Marketing.navbar.pages.items.roadmap.title'),
+          description: t('Marketing.navbar.pages.items.roadmap.description'),
           icon: <SquareKanbanIcon className="size-5 shrink-0" />,
           href: Routes.Roadmap,
           external: true
         },
         {
-          title: t('Marketing.menu.pages.items.cookiePolicy.title'),
-          description: t('Marketing.menu.pages.items.cookiePolicy.description'),
+          title: t('Marketing.navbar.pages.items.cookiePolicy.title'),
+          description: t('Marketing.navbar.pages.items.cookiePolicy.description'),
           icon: <CookieIcon className="size-5 shrink-0" />,
           href: Routes.CookiePolicy,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.privacyPolicy.title'),
-          description: t('Marketing.menu.pages.items.privacyPolicy.description'),
+          title: t('Marketing.navbar.pages.items.privacyPolicy.title'),
+          description: t('Marketing.navbar.pages.items.privacyPolicy.description'),
           icon: <ShieldCheckIcon className="size-5 shrink-0" />,
           href: Routes.PrivacyPolicy,
           external: false
         },
         {
-          title: t('Marketing.menu.pages.items.termsOfService.title'),
-          description: t('Marketing.menu.pages.items.termsOfService.description'),
+          title: t('Marketing.navbar.pages.items.termsOfService.title'),
+          description: t('Marketing.navbar.pages.items.termsOfService.description'),
           icon: <FileTextIcon className="size-5 shrink-0" />,
           href: Routes.TermsOfService,
           external: false
         }
       ]
     },
+    {
+      title: t('Marketing.navbar.blocks.title'),
+      items: [
+        {
+          title: t('Marketing.navbar.blocks.items.hero.title'),
+          icon: <FlameIcon className="size-5 shrink-0" />,
+          href: Routes.HeroBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.pricing.title'),
+          icon: <CircleDollarSignIcon className="size-5 shrink-0" />,
+          href: Routes.PricingBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.features.title'),
+          icon: <WandSparklesIcon className="size-5 shrink-0" />,
+          href: Routes.FeaturesBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.faq.title'),
+          icon: <CircleHelpIcon className="size-5 shrink-0" />,
+          href: Routes.FAQBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.stats.title'),
+          icon: <ChartNoAxesCombinedIcon className="size-5 shrink-0" />,
+          href: Routes.StatsBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.callToAction.title'),
+          icon: <RocketIcon className="size-5 shrink-0" />,
+          href: Routes.CallToActionBlocks,
+          external: false
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.content.title'),
+          icon: <NewspaperIcon className="size-5 shrink-0" />,
+          href: Routes.ContentBlocks,
+          external: false
+        }
+      ]
+    }
   ];
 }
 
