@@ -1,13 +1,14 @@
 import type { Locale } from "@/i18n/routing";
+import type { Messages } from "@/i18n/messages";
 
-export interface SendEmailParams {
+export interface EmailParams {
 	to: string;
 	subject: string;
 	text: string;
 	html?: string;
 }
 
-export type SendEmailHandler = (params: SendEmailParams) => Promise<void>;
+export type SendEmailHandler = (params: EmailParams) => Promise<void>;
 
 export interface MailProvider {
 	send: SendEmailHandler;
@@ -15,5 +16,5 @@ export interface MailProvider {
 
 export type BaseMailProps = {
 	locale: Locale;
-	translations: any;
+	messages: Messages;
 };

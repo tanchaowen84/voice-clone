@@ -1,30 +1,29 @@
-import { Link, Text } from "@react-email/components";
-import React from "react";
-import { createTranslator } from "use-intl/core";
+import { siteConfig } from "@/config/site";
 import EmailButton from "@/mail/components/EmailButton";
 import EmailLayout from "@/mail/components/EmailLayout";
-import { defaultLocale, defaultTranslations } from "@/mail/translations";
+import { defaultLocale, defaultMessages } from "@/mail/messages";
 import type { BaseMailProps } from "@/mail/types";
-import { siteConfig } from "@/config/site";
+import { Text } from "@react-email/components";
+import { createTranslator } from "use-intl/core";
 
 export function ForgotPassword({
 	url,
 	name,
 	locale,
-	translations,
+	messages,
 }: {
 	url: string;
 	name: string;
 } & BaseMailProps) {
 	const t = createTranslator({
 		locale,
-		messages: translations,
+		messages,
 	});
 
 	return (
 		<EmailLayout>
 			<Text>{t("mail.forgotPassword.title", { name })}</Text>
-			
+
 			<Text>{t("mail.forgotPassword.body")}</Text>
 
 			<EmailButton href={url}>
@@ -41,7 +40,7 @@ export function ForgotPassword({
 
 ForgotPassword.PreviewProps = {
 	locale: defaultLocale,
-	translations: defaultTranslations,
+	messages: defaultMessages,
 	url: "https://mksaas.com",
 	name: "username",
 };

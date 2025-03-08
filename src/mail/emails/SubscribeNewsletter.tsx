@@ -1,14 +1,16 @@
-import { Heading, Text } from "@react-email/components";
-import React from "react";
-import { createTranslator } from "use-intl/core";
 import EmailLayout from "@/mail/components/EmailLayout";
-import { defaultLocale, defaultTranslations } from "@/mail/translations";
+import { defaultLocale, defaultMessages } from "@/mail/messages";
 import type { BaseMailProps } from "@/mail/types";
+import { Heading, Text } from "@react-email/components";
+import { createTranslator } from "use-intl/core";
 
-export function SubscribeNewsletter({ locale, translations }: BaseMailProps) {
+export function SubscribeNewsletter({
+	locale,
+	messages,
+}: BaseMailProps) {
 	const t = createTranslator({
 		locale,
-		messages: translations,
+		messages,
 	});
 
 	return (
@@ -23,7 +25,7 @@ export function SubscribeNewsletter({ locale, translations }: BaseMailProps) {
 
 SubscribeNewsletter.PreviewProps = {
 	locale: defaultLocale,
-	translations: defaultTranslations,
+	messages: defaultMessages,
 };
 
 export default SubscribeNewsletter;

@@ -54,7 +54,7 @@ export const auth = betterAuth({
       console.log("sendResetPassword, locale:", locale);
       await send({
         to: user.email,
-        templateId: "forgotPassword",
+        template: "forgotPassword",
         context: {
           url,
           name: user.name,
@@ -72,7 +72,7 @@ export const auth = betterAuth({
       console.log("sendVerificationEmail, locale:", locale);
       await send({
         to: user.email,
-        templateId: "verifyEmail",
+        template: "verifyEmail",
         context: {
           url,
           name: user.name,

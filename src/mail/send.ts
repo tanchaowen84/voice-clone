@@ -1,30 +1,36 @@
+import type { Messages } from "@/i18n/messages";
+import { getMessagesForLocale } from "@/i18n/messages";
 import { Locale, routing } from "@/i18n/routing";
-import type { mailTemplates } from "@/mail/emails";
+import { mailTemplates } from "@/mail/emails";
 import { sendEmail } from "@/mail/provider/resend";
-import type { TemplateId } from "./templates";
-import { getTemplate } from "./templates";
+import { render } from "@react-email/render";
+
+export type Template = keyof typeof mailTemplates;
 
 /**
- * send email with given template, locale, and context
+ * send email
+ * 
+ * 1. with given template, and context
+ * 2. with given subject, text, and html
  */
-export async function send<T extends TemplateId>(
+export async function send<T extends Template>(
 	params: {
 		to: string;
 		locale?: Locale;
 	} & (
-		| {
-				templateId: T;
+			| {
+				template: T;
 				context: Omit<
 					Parameters<(typeof mailTemplates)[T]>[0],
-					"locale" | "translations"
+					"locale" | "messages"
 				>;
-		  }
-		| {
+			}
+			| {
 				subject: string;
 				text?: string;
 				html?: string;
-		  }
-	),
+			}
+		),
 ) {
 	const { to, locale = routing.defaultLocale } = params;
 	console.log("send, locale:", locale);
@@ -33,16 +39,18 @@ export async function send<T extends TemplateId>(
 	let text: string;
 	let subject: string;
 
-	if ("templateId" in params) {
-		const { templateId, context } = params;
-		const template = await getTemplate({
-			templateId,
+	// if template is provided, get the template
+	// otherwise, use the subject, text, and html
+	if ("template" in params) {
+		const { template, context } = params;
+		const mailTemplate = await getTemplate({
+			template,
 			context,
 			locale,
 		});
-		subject = template.subject;
-		text = template.text;
-		html = template.html;
+		subject = mailTemplate.subject;
+		text = mailTemplate.text;
+		html = mailTemplate.html;
 	} else {
 		subject = params.subject;
 		text = params.text ?? "";
@@ -61,4 +69,39 @@ export async function send<T extends TemplateId>(
 		console.error("Error sending email", e);
 		return false;
 	}
+}
+
+/**
+ * get rendered email for given template, context, and locale
+ */
+export async function getTemplate<T extends Template>({
+	template,
+	context,
+	locale,
+}: {
+	template: T;
+	context: Omit<
+		Parameters<(typeof mailTemplates)[T]>[0],
+		"locale" | "messages"
+	>;
+	locale: Locale;
+}) {
+	const mainTemplate = mailTemplates[template];
+	const messages = await getMessagesForLocale(locale);
+
+	const email = mainTemplate({
+		...(context as any),
+		locale,
+		messages,
+	});
+
+	// get the subject from the messages
+	const subject =
+		"subject" in messages.mail[template as keyof Messages["mail"]]
+			? messages.mail[template].subject
+			: "";
+
+	const html = await render(email);
+	const text = await render(email, { plainText: true });
+	return { html, text, subject };
 }
