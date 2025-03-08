@@ -70,7 +70,7 @@
   "mail": {
 		"common": {
       "team": "{name} 团队",
-      "copyright": "版权所有 {year}。保留所有权利。"
+      "copyright": "版权所有 {year}"
 		},
 		"verifyEmail": {
 			"title": "你好, {name}.",
@@ -85,7 +85,7 @@
 			"subject": "重置您的密码"
 		},
 		"subscribeNewsletter": {
-			"body": "感谢您订阅我们的邮件列表，我们将持续为您提供最新新闻和更新。",
+			"body": "感谢您订阅我们的邮件列表，我们将持续为您带来最新的新闻和更新。",
 			"subject": "感谢您的订阅"
 		}
 	}

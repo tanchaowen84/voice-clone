@@ -1,22 +1,13 @@
 import { siteConfig } from "@/config/site";
 import db from "@/db/index";
 import { account, session, user, verification } from "@/db/schema";
-import { Locale, LOCALE_COOKIE_NAME, routing } from "@/i18n/routing";
 import { send } from "@/mail/send";
+import { getLocaleFromRequest } from "@/lib/utils";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
-import { parse as parseCookies } from "cookie";
 
 const from = process.env.RESEND_FROM || "delivered@resend.dev";
-
-const getLocaleFromRequest = (request?: Request) => {
-  const cookies = parseCookies(request?.headers.get("cookie") ?? "");
-  return (
-    (cookies[LOCALE_COOKIE_NAME] as Locale) ??
-    routing.defaultLocale
-  );
-};
 
 export const auth = betterAuth({
   appName: siteConfig.name,

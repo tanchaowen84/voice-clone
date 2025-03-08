@@ -1,5 +1,7 @@
 import { AppInfo } from "@/constants/app-info";
+import { Locale, LOCALE_COOKIE_NAME, routing } from "@/i18n/routing";
 import { type ClassValue, clsx } from "clsx";
+import { parse as parseCookies } from "cookie";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -62,3 +64,18 @@ export function getLocaleDate(input: string | number): string {
   const day = date.getDate().toString().padStart(2, "0");
   return `${year}/${month}/${day}`;
 }
+
+/**
+ * Gets the locale from a request by parsing the cookies
+ * If no locale is found in the cookies, returns the default locale
+ * 
+ * @param request - The request to get the locale from
+ * @returns The locale from the request or the default locale
+ */
+export const getLocaleFromRequest = (request?: Request) => {
+  const cookies = parseCookies(request?.headers.get("cookie") ?? "");
+  return (
+    (cookies[LOCALE_COOKIE_NAME] as Locale) ??
+    routing.defaultLocale
+  );
+};
