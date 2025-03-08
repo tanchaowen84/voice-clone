@@ -80,16 +80,19 @@ export enum Routes {
  */
 export const publicRoutes = [
   "/",
-  "/terms(/.*)?",
-  "/privacy(/.*)?",
-  "/about(/.*)?",
-  "/changelog(/.*)?",
 
   // blog
   "/blog(/.*)?",
 
-  // docs
-  "/docs(/.*)?",
+  // pages
+  "/terms-of-service(/.*)?",
+  "/privacy-policy(/.*)?",
+  "/cookie-policy(/.*)?",
+
+  "/about(/.*)?",
+  "/contact(/.*)?",
+  "/waitlist(/.*)?",
+  "/changelog(/.*)?",
 
   // unsubscribe newsletter
   "/unsubscribe(/.*)?",
@@ -105,9 +108,9 @@ export const publicRoutes = [
  * The routes for the authentication pages
  */
 export const authRoutes = [
+  Routes.AuthError,
   Routes.Login,
   Routes.Register,
-  Routes.AuthError,
   Routes.ForgotPassword,
   Routes.ResetPassword,
 ];

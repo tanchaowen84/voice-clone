@@ -17,43 +17,43 @@ import { useTransition } from "react";
  * https://x.com/asidorenko_/status/1841547623712407994
  */
 export default function Error({ reset }: { reset: () => void }) {
-    const router = useRouter();
-    const [isPending, startTransition] = useTransition();
-    const t = useTranslations('ErrorPage');
-    return (
-        <div className="flex min-h-screen flex-col items-center justify-center gap-8">
-            <Logo className="size-12" />
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const t = useTranslations('ErrorPage');
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8">
+      <Logo className="size-12" />
 
-            <h1 className="text-2xl text-center">{t('title')}</h1>
+      <h1 className="text-2xl text-center">{t('title')}</h1>
 
-            <div className="flex items-center gap-4">
-                <Button
-                    type="submit"
-                    variant="default"
-                    disabled={isPending}
-                    onClick={() => {
-                        startTransition(() => {
-                            router.refresh();
-                            reset();
-                        });
-                    }}
-                >
-                    {isPending ? (
-                        <Loader2Icon className="mr-2 size-4 animate-spin" />
-                    ) : (
-                        ""
-                    )}
-                    {t('tryAgain')}
-                </Button>
+      <div className="flex items-center gap-4">
+        <Button
+          type="submit"
+          variant="default"
+          disabled={isPending}
+          onClick={() => {
+            startTransition(() => {
+              router.refresh();
+              reset();
+            });
+          }}
+        >
+          {isPending ? (
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+          ) : (
+            ""
+          )}
+          {t('tryAgain')}
+        </Button>
 
-                <Button
-                    type="submit"
-                    variant="outline"
-                    onClick={() => router.push("/")}
-                >
-                    {t('backToHome')}
-                </Button>
-            </div>
-        </div>
-    );
+        <Button
+          type="submit"
+          variant="outline"
+          onClick={() => router.push("/")}
+        >
+          {t('backToHome')}
+        </Button>
+      </div>
+    </div>
+  );
 }

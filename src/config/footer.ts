@@ -15,7 +15,6 @@ export const footerConfig: FooterConfig = {
       title: "Resources",
       items: [
         { title: "Blog", href: Routes.Blog },
-        { title: "Documentation", href: Routes.Docs },
         { title: "Changelog", href: Routes.Changelog },
         { title: "Roadmap", href: Routes.Roadmap },
       ],

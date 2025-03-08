@@ -38,26 +38,27 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
+    console.log("forgotPassword, values:", values);
     const { data, error } = await authClient.forgetPassword({
       email: values.email,
       redirectTo: `${Routes.ResetPassword}`,
     }, {
       onRequest: (ctx) => {
-        // console.log("forgotPassword, request:", ctx.url);
+        console.log("forgotPassword, request:", ctx.url);
         setIsPending(true);
         setError("");
         setSuccess("");
       },
       onResponse: (ctx) => {
-        // console.log("forgotPassword, response:", ctx.response);
+        console.log("forgotPassword, response:", ctx.response);
         setIsPending(false);
       },
       onSuccess: (ctx) => {
-        // console.log("forgotPassword, success:", ctx.data);
+        console.log("forgotPassword, success:", ctx.data);
         setSuccess(t("checkEmail"));
       },
       onError: (ctx) => {
-        console.log("forgotPassword, error:", ctx.error);
+        console.error("forgotPassword, error:", ctx.error);
         setError(ctx.error.message);
       },
     });

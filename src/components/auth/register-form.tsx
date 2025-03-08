@@ -70,7 +70,7 @@ export const RegisterForm = () => {
       },
       onError: (ctx) => {
         // sign up fail, display the error message
-        console.log("register, error:", ctx.error.message);
+        console.error("register, error:", ctx.error);
         setError(ctx.error.message);
       },
     });
