@@ -163,10 +163,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                   category && (
                     <li key={category.slug}>
                       <LocaleLink
-                        href={{
-                          pathname: "/blog/category/[slug]",
-                          params: { slug: category.slug }
-                        }}
+                        href={`/blog/category/${category.slug}`}
                         className="text-sm link-underline"
                       >
                         {category.name}

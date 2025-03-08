@@ -64,7 +64,7 @@ export function NavbarMobile({
         {...other}
       >
         {/* navbar left shows logo */}
-        <LocaleLink href={Routes.Root as any} className="flex items-center gap-2">
+        <LocaleLink href={Routes.Root} className="flex items-center gap-2">
           <Logo />
           <span className="text-xl font-semibold">{siteConfig.name}</span>
         </LocaleLink>
@@ -114,7 +114,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
         {/* action buttons */}
         <div className="flex w-full flex-col gap-2">
           <LocaleLink
-            href={Routes.Login as any}
+            href={Routes.Login}
             onClick={onLinkClicked}
             className={cn(
               buttonVariants({
@@ -127,7 +127,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
             Log in
           </LocaleLink>
           <LocaleLink
-            href={Routes.Register as any}
+            href={Routes.Register}
             className={cn(
               buttonVariants({
                 variant: 'default',

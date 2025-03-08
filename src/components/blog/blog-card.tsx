@@ -17,10 +17,7 @@ export default function BlogCard({ post }: BlogCardProps) {
 
   return (
     <LocaleLink 
-      href={{
-        pathname: "/blog/[...slug]",
-        params: { slug: slugParts }
-      }}
+      href={`/blog/${slugParts.join('/')}`}
       className="block h-full"
     >
       <div className="group flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">

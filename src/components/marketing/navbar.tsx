@@ -174,7 +174,7 @@ export function Navbar({ scroll, config }: NavBarProps) {
                   size="sm"
                   asChild
                 >
-                  <LocaleLink href={Routes.Register as any}>
+                  <LocaleLink href={Routes.Register}>
                     Sign up
                   </LocaleLink>
                 </Button>

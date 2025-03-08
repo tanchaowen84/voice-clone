@@ -9,13 +9,10 @@ interface BottomButtonProps {
   label: string;
 }
 
-/**
- * TODO: solve this error: href={href as any}
- */
 export const BottomButton = ({ href, label }: BottomButtonProps) => {
   return (
     <LocaleLink
-      href={href as any}
+      href={href}
       className={cn(
         buttonVariants({ variant: "link", size: "sm" }),
         "font-normal w-full text-muted-foreground hover:underline underline-offset-4 hover:text-primary"

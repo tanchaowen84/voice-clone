@@ -33,15 +33,17 @@ export const routing = defineRouting({
   localePrefix: "as-needed",
   // The pathnames for each locale
   // https://next-intl.dev/docs/routing#pathnames
-  // whenever use pathname in LocaleLink, you need to add it here
-  pathnames: {
-    // used in sietmap.ts
-    "/": "/",
-    // used in blog pages
-    "/blog/[...slug]": "/blog/[...slug]",
-    "/blog/category/[slug]": "/blog/category/[slug]",
-  },
+  // 
+  // https://next-intl.dev/docs/routing/navigation#link
+  // if we set pathnames, we need to use pathname in LocaleLink
+  // pathnames: {
+  //   // used in sietmap.ts
+  //   "/": "/",
+  //   // used in blog pages
+  //   "/blog/[...slug]": "/blog/[...slug]",
+  //   "/blog/category/[slug]": "/blog/category/[slug]",
+  // },
 });
 
-export type Pathnames = keyof typeof routing.pathnames;
+// export type Pathnames = keyof typeof routing.pathnames;
 export type Locale = (typeof routing.locales)[number];
