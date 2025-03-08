@@ -93,7 +93,7 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
             <a
               href={item.url}
               className={cn(
-                "inline-block text-sm no-underline",
+                "inline-block text-sm no-underline hover:text-primary",
                 item.url === `#${activeItem}`
                   ? "font-medium text-primary"
                   : "text-muted-foreground",

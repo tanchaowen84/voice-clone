@@ -35,7 +35,7 @@ const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
   "relative bg-transparent text-muted-foreground",
   "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
-  "data-[active]:font-bold data-[active]:bg-transparent data-[active]:text-primary",
+  "data-[active]:font-semibold data-[active]:bg-transparent data-[active]:text-primary",
   "data-[state=open]:bg-transparent data-[state=open]:text-primary",
   "dark:hover:text-primary dark:data-[active]:text-primary-foreground"
 );
@@ -180,7 +180,7 @@ export function Navbar({ scroll }: NavBarProps) {
             )}
 
             <ThemeSwitcher />
-            <LocaleSelector />
+            <LocaleSelector showLocaleName={false} />
           </div>
         </nav>
 

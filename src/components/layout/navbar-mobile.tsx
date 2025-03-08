@@ -16,7 +16,13 @@ import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
-import { ArrowUpRightIcon, ChevronDownIcon, ChevronUpIcon, MenuIcon, XIcon } from 'lucide-react';
+import {
+  ArrowUpRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MenuIcon,
+  XIcon
+} from 'lucide-react';
 import { useTranslations } from "next-intl";
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
@@ -72,7 +78,7 @@ export function NavbarMobile({
         </LocaleLink>
 
         {/* navbar right shows menu icon */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           {/* show user button if user is logged in */}
           {user ? <UserButton /> : null}
 
@@ -82,7 +88,8 @@ export function NavbarMobile({
             aria-expanded={open}
             aria-label="Toggle Mobile Menu"
             onClick={handleToggleMobileMenu}
-            className="flex aspect-square h-fit select-none items-center justify-center rounded-md border"
+            className="flex aspect-square h-fit select-none items-center 
+              justify-center rounded-md border"
           >
             {open ? (
               <XIcon className="size-8" />
@@ -96,7 +103,7 @@ export function NavbarMobile({
       {/* mobile menu */}
       {open && (
         <Portal asChild>
-          <RemoveScroll allowPinchZoom enabled>
+          <RemoveScroll allowPinchZoom removeScrollBar enabled>
             <MainMobileMenu onLinkClicked={handleToggleMobileMenu} />
           </RemoveScroll>
         </Portal>
@@ -118,10 +125,11 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const localePathname = useLocalePathname();
 
   return (
-    <div className="fixed inset-0 z-50 mt-[72px] overflow-y-auto bg-background backdrop-blur-md animate-in fade-in-0">
+    <div className="fixed w-full inset-0 z-50 mt-[72px] overflow-y-auto 
+      bg-background backdrop-blur-md animate-in fade-in-0">
       <div className="flex size-full flex-col items-start space-y-4 p-4">
         {/* action buttons */}
-        <div className="flex w-full flex-col gap-2">
+        <div className="flex w-full flex-col gap-4">
           <LocaleLink
             href={Routes.Login}
             onClick={onLinkClicked}
@@ -154,7 +162,9 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
         <ul className="w-full">
           {menuLinks && menuLinks.map((item) => {
             const isActive = item.href ? localePathname.startsWith(item.href) :
-              item.items?.some(subItem => subItem.href && localePathname.startsWith(subItem.href));
+              item.items?.some(subItem =>
+                subItem.href && localePathname.startsWith(subItem.href)
+              );
 
             return (
               <li key={item.title} className="py-2">
@@ -229,7 +239,8 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                                   )}
                                 </div>
                                 {subItem.external && (
-                                  <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+                                  <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground 
+                                    transition-colors group-hover:text-primary" />
                                 )}
                               </LocaleLink>
                             </li>
@@ -247,7 +258,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
                       buttonVariants({ variant: 'ghost' }),
                       'w-full justify-start',
                       "text-muted-foreground hover:text-primary",
-                      isActive && "font-bold text-primary dark:text-primary-foreground"
+                      isActive && "font-semibold text-primary dark:text-primary-foreground"
                     )}
                     onClick={onLinkClicked}
                   >
@@ -260,7 +271,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
         </ul>
 
         {/* bottom buttons */}
-        <div className="flex w-full items-center justify-between gap-4 border-t border-border/40 py-4">
+        <div className="flex w-full items-center justify-between gap-4 border-t border-border/50 py-4">
           <LocaleSelector />
           <ThemeSwitcherHorizontal />
         </div>

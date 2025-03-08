@@ -20,7 +20,7 @@ import {
   MailboxIcon,
   MailIcon,
   SettingsIcon,
-  ShieldIcon,
+  ShieldCheckIcon,
   SquareKanbanIcon,
   SquarePenIcon
 } from 'lucide-react';
@@ -46,6 +46,7 @@ export function createTranslator(t: any): TranslationFunction {
 
 /**
  * Get menu links with translations
+ * 
  * @param t - The translation function
  * @returns The menu links with translated titles and descriptions
  */
@@ -65,39 +66,6 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
       title: t('Marketing.menu.blog.title'),
       href: Routes.Blog,
       external: false
-    },
-    {
-      title: t('Marketing.menu.ai.title'),
-      items: [
-        {
-          title: t('Marketing.menu.ai.items.text.title'),
-          description: t('Marketing.menu.ai.items.text.description'),
-          icon: <SquarePenIcon className="size-5 shrink-0" />,
-          href: Routes.AIText,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.image.title'),
-          description: t('Marketing.menu.ai.items.image.description'),
-          icon: <ImageIcon className="size-5 shrink-0" />,
-          href: Routes.AIImage,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.video.title'),
-          description: t('Marketing.menu.ai.items.video.description'),
-          icon: <FilmIcon className="size-5 shrink-0" />,
-          href: Routes.AIVideo,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.audio.title'),
-          description: t('Marketing.menu.ai.items.audio.description'),
-          icon: <AudioLinesIcon className="size-5 shrink-0" />,
-          href: Routes.AIAudio,
-          external: false
-        }
-      ]
     },
     {
       title: t('Marketing.menu.pages.title'),
@@ -147,7 +115,7 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
         {
           title: t('Marketing.menu.pages.items.privacyPolicy.title'),
           description: t('Marketing.menu.pages.items.privacyPolicy.description'),
-          icon: <ShieldIcon className="size-5 shrink-0" />,
+          icon: <ShieldCheckIcon className="size-5 shrink-0" />,
           href: Routes.PrivacyPolicy,
           external: false
         },
@@ -156,6 +124,39 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t('Marketing.menu.pages.items.termsOfService.description'),
           icon: <FileTextIcon className="size-5 shrink-0" />,
           href: Routes.TermsOfService,
+          external: false
+        }
+      ]
+    },
+    {
+      title: t('Marketing.menu.ai.title'),
+      items: [
+        {
+          title: t('Marketing.menu.ai.items.text.title'),
+          description: t('Marketing.menu.ai.items.text.description'),
+          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          href: Routes.AIText,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.image.title'),
+          description: t('Marketing.menu.ai.items.image.description'),
+          icon: <ImageIcon className="size-5 shrink-0" />,
+          href: Routes.AIImage,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.video.title'),
+          description: t('Marketing.menu.ai.items.video.description'),
+          icon: <FilmIcon className="size-5 shrink-0" />,
+          href: Routes.AIVideo,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.audio.title'),
+          description: t('Marketing.menu.ai.items.audio.description'),
+          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          href: Routes.AIAudio,
           external: false
         }
       ]

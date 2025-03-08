@@ -114,7 +114,7 @@ export default async function BlogPostPage(props: NextPageProps) {
               )}
             </div>
 
-            {/* blog post date */}
+            {/* blog post date and reading time */}
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="size-4 text-muted-foreground" />
@@ -122,7 +122,9 @@ export default async function BlogPostPage(props: NextPageProps) {
               </div>
               <div className="flex items-center gap-2">
                 <ClockIcon className="size-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{estimateReadingTime(post.body.raw)}</p>
+                <p className="text-sm text-muted-foreground">
+                  {estimateReadingTime(post.body.raw)}
+                </p>
               </div>
             </div>
 
@@ -173,7 +175,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                     <li key={category.slug}>
                       <LocaleLink
                         href={`/blog/category/${category.slug}`}
-                        className="text-sm link-underline-animation"
+                        className="text-sm font-medium hover:text-primary"
                       >
                         {category.name}
                       </LocaleLink>
