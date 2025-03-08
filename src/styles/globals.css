@@ -54,8 +54,8 @@
     /* prevent the layout from shifting when the scrollbar appears or disappears. */
     scrollbar-gutter: stable;
     /* Force the scrollbar to always be visible to prevent layout shifts */
-    /* looks better when check the mobile menu (all open) on desktop device */
-    overflow-y: scroll;
+    /* can not set this, otherwise the theme switcher will disappear when click it when page has scrolled */
+    /* overflow-y: scroll; */
   }
   
   * {
