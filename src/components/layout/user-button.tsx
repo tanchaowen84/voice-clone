@@ -31,6 +31,7 @@ export function UserButton() {
   const t = useTranslations();
   const translator = createTranslator(t);
   const avatarLinks = getAvatarLinks(translator);
+  const commonTranslations = useTranslations("Common");
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -68,7 +69,8 @@ export function UserButton() {
         </DrawerTrigger>
         <DrawerPortal>
           <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
-          <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
+          <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 
+            overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
             <DrawerHeader>
               <DrawerTitle />
             </DrawerHeader>
@@ -118,7 +120,7 @@ export function UserButton() {
                   className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
                   <LogOutIcon className="size-4" />
-                  <p className="text-sm">Log out</p>
+                  <p className="text-sm">{commonTranslations("logout")}</p>
                 </a>
               </li>
             </ul>
@@ -154,7 +156,6 @@ export function UserButton() {
         {avatarLinks.map((item) => (
           <DropdownMenuItem
             key={item.title}
-            asChild
             className="cursor-pointer"
             onClick={() => {
               if (item.href) {
@@ -180,7 +181,7 @@ export function UserButton() {
         >
           <div className="flex items-center space-x-2.5">
             <LogOutIcon className="size-4" />
-            <p className="text-sm">Log out</p>
+            <p className="text-sm">{commonTranslations("logout")}</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

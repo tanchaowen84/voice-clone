@@ -37,7 +37,7 @@ export function BlogCategoryListMobile({
     <Drawer open={open} onClose={closeDrawer}>
       <DrawerTrigger
         onClick={() => setOpen(true)}
-        className="flex items-center w-full p-3 border-y text-foreground/90"
+        className="flex items-center w-full p-4 border-y text-foreground/90"
       >
         <div className="flex items-center justify-between w-full gap-4">
           <div className="flex items-center gap-2">
@@ -53,11 +53,7 @@ export function BlogCategoryListMobile({
         <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
         <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 overflow-hidden rounded-t-[10px] border bg-background">
           <DrawerTitle className="sr-only">{t("categories")}</DrawerTitle>
-          <div className="sticky top-0 z-20 flex w-full items-center justify-center bg-inherit">
-            <div className="my-3 h-1.5 w-16 rounded-full bg-muted-foreground/20" />
-          </div>
-
-          <ul className="mb-14 w-full p-3 text-muted-foreground">
+          <ul className="mb-14 w-full p-4 text-muted-foreground">
             <FilterItemMobile
               title={t("all")}
               href="/blog"

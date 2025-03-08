@@ -1,6 +1,7 @@
 {
   "Common": {
     "login": "登录",
+    "logout": "退出",
     "signUp": "注册"
   },
   "HomePage": {
@@ -105,7 +106,7 @@
         }
       },
       "pages": {
-        "title": "页面",
+        "title": "演示页面",
         "items": {
           "about": {
             "title": "关于我们",

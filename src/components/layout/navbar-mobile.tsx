@@ -12,11 +12,12 @@ import {
 import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
 import { LocaleLink } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
-import { useTranslations } from "next-intl";
 import { Portal } from '@radix-ui/react-portal';
 import { ArrowUpRightIcon, ChevronDownIcon, ChevronUpIcon, MenuIcon, XIcon } from 'lucide-react';
+import { useTranslations } from "next-intl";
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
@@ -28,6 +29,8 @@ export function NavbarMobile({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = React.useState<boolean>(false);
   const pathname = usePathname();
+  const { data: session, error } = authClient.useSession();
+  const user = session?.user;
 
   React.useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -71,7 +74,9 @@ export function NavbarMobile({
 
         {/* navbar right shows menu icon */}
         <div className="flex items-center gap-4">
-          <UserButton />
+          {/* show user button if user is logged in */}
+          {user ? <UserButton /> : null}
+
           <Button
             variant="ghost"
             size="icon"

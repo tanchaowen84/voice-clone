@@ -24,9 +24,8 @@ import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
-import { useTranslations } from "next-intl";
 import { ArrowUpRightIcon } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from "next-intl";
 import { usePathname } from 'next/navigation';
 
 interface NavBarProps {
@@ -138,7 +137,7 @@ export function Navbar({ scroll }: NavBarProps) {
                           "data-[active]:text-primary data-[active]:font-bold dark:data-[active]:text-white"
                         )}
                       >
-                        <Link
+                        <LocaleLink
                           href={item.href || '#'}
                           target={item.external ? '_blank' : undefined}
                           rel={
@@ -146,7 +145,7 @@ export function Navbar({ scroll }: NavBarProps) {
                           }
                         >
                           {item.title}
-                        </Link>
+                        </LocaleLink>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   )

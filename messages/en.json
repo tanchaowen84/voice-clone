@@ -1,7 +1,8 @@
 {
   "Common": {
     "login": "Log in",
-    "signUp": "Sign up"
+    "logout": "Log out",
+    "signUp": "Sign up"    
   },
   "HomePage": {
     "title": "next-intl example"
