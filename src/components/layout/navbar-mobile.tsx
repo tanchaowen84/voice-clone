@@ -28,6 +28,13 @@ import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { UserButton } from './user-button';
 
+/**
+ * TODO:
+ * 
+ * 1. bug: when the mobile menu is open, and its height is greater than the viewport height,
+ *    the layout will shift because the mobile menu is scrollable and scrollbar appears.
+ *    if we set scrollbar-gutter: stable; for html in globals.css.
+ */
 export function NavbarMobile({
   className,
   ...other
@@ -103,7 +110,9 @@ export function NavbarMobile({
       {/* mobile menu */}
       {open && (
         <Portal asChild>
-          <RemoveScroll allowPinchZoom removeScrollBar enabled>
+          {/* if we don't add RemoveScroll component, the underlying 
+            page will scroll when we scroll the mobile menu */}
+          <RemoveScroll allowPinchZoom enabled>
             <MainMobileMenu onLinkClicked={handleToggleMobileMenu} />
           </RemoveScroll>
         </Portal>
@@ -125,7 +134,7 @@ function MainMobileMenu({ onLinkClicked }: MainMobileMenuProps) {
   const localePathname = useLocalePathname();
 
   return (
-    <div className="fixed w-full inset-0 z-50 mt-[72px] overflow-y-auto 
+    <div className="fixed w-full inset-0 z-50 mt-[72px] overflow-y-auto
       bg-background backdrop-blur-md animate-in fade-in-0">
       <div className="flex size-full flex-col items-start space-y-4 p-4">
         {/* action buttons */}

@@ -68,6 +68,39 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
       external: false
     },
     {
+      title: t('Marketing.menu.ai.title'),
+      items: [
+        {
+          title: t('Marketing.menu.ai.items.text.title'),
+          description: t('Marketing.menu.ai.items.text.description'),
+          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          href: Routes.AIText,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.image.title'),
+          description: t('Marketing.menu.ai.items.image.description'),
+          icon: <ImageIcon className="size-5 shrink-0" />,
+          href: Routes.AIImage,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.video.title'),
+          description: t('Marketing.menu.ai.items.video.description'),
+          icon: <FilmIcon className="size-5 shrink-0" />,
+          href: Routes.AIVideo,
+          external: false
+        },
+        {
+          title: t('Marketing.menu.ai.items.audio.title'),
+          description: t('Marketing.menu.ai.items.audio.description'),
+          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          href: Routes.AIAudio,
+          external: false
+        }
+      ]
+    },
+    {
       title: t('Marketing.menu.pages.title'),
       items: [
         {
@@ -124,39 +157,6 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t('Marketing.menu.pages.items.termsOfService.description'),
           icon: <FileTextIcon className="size-5 shrink-0" />,
           href: Routes.TermsOfService,
-          external: false
-        }
-      ]
-    },
-    {
-      title: t('Marketing.menu.ai.title'),
-      items: [
-        {
-          title: t('Marketing.menu.ai.items.text.title'),
-          description: t('Marketing.menu.ai.items.text.description'),
-          icon: <SquarePenIcon className="size-5 shrink-0" />,
-          href: Routes.AIText,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.image.title'),
-          description: t('Marketing.menu.ai.items.image.description'),
-          icon: <ImageIcon className="size-5 shrink-0" />,
-          href: Routes.AIImage,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.video.title'),
-          description: t('Marketing.menu.ai.items.video.description'),
-          icon: <FilmIcon className="size-5 shrink-0" />,
-          href: Routes.AIVideo,
-          external: false
-        },
-        {
-          title: t('Marketing.menu.ai.items.audio.title'),
-          description: t('Marketing.menu.ai.items.audio.description'),
-          icon: <AudioLinesIcon className="size-5 shrink-0" />,
-          href: Routes.AIAudio,
           external: false
         }
       ]
