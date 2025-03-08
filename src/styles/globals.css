@@ -53,6 +53,8 @@
   html {
     /* prevent the layout from shifting when the scrollbar appears or disappears. */
     scrollbar-gutter: stable;
+    /* Force the scrollbar to always be visible to prevent layout shifts */
+    overflow-y: scroll;
   }
   
   * {

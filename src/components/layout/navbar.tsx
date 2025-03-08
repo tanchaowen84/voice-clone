@@ -102,9 +102,12 @@ export function Navbar({ scroll }: NavBarProps) {
                                       ? 'noopener noreferrer'
                                       : undefined
                                   }
-                                  className="group flex select-none flex-row items-center gap-4 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  className="group flex select-none flex-row items-center gap-4 rounded-md 
+                                    p-2 leading-none no-underline outline-none transition-colors 
+                                    hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
-                                  <div className="flex size-8 shrink-0 items-center justify-center text-muted-foreground group-hover:text-primary">
+                                  <div className="flex size-8 shrink-0 items-center justify-center 
+                                    text-muted-foreground group-hover:text-primary">
                                     {subItem.icon ? subItem.icon : null}
                                   </div>
                                   <div className="flex-1">
@@ -118,7 +121,8 @@ export function Navbar({ scroll }: NavBarProps) {
                                     )}
                                   </div>
                                   {subItem.external && (
-                                    <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground hover:text-primary-foreground" />
+                                    <ArrowUpRightIcon className="size-4 shrink-0 
+                                      text-muted-foreground hover:text-primary-foreground" />
                                   )}
                                 </LocaleLink>
                               </NavigationMenuLink>
