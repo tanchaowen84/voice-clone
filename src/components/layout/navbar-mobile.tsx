@@ -9,7 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { createTranslator, getMenuLinks } from '@/config/marketing';
+import { createTranslator, getMenuLinks } from '@/config/config';
 import { siteConfig } from '@/config/site';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';

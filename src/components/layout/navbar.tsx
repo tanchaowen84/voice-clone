@@ -17,7 +17,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { createTranslator, getMenuLinks } from '@/config/marketing';
+import { createTranslator, getMenuLinks } from '@/config/config';
 import { siteConfig } from '@/config/site';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';

@@ -8,7 +8,7 @@ import {
   createTranslator,
   getFooterLinks,
   getSocialLinks,
-} from '@/config/marketing';
+} from '@/config/config';
 import { siteConfig } from '@/config/site';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
