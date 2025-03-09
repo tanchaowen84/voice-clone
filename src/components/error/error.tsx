@@ -20,7 +20,7 @@ export default function Error({ reset }: { reset: () => void }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const t = useTranslations('ErrorPage');
-  
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8">
       <Logo className="size-12" />

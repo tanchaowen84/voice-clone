@@ -2,7 +2,7 @@ import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/shared/mdx-component';
 import { LocaleLink } from '@/i18n/navigation';
-import { getTableOfContents } from '@/lib/toc';
+import { getTableOfContents } from '@/lib/blog/toc';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { estimateReadingTime, getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';

@@ -1,6 +1,6 @@
-import { EMAIL_FROM } from '@/lib/constants';
-import { Resend } from 'resend';
+import { siteConfig } from '@/config/site';
 import { SendEmailHandler } from '@/mail/types';
+import { Resend } from 'resend';
 
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,7 +12,7 @@ export const sendEmail: SendEmailHandler = async ({ to, subject, html }) => {
       Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: EMAIL_FROM,
+      from: siteConfig.mail,
       to,
       subject,
       html,

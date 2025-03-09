@@ -1,7 +1,7 @@
 import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
-import { POSTS_PER_PAGE } from '@/lib/constants';
+import { POSTS_PER_PAGE } from '@/constants';
 import { allPosts, allCategories } from 'content-collections';
 import { siteConfig } from '@/config/site';
 import { constructMetadata } from '@/lib/metadata';

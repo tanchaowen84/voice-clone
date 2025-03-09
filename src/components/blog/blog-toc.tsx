@@ -1,7 +1,7 @@
 'use client';
 
 import { useMounted } from '@/hooks/use-mounted';
-import type { TableOfContents } from '@/lib/toc';
+import type { TableOfContents } from '@/lib/blog/toc';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 

@@ -20,7 +20,7 @@ export function constructMetadata({
 } = {}): Metadata {
   const fullTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
   const ogImageUrl = new URL(`${getBaseUrl()}/${image}`);
-  
+
   return {
     title: fullTitle,
     description,

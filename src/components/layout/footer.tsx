@@ -4,11 +4,7 @@ import Container from '@/components/container';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
 import { Logo } from '@/components/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
-import {
-  createTranslator,
-  getFooterLinks,
-  getSocialLinks,
-} from '@/config/config';
+import { createTranslator, getFooterLinks, getSocialLinks } from '@/config';
 import { siteConfig } from '@/config/site';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';

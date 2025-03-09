@@ -5,7 +5,7 @@ import { Routes } from '@/routes';
 
 export const metadata = constructMetadata({
   title: 'Auth Error',
-  description: 'Auth Error',  
+  description: 'Auth Error',
   canonicalUrl: `${getBaseUrl()}${Routes.AuthError}`,
 });
 

@@ -11,12 +11,7 @@ type VerifyEmailProps = {
   name: string;
 } & BaseMailProps;
 
-export function VerifyEmail({
-  url,
-  name,
-  locale,
-  messages,
-}: VerifyEmailProps) {
+export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
   const t = createTranslator({
     locale,
     messages,

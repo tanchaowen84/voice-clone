@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
-import { POSTS_PER_PAGE } from '@/lib/constants';
+import { POSTS_PER_PAGE } from '@/constants';
 import { NextPageProps } from '@/types/next-page-props';
 
 export async function generateMetadata(): Promise<Metadata> {

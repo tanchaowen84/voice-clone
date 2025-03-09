@@ -1,5 +1,5 @@
 import BlogCard, { BlogCardSkeleton } from '@/components/blog/blog-card';
-import { POSTS_PER_PAGE } from '@/lib/constants';
+import { POSTS_PER_PAGE } from '@/constants';
 import { Post } from 'content-collections';
 
 interface BlogGridProps {
