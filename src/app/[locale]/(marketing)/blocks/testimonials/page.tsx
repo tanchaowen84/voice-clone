@@ -8,6 +8,9 @@ interface TestimonialsPageProps {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * https://nsui.irung.me/testimonials
+ */
 export default async function TestimonialsPage(props: TestimonialsPageProps) {
   const params = await props.params;
 
@@ -15,9 +18,13 @@ export default async function TestimonialsPage(props: TestimonialsPageProps) {
     <>
       <div className="mt-8 flex flex-col gap-16 pb-16">
         <Testimonials />
+
         <Testimonials2 />
+        
         <Testimonials4 />
+        
         <Testimonials5 />
+        
         <Testimonials6 />
       </div>
     </>

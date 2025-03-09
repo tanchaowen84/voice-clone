@@ -50,7 +50,7 @@ export default function HeroSection() {
                   <div aria-hidden className="z-2 absolute inset-0 size-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,var(--color-background)_100%)]" />
                   <div aria-hidden className="z-2 absolute inset-0 size-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,var(--color-background)_100%)]" />
 
-                  <Image className="rounded-(--radius) z-1 relative border dark:hidden" src="/images/blocks/card.webp" alt="tailus ui hero section" width={2880} height={2074} />
+                  <Image className="rounded-(--radius) z-1 relative border dark:hidden" src="/images/blocks/card.png" alt="tailus ui hero section" width={2880} height={2074} />
                   <Image className="rounded-(--radius) z-1 relative hidden border dark:block" src="/images/blocks/dark-card.webp" alt="tailus ui hero section" width={2880} height={2074} />
                 </div>
               </div>

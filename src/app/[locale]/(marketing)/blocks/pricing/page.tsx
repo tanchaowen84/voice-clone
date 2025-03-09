@@ -8,6 +8,9 @@ interface PricingPageProps {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * https://nsui.irung.me/pricing
+ */
 export default async function PricingPage(props: PricingPageProps) {
   const params = await props.params;
   const { locale } = params;

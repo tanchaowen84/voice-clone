@@ -7,6 +7,9 @@ interface HeroPageProps {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * https://nsui.irung.me/hero-section
+ */
 export default async function HeroPage(props: HeroPageProps) {
   const params = await props.params;
 
