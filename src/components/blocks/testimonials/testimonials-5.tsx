@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
 
 type Testimonial = {
   name: string;
@@ -10,88 +10,88 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Jonathan Yombo",
-    role: "Software Engineer",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
+    name: 'Jonathan Yombo',
+    role: 'Software Engineer',
+    image: 'https://randomuser.me/api/portraits/men/1.jpg',
     quote:
-      "Tailus is really extraordinary and very practical, no need to break your head. A real gold mine.",
+      'Tailus is really extraordinary and very practical, no need to break your head. A real gold mine.',
   },
   {
-    name: "Yves Kalume",
-    role: "GDE - Android",
-    image: "https://randomuser.me/api/portraits/men/6.jpg",
+    name: 'Yves Kalume',
+    role: 'GDE - Android',
+    image: 'https://randomuser.me/api/portraits/men/6.jpg',
     quote:
-      "With no experience in webdesign I just redesigned my entire website in a few minutes with tailwindcss thanks to Tailus.",
+      'With no experience in webdesign I just redesigned my entire website in a few minutes with tailwindcss thanks to Tailus.',
   },
   {
-    name: "Yucel Faruksahan",
-    role: "Tailkits Creator",
-    image: "https://randomuser.me/api/portraits/men/7.jpg",
+    name: 'Yucel Faruksahan',
+    role: 'Tailkits Creator',
+    image: 'https://randomuser.me/api/portraits/men/7.jpg',
     quote:
-      "Great work on tailfolio template. This is one of the best personal website that I have seen so far :)",
+      'Great work on tailfolio template. This is one of the best personal website that I have seen so far :)',
   },
   {
-    name: "Anonymous author",
-    role: "Doing something",
-    image: "https://randomuser.me/api/portraits/men/8.jpg",
+    name: 'Anonymous author',
+    role: 'Doing something',
+    image: 'https://randomuser.me/api/portraits/men/8.jpg',
     quote:
-      "I am really new to Tailwind and I want to give a go to make some page on my own. I searched a lot of hero pages and blocks online. However, most of them are not giving me a clear view or needed some HTML/CSS coding background to make some changes from the original or too expensive to have. I downloaded the one of Tailus template which is very clear to understand at the start and you could modify the codes/blocks to fit perfectly on your purpose of the page.",
+      'I am really new to Tailwind and I want to give a go to make some page on my own. I searched a lot of hero pages and blocks online. However, most of them are not giving me a clear view or needed some HTML/CSS coding background to make some changes from the original or too expensive to have. I downloaded the one of Tailus template which is very clear to understand at the start and you could modify the codes/blocks to fit perfectly on your purpose of the page.',
   },
   {
-    name: "Shekinah Tshiokufila",
-    role: "Senior Software Engineer",
-    image: "https://randomuser.me/api/portraits/men/4.jpg",
+    name: 'Shekinah Tshiokufila',
+    role: 'Senior Software Engineer',
+    image: 'https://randomuser.me/api/portraits/men/4.jpg',
     quote:
-      "Tailus is redefining the standard of web design, with these blocks it provides an easy and efficient way for those who love beauty but may lack the time to implement it. I can only recommend this incredible wonder.",
+      'Tailus is redefining the standard of web design, with these blocks it provides an easy and efficient way for those who love beauty but may lack the time to implement it. I can only recommend this incredible wonder.',
   },
   {
-    name: "Oketa Fred",
-    role: "Fullstack Developer",
-    image: "https://randomuser.me/api/portraits/men/2.jpg",
+    name: 'Oketa Fred',
+    role: 'Fullstack Developer',
+    image: 'https://randomuser.me/api/portraits/men/2.jpg',
     quote:
-      "I absolutely love Tailus! The component blocks are beautifully designed and easy to use, which makes creating a great-looking website a breeze.",
+      'I absolutely love Tailus! The component blocks are beautifully designed and easy to use, which makes creating a great-looking website a breeze.',
   },
   {
-    name: "Zeki",
-    role: "Founder of ChatExtend",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+    name: 'Zeki',
+    role: 'Founder of ChatExtend',
+    image: 'https://randomuser.me/api/portraits/men/5.jpg',
     quote:
       "Using TailsUI has been like unlocking a secret design superpower. It's the perfect fusion of simplicity and versatility, enabling us to create UIs that are as stunning as they are user-friendly.",
   },
   {
-    name: "Joseph Kitheka",
-    role: "Fullstack Developer",
-    image: "https://randomuser.me/api/portraits/men/9.jpg",
+    name: 'Joseph Kitheka',
+    role: 'Fullstack Developer',
+    image: 'https://randomuser.me/api/portraits/men/9.jpg',
     quote:
-      "Tailus has transformed the way I develop web applications. Their extensive collection of UI components, blocks, and templates has significantly accelerated my workflow. The flexibility to customize every aspect allows me to create unique user experiences. Tailus is a game-changer for modern web development!",
+      'Tailus has transformed the way I develop web applications. Their extensive collection of UI components, blocks, and templates has significantly accelerated my workflow. The flexibility to customize every aspect allows me to create unique user experiences. Tailus is a game-changer for modern web development!',
   },
   {
-    name: "Khatab Wedaa",
-    role: "MerakiUI Creator",
-    image: "https://randomuser.me/api/portraits/men/10.jpg",
+    name: 'Khatab Wedaa',
+    role: 'MerakiUI Creator',
+    image: 'https://randomuser.me/api/portraits/men/10.jpg',
     quote:
       "Tailus is an elegant, clean, and responsive tailwind css components it's very helpful to start fast with your project.",
   },
   {
-    name: "Rodrigo Aguilar",
-    role: "TailwindAwesome Creator",
-    image: "https://randomuser.me/api/portraits/men/11.jpg",
+    name: 'Rodrigo Aguilar',
+    role: 'TailwindAwesome Creator',
+    image: 'https://randomuser.me/api/portraits/men/11.jpg',
     quote:
-      "I love Tailus ❤️. The component blocks are well-structured, simple to use, and beautifully designed. It makes it really easy to have a good-looking website in no time.",
+      'I love Tailus ❤️. The component blocks are well-structured, simple to use, and beautifully designed. It makes it really easy to have a good-looking website in no time.',
   },
   {
-    name: "Eric Ampire",
-    role: "Mobile Engineer at @BRPNews • @GoogleDevExpert for Android",
-    image: "https://randomuser.me/api/portraits/men/12.jpg",
+    name: 'Eric Ampire',
+    role: 'Mobile Engineer at @BRPNews • @GoogleDevExpert for Android',
+    image: 'https://randomuser.me/api/portraits/men/12.jpg',
     quote:
-      "Tailus templates are the perfect solution for anyone who wants to create a beautiful and functional website without any web design experience. The templates are easy to use, customizable, and responsive, and the support team is always available to help. I highly recommend Tailus templates to anyone who is looking to create a website.",
+      'Tailus templates are the perfect solution for anyone who wants to create a beautiful and functional website without any web design experience. The templates are easy to use, customizable, and responsive, and the support team is always available to help. I highly recommend Tailus templates to anyone who is looking to create a website.',
   },
   {
-    name: "Roland Tubonge",
-    role: "Software Engineer",
-    image: "https://randomuser.me/api/portraits/men/13.jpg",
+    name: 'Roland Tubonge',
+    role: 'Software Engineer',
+    image: 'https://randomuser.me/api/portraits/men/13.jpg',
     quote:
-      "Tailus is so well designed that even with a very poor knowledge of web design you can do miracles. Let yourself be seduced!",
+      'Tailus is so well designed that even with a very poor knowledge of web design you can do miracles. Let yourself be seduced!',
   },
 ];
 

@@ -1,16 +1,16 @@
-"use client";
-import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, Menu, SendHorizonal, X } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+'use client';
+import { Logo } from '@/components/logo';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Mail, Menu, SendHorizonal, X } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const menuItems = [
-  { name: "Features", href: "#" },
-  { name: "Solution", href: "#" },
-  { name: "Pricing", href: "#" },
-  { name: "About", href: "#" },
+  { name: 'Features', href: '#' },
+  { name: 'Solution', href: '#' },
+  { name: 'Pricing', href: '#' },
+  { name: 'About', href: '#' },
 ];
 
 export default function HeroSection2() {

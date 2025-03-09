@@ -14,8 +14,8 @@ export default function Stats4() {
             The Gemini ecosystem brings together our models.
           </h2>
           <p>
-            Gemini is evolving to be more than just the models.{" "}
-            <span className="font-medium">It supports an entire ecosystem</span>{" "}
+            Gemini is evolving to be more than just the models.{' '}
+            <span className="font-medium">It supports an entire ecosystem</span>{' '}
             — from products innovate.
           </p>
         </div>

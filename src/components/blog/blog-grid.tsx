@@ -1,6 +1,6 @@
-import BlogCard, { BlogCardSkeleton } from "@/components/blog/blog-card";
-import { POSTS_PER_PAGE } from "@/lib/constants";
-import { Post } from "content-collections";
+import BlogCard, { BlogCardSkeleton } from '@/components/blog/blog-card';
+import { POSTS_PER_PAGE } from '@/lib/constants';
+import { Post } from 'content-collections';
 
 interface BlogGridProps {
   posts: Post[];

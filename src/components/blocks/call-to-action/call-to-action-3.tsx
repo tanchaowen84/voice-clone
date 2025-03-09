@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Mail, SendHorizonal } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Mail, SendHorizonal } from 'lucide-react';
 
 /**
  * https://nsui.irung.me/call-to-action

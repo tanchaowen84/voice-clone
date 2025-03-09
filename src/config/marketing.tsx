@@ -30,7 +30,7 @@ import {
   SquareKanbanIcon,
   SquarePenIcon,
   ThumbsUpIcon,
-  WandSparklesIcon
+  WandSparklesIcon,
 } from 'lucide-react';
 
 type TranslationFunction = (key: string, ...args: any[]) => string;
@@ -54,7 +54,7 @@ export function createTranslator(t: any): TranslationFunction {
 
 /**
  * Get menu links with translations
- * 
+ *
  * @param t - The translation function
  * @returns The menu links with translated titles and descriptions
  */
@@ -63,17 +63,17 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
     {
       title: t('Marketing.navbar.features.title'),
       href: Routes.Features,
-      external: false
+      external: false,
     },
     {
       title: t('Marketing.navbar.pricing.title'),
       href: Routes.Pricing,
-      external: false
+      external: false,
     },
     {
       title: t('Marketing.navbar.blog.title'),
       href: Routes.Blog,
-      external: false
+      external: false,
     },
     {
       title: t('Marketing.navbar.ai.title'),
@@ -83,30 +83,30 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t('Marketing.navbar.ai.items.text.description'),
           icon: <SquarePenIcon className="size-5 shrink-0" />,
           href: Routes.AIText,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.image.title'),
           description: t('Marketing.navbar.ai.items.image.description'),
           icon: <ImageIcon className="size-5 shrink-0" />,
           href: Routes.AIImage,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.video.title'),
           description: t('Marketing.navbar.ai.items.video.description'),
           icon: <FilmIcon className="size-5 shrink-0" />,
           href: Routes.AIVideo,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.audio.title'),
           description: t('Marketing.navbar.ai.items.audio.description'),
           icon: <AudioLinesIcon className="size-5 shrink-0" />,
           href: Routes.AIAudio,
-          external: false
-        }
-      ]
+          external: false,
+        },
+      ],
     },
     {
       title: t('Marketing.navbar.pages.title'),
@@ -116,58 +116,64 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t('Marketing.navbar.pages.items.about.description'),
           icon: <BuildingIcon className="size-5 shrink-0" />,
           href: Routes.About,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.contact.title'),
           description: t('Marketing.navbar.pages.items.contact.description'),
           icon: <MailIcon className="size-5 shrink-0" />,
           href: Routes.Contact,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.waitlist.title'),
           description: t('Marketing.navbar.pages.items.waitlist.description'),
           icon: <MailboxIcon className="size-5 shrink-0" />,
           href: Routes.Waitlist,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.roadmap.title'),
           description: t('Marketing.navbar.pages.items.roadmap.description'),
           icon: <SquareKanbanIcon className="size-5 shrink-0" />,
           href: Routes.Roadmap,
-          external: true
+          external: true,
         },
         {
           title: t('Marketing.navbar.pages.items.changelog.title'),
           description: t('Marketing.navbar.pages.items.changelog.description'),
           icon: <ListChecksIcon className="size-5 shrink-0" />,
           href: Routes.Changelog,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.cookiePolicy.title'),
-          description: t('Marketing.navbar.pages.items.cookiePolicy.description'),
+          description: t(
+            'Marketing.navbar.pages.items.cookiePolicy.description'
+          ),
           icon: <CookieIcon className="size-5 shrink-0" />,
           href: Routes.CookiePolicy,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.privacyPolicy.title'),
-          description: t('Marketing.navbar.pages.items.privacyPolicy.description'),
+          description: t(
+            'Marketing.navbar.pages.items.privacyPolicy.description'
+          ),
           icon: <ShieldCheckIcon className="size-5 shrink-0" />,
           href: Routes.PrivacyPolicy,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.termsOfService.title'),
-          description: t('Marketing.navbar.pages.items.termsOfService.description'),
+          description: t(
+            'Marketing.navbar.pages.items.termsOfService.description'
+          ),
           icon: <FileTextIcon className="size-5 shrink-0" />,
           href: Routes.TermsOfService,
-          external: false
-        }
-      ]
+          external: false,
+        },
+      ],
     },
     {
       title: t('Marketing.navbar.blocks.title'),
@@ -176,52 +182,52 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           title: t('Marketing.navbar.blocks.items.hero.title'),
           icon: <FlameIcon className="size-5 shrink-0" />,
           href: Routes.HeroBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.pricing.title'),
           icon: <CircleDollarSignIcon className="size-5 shrink-0" />,
           href: Routes.PricingBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.features.title'),
           icon: <WandSparklesIcon className="size-5 shrink-0" />,
           href: Routes.FeaturesBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.faq.title'),
           icon: <CircleHelpIcon className="size-5 shrink-0" />,
           href: Routes.FAQBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.testimonials.title'),
           icon: <ThumbsUpIcon className="size-5 shrink-0" />,
           href: Routes.TestimonialsBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.stats.title'),
           icon: <ChartNoAxesCombinedIcon className="size-5 shrink-0" />,
           href: Routes.StatsBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.callToAction.title'),
           icon: <RocketIcon className="size-5 shrink-0" />,
           href: Routes.CallToActionBlocks,
-          external: false
+          external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.content.title'),
           icon: <NewspaperIcon className="size-5 shrink-0" />,
           href: Routes.ContentBlocks,
-          external: false
-        }
-      ]
-    }
+          external: false,
+        },
+      ],
+    },
   ];
 }
 
@@ -235,35 +241,83 @@ export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
     {
       title: t('Marketing.footer.product.title'),
       items: [
-        { title: t('Marketing.footer.product.items.features'), href: Routes.Features, external: false },
-        { title: t('Marketing.footer.product.items.pricing'), href: Routes.Pricing, external: false },
-        { title: t('Marketing.footer.product.items.faq'), href: Routes.FAQ, external: false },
-      ]
+        {
+          title: t('Marketing.footer.product.items.features'),
+          href: Routes.Features,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.product.items.pricing'),
+          href: Routes.Pricing,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.product.items.faq'),
+          href: Routes.FAQ,
+          external: false,
+        },
+      ],
     },
     {
       title: t('Marketing.footer.resources.title'),
       items: [
-        { title: t('Marketing.footer.resources.items.blog'), href: Routes.Blog, external: false },
-        { title: t('Marketing.footer.resources.items.changelog'), href: Routes.Changelog, external: false },
-        { title: t('Marketing.footer.resources.items.roadmap'), href: Routes.Roadmap, external: true },
-      ]
+        {
+          title: t('Marketing.footer.resources.items.blog'),
+          href: Routes.Blog,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.resources.items.changelog'),
+          href: Routes.Changelog,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.resources.items.roadmap'),
+          href: Routes.Roadmap,
+          external: true,
+        },
+      ],
     },
     {
       title: t('Marketing.footer.company.title'),
       items: [
-        { title: t('Marketing.footer.company.items.about'), href: Routes.About, external: false },
-        { title: t('Marketing.footer.company.items.contact'), href: Routes.Contact, external: false },
-        { title: t('Marketing.footer.company.items.waitlist'), href: Routes.Waitlist, external: false }
-      ]
+        {
+          title: t('Marketing.footer.company.items.about'),
+          href: Routes.About,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.company.items.contact'),
+          href: Routes.Contact,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.company.items.waitlist'),
+          href: Routes.Waitlist,
+          external: false,
+        },
+      ],
     },
     {
       title: t('Marketing.footer.legal.title'),
       items: [
-        { title: t('Marketing.footer.legal.items.cookiePolicy'), href: Routes.CookiePolicy, external: false },
-        { title: t('Marketing.footer.legal.items.privacyPolicy'), href: Routes.PrivacyPolicy, external: false },
-        { title: t('Marketing.footer.legal.items.termsOfService'), href: Routes.TermsOfService, external: false },
-      ]
-    }
+        {
+          title: t('Marketing.footer.legal.items.cookiePolicy'),
+          href: Routes.CookiePolicy,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.legal.items.privacyPolicy'),
+          href: Routes.PrivacyPolicy,
+          external: false,
+        },
+        {
+          title: t('Marketing.footer.legal.items.termsOfService'),
+          href: Routes.TermsOfService,
+          external: false,
+        },
+      ],
+    },
   ];
 }
 
@@ -275,48 +329,48 @@ export function getSocialLinks(): MenuItem[] {
     {
       title: 'Email',
       href: 'mailto:mksaas@gmail.com',
-      icon: <MailIcon className="size-4 shrink-0" />
+      icon: <MailIcon className="size-4 shrink-0" />,
     },
     {
       title: 'GitHub',
       href: 'https://github.com/MkSaaSHQ',
-      icon: <GitHubIcon className="size-4 shrink-0" />
+      icon: <GitHubIcon className="size-4 shrink-0" />,
     },
     {
       title: 'Twitter',
       href: 'https://twitter.com/mksaas',
-      icon: <TwitterIcon className="size-4 shrink-0" />
+      icon: <TwitterIcon className="size-4 shrink-0" />,
     },
     {
       title: 'Bluesky',
       href: 'https://bsky.app/profile/mksaas.com',
-      icon: <BlueskyIcon className="size-4 shrink-0" />
+      icon: <BlueskyIcon className="size-4 shrink-0" />,
     },
     {
       title: 'YouTube',
       href: 'https://www.youtube.com/@MkSaaSHQ',
-      icon: <YouTubeIcon className="size-4 shrink-0" />
+      icon: <YouTubeIcon className="size-4 shrink-0" />,
     },
     {
       title: 'LinkedIn',
       href: 'https://www.linkedin.com/company/mksaas',
-      icon: <LinkedInIcon className="size-4 shrink-0" />
+      icon: <LinkedInIcon className="size-4 shrink-0" />,
     },
     {
       title: 'Facebook',
       href: 'https://www.facebook.com/mksaas',
-      icon: <FacebookIcon className="size-4 shrink-0" />
+      icon: <FacebookIcon className="size-4 shrink-0" />,
     },
     {
       title: 'Instagram',
       href: 'https://www.instagram.com/mksaas',
-      icon: <InstagramIcon className="size-4 shrink-0" />
+      icon: <InstagramIcon className="size-4 shrink-0" />,
     },
     {
       title: 'TikTok',
       href: 'https://www.tiktok.com/@mksaas',
-      icon: <TikTokIcon className="size-4 shrink-0" />
-    }
+      icon: <TikTokIcon className="size-4 shrink-0" />,
+    },
   ];
 }
 
@@ -330,12 +384,12 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
     {
       title: t('Marketing.avatar.dashboard'),
       href: Routes.Dashboard,
-      icon: <DashboardIcon className="size-4 shrink-0" />
+      icon: <DashboardIcon className="size-4 shrink-0" />,
     },
     {
       title: t('Marketing.avatar.settings'),
       href: Routes.Settings,
-      icon: <SettingsIcon className="size-4 shrink-0" />
-    }
+      icon: <SettingsIcon className="size-4 shrink-0" />,
+    },
   ];
 }

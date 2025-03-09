@@ -1,4 +1,4 @@
-import { Cpu, Lock, Sparkles, Zap } from "lucide-react";
+import { Cpu, Lock, Sparkles, Zap } from 'lucide-react';
 
 /**
  * https://nsui.irung.me/content-5

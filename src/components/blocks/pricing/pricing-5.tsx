@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
+import Link from 'next/link';
 
 /**
  * https://nsui.irung.me/pricing
@@ -39,10 +39,10 @@ export default function Pricing5() {
               <div className="relative">
                 <ul role="list" className="space-y-4">
                   {[
-                    "First premium advantage",
-                    "Second advantage weekly",
-                    "Third advantage donate to project",
-                    "Fourth, access to all components weekly",
+                    'First premium advantage',
+                    'Second advantage weekly',
+                    'Third advantage donate to project',
+                    'Fourth, access to all components weekly',
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <Check className="size-3" />

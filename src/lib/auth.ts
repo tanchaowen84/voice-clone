@@ -1,20 +1,20 @@
-import { siteConfig } from "@/config/site";
-import db from "@/db/index";
-import { account, session, user, verification } from "@/db/schema";
-import { send } from "@/mail/send";
-import { getLocaleFromRequest } from "@/lib/utils";
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin } from "better-auth/plugins";
+import { siteConfig } from '@/config/site';
+import db from '@/db/index';
+import { account, session, user, verification } from '@/db/schema';
+import { send } from '@/mail/send';
+import { getLocaleFromRequest } from '@/lib/utils';
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { admin } from 'better-auth/plugins';
 
-const from = process.env.RESEND_FROM || "delivered@resend.dev";
+const from = process.env.RESEND_FROM || 'delivered@resend.dev';
 
 export const auth = betterAuth({
   appName: siteConfig.name,
   database: drizzleAdapter(db, {
-    provider: "pg", // or "mysql", "sqlite"
+    provider: 'pg', // or "mysql", "sqlite"
     // The schema object that defines the tables and fields
-    // [BetterAuthError]: [# Drizzle Adapter]: The model "verification" was not found in the schema object. 
+    // [BetterAuthError]: [# Drizzle Adapter]: The model "verification" was not found in the schema object.
     // Please pass the schema directly to the adapter options.
     schema: {
       user: user,
@@ -27,13 +27,13 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/concepts/session-management#cookie-cache
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60 // Cache duration in seconds
+      maxAge: 5 * 60, // Cache duration in seconds
     },
     // https://www.better-auth.com/docs/concepts/session-management#session-expiration
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // every 1 day the session expiration is updated
     // https://www.better-auth.com/docs/concepts/session-management#session-freshness
-    freshAge: 60 * 5 // the session is fresh if created within the last 5 minutes
+    freshAge: 60 * 5, // the session is fresh if created within the last 5 minutes
   },
   emailAndPassword: {
     enabled: true,
@@ -42,10 +42,10 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
     async sendResetPassword({ user, url }, request) {
       const locale = getLocaleFromRequest(request);
-      console.log("sendResetPassword, locale:", locale);
+      console.log('sendResetPassword, locale:', locale);
       await send({
         to: user.email,
-        template: "forgotPassword",
+        template: 'forgotPassword',
         context: {
           url,
           name: user.name,
@@ -60,10 +60,10 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
-      console.log("sendVerificationEmail, locale:", locale);
+      console.log('sendVerificationEmail, locale:', locale);
       await send({
         to: user.email,
-        template: "verifyEmail",
+        template: 'verifyEmail',
         context: {
           url,
           name: user.name,
@@ -82,17 +82,17 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }
+    },
   },
   account: {
     // https://www.better-auth.com/docs/concepts/users-accounts#account-linking
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "github"],
+      trustedProviders: ['google', 'github'],
     },
   },
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
     admin(),
-  ]
+  ],
 });

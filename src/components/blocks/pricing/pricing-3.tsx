@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Check } from "lucide-react";
+} from '@/components/ui/card';
+import { Check } from 'lucide-react';
 
 /**
  * https://nsui.irung.me/pricing
@@ -45,9 +45,9 @@ export default function Pricing3() {
 
               <ul className="list-outside space-y-3 text-sm">
                 {[
-                  "Basic Analytics Dashboard",
-                  "5GB Cloud Storage",
-                  "Email and Chat Support",
+                  'Basic Analytics Dashboard',
+                  '5GB Cloud Storage',
+                  'Email and Chat Support',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="size-3" />
@@ -82,16 +82,16 @@ export default function Pricing3() {
 
               <ul className="list-outside space-y-3 text-sm">
                 {[
-                  "Everything in Free Plan",
-                  "5GB Cloud Storage",
-                  "Email and Chat Support",
-                  "Access to Community Forum",
-                  "Single User Access",
-                  "Access to Basic Templates",
-                  "Mobile App Access",
-                  "1 Custom Report Per Month",
-                  "Monthly Product Updates",
-                  "Standard Security Features",
+                  'Everything in Free Plan',
+                  '5GB Cloud Storage',
+                  'Email and Chat Support',
+                  'Access to Community Forum',
+                  'Single User Access',
+                  'Access to Basic Templates',
+                  'Mobile App Access',
+                  '1 Custom Report Per Month',
+                  'Monthly Product Updates',
+                  'Standard Security Features',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="size-3" />
@@ -122,9 +122,9 @@ export default function Pricing3() {
 
               <ul className="list-outside space-y-3 text-sm">
                 {[
-                  "Everything in Pro Plan",
-                  "5GB Cloud Storage",
-                  "Email and Chat Support",
+                  'Everything in Pro Plan',
+                  '5GB Cloud Storage',
+                  'Email and Chat Support',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="size-3" />

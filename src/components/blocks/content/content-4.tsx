@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 /**
  * https://nsui.irung.me/content-4
@@ -23,8 +23,8 @@ export default function Content4() {
               developers and businesses innovate.
             </p>
             <p>
-              Tailus UI.{" "}
-              <span className="font-bold">It supports an entire ecosystem</span>{" "}
+              Tailus UI.{' '}
+              <span className="font-bold">It supports an entire ecosystem</span>{' '}
               — from products innovate. Sit minus, quod debitis autem quia
               aspernatur delectus impedit modi, neque non id ad dignissimos?
               Saepe deleniti perferendis beatae.

@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Users } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, Users } from 'lucide-react';
 
 /**
  * https://nsui.irung.me/features-8

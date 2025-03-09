@@ -10,7 +10,7 @@ export default function FAQs() {
         <div className="grid gap-y-12 px-2 lg:[grid-template-columns:1fr_auto]">
           <div className="text-center lg:text-left">
             <h2 className="mb-4 text-3xl font-semibold md:text-4xl">
-              Frequently <br className="hidden lg:block" /> Asked{" "}
+              Frequently <br className="hidden lg:block" /> Asked{' '}
               <br className="hidden lg:block" />
               Questions
             </h2>

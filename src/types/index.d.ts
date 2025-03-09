@@ -1,5 +1,5 @@
-import type { Icons } from "@/components/icons/icons";
-import type { ReactNode } from "react";
+import type { Icons } from '@/components/icons/icons';
+import type { ReactNode } from 'react';
 
 /**
  * site config
@@ -51,13 +51,13 @@ export type HeroConfig = {
     text: string;
     icon: keyof typeof Icons;
     href: string;
-    variant: "default" | "outline";
+    variant: 'default' | 'outline';
   };
   secondaryButton: {
     text: string;
     icon: keyof typeof Icons;
     href: string;
-    variant: "default" | "outline";
+    variant: 'default' | 'outline';
   };
 };
 
@@ -136,7 +136,7 @@ export type MkdirsInfoLdg = {
     text: string;
     icon: keyof typeof Icons;
     href: string;
-    variant: "default" | "outline";
+    variant: 'default' | 'outline';
   };
 };
 

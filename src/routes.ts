@@ -4,7 +4,7 @@
 export enum Routes {
   Root = '/',
   DefaultLoginRedirect = '/dashboard',
-  
+
   Features = '/#features',
   FAQ = '/#faq',
   Pricing = '/pricing',
@@ -51,26 +51,26 @@ export enum Routes {
  * @type {string[]}
  */
 export const publicRoutes = [
-  "/",
+  '/',
 
   // pages
-  "/blog(/.*)?",
-  "/terms-of-service(/.*)?",
-  "/privacy-policy(/.*)?",
-  "/cookie-policy(/.*)?",
-  "/about(/.*)?",
-  "/contact(/.*)?",
-  "/waitlist(/.*)?",
-  "/changelog(/.*)?",
+  '/blog(/.*)?',
+  '/terms-of-service(/.*)?',
+  '/privacy-policy(/.*)?',
+  '/cookie-policy(/.*)?',
+  '/about(/.*)?',
+  '/contact(/.*)?',
+  '/waitlist(/.*)?',
+  '/changelog(/.*)?',
 
   // unsubscribe newsletter
-  "/unsubscribe(/.*)?",
+  '/unsubscribe(/.*)?',
 
   // stripe webhook
-  "/api/webhook",
+  '/api/webhook',
 
   // og images
-  "/api/og",
+  '/api/og',
 ];
 
 /**
@@ -89,10 +89,10 @@ export const authRoutes = [
  * Routes that start with this prefix are used for API authentication purposes
  * @type {string}
  */
-export const apiAuthPrefix = "/api/auth";
+export const apiAuthPrefix = '/api/auth';
 
 /**
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const DEFAULT_LOGIN_REDIRECT = '/dashboard';

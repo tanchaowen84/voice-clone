@@ -1,5 +1,5 @@
-import { siteConfig } from "@/config/site";
-import type { Metadata } from "next";
+import { siteConfig } from '@/config/site';
+import type { Metadata } from 'next';
 
 /**
  * Construct the metadata object for the current page (in docs/guides)
@@ -17,9 +17,7 @@ export function constructMetadata({
   image?: string;
   noIndex?: boolean;
 } = {}): Metadata {
-  const fullTitle = title
-    ? `${title} - ${siteConfig.title}`
-    : siteConfig.title;
+  const fullTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
   return {
     title: fullTitle,
     description,
@@ -36,8 +34,8 @@ export function constructMetadata({
         }
       : undefined,
     openGraph: {
-      type: "website",
-      locale: "en_US",
+      type: 'website',
+      locale: 'en_US',
       url: siteConfig.url,
       title: fullTitle,
       description,
@@ -45,7 +43,7 @@ export function constructMetadata({
       images: [image],
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: fullTitle,
       description,
       images: [image],
@@ -53,9 +51,9 @@ export function constructMetadata({
       creator: siteConfig.author,
     },
     icons: {
-      icon: "/favicon.ico",
-      shortcut: "/favicon-32x32.png",
-      apple: "/apple-touch-icon.png",
+      icon: '/favicon.ico',
+      shortcut: '/favicon-32x32.png',
+      apple: '/apple-touch-icon.png',
     },
     metadataBase: new URL(siteConfig.url),
     manifest: `${siteConfig.url}/site.webmanifest`,

@@ -12,7 +12,12 @@ interface CustomPageProps {
   content: any; // MDX content
 }
 
-export function CustomPage({ title, description, date, content }: CustomPageProps) {
+export function CustomPage({
+  title,
+  description,
+  date,
+  content,
+}: CustomPageProps) {
   const formattedDate = getLocaleDate(date);
 
   return (
@@ -41,4 +46,4 @@ export function CustomPage({ title, description, date, content }: CustomPageProp
       </Card>
     </div>
   );
-} 
+}

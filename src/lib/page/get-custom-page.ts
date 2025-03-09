@@ -9,9 +9,7 @@ import { allPages } from 'content-collections';
 export async function getCustomPage(type: string, locale: string) {
   // Find page with matching slug and locale
   const page = allPages.find(
-    (page) =>
-      page.slugAsParams === `${type}` &&
-      page.locale === locale
+    (page) => page.slugAsParams === `${type}` && page.locale === locale
   );
 
   if (!page) {
@@ -24,4 +22,4 @@ export async function getCustomPage(type: string, locale: string) {
   }
 
   return page;
-} 
+}

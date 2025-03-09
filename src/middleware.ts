@@ -5,7 +5,7 @@ export default createMiddleware(routing);
 
 /**
  * Next.js internationalized routing
- * 
+ *
  * https://next-intl.dev/docs/routing#base-path
  */
 export const config = {
@@ -23,6 +23,6 @@ export const config = {
     // (e.g. `/pathnames` -> `/zh/pathnames`)
     // Exclude API routes and other Next.js internal routes
     // if not exclude api routes, auth routes will not work
-    '/((?!api|_next|_vercel|.*\\..*).*)'
-  ]
+    '/((?!api|_next|_vercel|.*\\..*).*)',
+  ],
 };

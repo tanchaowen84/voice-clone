@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Pagination,
@@ -8,8 +8,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+} from '@/components/ui/pagination';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type CustomPaginationProps = {
   totalPages: number;
@@ -22,11 +22,11 @@ export default function CustomPagination({
 }: CustomPaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
+  const currentPage = Number(searchParams.get('page')) || 1;
 
   const handlePageChange = (page: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", page.toString());
+    params.set('page', page.toString());
     router.push(`${routePreix}?${params.toString()}`);
   };
 
@@ -45,21 +45,21 @@ export default function CustomPagination({
             aria-disabled={currentPage <= 1}
             className={
               currentPage <= 1
-                ? "pointer-events-none text-gray-300 dark:text-gray-600"
-                : "cursor-pointer"
+                ? 'pointer-events-none text-gray-300 dark:text-gray-600'
+                : 'cursor-pointer'
             }
           />
         </PaginationItem>
         {allPages.map((page, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <PaginationItem key={`${page}-${index}`}>
-            {page === "..." ? (
+            {page === '...' ? (
               <PaginationEllipsis />
             ) : (
               <PaginationLink
                 onClick={() => handlePageChange(page)}
                 isActive={currentPage === page}
-                className={currentPage === page ? "" : "cursor-pointer"}
+                className={currentPage === page ? '' : 'cursor-pointer'}
               >
                 {page}
               </PaginationLink>
@@ -77,8 +77,8 @@ export default function CustomPagination({
             aria-disabled={currentPage >= totalPages}
             className={
               currentPage >= totalPages
-                ? "pointer-events-none text-gray-300 dark:text-gray-600"
-                : "cursor-pointer"
+                ? 'pointer-events-none text-gray-300 dark:text-gray-600'
+                : 'cursor-pointer'
             }
           />
         </PaginationItem>
@@ -100,13 +100,13 @@ const generatePagination = (currentPage: number, totalPages: number) => {
   // If the current page is among the first 3 pages,
   // show the first 3, an ellipsis, and the last 2 pages.
   if (currentPage <= 3) {
-    return [1, 2, 3, "...", totalPages - 1, totalPages];
+    return [1, 2, 3, '...', totalPages - 1, totalPages];
   }
 
   // If the current page is among the last 3 pages,
   // show the first 2, an ellipsis, and the last 3 pages.
   if (currentPage >= totalPages - 2) {
-    return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
+    return [1, 2, '...', totalPages - 2, totalPages - 1, totalPages];
   }
 
   // If the current page is somewhere in the middle,
@@ -114,11 +114,11 @@ const generatePagination = (currentPage: number, totalPages: number) => {
   // another ellipsis, and the last page.
   return [
     1,
-    "...",
+    '...',
     currentPage - 1,
     currentPage,
     currentPage + 1,
-    "...",
+    '...',
     totalPages,
   ];
 };

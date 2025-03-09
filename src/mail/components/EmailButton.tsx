@@ -1,5 +1,5 @@
-import { Button } from "@react-email/components";
-import React, { type PropsWithChildren } from "react";
+import { Button } from '@react-email/components';
+import React, { type PropsWithChildren } from 'react';
 
 export default function EmailButton({
   href,

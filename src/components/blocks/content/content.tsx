@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 /**
  * https://nsui.irung.me/content
@@ -34,10 +34,10 @@ export default function Content() {
 
           <div className="relative space-y-4">
             <p className="text-muted-foreground">
-              Gemini is evolving to be more than just the models.{" "}
+              Gemini is evolving to be more than just the models.{' '}
               <span className="text-accent-foreground font-bold">
                 It supports an entire ecosystem
-              </span>{" "}
+              </span>{' '}
               — from products innovate.
             </p>
             <p className="text-muted-foreground">

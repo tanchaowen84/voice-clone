@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { HeaderSection } from "@/components/shared/header-section";
-import { NewsletterForm } from "@/components/newsletter/newsletter-form";
+import { HeaderSection } from '@/components/shared/header-section';
+import { NewsletterForm } from '@/components/newsletter/newsletter-form';
 
 export function NewsletterCard() {
   return (

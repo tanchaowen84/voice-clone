@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { LocaleLink } from "@/i18n/navigation";
+import { cn } from '@/lib/utils';
+import { LocaleLink } from '@/i18n/navigation';
 
 interface FilterItemMobileProps {
   title: string;
@@ -22,12 +22,12 @@ export default function FilterItemMobile({
         href={href}
         onClick={clickAction}
         className={cn(
-          "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-muted",
-          active && "bg-primary text-primary-foreground hover:bg-primary/90"
+          'flex w-full items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-muted',
+          active && 'bg-primary text-primary-foreground hover:bg-primary/90'
         )}
       >
         {title}
       </LocaleLink>
     </li>
   );
-} 
+}

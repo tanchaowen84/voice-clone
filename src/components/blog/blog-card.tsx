@@ -1,8 +1,8 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { getLocaleDate } from "@/lib/utils";
-import { Post } from "content-collections";
-import Image from "next/image";
-import { LocaleLink } from "@/i18n/navigation";
+import { Skeleton } from '@/components/ui/skeleton';
+import { getLocaleDate } from '@/lib/utils';
+import { Post } from 'content-collections';
+import Image from 'next/image';
+import { LocaleLink } from '@/i18n/navigation';
 
 interface BlogCardProps {
   post: Post;
@@ -11,15 +11,12 @@ interface BlogCardProps {
 export default function BlogCard({ post }: BlogCardProps) {
   const publishDate = post.date;
   const date = getLocaleDate(publishDate);
-  
+
   // Extract the slug parts for the Link component
   const slugParts = post.slugAsParams.split('/');
 
   return (
-    <LocaleLink 
-      href={`/blog/${slugParts.join('/')}`}
-      className="block h-full"
-    >
+    <LocaleLink href={`/blog/${slugParts.join('/')}`} className="block h-full">
       <div className="group flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
         {/* Image container - fixed aspect ratio */}
         <div className="group overflow-hidden relative aspect-[16/9] w-full">
@@ -27,8 +24,8 @@ export default function BlogCard({ post }: BlogCardProps) {
             <div className="relative w-full h-full">
               <Image
                 src={post.image}
-                alt={post.title || "image for blog post"}
-                title={post.title || "image for blog post"}
+                alt={post.title || 'image for blog post'}
+                title={post.title || 'image for blog post'}
                 className="object-cover hover:scale-105 transition-transform duration-300"
                 fill
               />

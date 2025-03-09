@@ -13,7 +13,13 @@ interface ReleaseCardProps {
   content: any; // MDX content
 }
 
-export function ReleaseCard({ title, description, date, version, content }: ReleaseCardProps) {
+export function ReleaseCard({
+  title,
+  description,
+  date,
+  version,
+  content,
+}: ReleaseCardProps) {
   const formattedDate = getLocaleDate(date);
 
   return (
@@ -40,4 +46,4 @@ export function ReleaseCard({ title, description, date, version, content }: Rele
       </CardContent>
     </Card>
   );
-} 
+}

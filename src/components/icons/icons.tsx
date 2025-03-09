@@ -44,25 +44,25 @@ import {
   VideoIcon,
   WandSparklesIcon,
   WorkflowIcon,
-  WrenchIcon
-} from "lucide-react";
-import { GitHubIcon } from "../icons/github";
-import { GoogleIcon } from "../icons/google";
-import { ProductHuntIcon } from "../icons/product-hunt";
-import { TwitterIcon } from "../icons/twitter";
-import { XTwitterIcon } from "../icons/x";
-import { BlueskyIcon } from "./bluesky";
-import { NextjsIcon } from "./nextjs";
-import { ResendIcon } from "./resend";
-import { ShadcnuiIcon } from "./shadcnui";
-import { StripeIcon } from "./stripe";
-import { TailwindcssIcon } from "./tailwindcss";
-import { VercelIcon } from "./vercel";
-import { YouTubeIcon } from "./youtube";
-import { TikTokIcon } from "./tiktok";
-import { LinkedInIcon } from "./linkedin";
-import { InstagramIcon } from "./instagram";
-import { FacebookIcon } from "./facebook";
+  WrenchIcon,
+} from 'lucide-react';
+import { GitHubIcon } from '../icons/github';
+import { GoogleIcon } from '../icons/google';
+import { ProductHuntIcon } from '../icons/product-hunt';
+import { TwitterIcon } from '../icons/twitter';
+import { XTwitterIcon } from '../icons/x';
+import { BlueskyIcon } from './bluesky';
+import { NextjsIcon } from './nextjs';
+import { ResendIcon } from './resend';
+import { ShadcnuiIcon } from './shadcnui';
+import { StripeIcon } from './stripe';
+import { TailwindcssIcon } from './tailwindcss';
+import { VercelIcon } from './vercel';
+import { YouTubeIcon } from './youtube';
+import { TikTokIcon } from './tiktok';
+import { LinkedInIcon } from './linkedin';
+import { InstagramIcon } from './instagram';
+import { FacebookIcon } from './facebook';
 
 export type Icon = LucideIcon;
 

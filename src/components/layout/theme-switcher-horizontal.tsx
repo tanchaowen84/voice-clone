@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { Button } from '@/components/ui/button';
+import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 /**
  * Theme switcher component, used in the footer, switch theme by theme variable
@@ -34,10 +34,10 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          "size-6 px-0 rounded-full",
-          theme === "light" && "bg-muted text-foreground"
+          'size-6 px-0 rounded-full',
+          theme === 'light' && 'bg-muted text-foreground'
         )}
-        onClick={() => setTheme("light")}
+        onClick={() => setTheme('light')}
         aria-label="Light mode"
       >
         <SunIcon className="size-4" />
@@ -47,10 +47,10 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          "size-6 px-0 rounded-full",
-          theme === "dark" && "bg-muted text-foreground"
+          'size-6 px-0 rounded-full',
+          theme === 'dark' && 'bg-muted text-foreground'
         )}
-        onClick={() => setTheme("dark")}
+        onClick={() => setTheme('dark')}
         aria-label="Dark mode"
       >
         <MoonIcon className="size-4" />
@@ -60,10 +60,10 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          "size-6 px-0 rounded-full",
-          theme === "system" && "bg-muted text-foreground"
+          'size-6 px-0 rounded-full',
+          theme === 'system' && 'bg-muted text-foreground'
         )}
-        onClick={() => setTheme("system")}
+        onClick={() => setTheme('system')}
         aria-label="System mode"
       >
         <LaptopIcon className="size-4" />

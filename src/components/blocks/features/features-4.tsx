@@ -5,7 +5,7 @@ import {
   Settings2,
   Sparkles,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
 /**
  * https://nsui.irung.me/features-4

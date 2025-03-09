@@ -15,17 +15,17 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle
+  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { createTranslator, getMenuLinks } from '@/config/marketing';
 import { siteConfig } from '@/config/site';
-import { useScroll } from "@/hooks/use-scroll";
+import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -33,10 +33,10 @@ interface NavBarProps {
 
 const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
-  "relative bg-transparent text-muted-foreground",
-  "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
-  "data-[active]:font-semibold data-[active]:bg-transparent data-[active]:text-primary",
-  "data-[state=open]:bg-transparent data-[state=open]:text-primary",
+  'relative bg-transparent text-muted-foreground',
+  'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
+  'data-[active]:font-semibold data-[active]:bg-transparent data-[active]:text-primary',
+  'data-[state=open]:bg-transparent data-[state=open]:text-primary'
 );
 
 export function Navbar({ scroll }: NavBarProps) {
@@ -46,20 +46,22 @@ export function Navbar({ scroll }: NavBarProps) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
-  const commonTranslations = useTranslations("Common");
+  const commonTranslations = useTranslations('Common');
   const localePathname = useLocalePathname();
 
   // console.log(`Navbar, user:`, user);
 
   return (
-    <section className={cn(
-      "sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300",
-      scroll ? (
-        scrolled
-          ? "bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60"
-          : "bg-background"
-      ) : "border-b bg-background"
-    )}>
+    <section
+      className={cn(
+        'sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300',
+        scroll
+          ? scrolled
+            ? 'bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60'
+            : 'bg-background'
+          : 'border-b bg-background'
+      )}
+    >
       <Container className="px-4">
         {/* desktop navbar */}
         <nav className="hidden lg:flex">
@@ -75,100 +77,128 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex-1 flex items-center justify-center space-x-2">
             <NavigationMenu className="relative">
               <NavigationMenuList className="flex items-center">
-                {menuLinks && menuLinks.map((item, index) =>
-                  item.items ? (
-                    <NavigationMenuItem key={index} className="relative">
-                      <NavigationMenuTrigger
-                        data-active={
-                          item.items.some((subItem) =>
-                            subItem.href ? localePathname.startsWith(subItem.href) : false
-                          ) ? "true" : undefined
-                        }
-                        className={customNavigationMenuTriggerStyle}
-                      >
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {item.items && item.items.map((subItem, subIndex) => {
-                            const isSubItemActive = subItem.href && localePathname.startsWith(subItem.href);
-                            return (
-                              <li key={subIndex}>
-                                <NavigationMenuLink asChild>
-                                  <LocaleLink
-                                    href={subItem.href || '#'}
-                                    target={subItem.external ? '_blank' : undefined}
-                                    rel={
-                                      subItem.external
-                                        ? 'noopener noreferrer'
-                                        : undefined
-                                    }
-                                    className="group flex select-none flex-row items-center gap-4 rounded-md 
+                {menuLinks &&
+                  menuLinks.map((item, index) =>
+                    item.items ? (
+                      <NavigationMenuItem key={index} className="relative">
+                        <NavigationMenuTrigger
+                          data-active={
+                            item.items.some((subItem) =>
+                              subItem.href
+                                ? localePathname.startsWith(subItem.href)
+                                : false
+                            )
+                              ? 'true'
+                              : undefined
+                          }
+                          className={customNavigationMenuTriggerStyle}
+                        >
+                          {item.title}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                            {item.items &&
+                              item.items.map((subItem, subIndex) => {
+                                const isSubItemActive =
+                                  subItem.href &&
+                                  localePathname.startsWith(subItem.href);
+                                return (
+                                  <li key={subIndex}>
+                                    <NavigationMenuLink asChild>
+                                      <LocaleLink
+                                        href={subItem.href || '#'}
+                                        target={
+                                          subItem.external
+                                            ? '_blank'
+                                            : undefined
+                                        }
+                                        rel={
+                                          subItem.external
+                                            ? 'noopener noreferrer'
+                                            : undefined
+                                        }
+                                        className="group flex select-none flex-row items-center gap-4 rounded-md 
                                       p-2 leading-none no-underline outline-none transition-colors 
                                       hover:bg-accent hover:text-accent-foreground 
                                       focus:bg-accent focus:text-accent-foreground"
-                                  >
-                                    <div className={cn(
-                                      "flex size-8 shrink-0 items-center justify-center transition-colors",
-                                      "bg-transparent text-muted-foreground",
-                                      "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
-                                      isSubItemActive && "bg-transparent text-primary"
-                                    )}>
-                                      {subItem.icon ? subItem.icon : null}
-                                    </div>
-                                    <div className="flex-1">
-                                      <div className={cn(
-                                        "text-sm font-medium text-muted-foreground",
-                                        "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
-                                        isSubItemActive && "bg-transparent text-primary"
-                                      )}>
-                                        {subItem.title}
-                                      </div>
-                                      {subItem.description && (
-                                        <div className={cn(
-                                          "text-sm text-muted-foreground",
-                                          "group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80",
-                                          isSubItemActive && "bg-transparent text-primary/80"
-                                        )}>
-                                          {subItem.description}
+                                      >
+                                        <div
+                                          className={cn(
+                                            'flex size-8 shrink-0 items-center justify-center transition-colors',
+                                            'bg-transparent text-muted-foreground',
+                                            'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                            isSubItemActive &&
+                                              'bg-transparent text-primary'
+                                          )}
+                                        >
+                                          {subItem.icon ? subItem.icon : null}
                                         </div>
-                                      )}
-                                    </div>
-                                    {subItem.external && (
-                                      <ArrowUpRightIcon className={cn(
-                                        "size-4 shrink-0 text-muted-foreground",
-                                        "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
-                                        isSubItemActive && "bg-transparent text-primary"
-                                      )} />
-                                    )}
-                                  </LocaleLink>
-                                </NavigationMenuLink>
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  ) : (
-                    <NavigationMenuItem key={index}>
-                      <NavigationMenuLink
-                        asChild
-                        active={item.href ? localePathname.startsWith(item.href) : false}
-                        className={customNavigationMenuTriggerStyle}
-                      >
-                        <LocaleLink
-                          href={item.href || '#'}
-                          target={item.external ? '_blank' : undefined}
-                          rel={
-                            item.external ? 'noopener noreferrer' : undefined
+                                        <div className="flex-1">
+                                          <div
+                                            className={cn(
+                                              'text-sm font-medium text-muted-foreground',
+                                              'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                              isSubItemActive &&
+                                                'bg-transparent text-primary'
+                                            )}
+                                          >
+                                            {subItem.title}
+                                          </div>
+                                          {subItem.description && (
+                                            <div
+                                              className={cn(
+                                                'text-sm text-muted-foreground',
+                                                'group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80',
+                                                isSubItemActive &&
+                                                  'bg-transparent text-primary/80'
+                                              )}
+                                            >
+                                              {subItem.description}
+                                            </div>
+                                          )}
+                                        </div>
+                                        {subItem.external && (
+                                          <ArrowUpRightIcon
+                                            className={cn(
+                                              'size-4 shrink-0 text-muted-foreground',
+                                              'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                              isSubItemActive &&
+                                                'bg-transparent text-primary'
+                                            )}
+                                          />
+                                        )}
+                                      </LocaleLink>
+                                    </NavigationMenuLink>
+                                  </li>
+                                );
+                              })}
+                          </ul>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    ) : (
+                      <NavigationMenuItem key={index}>
+                        <NavigationMenuLink
+                          asChild
+                          active={
+                            item.href
+                              ? localePathname.startsWith(item.href)
+                              : false
                           }
+                          className={customNavigationMenuTriggerStyle}
                         >
-                          {item.title}
-                        </LocaleLink>
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  )
-                )}
+                          <LocaleLink
+                            href={item.href || '#'}
+                            target={item.external ? '_blank' : undefined}
+                            rel={
+                              item.external ? 'noopener noreferrer' : undefined
+                            }
+                          >
+                            {item.title}
+                          </LocaleLink>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )
+                  )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -182,20 +212,14 @@ export function Navbar({ scroll }: NavBarProps) {
             ) : (
               <div className="flex items-center gap-x-4">
                 <LoginWrapper mode="modal" asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                  >
-                    {commonTranslations("login")}
+                  <Button variant="outline" size="sm">
+                    {commonTranslations('login')}
                   </Button>
                 </LoginWrapper>
 
-                <Button asChild
-                  size="sm"
-                  variant="default"
-                >
+                <Button asChild size="sm" variant="default">
                   <LocaleLink href={Routes.Register}>
-                    {commonTranslations("signUp")}
+                    {commonTranslations('signUp')}
                   </LocaleLink>
                 </Button>
               </div>

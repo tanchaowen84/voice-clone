@@ -1,11 +1,11 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 /**
  * newsletter schema
  */
 export const NewsletterFormSchema = z.object({
   email: z.string().email({
-    message: "Enter a valid email",
+    message: 'Enter a valid email',
   }),
 });
 
@@ -17,33 +17,33 @@ export type NewsletterFormData = z.infer<typeof NewsletterFormSchema>;
 export const SubmitSchema = z.object({
   name: z
     .string()
-    .min(1, { message: "Name is required" })
-    .max(32, { message: "Name must be 32 or fewer characters long" }),
-  link: z.string().url({ message: "Invalid url" }),
+    .min(1, { message: 'Name is required' })
+    .max(32, { message: 'Name must be 32 or fewer characters long' }),
+  link: z.string().url({ message: 'Invalid url' }),
   description: z
     .string()
-    .min(1, { message: "Description is required" })
-    .max(256, { message: "Description must be 256 or fewer characters long" }),
+    .min(1, { message: 'Description is required' })
+    .max(256, { message: 'Description must be 256 or fewer characters long' }),
   introduction: z
     .string()
-    .min(1, { message: "Introduction is required" })
+    .min(1, { message: 'Introduction is required' })
     .max(4096, {
-      message: "Introduction must be 4096 or fewer characters long",
+      message: 'Introduction must be 4096 or fewer characters long',
     }),
-  tags: z.array(z.string()).min(1, { message: "Must select at least one tag" }),
+  tags: z.array(z.string()).min(1, { message: 'Must select at least one tag' }),
   categories: z
     .array(z.string())
-    .min(1, { message: "Must select at least one category" }),
-  imageId: z.string().min(1, { message: "Must upload an image" }),
+    .min(1, { message: 'Must select at least one category' }),
+  imageId: z.string().min(1, { message: 'Must upload an image' }),
 });
 
 /**
  * edit item
  */
 export const EditSchema = SubmitSchema.extend({
-  id: z.string().min(1, { message: "ID is required" }),
-  pricePlan: z.string().min(1, { message: "Price plan is required" }),
-  planStatus: z.string().min(1, { message: "Plan status is required" }),
+  id: z.string().min(1, { message: 'ID is required' }),
+  pricePlan: z.string().min(1, { message: 'Price plan is required' }),
+  planStatus: z.string().min(1, { message: 'Plan status is required' }),
 });
 
 /**
@@ -51,7 +51,7 @@ export const EditSchema = SubmitSchema.extend({
  */
 export const SettingsSchema = z
   .object({
-    name: z.string().min(1, { message: "Name is required" }),
+    name: z.string().min(1, { message: 'Name is required' }),
     link: z.string().optional(),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
@@ -65,9 +65,9 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: "New password is required!",
-      path: ["newPassword"],
-    },
+      message: 'New password is required!',
+      path: ['newPassword'],
+    }
   )
   .refine(
     (data) => {
@@ -78,16 +78,16 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: "Password is required!",
-      path: ["password"],
-    },
+      message: 'Password is required!',
+      path: ['password'],
+    }
   );
 
 export const UserNameSchema = z.object({
   name: z
     .string()
-    .min(1, { message: "Name is required" })
-    .max(32, { message: "Name must be 32 or fewer characters long" }),
+    .min(1, { message: 'Name is required' })
+    .max(32, { message: 'Name must be 32 or fewer characters long' }),
 });
 
 export type UserNameData = z.infer<typeof UserNameSchema>;
@@ -95,8 +95,8 @@ export type UserNameData = z.infer<typeof UserNameSchema>;
 export const UserLinkSchema = z.object({
   link: z
     .string()
-    .min(0, { message: "Link is optional" })
-    .max(128, { message: "Link must be 128 or fewer characters long" }),
+    .min(0, { message: 'Link is optional' })
+    .max(128, { message: 'Link must be 128 or fewer characters long' }),
 });
 
 export type UserLinkData = z.infer<typeof UserLinkSchema>;
@@ -104,13 +104,13 @@ export type UserLinkData = z.infer<typeof UserLinkSchema>;
 export const UserPasswordSchema = z
   .object({
     password: z.string().min(8, {
-      message: "Minimum 8 characters required",
+      message: 'Minimum 8 characters required',
     }),
     newPassword: z.string().min(8, {
-      message: "Minimum 8 characters required",
+      message: 'Minimum 8 characters required',
     }),
     confirmPassword: z.string().min(8, {
-      message: "Minimum 8 characters required",
+      message: 'Minimum 8 characters required',
     }),
   })
   .refine(
@@ -122,9 +122,9 @@ export const UserPasswordSchema = z
       return true;
     },
     {
-      message: "Password is required",
-      path: ["password"],
-    },
+      message: 'Password is required',
+      path: ['password'],
+    }
   )
   .refine(
     (data) => {
@@ -135,9 +135,9 @@ export const UserPasswordSchema = z
       return true;
     },
     {
-      message: "New password is required",
-      path: ["newPassword"],
-    },
+      message: 'New password is required',
+      path: ['newPassword'],
+    }
   )
   .refine(
     (data) => {
@@ -148,9 +148,9 @@ export const UserPasswordSchema = z
       return true;
     },
     {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    },
+      message: 'Passwords do not match',
+      path: ['confirmPassword'],
+    }
   );
 
 export type UserPasswordData = z.infer<typeof UserPasswordSchema>;
@@ -160,34 +160,34 @@ export type UserPasswordData = z.infer<typeof UserPasswordSchema>;
  */
 export const ResetPasswordSchema = z.object({
   password: z.string().min(8, {
-    message: "Minimum 8 characters required",
+    message: 'Minimum 8 characters required',
   }),
 });
 
 export const ForgotPasswordSchema = z.object({
   email: z.string().email({
-    message: "Email is required",
+    message: 'Email is required',
   }),
 });
 
 export const LoginSchema = z.object({
   email: z.string().email({
-    message: "Email is required",
+    message: 'Email is required',
   }),
   password: z.string().min(1, {
-    message: "Password is required",
+    message: 'Password is required',
   }),
 });
 
 export const RegisterSchema = z.object({
   email: z.string().email({
-    message: "Email is required",
+    message: 'Email is required',
   }),
   password: z.string().min(8, {
-    message: "Minimum 8 characters required",
+    message: 'Minimum 8 characters required',
   }),
   name: z.string().min(1, {
-    message: "Name is required",
+    message: 'Name is required',
   }),
 });
 
@@ -198,5 +198,5 @@ export const ogImageSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   type: z.string().optional(),
-  mode: z.enum(["light", "dark"]).default("light"),
+  mode: z.enum(['light', 'dark']).default('light'),
 });

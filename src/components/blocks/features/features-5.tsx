@@ -1,5 +1,5 @@
-import { Activity, DraftingCompass, Mail, Zap } from "lucide-react";
-import Image from "next/image";
+import { Activity, DraftingCompass, Mail, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 /**
  * https://nsui.irung.me/features-5

@@ -9,14 +9,9 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger
+  AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 
 const components = {
@@ -84,28 +79,16 @@ const components = {
     />
   ),
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p
-      className={cn('mt-6 leading-7', className)}
-      {...props}
-    />
+    <p className={cn('mt-6 leading-7', className)} {...props} />
   ),
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul
-      className={cn('my-6 ml-6 list-disc', className)}
-      {...props}
-    />
+    <ul className={cn('my-6 ml-6 list-disc', className)} {...props} />
   ),
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol
-      className={cn('my-6 ml-6 list-decimal', className)}
-      {...props}
-    />
+    <ol className={cn('my-6 ml-6 list-decimal', className)} {...props} />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li
-      className={cn('mt-2', className)}
-      {...props}
-    />
+    <li className={cn('mt-2', className)} {...props} />
   ),
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote
@@ -118,17 +101,10 @@ const components = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img
-      className={cn('rounded-md', className)}
-      alt={alt}
-      {...props}
-    />
+    <img className={cn('rounded-md', className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr
-      className="my-4 md:my-8"
-      {...props}
-    />
+    <hr className="my-4 md:my-8" {...props} />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto rounded-none">
@@ -139,10 +115,7 @@ const components = {
     </div>
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr
-      className={cn('m-0 border-t p-0', className)}
-      {...props}
-    />
+    <tr className={cn('m-0 border-t p-0', className)} {...props} />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
@@ -185,50 +158,32 @@ const components = {
     className,
     ...props
   }: React.ComponentProps<typeof AccordionContent>) => (
-    <AccordionContent
-      className={cn('[&>p]:m-0', className)}
-      {...props}
-    />
+    <AccordionContent className={cn('[&>p]:m-0', className)} {...props} />
   ),
   AccordionItem,
   AccordionTrigger,
   Callout,
   Image,
-  Tabs: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof Tabs>) => (
-    <Tabs
-      className={cn('relative mt-6 w-full', className)}
-      {...props}
-    />
+  Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => (
+    <Tabs className={cn('relative mt-6 w-full', className)} {...props} />
   ),
   TabsList: ({
     className,
     ...props
   }: React.ComponentProps<typeof TabsList>) => (
-    <TabsList
-      className={cn('w-full border-b', className)}
-      {...props}
-    />
+    <TabsList className={cn('w-full border-b', className)} {...props} />
   ),
   TabsTrigger: ({
     className,
     ...props
   }: React.ComponentProps<typeof TabsTrigger>) => (
-    <TabsTrigger
-      className={cn('', className)}
-      {...props}
-    />
+    <TabsTrigger className={cn('', className)} {...props} />
   ),
   TabsContent: ({
     className,
     ...props
   }: React.ComponentProps<typeof TabsContent>) => (
-    <TabsContent
-      className={cn('p-4', className)}
-      {...props}
-    />
+    <TabsContent className={cn('p-4', className)} {...props} />
   ),
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link
@@ -244,7 +199,7 @@ const components = {
       )}
       {...props}
     />
-  )
+  ),
 };
 
 type MdxProps = {

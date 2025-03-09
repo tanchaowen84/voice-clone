@@ -1,5 +1,5 @@
-import { Cpu, Zap } from "lucide-react";
-import Image from "next/image";
+import { Cpu, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 /**
  * https://nsui.irung.me/content
@@ -16,10 +16,10 @@ export default function Content2() {
         <div className="relative">
           <div className="relative z-10 space-y-4 md:w-1/2">
             <p className="text-body">
-              Lyra is evolving to be more than just the models.{" "}
+              Lyra is evolving to be more than just the models.{' '}
               <span className="text-title font-medium">
                 It supports an entire ecosystem
-              </span>{" "}
+              </span>{' '}
               — from products innovate.
             </p>
             <p>

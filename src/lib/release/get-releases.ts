@@ -8,16 +8,12 @@ import { allReleases } from 'content-collections';
 export async function getReleases(locale: string) {
   // Find all published releases with matching locale
   const releases = allReleases.filter(
-    (release) =>
-      release.published &&
-      release.locale === locale
+    (release) => release.published && release.locale === locale
   );
 
   // If no releases found with the current locale, try to find ones with any locale
   if (releases.length === 0) {
-    const defaultReleases = allReleases.filter(
-      (release) => release.published
-    );
+    const defaultReleases = allReleases.filter((release) => release.published);
 
     // Sort by date (newest first)
     return defaultReleases.sort(
@@ -29,4 +25,4 @@ export async function getReleases(locale: string) {
   return releases.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
-} 
+}

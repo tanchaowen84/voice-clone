@@ -1,7 +1,7 @@
-import Container from "@/components/container";
-import { Category } from "content-collections";
-import { BlogCategoryListDesktop } from "./blog-category-list-desktop";
-import { BlogCategoryListMobile } from "./blog-category-list-mobile";
+import Container from '@/components/container';
+import { Category } from 'content-collections';
+import { BlogCategoryListDesktop } from './blog-category-list-desktop';
+import { BlogCategoryListMobile } from './blog-category-list-mobile';
 
 interface BlogCategoryFilterProps {
   categoryList: Category[];

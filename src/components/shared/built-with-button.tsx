@@ -1,7 +1,7 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { MkSaaSLogo } from "@/components/logo-mksaas";
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { MkSaaSLogo } from '@/components/logo-mksaas';
 
 export default function BuiltWithButton() {
   return (
@@ -9,8 +9,8 @@ export default function BuiltWithButton() {
       target="_blank"
       href="https://mksaas.com?utm_source=built-with-mksaas"
       className={cn(
-        buttonVariants({ variant: "outline", size: "sm" }),
-        "border border-border px-4 rounded-md"
+        buttonVariants({ variant: 'outline', size: 'sm' }),
+        'border border-border px-4 rounded-md'
       )}
     >
       <span>Built with</span>

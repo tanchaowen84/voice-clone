@@ -9,7 +9,7 @@
   /* @import "./theme-violet.css"; */
   /* @import "./theme-zinc.css"; */
   @import "./theme.css";
-  
+
   html {
     /* prevent the layout from shifting when the scrollbar appears or disappears. */
     scrollbar-gutter: stable;
@@ -17,7 +17,7 @@
     /* can not set this, otherwise the theme switcher will disappear when click it after page scrolled */
     /* overflow-y: scroll; */
   }
-  
+
   * {
     @apply border-border outline-ring/50;
   }

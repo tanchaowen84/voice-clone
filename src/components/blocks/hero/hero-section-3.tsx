@@ -1,22 +1,22 @@
-"use client";
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-coverflow";
-import Link from "next/link";
-import { Logo } from "@/components/logo";
-import { ArrowRight, Menu, Rocket, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+'use client';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+import Link from 'next/link';
+import { Logo } from '@/components/logo';
+import { ArrowRight, Menu, Rocket, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const menuItems = [
-  { name: "Features", href: "#" },
-  { name: "Solution", href: "#" },
-  { name: "Pricing", href: "#" },
-  { name: "About", href: "#" },
+  { name: 'Features', href: '#' },
+  { name: 'Solution', href: '#' },
+  { name: 'Pricing', href: '#' },
+  { name: 'About', href: '#' },
 ];
 
 export default function HeroSection3() {

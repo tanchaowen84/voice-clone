@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { buttonVariants } from "@/components/ui/button";
-import { LocaleLink } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
+import { buttonVariants } from '@/components/ui/button';
+import { LocaleLink } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 interface BottomButtonProps {
-  href: string
+  href: string;
   label: string;
 }
 
@@ -14,8 +14,8 @@ export const BottomButton = ({ href, label }: BottomButtonProps) => {
     <LocaleLink
       href={href}
       className={cn(
-        buttonVariants({ variant: "link", size: "sm" }),
-        "font-normal w-full text-muted-foreground hover:underline underline-offset-4 hover:text-primary"
+        buttonVariants({ variant: 'link', size: 'sm' }),
+        'font-normal w-full text-muted-foreground hover:underline underline-offset-4 hover:text-primary'
       )}
     >
       {label}

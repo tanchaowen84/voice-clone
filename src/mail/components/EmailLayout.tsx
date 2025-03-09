@@ -5,12 +5,12 @@ import {
   Html,
   Section,
   Tailwind,
-} from "@react-email/components";
-import React, { type PropsWithChildren } from "react";
+} from '@react-email/components';
+import React, { type PropsWithChildren } from 'react';
 
 /**
  * Email Layout
- * 
+ *
  * https://react.email/docs/components/tailwind
  */
 export default function EmailLayout({ children }: PropsWithChildren) {

@@ -1,14 +1,14 @@
-"use client";
-import { Logo } from "@/components/logo";
-import { Activity, Map as MapIcon, MessageCircle } from "lucide-react";
-import DottedMap from "dotted-map";
-import { Area, AreaChart, CartesianGrid } from "recharts";
+'use client';
+import { Logo } from '@/components/logo';
+import { Activity, Map as MapIcon, MessageCircle } from 'lucide-react';
+import DottedMap from 'dotted-map';
+import { Area, AreaChart, CartesianGrid } from 'recharts';
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from '@/components/ui/chart';
 
 /**
  * https://nsui.irung.me/features-9
@@ -96,9 +96,9 @@ export default function Features9() {
             </span>
 
             <p className="my-8 text-2xl font-semibold">
-              Monitor your application's activity in real-time.{" "}
+              Monitor your application's activity in real-time.{' '}
               <span className="text-muted-foreground">
-                {" "}
+                {' '}
                 Instantly identify and resolve issues.
               </span>
             </p>
@@ -110,13 +110,13 @@ export default function Features9() {
   );
 }
 
-const map = new DottedMap({ height: 55, grid: "diagonal" });
+const map = new DottedMap({ height: 55, grid: 'diagonal' });
 
 const points = map.getPoints();
 
 const svgOptions = {
-  backgroundColor: "var(--color-background)",
-  color: "currentColor",
+  backgroundColor: 'var(--color-background)',
+  color: 'currentColor',
   radius: 0.15,
 };
 
@@ -139,22 +139,22 @@ const Map = () => {
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "#2563eb",
+    label: 'Desktop',
+    color: '#2563eb',
   },
   mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
+    label: 'Mobile',
+    color: '#60a5fa',
   },
 } satisfies ChartConfig;
 
 const chartData = [
-  { month: "May", desktop: 56, mobile: 224 },
-  { month: "June", desktop: 56, mobile: 224 },
-  { month: "January", desktop: 126, mobile: 252 },
-  { month: "February", desktop: 205, mobile: 410 },
-  { month: "March", desktop: 200, mobile: 126 },
-  { month: "April", desktop: 400, mobile: 800 },
+  { month: 'May', desktop: 56, mobile: 224 },
+  { month: 'June', desktop: 56, mobile: 224 },
+  { month: 'January', desktop: 126, mobile: 252 },
+  { month: 'February', desktop: 205, mobile: 410 },
+  { month: 'March', desktop: 200, mobile: 126 },
+  { month: 'April', desktop: 400, mobile: 800 },
 ];
 
 const MonitoringChart = () => {

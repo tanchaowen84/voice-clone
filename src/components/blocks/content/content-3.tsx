@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 /**
  * https://nsui.irung.me/content-3

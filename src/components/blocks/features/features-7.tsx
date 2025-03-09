@@ -1,5 +1,5 @@
-import { Cpu, Lock, Sparkles, Zap } from "lucide-react";
-import Image from "next/image";
+import { Cpu, Lock, Sparkles, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 /**
  * https://nsui.irung.me/features-7

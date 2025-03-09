@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { UserAvatar } from "@/components/shared/user-avatar";
+import { UserAvatar } from '@/components/shared/user-avatar';
 import {
   Drawer,
   DrawerContent,
@@ -9,21 +9,21 @@ import {
   DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from '@/components/ui/drawer';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { createTranslator, getAvatarLinks } from "@/config/marketing";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { LocaleLink, useLocaleRouter } from "@/i18n/navigation";
-import { authClient } from "@/lib/auth-client";
-import { useTranslations } from "next-intl";
-import { LogOutIcon } from "lucide-react";
-import { useState } from "react";
+} from '@/components/ui/dropdown-menu';
+import { createTranslator, getAvatarLinks } from '@/config/marketing';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
+import { useTranslations } from 'next-intl';
+import { LogOutIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
@@ -31,17 +31,17 @@ export function UserButton() {
   const t = useTranslations();
   const translator = createTranslator(t);
   const avatarLinks = getAvatarLinks(translator);
-  const commonTranslations = useTranslations("Common");
+  const commonTranslations = useTranslations('Common');
 
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          console.log("sign out success");
-          localeRouter.push("/");
+          console.log('sign out success');
+          localeRouter.push('/');
         },
         onError: (error) => {
-          console.error("sign out error:", error);
+          console.error('sign out error:', error);
           // TODO: show error message
         },
       },
@@ -55,7 +55,7 @@ export function UserButton() {
   };
 
   const { isMobile } = useMediaQuery();
-  
+
   // Mobile View, use Drawer
   if (isMobile) {
     return (
@@ -69,8 +69,10 @@ export function UserButton() {
         </DrawerTrigger>
         <DrawerPortal>
           <DrawerOverlay className="fixed inset-0 z-40 bg-background/50" />
-          <DrawerContent className="fixed inset-x-0 bottom-0 z-50 mt-24 
-            overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm">
+          <DrawerContent
+            className="fixed inset-x-0 bottom-0 z-50 mt-24 
+            overflow-hidden rounded-t-[10px] border bg-background px-3 text-sm"
+          >
             <DrawerHeader>
               <DrawerTitle />
             </DrawerHeader>
@@ -91,27 +93,29 @@ export function UserButton() {
             </div>
 
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
-              {avatarLinks && avatarLinks.map((item) => (
-                <li
-                  key={item.title}
-                  className="rounded-lg text-foreground hover:bg-muted"
-                >
-                  <LocaleLink 
-                    href={item.href || "#"}
-                    onClick={closeDrawer}
-                    className="flex w-full items-center gap-3 px-2.5 py-2"
+              {avatarLinks &&
+                avatarLinks.map((item) => (
+                  <li
+                    key={item.title}
+                    className="rounded-lg text-foreground hover:bg-muted"
                   >
-                    {item.icon ? item.icon : null}
-                    <p className="text-sm">{item.title}</p>
-                  </LocaleLink>
-                </li>
-              ))}
+                    <LocaleLink
+                      href={item.href || '#'}
+                      onClick={closeDrawer}
+                      className="flex w-full items-center gap-3 px-2.5 py-2"
+                    >
+                      {item.icon ? item.icon : null}
+                      <p className="text-sm">{item.title}</p>
+                    </LocaleLink>
+                  </li>
+                ))}
 
               <li
                 key="logout"
                 className="rounded-lg text-foreground hover:bg-muted"
               >
-                <a href="#"
+                <a
+                  href="#"
                   onClick={async (event) => {
                     event.preventDefault();
                     closeDrawer();
@@ -120,7 +124,7 @@ export function UserButton() {
                   className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
                   <LogOutIcon className="size-4" />
-                  <p className="text-sm">{commonTranslations("logout")}</p>
+                  <p className="text-sm">{commonTranslations('logout')}</p>
                 </a>
               </li>
             </ul>
@@ -181,7 +185,7 @@ export function UserButton() {
         >
           <div className="flex items-center space-x-2.5">
             <LogOutIcon className="size-4" />
-            <p className="text-sm">{commonTranslations("logout")}</p>
+            <p className="text-sm">{commonTranslations('logout')}</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

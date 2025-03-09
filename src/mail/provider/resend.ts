@@ -1,25 +1,25 @@
-import { Resend } from "resend";
-import { SendEmailHandler } from "@/mail/types";
+import { Resend } from 'resend';
+import { SendEmailHandler } from '@/mail/types';
 
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail: SendEmailHandler = async ({ to, subject, html }) => {
-	const response = await fetch("https://api.resend.com/emails", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-		},
-		body: JSON.stringify({
-			from: process.env.RESEND_FROM,
-			to,
-			subject,
-			html,
-		}),
-	});
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+    },
+    body: JSON.stringify({
+      from: process.env.RESEND_FROM,
+      to,
+      subject,
+      html,
+    }),
+  });
 
-	if (!response.ok) {
-		console.error("Error sending email", await response.json());
-		throw new Error("Error sending email");
-	}
+  if (!response.ok) {
+    console.error('Error sending email', await response.json());
+    throw new Error('Error sending email');
+  }
 };

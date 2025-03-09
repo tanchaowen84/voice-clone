@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { ComponentProps } from 'react';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle
-} from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 type CalloutProps = ComponentProps<typeof Alert> & {
   icon?: string;

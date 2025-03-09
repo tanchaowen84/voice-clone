@@ -1,4 +1,4 @@
-import { CircleCheckIcon } from "lucide-react";
+import { CircleCheckIcon } from 'lucide-react';
 
 interface FormSuccessProps {
   message?: string;

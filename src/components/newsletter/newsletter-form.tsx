@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 // import { subscribeToNewsletter } from "@/actions/subscribe-to-newsletter";
-import { Icons } from "@/components/icons/icons";
-import { Button } from "@/components/ui/button";
+import { Icons } from '@/components/icons/icons';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,15 +10,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { type NewsletterFormData, NewsletterFormSchema } from "@/lib/schemas";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { type NewsletterFormData, NewsletterFormSchema } from '@/lib/schemas';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { PaperPlaneIcon } from '@radix-ui/react-icons';
+import { useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export function NewsletterForm() {
   const [isPending, startTransition] = useTransition();
@@ -26,7 +26,7 @@ export function NewsletterForm() {
   const form = useForm<NewsletterFormData>({
     resolver: zodResolver(NewsletterFormSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
@@ -66,8 +66,8 @@ export function NewsletterForm() {
                 <Input
                   type="email"
                   className={cn(
-                    "w-[280px] sm:w-[320px] md:w-[400px] h-12 rounded-r-none",
-                    "focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary focus:border-2 focus:border-r-0",
+                    'w-[280px] sm:w-[320px] md:w-[400px] h-12 rounded-r-none',
+                    'focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary focus:border-2 focus:border-r-0'
                   )}
                   placeholder="Enter your email"
                   {...field}

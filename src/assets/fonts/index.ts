@@ -1,5 +1,5 @@
-import localFont from "next/font/local";
-import { Source_Serif_4 } from "next/font/google";
+import localFont from 'next/font/local';
+import { Source_Serif_4 } from 'next/font/google';
 
 /**
  * This file shows how to customize the font by using local font or google font
@@ -12,8 +12,8 @@ import { Source_Serif_4 } from "next/font/google";
  */
 // https://gwfh.mranftl.com/fonts/source-sans-3?subsets=latin
 export const fontSourceSans = localFont({
-  src: "./source-sans-3-v15-latin-regular.woff2",
-  variable: "--font-source-sans",
+  src: './source-sans-3-v15-latin-regular.woff2',
+  variable: '--font-source-sans',
 });
 
 /**
@@ -28,5 +28,5 @@ export const fontSourceSans = localFont({
 export const fontSourceSerif4 = Source_Serif_4({
   subsets: ['latin'],
   display: 'swap',
-  variable: "--font-source-serif",
-})
+  variable: '--font-source-serif',
+});

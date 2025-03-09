@@ -1,8 +1,8 @@
 /**
  * TODO: update
- * 
+ *
  * Types for Next.js App Router page components
- * 
+ *
  * Params: Route parameters from dynamic segments
  * Example: For route /blog/[slug] with URL /blog/hello-world
  * params = { slug: "hello-world" }

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import React, { useEffect } from "react";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { CheckIcon, CopyIcon } from 'lucide-react';
+import React, { useEffect } from 'react';
 
 interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   value: string;
@@ -29,8 +29,8 @@ export function CopyButton({ value, className, ...props }: CopyButtonProps) {
       size="sm"
       variant="ghost"
       className={cn(
-        "z-10 size-[30px] border border-white/25 bg-zinc-900 p-1.5 text-primary-foreground hover:text-foreground dark:text-foreground",
-        className,
+        'z-10 size-[30px] border border-white/25 bg-zinc-900 p-1.5 text-primary-foreground hover:text-foreground dark:text-foreground',
+        className
       )}
       onClick={() => handleCopyValue(value)}
       {...props}

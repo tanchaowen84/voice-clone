@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Settings2, Sparkles, Zap } from "lucide-react";
-import { ReactNode } from "react";
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Settings2, Sparkles, Zap } from 'lucide-react';
+import { ReactNode } from 'react';
 
 /**
  * https://nsui.irung.me/features

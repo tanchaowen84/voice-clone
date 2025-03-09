@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
+import Link from 'next/link';
 
 /**
  * https://nsui.irung.me/pricing
@@ -39,9 +39,9 @@ export default function Pricing4() {
 
               <ul className="list-outside space-y-3 text-sm">
                 {[
-                  "Basic Analytics Dashboard",
-                  "5GB Cloud Storage",
-                  "Email and Chat Support",
+                  'Basic Analytics Dashboard',
+                  '5GB Cloud Storage',
+                  'Email and Chat Support',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="size-3" />
@@ -75,16 +75,16 @@ export default function Pricing4() {
 
                 <ul className="mt-4 list-outside space-y-3 text-sm">
                   {[
-                    "Everything in Free Plan",
-                    "5GB Cloud Storage",
-                    "Email and Chat Support",
-                    "Access to Community Forum",
-                    "Single User Access",
-                    "Access to Basic Templates",
-                    "Mobile App Access",
-                    "1 Custom Report Per Month",
-                    "Monthly Product Updates",
-                    "Standard Security Features",
+                    'Everything in Free Plan',
+                    '5GB Cloud Storage',
+                    'Email and Chat Support',
+                    'Access to Community Forum',
+                    'Single User Access',
+                    'Access to Basic Templates',
+                    'Mobile App Access',
+                    '1 Custom Report Per Month',
+                    'Monthly Product Updates',
+                    'Standard Security Features',
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <Check className="size-3" />
