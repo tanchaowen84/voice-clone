@@ -233,7 +233,7 @@ interface ImagesProps {
   alt: string;
 }
 
-export const images: ImagesProps[] = [
+const images: ImagesProps[] = [
   // first column
   {
     image:
