@@ -51,7 +51,7 @@ export default async function AboutPage() {
               <div className="flex items-center gap-4">
                 <Button className="rounded-lg">
                   <MailIcon className="mr-1 size-4" />
-                  <a href={`mailto:${websiteConfig.mail}`}>{t('talkWithMe')}</a>
+                  <a href={`mailto:${websiteConfig.mail.from}`}>{t('talkWithMe')}</a>
                 </Button>
               </div>
             </div>

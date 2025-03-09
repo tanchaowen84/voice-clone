@@ -35,8 +35,23 @@ import {
 import { TranslationFunction } from './i18n/translator';
 
 export const websiteConfig: WebsiteConfig = {
-  image: '/og.png',
-  mail: 'support@mksaas.com',
+  metadata: {
+    author: 'MkSaaS Team',
+    image: '/og.png',
+  },
+  mail: {
+    from: 'support@mksaas.com',
+  },
+  social: {
+    github: 'https://github.com/MkSaaSHQ',
+    twitter: 'https://twitter.com/mksaas',
+    blueSky: 'https://bsky.app/profile/mksaas.com',
+    youtube: 'https://www.youtube.com/@MkSaaSHQ',
+    linkedin: 'https://linkedin.com/company/mksaas',
+    facebook: 'https://facebook.com/mksaas',
+    instagram: 'https://instagram.com/mksaas',
+    tiktok: 'https://tiktok.com/@mksaas',
+  }
 };
 
 /**
@@ -324,59 +339,6 @@ export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
 }
 
 /**
- * list all the social links here, you can delete the ones that are not needed
- */
-export function getSocialLinks(): MenuItem[] {
-  return [
-    {
-      title: 'Email',
-      href: 'mailto:mksaas@gmail.com',
-      icon: <MailIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'GitHub',
-      href: 'https://github.com/MkSaaSHQ',
-      icon: <GitHubIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'Twitter',
-      href: 'https://twitter.com/mksaas',
-      icon: <TwitterIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'Bluesky',
-      href: 'https://bsky.app/profile/mksaas.com',
-      icon: <BlueskyIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'YouTube',
-      href: 'https://www.youtube.com/@MkSaaSHQ',
-      icon: <YouTubeIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'LinkedIn',
-      href: 'https://www.linkedin.com/company/mksaas',
-      icon: <LinkedInIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'Facebook',
-      href: 'https://www.facebook.com/mksaas',
-      icon: <FacebookIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'Instagram',
-      href: 'https://www.instagram.com/mksaas',
-      icon: <InstagramIcon className="size-4 shrink-0" />,
-    },
-    {
-      title: 'TikTok',
-      href: 'https://www.tiktok.com/@mksaas',
-      icon: <TikTokIcon className="size-4 shrink-0" />,
-    },
-  ];
-}
-
-/**
  * Get avatar links with translations
  * @param t - The translation function
  * @returns The avatar links with translated titles
@@ -394,4 +356,86 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
       icon: <SettingsIcon className="size-4 shrink-0" />,
     },
   ];
+}
+
+/**
+ * list all the social links here, you can delete the ones that are not needed
+ */
+export function getSocialLinks(): MenuItem[] {
+  const socialLinks: MenuItem[] = [];
+
+  // Only add social links that are configured in websiteConfig
+  if (websiteConfig.mail.from) {
+    socialLinks.push({
+      title: 'Email',
+      href: `mailto:${websiteConfig.mail.from}`,
+      icon: <MailIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.github) {
+    socialLinks.push({
+      title: 'GitHub',
+      href: websiteConfig.social.github,
+      icon: <GitHubIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.twitter) {
+    socialLinks.push({
+      title: 'Twitter',
+      href: websiteConfig.social.twitter,
+      icon: <TwitterIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.blueSky) {
+    socialLinks.push({
+      title: 'Bluesky',
+      href: websiteConfig.social.blueSky,
+      icon: <BlueskyIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.youtube) {
+    socialLinks.push({
+      title: 'YouTube',
+      href: websiteConfig.social.youtube,
+      icon: <YouTubeIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.linkedin) {
+    socialLinks.push({
+      title: 'LinkedIn',
+      href: websiteConfig.social.linkedin,
+      icon: <LinkedInIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.facebook) {
+    socialLinks.push({
+      title: 'Facebook',
+      href: websiteConfig.social.facebook,
+      icon: <FacebookIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.instagram) {
+    socialLinks.push({
+      title: 'Instagram',
+      href: websiteConfig.social.instagram,
+      icon: <InstagramIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.social.tiktok) {
+    socialLinks.push({
+      title: 'TikTok',
+      href: websiteConfig.social.tiktok,
+      icon: <TikTokIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  return socialLinks;
 }

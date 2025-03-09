@@ -15,8 +15,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const footerLinks = getFooterLinks(translator);
-  const socialLinks = getSocialLinks();
   const websiteInfo = getWebsiteInfo(translator);
+  const socialLinks = getSocialLinks();
 
   return (
     <footer className={cn('border-t', className)}>

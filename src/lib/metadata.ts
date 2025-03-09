@@ -27,7 +27,7 @@ export function constructMetadata({
   
   title = title || websiteInfo.name;
   description = description || websiteInfo.description;
-  image = image || websiteConfig.image;
+  image = image || websiteConfig.metadata.image;
   
   const fullTitle = title ? `${title} - ${websiteInfo.title}` : websiteInfo.title;
   const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
@@ -55,6 +55,7 @@ export function constructMetadata({
       description,
       images: [ogImageUrl.toString()],
       site: getBaseUrl(),
+      creator: websiteConfig.metadata.author,
     },
     icons: {
       icon: '/favicon.ico',
