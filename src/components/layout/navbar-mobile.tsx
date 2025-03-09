@@ -137,27 +137,27 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
             <LocaleLink
               href={Routes.Login}
               onClick={onLinkClicked}
-            className={cn(
-              buttonVariants({
-                variant: 'outline',
-                size: 'lg'
-              }),
-              'w-full'
-            )}
-          >
-            {commonTranslations("login")}
-          </LocaleLink>
-          <LocaleLink
-            href={Routes.Register}
-            className={cn(
-              buttonVariants({
-                variant: 'default',
-                size: 'lg'
-              }),
-              'w-full'
-            )}
-            onClick={onLinkClicked}
-          >
+              className={cn(
+                buttonVariants({
+                  variant: 'outline',
+                  size: 'lg'
+                }),
+                'w-full'
+              )}
+            >
+              {commonTranslations("login")}
+            </LocaleLink>
+            <LocaleLink
+              href={Routes.Register}
+              className={cn(
+                buttonVariants({
+                  variant: 'default',
+                  size: 'lg'
+                }),
+                'w-full'
+              )}
+              onClick={onLinkClicked}
+            >
               {commonTranslations("signUp")}
             </LocaleLink>
           </div>
@@ -189,8 +189,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                         variant="ghost"
                         className={cn(
                           "flex w-full items-center justify-between text-left",
-                          "text-muted-foreground hover:text-primary",
-                          isActive && "font-bold text-primary dark:text-primary-foreground"
+                          "bg-transparent text-muted-foreground",
+                          "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
+                          isActive && "font-semibold bg-transparent text-primary"
                         )}
                       >
                         <span className="text-base">
@@ -221,31 +222,44 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                 className={cn(
                                   buttonVariants({ variant: 'ghost' }),
                                   'group h-auto w-full justify-start gap-4 p-2',
-                                  "text-muted-foreground hover:text-primary",
-                                  isSubItemActive && "font-bold text-primary dark:text-primary-foreground"
+                                  "bg-transparent text-muted-foreground",
+                                  "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
+                                  isSubItemActive && "font-semibold bg-transparent text-primary"
                                 )}
                                 onClick={onLinkClicked}
                               >
                                 <div className={cn(
                                   "flex size-8 shrink-0 items-center justify-center transition-colors",
-                                  "text-muted-foreground group-hover:text-primary",
-                                  isSubItemActive && "text-primary dark:text-primary-foreground"
+                                  "bg-transparent text-muted-foreground",
+                                  "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                  isSubItemActive && "bg-transparent text-primary"
                                 )}>
                                   {subItem.icon ? subItem.icon : null}
                                 </div>
                                 <div className="flex-1">
-                                  <span className="text-sm font-medium">
+                                  <span className={cn(
+                                    "text-sm text-muted-foreground",
+                                    "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                    isSubItemActive && "font-semibold bg-transparent text-primary"
+                                  )}>
                                     {subItem.title}
                                   </span>
                                   {subItem.description && (
-                                    <p className="text-xs text-muted-foreground">
+                                    <p className={cn(
+                                      "text-xs text-muted-foreground",
+                                      "group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80",
+                                      isSubItemActive && "bg-transparent text-primary/80"
+                                    )}>
                                       {subItem.description}
                                     </p>
                                   )}
                                 </div>
                                 {subItem.external && (
-                                  <ArrowUpRightIcon className="size-4 shrink-0 text-muted-foreground 
-                                    transition-colors group-hover:text-primary" />
+                                  <ArrowUpRightIcon className={cn(
+                                    "size-4 shrink-0 text-muted-foreground",
+                                    "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                    isSubItemActive && "bg-transparent text-primary"
+                                  )} />
                                 )}
                               </LocaleLink>
                             </li>
@@ -262,8 +276,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                     className={cn(
                       buttonVariants({ variant: 'ghost' }),
                       'w-full justify-start',
-                      "text-muted-foreground hover:text-primary",
-                      isActive && "font-semibold text-primary dark:text-primary-foreground"
+                      "bg-transparent text-muted-foreground",
+                      "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
+                      isActive && "font-semibold bg-transparent text-primary"
                     )}
                     onClick={onLinkClicked}
                   >

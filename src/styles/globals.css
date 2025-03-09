@@ -7,7 +7,8 @@
   /* all the themes are from https://ui.shadcn.com/themes */
   /* @import "./theme-blue.css"; */
   /* @import "./theme-violet.css"; */
-  @import "./theme-blue.css";
+  /* @import "./theme-zinc.css"; */
+  @import "./theme.css";
   
   html {
     /* prevent the layout from shifting when the scrollbar appears or disappears. */

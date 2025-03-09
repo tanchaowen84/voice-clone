@@ -37,7 +37,6 @@ const customNavigationMenuTriggerStyle = cn(
   "hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary",
   "data-[active]:font-semibold data-[active]:bg-transparent data-[active]:text-primary",
   "data-[state=open]:bg-transparent data-[state=open]:text-primary",
-  "dark:hover:text-primary dark:data-[active]:text-primary-foreground"
 );
 
 export function Navbar({ scroll }: NavBarProps) {
@@ -91,43 +90,62 @@ export function Navbar({ scroll }: NavBarProps) {
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {item.items && item.items.map((subItem, subIndex) => (
-                            <li key={subIndex}>
-                              <NavigationMenuLink asChild>
-                                <LocaleLink
-                                  href={subItem.href || '#'}
-                                  target={subItem.external ? '_blank' : undefined}
-                                  rel={
-                                    subItem.external
-                                      ? 'noopener noreferrer'
-                                      : undefined
-                                  }
-                                  className="group flex select-none flex-row items-center gap-4 rounded-md 
-                                    p-2 leading-none no-underline outline-none transition-colors 
-                                    hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                >
-                                  <div className="flex size-8 shrink-0 items-center justify-center 
-                                    text-muted-foreground group-hover:text-primary">
-                                    {subItem.icon ? subItem.icon : null}
-                                  </div>
-                                  <div className="flex-1">
-                                    <div className="text-sm font-medium group-hover:text-primary">
-                                      {subItem.title}
+                          {item.items && item.items.map((subItem, subIndex) => {
+                            const isSubItemActive = subItem.href && localePathname.startsWith(subItem.href);
+                            return (
+                              <li key={subIndex}>
+                                <NavigationMenuLink asChild>
+                                  <LocaleLink
+                                    href={subItem.href || '#'}
+                                    target={subItem.external ? '_blank' : undefined}
+                                    rel={
+                                      subItem.external
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                    }
+                                    className="group flex select-none flex-row items-center gap-4 rounded-md 
+                                      p-2 leading-none no-underline outline-none transition-colors 
+                                      hover:bg-accent hover:text-accent-foreground 
+                                      focus:bg-accent focus:text-accent-foreground"
+                                  >
+                                    <div className={cn(
+                                      "flex size-8 shrink-0 items-center justify-center transition-colors",
+                                      "bg-transparent text-muted-foreground",
+                                      "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                      isSubItemActive && "bg-transparent text-primary"
+                                    )}>
+                                      {subItem.icon ? subItem.icon : null}
                                     </div>
-                                    {subItem.description && (
-                                      <div className="text-sm text-muted-foreground">
-                                        {subItem.description}
+                                    <div className="flex-1">
+                                      <div className={cn(
+                                        "text-sm font-medium text-muted-foreground",
+                                        "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                        isSubItemActive && "bg-transparent text-primary"
+                                      )}>
+                                        {subItem.title}
                                       </div>
+                                      {subItem.description && (
+                                        <div className={cn(
+                                          "text-sm text-muted-foreground",
+                                          "group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80",
+                                          isSubItemActive && "bg-transparent text-primary/80"
+                                        )}>
+                                          {subItem.description}
+                                        </div>
+                                      )}
+                                    </div>
+                                    {subItem.external && (
+                                      <ArrowUpRightIcon className={cn(
+                                        "size-4 shrink-0 text-muted-foreground",
+                                        "group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary",
+                                        isSubItemActive && "bg-transparent text-primary"
+                                      )} />
                                     )}
-                                  </div>
-                                  {subItem.external && (
-                                    <ArrowUpRightIcon className="size-4 shrink-0 
-                                      text-muted-foreground hover:text-primary-foreground" />
-                                  )}
-                                </LocaleLink>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
+                                  </LocaleLink>
+                                </NavigationMenuLink>
+                              </li>
+                            )
+                          })}
                         </ul>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
