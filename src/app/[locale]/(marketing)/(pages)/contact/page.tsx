@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useTranslations } from 'next-intl';
 
 /**
- * https://nsui.irung.me/contact
+ * inspired by https://nsui.irung.me/contact
  */
 export default function ContactPage() {
   const t = useTranslations('ContactPage');

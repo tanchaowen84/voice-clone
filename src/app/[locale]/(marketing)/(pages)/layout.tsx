@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 
 export default function LegalLayout({ children }: PropsWithChildren) {
   return (
-    <Container className="pt-8 pb-16 px-4">
+    <Container className="py-16 px-4">
       <div className="mx-auto">
         {children}
       </div>

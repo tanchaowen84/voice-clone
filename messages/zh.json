@@ -17,6 +17,14 @@
     "tryAgain": "重试",
     "backToHome": "返回首页"
   },
+  "AboutPage": {
+    "title": "关于我们",
+    "subtitle": "了解更多关于我们的公司、使命和价值观",
+    "authorName": "MkSaaS",
+    "authorBio": "全栈开发工程师",
+    "authorIntroduction": "你好，这里是 MkSaaS，一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
+    "talkWithMe": "联系我"
+  },
   "ChangelogPage": {
     "title": "更新日志",
     "subtitle": "查看我们产品的最新动态"
