@@ -1,6 +1,6 @@
-import { VerifyEmail } from './VerifyEmail';
-import { ForgotPassword } from './ForgotPassword';
-import { SubscribeNewsletter } from './SubscribeNewsletter';
+import { VerifyEmail } from './verify-email';
+import { ForgotPassword } from './forgot-password';
+import { SubscribeNewsletter } from './subscribe-newsletter';
 
 /**
  * list all the mail templates here

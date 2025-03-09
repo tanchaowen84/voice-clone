@@ -1,4 +1,4 @@
-import EmailLayout from '@/mail/components/EmailLayout';
+import EmailLayout from '@/mail/components/email-layout';
 import { defaultLocale, defaultMessages } from '@/mail/messages';
 import type { BaseMailProps } from '@/mail/types';
 import { Heading, Text } from '@react-email/components';

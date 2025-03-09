@@ -1,6 +1,6 @@
 import { siteConfig } from '@/config/site';
-import EmailButton from '@/mail/components/EmailButton';
-import EmailLayout from '@/mail/components/EmailLayout';
+import EmailButton from '@/mail/components/email-button';
+import EmailLayout from '@/mail/components/email-layout';
 import { defaultLocale, defaultMessages } from '@/mail/messages';
 import type { BaseMailProps } from '@/mail/types';
 import { Text } from '@react-email/components';

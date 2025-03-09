@@ -4,12 +4,12 @@ import { buttonVariants } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
-interface BottomButtonProps {
+interface BottomLinkProps {
   href: string;
   label: string;
 }
 
-export const BottomButton = ({ href, label }: BottomButtonProps) => {
+export const BottomLink = ({ href, label }: BottomLinkProps) => {
   return (
     <LocaleLink
       href={href}

@@ -5,7 +5,7 @@ import { mailTemplates } from '@/mail/emails';
 import { sendEmail } from '@/mail/provider/resend';
 import { render } from '@react-email/render';
 
-export type Template = keyof typeof mailTemplates;
+type Template = keyof typeof mailTemplates;
 
 /**
  * send email
@@ -74,7 +74,7 @@ export async function send<T extends Template>(
 /**
  * get rendered email for given template, context, and locale
  */
-export async function getTemplate<T extends Template>({
+async function getTemplate<T extends Template>({
   template,
   context,
   locale,

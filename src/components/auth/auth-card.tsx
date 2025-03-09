@@ -1,7 +1,8 @@
 'use client';
 
-import { BottomButton } from '@/components/auth/bottom-button';
+import { BottomLink } from '@/components/auth/bottom-link';
 import { SocialLoginButton } from '@/components/auth/social-login-button';
+import { Logo } from '@/components/logo';
 import {
   Card,
   CardContent,
@@ -9,10 +10,8 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { Logo } from '@/components/logo';
 import { LocaleLink } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 interface AuthCardProps {
   children: React.ReactNode;
@@ -46,7 +45,7 @@ export const AuthCard = ({
         </CardFooter>
       )}
       <CardFooter>
-        <BottomButton label={bottomButtonLabel} href={bottomButtonHref} />
+        <BottomLink label={bottomButtonLabel} href={bottomButtonHref} />
       </CardFooter>
     </Card>
   );

@@ -1,6 +1,4 @@
 /**
- * TODO: update
- *
  * Types for Next.js App Router page components
  *
  * Params: Route parameters from dynamic segments

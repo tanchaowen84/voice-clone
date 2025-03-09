@@ -1,6 +1,4 @@
 /**
- * TODO: update
- *
  * ObjectValues<T> is a utility type that extracts a union type of all value types in an object
  *
  * For example, in the AppInfo use case:
