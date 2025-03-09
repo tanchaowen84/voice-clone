@@ -4,8 +4,8 @@ import Container from '@/components/container';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
 import { Logo } from '@/components/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
-import { createTranslator, getFooterLinks, getSocialLinks } from '@/config';
-import { siteConfig } from '@/config/site';
+import { getFooterLinks, getWebsiteInfo, getSocialLinks } from '@/config';
+import { createTranslator } from '@/i18n/translator';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
@@ -16,6 +16,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const translator = createTranslator(t);
   const footerLinks = getFooterLinks(translator);
   const socialLinks = getSocialLinks();
+  const websiteInfo = getWebsiteInfo(translator);
 
   return (
     <footer className={cn('border-t', className)}>
@@ -26,12 +27,12 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {/* logo and name */}
               <div className="items-center space-x-2 flex">
                 <Logo />
-                <span className="text-xl font-semibold">{siteConfig.name}</span>
+                <span className="text-xl font-semibold">{websiteInfo.name}</span>
               </div>
 
               {/* tagline */}
               <p className="text-muted-foreground text-base py-2 md:pr-12">
-                {siteConfig.tagline}
+                {websiteInfo.tagline}
               </p>
 
               {/* social links */}
@@ -93,7 +94,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       <div className="border-t py-8">
         <Container className="px-4 flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {siteConfig.name} All Rights
+            &copy; {new Date().getFullYear()} {websiteInfo.name} All Rights
             Reserved.
           </span>
 

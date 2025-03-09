@@ -1,10 +1,11 @@
 import { type MetadataRoute } from 'next';
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo } from '@/config';
+import { createTranslator } from '@/i18n/translator';
 
 /**
  * Generates the Web App Manifest for the application
  *
- * TODO: https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/manifest.ts
+ * ref: https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/manifest.ts
  *
  * The manifest.json provides metadata used when the web app is installed on a
  * user's mobile device or desktop. See https://web.dev/add-manifest/
@@ -12,10 +13,14 @@ import { siteConfig } from '@/config/site';
  * @returns {MetadataRoute.Manifest} The manifest configuration object
  */
 export default function manifest(): MetadataRoute.Manifest {
+  // Create a simple translator function for default values
+  const t = createTranslator((key: string) => key);
+  const websiteInfo = getWebsiteInfo(t);
+  
   return {
-    name: siteConfig.name,
-    short_name: siteConfig.name,
-    description: siteConfig.description,
+    name: websiteInfo.name,
+    short_name: websiteInfo.name,
+    description: websiteInfo.description,
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

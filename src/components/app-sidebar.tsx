@@ -26,7 +26,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo } from '@/config';
+import { createTranslator } from '@/i18n/translator';
+import { useTranslations } from 'next-intl';
 import { Logo } from './logo';
 
 const data = {
@@ -154,6 +156,9 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useTranslations();
+  const websiteInfo = getWebsiteInfo(createTranslator(t));
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -164,9 +169,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <Logo className="size-8" />
                 <div className="grid flex-1 text-left leading-tight">
                   <span className="truncate font-semibold text-lg">
-                    {siteConfig.name}
+                    {websiteInfo.name}
                   </span>
-                  {/* <span className="truncate text-xs">{siteConfig.description}</span> */}
+                  {/* <span className="truncate text-xs">{websiteInfo.description}</span> */}
                 </div>
               </a>
             </SidebarMenuButton>

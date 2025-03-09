@@ -1,4 +1,5 @@
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo } from '@/config';
+import { createTranslator as createAppTranslator } from '@/i18n/translator';
 import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
 import { defaultLocale, defaultMessages } from '@/mail/messages';
@@ -16,6 +17,10 @@ export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
     locale,
     messages,
   });
+  
+  // Create a simple translator function for site config
+  const appTranslator = createAppTranslator((key: string) => key);
+  const websiteInfo = getWebsiteInfo(appTranslator);
 
   return (
     <EmailLayout>
@@ -29,7 +34,7 @@ export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
       <br />
       <br />
 
-      <Text>{t('Mail.common.team', { name: siteConfig.name })}</Text>
+      <Text>{t('Mail.common.team', { name: websiteInfo.name })}</Text>
       <Text>
         {t('Mail.common.copyright', { year: new Date().getFullYear() })}
       </Text>

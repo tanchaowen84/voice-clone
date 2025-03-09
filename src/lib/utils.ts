@@ -1,5 +1,6 @@
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo } from '@/config';
 import { Locale, LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
+import { createTranslator } from '@/i18n/translator';
 import { type ClassValue, clsx } from 'clsx';
 import { parse as parseCookies } from 'cookie';
 import { twMerge } from 'tailwind-merge';
@@ -12,17 +13,26 @@ export function cn(...inputs: ClassValue[]) {
  * Creates a title for the page
  * @param title - The title of the page
  * @param addSuffix - Whether to add the app name as a suffix
+ * @param locale - The locale to use for the title
  * @returns The title for the page
  */
-export function createTitle(title: string, addSuffix: boolean = true): string {
+export function createTitle(
+  title: string, 
+  addSuffix: boolean = true,
+  locale: string = 'en'
+): string {
+  // Create a simple translator function for default values
+  const t = createTranslator((key: string) => key);
+  const websiteInfo = getWebsiteInfo(t);
+  
   if (!addSuffix) {
     return title;
   }
   if (!title) {
-    return siteConfig.name;
+    return websiteInfo.name;
   }
 
-  return `${title} | ${siteConfig.name}`;
+  return `${title} | ${websiteInfo.name}`;
 }
 
 /**

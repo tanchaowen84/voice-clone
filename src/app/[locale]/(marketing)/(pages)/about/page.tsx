@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo, websiteConfig } from '@/config';
+import { createTranslator } from '@/i18n/translator';
 import { MailIcon, UserCircleIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
@@ -10,6 +11,8 @@ import Image from 'next/image';
  */
 export default async function AboutPage() {
   const t = await getTranslations('AboutPage');
+  const translator = createTranslator(t);
+  const websiteInfo = getWebsiteInfo(translator);
 
   return (
     <section className="space-y-8 pb-16">
@@ -48,7 +51,7 @@ export default async function AboutPage() {
               <div className="flex items-center gap-4">
                 <Button className="rounded-lg">
                   <MailIcon className="mr-1 size-4" />
-                  <a href={`mailto:${siteConfig.mail}`}>{t('talkWithMe')}</a>
+                  <a href={`mailto:${websiteConfig.mail}`}>{t('talkWithMe')}</a>
                 </Button>
               </div>
             </div>

@@ -7,7 +7,7 @@ import { TikTokIcon } from '@/components/icons/tiktok';
 import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
 import { Routes } from '@/routes';
-import { MenuItem, NestedMenuItem } from '@/types';
+import { MenuItem, NestedMenuItem, WebsiteConfig, WebsiteInfo } from '@/types';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
@@ -33,6 +33,26 @@ import {
   WandSparklesIcon,
 } from 'lucide-react';
 import { TranslationFunction } from './i18n/translator';
+
+export const websiteConfig: WebsiteConfig = {
+  image: '/og.png',
+  mail: 'support@mksaas.com',
+};
+
+/**
+ * Get website information with translations
+ *
+ * @param t - The translation function
+ * @returns The website information with translated content
+ */
+export function getWebsiteInfo(t: TranslationFunction): WebsiteInfo {
+  return {
+    name: t('Site.name'),
+    title: t('Site.title'),
+    tagline: t('Site.tagline'),
+    description: t('Site.description'),
+  };
+}
 
 /**
  * Get menu links with translations

@@ -9,9 +9,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { getMenuLinks } from '@/config';
+import { getMenuLinks, getWebsiteInfo } from '@/config';
 import { createTranslator } from '@/i18n/translator';
-import { siteConfig } from '@/config/site';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
@@ -37,6 +36,9 @@ export function NavbarMobile({
   const localePathname = useLocalePathname();
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const websiteInfo = getWebsiteInfo(translator);
 
   React.useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -75,7 +77,7 @@ export function NavbarMobile({
         {/* navbar left shows logo */}
         <LocaleLink href={Routes.Root} className="flex items-center gap-2">
           <Logo />
-          <span className="text-xl font-semibold">{siteConfig.name}</span>
+          <span className="text-xl font-semibold">{websiteInfo.name}</span>
         </LocaleLink>
 
         {/* navbar right shows menu icon */}

@@ -17,7 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { createTranslator, getAvatarLinks } from '@/config';
+import { getAvatarLinks } from '@/config';
+import { createTranslator } from '@/i18n/translator';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';

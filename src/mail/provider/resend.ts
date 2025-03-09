@@ -1,4 +1,4 @@
-import { siteConfig } from '@/config/site';
+import { websiteConfig } from '@/config';
 import { SendEmailHandler } from '@/mail/types';
 import { Resend } from 'resend';
 
@@ -12,7 +12,7 @@ export const sendEmail: SendEmailHandler = async ({ to, subject, html }) => {
       Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: siteConfig.mail,
+      from: websiteConfig.mail,
       to,
       subject,
       html,

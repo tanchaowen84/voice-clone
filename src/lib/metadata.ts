@@ -1,4 +1,5 @@
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo, websiteConfig } from '@/config';
+import { createTranslator } from '@/i18n/translator';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/get-base-url';
 
@@ -6,20 +7,30 @@ import { getBaseUrl } from './urls/get-base-url';
  * Construct the metadata object for the current page (in docs/guides)
  */
 export function constructMetadata({
-  title = siteConfig.name,
-  description = siteConfig.description,
+  title,
+  description,
   canonicalUrl,
-  image = siteConfig.image,
+  image,
   noIndex = false,
+  locale = 'en',
 }: {
   title?: string;
   description?: string;
   canonicalUrl?: string;
   image?: string;
   noIndex?: boolean;
+  locale?: string;
 } = {}): Metadata {
-  const fullTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
-  const ogImageUrl = new URL(`${getBaseUrl()}/${image}`);
+  // Create a simple translator function for default values
+  const t = createTranslator((key: string) => key);
+  const websiteInfo = getWebsiteInfo(t);
+  
+  title = title || websiteInfo.name;
+  description = description || websiteInfo.description;
+  image = image || websiteConfig.image;
+  
+  const fullTitle = title ? `${title} - ${websiteInfo.title}` : websiteInfo.title;
+  const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
 
   return {
     title: fullTitle,

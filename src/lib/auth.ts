@@ -1,14 +1,19 @@
-import { siteConfig } from '@/config/site';
+import { getWebsiteInfo } from '@/config';
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
+import { createTranslator } from '@/i18n/translator';
 import { getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail/send';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
 
+// Create a simple translator function for default values
+const t = createTranslator((key: string) => key);
+const websiteInfo = getWebsiteInfo(t);
+
 export const auth = betterAuth({
-  appName: siteConfig.name,
+  appName: websiteInfo.name,
   database: drizzleAdapter(db, {
     provider: 'pg', // or "mysql", "sqlite"
     // The schema object that defines the tables and fields

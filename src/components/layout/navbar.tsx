@@ -17,9 +17,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { getMenuLinks } from '@/config';
+import { getMenuLinks, getWebsiteInfo } from '@/config';
 import { createTranslator } from '@/i18n/translator';
-import { siteConfig } from '@/config/site';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
@@ -47,6 +46,7 @@ export function Navbar({ scroll }: NavBarProps) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
+  const websiteInfo = getWebsiteInfo(translator);
   const commonTranslations = useTranslations('Common');
   const localePathname = useLocalePathname();
 
@@ -70,7 +70,7 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex items-center">
             <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
-              <span className="text-xl font-semibold">{siteConfig.name}</span>
+              <span className="text-xl font-semibold">{websiteInfo.name}</span>
             </LocaleLink>
           </div>
 
