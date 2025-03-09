@@ -4,6 +4,9 @@ interface FAQPageProps {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * https://nsui.irung.me/faqs
+ */
 export default async function FAQPage(props: FAQPageProps) {
   const params = await props.params;
 

@@ -6,6 +6,9 @@ interface CallToActionPageProps {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * https://nsui.irung.me/call-to-action
+ */
 export default async function CallToActionPage(props: CallToActionPageProps) {
   const params = await props.params;
 
