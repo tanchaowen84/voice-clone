@@ -38,6 +38,13 @@
     "message": "消息",
     "submit": "提交"
   },
+  "WaitlistPage": {
+    "title": "邮件列表",
+    "subtitle": "加入我们的邮件列表，获取最新消息和更新",
+    "formDescription": "我们每周只发送一封邮件，并且不会发送垃圾邮件",
+    "email": "邮箱",
+    "subscribe": "订阅"
+  },
   "AuthPage": {
     "login": {
       "title": "登录",

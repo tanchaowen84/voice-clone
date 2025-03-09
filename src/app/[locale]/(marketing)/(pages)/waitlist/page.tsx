@@ -4,14 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { useTranslations } from 'next-intl';
 
 /**
- * inspired by https://nsui.irung.me/contact
+ * 
  */
-export default function ContactPage() {
-  const t = useTranslations('ContactPage');
+export default function WaitlistPage() {
+  const t = useTranslations('WaitlistPage');
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 p-8">
@@ -35,28 +34,14 @@ export default function ContactPage() {
 
         <form action="" className="mt-8 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">
-              {t('name')}
-            </Label>
-            <Input type="text" id="name" required />
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="email">
               {t('email')}
             </Label>
             <Input type="email" id="email" required />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="msg">
-              {t('message')}
-            </Label>
-            <Textarea id="msg" rows={3} />
-          </div>
-
           <Button type="submit" className="w-full">
-            {t('submit')}
+            {t('subscribe')}
           </Button>
         </form>
       </Card>

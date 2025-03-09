@@ -41,6 +41,13 @@
     "message": "Message",
     "submit": "Submit"
   },
+  "WaitlistPage": {
+    "title": "Waitlist",
+    "subtitle": "Join our waitlist for latest news and updates",
+    "formDescription": "We will send you only one email every week, and no spam",
+    "email": "Email",
+    "subscribe": "Subscribe"
+  },
   "AuthPage": {
     "login": {
       "title": "Login",
