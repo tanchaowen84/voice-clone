@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useTranslations } from 'next-intl';
 
 /**
- * 
+ *
  */
 export default function WaitlistPage() {
   const t = useTranslations('WaitlistPage');
@@ -34,9 +34,7 @@ export default function WaitlistPage() {
 
         <form action="" className="mt-8 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">
-              {t('email')}
-            </Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input type="email" id="email" required />
           </div>
 
@@ -46,5 +44,5 @@ export default function WaitlistPage() {
         </form>
       </Card>
     </div>
-  )
+  );
 }

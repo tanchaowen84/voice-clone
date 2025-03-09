@@ -17,7 +17,7 @@ export async function generateMetadata(
 
   const locale = params.locale as string;
   const page = await getCustomPage('privacy-policy', locale);
-  
+
   if (!page) {
     return {};
   }
@@ -29,8 +29,8 @@ export async function generateMetadata(
       title: page.title,
       description: page.description,
       type: 'article',
-      url: `${getBaseUrl()}/privacy-policy`
-    }
+      url: `${getBaseUrl()}/privacy-policy`,
+    },
   };
 }
 
@@ -42,7 +42,7 @@ export default async function PrivacyPolicyPage(props: NextPageProps) {
 
   const locale = params.locale as string;
   const page = await getCustomPage('privacy-policy', locale);
-  
+
   if (!page) {
     notFound();
   }
@@ -55,4 +55,4 @@ export default async function PrivacyPolicyPage(props: NextPageProps) {
       content={page.body.code}
     />
   );
-} 
+}

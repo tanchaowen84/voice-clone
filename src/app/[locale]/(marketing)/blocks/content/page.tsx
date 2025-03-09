@@ -1,13 +1,13 @@
-import Content from "@/components/blocks/content/content";
-import Content2 from "@/components/blocks/content/content-2";
-import Content3 from "@/components/blocks/content/content-3";
-import Content4 from "@/components/blocks/content/content-4";
-import Content5 from "@/components/blocks/content/content-5";
-import Content6 from "@/components/blocks/content/content-6";
+import Content from '@/components/blocks/content/content';
+import Content2 from '@/components/blocks/content/content-2';
+import Content3 from '@/components/blocks/content/content-3';
+import Content4 from '@/components/blocks/content/content-4';
+import Content5 from '@/components/blocks/content/content-5';
+import Content6 from '@/components/blocks/content/content-6';
 
 interface ContentPageProps {
   params: Promise<{ locale: string }>;
-};
+}
 
 export default async function ContentPage(props: ContentPageProps) {
   const params = await props.params;

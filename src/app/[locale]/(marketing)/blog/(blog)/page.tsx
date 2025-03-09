@@ -15,12 +15,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function BlogPage({
   params,
-  searchParams
+  searchParams,
 }: NextPageProps) {
   const resolvedParams = await params;
   const { locale } = resolvedParams;
   const resolvedSearchParams = await searchParams;
-  const { page } = resolvedSearchParams as { [key: string]: string } || {};
+  const { page } = (resolvedSearchParams as { [key: string]: string }) || {};
   const currentPage = page ? Number(page) : 1;
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
@@ -31,9 +31,10 @@ export default async function BlogPage({
   );
 
   // If no posts found for the current locale, show all published posts
-  const filteredPosts = localePosts.length > 0
-    ? localePosts
-    : allPosts.filter((post) => post.published);
+  const filteredPosts =
+    localePosts.length > 0
+      ? localePosts
+      : allPosts.filter((post) => post.published);
 
   // Sort posts by date (newest first)
   const sortedPosts = [...filteredPosts].sort(
@@ -67,4 +68,4 @@ export default async function BlogPage({
       )}
     </div>
   );
-} 
+}

@@ -19,13 +19,13 @@ import '@/styles/mdx.css';
  * Gets the blog post from the params
  * @param props - The props of the page
  * @returns The blog post
- * 
+ *
  * How it works:
  * 1. /[locale]/blog/first-post:
  * params.slug = ["first-post"]
  * slug becomes "first-post" after join('/')
  * Matches post where slugAsParams === "first-post" AND locale === params.locale
- * 
+ *
  * 2. /[locale]/blog/2023/year-review:
  * params.slug = ["2023", "year-review"]
  * slug becomes "2023/year-review" after join('/')
@@ -44,7 +44,8 @@ async function getBlogPostFromParams(props: NextPageProps) {
   // Find post with matching slug and locale
   const post = allPosts.find(
     (post) =>
-      (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')) &&
+      (post.slugAsParams === slug ||
+        (!slug && post.slugAsParams === 'index')) &&
       post.locale === locale
   );
 
@@ -52,7 +53,7 @@ async function getBlogPostFromParams(props: NextPageProps) {
     // If no post found with the current locale, try to find one with the default locale
     const defaultPost = allPosts.find(
       (post) =>
-        (post.slugAsParams === slug || (!slug && post.slugAsParams === 'index'))
+        post.slugAsParams === slug || (!slug && post.slugAsParams === 'index')
     );
 
     return defaultPost;
@@ -76,8 +77,8 @@ export async function generateMetadata(
       title: post.title,
       description: post.description,
       type: 'article',
-      url: `${getBaseUrl()}${post.slug}`
-    }
+      url: `${getBaseUrl()}${post.slug}`,
+    },
   };
 }
 
@@ -90,7 +91,7 @@ export default async function BlogPostPage(props: NextPageProps) {
   const publishDate = post.date;
   const date = getLocaleDate(publishDate);
   const toc = await getTableOfContents(post.content);
-  const t = await getTranslations("BlogPage");
+  const t = await getTranslations('BlogPage');
 
   return (
     <div className="flex flex-col gap-8">
@@ -105,8 +106,8 @@ export default async function BlogPostPage(props: NextPageProps) {
               {post.image && (
                 <Image
                   src={post.image}
-                  alt={post.title || "image for blog post"}
-                  title={post.title || "image for blog post"}
+                  alt={post.title || 'image for blog post'}
+                  title={post.title || 'image for blog post'}
                   loading="eager"
                   fill
                   className="object-cover"
@@ -150,7 +151,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* author info */}
             <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">{t("author")}</h2>
+              <h2 className="text-lg font-semibold mb-4">{t('author')}</h2>
               <div className="flex items-center gap-4">
                 <div className="relative h-8 w-8 flex-shrink-0">
                   {post.author?.avatar && (
@@ -168,26 +169,29 @@ export default async function BlogPostPage(props: NextPageProps) {
 
             {/* categories */}
             <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">{t("categories")}</h2>
+              <h2 className="text-lg font-semibold mb-4">{t('categories')}</h2>
               <ul className="flex flex-wrap gap-4">
-                {post.categories?.filter(Boolean).map((category) => (
-                  category && (
-                    <li key={category.slug}>
-                      <LocaleLink
-                        href={`/blog/category/${category.slug}`}
-                        className="text-sm font-medium hover:text-primary"
-                      >
-                        {category.name}
-                      </LocaleLink>
-                    </li>
-                  )
-                ))}
+                {post.categories?.filter(Boolean).map(
+                  (category) =>
+                    category && (
+                      <li key={category.slug}>
+                        <LocaleLink
+                          href={`/blog/category/${category.slug}`}
+                          className="text-sm font-medium hover:text-primary"
+                        >
+                          {category.name}
+                        </LocaleLink>
+                      </li>
+                    )
+                )}
               </ul>
             </div>
 
             {/* table of contents */}
             <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
-              <h2 className="text-lg font-semibold mb-4">{t("tableOfContents")}</h2>
+              <h2 className="text-lg font-semibold mb-4">
+                {t('tableOfContents')}
+              </h2>
               <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
                 <BlogToc toc={toc} />
               </div>
@@ -200,4 +204,4 @@ export default async function BlogPostPage(props: NextPageProps) {
       {/* TODO: add newsletter */}
     </div>
   );
-} 
+}

@@ -1,4 +1,4 @@
-import BackButtonSmall from "@/components/shared/back-button-small";
+import BackButtonSmall from '@/components/shared/back-button-small';
 
 /**
  * auth layout is different from other public layouts,
@@ -12,9 +12,7 @@ export default function AuthLayout({
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <BackButtonSmall className="absolute top-6 left-6" />
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        {children}
-      </div>
+      <div className="flex w-full max-w-sm flex-col gap-6">{children}</div>
     </div>
   );
 }

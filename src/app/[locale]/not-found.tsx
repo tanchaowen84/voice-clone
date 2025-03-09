@@ -1,12 +1,12 @@
-import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { LocaleLink } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { Logo } from '@/components/logo';
+import { Button } from '@/components/ui/button';
+import { LocaleLink } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 /**
  * Note that `app/[locale]/[...rest]/page.tsx`
  * is necessary for this page to render.
- * 
+ *
  * https://next-intl.dev/docs/environments/error-files#not-foundjs
  * https://next-intl.dev/docs/environments/error-files#catching-non-localized-requests
  */

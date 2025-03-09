@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -35,23 +35,17 @@ export default function ContactPage() {
 
         <form action="" className="mt-8 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">
-              {t('name')}
-            </Label>
+            <Label htmlFor="name">{t('name')}</Label>
             <Input type="text" id="name" required />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">
-              {t('email')}
-            </Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input type="email" id="email" required />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="msg">
-              {t('message')}
-            </Label>
+            <Label htmlFor="msg">{t('message')}</Label>
             <Textarea id="msg" rows={3} />
           </div>
 
@@ -61,5 +55,5 @@ export default function ContactPage() {
         </form>
       </Card>
     </div>
-  )
+  );
 }

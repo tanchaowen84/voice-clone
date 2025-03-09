@@ -9,6 +9,7 @@
     "ignoreUnknown": true,
     "ignore": [
       ".next/**",
+      ".content-collections/**",
       "node_modules/**",
       "dist/**",
       "build/**",
@@ -45,6 +46,7 @@
     },
     "ignore": [
       ".next/**",
+      ".content-collections/**",
       "node_modules/**",
       "dist/**",
       "build/**",
@@ -55,7 +57,7 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
+      "quoteStyle": "single",
       "trailingCommas": "es5",
       "semicolons": "always"
     }

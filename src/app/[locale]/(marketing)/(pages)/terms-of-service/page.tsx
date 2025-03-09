@@ -17,7 +17,7 @@ export async function generateMetadata(
 
   const locale = params.locale as string;
   const page = await getCustomPage('terms-of-service', locale);
-  
+
   if (!page) {
     return {};
   }
@@ -29,8 +29,8 @@ export async function generateMetadata(
       title: page.title,
       description: page.description,
       type: 'article',
-      url: `${getBaseUrl()}/terms-of-service`
-    }
+      url: `${getBaseUrl()}/terms-of-service`,
+    },
   };
 }
 
@@ -42,7 +42,7 @@ export default async function TermsOfServicePage(props: NextPageProps) {
 
   const locale = params.locale as string;
   const page = await getCustomPage('terms-of-service', locale);
-  
+
   if (!page) {
     notFound();
   }
@@ -55,4 +55,4 @@ export default async function TermsOfServicePage(props: NextPageProps) {
       content={page.body.code}
     />
   );
-} 
+}

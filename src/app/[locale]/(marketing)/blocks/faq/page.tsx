@@ -1,8 +1,8 @@
-import FAQs from "@/components/blocks/faq/faqs";
+import FAQs from '@/components/blocks/faq/faqs';
 
 interface FAQPageProps {
   params: Promise<{ locale: string }>;
-};
+}
 
 /**
  * https://nsui.irung.me/faqs

@@ -17,7 +17,7 @@ export async function generateMetadata(
 
   const locale = params.locale as string;
   const page = await getCustomPage('cookie-policy', locale);
-  
+
   if (!page) {
     return {};
   }
@@ -29,8 +29,8 @@ export async function generateMetadata(
       title: page.title,
       description: page.description,
       type: 'article',
-      url: `${getBaseUrl()}/cookie-policy`
-    }
+      url: `${getBaseUrl()}/cookie-policy`,
+    },
   };
 }
 
@@ -42,7 +42,7 @@ export default async function CookiePolicyPage(props: NextPageProps) {
 
   const locale = params.locale as string;
   const page = await getCustomPage('cookie-policy', locale);
-  
+
   if (!page) {
     notFound();
   }
@@ -55,4 +55,4 @@ export default async function CookiePolicyPage(props: NextPageProps) {
       content={page.body.code}
     />
   );
-} 
+}

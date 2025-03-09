@@ -8,35 +8,33 @@ import { NextPageProps } from '@/types/next-page-props';
 
 interface BlogListLayoutProps extends PropsWithChildren, NextPageProps {}
 
-export default async function BlogListLayout({ 
+export default async function BlogListLayout({
   children,
-  params 
+  params,
 }: BlogListLayoutProps) {
   const resolvedParams = await params;
   const { locale } = resolvedParams;
-  const t = await getTranslations("BlogPage");
-  
+  const t = await getTranslations('BlogPage');
+
   // Filter categories by locale
   // console.log("allCategories", allCategories);
   const categoryList = allCategories.filter(
-    category => category.locale === locale
+    (category) => category.locale === locale
   );
-  
+
   return (
     <div className="mb-16">
       <div className="mt-8 w-full flex flex-col items-center justify-center gap-8">
         <HeaderSection
           titleAs="h2"
-          title={t("title")}
-          subtitle={t("subtitle")}
+          title={t('title')}
+          subtitle={t('subtitle')}
         />
 
         <BlogCategoryFilter categoryList={categoryList} />
       </div>
 
-      <Container className="mt-8 px-4">
-        {children}
-      </Container>
+      <Container className="mt-8 px-4">{children}</Container>
     </div>
   );
 }

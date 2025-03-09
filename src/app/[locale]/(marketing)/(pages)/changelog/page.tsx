@@ -25,8 +25,8 @@ export async function generateMetadata(
       title: 'Changelog',
       description: 'Track all updates and improvements to our platform',
       type: 'article',
-      url: `${getBaseUrl()}/changelog`
-    }
+      url: `${getBaseUrl()}/changelog`,
+    },
   };
 }
 

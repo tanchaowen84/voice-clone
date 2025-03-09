@@ -1,15 +1,15 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
-import { MailIcon, UserCircleIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { siteConfig } from '@/config/site';
+import { MailIcon, UserCircleIcon } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 
 /**
  * inspired by https://astro-nomy.vercel.app/about
  */
 export default async function AboutPage() {
-  const t = await getTranslations("AboutPage");
+  const t = await getTranslations('AboutPage');
 
   return (
     <section className="space-y-8 pb-16">
@@ -31,10 +31,10 @@ export default async function AboutPage() {
               </Avatar>
               <div>
                 <h1 className="text-4xl font-heading text-foreground">
-                  {t("authorName")}
+                  {t('authorName')}
                 </h1>
                 <p className="text-base text-muted-foreground mt-2">
-                  {t("authorBio")}
+                  {t('authorBio')}
                 </p>
               </div>
             </div>
@@ -42,15 +42,13 @@ export default async function AboutPage() {
             {/* introduction */}
             <div>
               <p className="mb-8 text-base text-muted-foreground">
-                {t("authorIntroduction")}
+                {t('authorIntroduction')}
               </p>
 
               <div className="flex items-center gap-4">
                 <Button className="rounded-lg">
                   <MailIcon className="mr-1 size-4" />
-                  <a href={`mailto:${siteConfig.mail}`}>
-                    {t("talkWithMe")}
-                  </a>
+                  <a href={`mailto:${siteConfig.mail}`}>{t('talkWithMe')}</a>
                 </Button>
               </div>
             </div>
@@ -65,14 +63,17 @@ export default async function AboutPage() {
             {/* Mobile view (1 column) */}
             <div className="grid grid-cols-1 gap-4 sm:hidden">
               {images.map((image, index) => (
-                <div key={index} className="overflow-hidden rounded-xl aspect-[4/3]">
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-xl aspect-[4/3]"
+                >
                   <Image
                     className="w-full h-full object-cover"
                     src={image.image}
                     alt={image.alt}
                     width={800}
                     height={900}
-                    loading={index < 2 ? "eager" : "lazy"}
+                    loading={index < 2 ? 'eager' : 'lazy'}
                     priority={index < 2}
                   />
                 </div>
@@ -83,14 +84,17 @@ export default async function AboutPage() {
             <div className="hidden sm:grid sm:grid-cols-2 md:hidden gap-4">
               <div className="space-y-4">
                 {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="overflow-hidden rounded-xl aspect-[4/3]">
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl aspect-[4/3]"
+                  >
                     <Image
                       className="w-full h-full object-cover"
                       src={image.image}
                       alt={image.alt}
                       width={800}
                       height={900}
-                      loading={index < 2 ? "eager" : "lazy"}
+                      loading={index < 2 ? 'eager' : 'lazy'}
                       priority={index < 2}
                     />
                   </div>
@@ -98,14 +102,17 @@ export default async function AboutPage() {
               </div>
               <div className="space-y-4">
                 {images.slice(4, 8).map((image, index) => (
-                  <div key={index} className="overflow-hidden rounded-xl aspect-[4/3]">
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl aspect-[4/3]"
+                  >
                     <Image
                       className="w-full h-full object-cover"
                       src={image.image}
                       alt={image.alt}
                       width={800}
                       height={900}
-                      loading={index < 2 ? "eager" : "lazy"}
+                      loading={index < 2 ? 'eager' : 'lazy'}
                       priority={index < 1}
                     />
                   </div>
@@ -237,50 +244,50 @@ const images: ImagesProps[] = [
   // first column
   {
     image:
-      "https://images.pexels.com/photos/15372903/pexels-photo-15372903/free-photo-of-computer-setup-with-big-monitor-screen.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "setup desktop",
+      'https://images.pexels.com/photos/15372903/pexels-photo-15372903/free-photo-of-computer-setup-with-big-monitor-screen.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'setup desktop',
   },
   {
     image:
-      "https://images.pexels.com/photos/1049317/pexels-photo-1049317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "friends smiles",
+      'https://images.pexels.com/photos/1049317/pexels-photo-1049317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'friends smiles',
   },
   // second column
   {
     image:
-      "https://images.pexels.com/photos/3712095/pexels-photo-3712095.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "grey cat",
+      'https://images.pexels.com/photos/3712095/pexels-photo-3712095.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'grey cat',
   },
   {
     image:
-      "https://images.pexels.com/photos/9293249/pexels-photo-9293249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "home building",
+      'https://images.pexels.com/photos/9293249/pexels-photo-9293249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'home building',
   },
   {
     image:
-      "https://images.pexels.com/photos/375467/pexels-photo-375467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "pizza laptop",
+      'https://images.pexels.com/photos/375467/pexels-photo-375467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'pizza laptop',
   },
   // third column
   {
     image:
-      "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "hike and sunset",
+      'https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'hike and sunset',
   },
   {
     image:
-      "https://images.pexels.com/photos/5500779/pexels-photo-5500779.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "chinese lantern",
+      'https://images.pexels.com/photos/5500779/pexels-photo-5500779.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'chinese lantern',
   },
   // fourth column
   {
     image:
-      "https://images.pexels.com/photos/2090644/pexels-photo-2090644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "the great wheel",
+      'https://images.pexels.com/photos/2090644/pexels-photo-2090644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'the great wheel',
   },
   {
     image:
-      "https://images.pexels.com/photos/7418632/pexels-photo-7418632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    alt: "dalmatian",
+      'https://images.pexels.com/photos/7418632/pexels-photo-7418632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    alt: 'dalmatian',
   },
 ];

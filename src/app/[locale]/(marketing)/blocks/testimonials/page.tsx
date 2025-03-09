@@ -1,12 +1,12 @@
-import Testimonials from "@/components/blocks/testimonials/testimonials";
-import Testimonials2 from "@/components/blocks/testimonials/testimonials-2";
-import Testimonials4 from "@/components/blocks/testimonials/testimonials-4";
-import Testimonials5 from "@/components/blocks/testimonials/testimonials-5";
-import Testimonials6 from "@/components/blocks/testimonials/testimonials-6";
+import Testimonials from '@/components/blocks/testimonials/testimonials';
+import Testimonials2 from '@/components/blocks/testimonials/testimonials-2';
+import Testimonials4 from '@/components/blocks/testimonials/testimonials-4';
+import Testimonials5 from '@/components/blocks/testimonials/testimonials-5';
+import Testimonials6 from '@/components/blocks/testimonials/testimonials-6';
 
 interface TestimonialsPageProps {
   params: Promise<{ locale: string }>;
-};
+}
 
 /**
  * https://nsui.irung.me/testimonials
@@ -20,11 +20,11 @@ export default async function TestimonialsPage(props: TestimonialsPageProps) {
         <Testimonials />
 
         <Testimonials2 />
-        
+
         <Testimonials4 />
-        
+
         <Testimonials5 />
-        
+
         <Testimonials6 />
       </div>
     </>
