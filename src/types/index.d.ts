@@ -9,9 +9,6 @@ export type SiteConfig = {
   title: string;
   tagline: string;
   description: string;
-  keywords: string[];
-  author: string;
-  url: string;
   image: string;
   mail: string;
 };

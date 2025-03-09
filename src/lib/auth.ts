@@ -1,13 +1,11 @@
 import { siteConfig } from '@/config/site';
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
-import { send } from '@/mail/send';
 import { getLocaleFromRequest } from '@/lib/utils';
+import { send } from '@/mail/send';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
-
-const from = process.env.RESEND_FROM || 'delivered@resend.dev';
 
 export const auth = betterAuth({
   appName: siteConfig.name,
@@ -30,10 +28,9 @@ export const auth = betterAuth({
       maxAge: 5 * 60, // Cache duration in seconds
     },
     // https://www.better-auth.com/docs/concepts/session-management#session-expiration
-    expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24, // every 1 day the session expiration is updated
-    // https://www.better-auth.com/docs/concepts/session-management#session-freshness
-    freshAge: 60 * 5, // the session is fresh if created within the last 5 minutes
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
+    freshAge: 60 * 5,
   },
   emailAndPassword: {
     enabled: true,

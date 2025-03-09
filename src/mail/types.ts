@@ -10,6 +10,9 @@ export interface EmailParams {
 
 export type SendEmailHandler = (params: EmailParams) => Promise<void>;
 
+/**
+ * Mail provider, currently only Resend is supported
+ */
 export interface MailProvider {
   send: SendEmailHandler;
 }

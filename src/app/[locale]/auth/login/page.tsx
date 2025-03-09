@@ -1,14 +1,14 @@
 import { LoginForm } from '@/components/auth/login-form';
-import { siteConfig } from '@/config/site';
 import { LocaleLink } from '@/i18n/navigation';
 import { constructMetadata } from '@/lib/metadata';
+import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 
 export const metadata = constructMetadata({
   title: 'Login',
   description: 'Login to your account',
-  canonicalUrl: `${siteConfig.url}${Routes.Login}`,
+  canonicalUrl: `${getBaseUrl()}${Routes.Login}`,
 });
 
 const LoginPage = () => {

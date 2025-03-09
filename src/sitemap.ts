@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { routing, Locale } from '@/i18n/routing';
 import { getLocalePathname } from '@/i18n/navigation';
-import { siteConfig } from './config/site';
+import { getBaseUrl } from './lib/urls/get-base-url';
 
 /**
  * https://github.com/javayhu/cnblocks/blob/main/app/sitemap.ts
@@ -29,5 +29,5 @@ function getEntries(href: Href) {
 
 function getUrl(href: Href, locale: Locale) {
   const pathname = getLocalePathname({ locale, href });
-  return siteConfig.url + pathname;
+  return getBaseUrl() + pathname;
 }

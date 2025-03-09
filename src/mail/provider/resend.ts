@@ -1,3 +1,4 @@
+import { EMAIL_FROM } from '@/lib/constants';
 import { Resend } from 'resend';
 import { SendEmailHandler } from '@/mail/types';
 
@@ -11,7 +12,7 @@ export const sendEmail: SendEmailHandler = async ({ to, subject, html }) => {
       Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: process.env.RESEND_FROM,
+      from: EMAIL_FROM,
       to,
       subject,
       html,

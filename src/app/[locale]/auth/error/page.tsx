@@ -1,12 +1,12 @@
 import { ErrorCard } from '@/components/auth/error-card';
-import { siteConfig } from '@/config/site';
+import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { constructMetadata } from '@/lib/metadata';
 import { Routes } from '@/routes';
 
 export const metadata = constructMetadata({
   title: 'Auth Error',
-  description: 'Auth Error',
-  canonicalUrl: `${siteConfig.url}${Routes.AuthError}`,
+  description: 'Auth Error',  
+  canonicalUrl: `${getBaseUrl()}${Routes.AuthError}`,
 });
 
 const AuthErrorPage = () => {

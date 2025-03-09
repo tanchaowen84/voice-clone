@@ -6,15 +6,17 @@ import type { BaseMailProps } from '@/mail/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
+type VerifyEmailProps = {
+  url: string;
+  name: string;
+} & BaseMailProps;
+
 export function VerifyEmail({
   url,
   name,
   locale,
   messages,
-}: {
-  url: string;
-  name: string;
-} & BaseMailProps) {
+}: VerifyEmailProps) {
   const t = createTranslator({
     locale,
     messages,

@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site';
 import { constructMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import { NextPageProps } from '@/types/next-page-props';
+import { getBaseUrl } from '@/lib/urls/get-base-url';
 
 export async function generateMetadata({
   params,
@@ -28,7 +29,7 @@ export async function generateMetadata({
     return;
   }
 
-  const ogImageUrl = new URL(`${siteConfig.url}/api/og`);
+  const ogImageUrl = new URL(`${getBaseUrl()}/api/og`);
   ogImageUrl.searchParams.append('title', category.name);
   ogImageUrl.searchParams.append('description', category.description || '');
   ogImageUrl.searchParams.append('type', 'Blog Category');
@@ -36,7 +37,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: `${category.name}`,
     description: category.description,
-    canonicalUrl: `${siteConfig.url}/blog/category/${slug}`,
+    canonicalUrl: `${getBaseUrl()}/blog/category/${slug}`,
     // image: ogImageUrl.toString(),
   });
 }

@@ -6,15 +6,17 @@ import type { BaseMailProps } from '@/mail/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
+type ForgotPasswordProps = {
+  url: string;
+  name: string;
+} & BaseMailProps;
+
 export function ForgotPassword({
   url,
   name,
   locale,
   messages,
-}: {
-  url: string;
-  name: string;
-} & BaseMailProps) {
+}: ForgotPasswordProps) {
   const t = createTranslator({
     locale,
     messages,
