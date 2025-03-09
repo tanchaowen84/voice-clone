@@ -1,7 +1,7 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { LocaleLink } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 /**
  * Note that `app/[locale]/[...rest]/page.tsx`
@@ -24,7 +24,7 @@ export default function NotFound() {
       </p>
 
       <Button asChild size="lg" variant="default">
-        <Link href="/">{t('backToHome')}</Link>
+        <LocaleLink href="/">{t('backToHome')}</LocaleLink>
       </Button>
     </div>
   );

@@ -136,7 +136,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <div className="mt-4">
+          <div className="prose prose-gray dark:prose-invert max-w-none">
             <Mdx code={post.body.code} />
           </div>
 

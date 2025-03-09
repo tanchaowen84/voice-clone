@@ -1,0 +1,63 @@
+---
+title: Cookie Policy
+description: How we use cookies and similar technologies on our website
+date: 2025-03-10T00:00:00.000Z
+published: true
+locale: en
+---
+
+## Introduction
+
+This Cookie Policy explains how we use cookies and similar technologies on our website. By using our website, you consent to the use of cookies as described in this policy.
+
+## What Are Cookies
+
+Cookies are small text files that are stored on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to the website owners.
+
+## How We Use Cookies
+
+We use cookies for the following purposes:
+
+- **Essential Cookies**: These cookies are necessary for the website to function properly and cannot be switched off in our systems.
+- **Performance Cookies**: These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site.
+- **Functional Cookies**: These cookies enable the website to provide enhanced functionality and personalization.
+- **Targeting Cookies**: These cookies may be set through our site by our advertising partners to build a profile of your interests.
+
+## Types of Cookies We Use
+
+### Essential Cookies
+- Session cookies for maintaining user sessions
+- Security cookies for protecting against fraud and abuse
+
+### Performance Cookies
+- Analytics cookies to understand how visitors interact with our website
+- Load balancing cookies to distribute traffic to servers
+
+### Functional Cookies
+- Preference cookies to remember your settings and choices
+- Language cookies to remember your language preference
+
+### Targeting Cookies
+- Advertising cookies to deliver relevant advertisements
+- Social media cookies to enable sharing content on social platforms
+
+## Managing Cookies
+
+Most web browsers allow you to control cookies through their settings. You can:
+
+- Delete cookies from your device
+- Block cookies by activating the setting on your browser that allows you to refuse all or some cookies
+- Set your browser to notify you when you receive a cookie
+
+Please note that if you choose to block or delete cookies, you may not be able to access certain areas or features of our website.
+
+## Changes to This Cookie Policy
+
+We may update our Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page.
+
+## Contact Us
+
+If you have any questions about this Cookie Policy, please contact us:
+
+- By email: support@example.com
+- By visiting our website: [Contact Page](https://example.com/contact) 

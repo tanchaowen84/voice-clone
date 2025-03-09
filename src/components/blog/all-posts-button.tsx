@@ -10,7 +10,7 @@ export default function AllPostsButton() {
   return (
     <Button
       size="lg"
-      variant="outline"
+      variant="default"
       className="inline-flex items-center gap-2 group"
       asChild
     >
