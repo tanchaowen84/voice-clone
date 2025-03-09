@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 /**
  * https://nsui.irung.me/call-to-action
- * 
+ *
  * pnpm dlx shadcn@canary add https://nsui.irung.me/r/call-to-action-1.json
  */
 export default function CallToAction() {
@@ -11,7 +11,9 @@ export default function CallToAction() {
     <section className="py-16">
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
-          <h2 className="text-balance text-4xl font-semibold lg:text-5xl">Start Building</h2>
+          <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
+            Start Building
+          </h2>
           <p className="mt-4">Libero sapiente aliquam quibusdam aspernatur.</p>
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
@@ -30,5 +32,5 @@ export default function CallToAction() {
         </div>
       </div>
     </section>
-  )
+  );
 }

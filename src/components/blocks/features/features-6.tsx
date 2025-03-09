@@ -1,34 +1,50 @@
 import { Cpu, Lock, Sparkles, Zap } from "lucide-react";
+import Image from "next/image";
 
 /**
- * https://nsui.irung.me/content-5
+ * https://nsui.irung.me/features-6
  *
- * pnpm dlx shadcn@canary add https://nsui.irung.me/r/content-5.json
+ * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-6.json
  */
-export default function Content5() {
+export default function Features6() {
   return (
     <section className="py-16">
-      <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
-        <div className="mx-auto max-w-xl space-y-6 text-center md:space-y-12">
-          <h2 className="text-balance text-4xl font-medium lg:text-5xl">
-            The Lyra ecosystem brings together our models, products and
-            platforms.
+      <div className="mx-auto max-w-5xl space-y-12 px-6">
+        <div className="relative z-10 grid items-center gap-4 md:grid-cols-2 md:gap-12">
+          <h2 className="text-4xl font-semibold">
+            The Lyra ecosystem brings together our models
           </h2>
-          <p>
-            Lyra is evolving to be more than just the models. It supports an
-            entire ecosystem — from products to the APIs and platforms helping
-            developers and businesses innovate.
+          <p className="max-w-sm sm:ml-auto">
+            Empower your team with workflows that adapt to your needs, whether
+            you prefer git synchronization or a AI Agents interface.
           </p>
         </div>
-        <img
-          className="rounded-(--radius) grayscale"
-          src="https://images.unsplash.com/photo-1616587226960-4a03badbe8bf?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="team image"
-          height=""
-          width=""
-          loading="lazy"
-        />
-
+        <div className="relative rounded-3xl p-3 md:-mx-8 lg:col-span-3">
+          <div className="aspect-88/36 relative">
+            <div className="bg-linear-to-t z-1 from-background absolute inset-0 to-transparent"></div>
+            <Image
+              src="/images/blocks/mail-upper.png"
+              className="absolute inset-0 z-10"
+              alt="payments illustration dark"
+              width={2797}
+              height={1137}
+            />
+            <Image
+              src="/images/blocks/mail-back.png"
+              className="hidden dark:block"
+              alt="payments illustration dark"
+              width={2797}
+              height={1137}
+            />
+            <Image
+              src="/images/blocks/mail-back-light.png"
+              className="dark:hidden"
+              alt="payments illustration light"
+              width={2797}
+              height={1137}
+            />
+          </div>
+        </div>
         <div className="relative mx-auto grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-8 lg:grid-cols-4">
           <div className="space-y-3">
             <div className="flex items-center gap-2">

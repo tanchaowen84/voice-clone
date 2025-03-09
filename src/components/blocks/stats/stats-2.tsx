@@ -1,6 +1,6 @@
 /**
  * https://nsui.irung.me/stats
- * 
+ *
  * pnpm dlx shadcn@canary add https://nsui.irung.me/r/stats-2.json
  */
 export default function Stats2() {
@@ -8,8 +8,14 @@ export default function Stats2() {
     <section className="py-12">
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
-          <h2 className="text-4xl font-semibold lg:text-5xl">Tailus UI in numbers</h2>
-          <p>Gemini is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</p>
+          <h2 className="text-4xl font-semibold lg:text-5xl">
+            Tailus UI in numbers
+          </h2>
+          <p>
+            Gemini is evolving to be more than just the models. It supports an
+            entire to the APIs and platforms helping developers and businesses
+            innovate.
+          </p>
         </div>
 
         <div className="grid gap-0.5 *:text-center md:grid-cols-3 dark:[--color-muted:var(--color-zinc-900)]">
@@ -28,5 +34,5 @@ export default function Stats2() {
         </div>
       </div>
     </section>
-  )
+  );
 }

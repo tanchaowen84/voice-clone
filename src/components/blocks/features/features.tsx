@@ -5,11 +5,11 @@ import { ReactNode } from "react";
 /**
  * https://nsui.irung.me/features
  *
- * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-2.json
+ * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-1.json
  */
-export default function Features2() {
+export default function Features() {
   return (
-    <section className="py-16">
+    <section className="bg-zinc-50 py-16 dark:bg-transparent">
       <div className="@container mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
@@ -20,8 +20,8 @@ export default function Features2() {
             repellendus.
           </p>
         </div>
-        <div className="md:max-w-full md:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 [--color-background:var(--color-muted)] [--color-card:var(--color-muted)] *:text-center md:mt-16 dark:[--color-muted:var(--color-zinc-900)]">
-          <Card className="group border-0 shadow-none">
+        <div className="md:max-w-full md:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
+          <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
                 <Zap className="size-6" aria-hidden />
@@ -38,7 +38,7 @@ export default function Features2() {
             </CardContent>
           </Card>
 
-          <Card className="group border-0 shadow-none">
+          <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
                 <Settings2 className="size-6" aria-hidden />
@@ -55,7 +55,7 @@ export default function Features2() {
             </CardContent>
           </Card>
 
-          <Card className="group border-0 shadow-none">
+          <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
                 <Sparkles className="size-6" aria-hidden />
@@ -87,7 +87,7 @@ const CardDecorator = ({ children }: { children: ReactNode }) => (
       aria-hidden
       className="bg-radial to-background absolute inset-0 from-transparent to-75%"
     />
-    <div className="dark:bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t bg-white">
+    <div className="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
       {children}
     </div>
   </div>

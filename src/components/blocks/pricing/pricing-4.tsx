@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Check } from 'lucide-react'
-import Link from 'next/link'
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
+import Link from "next/link";
 
 /**
  * https://nsui.irung.me/pricing
@@ -10,8 +10,14 @@ export default function Pricing4() {
     <section className="py-16">
       <div className="mx-auto max-w-5xl px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-center">
-          <h1 className="text-center text-4xl font-semibold lg:text-5xl">Pricing that Scales with You</h1>
-          <p>Gemini is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</p>
+          <h1 className="text-center text-4xl font-semibold lg:text-5xl">
+            Pricing that Scales with You
+          </h1>
+          <p>
+            Gemini is evolving to be more than just the models. It supports an
+            entire to the APIs and platforms helping developers and businesses
+            innovate.
+          </p>
         </div>
 
         <div className="mt-8 grid gap-6 md:mt-20 md:grid-cols-5 md:gap-0">
@@ -19,7 +25,9 @@ export default function Pricing4() {
             <div className="space-y-4">
               <div>
                 <h2 className="font-medium">Free</h2>
-                <span className="my-3 block text-2xl font-semibold">$0 / mo</span>
+                <span className="my-3 block text-2xl font-semibold">
+                  $0 / mo
+                </span>
                 <p className="text-muted-foreground text-sm">Per editor</p>
               </div>
 
@@ -30,7 +38,11 @@ export default function Pricing4() {
               <hr className="border-dashed" />
 
               <ul className="list-outside space-y-3 text-sm">
-                {['Basic Analytics Dashboard', '5GB Cloud Storage', 'Email and Chat Support'].map((item, index) => (
+                {[
+                  "Basic Analytics Dashboard",
+                  "5GB Cloud Storage",
+                  "Email and Chat Support",
+                ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="size-3" />
                     {item}
@@ -45,7 +57,9 @@ export default function Pricing4() {
               <div className="space-y-4">
                 <div>
                   <h2 className="font-medium">Pro</h2>
-                  <span className="my-3 block text-2xl font-semibold">$19 / mo</span>
+                  <span className="my-3 block text-2xl font-semibold">
+                    $19 / mo
+                  </span>
                   <p className="text-muted-foreground text-sm">Per editor</p>
                 </div>
 
@@ -55,10 +69,23 @@ export default function Pricing4() {
               </div>
 
               <div>
-                <div className="text-sm font-medium">Everything in free plus :</div>
+                <div className="text-sm font-medium">
+                  Everything in free plus :
+                </div>
 
                 <ul className="mt-4 list-outside space-y-3 text-sm">
-                  {['Everything in Free Plan', '5GB Cloud Storage', 'Email and Chat Support', 'Access to Community Forum', 'Single User Access', 'Access to Basic Templates', 'Mobile App Access', '1 Custom Report Per Month', 'Monthly Product Updates', 'Standard Security Features'].map((item, index) => (
+                  {[
+                    "Everything in Free Plan",
+                    "5GB Cloud Storage",
+                    "Email and Chat Support",
+                    "Access to Community Forum",
+                    "Single User Access",
+                    "Access to Basic Templates",
+                    "Mobile App Access",
+                    "1 Custom Report Per Month",
+                    "Monthly Product Updates",
+                    "Standard Security Features",
+                  ].map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <Check className="size-3" />
                       {item}
@@ -71,5 +98,5 @@ export default function Pricing4() {
         </div>
       </div>
     </section>
-  )
+  );
 }
