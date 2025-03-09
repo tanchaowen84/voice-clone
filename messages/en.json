@@ -20,6 +20,10 @@
     "tryAgain": "Try again",
     "backToHome": "Back to home"
   },
+  "ChangelogPage": {
+    "title": "Changelog",
+    "subtitle": "Stay up to date with the latest changes in our product."
+  },
   "AuthPage": {
     "login": {
       "title": "Login",

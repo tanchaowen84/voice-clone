@@ -17,6 +17,10 @@
     "tryAgain": "重试",
     "backToHome": "返回首页"
   },
+  "ChangelogPage": {
+    "title": "更新日志",
+    "subtitle": "查看我们产品的最新动态"
+  },
   "AuthPage": {
     "login": {
       "title": "登录",

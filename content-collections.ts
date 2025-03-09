@@ -232,6 +232,74 @@ export const pages = defineCollection({
   }
 });
 
+/**
+ * Releases collection for changelog
+ * 
+ * 1. For a release at content/en/release/v1-0-0.md:
+ * locale: en
+ * slug: /release/v1-0-0
+ * slugAsParams: v1-0-0
+ * 
+ * 2. For a release at content/zh/release/v1-0-0.md:
+ * locale: zh
+ * slug: /release/v1-0-0
+ * slugAsParams: v1-0-0
+ */
+export const releases = defineCollection({
+  name: 'release',
+  directory: 'content',
+  include: '**/release/**/*.{md,mdx}',
+  schema: (z) => ({
+    title: z.string(),
+    description: z.string(),
+    date: z.string().datetime(),
+    version: z.string(),
+    published: z.boolean().default(true),
+    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+  }),
+  transform: async (data, context) => {
+    const body = await compileMDX(context, data, {
+      remarkPlugins: [
+        remarkGfm,
+        codeImport
+      ],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeAutolinkHeadings,
+        [rehypePrettyCode, prettyCodeOptions]
+      ]
+    });
+    
+    // Determine the locale from the file path or use the provided locale
+    const pathParts = data._meta.path.split(path.sep);
+    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
+    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    
+    // Create a slug without the locale in the path
+    let slugPath = data._meta.path;
+    if (localeFromPath) {
+      // Remove the locale from the path for the slug
+      const pathWithoutLocale = pathParts.slice(1).join(path.sep);
+      slugPath = pathWithoutLocale;
+    }
+    
+    // Create slugAsParams without the locale
+    const slugParamsParts = slugPath.split(path.sep).slice(1);
+    const slugAsParams = slugParamsParts.join('/');
+    
+    return {
+      ...data,
+      locale,
+      slug: `/${slugPath}`,
+      slugAsParams,
+      body: {
+        raw: data.content,
+        code: body
+      }
+    };
+  }
+});
+
 const prettyCodeOptions: Options = {
   theme: 'github-dark',
   getHighlighter: (options) =>
@@ -260,5 +328,5 @@ const prettyCodeOptions: Options = {
 };
 
 export default defineConfig({
-  collections: [authors, categories, posts, pages]
+  collections: [authors, categories, posts, pages, releases]
 });
