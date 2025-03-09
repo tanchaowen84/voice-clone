@@ -1,9 +1,11 @@
 ---
 description: Best practices for using Vercel AI SDK
 globs: **/*.{ts,tsx}
+alwaysApply: false
 ---
 
-- Use the AI SDK to simplify OpenAI API integration
-- Implement proper error handling and rate limiting for API calls
-- Utilize streaming responses for improved user experience in chat applications
+- Use the `createClient` function to initialize your OpenAI client.
+- Implement proper error handling and rate limiting for API requests.
+- Utilize streaming responses for better user experience in long-running tasks.
+- Leverage the `ai` package for easy integration with React components.
 - Follow OpenAI's guidelines for responsible AI usage and data privacy
