@@ -3,6 +3,9 @@ import { routing, Locale } from '@/i18n/routing';
 import { getLocalePathname } from '@/i18n/navigation';
 import { siteConfig } from './config/site';
 
+/**
+ * https://github.com/javayhu/cnblocks/blob/main/app/sitemap.ts
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
     return [...getEntries('/')];
 }
