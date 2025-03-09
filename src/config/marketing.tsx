@@ -133,18 +133,18 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           external: false
         },
         {
-          title: t('Marketing.navbar.pages.items.changelog.title'),
-          description: t('Marketing.navbar.pages.items.changelog.description'),
-          icon: <ListChecksIcon className="size-5 shrink-0" />,
-          href: Routes.Changelog,
-          external: false
-        },
-        {
           title: t('Marketing.navbar.pages.items.roadmap.title'),
           description: t('Marketing.navbar.pages.items.roadmap.description'),
           icon: <SquareKanbanIcon className="size-5 shrink-0" />,
           href: Routes.Roadmap,
           external: true
+        },
+        {
+          title: t('Marketing.navbar.pages.items.changelog.title'),
+          description: t('Marketing.navbar.pages.items.changelog.description'),
+          icon: <ListChecksIcon className="size-5 shrink-0" />,
+          href: Routes.Changelog,
+          external: false
         },
         {
           title: t('Marketing.navbar.pages.items.cookiePolicy.title'),

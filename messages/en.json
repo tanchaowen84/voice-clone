@@ -22,7 +22,16 @@
   },
   "ChangelogPage": {
     "title": "Changelog",
-    "subtitle": "Stay up to date with the latest changes in our product."
+    "subtitle": "Stay up to date with the latest changes in our product"
+  },
+  "ContactPage": {
+    "title": "Contact",
+    "subtitle": "We'll help you find the right plan for your business",
+    "formDescription": "If you have any questions or feedback, please reach out to our team",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Submit"
   },
   "AuthPage": {
     "login": {

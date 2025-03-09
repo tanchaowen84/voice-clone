@@ -21,6 +21,15 @@
     "title": "更新日志",
     "subtitle": "查看我们产品的最新动态"
   },
+  "ContactPage": {
+    "title": "联系我们",
+    "subtitle": "我们帮助您找到合适的计划",
+    "formDescription": "如果您有任何问题或反馈，欢迎联系我们的团队",
+    "name": "姓名",
+    "email": "邮箱",
+    "message": "消息",
+    "submit": "提交"
+  },
   "AuthPage": {
     "login": {
       "title": "登录",
