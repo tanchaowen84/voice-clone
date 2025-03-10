@@ -137,11 +137,9 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <div className="prose prose-gray dark:prose-invert max-w-none">
-            <Mdx code={post.body.code} />
-          </div>
+          <Mdx code={post.body.code} />
 
-          <div className="flex items-center justify-start mt-16">
+          <div className="flex items-center justify-start my-16">
             <AllPostsButton />
           </div>
         </div>

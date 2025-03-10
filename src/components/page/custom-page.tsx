@@ -39,9 +39,7 @@ export function CustomPage({
       {/* Content */}
       <Card className="mb-8">
         <CardContent>
-          <div className="prose prose-gray dark:prose-invert max-w-none">
-            <Mdx code={content} />
-          </div>
+          <Mdx code={content} />
         </CardContent>
       </Card>
     </div>

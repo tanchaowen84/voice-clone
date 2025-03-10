@@ -13,7 +13,8 @@
     "language": "Switch language",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "copy": "Copy"
   },
   "HomePage": {
     "title": "next-intl example"

@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { createHighlighter } from 'shiki';
 import path from "path";
 import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
+import { visit } from 'unist-util-visit';
 
 /**
  * Content Collections documentation
@@ -100,17 +101,7 @@ export const posts = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    const body = await compileMDX(context, data, {
-      remarkPlugins: [
-        remarkGfm,
-        codeImport
-      ],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypeAutolinkHeadings,
-        [rehypePrettyCode, prettyCodeOptions]
-      ]
-    });
+    const body = await compileWithCodeCopy(context, data);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -190,17 +181,7 @@ export const pages = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    const body = await compileMDX(context, data, {
-      remarkPlugins: [
-        remarkGfm,
-        codeImport
-      ],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypeAutolinkHeadings,
-        [rehypePrettyCode, prettyCodeOptions]
-      ]
-    });
+    const body = await compileWithCodeCopy(context, data);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -258,17 +239,7 @@ export const releases = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    const body = await compileMDX(context, data, {
-      remarkPlugins: [
-        remarkGfm,
-        codeImport
-      ],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypeAutolinkHeadings,
-        [rehypePrettyCode, prettyCodeOptions]
-      ]
-    });
+    const body = await compileWithCodeCopy(context, data);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -325,6 +296,40 @@ const prettyCodeOptions: Options = {
     }
     node.properties.className = ['word--highlighted'];
   }
+};
+
+const compileWithCodeCopy = async (
+  context: any, 
+  data: any, 
+  options: { 
+    remarkPlugins?: any[]; 
+    rehypePlugins?: any[];
+  } = {}
+) => {
+  return await compileMDX(context, data, {
+    ...options,
+    remarkPlugins: [
+      remarkGfm,
+      codeImport,
+      ...(options.remarkPlugins || [])
+    ],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypePrettyCode, prettyCodeOptions],
+      // add __rawString__ to pre element
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === "element" && node?.tagName === "pre") {
+            const [codeEl] = node.children;
+            if (codeEl.tagName !== "code") return;
+            node.__rawString__ = codeEl.children?.[0]?.value;
+          }
+        });
+      },
+      rehypeAutolinkHeadings,
+      ...(options.rehypePlugins || [])
+    ]
+  });
 };
 
 export default defineConfig({

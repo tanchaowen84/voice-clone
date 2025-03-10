@@ -40,9 +40,7 @@ export function ReleaseCard({
         <Separator />
       </CardHeader>
       <CardContent>
-        <div className="prose prose-gray dark:prose-invert max-w-none">
-          <Mdx code={content} />
-        </div>
+        <Mdx code={content} />
       </CardContent>
     </Card>
   );

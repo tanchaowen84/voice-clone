@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { CheckIcon, CopyIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
 interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -11,8 +12,8 @@ interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 
 export function CopyButton({ value, className, ...props }: CopyButtonProps) {
   const [hasCopied, setHasCopied] = React.useState(false);
+  const t = useTranslations('Common');
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setTimeout(() => {
       setHasCopied(false);
@@ -35,7 +36,7 @@ export function CopyButton({ value, className, ...props }: CopyButtonProps) {
       onClick={() => handleCopyValue(value)}
       {...props}
     >
-      <span className="sr-only">Copy</span>
+      <span className="sr-only">{t('copy')}</span>
       {hasCopied ? (
         <CheckIcon className="size-4" />
       ) : (

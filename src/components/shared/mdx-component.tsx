@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import { CopyButton } from './copy-button';
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -135,14 +136,29 @@ const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <pre
-      className={cn(
-        'relative mt-4 max-w-[calc(100vw-64px)] overflow-x-auto rounded bg-muted px-1 py-2 font-mono text-sm',
-        className
+  pre: ({
+    className,
+    __rawString__,
+    ...props
+  }: React.HTMLAttributes<HTMLPreElement> & { __rawString__?: string }) => (
+    <div className="my-4 group relative w-full overflow-hidden">
+      <pre
+        className={cn(
+          "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
+          className,
+        )}
+        {...props}
+      />
+      {__rawString__ && (
+        <CopyButton
+          value={__rawString__}
+          className={cn(
+            "absolute right-4 top-4 z-20",
+            "duration-250 opacity-0 transition-all group-hover:opacity-100",
+          )}
+        />
       )}
-      {...props}
-    />
+    </div>
   ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
@@ -163,7 +179,12 @@ const components = {
   AccordionItem,
   AccordionTrigger,
   Callout,
-  Image,
+  Image: ({ className, ...props }: React.ComponentProps<typeof Image>) => (
+    <Image
+      className={cn('my-4 w-full rounded-lg', className)}
+      {...props}
+    />
+  ),
   Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => (
     <Tabs className={cn('relative mt-6 w-full', className)} {...props} />
   ),
@@ -207,7 +228,7 @@ type MdxProps = {
 };
 
 /**
- * TODO: update
+ * render mdx content with custom components
  */
 export function Mdx({ code }: MdxProps) {
   const Component = useMDXComponent(code);

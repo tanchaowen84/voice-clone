@@ -13,7 +13,8 @@
     "language": "切换语言",
     "light": "浅色模式",
     "dark": "深色模式",
-    "system": "跟随系统"
+    "system": "跟随系统",
+    "copy": "复制"
   },
   "HomePage": {
     "title": "next-intl 示例"
