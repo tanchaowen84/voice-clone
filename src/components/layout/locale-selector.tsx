@@ -24,9 +24,7 @@ import { useEffect, useTransition } from 'react';
  *
  * https://next-intl.dev/docs/routing/navigation#userouter
  */
-export default function LocaleSelector({
-  showLocaleName = true,
-}: { showLocaleName?: boolean }) {
+export default function LocaleSelector() {
   const router = useLocaleRouter();
   const pathname = useLocalePathname();
   const params = useParams();
@@ -67,7 +65,7 @@ export default function LocaleSelector({
           {currentLocale && (
             <div className="flex items-center gap-2">
               <span className="text-lg">{LOCALE_LIST[currentLocale].flag}</span>
-              {showLocaleName && <span>{LOCALE_LIST[currentLocale].name}</span>}
+              <span>{LOCALE_LIST[currentLocale].name}</span>
             </div>
           )}
         </SelectValue>

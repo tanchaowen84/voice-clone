@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import LocaleSwitcher from './locale-switcher';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -227,7 +228,7 @@ export function Navbar({ scroll }: NavBarProps) {
             )}
 
             <ThemeSwitcher />
-            <LocaleSelector showLocaleName={false} />
+            <LocaleSwitcher />
           </div>
         </nav>
 
