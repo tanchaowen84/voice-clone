@@ -1,8 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { getWebsiteInfo, websiteConfig } from '@/config';
-import { createTranslator } from '@/i18n/translator';
-import { MailIcon, UserCircleIcon } from 'lucide-react';
+import { websiteConfig } from '@/config';
+import { MailIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
@@ -11,8 +10,6 @@ import Image from 'next/image';
  */
 export default async function AboutPage() {
   const t = await getTranslations('AboutPage');
-  const translator = createTranslator(t);
-  const websiteInfo = getWebsiteInfo(translator);
 
   return (
     <section className="space-y-8 pb-16">
@@ -29,7 +26,7 @@ export default async function AboutPage() {
                   alt="Avatar"
                 />
                 <AvatarFallback>
-                  <UserCircleIcon className="size-32 text-muted-foreground" />
+                  <div className="size-32 text-muted-foreground" />
                 </AvatarFallback>
               </Avatar>
               <div>
