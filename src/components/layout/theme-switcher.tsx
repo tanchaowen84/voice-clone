@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 /**
@@ -15,6 +16,7 @@ import { useTheme } from 'next-themes';
  */
 export function ThemeSwitcher() {
   const { setTheme } = useTheme();
+  const t = useTranslations('Common');
 
   return (
     <DropdownMenu>
@@ -22,11 +24,11 @@ export function ThemeSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-9 w-9 p-0.5 border border-border rounded-full"
+          className="size-9 p-0.5 border border-border rounded-full"
         >
           <SunIcon className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">{t('theme')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -35,21 +37,21 @@ export function ThemeSwitcher() {
           className="cursor-pointer"
         >
           <SunIcon className="mr-2 size-4" />
-          <span>Light</span>
+          <span>{t('light')}</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme('dark')}
           className="cursor-pointer"
         >
           <MoonIcon className="mr-2 size-4" />
-          <span>Dark</span>
+          <span>{t('dark')}</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme('system')}
           className="cursor-pointer"
         >
           <LaptopIcon className="mr-2 size-4" />
-          <span>System</span>
+          <span>{t('system')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

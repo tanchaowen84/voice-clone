@@ -8,7 +8,12 @@
   "Common": {
     "login": "Login",
     "logout": "Log out",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "theme": "Toggle theme",
+    "language": "Switch language",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   },
   "HomePage": {
     "title": "next-intl example"

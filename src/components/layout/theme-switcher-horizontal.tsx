@@ -5,6 +5,7 @@ import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 /**
  * Theme switcher component, used in the footer, switch theme by theme variable
@@ -12,6 +13,7 @@ import { useEffect, useState } from 'react';
 export function ThemeSwitcherHorizontal() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations('Common');
 
   // Only show the UI after hydration to prevent hydration mismatch
   useEffect(() => {
@@ -38,7 +40,7 @@ export function ThemeSwitcherHorizontal() {
           theme === 'light' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('light')}
-        aria-label="Light mode"
+        aria-label={t('light')}
       >
         <SunIcon className="size-4" />
       </Button>
@@ -51,7 +53,7 @@ export function ThemeSwitcherHorizontal() {
           theme === 'dark' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('dark')}
-        aria-label="Dark mode"
+        aria-label={t('dark')}
       >
         <MoonIcon className="size-4" />
       </Button>
@@ -64,7 +66,7 @@ export function ThemeSwitcherHorizontal() {
           theme === 'system' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('system')}
-        aria-label="System mode"
+        aria-label={t('system')}
       >
         <LaptopIcon className="size-4" />
       </Button>

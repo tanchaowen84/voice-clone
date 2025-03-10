@@ -8,7 +8,12 @@
   "Common": {
     "login": "登录",
     "logout": "退出",
-    "signUp": "注册"
+    "signUp": "注册",
+    "theme": "切换主题",
+    "language": "切换语言",
+    "light": "浅色模式",
+    "dark": "深色模式",
+    "system": "跟随系统"
   },
   "HomePage": {
     "title": "next-intl 示例"

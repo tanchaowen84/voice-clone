@@ -8,10 +8,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { DEFAULT_LOCALE, Locale, LOCALE_LIST, routing } from '@/i18n/routing';
+import { Locale, LOCALE_LIST, routing } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Languages } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 
@@ -30,7 +30,8 @@ export default function LocaleSwitcher() {
   const locale = useLocale();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
   const [, startTransition] = useTransition();
-
+  const t = useTranslations('Common');
+  
   useEffect(() => {
     setCurrentLocale(locale);
   }, [locale, setCurrentLocale]);
@@ -55,10 +56,10 @@ export default function LocaleSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-9 w-9 p-0.5 border border-border rounded-full"
+          className="size-9 p-0.5 border border-border rounded-full"
         >
           <Languages className="size-3" />
-          <span className="sr-only">Switch language</span>
+          <span className="sr-only">{t('language')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
