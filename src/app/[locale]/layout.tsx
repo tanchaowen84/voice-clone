@@ -1,4 +1,4 @@
-import { fontSourceSans, fontSourceSerif4 } from '@/assets/fonts';
+import { fontDMSans, fontSourceSans, fontSourceSerif4 } from '@/assets/fonts';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -46,6 +46,7 @@ export default async function LocaleLayout({
         className={cn(
           'size-full antialiased',
           GeistSans.className,
+          fontDMSans.variable,
           fontSourceSerif4.variable,
           fontSourceSans.variable,
           GeistSans.variable,

@@ -16,6 +16,12 @@ export const fontSourceSans = localFont({
   variable: '--font-source-sans',
 });
 
+// https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
+export const fontDMSans = localFont({
+  src: './dm-sans-v15-latin-regular.woff2',
+  variable: '--font-dm-sans',
+});
+
 /**
  * [2] use google font
  *
