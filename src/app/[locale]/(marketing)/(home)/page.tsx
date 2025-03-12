@@ -14,7 +14,7 @@ import Testimonials from '@/components/blocks/testimonials/testimonials';
 import { getTranslations } from 'next-intl/server';
 
 interface HomePageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function HomePage(props: HomePageProps) {

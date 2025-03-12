@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
-import { routing, Locale } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
 import { getLocalePathname } from '@/i18n/navigation';
 import { getBaseUrl } from './lib/urls/get-base-url';
+import { Locale } from 'next-intl';
 
 /**
  * https://github.com/javayhu/cnblocks/blob/main/app/sitemap.ts

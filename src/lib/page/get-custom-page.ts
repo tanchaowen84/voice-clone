@@ -6,7 +6,7 @@ import { allPages } from 'content-collections';
  * @param locale The locale to get the page for
  * @returns The custom page or undefined if not found
  */
-export async function getCustomPage(type: string, locale: string) {
+export async function getCustomPage(type: string, locale: Locale) {
   // Find page with matching slug and locale
   const page = allPages.find(
     (page) => page.slugAsParams === `${type}` && page.locale === locale

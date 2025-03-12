@@ -8,7 +8,7 @@ import Features8 from '@/components/blocks/features/features-8';
 import Features9 from '@/components/blocks/features/features-9';
 
 interface FeaturesPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function FeaturesPage(props: FeaturesPageProps) {

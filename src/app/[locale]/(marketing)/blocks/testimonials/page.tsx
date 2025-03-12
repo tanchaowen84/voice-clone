@@ -5,7 +5,7 @@ import Testimonials5 from '@/components/blocks/testimonials/testimonials-5';
 import Testimonials6 from '@/components/blocks/testimonials/testimonials-6';
 
 interface TestimonialsPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 /**

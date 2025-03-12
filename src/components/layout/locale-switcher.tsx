@@ -8,10 +8,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { Locale, LOCALE_LIST, routing } from '@/i18n/routing';
+import { LOCALE_LIST, routing } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Languages } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { Locale, useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 

@@ -1,5 +1,4 @@
-import type { Locale } from '@/i18n/routing';
-import type { Messages } from '@/i18n/messages';
+import { Locale, Messages } from 'next-intl';
 
 export interface EmailParams {
   to: string;

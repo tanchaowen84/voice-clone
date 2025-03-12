@@ -1,4 +1,4 @@
-import { Locale } from '@/i18n/routing';
+import { Locale } from 'next-intl';
 import { create } from 'zustand';
 
 interface LocaleState {
