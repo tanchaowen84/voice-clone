@@ -1,21 +1,15 @@
 'use client';
-import React from 'react';
-import Link from 'next/link';
-import { Logo } from '@/components/logo';
-import { ArrowRight, Menu, Rocket, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ArrowRight, Rocket } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const menuItems = [
-  { name: 'Features', href: '#' },
-  { name: 'Solution', href: '#' },
-  { name: 'Pricing', href: '#' },
-  { name: 'About', href: '#' },
-];
-
+/**
+ * https://nsui.irung.me/hero-section
+ *
+ * pnpm dlx shadcn@canary add https://nsui.irung.me/r/hero-section-4.json
+ */
 export default function HeroSection4() {
-  const [menuState, setMenuState] = React.useState(false);
-
   return (
     <>
       <main className="overflow-hidden">
