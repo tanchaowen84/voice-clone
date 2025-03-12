@@ -1,11 +1,8 @@
 import deepmerge from 'deepmerge';
 import { routing } from './routing';
+import { Locale, Messages } from 'next-intl';
 
-import type messages from '../../messages/en.json';
-
-export type Messages = typeof messages;
-
-export const importLocale = async (locale: string): Promise<Messages> => {
+const importLocale = async (locale: Locale): Promise<Messages> => {
   return (await import(`../../messages/${locale}.json`)).default as Messages;
 };
 
@@ -16,7 +13,7 @@ export const importLocale = async (locale: string): Promise<Messages> => {
  * https://next-intl.dev/docs/usage/configuration#messages
  */
 export const getMessagesForLocale = async (
-  locale: string
+  locale: Locale
 ): Promise<Messages> => {
   const localeMessages = await importLocale(locale);
   if (locale === routing.defaultLocale) {

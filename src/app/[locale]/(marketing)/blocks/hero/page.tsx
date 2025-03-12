@@ -4,7 +4,7 @@ import HeroSection3 from '@/components/blocks/hero/hero-section-3';
 import HeroSection4 from '@/components/blocks/hero/hero-section-4';
 
 interface HeroPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 /**

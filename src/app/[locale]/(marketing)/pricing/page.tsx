@@ -5,7 +5,7 @@ import PricingComparator from '@/components/pricing-comparator';
 import { getTranslations } from 'next-intl/server';
 
 interface PricingPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function PricingPage(props: PricingPageProps) {

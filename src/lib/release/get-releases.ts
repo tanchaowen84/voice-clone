@@ -5,7 +5,7 @@ import { allReleases } from 'content-collections';
  * @param locale The locale to get releases for
  * @returns An array of releases sorted by date (newest first)
  */
-export async function getReleases(locale: string) {
+export async function getReleases(locale: Locale) {
   // Find all published releases with matching locale
   const releases = allReleases.filter(
     (release) => release.published && release.locale === locale

@@ -14,6 +14,7 @@ export const LOCALE_COOKIE_NAME = 'NEXT_LOCALE';
  * Next.js internationalized routing
  *
  * https://next-intl.dev/docs/routing
+ * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/i18n/routing.ts
  */
 export const routing = defineRouting({
   // A list of all locales that are supported
@@ -46,4 +47,4 @@ export const routing = defineRouting({
 });
 
 // export type Pathnames = keyof typeof routing.pathnames;
-export type Locale = (typeof routing.locales)[number];
+// export type Locale = (typeof routing.locales)[number];

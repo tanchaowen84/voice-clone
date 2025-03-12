@@ -1,8 +1,9 @@
 import { getWebsiteInfo } from '@/config';
-import { Locale, LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
+import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { createTranslator } from '@/i18n/translator';
 import { type ClassValue, clsx } from 'clsx';
 import { parse as parseCookies } from 'cookie';
+import { Locale } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -19,7 +20,7 @@ export function cn(...inputs: ClassValue[]) {
 export function createTitle(
   title: string, 
   addSuffix: boolean = true,
-  locale: string = 'en'
+  locale: Locale = routing.defaultLocale
 ): string {
   // Create a simple translator function for default values
   const t = createTranslator((key: string) => key);

@@ -13,7 +13,7 @@ import { getBaseUrl } from '@/lib/urls/get-base-url';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string; locale: string }>;
+  params: Promise<{ slug: string; locale: Locale }>;
 }): Promise<Metadata | undefined> {
   const resolvedParams = await params;
   const { slug, locale } = resolvedParams;

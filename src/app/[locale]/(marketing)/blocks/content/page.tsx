@@ -6,7 +6,7 @@ import Content5 from '@/components/blocks/content/content-5';
 import Content6 from '@/components/blocks/content/content-6';
 
 interface ContentPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function ContentPage(props: ContentPageProps) {

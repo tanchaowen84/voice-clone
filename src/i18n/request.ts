@@ -1,3 +1,4 @@
+import { hasLocale } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
 import { getMessagesForLocale } from './messages';
 import { routing } from './routing';
@@ -11,15 +12,17 @@ import { routing } from './routing';
  * The first component to use internationalization will call the function defined with getRequestConfig.
  *
  * https://next-intl.dev/docs/usage/configuration
+ * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/i18n/request.ts
  */
 export default getRequestConfig(async ({ requestLocale }) => {
   // This typically corresponds to the `[locale]` segment
-  let locale = await requestLocale;
+  let requested = await requestLocale;
 
   // Ensure that the incoming `locale` is valid
-  if (!locale || !routing.locales.includes(locale as any)) {
-    locale = routing.defaultLocale;
-  }
+  // https://next-intl.dev/blog/next-intl-4-0?s#strictly-typed-locale
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
 
   // https://next-intl.dev/docs/usage/configuration#messages
   // If you have incomplete messages for a given locale and would like to use messages

@@ -8,9 +8,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { DEFAULT_LOCALE, Locale, LOCALE_LIST, routing } from '@/i18n/routing';
+import { DEFAULT_LOCALE, LOCALE_LIST, routing } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
-import { useLocale } from 'next-intl';
+import { Locale, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 

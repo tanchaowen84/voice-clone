@@ -1,9 +1,9 @@
-import type { Messages } from '@/i18n/messages';
 import { getMessagesForLocale } from '@/i18n/messages';
-import { Locale, routing } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
 import { mailTemplates } from '@/mail/emails';
 import { sendEmail } from '@/mail/provider/resend';
 import { render } from '@react-email/render';
+import { Locale, Messages } from 'next-intl';
 
 type Template = keyof typeof mailTemplates;
 

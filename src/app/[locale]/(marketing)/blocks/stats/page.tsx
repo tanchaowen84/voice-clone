@@ -4,7 +4,7 @@ import Stats3 from '@/components/blocks/stats/stats-3';
 import Stats4 from '@/components/blocks/stats/stats-4';
 
 interface StatsPageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }
 
 /**

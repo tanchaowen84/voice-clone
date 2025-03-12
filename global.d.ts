@@ -1,8 +1,14 @@
-import en from './messages/en.json';
+import { routing } from '@/i18n/routing';
+import messages from './messages/en.json';
 
-type Messages = typeof en;
-
-declare global {
-  // Use type safe message keys with `next-intl`
-  interface IntlMessages extends Messages {}
+/**
+ * next-intl 4.0.0
+ * 
+ * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/global.d.ts
+ */
+declare module 'next-intl' {
+  interface AppConfig {
+    Locale: (typeof routing.locales)[number];
+    Messages: typeof messages;
+  }
 }
