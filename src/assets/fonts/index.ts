@@ -17,10 +17,23 @@ export const fontSourceSans = localFont({
 });
 
 // https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
-export const fontDMSans = localFont({
+export const fontDMSansRegular = localFont({
   src: './dm-sans-v15-latin-regular.woff2',
+  variable: '--font-dm-sans-regular',
+});
+
+// https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
+// download this font with weight 500
+export const fontDMSans = localFont({
+  src: './dm-sans-v15-latin-500.woff2',
   variable: '--font-dm-sans',
 });
+
+// https://gwfh.mranftl.com/fonts/dm-serif-display?subsets=latin
+// export const fontDMSerifDisplay = localFont({
+//   src: './dm-serif-display-v15-latin-regular.woff2',
+//   variable: '--font-dm-serif-display',
+// });
 
 /**
  * [2] use google font

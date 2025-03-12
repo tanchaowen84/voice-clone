@@ -41,7 +41,7 @@ export default async function LocaleLayout({
         suppressHydrationWarning
         className={cn(
           'size-full antialiased',
-          GeistSans.className,
+          fontDMSans.className,
           fontDMSans.variable,
           fontSourceSerif4.variable,
           fontSourceSans.variable,
