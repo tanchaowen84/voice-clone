@@ -1,16 +1,12 @@
 import CallToAction from '@/components/blocks/call-to-action/call-to-action';
-import CallToAction3 from '@/components/blocks/call-to-action/call-to-action-3';
-import Content2 from '@/components/blocks/content/content-2';
 import FAQs from '@/components/blocks/faq/faqs';
-import Features from '@/components/blocks/features/features';
 import Features7 from '@/components/blocks/features/features-7';
-import FeaturesSection from '@/components/blocks/features/features-8';
 import HeroSection from '@/components/blocks/hero/hero-section-4';
 import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
-import Pricing from '@/components/blocks/pricing/pricing';
 import Pricing4 from '@/components/blocks/pricing/pricing-4';
 import StatsSection from '@/components/blocks/stats/stats';
 import Testimonials from '@/components/blocks/testimonials/testimonials';
+import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 interface HomePageProps {

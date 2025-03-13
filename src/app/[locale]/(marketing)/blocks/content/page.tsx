@@ -4,6 +4,7 @@ import Content3 from '@/components/blocks/content/content-3';
 import Content4 from '@/components/blocks/content/content-4';
 import Content5 from '@/components/blocks/content/content-5';
 import Content6 from '@/components/blocks/content/content-6';
+import { Locale } from 'next-intl';
 
 interface ContentPageProps {
   params: Promise<{ locale: Locale }>;

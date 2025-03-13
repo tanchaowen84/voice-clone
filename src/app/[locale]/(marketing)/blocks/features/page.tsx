@@ -6,6 +6,7 @@ import Features6 from '@/components/blocks/features/features-6';
 import Features7 from '@/components/blocks/features/features-7';
 import Features8 from '@/components/blocks/features/features-8';
 import Features9 from '@/components/blocks/features/features-9';
+import { Locale } from 'next-intl';
 
 interface FeaturesPageProps {
   params: Promise<{ locale: Locale }>;

@@ -1,4 +1,5 @@
 import FAQs from '@/components/blocks/faq/faqs';
+import { Locale } from 'next-intl';
 
 interface FAQPageProps {
   params: Promise<{ locale: Locale }>;

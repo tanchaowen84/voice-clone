@@ -1,6 +1,7 @@
 import CallToAction from '@/components/blocks/call-to-action/call-to-action';
 import CallToAction2 from '@/components/blocks/call-to-action/call-to-action-2';
 import CallToAction3 from '@/components/blocks/call-to-action/call-to-action-3';
+import { Locale } from 'next-intl';
 
 interface CallToActionPageProps {
   params: Promise<{ locale: Locale }>;

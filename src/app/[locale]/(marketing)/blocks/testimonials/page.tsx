@@ -3,6 +3,7 @@ import Testimonials2 from '@/components/blocks/testimonials/testimonials-2';
 import Testimonials4 from '@/components/blocks/testimonials/testimonials-4';
 import Testimonials5 from '@/components/blocks/testimonials/testimonials-5';
 import Testimonials6 from '@/components/blocks/testimonials/testimonials-6';
+import { Locale } from 'next-intl';
 
 interface TestimonialsPageProps {
   params: Promise<{ locale: Locale }>;

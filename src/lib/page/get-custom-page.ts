@@ -1,4 +1,5 @@
 import { allPages } from 'content-collections';
+import { Locale } from 'next-intl';
 
 /**
  * Gets a custom page from the content collection

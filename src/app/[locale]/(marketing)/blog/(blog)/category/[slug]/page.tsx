@@ -9,6 +9,7 @@ import { constructMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import { NextPageProps } from '@/types/next-page-props';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { Locale } from 'next-intl';
 
 export async function generateMetadata({
   params,

@@ -1,5 +1,5 @@
 import { allReleases } from 'content-collections';
-
+import { Locale } from 'next-intl';
 /**
  * Gets all releases for the changelog page
  * @param locale The locale to get releases for
