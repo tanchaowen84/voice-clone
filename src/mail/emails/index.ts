@@ -3,9 +3,9 @@ import { ForgotPassword } from './forgot-password';
 import { SubscribeNewsletter } from './subscribe-newsletter';
 
 /**
- * list all the mail templates here
+ * list all the email templates here
  */
-export const mailTemplates = {
+export const EmailTemplates = {
   forgotPassword: ForgotPassword,
   verifyEmail: VerifyEmail,
   subscribeNewsletter: SubscribeNewsletter,

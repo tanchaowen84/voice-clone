@@ -1,11 +1,10 @@
 import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
-import { mailTemplates } from '@/mail/emails';
+import { EmailTemplates } from '@/mail/emails';
 import { sendEmail } from '@/mail/provider/resend';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';
-
-type Template = keyof typeof mailTemplates;
+import { Template } from './types';
 
 /**
  * send email
@@ -21,7 +20,7 @@ export async function send<T extends Template>(
     | {
         template: T;
         context: Omit<
-          Parameters<(typeof mailTemplates)[T]>[0],
+          Parameters<(typeof EmailTemplates)[T]>[0],
           'locale' | 'messages'
         >;
       }
@@ -81,12 +80,12 @@ async function getTemplate<T extends Template>({
 }: {
   template: T;
   context: Omit<
-    Parameters<(typeof mailTemplates)[T]>[0],
+    Parameters<(typeof EmailTemplates)[T]>[0],
     'locale' | 'messages'
   >;
   locale: Locale;
 }) {
-  const mainTemplate = mailTemplates[template];
+  const mainTemplate = EmailTemplates[template];
   const messages = await getMessagesForLocale(locale);
 
   const email = mainTemplate({

@@ -1,16 +1,17 @@
 import { getWebsiteInfo } from '@/config';
+import { routing } from '@/i18n/routing';
 import { createTranslator as createAppTranslator } from '@/i18n/translator';
 import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
-import { defaultLocale, defaultMessages } from '@/mail/messages';
-import type { BaseMailProps } from '@/mail/types';
+import type { BaseEmailProps } from '@/mail/utils/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
+import { defaultMessages } from '@/i18n/messages';
 
 type ForgotPasswordProps = {
   url: string;
   name: string;
-} & BaseMailProps;
+} & BaseEmailProps;
 
 export function ForgotPassword({
   url,
@@ -50,7 +51,7 @@ export function ForgotPassword({
 }
 
 ForgotPassword.PreviewProps = {
-  locale: defaultLocale,
+  locale: routing.defaultLocale,
   messages: defaultMessages,
   url: 'https://mksaas.com',
   name: 'username',

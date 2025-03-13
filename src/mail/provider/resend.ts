@@ -1,5 +1,5 @@
 import { websiteConfig } from '@/config';
-import { SendEmailHandler } from '@/mail/types';
+import { SendEmailHandler } from '@/mail/utils/types';
 import { Resend } from 'resend';
 
 export const resend = new Resend(process.env.RESEND_API_KEY);

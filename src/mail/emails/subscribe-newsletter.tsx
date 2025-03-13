@@ -1,10 +1,11 @@
+import { routing } from '@/i18n/routing';
 import EmailLayout from '@/mail/components/email-layout';
-import { defaultLocale, defaultMessages } from '@/mail/messages';
-import type { BaseMailProps } from '@/mail/types';
+import type { BaseEmailProps } from '@/mail/utils/types';
 import { Heading, Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
+import { defaultMessages } from '@/i18n/messages';
 
-export function SubscribeNewsletter({ locale, messages }: BaseMailProps) {
+export function SubscribeNewsletter({ locale, messages }: BaseEmailProps) {
   const t = createTranslator({
     locale,
     messages,
@@ -21,7 +22,7 @@ export function SubscribeNewsletter({ locale, messages }: BaseMailProps) {
 }
 
 SubscribeNewsletter.PreviewProps = {
-  locale: defaultLocale,
+  locale: routing.defaultLocale,
   messages: defaultMessages,
 };
 
