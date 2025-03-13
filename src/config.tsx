@@ -36,7 +36,6 @@ import { TranslationFunction } from './i18n/translator';
 
 export const websiteConfig: WebsiteConfig = {
   metadata: {
-    author: 'MkSaaS Team',
     image: '/og.png',
   },
   mail: {

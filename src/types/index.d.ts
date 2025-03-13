@@ -5,7 +5,6 @@ import type { ReactNode } from 'react';
  */
 export type WebsiteConfig = {
   metadata: {
-    author?: string;
     image?: string;
   };
   mail: {

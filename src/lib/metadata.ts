@@ -55,7 +55,6 @@ export function constructMetadata({
       description,
       images: [ogImageUrl.toString()],
       site: getBaseUrl(),
-      creator: websiteConfig.metadata.author,
     },
     icons: {
       icon: '/favicon.ico',
