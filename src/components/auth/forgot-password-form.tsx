@@ -46,22 +46,22 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
       },
       {
         onRequest: (ctx) => {
-          console.log('forgotPassword, request:', ctx.url);
+          // console.log('forgotPassword, request:', ctx.url);
           setIsPending(true);
           setError('');
           setSuccess('');
         },
         onResponse: (ctx) => {
-          console.log('forgotPassword, response:', ctx.response);
+          // console.log('forgotPassword, response:', ctx.response);
           setIsPending(false);
         },
         onSuccess: (ctx) => {
-          console.log('forgotPassword, success:', ctx.data);
+          // console.log('forgotPassword, success:', ctx.data);
           setSuccess(t('checkEmail'));
         },
         onError: (ctx) => {
           console.error('forgotPassword, error:', ctx.error);
-          setError(ctx.error.message);
+          setError(`${ctx.error.status} : ${ctx.error.statusText}`);
         },
       }
     );

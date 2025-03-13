@@ -78,7 +78,7 @@ export const ResetPasswordForm = () => {
         },
         onError: (ctx) => {
           console.error('resetPassword, error:', ctx.error);
-          setError(ctx.error.message);
+          setError(`${ctx.error.status}:${ctx.error.statusText}`);
         },
       }
     );
