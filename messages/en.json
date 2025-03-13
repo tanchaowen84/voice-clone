@@ -256,7 +256,7 @@
   },
   "Mail": {
     "common": {
-      "team": "{name} Team",
+      "team": "MkSaaS Team",
       "copyright": "Copyright {year} All Rights Reserved."
     },
     "verifyEmail": {

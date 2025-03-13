@@ -1,9 +1,9 @@
+import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import EmailLayout from '@/mail/components/email-layout';
 import type { BaseEmailProps } from '@/mail/utils/types';
 import { Heading, Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
-import { defaultMessages } from '@/i18n/messages';
 
 export function SubscribeNewsletter({ locale, messages }: BaseEmailProps) {
   const t = createTranslator({
@@ -17,6 +17,15 @@ export function SubscribeNewsletter({ locale, messages }: BaseEmailProps) {
         {t('Mail.subscribeNewsletter.subject')}
       </Heading>
       <Text>{t('Mail.subscribeNewsletter.body')}</Text>
+
+      <br />
+      <br />
+      <br />
+
+      <Text>{t('Mail.common.team')}</Text>
+      <Text>
+        {t('Mail.common.copyright', { year: new Date().getFullYear() })}
+      </Text>
     </EmailLayout>
   );
 }

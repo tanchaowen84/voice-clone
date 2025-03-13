@@ -1,12 +1,10 @@
-import { getWebsiteInfo } from '@/config';
+import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
-import { createTranslator as createAppTranslator } from '@/i18n/translator';
 import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
 import type { BaseEmailProps } from '@/mail/utils/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
-import { defaultMessages } from '@/i18n/messages';
 
 type VerifyEmailProps = {
   url: string;
@@ -19,10 +17,6 @@ export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
     messages,
   });
   
-  // Create a simple translator function for site config
-  const appTranslator = createAppTranslator((key: string) => key);
-  const websiteInfo = getWebsiteInfo(appTranslator);
-
   return (
     <EmailLayout>
       <Text>{t('Mail.verifyEmail.title', { name })}</Text>
@@ -35,7 +29,7 @@ export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
       <br />
       <br />
 
-      <Text>{t('Mail.common.team', { name: websiteInfo.name })}</Text>
+      <Text>{t('Mail.common.team')}</Text>
       <Text>
         {t('Mail.common.copyright', { year: new Date().getFullYear() })}
       </Text>

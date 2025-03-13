@@ -254,7 +254,7 @@
   },
   "Mail": {
 		"common": {
-      "team": "{name} 团队",
+      "team": "MkSaaS 团队",
       "copyright": "版权所有 {year} All Rights Reserved."
 		},
 		"verifyEmail": {
