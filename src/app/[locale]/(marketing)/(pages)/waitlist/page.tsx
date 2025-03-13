@@ -4,7 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { constructMetadata } from '@/lib/metadata';
+import { createTitle } from '@/lib/utils';
+import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('WaitlistPage');
+
+  return constructMetadata({
+    title: createTitle(t('title')),
+    description: t('description'),
+  });
+}
 
 /**
  *

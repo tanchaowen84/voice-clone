@@ -1,4 +1,5 @@
 import { getWebsiteInfo } from '@/config';
+import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { createTranslator } from '@/i18n/translator';
 import { type ClassValue, clsx } from 'clsx';
@@ -22,18 +23,13 @@ export function createTitle(
   addSuffix: boolean = true,
   locale: Locale = routing.defaultLocale
 ): string {
-  // Create a simple translator function for default values
-  const t = createTranslator((key: string) => key);
-  const websiteInfo = getWebsiteInfo(t);
-  
   if (!addSuffix) {
     return title;
   }
   if (!title) {
-    return websiteInfo.name;
+    return defaultMessages.Site.title;
   }
-
-  return `${title} | ${websiteInfo.name}`;
+  return `${title} | ${defaultMessages.Site.title}`;
 }
 
 /**

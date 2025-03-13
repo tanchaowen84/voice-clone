@@ -6,6 +6,7 @@ import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
+import { TranslationFunction } from '@/i18n/translator';
 import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig, WebsiteInfo } from '@/types';
 import { DashboardIcon } from '@radix-ui/react-icons';
@@ -32,7 +33,6 @@ import {
   ThumbsUpIcon,
   WandSparklesIcon,
 } from 'lucide-react';
-import { TranslationFunction } from './i18n/translator';
 
 /**
  * website config, without translations

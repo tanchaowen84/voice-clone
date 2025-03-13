@@ -5,12 +5,17 @@ import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { POSTS_PER_PAGE } from '@/constants';
 import { NextPageProps } from '@/types/next-page-props';
+import { getTranslations } from 'next-intl/server';
+import { constructMetadata } from '@/lib/metadata';
+import { createTitle } from '@/lib/utils';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: 'Blog',
-    description: 'Latest news and updates from our team',
-  };
+  const t = await getTranslations('BlogPage');
+
+  return constructMetadata({
+    title: createTitle(t('title')),
+    description: t('description'),
+  });
 }
 
 export default async function BlogPage({

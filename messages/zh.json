@@ -17,7 +17,8 @@
     "copy": "复制"
   },
   "HomePage": {
-    "title": "next-intl 示例"
+    "title": "MkSaaS 示例",
+    "description": "这是一个使用 MkSaaS 构建网站的简单示例"
   },
   "NotFoundPage": {
     "title": "404",
@@ -31,6 +32,7 @@
   },
   "AboutPage": {
     "title": "关于我们",
+    "description": "MkSaaS 是一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
     "subtitle": "了解更多关于我们的公司、使命和价值观",
     "authorName": "MkSaaS",
     "authorBio": "全栈开发工程师",
@@ -43,6 +45,7 @@
   },
   "ContactPage": {
     "title": "联系我们",
+    "description": "我们帮助您找到合适的计划",
     "subtitle": "我们帮助您找到合适的计划",
     "formDescription": "如果您有任何问题或反馈，欢迎联系我们的团队",
     "name": "姓名",
@@ -52,6 +55,7 @@
   },
   "WaitlistPage": {
     "title": "邮件列表",
+    "description": "加入我们的邮件列表，获取最新消息和更新",
     "subtitle": "加入我们的邮件列表，获取最新消息和更新",
     "formDescription": "我们每周只发送一封邮件，并且不会发送垃圾邮件",
     "email": "邮箱",
@@ -105,6 +109,7 @@
   },
   "BlogPage": {
     "title": "博客",
+    "description": "来自我们的团队最新新闻和更新",
     "subtitle": "来自我们的团队最新新闻和更新",
     "author": "作者",
     "categories": "分类",

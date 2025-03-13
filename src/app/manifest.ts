@@ -1,6 +1,5 @@
+import { defaultMessages } from '@/i18n/messages';
 import { type MetadataRoute } from 'next';
-import { getWebsiteInfo } from '@/config';
-import { createTranslator } from '@/i18n/translator';
 
 /**
  * Generates the Web App Manifest for the application
@@ -13,14 +12,10 @@ import { createTranslator } from '@/i18n/translator';
  * @returns {MetadataRoute.Manifest} The manifest configuration object
  */
 export default function manifest(): MetadataRoute.Manifest {
-  // Create a simple translator function for default values
-  const t = createTranslator((key: string) => key);
-  const websiteInfo = getWebsiteInfo(t);
-  
   return {
-    name: websiteInfo.name,
-    short_name: websiteInfo.name,
-    description: websiteInfo.description,
+    name: defaultMessages.Site.title,
+    short_name: defaultMessages.Site.name,
+    description: defaultMessages.Site.description,
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

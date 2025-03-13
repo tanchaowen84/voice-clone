@@ -1,8 +1,10 @@
 import { ReleaseCard } from '@/components/release/release-card';
+import { constructMetadata } from '@/lib/metadata';
 import { getReleases } from '@/lib/release/get-releases';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { createTitle } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
+import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -16,18 +18,12 @@ export async function generateMetadata(
     return {};
   }
 
-  const locale = params.locale as string;
-
-  return {
-    title: 'Changelog',
-    description: 'Track all updates and improvements to our platform',
-    openGraph: {
-      title: 'Changelog',
-      description: 'Track all updates and improvements to our platform',
-      type: 'article',
-      url: `${getBaseUrl()}/changelog`,
-    },
-  };
+  const t = await getTranslations('ChangelogPage');
+  
+  return constructMetadata({
+    title: createTitle(t('title')),
+    description: t('subtitle'),
+  });
 }
 
 export default async function ChangelogPage(props: NextPageProps) {
@@ -36,7 +32,7 @@ export default async function ChangelogPage(props: NextPageProps) {
     notFound();
   }
 
-  const locale = params.locale as string;
+  const locale = params.locale as Locale;
   const releases = await getReleases(locale);
 
   if (!releases || releases.length === 0) {

@@ -6,8 +6,20 @@ import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
 import Pricing4 from '@/components/blocks/pricing/pricing-4';
 import StatsSection from '@/components/blocks/stats/stats';
 import Testimonials from '@/components/blocks/testimonials/testimonials';
+import { constructMetadata } from '@/lib/metadata';
+import { createTitle } from '@/lib/utils';
+import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('HomePage');
+
+  return constructMetadata({
+    title: createTitle(t('title')),
+    description: t('description'),
+  });
+}
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;

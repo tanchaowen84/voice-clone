@@ -1,9 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { websiteConfig } from '@/config';
+import { constructMetadata } from '@/lib/metadata';
+import { createTitle } from '@/lib/utils';
 import { MailIcon } from 'lucide-react';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('AboutPage');
+
+  return constructMetadata({
+    title: createTitle(t('title')),
+    description: t('description'),
+  });
+}
 
 /**
  * inspired by https://astro-nomy.vercel.app/about

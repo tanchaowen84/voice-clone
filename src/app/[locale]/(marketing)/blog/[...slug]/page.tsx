@@ -14,6 +14,8 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import '@/styles/mdx.css';
+import { defaultMessages } from '@/i18n/messages';
+import { constructMetadata } from '@/lib/metadata';
 
 /**
  * Gets the blog post from the params
@@ -70,16 +72,13 @@ export async function generateMetadata(
     return {};
   }
 
-  return {
-    title: post.title,
+  // TODO: add image and locale
+
+  return constructMetadata({
+    title: `${post.title} | ${defaultMessages.Site.title}`,
     description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: 'article',
-      url: `${getBaseUrl()}${post.slug}`,
-    },
-  };
+    canonicalUrl: `${getBaseUrl()}${post.slug}`,
+  });
 }
 
 export default async function BlogPostPage(props: NextPageProps) {

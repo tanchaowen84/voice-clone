@@ -1,5 +1,5 @@
-import { getWebsiteInfo, websiteConfig } from '@/config';
-import { createTranslator } from '@/i18n/translator';
+import { websiteConfig } from '@/config';
+import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/get-base-url';
 
@@ -12,7 +12,7 @@ export function constructMetadata({
   canonicalUrl,
   image,
   noIndex = false,
-  locale = 'en',
+  locale = routing.defaultLocale,
 }: {
   title?: string;
   description?: string;
@@ -21,19 +21,10 @@ export function constructMetadata({
   noIndex?: boolean;
   locale?: string;
 } = {}): Metadata {
-  // Create a simple translator function for default values
-  const t = createTranslator((key: string) => key);
-  const websiteInfo = getWebsiteInfo(t);
-  
-  title = title || websiteInfo.name;
-  description = description || websiteInfo.description;
   image = image || websiteConfig.metadata.image;
-  
-  const fullTitle = title ? `${title} - ${websiteInfo.title}` : websiteInfo.title;
   const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
-
   return {
-    title: fullTitle,
+    title,
     description,
     alternates: canonicalUrl
       ? {
@@ -42,16 +33,16 @@ export function constructMetadata({
       : undefined,
     openGraph: {
       type: 'website',
-      locale: 'en_US',
+      locale: 'en_US', // TODO: use locale
       url: getBaseUrl(),
-      title: fullTitle,
+      title,
       description,
       siteName: title,
       images: [ogImageUrl.toString()],
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
+      title,
       description,
       images: [ogImageUrl.toString()],
       site: getBaseUrl(),

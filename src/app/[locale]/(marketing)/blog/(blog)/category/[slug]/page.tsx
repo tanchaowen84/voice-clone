@@ -10,7 +10,8 @@ import type { Metadata } from 'next';
 import { NextPageProps } from '@/types/next-page-props';
 import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { Locale } from 'next-intl';
-
+import { getTranslations } from 'next-intl/server';
+import { defaultMessages } from '@/i18n/messages';
 export async function generateMetadata({
   params,
 }: {
@@ -36,11 +37,12 @@ export async function generateMetadata({
   ogImageUrl.searchParams.append('description', category.description || '');
   ogImageUrl.searchParams.append('type', 'Blog Category');
 
+  // TODO: add locale
+
   return constructMetadata({
-    title: `${category.name}`,
+    title: `${category.name} | ${defaultMessages.Site.title}`,
     description: category.description,
     canonicalUrl: `${getBaseUrl()}/blog/category/${slug}`,
-    // image: ogImageUrl.toString(),
   });
 }
 
