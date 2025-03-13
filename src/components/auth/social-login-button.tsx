@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { GitHubIcon } from '@/components/icons/github';
 import { GoogleIcon } from '@/components/icons/google';
 import { authClient } from '@/lib/auth-client';
-import { Routes } from '@/routes';
+import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 
 /**
@@ -31,7 +31,7 @@ export const SocialLoginButton = () => {
          * a url to redirect after the user authenticates with the provider
          * @default "/"
          */
-        callbackURL: callbackUrl || Routes.DefaultLoginRedirect,
+        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
         /**
          * a url to redirect if an error occurs during the sign in process
          */

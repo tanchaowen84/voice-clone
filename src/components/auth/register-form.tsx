@@ -16,7 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { RegisterSchema } from '@/lib/schemas';
-import { Routes } from '@/routes';
+import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
@@ -52,7 +52,7 @@ export const RegisterForm = () => {
         email: values.email,
         password: values.password,
         name: values.name,
-        callbackURL: callbackUrl || Routes.DefaultLoginRedirect,
+        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       },
       {
         onRequest: (ctx) => {

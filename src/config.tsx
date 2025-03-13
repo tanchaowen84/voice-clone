@@ -34,6 +34,9 @@ import {
 } from 'lucide-react';
 import { TranslationFunction } from './i18n/translator';
 
+/**
+ * website config, without translations
+ */
 export const websiteConfig: WebsiteConfig = {
   metadata: {
     image: '/og.png',

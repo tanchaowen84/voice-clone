@@ -18,7 +18,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { LoginSchema } from '@/lib/schemas';
 import { cn } from '@/lib/utils';
-import { Routes } from '@/routes';
+import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
@@ -52,7 +52,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
       {
         email: values.email,
         password: values.password,
-        callbackURL: callbackUrl || Routes.DefaultLoginRedirect,
+        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       },
       {
         onRequest: (ctx) => {
