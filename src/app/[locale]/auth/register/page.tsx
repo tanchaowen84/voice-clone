@@ -1,16 +1,26 @@
 import { RegisterForm } from '@/components/auth/register-form';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
-import { Routes } from '@/routes';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { Metadata } from 'next';
+import { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = constructMetadata({
-  title: 'Register',
-  description: 'Create an account to get started',
-  canonicalUrl: `${getBaseUrl()}${Routes.Register}`,
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'AuthPage.register'});
+  
+  return constructMetadata({
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: t('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/auth/register`,
+  });
+}
 
-const RegisterPage = () => {
+export default async function RegisterPage() {
   return <RegisterForm />;
-};
-
-export default RegisterPage;
+}

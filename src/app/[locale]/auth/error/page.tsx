@@ -1,16 +1,26 @@
 import { ErrorCard } from '@/components/auth/error-card';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { constructMetadata } from '@/lib/metadata';
-import { Routes } from '@/routes';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { Metadata } from 'next';
+import { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = constructMetadata({
-  title: 'Auth Error',
-  description: 'Auth Error',
-  canonicalUrl: `${getBaseUrl()}${Routes.AuthError}`,
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'AuthPage.error'});
+  
+  return constructMetadata({
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: t('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/auth/error`,
+  });
+}
 
-const AuthErrorPage = () => {
+export default async function AuthErrorPage() {
   return <ErrorCard />;
-};
-
-export default AuthErrorPage;
+}

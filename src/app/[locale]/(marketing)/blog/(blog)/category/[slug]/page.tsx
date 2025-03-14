@@ -2,24 +2,20 @@ import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { POSTS_PER_PAGE } from '@/constants';
-import { allPosts, allCategories } from 'content-collections';
-import { getWebsiteInfo } from '@/config';
-import { createTranslator } from '@/i18n/translator';
 import { constructMetadata } from '@/lib/metadata';
-import type { Metadata } from 'next';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { NextPageProps } from '@/types/next-page-props';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { allCategories, allPosts } from 'content-collections';
+import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import { defaultMessages } from '@/i18n/messages';
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string; locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const resolvedParams = await params;
-  const { slug, locale } = resolvedParams;
+  const { slug, locale } = await params;
 
   // Find category with matching slug and locale
   const category = allCategories.find(
@@ -30,20 +26,21 @@ export async function generateMetadata({
     console.warn(
       `generateMetadata, category not found for slug: ${slug}, locale: ${locale}`
     );
-    return;
+    return {};
   }
 
-  const ogImageUrl = new URL(`${getBaseUrl()}/api/og`);
-  ogImageUrl.searchParams.append('title', category.name);
-  ogImageUrl.searchParams.append('description', category.description || '');
-  ogImageUrl.searchParams.append('type', 'Blog Category');
+  const t = await getTranslations({locale, namespace: 'Metadata'});
 
-  // TODO: add locale
+  // TODO: add og image
+  // const ogImageUrl = new URL(`${getBaseUrl()}/api/og`);
+  // ogImageUrl.searchParams.append('title', category.name);
+  // ogImageUrl.searchParams.append('description', category.description || '');
+  // ogImageUrl.searchParams.append('type', 'Blog Category');
 
   return constructMetadata({
-    title: `${category.name} | ${defaultMessages.Site.title}`,
+    title: `${category.name} | ${t('title')}`,
     description: category.description,
-    canonicalUrl: `${getBaseUrl()}/blog/category/${slug}`,
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/blog/category/${slug}`,
   });
 }
 

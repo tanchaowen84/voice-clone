@@ -1,18 +1,30 @@
 import { LoginForm } from '@/components/auth/login-form';
 import { LocaleLink } from '@/i18n/navigation';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { Routes } from '@/routes';
-import { useTranslations } from 'next-intl';
+import { Metadata } from 'next';
+import { Locale, useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = constructMetadata({
-  title: 'Login',
-  description: 'Login to your account',
-  canonicalUrl: `${getBaseUrl()}${Routes.Login}`,
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'AuthPage.login'});
+  
+  return constructMetadata({
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: t('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/auth/login`,
+  });
+}
 
-const LoginPage = () => {
-  const t = useTranslations('AuthPage.login');
+export default async function LoginPage() {
+  const t = await getTranslations('AuthPage.login');
 
   return (
     <div className="flex flex-col gap-4">
@@ -36,5 +48,3 @@ const LoginPage = () => {
     </div>
   );
 };
-
-export default LoginPage;

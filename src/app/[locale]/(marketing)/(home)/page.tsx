@@ -7,7 +7,7 @@ import Pricing4 from '@/components/blocks/pricing/pricing-4';
 import StatsSection from '@/components/blocks/stats/stats';
 import Testimonials from '@/components/blocks/testimonials/testimonials';
 import { constructMetadata } from '@/lib/metadata';
-import { createTitle } from '@/lib/utils';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -20,12 +20,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
+  const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'Metadata'});
+  
   return constructMetadata({
     title: t('title'),
     description: t('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/`,
   });
 }
 

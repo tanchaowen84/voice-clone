@@ -3,7 +3,7 @@ import { BlogToc } from '@/components/blog/blog-toc';
 import { Mdx } from '@/components/shared/mdx-component';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
-import { getBaseUrl } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { estimateReadingTime, getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
@@ -13,9 +13,9 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import '@/styles/mdx.css';
-import { defaultMessages } from '@/i18n/messages';
 import { constructMetadata } from '@/lib/metadata';
+import '@/styles/mdx.css';
+import { Locale } from 'next-intl';
 
 /**
  * Gets the blog post from the params
@@ -64,20 +64,30 @@ async function getBlogPostFromParams(props: NextPageProps) {
   return post;
 }
 
-export async function generateMetadata(
-  props: NextPageProps
-): Promise<Metadata> {
-  const post = await getBlogPostFromParams(props);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {slug, locale} = await params;
+  
+  const post = await getBlogPostFromParams({
+    params: Promise.resolve({ slug, locale }),
+    searchParams: Promise.resolve({})
+  });
   if (!post) {
+    console.warn(
+      `generateMetadata, post not found for slug: ${slug}, locale: ${locale}`
+    );
     return {};
   }
 
-  // TODO: add image and locale
+  const t = await getTranslations({locale, namespace: 'Metadata'});
 
   return constructMetadata({
-    title: `${post.title} | ${defaultMessages.Site.title}`,
+    title: `${post.title} | ${t('title')}`,
     description: post.description,
-    canonicalUrl: `${getBaseUrl()}${post.slug}`,
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}${post.slug}`,
   });
 }
 

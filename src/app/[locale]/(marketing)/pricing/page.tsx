@@ -3,17 +3,23 @@ import Pricing4 from '@/components/blocks/pricing/pricing-4';
 import Pricing5 from '@/components/blocks/pricing/pricing-5';
 import PricingComparator from '@/components/pricing-comparator';
 import { constructMetadata } from '@/lib/metadata';
-import { createTitle } from '@/lib/utils';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('PricingPage');
-
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'PricingPage'});
   return constructMetadata({
-    title: createTitle(t('title')),
-    description: t('description'),
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: pageTranslations('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/pricing`,
   });
 }
 

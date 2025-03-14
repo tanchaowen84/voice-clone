@@ -1,7 +1,7 @@
 import { ReleaseCard } from '@/components/release/release-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getReleases } from '@/lib/release/get-releases';
-import { createTitle } from '@/lib/utils';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
@@ -10,19 +10,19 @@ import { notFound } from 'next/navigation';
 
 import '@/styles/mdx.css';
 
-export async function generateMetadata(
-  props: NextPageProps
-): Promise<Metadata> {
-  const params = await props.params;
-  if (!params) {
-    return {};
-  }
-
-  const t = await getTranslations('ChangelogPage');
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'ChangelogPage'});
   
   return constructMetadata({
-    title: createTitle(t('title')),
-    description: t('subtitle'),
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: pageTranslations('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/changelog`,
   });
 }
 

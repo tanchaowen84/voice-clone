@@ -1,20 +1,27 @@
-import { allPosts } from 'content-collections';
-import { Metadata } from 'next';
 import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { POSTS_PER_PAGE } from '@/constants';
-import { NextPageProps } from '@/types/next-page-props';
-import { getTranslations } from 'next-intl/server';
 import { constructMetadata } from '@/lib/metadata';
-import { createTitle } from '@/lib/utils';
+import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { NextPageProps } from '@/types/next-page-props';
+import { allPosts } from 'content-collections';
+import { Metadata } from 'next';
+import { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('BlogPage');
-
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const pageTranslations = await getTranslations({locale, namespace: 'BlogPage'});
   return constructMetadata({
-    title: createTitle(t('title')),
-    description: t('description'),
+    title: pageTranslations('title') + ' | ' + t('title'),
+    description: pageTranslations('description'),
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/blog`,
   });
 }
 
