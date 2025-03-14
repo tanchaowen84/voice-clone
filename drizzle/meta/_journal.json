@@ -15,6 +15,13 @@
       "when": 1740323860731,
       "tag": "0001_shocking_wild_pack",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1741971106943,
+      "tag": "0002_talented_greymalkin",
+      "breakpoints": true
     }
   ]
 }

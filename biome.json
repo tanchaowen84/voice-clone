@@ -15,7 +15,8 @@
       "build/**",
       "src/components/ui/*.tsx",
       "src/components/magicui/*.tsx",
-      "tailwind.config.ts"
+      "tailwind.config.ts",
+      "src/db/schema.ts"
     ]
   },
   "formatter": {
@@ -52,7 +53,8 @@
       "build/**",
       "src/components/ui/*.tsx",
       "src/components/magicui/*.tsx",
-      "tailwind.config.ts"
+      "tailwind.config.ts",
+      "src/db/schema.ts"
     ]
   },
   "javascript": {
