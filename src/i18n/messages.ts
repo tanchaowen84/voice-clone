@@ -6,7 +6,10 @@ const importLocale = async (locale: Locale): Promise<Messages> => {
   return (await import(`../../messages/${locale}.json`)).default as Messages;
 };
 
-export const defaultMessages = await importLocale(routing.defaultLocale);
+// Instead of using top-level await, create a function to get default messages
+export const getDefaultMessages = async (): Promise<Messages> => {
+  return await importLocale(routing.defaultLocale);
+};
 
 /**
  * If you have incomplete messages for a given locale and would like to use messages
@@ -21,5 +24,7 @@ export const getMessagesForLocale = async (
   if (locale === routing.defaultLocale) {
     return localeMessages;
   }
+  // Get default messages when needed instead of using a top-level await
+  const defaultMessages = await getDefaultMessages();
   return deepmerge(defaultMessages, localeMessages);
 };

@@ -1,4 +1,4 @@
-import { defaultMessages } from '@/i18n/messages';
+import { getDefaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import EmailLayout from '@/mail/components/email-layout';
 import type { BaseEmailProps } from '@/mail/utils/types';
@@ -32,7 +32,7 @@ export function SubscribeNewsletter({ locale, messages }: BaseEmailProps) {
 
 SubscribeNewsletter.PreviewProps = {
   locale: routing.defaultLocale,
-  messages: defaultMessages,
+  messages: await getDefaultMessages(),
 };
 
 export default SubscribeNewsletter;

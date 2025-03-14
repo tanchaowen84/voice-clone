@@ -1,7 +1,4 @@
-import { getWebsiteInfo } from '@/config';
-import { defaultMessages, getMessagesForLocale } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
-import { createTranslator } from '@/i18n/translator';
 import { type ClassValue, clsx } from 'clsx';
 import { parse as parseCookies } from 'cookie';
 import { Locale } from 'next-intl';
@@ -9,28 +6,6 @@ import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-/**
- * Creates a title for the page
- * @param title - The title of the page
- * @param addSuffix - Whether to add the app name as a suffix
- * @param locale - The locale to use for the title
- * @returns The title for the page
- */
-export async function createTitle(
-  title: string,
-  addSuffix: boolean = true,
-  locale?: Locale
-): Promise<string> {
-  if (!addSuffix) {
-    return title;
-  }
-  if (!title) {
-    return defaultMessages.Site.title;
-  }
-  const messages = await getMessagesForLocale(locale ?? routing.defaultLocale);
-  return `${title} | ${messages.Site.title}`;
 }
 
 /**

@@ -1,4 +1,4 @@
-import { defaultMessages } from '@/i18n/messages';
+import { getDefaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
@@ -46,7 +46,7 @@ export function ForgotPassword({
 
 ForgotPassword.PreviewProps = {
   locale: routing.defaultLocale,
-  messages: defaultMessages,
+  messages: await getDefaultMessages(),
   url: 'https://mksaas.com',
   name: 'username',
 };
