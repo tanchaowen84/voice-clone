@@ -1,14 +1,9 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { constructMetadata } from '@/lib/metadata';
 import { createTitle } from '@/lib/utils';
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { WaitlistForm } from './waitlist-form';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('WaitlistPage');
@@ -22,8 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 /**
  *
  */
-export default function WaitlistPage() {
-  const t = useTranslations('WaitlistPage');
+export default async function WaitlistPage() {
+  const t = await getTranslations('WaitlistPage');
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 p-8">
@@ -45,16 +40,10 @@ export default function WaitlistPage() {
           </p>
         </div>
 
-        <form action="" className="mt-8 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('email')}</Label>
-            <Input type="email" id="email" required />
-          </div>
-
-          <Button type="submit" className="w-full">
-            {t('subscribe')}
-          </Button>
-        </form>
+        <WaitlistForm labels={{
+          email: t('email'),
+          subscribe: t('subscribe')
+        }} />
       </Card>
     </div>
   );

@@ -12,11 +12,19 @@ import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('HomePage');
-
+/**
+ * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const resolvedParams = await params;
+  const { locale } = resolvedParams;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
   return constructMetadata({
-    title: createTitle(t('title')),
+    title: t('title'),
     description: t('description'),
   });
 }

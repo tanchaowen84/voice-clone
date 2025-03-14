@@ -1,17 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { websiteConfig } from '@/config';
 import { constructMetadata } from '@/lib/metadata';
-import { createTitle } from '@/lib/utils';
 import { MailIcon } from 'lucide-react';
 import { Metadata } from 'next';
+import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('AboutPage');
-
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata | undefined> {
+  const resolvedParams = await params;
+  const { locale } = resolvedParams;
+  const t = await getTranslations({locale, namespace: 'Metadata'});
   return constructMetadata({
-    title: createTitle(t('title')),
+    title: t('title'),
     description: t('description'),
   });
 }

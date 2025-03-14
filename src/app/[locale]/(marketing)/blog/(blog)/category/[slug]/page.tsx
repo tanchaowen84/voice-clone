@@ -12,6 +12,7 @@ import { getBaseUrl } from '@/lib/urls/get-base-url';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { defaultMessages } from '@/i18n/messages';
+
 export async function generateMetadata({
   params,
 }: {

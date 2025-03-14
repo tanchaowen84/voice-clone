@@ -1,5 +1,5 @@
 import { getWebsiteInfo } from '@/config';
-import { defaultMessages } from '@/i18n/messages';
+import { defaultMessages, getMessagesForLocale } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { createTranslator } from '@/i18n/translator';
 import { type ClassValue, clsx } from 'clsx';
@@ -18,18 +18,19 @@ export function cn(...inputs: ClassValue[]) {
  * @param locale - The locale to use for the title
  * @returns The title for the page
  */
-export function createTitle(
-  title: string, 
+export async function createTitle(
+  title: string,
   addSuffix: boolean = true,
-  locale: Locale = routing.defaultLocale
-): string {
+  locale?: Locale
+): Promise<string> {
   if (!addSuffix) {
     return title;
   }
   if (!title) {
     return defaultMessages.Site.title;
   }
-  return `${title} | ${defaultMessages.Site.title}`;
+  const messages = await getMessagesForLocale(locale ?? routing.defaultLocale);
+  return `${title} | ${messages.Site.title}`;
 }
 
 /**
