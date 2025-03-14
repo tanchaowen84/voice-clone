@@ -2,6 +2,8 @@ import { type MetadataRoute } from 'next';
 import { getDefaultMessages } from '@/i18n/messages';
 /**
  * Generates the Web App Manifest for the application
+ * 
+ * generated file name: site.webmanifest
  *
  * ref: https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/manifest.ts
  *
