@@ -65,9 +65,7 @@ export const websiteConfig: WebsiteConfig = {
 export function getWebsiteInfo(t: TranslationFunction): WebsiteInfo {
   return {
     name: t('Site.name'),
-    title: t('Site.title'),
     tagline: t('Site.tagline'),
-    description: t('Site.description'),
   };
 }
 

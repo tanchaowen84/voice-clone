@@ -25,16 +25,12 @@ export type WebsiteConfig = {
 /**
  * website info, with translations
  * 
- * name: the name of the website
- * title: the title of the website, used in metadata
+ * name: the name of the website, used in navbar and footer
  * tagline: the tagline of the website, used in footer
- * description: the description of the website, used in metadata
  */
 export type WebsiteInfo = {
   name: string;
-  title: string;
   tagline: string;
-  description: string;
 };
 
 /**
