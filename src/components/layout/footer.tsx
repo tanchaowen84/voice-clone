@@ -4,9 +4,9 @@ import Container from '@/components/container';
 import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
 import { Logo } from '@/components/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
-import { getFooterLinks, getWebsiteInfo, getSocialLinks } from '@/config';
-import { createTranslator } from '@/i18n/translator';
+import { getFooterLinks, getSocialLinks } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
+import { createTranslator } from '@/i18n/translator';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -15,7 +15,6 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const footerLinks = getFooterLinks(translator);
-  const websiteInfo = getWebsiteInfo(translator);
   const socialLinks = getSocialLinks();
 
   return (
@@ -27,12 +26,14 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {/* logo and name */}
               <div className="items-center space-x-2 flex">
                 <Logo />
-                <span className="text-xl font-semibold">{websiteInfo.name}</span>
+                <span className="text-xl font-semibold">
+                  {t('Site.name')}
+                </span>
               </div>
 
               {/* tagline */}
               <p className="text-muted-foreground text-base py-2 md:pr-12">
-                {websiteInfo.tagline}
+                {t('Site.tagline')}
               </p>
 
               {/* social links */}
@@ -95,7 +96,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       <div className="border-t py-8">
         <Container className="px-4 flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {websiteInfo.name} All Rights
+            &copy; {new Date().getFullYear()} {t('Site.name')} All Rights
             Reserved.
           </span>
 

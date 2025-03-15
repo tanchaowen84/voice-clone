@@ -1,21 +1,6 @@
 'use client';
 
-import * as React from 'react';
-import {
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
-} from 'lucide-react';
 import { NavMain } from '@/components/dashboard/nav-main';
-import { NavProjects } from '@/components/dashboard/nav-projects';
-import { NavSecondary } from '@/components/dashboard/nav-secondary';
 import { NavUser } from '@/components/dashboard/nav-user';
 import {
   Sidebar,
@@ -26,12 +11,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { getWebsiteInfo } from '@/config';
-import { createTranslator } from '@/i18n/translator';
-import { useTranslations } from 'next-intl';
-import { Logo } from '../logo';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
+import {
+  Bot,
+  Frame,
+  LifeBuoy,
+  Map,
+  PieChart,
+  Send,
+  Settings2
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import * as React from 'react';
+import { Logo } from '../logo';
 
 const data = {
   navMain: [
@@ -112,7 +105,6 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
-  const websiteInfo = getWebsiteInfo(createTranslator(t));
   
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -124,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <Logo className="size-8" />
                 <div className="grid flex-1 text-left leading-tight">
                   <span className="truncate font-semibold text-lg">
-                    {websiteInfo.name}
+                    {t('Site.name')}
                   </span>
                 </div>
               </LocaleLink>
@@ -134,8 +126,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavProjects projects={data.projects} /> */}
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

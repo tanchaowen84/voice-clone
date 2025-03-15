@@ -57,19 +57,6 @@ export const websiteConfig: WebsiteConfig = {
 };
 
 /**
- * Get website information with translations
- *
- * @param t - The translation function
- * @returns The website information with translated content
- */
-export function getWebsiteInfo(t: TranslationFunction): WebsiteInfo {
-  return {
-    name: t('Site.name'),
-    tagline: t('Site.tagline'),
-  };
-}
-
-/**
  * Get menu links with translations
  *
  * @param t - The translation function

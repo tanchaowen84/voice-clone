@@ -2,7 +2,6 @@
 
 import { LoginWrapper } from '@/components/auth/login-button';
 import Container from '@/components/container';
-import LocaleSelector from '@/components/layout/locale-selector';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { ThemeSwitcher } from '@/components/layout/theme-switcher';
 import { UserButton } from '@/components/layout/user-button';
@@ -17,10 +16,10 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { getMenuLinks, getWebsiteInfo } from '@/config';
-import { createTranslator } from '@/i18n/translator';
+import { getMenuLinks } from '@/config';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import { createTranslator } from '@/i18n/translator';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
@@ -47,8 +46,6 @@ export function Navbar({ scroll }: NavBarProps) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
-  const websiteInfo = getWebsiteInfo(translator);
-  const commonTranslations = useTranslations('Common');
   const localePathname = useLocalePathname();
 
   // console.log(`Navbar, user:`, user);
@@ -71,7 +68,9 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex items-center">
             <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
-              <span className="text-xl font-semibold">{websiteInfo.name}</span>
+              <span className="text-xl font-semibold">
+                {t('Site.name')}
+              </span>
             </LocaleLink>
           </div>
 
@@ -215,13 +214,13 @@ export function Navbar({ scroll }: NavBarProps) {
               <div className="flex items-center gap-x-4">
                 <LoginWrapper mode="modal" asChild>
                   <Button variant="outline" size="sm">
-                    {commonTranslations('login')}
+                    {t('Common.login')}
                   </Button>
                 </LoginWrapper>
 
                 <Button asChild size="sm" variant="default">
                   <LocaleLink href={Routes.Register}>
-                    {commonTranslations('signUp')}
+                    {t('Common.signUp')}
                   </LocaleLink>
                 </Button>
               </div>
