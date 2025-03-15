@@ -82,7 +82,8 @@
       "termsOfService": "Terms of Service",
       "privacyPolicy": "Privacy Policy",
       "byClickingContinue": "By clicking continue, you agree to our ",
-      "and": " and "
+      "and": " and ",
+      "or": "Or continue with"
     },
     "register": {
       "title": "Register",

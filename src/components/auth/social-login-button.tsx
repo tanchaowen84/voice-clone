@@ -9,6 +9,7 @@ import { GoogleIcon } from '@/components/icons/google';
 import { authClient } from '@/lib/auth-client';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
+import { DividerWithText } from '@/components/auth/divider-with-text';
 
 /**
  * social login buttons
@@ -69,6 +70,7 @@ export const SocialLoginButton = () => {
 
   return (
     <div className="w-full flex flex-col gap-4">
+      <DividerWithText text={t('or')} />
       <Button
         size="lg"
         className="w-full"
