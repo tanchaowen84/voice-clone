@@ -1,5 +1,6 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
+import { defaultMessages } from '@/i18n/messages';
 import { getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail';
 import { betterAuth } from 'better-auth';
@@ -10,7 +11,7 @@ import { admin, username } from 'better-auth/plugins';
  * https://www.better-auth.com/docs/reference/options
  */
 export const auth = betterAuth({
-  appName: 'MkSaaS',
+  appName: defaultMessages.Site.name,
   database: drizzleAdapter(db, {
     provider: 'pg', // or "mysql", "sqlite"
     // The schema object that defines the tables and fields

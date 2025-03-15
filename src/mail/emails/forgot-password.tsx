@@ -1,4 +1,4 @@
-import { getDefaultMessages } from '@/i18n/messages';
+import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
@@ -6,10 +6,10 @@ import type { BaseEmailProps } from '@/mail/utils/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
-type ForgotPasswordProps = {
+interface ForgotPasswordProps extends BaseEmailProps {
   url: string;
   name: string;
-} & BaseEmailProps;
+}
 
 export function ForgotPassword({
   url,
@@ -23,7 +23,7 @@ export function ForgotPassword({
   });
   
   return (
-    <EmailLayout>
+    <EmailLayout locale={locale} messages={messages}>
       <Text>{t('Mail.forgotPassword.title', { name })}</Text>
 
       <Text>{t('Mail.forgotPassword.body')}</Text>
@@ -31,22 +31,14 @@ export function ForgotPassword({
       <EmailButton href={url}>
         {t('Mail.forgotPassword.resetPassword')}
       </EmailButton>
-
-      <br />
-      <br />
-      <br />
-
-      <Text>{t('Mail.common.team')}</Text>
-      <Text>
-        {t('Mail.common.copyright', { year: new Date().getFullYear() })}
-      </Text>
     </EmailLayout>
   );
 }
 
+// NOTICE: can not use await here!!!
 ForgotPassword.PreviewProps = {
   locale: routing.defaultLocale,
-  messages: await getDefaultMessages(),
+  messages: defaultMessages,
   url: 'https://mksaas.com',
   name: 'username',
 };

@@ -1,5 +1,6 @@
+import { defaultMessages } from '@/i18n/messages';
 import { type MetadataRoute } from 'next';
-import { getDefaultMessages } from '@/i18n/messages';
+
 /**
  * Generates the Web App Manifest for the application
  * 
@@ -19,12 +20,11 @@ import { getDefaultMessages } from '@/i18n/messages';
  *
  * @returns {MetadataRoute.Manifest} The manifest configuration object
  */
-export default async function manifest(): Promise<MetadataRoute.Manifest> {
-  const defaultMessages = await getDefaultMessages();
+export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: defaultMessages.Site.title,
+    name: defaultMessages.Site.name,
     short_name: defaultMessages.Site.name,
-    description: defaultMessages.Site.description,
+    description: defaultMessages.Site.tagline,
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

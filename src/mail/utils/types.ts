@@ -1,12 +1,10 @@
 import { Locale, Messages } from 'next-intl';
 import { EmailTemplates } from '../emails';
 
-export type Template = keyof typeof EmailTemplates;
-
-export type BaseEmailProps = {
+export interface BaseEmailProps {
   locale: Locale;
   messages: Messages;
-};
+}
 
 export interface SendEmailProps {
   to: string;
@@ -14,6 +12,8 @@ export interface SendEmailProps {
   text: string;
   html?: string;
 }
+
+export type Template = keyof typeof EmailTemplates;
 
 export type SendEmailHandler = (params: SendEmailProps) => Promise<void>;
 

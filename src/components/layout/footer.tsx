@@ -46,7 +46,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={link.title}
-                        className="border border-border inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-accent hover:text-accent-foreground"
+                        className="border border-border inline-flex h-8 w-8 items-center 
+                          justify-center rounded-full hover:bg-accent hover:text-accent-foreground"
                       >
                         <span className="sr-only">{link.title}</span>
                         {link.icon ? link.icon : null}

@@ -2,6 +2,12 @@ import deepmerge from 'deepmerge';
 import { routing } from './routing';
 import { Locale, Messages } from 'next-intl';
 
+// assume that the default messages are in the en.json file
+// if you want to use a different default locale, you can change to other {locale}.json file
+// we need to export the default messages so that we can use them in the app/manifest.ts file
+// and the email templates can use the default messages to preview the emails
+export { default as defaultMessages } from '../../messages/en.json';
+
 const importLocale = async (locale: Locale): Promise<Messages> => {
   return (await import(`../../messages/${locale}.json`)).default as Messages;
 };

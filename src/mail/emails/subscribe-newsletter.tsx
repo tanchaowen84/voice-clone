@@ -1,38 +1,32 @@
-import { getDefaultMessages } from '@/i18n/messages';
+import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import EmailLayout from '@/mail/components/email-layout';
 import type { BaseEmailProps } from '@/mail/utils/types';
 import { Heading, Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
-export function SubscribeNewsletter({ locale, messages }: BaseEmailProps) {
+interface SubscribeNewsletterProps extends BaseEmailProps {
+}
+
+export function SubscribeNewsletter({ locale, messages }: SubscribeNewsletterProps) {
   const t = createTranslator({
     locale,
     messages,
   });
 
   return (
-    <EmailLayout>
+    <EmailLayout locale={locale} messages={messages}>
       <Heading className="text-xl">
         {t('Mail.subscribeNewsletter.subject')}
       </Heading>
       <Text>{t('Mail.subscribeNewsletter.body')}</Text>
-
-      <br />
-      <br />
-      <br />
-
-      <Text>{t('Mail.common.team')}</Text>
-      <Text>
-        {t('Mail.common.copyright', { year: new Date().getFullYear() })}
-      </Text>
     </EmailLayout>
   );
 }
 
 SubscribeNewsletter.PreviewProps = {
   locale: routing.defaultLocale,
-  messages: await getDefaultMessages(),
+  messages: defaultMessages,
 };
 
 export default SubscribeNewsletter;
