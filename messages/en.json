@@ -303,16 +303,17 @@
               "description": "Please enter your display name",
               "placeholder": "Enter your name",
               "minLength": "Please use 3 characters at minimum",
-              "maxLength": "Please use 30 characters at maximum"
+              "maxLength": "Please use 30 characters at maximum",
+              "hint": "Please use 3-30 characters for your name"
             },
             "password": {
               "title": "Change Password",
               "description": "Enter your current password and a new password",
               "currentPassword": "Current Password",
-              "newPassword": "New Password",
-              "minLength": "Please use 8 characters at minimum",
               "currentRequired": "Current password is required",
+              "newPassword": "New Password",
               "newMinLength": "Password must be at least 8 characters",
+              "hint": "Please use at least 8 characters for password",
               "showPassword": "Show password",
               "hidePassword": "Hide password"
             },

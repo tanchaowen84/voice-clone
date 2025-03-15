@@ -299,16 +299,17 @@
               "description": "请输入您的名字",
               "placeholder": "输入您的名字",
               "minLength": "请至少使用 3 个字符",
-              "maxLength": "请最多使用 30 个字符"
+              "maxLength": "请最多使用 30 个字符",
+              "hint": "请使用 3-30 个字符"
             },
             "password": {
               "title": "修改密码",
               "description": "输入您的当前密码和新密码",
               "currentPassword": "当前密码",
-              "newPassword": "新密码",
-              "minLength": "请至少使用 8 个字符",
               "currentRequired": "当前密码是必填项",
+              "newPassword": "新密码",
               "newMinLength": "密码必须至少包含 8 个字符",
+              "hint": "请使用至少 8 个字符",
               "showPassword": "显示密码",
               "hidePassword": "隐藏密码"
             },

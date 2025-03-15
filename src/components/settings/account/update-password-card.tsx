@@ -157,7 +157,7 @@ export function UpdatePasswordCard() {
           </CardContent>
           <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
             <p className="text-sm text-muted-foreground">
-              {t('password.newMinLength')}
+              {t('password.hint')}
             </p>
 
             <Button type="submit" disabled={isSaving}>

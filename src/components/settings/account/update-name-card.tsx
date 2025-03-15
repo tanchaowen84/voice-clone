@@ -1,20 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
-  CardTitle,
-  CardFooter
+  CardTitle
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -22,13 +16,17 @@ import {
   FormItem,
   FormMessage
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { User2Icon } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const { data: session, error } = authClient.useSession();
 
   // Create a schema for name validation
@@ -94,7 +92,7 @@ export function UpdateNameCard() {
           </CardContent>
           <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
             <p className="text-sm text-muted-foreground">
-              {t('name.maxLength')}
+              {t('name.hint')}
             </p>
 
             <Button type="submit" disabled={isSaving}>

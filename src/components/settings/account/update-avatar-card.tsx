@@ -13,13 +13,19 @@ import {
 import { authClient } from '@/lib/auth-client';
 import { User2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function UpdateAvatarCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isUploading, setIsUploading] = useState(false);
   const { data: session, error } = authClient.useSession();
-  const [avatarUrl, setAvatarUrl] = useState(session?.user?.image);
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  useEffect(() => {
+    if (session?.user?.image) {
+      setAvatarUrl(session.user.image);
+    }
+  }, [session]);
 
   const user = session?.user;
   if (!user) {
