@@ -290,11 +290,8 @@
       "settings": {
         "title": "Settings",
         "items": {
-          "general": {
-            "title": "General"
-          },
-          "security": {
-            "title": "Security"
+          "account": {
+            "title": "Account"
           },
           "billing": {
             "title": "Billing"

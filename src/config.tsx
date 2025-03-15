@@ -342,7 +342,7 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
     },
     {
       title: t('Marketing.avatar.settings'),
-      href: Routes.SettingsGeneral,
+      href: Routes.SettingsAccount,
       icon: <Settings2Icon className="size-4 shrink-0" />,
     },
   ];
@@ -397,9 +397,9 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
       icon: <Settings2Icon className="site-4 shrink-0" />,
       items: [
         {
-          title: t('Dashboard.sidebar.settings.items.general.title'),
+          title: t('Dashboard.sidebar.settings.items.account.title'),
           icon: <UserCircleIcon className="site-4 shrink-0" />,
-          href: Routes.SettingsGeneral,
+          href: Routes.SettingsAccount,
           external: false,
         },
         {

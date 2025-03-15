@@ -28,7 +28,7 @@ export function SidebarMain() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
         {sidebarMainLinks.map((item) => (
           <>

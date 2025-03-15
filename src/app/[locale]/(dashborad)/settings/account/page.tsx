@@ -1,7 +1,6 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -12,7 +11,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useTranslations } from 'next-intl';
 
-export default function DashboardPage() {
+export default function SettingsAccountPage() {
   const t = useTranslations();
 
   return (
@@ -24,9 +23,13 @@ export default function DashboardPage() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">
-                  {t('Dashboard.sidebar.dashboard.title')}
-                </BreadcrumbLink>
+                {t('Dashboard.sidebar.settings.title')}
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  {t('Dashboard.sidebar.settings.items.account.title')}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

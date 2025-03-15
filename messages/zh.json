@@ -285,11 +285,8 @@
       "settings": {
         "title": "设置",
         "items": {
-          "general": {
+          "account": {
             "title": "账号"
-          },
-          "security": {
-            "title": "安全"
           },
           "billing": {
             "title": "账单"
