@@ -13,10 +13,10 @@ import {
   Settings2,
   SquareTerminal,
 } from 'lucide-react';
-import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
-import { NavSecondary } from '@/components/nav-secondary';
-import { NavUser } from '@/components/nav-user';
+import { NavMain } from '@/components/dashboard/nav-main';
+import { NavProjects } from '@/components/dashboard/nav-projects';
+import { NavSecondary } from '@/components/dashboard/nav-secondary';
+import { NavUser } from '@/components/dashboard/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -29,7 +29,8 @@ import {
 import { getWebsiteInfo } from '@/config';
 import { createTranslator } from '@/i18n/translator';
 import { useTranslations } from 'next-intl';
-import { Logo } from './logo';
+import { Logo } from '../logo';
+import { LocaleLink } from '@/i18n/navigation';
 
 const data = {
   user: {
@@ -110,7 +111,7 @@ const data = {
           url: '#',
         },
         {
-          title: 'Team',
+          title: 'Security',
           url: '#',
         },
         {
@@ -165,15 +166,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <LocaleLink href="/">
                 <Logo className="size-8" />
                 <div className="grid flex-1 text-left leading-tight">
                   <span className="truncate font-semibold text-lg">
                     {websiteInfo.name}
                   </span>
-                  {/* <span className="truncate text-xs">{websiteInfo.description}</span> */}
                 </div>
-              </a>
+              </LocaleLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

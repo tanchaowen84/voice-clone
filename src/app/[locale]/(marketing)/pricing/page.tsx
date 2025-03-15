@@ -1,7 +1,7 @@
 import Pricing3 from '@/components/blocks/pricing/pricing-3';
 import Pricing4 from '@/components/blocks/pricing/pricing-4';
 import Pricing5 from '@/components/blocks/pricing/pricing-5';
-import PricingComparator from '@/components/pricing-comparator';
+import PricingComparator from '@/components/blocks/pricing/pricing-comparator';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { Metadata } from 'next';
