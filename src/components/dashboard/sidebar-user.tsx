@@ -37,13 +37,6 @@ import { useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
 
 export function SidebarUser() {
-  const { data: session, error } = authClient.useSession();
-  const user = session?.user;
-  if (!user) {
-    return null;
-  }
-  
-  const t = useTranslations();
   const { setTheme } = useTheme();
   const router = useLocaleRouter();
   const { isMobile } = useSidebar();
@@ -51,6 +44,13 @@ export function SidebarUser() {
   const params = useParams();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
   const [, startTransition] = useTransition();
+  const t = useTranslations();
+
+  const { data: session, error } = authClient.useSession();
+  const user = session?.user;
+  if (!user) {
+    return null;
+  }
 
   function onSelectLocale(nextLocale: Locale) {
     setCurrentLocale(nextLocale);
@@ -82,7 +82,7 @@ export function SidebarUser() {
   };
 
   return (
-    <SidebarMenu className="border-t py-2">
+    <SidebarMenu className="border-t">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
