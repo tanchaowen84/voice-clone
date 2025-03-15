@@ -7,8 +7,8 @@ import {
 } from '@/components/ui/collapsible';
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -28,26 +28,27 @@ export function SidebarMain() {
 
   return (
     <SidebarGroup>
-      {/* <SidebarGroupLabel>Dashboard</SidebarGroupLabel> */}
+      <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {sidebarMainLinks.map((item) => (
-          <Collapsible key={item.title} asChild>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <LocaleLink href={item.href || ''}>
-                  {item.icon ? item.icon : null}
-                  <span>{item.title}</span>
-                </LocaleLink>
-              </SidebarMenuButton>
-
-              {item.items?.length ? (
-                <>
+          <>
+            {item.items?.length ? (
+              <Collapsible
+                key={item.title}
+                asChild
+                defaultOpen={false}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRight />
-                      <span className="sr-only">Toggle</span>
-                    </SidebarMenuAction>
+                    <SidebarMenuButton tooltip={item.title}>
+                      {item.icon ? item.icon : null}
+                      <span>{item.title}</span>
+                      <ChevronRight className="ml-auto transition-transform 
+                        duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
                   </CollapsibleTrigger>
+
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
@@ -62,10 +63,20 @@ export function SidebarMain() {
                       ))}
                     </SidebarMenuSub>
                   </CollapsibleContent>
-                </>
-              ) : null}
-            </SidebarMenuItem>
-          </Collapsible>
+                </SidebarMenuItem>
+              </Collapsible>
+            ) : (
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip={item.title}>
+                  <LocaleLink href={item.href || ''}>
+                    {item.icon ? item.icon : null}
+                    <span>{item.title}</span>
+                  </LocaleLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+            }
+          </>
         ))}
       </SidebarMenu>
     </SidebarGroup>

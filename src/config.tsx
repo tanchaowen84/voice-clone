@@ -9,7 +9,6 @@ import { YouTubeIcon } from '@/components/icons/youtube';
 import { TranslationFunction } from '@/i18n/translator';
 import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
-import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
   BotIcon,
@@ -23,13 +22,13 @@ import {
   FilmIcon,
   FlameIcon,
   ImageIcon,
+  LayoutDashboardIcon,
   ListChecksIcon,
   MailboxIcon,
   MailIcon,
   NewspaperIcon,
   RocketIcon,
   Settings2Icon,
-  SettingsIcon,
   ShieldCheckIcon,
   SquareKanbanIcon,
   SquarePenIcon,
@@ -89,28 +88,28 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
         {
           title: t('Marketing.navbar.ai.items.text.title'),
           description: t('Marketing.navbar.ai.items.text.description'),
-          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          icon: <SquarePenIcon className="site-4 shrink-0" />,
           href: Routes.AIText,
           external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.image.title'),
           description: t('Marketing.navbar.ai.items.image.description'),
-          icon: <ImageIcon className="size-5 shrink-0" />,
+          icon: <ImageIcon className="site-4 shrink-0" />,
           href: Routes.AIImage,
           external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.video.title'),
           description: t('Marketing.navbar.ai.items.video.description'),
-          icon: <FilmIcon className="size-5 shrink-0" />,
+          icon: <FilmIcon className="site-4 shrink-0" />,
           href: Routes.AIVideo,
           external: false,
         },
         {
           title: t('Marketing.navbar.ai.items.audio.title'),
           description: t('Marketing.navbar.ai.items.audio.description'),
-          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          icon: <AudioLinesIcon className="site-4 shrink-0" />,
           href: Routes.AIAudio,
           external: false,
         },
@@ -122,35 +121,35 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
         {
           title: t('Marketing.navbar.pages.items.about.title'),
           description: t('Marketing.navbar.pages.items.about.description'),
-          icon: <BuildingIcon className="size-5 shrink-0" />,
+          icon: <BuildingIcon className="site-4 shrink-0" />,
           href: Routes.About,
           external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.contact.title'),
           description: t('Marketing.navbar.pages.items.contact.description'),
-          icon: <MailIcon className="size-5 shrink-0" />,
+          icon: <MailIcon className="site-4 shrink-0" />,
           href: Routes.Contact,
           external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.waitlist.title'),
           description: t('Marketing.navbar.pages.items.waitlist.description'),
-          icon: <MailboxIcon className="size-5 shrink-0" />,
+          icon: <MailboxIcon className="site-4 shrink-0" />,
           href: Routes.Waitlist,
           external: false,
         },
         {
           title: t('Marketing.navbar.pages.items.roadmap.title'),
           description: t('Marketing.navbar.pages.items.roadmap.description'),
-          icon: <SquareKanbanIcon className="size-5 shrink-0" />,
+          icon: <SquareKanbanIcon className="site-4 shrink-0" />,
           href: Routes.Roadmap,
           external: true,
         },
         {
           title: t('Marketing.navbar.pages.items.changelog.title'),
           description: t('Marketing.navbar.pages.items.changelog.description'),
-          icon: <ListChecksIcon className="size-5 shrink-0" />,
+          icon: <ListChecksIcon className="site-4 shrink-0" />,
           href: Routes.Changelog,
           external: false,
         },
@@ -159,7 +158,7 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t(
             'Marketing.navbar.pages.items.cookiePolicy.description'
           ),
-          icon: <CookieIcon className="size-5 shrink-0" />,
+          icon: <CookieIcon className="site-4 shrink-0" />,
           href: Routes.CookiePolicy,
           external: false,
         },
@@ -168,7 +167,7 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t(
             'Marketing.navbar.pages.items.privacyPolicy.description'
           ),
-          icon: <ShieldCheckIcon className="size-5 shrink-0" />,
+          icon: <ShieldCheckIcon className="site-4 shrink-0" />,
           href: Routes.PrivacyPolicy,
           external: false,
         },
@@ -177,7 +176,7 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
           description: t(
             'Marketing.navbar.pages.items.termsOfService.description'
           ),
-          icon: <FileTextIcon className="size-5 shrink-0" />,
+          icon: <FileTextIcon className="site-4 shrink-0" />,
           href: Routes.TermsOfService,
           external: false,
         },
@@ -188,49 +187,49 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
       items: [
         {
           title: t('Marketing.navbar.blocks.items.hero.title'),
-          icon: <FlameIcon className="size-5 shrink-0" />,
+          icon: <FlameIcon className="site-4 shrink-0" />,
           href: Routes.HeroBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.pricing.title'),
-          icon: <CircleDollarSignIcon className="size-5 shrink-0" />,
+          icon: <CircleDollarSignIcon className="site-4 shrink-0" />,
           href: Routes.PricingBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.features.title'),
-          icon: <WandSparklesIcon className="size-5 shrink-0" />,
+          icon: <WandSparklesIcon className="site-4 shrink-0" />,
           href: Routes.FeaturesBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.faq.title'),
-          icon: <CircleHelpIcon className="size-5 shrink-0" />,
+          icon: <CircleHelpIcon className="site-4 shrink-0" />,
           href: Routes.FAQBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.testimonials.title'),
-          icon: <ThumbsUpIcon className="size-5 shrink-0" />,
+          icon: <ThumbsUpIcon className="site-4 shrink-0" />,
           href: Routes.TestimonialsBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.stats.title'),
-          icon: <ChartNoAxesCombinedIcon className="size-5 shrink-0" />,
+          icon: <ChartNoAxesCombinedIcon className="site-4 shrink-0" />,
           href: Routes.StatsBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.callToAction.title'),
-          icon: <RocketIcon className="size-5 shrink-0" />,
+          icon: <RocketIcon className="site-4 shrink-0" />,
           href: Routes.CallToActionBlocks,
           external: false,
         },
         {
           title: t('Marketing.navbar.blocks.items.content.title'),
-          icon: <NewspaperIcon className="size-5 shrink-0" />,
+          icon: <NewspaperIcon className="site-4 shrink-0" />,
           href: Routes.ContentBlocks,
           external: false,
         },
@@ -339,7 +338,7 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
     {
       title: t('Marketing.avatar.dashboard'),
       href: Routes.Dashboard,
-      icon: <DashboardIcon className="size-4 shrink-0" />,
+      icon: <LayoutDashboardIcon className="size-4 shrink-0" />,
     },
     {
       title: t('Marketing.avatar.settings'),
@@ -359,35 +358,35 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
   return [
     {
       title: t('Dashboard.sidebar.dashboard.title'),
-      icon: <DashboardIcon className="size-5 shrink-0" />,
+      icon: <LayoutDashboardIcon className="site-4 shrink-0" />,
       href: Routes.Dashboard,
       external: false,
     },
     {
       title: t('Dashboard.sidebar.ai.title'),
-      icon: <BotIcon className="size-5 shrink-0" />,
+      icon: <BotIcon className="site-4 shrink-0" />,
       items: [
         {
           title: t('Dashboard.sidebar.ai.items.text.title'),
-          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          icon: <SquarePenIcon className="site-4 shrink-0" />,
           href: Routes.AIText,
           external: false,
         },
         {
           title: t('Dashboard.sidebar.ai.items.image.title'),
-          icon: <ImageIcon className="size-5 shrink-0" />,
+          icon: <ImageIcon className="site-4 shrink-0" />,
           href: Routes.AIImage,
           external: false,
         },
         {
           title: t('Dashboard.sidebar.ai.items.video.title'),
-          icon: <FilmIcon className="size-5 shrink-0" />,
+          icon: <FilmIcon className="site-4 shrink-0" />,
           href: Routes.AIVideo,
           external: false,
         },
         {
           title: t('Dashboard.sidebar.ai.items.audio.title'),
-          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          icon: <AudioLinesIcon className="site-4 shrink-0" />,
           href: Routes.AIAudio,
           external: false,
         },
@@ -395,17 +394,17 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
     },
     {
       title: t('Dashboard.sidebar.settings.title'),
-      icon: <Settings2Icon className="size-5 shrink-0" />,
+      icon: <Settings2Icon className="site-4 shrink-0" />,
       items: [
         {
           title: t('Dashboard.sidebar.settings.items.general.title'),
-          icon: <UserCircleIcon className="size-5 shrink-0" />,
+          icon: <UserCircleIcon className="site-4 shrink-0" />,
           href: Routes.SettingsGeneral,
           external: false,
         },
         {
           title: t('Dashboard.sidebar.settings.items.billing.title'),
-          icon: <CreditCardIcon className="size-5 shrink-0" />,
+          icon: <CreditCardIcon className="site-4 shrink-0" />,
           href: Routes.SettingsBilling,
           external: false,
         }
