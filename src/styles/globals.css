@@ -8,7 +8,9 @@
   /* @import "./theme-blue.css"; */
   /* @import "./theme-violet.css"; */
   /* @import "./theme-zinc.css"; */
-  @import "./theme-zinc.css";
+  @import "./theme-blue.css";
+  /* please notice that sidebar theme need to be set manually */
+  /* https://ui.shadcn.com/docs/components/sidebar#theming */
 
   html {
     /* prevent the layout from shifting when the scrollbar appears or disappears. */

@@ -1,3 +1,4 @@
+/* https://ui.shadcn.com/docs/components/sidebar#theming */
 :root {
   --background: 0 0% 100%;
   --foreground: 239 6.9% 4%;
@@ -19,6 +20,15 @@
   --input: 239 6.9% 90%;
   --ring: 239 69% 60%;
   --radius: 0.5rem;
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
 .dark {
@@ -41,4 +51,13 @@
   --border: 239 6.9% 16%;
   --input: 239 6.9% 16%;
   --ring: 239 69% 68%;
+
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 0 0% 98%;
+  --sidebar-primary-foreground: 240 5.9% 10%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
 }

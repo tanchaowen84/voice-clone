@@ -13,6 +13,7 @@ import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
   BadgeCheckIcon,
+  BotIcon,
   BuildingIcon,
   ChartNoAxesCombinedIcon,
   CircleDollarSignIcon,
@@ -358,6 +359,7 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
   return [
     {
       title: t('Dashboard.sidebar.ai.title'),
+      icon: <BotIcon className="size-5 shrink-0" />,
       items: [
         {
           title: t('Dashboard.sidebar.ai.items.text.title'),
@@ -387,6 +389,7 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
     },
     {
       title: t('Dashboard.sidebar.settings.title'),
+      icon: <SettingsIcon className="size-5 shrink-0" />,
       items: [
         {
           title: t('Dashboard.sidebar.settings.items.general.title'),
