@@ -7,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { LocaleLink } from '@/i18n/navigation';
 
 export function NavSecondary({
   items,
@@ -25,10 +26,10 @@ export function NavSecondary({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild size="sm">
-                <a href={item.url}>
+                <LocaleLink href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
-                </a>
+                </LocaleLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

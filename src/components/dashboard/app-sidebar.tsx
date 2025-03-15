@@ -10,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
@@ -25,6 +26,7 @@ import {
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
+import { NavSecondary } from './nav-secondary';
 
 const data = {
   navMain: [
@@ -72,23 +74,6 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
-    },
-  ],
   navSecondary: [
     {
       title: 'Support',
@@ -124,11 +109,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
+        {/* main nav */}
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
-        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+
+        {/* secondary nav */}
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+
+      <SidebarSeparator />
+      
       <SidebarFooter>
         <NavUser />
       </SidebarFooter>
