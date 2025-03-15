@@ -30,7 +30,7 @@ import {
   MoonIcon,
   SunIcon
 } from 'lucide-react';
-import { Locale, useLocale, useTranslations } from 'next-intl';
+import { Locale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
@@ -52,7 +52,7 @@ export function SidebarUser() {
     return null;
   }
 
-  function onSelectLocale(nextLocale: Locale) {
+  const setLocale = (nextLocale: Locale) => {
     setCurrentLocale(nextLocale);
 
     startTransition(() => {
@@ -82,7 +82,7 @@ export function SidebarUser() {
   };
 
   return (
-    <SidebarMenu className="border-t">
+    <SidebarMenu className="border-t pt-2">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -172,7 +172,7 @@ export function SidebarUser() {
                   {routing.locales.map((localeOption) => (
                     <DropdownMenuItem
                       key={localeOption}
-                      onClick={() => onSelectLocale(localeOption)}
+                      onClick={() => setLocale(localeOption)}
                       className="cursor-pointer"
                     >
                       <span className="mr-2 text-md">{LOCALE_LIST[localeOption].flag}</span>

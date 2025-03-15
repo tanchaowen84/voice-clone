@@ -36,7 +36,7 @@ export default function LocaleSwitcher() {
     setCurrentLocale(locale);
   }, [locale, setCurrentLocale]);
 
-  function onSelectLocale(nextLocale: Locale) {
+  const setLocale = (nextLocale: Locale) => {
     setCurrentLocale(nextLocale);
 
     startTransition(() => {
@@ -66,7 +66,7 @@ export default function LocaleSwitcher() {
         {routing.locales.map((localeOption) => (
           <DropdownMenuItem
             key={localeOption}
-            onClick={() => onSelectLocale(localeOption)}
+            onClick={() => setLocale(localeOption)}
             className="cursor-pointer"
           >
             <span className="mr-2 text-md">{LOCALE_LIST[localeOption].flag}</span>
