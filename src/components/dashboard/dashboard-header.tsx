@@ -7,8 +7,9 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { ReactNode } from 'react';
-import React from 'react';
+import React, { ReactNode } from 'react';
+import LocaleSwitcher from '../layout/locale-switcher';
+import { ThemeSwitcher } from '../layout/theme-switcher';
 
 interface BreadcrumbItem {
   label: string;
@@ -33,8 +34,8 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
                 {index > 0 && (
                   <BreadcrumbSeparator key={`sep-${index}`} className="hidden md:block" />
                 )}
-                <BreadcrumbItem 
-                  key={`item-${index}`} 
+                <BreadcrumbItem
+                  key={`item-${index}`}
                   className={index < breadcrumbs.length - 1 ? "hidden md:block" : ""}
                 >
                   {item.isCurrentPage ? (
@@ -48,11 +49,14 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      {actions && (
-        <div className="ml-auto flex items-center gap-2 px-4">
-          {actions}
-        </div>
-      )}
+
+      {/* dashboard header actions on the right side */}
+      <div className="ml-auto flex items-center gap-3 px-4">
+        {actions}
+
+        <ThemeSwitcher />
+        <LocaleSwitcher />
+      </div>
     </header>
   );
 } 
