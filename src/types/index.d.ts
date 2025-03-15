@@ -23,17 +23,6 @@ export type WebsiteConfig = {
 };
 
 /**
- * website info, with translations
- * 
- * name: the name of the website, used in navbar and footer
- * tagline: the tagline of the website, used in footer
- */
-export type WebsiteInfo = {
-  name: string;
-  tagline: string;
-};
-
-/**
  * menu item
  * 
  * title: the text to display

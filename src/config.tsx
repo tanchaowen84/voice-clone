@@ -8,7 +8,7 @@ import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
 import { TranslationFunction } from '@/i18n/translator';
 import { Routes } from '@/routes';
-import { MenuItem, NestedMenuItem, WebsiteConfig, WebsiteInfo } from '@/types';
+import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
