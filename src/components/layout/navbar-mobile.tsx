@@ -130,7 +130,6 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const t = useTranslations();
   const translator = createTranslator(t);
   const menuLinks = getMenuLinks(translator);
-  const commonTranslations = useTranslations('Common');
   const localePathname = useLocalePathname();
 
   return (
@@ -153,7 +152,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                 'w-full'
               )}
             >
-              {commonTranslations('login')}
+              {t('Common.login')}
             </LocaleLink>
             <LocaleLink
               href={Routes.Register}
@@ -166,7 +165,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
               )}
               onClick={onLinkClicked}
             >
-              {commonTranslations('signUp')}
+              {t('Common.signUp')}
             </LocaleLink>
           </div>
         )}

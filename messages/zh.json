@@ -295,12 +295,14 @@
               "uploadAvatar": "上传头像"
             },
             "name": {
-              "title": "姓名",
+              "title": "名字",
               "description": "请输入您的名字",
-              "placeholder": "输入您的名字",
+              "placeholder": "名字",
               "minLength": "请至少使用 3 个字符",
               "maxLength": "请最多使用 30 个字符",
-              "hint": "请使用 3-30 个字符"
+              "hint": "请使用 3-30 个字符",
+              "success": "名字更新成功",
+              "fail": "更新名字失败"
             },
             "password": {
               "title": "修改密码",

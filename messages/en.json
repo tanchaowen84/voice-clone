@@ -12,7 +12,8 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System",
-    "copy": "Copy"
+    "copy": "Copy",
+    "logoutFailed": "Failed to log out"
   },
   "Metadata": {
     "title": "MkSaaS - The Best AI SaaS Boilerplate",
@@ -304,7 +305,9 @@
               "placeholder": "Enter your name",
               "minLength": "Please use 3 characters at minimum",
               "maxLength": "Please use 30 characters at maximum",
-              "hint": "Please use 3-30 characters for your name"
+              "hint": "Please use 3-30 characters for your name",
+              "success": "Name updated successfully",
+              "fail": "Failed to update name"
             },
             "password": {
               "title": "Change Password",

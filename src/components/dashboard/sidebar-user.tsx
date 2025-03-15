@@ -35,6 +35,7 @@ import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
+import { toast } from 'sonner';
 
 export function SidebarUser() {
   const { setTheme } = useTheme();
@@ -75,7 +76,7 @@ export function SidebarUser() {
         },
         onError: (error) => {
           console.error('sign out error:', error);
-          // TODO: show error message
+          toast.error(t('Common.logoutFailed'));
         },
       },
     });
@@ -92,14 +93,14 @@ export function SidebarUser() {
               data-[state=open]:text-sidebar-accent-foreground"
             >
               <UserAvatar
-                name={user.name || undefined}
+                name={user.username || undefined}
                 image={user.image || undefined}
                 className="size-8 border"
               />
 
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {user.name}
+                  {user.username}
                 </span>
                 <span className="truncate text-xs">
                   {user.email}
@@ -117,12 +118,12 @@ export function SidebarUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <UserAvatar
-                  name={user.name || undefined}
+                  name={user.username || undefined}
                   image={user.image || undefined}
                   className="size-8 border"
                 />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-semibold">{user.username}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>

@@ -32,7 +32,6 @@ export function UserButton() {
   const t = useTranslations();
   const translator = createTranslator(t);
   const avatarLinks = getAvatarLinks(translator);
-  const commonTranslations = useTranslations('Common');
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -63,7 +62,7 @@ export function UserButton() {
       <Drawer open={open} onClose={closeDrawer}>
         <DrawerTrigger onClick={() => setOpen(true)}>
           <UserAvatar
-            name={user?.name || undefined}
+            name={user?.username || undefined}
             image={user?.image || undefined}
             className="size-8 border"
           />
@@ -79,12 +78,14 @@ export function UserButton() {
             </DrawerHeader>
             <div className="flex items-center justify-start gap-4 p-2">
               <UserAvatar
-                name={user?.name || undefined}
+                name={user?.username || undefined}
                 image={user?.image || undefined}
                 className="size-8 border"
               />
               <div className="flex flex-col">
-                {user?.name && <p className="font-medium">{user.name}</p>}
+                {user?.username && <p className="font-medium">
+                  {user.username}
+                </p>}
                 {user?.email && (
                   <p className="w-[200px] truncate text-muted-foreground">
                     {user?.email}
@@ -125,7 +126,7 @@ export function UserButton() {
                   className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
                   <LogOutIcon className="size-4" />
-                  <p className="text-sm">{commonTranslations('logout')}</p>
+                  <p className="text-sm">{t('Common.logout')}</p>
                 </a>
               </li>
             </ul>
@@ -140,7 +141,7 @@ export function UserButton() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
         <UserAvatar
-          name={user?.name || undefined}
+          name={user?.username || undefined}
           image={user?.image || undefined}
           className="size-8 border"
         />
@@ -148,7 +149,9 @@ export function UserButton() {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user?.name && <p className="font-medium">{user.name}</p>}
+            {user?.username && <p className="font-medium">
+              {user.username}
+            </p>}
             {user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
                 {user?.email}
@@ -186,7 +189,7 @@ export function UserButton() {
         >
           <div className="flex items-center space-x-2.5">
             <LogOutIcon className="size-4" />
-            <p className="text-sm">{commonTranslations('logout')}</p>
+            <p className="text-sm">{t('Common.logout')}</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

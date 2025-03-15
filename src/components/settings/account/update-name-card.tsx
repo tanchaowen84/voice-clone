@@ -20,14 +20,22 @@ import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
+/**
+ * update user name
+ * 
+ * NOTICE: we update username instead of name in user table
+ * 
+ * https://www.better-auth.com/docs/plugins/username
+ */
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
-  const { data: session, error } = authClient.useSession();
+  const { data: session, refetch, error } = authClient.useSession();
 
   // Create a schema for name validation
   const formSchema = z.object({
@@ -41,9 +49,15 @@ export function UpdateNameCard() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: session?.user?.name || '',
+      name: session?.user?.username || '',
     },
   });
+
+  useEffect(() => {
+    if (session?.user?.username) {
+      form.setValue('name', session.user.username);
+    }
+  }, [session, form]);
 
   // Check if user exists after all hooks are initialized
   const user = session?.user;
@@ -53,14 +67,37 @@ export function UpdateNameCard() {
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSaving(true);
+    // Don't update if the name hasn't changed
+    if (values.name === session?.user?.username) {
+      console.log("No changes to save");
+      return;
+    }
 
-    // Here you would typically send the data to your server
-    // For now, we're just simulating the request
-    setTimeout(() => {
-      setIsSaving(false);
-      // In a real implementation, you would handle the response from your server
-    }, 1000);
+    const { data, error } = await authClient.updateUser(
+      {
+        username: values.name,
+      },
+      {
+        onRequest: (ctx) => {
+          // console.log('update name, request:', ctx.url);
+          setIsSaving(true);
+        },
+        onResponse: (ctx) => {
+          // console.log('update name, response:', ctx.response);
+          setIsSaving(false);
+        },
+        onSuccess: (ctx) => {
+          // update name success, user information stored in ctx.data
+          // console.log("update name, success:", ctx.data);
+          toast.success(t('name.success'));
+          refetch();
+        },
+        onError: (ctx) => {
+          // update name fail, display the error message
+          console.error('update name, error:', ctx.error);
+          toast.error(t('name.fail'));
+        },
+      });
   };
 
   return (
