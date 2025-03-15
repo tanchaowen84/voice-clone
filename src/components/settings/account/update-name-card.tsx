@@ -31,7 +31,7 @@ import { z } from 'zod';
  * 
  * NOTICE: we update username instead of name in user table
  * 
- * TODO: by default, username is empty, how can we show the username in user-button?
+ * TODO: by default, username is empty, how can we show the username after signup?
  * 
  * https://www.better-auth.com/docs/plugins/username
  */

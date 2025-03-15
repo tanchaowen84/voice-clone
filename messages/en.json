@@ -328,8 +328,21 @@
               "success": "Password updated successfully",
               "fail": "Failed to update password"
             },
+            "deleteAccount": {
+              "title": "Delete Account",
+              "description": "Permanently remove your account and all of its contents",
+              "warning": "This action is not reversible, so please continue with caution",
+              "button": "Delete Account",
+              "confirmTitle": "Delete Account",
+              "confirmDescription": "Are you sure you want to delete your account? This action cannot be undone.",
+              "confirm": "Delete",
+              "deleting": "Deleting...",
+              "success": "Account deleted successfully",
+              "fail": "Failed to delete account"
+            },
             "save": "Save",
-            "saving": "Saving..."
+            "saving": "Saving...",
+            "cancel": "Cancel"
           },
           "billing": {
             "title": "Billing"

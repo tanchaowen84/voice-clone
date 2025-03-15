@@ -323,6 +323,18 @@
               "success": "密码更新成功",
               "fail": "更新密码失败"
             },
+            "deleteAccount": {
+              "title": "删除账号",
+              "description": "永久删除您的账号和所有内容",
+              "warning": "此操作是不可逆的，请谨慎操作",
+              "button": "删除账号",
+              "confirmTitle": "删除账号",
+              "confirmDescription": "您确定要删除您的账号吗？此操作无法撤销",
+              "confirm": "删除",
+              "deleting": "删除中...",
+              "success": "账号删除成功",
+              "fail": "删除账号失败"
+            },
             "save": "保存",
             "saving": "保存中..."
           },
