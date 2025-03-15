@@ -4,7 +4,7 @@ import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { Routes } from '@/routes';
 import { Metadata } from 'next';
-import { Locale, useTranslations } from 'next-intl';
+import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({

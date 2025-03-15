@@ -139,27 +139,46 @@ const components = {
   pre: ({
     className,
     __rawString__,
+    children,
     ...props
-  }: React.HTMLAttributes<HTMLPreElement> & { __rawString__?: string }) => (
-    <div className="my-4 group relative w-full overflow-hidden">
-      <pre
-        className={cn(
-          "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
-          className,
-        )}
-        {...props}
-      />
-      {__rawString__ && (
-        <CopyButton
-          value={__rawString__}
+  }: React.HTMLAttributes<HTMLPreElement> & { __rawString__?: string }) => {
+    const preRef = React.useRef<HTMLPreElement>(null);
+    const [codeContent, setCodeContent] = React.useState<string>(__rawString__ || '');
+    
+    // Extract the text content from the pre element after rendering
+    React.useEffect(() => {
+      if (preRef.current && !codeContent) {
+        // Find the code element inside the pre element
+        const codeElement = preRef.current.querySelector('code');
+        if (codeElement) {
+          // Get the text content of the code element
+          const text = codeElement.textContent || '';
+          setCodeContent(text);
+        }
+      }
+    }, [codeContent]);
+    
+    return (
+      <div className="my-4 group relative w-full overflow-hidden">
+        <pre
+          ref={preRef}
           className={cn(
-            "absolute right-4 top-4 z-20",
-            "duration-250 opacity-0 transition-all group-hover:opacity-100",
+            "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
+            className,
           )}
-        />
-      )}
-    </div>
-  ),
+          {...props}
+        >
+          {children}
+        </pre>
+        {(codeContent || __rawString__) && (
+          <CopyButton
+            value={codeContent || __rawString__ || ''}
+            className="absolute right-4 top-4 z-20 opacity-70 hover:opacity-100 transition-all"
+          />
+        )}
+      </div>
+    );
+  },
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(

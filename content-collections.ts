@@ -322,7 +322,12 @@ const compileWithCodeCopy = async (
           if (node?.type === "element" && node?.tagName === "pre") {
             const [codeEl] = node.children;
             if (codeEl.tagName !== "code") return;
-            node.__rawString__ = codeEl.children?.[0]?.value;
+            
+            // add __rawString__ as a property that will be passed to the React component
+            if (!node.properties) {
+              node.properties = {};
+            }
+            node.properties.__rawString__ = codeEl.children?.[0]?.value;
           }
         });
       },
