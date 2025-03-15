@@ -27,13 +27,8 @@ import { authClient } from '@/lib/auth-client';
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
-
   const { data: session, error } = authClient.useSession();
-  const user = session?.user;
-  if (!user) {
-    return null;
-  }
-
+  
   // Create a schema for name validation
   const formSchema = z.object({
     name: z
@@ -42,13 +37,19 @@ export function UpdateNameCard() {
       .max(30, { message: t('name.maxLength') }),
   });
 
-  // Initialize the form
+  // Initialize the form with empty string as fallback if user.name is undefined
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: user.name,
+      name: session?.user?.name || '',
     },
   });
+
+  // Check if user exists after all hooks are initialized
+  const user = session?.user;
+  if (!user) {
+    return null;
+  }
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

@@ -28,16 +28,15 @@ import { authClient } from '@/lib/auth-client';
 
 export function UpdatePasswordCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
-
+  const [isSaving, setIsSaving] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   if (!user) {
     return null;
   }
-
-  const [isSaving, setIsSaving] = useState(false);
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
 
   // Create a schema for password validation
   const formSchema = z.object({

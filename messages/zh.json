@@ -299,7 +299,7 @@
               "description": "请输入您的名字。",
               "placeholder": "输入您的名字",
               "minLength": "请至少使用 3 个字符。",
-              "maxLength": "请最多使用 32 个字符。"
+              "maxLength": "请最多使用 30 个字符。"
             },
             "password": {
               "title": "修改密码",

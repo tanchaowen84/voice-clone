@@ -303,7 +303,7 @@
               "description": "Please enter your display name.",
               "placeholder": "Enter your name",
               "minLength": "Please use 3 characters at minimum.",
-              "maxLength": "Please use 32 characters at maximum."
+              "maxLength": "Please use 30 characters at maximum."
             },
             "password": {
               "title": "Change Password",

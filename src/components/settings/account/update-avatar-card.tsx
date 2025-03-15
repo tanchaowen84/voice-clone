@@ -16,14 +16,14 @@ import { useState } from 'react';
 
 export function UpdateAvatarCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const [avatarUrl, setAvatarUrl] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   if (!user) {
     return null;
   }
-
-  const [avatarUrl, setAvatarUrl] = useState(user?.image);
-  const [isUploading, setIsUploading] = useState(false);
 
   const handleAvatarClick = () => {
     // Create a hidden file input and trigger it
