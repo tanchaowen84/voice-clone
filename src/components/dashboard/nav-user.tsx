@@ -7,6 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -15,28 +18,57 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { useLocaleRouter } from '@/i18n/navigation';
+import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
+import { LOCALE_LIST, routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
+import { useLocaleStore } from '@/stores/locale-store';
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
+  Languages,
+  LaptopIcon,
   LogOut,
-  Sparkles,
+  MoonIcon,
+  SunIcon
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Locale, useLocale, useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
+import { useParams } from 'next/navigation';
+import { useEffect, useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
 
 export function NavUser() {
-  const router = useLocaleRouter();
-  const { isMobile } = useSidebar();
-  const t = useTranslations('Common');
-
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   if (!user) {
     return null;
+  }
+
+  const t = useTranslations();
+  const { setTheme } = useTheme();
+  const router = useLocaleRouter();
+  const { isMobile } = useSidebar();
+  const pathname = useLocalePathname();
+  const params = useParams();
+  const locale = useLocale();
+  const { currentLocale, setCurrentLocale } = useLocaleStore();
+  const [, startTransition] = useTransition();
+  
+  useEffect(() => {
+    setCurrentLocale(locale);
+  }, [locale, setCurrentLocale]);
+
+  function onSelectLocale(nextLocale: Locale) {
+    setCurrentLocale(nextLocale);
+
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: nextLocale }
+      );
+    });
   }
 
   const handleSignOut = async () => {
@@ -100,31 +132,87 @@ export function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
+
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <LaptopIcon className="mr-2 size-4" />
+                  <span>{t('Common.theme')}</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setTheme('light')}
+                  >
+                    <SunIcon className="mr-2 size-4" />
+                    <span>{t('Common.light')}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setTheme('dark')}
+                  >
+                    <MoonIcon className="mr-2 size-4" />
+                    <span>{t('Common.dark')}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setTheme('system')}
+                  >
+                    <LaptopIcon className="mr-2 size-4" />
+                    <span>{t('Common.system')}</span>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuGroup>
+
+            <DropdownMenuGroup>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Languages className="mr-2 size-4" />
+                  <span>{t('Common.language')}</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  {routing.locales.map((localeOption) => (
+                    <DropdownMenuItem
+                      key={localeOption}
+                      onClick={() => onSelectLocale(localeOption)}
+                      className="cursor-pointer"
+                    >
+                      <span className="mr-2 text-md">{LOCALE_LIST[localeOption].flag}</span>
+                      <span className="text-sm">{LOCALE_LIST[localeOption].name}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            {/* <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
-                <Sparkles />
+                <Sparkles className="mr-2 size-4" />
                 Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
-                <BadgeCheck />
+                <BadgeCheck className="mr-2 size-4" />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
-                <CreditCard />
+                <CreditCard className="mr-2 size-4" />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
-                <Bell />
+                <Bell className="mr-2 size-4" />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator /> */}
 
-            <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={async (event) => {
@@ -132,8 +220,8 @@ export function NavUser() {
                 handleSignOut();
               }}
             >
-              <LogOut />
-              {t('logout')}
+              <LogOut className="mr-2 size-4" />
+              {t('Common.logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
