@@ -1,4 +1,4 @@
-import { AppSidebar } from '@/components/dashboard/app-sidebar';
+import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
 import {
   SidebarInset,
   SidebarProvider
@@ -8,7 +8,7 @@ import { PropsWithChildren } from 'react';
 export default function DashboardLayout({children}: PropsWithChildren) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <DashboardSidebar />
       
       <SidebarInset>
         {children}

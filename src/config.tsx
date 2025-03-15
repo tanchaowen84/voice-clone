@@ -12,11 +12,13 @@ import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import {
   AudioLinesIcon,
+  BadgeCheckIcon,
   BuildingIcon,
   ChartNoAxesCombinedIcon,
   CircleDollarSignIcon,
   CircleHelpIcon,
   CookieIcon,
+  CreditCardIcon,
   FileTextIcon,
   FilmIcon,
   FlameIcon,
@@ -26,6 +28,7 @@ import {
   MailIcon,
   NewspaperIcon,
   RocketIcon,
+  Settings2Icon,
   SettingsIcon,
   ShieldCheckIcon,
   SquareKanbanIcon,
@@ -341,6 +344,69 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
       title: t('Marketing.avatar.settings'),
       href: Routes.Settings,
       icon: <SettingsIcon className="size-4 shrink-0" />,
+    },
+  ];
+}
+
+/**
+ * Get sidebar main menu links with translations
+ *
+ * @param t - The translation function
+ * @returns The menu links with translated titles and descriptions
+ */
+export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
+  return [
+    {
+      title: t('Dashboard.sidebar.ai.title'),
+      items: [
+        {
+          title: t('Dashboard.sidebar.ai.items.text.title'),
+          icon: <SquarePenIcon className="size-5 shrink-0" />,
+          href: Routes.AIText,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.ai.items.image.title'),
+          icon: <ImageIcon className="size-5 shrink-0" />,
+          href: Routes.AIImage,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.ai.items.video.title'),
+          icon: <FilmIcon className="size-5 shrink-0" />,
+          href: Routes.AIVideo,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.ai.items.audio.title'),
+          icon: <AudioLinesIcon className="size-5 shrink-0" />,
+          href: Routes.AIAudio,
+          external: false,
+        },
+      ],
+    },
+    {
+      title: t('Dashboard.sidebar.settings.title'),
+      items: [
+        {
+          title: t('Dashboard.sidebar.settings.items.general.title'),
+          icon: <BadgeCheckIcon className="size-5 shrink-0" />,
+          href: Routes.HeroBlocks,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.settings.items.security.title'),
+          icon: <ShieldCheckIcon className="size-5 shrink-0" />,
+          href: Routes.PricingBlocks,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.settings.items.billing.title'),
+          icon: <CreditCardIcon className="size-5 shrink-0" />,
+          href: Routes.FeaturesBlocks,
+          external: false,
+        }
+      ],
     },
   ];
 }

@@ -264,6 +264,41 @@
       "settings": "Settings"
     }
   },
+  "Dashboard": {
+    "sidebar": {
+      "ai": {
+        "title": "AI",
+        "items": {
+          "text": { 
+            "title": "AI Text"
+          },
+          "image": {
+            "title": "AI Image"
+          },
+          "video": {
+            "title": "AI Video"
+          },
+          "audio": {
+            "title": "AI Audio"
+          }
+        }
+      },
+      "settings": {
+        "title": "Settings",
+        "items": {
+          "general": {
+            "title": "General"
+          },
+          "security": {
+            "title": "Security"
+          },
+          "billing": {
+            "title": "Billing"
+          }
+        }
+      }
+    }
+  },
   "Mail": {
     "common": {
       "team": "MkSaaS Team",

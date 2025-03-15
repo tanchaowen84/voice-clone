@@ -15,33 +15,27 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
+import { getSidebarMainLinks } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
-import { ChevronRight, type LucideIcon } from 'lucide-react';
+import { createTranslator } from '@/i18n/translator';
+import { ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export function SidebarMain() {
+  const t = useTranslations();
+  const translator = createTranslator(t);
+  const sidebarMainLinks = getSidebarMainLinks(translator);
+
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Dashboard</SidebarGroupLabel> */}
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+        {sidebarMainLinks.map((item) => (
+          <Collapsible key={item.title} asChild>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
-                <LocaleLink href={item.url}>
-                  <item.icon />
+                <LocaleLink href={item.href || ''}>
+                  {item.icon ? item.icon : null}
                   <span>{item.title}</span>
                 </LocaleLink>
               </SidebarMenuButton>
@@ -59,7 +53,8 @@ export function NavMain({
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <LocaleLink href={subItem.url}>
+                            <LocaleLink href={subItem.href || ''}>
+                              {subItem.icon ? subItem.icon : null}
                               <span>{subItem.title}</span>
                             </LocaleLink>
                           </SidebarMenuSubButton>

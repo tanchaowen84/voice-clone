@@ -260,6 +260,41 @@
       "logout": "退出"
     }
   },
+  "Dashboard": {
+    "sidebar": {
+      "ai": {
+        "title": "AI",
+        "items": {
+          "text": { 
+            "title": "AI 文本"
+          },
+          "image": {
+            "title": "AI 图像"
+          },
+          "video": {
+            "title": "AI 视频"
+          },
+          "audio": {
+            "title": "AI 音频"
+          }
+        }
+      },
+      "settings": {
+        "title": "设置",
+        "items": {
+          "general": {
+            "title": "账号"
+          },
+          "security": {
+            "title": "安全"
+          },
+          "billing": {
+            "title": "账单"
+          }
+        }
+      }
+    }
+  },
   "Mail": {
 		"common": {
       "team": "MkSaaS 团队",

@@ -33,29 +33,24 @@ import {
 import { Locale, useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
-import { useEffect, useTransition } from 'react';
+import { useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
 
-export function NavUser() {
+export function SidebarUser() {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   if (!user) {
     return null;
   }
-
+  
   const t = useTranslations();
   const { setTheme } = useTheme();
   const router = useLocaleRouter();
   const { isMobile } = useSidebar();
   const pathname = useLocalePathname();
   const params = useParams();
-  const locale = useLocale();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
   const [, startTransition] = useTransition();
-  
-  useEffect(() => {
-    setCurrentLocale(locale);
-  }, [locale, setCurrentLocale]);
 
   function onSelectLocale(nextLocale: Locale) {
     setCurrentLocale(nextLocale);
@@ -87,7 +82,7 @@ export function NavUser() {
   };
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="border-t py-2">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -189,29 +184,6 @@ export function NavUser() {
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
-
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer">
-                <Sparkles className="mr-2 size-4" />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer">
-                <BadgeCheck className="mr-2 size-4" />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <CreditCard className="mr-2 size-4" />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Bell className="mr-2 size-4" />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
 
             <DropdownMenuItem
               className="cursor-pointer"
