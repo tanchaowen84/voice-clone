@@ -74,6 +74,8 @@
       "forgotPassword": "忘记密码？",
       "signInWithGoogle": "使用 Google 登录",
       "signInWithGitHub": "使用 GitHub 登录",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码",
       "termsOfService": "服务条款",
       "privacyPolicy": "隐私政策",
       "byClickingContinue": "继续即表示您同意我们的 ",
@@ -88,7 +90,9 @@
       "password": "密码",
       "signUp": "注册",
       "signInHint": "已经有账号？登录",
-      "checkEmail": "请检查您的邮箱"
+      "checkEmail": "请检查您的邮箱",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码"
     },
     "forgotPassword": {
       "title": "忘记密码",

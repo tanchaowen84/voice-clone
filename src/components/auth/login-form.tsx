@@ -20,6 +20,7 @@ import { LoginSchema } from '@/lib/schemas';
 import { cn } from '@/lib/utils';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -76,6 +78,10 @@ export const LoginForm = ({ className }: { className?: string }) => {
         },
       }
     );
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -129,12 +135,32 @@ export const LoginForm = ({ className }: { className?: string }) => {
                     </Button>
                   </div>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="******"
-                      type="password"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="******"
+                        type={showPassword ? "text" : "password"}
+                        className="pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={togglePasswordVisibility}
+                        disabled={isPending}
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                        )}
+                        <span className="sr-only">
+                          {showPassword ? t('hidePassword') : t('showPassword')}
+                        </span>
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

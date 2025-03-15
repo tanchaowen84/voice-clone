@@ -1,7 +1,7 @@
 {
   "Site": {
     "name": "MkSaaS",
-    "tagline": "Make AI SaaS in hours, simply and effortlessly"    
+    "tagline": "Make AI SaaS in hours, simply and effortlessly"
   },
   "Common": {
     "login": "Log in",
@@ -80,6 +80,8 @@
       "forgotPassword": "Forgot Password?",
       "signInWithGoogle": "Sign In with Google",
       "signInWithGitHub": "Sign In with GitHub",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
       "termsOfService": "Terms of Service",
       "privacyPolicy": "Privacy Policy",
       "byClickingContinue": "By clicking continue, you agree to our ",
@@ -94,7 +96,9 @@
       "password": "Password",
       "signUp": "Sign Up",
       "signInHint": "Already have an account? Sign in",
-      "checkEmail": "Please check your email inbox"
+      "checkEmail": "Please check your email inbox",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
     },
     "forgotPassword": {
       "title": "Forgot Password",
@@ -273,7 +277,7 @@
       "ai": {
         "title": "AI",
         "items": {
-          "text": { 
+          "text": {
             "title": "AI Text"
           },
           "image": {
