@@ -324,7 +324,9 @@
               "newMinLength": "Password must be at least 8 characters",
               "hint": "Please use at least 8 characters for password",
               "showPassword": "Show password",
-              "hidePassword": "Hide password"
+              "hidePassword": "Hide password",
+              "success": "Password updated successfully",
+              "fail": "Failed to update password"
             },
             "save": "Save",
             "saving": "Saving..."

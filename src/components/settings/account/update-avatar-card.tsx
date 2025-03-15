@@ -75,7 +75,7 @@ export function UpdateAvatarCard() {
           <Avatar className="h-16 w-16 border">
             <AvatarImage src={avatarUrl ?? ''} alt={user.name} />
             <AvatarFallback>
-              <User2Icon className="h-8 w-8" />
+              <User2Icon className="h-8 w-8 text-muted-foreground" />
             </AvatarFallback>
           </Avatar>
 

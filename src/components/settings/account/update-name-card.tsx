@@ -1,5 +1,6 @@
 'use client';
 
+import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -30,12 +31,15 @@ import { z } from 'zod';
  * 
  * NOTICE: we update username instead of name in user table
  * 
+ * TODO: by default, username is empty, how can we show the username in user-button?
+ * 
  * https://www.better-auth.com/docs/plugins/username
  */
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
-  const { data: session, refetch, error } = authClient.useSession();
+  const [error, setError] = useState<string | undefined>('');
+  const { data: session, refetch } = authClient.useSession();
 
   // Create a schema for name validation
   const formSchema = z.object({
@@ -81,6 +85,7 @@ export function UpdateNameCard() {
         onRequest: (ctx) => {
           // console.log('update name, request:', ctx.url);
           setIsSaving(true);
+          setError('');
         },
         onResponse: (ctx) => {
           // console.log('update name, response:', ctx.response);
@@ -91,10 +96,12 @@ export function UpdateNameCard() {
           // console.log("update name, success:", ctx.data);
           toast.success(t('name.success'));
           refetch();
+          form.reset();
         },
         onError: (ctx) => {
           // update name fail, display the error message
           console.error('update name, error:', ctx.error);
+          setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(t('name.fail'));
         },
       });
@@ -126,6 +133,7 @@ export function UpdateNameCard() {
                 </FormItem>
               )}
             />
+            <FormError message={error} />
           </CardContent>
           <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
             <p className="text-sm text-muted-foreground">

@@ -1,5 +1,6 @@
 'use client';
 
+import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -18,20 +19,29 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
+/**
+ * update user password
+ * 
+ * https://www.better-auth.com/docs/authentication/email-password#update-password
+ */
 export function UpdatePasswordCard() {
+  const router = useLocaleRouter();
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const { data: session, error } = authClient.useSession();
+  const [error, setError] = useState<string | undefined>('');
+  const { data: session } = authClient.useSession();
 
   // Create a schema for password validation
   const formSchema = z.object({
@@ -58,17 +68,41 @@ export function UpdatePasswordCard() {
     return null;
   }
 
+  // TODO: if user account provider is not credential, we should not allow user to update password
+
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSaving(true);
-
-    // Here you would typically send the data to your server
-    // For now, we're just simulating the request
-    setTimeout(() => {
-      setIsSaving(false);
-      form.reset();
-      // In a real implementation, you would handle the response from your server
-    }, 1000);
+    const { data, error } = await authClient.changePassword(
+      {
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+        revokeOtherSessions: true,
+      },
+      {
+        onRequest: (ctx) => {
+          // console.log('update password, request:', ctx.url);
+          setIsSaving(true);
+          setError('');
+        },
+        onResponse: (ctx) => {
+          // console.log('update password, response:', ctx.response);
+          setIsSaving(false);
+        },
+        onSuccess: (ctx) => {
+          // update password success, user information stored in ctx.data
+          // console.log("update password, success:", ctx.data);
+          toast.success(t('password.success'));
+          router.refresh();
+          form.reset();
+        },
+        onError: (ctx) => {
+          // update password fail, display the error message
+          // { "message": "Invalid password", "code": "INVALID_PASSWORD", "status": 400, "statusText": "BAD_REQUEST" }
+          console.error('update password, error:', ctx.error);
+          setError(`${ctx.error.status}: ${ctx.error.message}`);
+          toast.error(t('password.fail'));
+        },
+      });
   };
 
   return (
@@ -154,6 +188,7 @@ export function UpdatePasswordCard() {
                 </FormItem>
               )}
             />
+            <FormError message={error} />
           </CardContent>
           <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
             <p className="text-sm text-muted-foreground">
