@@ -1,20 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
-  CardTitle,
-  CardFooter
+  CardTitle
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -23,20 +17,21 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 export function UpdatePasswordCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  
   const { data: session, error } = authClient.useSession();
-  const user = session?.user;
-  if (!user) {
-    return null;
-  }
 
   // Create a schema for password validation
   const formSchema = z.object({
@@ -57,10 +52,16 @@ export function UpdatePasswordCard() {
     },
   });
 
+  // Check if user exists after all hooks are initialized
+  const user = session?.user;
+  if (!user) {
+    return null;
+  }
+
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSaving(true);
-    
+
     // Here you would typically send the data to your server
     // For now, we're just simulating the request
     setTimeout(() => {
@@ -71,9 +72,9 @@ export function UpdatePasswordCard() {
   };
 
   return (
-    <Card>
+    <Card className="max-w-md md:max-w-lg">
       <CardHeader>
-        <CardTitle>{t('password.title')}</CardTitle>
+        <CardTitle className="text-lg font-bold">{t('password.title')}</CardTitle>
         <CardDescription>
           {t('password.description')}
         </CardDescription>
@@ -91,10 +92,10 @@ export function UpdatePasswordCard() {
                   </FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input 
-                        type={showCurrentPassword ? 'text' : 'password'} 
-                        placeholder={t('password.currentPassword')} 
-                        {...field} 
+                      <Input
+                        type={showCurrentPassword ? 'text' : 'password'}
+                        placeholder={t('password.currentPassword')}
+                        {...field}
                       />
                       <Button
                         type="button"
@@ -126,10 +127,10 @@ export function UpdatePasswordCard() {
                   <FormLabel>{t('password.newPassword')}</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input 
-                        type={showNewPassword ? 'text' : 'password'} 
-                        placeholder={t('password.newPassword')} 
-                        {...field} 
+                      <Input
+                        type={showNewPassword ? 'text' : 'password'}
+                        placeholder={t('password.newPassword')}
+                        {...field}
                       />
                       <Button
                         type="button"
@@ -153,11 +154,12 @@ export function UpdatePasswordCard() {
                 </FormItem>
               )}
             />
-            <p className="text-sm text-muted-foreground">
-              {t('password.minLength')}
-            </p>
           </CardContent>
-          <CardFooter className="flex justify-end">
+          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+            <p className="text-sm text-muted-foreground">
+              {t('password.newMinLength')}
+            </p>
+
             <Button type="submit" disabled={isSaving}>
               {isSaving ? t('saving') : t('save')}
             </Button>

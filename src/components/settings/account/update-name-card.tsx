@@ -23,12 +23,14 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { authClient } from '@/lib/auth-client';
+import { User2Icon } from 'lucide-react';
 
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const { data: session, error } = authClient.useSession();
-  
+
   // Create a schema for name validation
   const formSchema = z.object({
     name: z
@@ -64,16 +66,16 @@ export function UpdateNameCard() {
   };
 
   return (
-    <Card>
+    <Card className="max-w-md md:max-w-lg">
       <CardHeader>
-        <CardTitle>{t('name.title')}</CardTitle>
+        <CardTitle className="text-lg font-bold">{t('name.title')}</CardTitle>
         <CardDescription>
           {t('name.description')}
         </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent>
+          <CardContent className="space-y-6">
             <FormField
               control={form.control}
               name="name"
@@ -89,11 +91,12 @@ export function UpdateNameCard() {
                 </FormItem>
               )}
             />
-            <p className="text-sm text-muted-foreground mt-2">
+          </CardContent>
+          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+            <p className="text-sm text-muted-foreground">
               {t('name.maxLength')}
             </p>
-          </CardContent>
-          <CardFooter className="flex justify-end">
+
             <Button type="submit" disabled={isSaving}>
               {isSaving ? t('saving') : t('save')}
             </Button>

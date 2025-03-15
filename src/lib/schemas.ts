@@ -86,8 +86,8 @@ export const SettingsSchema = z
 export const UserNameSchema = z.object({
   name: z
     .string()
-    .min(1, { message: 'Name is required' })
-    .max(32, { message: 'Name must be 32 or fewer characters long' }),
+    .min(3, { message: 'Name must be 3 characters at minimum' })
+    .max(30, { message: 'Name must be 30 characters at maximum' }),
 });
 
 export type UserNameData = z.infer<typeof UserNameSchema>;

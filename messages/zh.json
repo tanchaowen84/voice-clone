@@ -289,24 +289,24 @@
             "title": "账户",
             "avatar": {
               "title": "头像",
-              "description": "点击头像从您的文件中上传自定义头像。",
-              "recommendation": "头像是可选的，但强烈推荐使用。",
+              "description": "点击上传按钮上传自定义头像",
+              "recommendation": "头像是可选的，但强烈推荐使用",
               "uploading": "上传中...",
               "uploadAvatar": "上传头像"
             },
             "name": {
               "title": "姓名",
-              "description": "请输入您的名字。",
+              "description": "请输入您的名字",
               "placeholder": "输入您的名字",
-              "minLength": "请至少使用 3 个字符。",
-              "maxLength": "请最多使用 30 个字符。"
+              "minLength": "请至少使用 3 个字符",
+              "maxLength": "请最多使用 30 个字符"
             },
             "password": {
               "title": "修改密码",
-              "description": "输入您的当前密码和新密码。",
+              "description": "输入您的当前密码和新密码",
               "currentPassword": "当前密码",
               "newPassword": "新密码",
-              "minLength": "请至少使用 8 个字符。",
+              "minLength": "请至少使用 8 个字符",
               "currentRequired": "当前密码是必填项",
               "newMinLength": "密码必须至少包含 8 个字符",
               "showPassword": "显示密码",
