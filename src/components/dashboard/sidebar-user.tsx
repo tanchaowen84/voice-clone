@@ -175,8 +175,12 @@ export function SidebarUser() {
                       onClick={() => setLocale(localeOption)}
                       className="cursor-pointer"
                     >
-                      <span className="mr-2 text-md">{LOCALE_LIST[localeOption].flag}</span>
-                      <span className="text-sm">{LOCALE_LIST[localeOption].name}</span>
+                      <span className="mr-2 text-md">
+                        {LOCALE_LIST[localeOption].flag}
+                      </span>
+                      <span className="text-sm">
+                        {LOCALE_LIST[localeOption].name}
+                      </span>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuSubContent>

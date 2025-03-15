@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/collapsible';
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -16,27 +15,41 @@ import {
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
 import { getSidebarMainLinks } from '@/config';
-import { LocaleLink } from '@/i18n/navigation';
+import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { createTranslator } from '@/i18n/translator';
+import { MenuItem } from '@/types';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import * as React from 'react';
 
 export function SidebarMain() {
   const t = useTranslations();
   const translator = createTranslator(t);
   const sidebarMainLinks = getSidebarMainLinks(translator);
+  const pathname = useLocalePathname();
+
+  // Function to check if a path is active
+  const isActive = (href: string | undefined): boolean => {
+    if (!href) return false;
+    return pathname === href || pathname.startsWith(href + '/');
+  };
+
+  // Function to check if any sub-item in a collapsible menu is active
+  const hasActiveChild = (items: MenuItem[]): boolean => {
+    if (!items?.length) return false;
+    return items.some(item => isActive(item.href));
+  };
 
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
         {sidebarMainLinks.map((item) => (
-          <>
+          <React.Fragment key={item.title}>
             {item.items?.length ? (
               <Collapsible
-                key={item.title}
                 asChild
-                defaultOpen={false}
+                defaultOpen={hasActiveChild(item.items)}
                 className="group/collapsible"
               >
                 <SidebarMenuItem>
@@ -53,7 +66,10 @@ export function SidebarMain() {
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton 
+                            asChild
+                            isActive={isActive(subItem.href)}
+                          >
                             <LocaleLink href={subItem.href || ''}>
                               {subItem.icon ? subItem.icon : null}
                               <span>{subItem.title}</span>
@@ -67,16 +83,19 @@ export function SidebarMain() {
               </Collapsible>
             ) : (
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip={item.title}>
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip={item.title}
+                  isActive={isActive(item.href)}
+                >
                   <LocaleLink href={item.href || ''}>
                     {item.icon ? item.icon : null}
                     <span>{item.title}</span>
                   </LocaleLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
-            }
-          </>
+            )}
+          </React.Fragment>
         ))}
       </SidebarMenu>
     </SidebarGroup>
