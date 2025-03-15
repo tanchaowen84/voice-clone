@@ -54,7 +54,7 @@ export function SidebarMain() {
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton tooltip={item.title} className='py-4'>
                       {item.icon ? item.icon : null}
                       <span>{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform 
@@ -66,9 +66,10 @@ export function SidebarMain() {
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton 
+                          <SidebarMenuSubButton
                             asChild
                             isActive={isActive(subItem.href)}
+                            className='py-4'
                           >
                             <LocaleLink href={subItem.href || ''}>
                               {subItem.icon ? subItem.icon : null}
@@ -83,10 +84,11 @@ export function SidebarMain() {
               </Collapsible>
             ) : (
               <SidebarMenuItem>
-                <SidebarMenuButton 
-                  asChild 
+                <SidebarMenuButton
+                  asChild
                   tooltip={item.title}
                   isActive={isActive(item.href)}
+                  className='py-4'
                 >
                   <LocaleLink href={item.href || ''}>
                     {item.icon ? item.icon : null}
