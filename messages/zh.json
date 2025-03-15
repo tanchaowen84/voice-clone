@@ -263,12 +263,12 @@
   "Dashboard": {
     "sidebar": {
       "dashboard": {
-        "title": "工作台"
+        "title": "仪表盘"
       },
       "ai": {
         "title": "AI",
         "items": {
-          "text": { 
+          "text": {
             "title": "AI 文本"
           },
           "image": {
@@ -286,7 +286,34 @@
         "title": "设置",
         "items": {
           "account": {
-            "title": "账号"
+            "title": "账户",
+            "avatar": {
+              "title": "头像",
+              "description": "点击头像从您的文件中上传自定义头像。",
+              "recommendation": "头像是可选的，但强烈推荐使用。",
+              "uploading": "上传中...",
+              "uploadAvatar": "上传头像"
+            },
+            "name": {
+              "title": "姓名",
+              "description": "请输入您的名字。",
+              "placeholder": "输入您的名字",
+              "minLength": "请至少使用 3 个字符。",
+              "maxLength": "请最多使用 32 个字符。"
+            },
+            "password": {
+              "title": "修改密码",
+              "description": "输入您的当前密码和新密码。",
+              "currentPassword": "当前密码",
+              "newPassword": "新密码",
+              "minLength": "请至少使用 8 个字符。",
+              "currentRequired": "当前密码是必填项",
+              "newMinLength": "密码必须至少包含 8 个字符",
+              "showPassword": "显示密码",
+              "hidePassword": "隐藏密码"
+            },
+            "save": "保存",
+            "saving": "保存中..."
           },
           "billing": {
             "title": "账单"
@@ -298,22 +325,22 @@
   "Mail": {
 		"common": {
       "team": "MkSaaS 团队",
-      "copyright": "©️ {year} All Rights Reserved."
+      "copyright": "©️ {year} 版权所有。"
 		},
 		"verifyEmail": {
-			"title": "你好, {name}.",
+			"title": "你好，{name}。",
 			"body": "请点击下面的链接验证您的邮箱地址。",
-			"confirmEmail": "验证邮箱",
+			"confirmEmail": "确认邮箱",
 			"subject": "验证您的邮箱"
 		},
 		"forgotPassword": {
-			"title": "你好, {name}.",
+			"title": "你好，{name}。",
 			"body": "请点击下面的链接重置您的密码。",
 			"resetPassword": "重置密码",
 			"subject": "重置您的密码"
 		},
 		"subscribeNewsletter": {
-			"body": "感谢您订阅我们的邮件列表，我们将持续为您带来最新的新闻和更新。",
+			"body": "感谢您订阅我们的邮件列表，我们将为您提供最新的新闻和更新。",
 			"subject": "感谢您的订阅"
 		}
 	}

@@ -267,8 +267,7 @@
   "Dashboard": {
     "sidebar": {
       "dashboard": {
-        "title": "Dashboard",
-        "href": "/dashboard"
+        "title": "Dashboard"
       },
       "ai": {
         "title": "AI",
@@ -291,7 +290,34 @@
         "title": "Settings",
         "items": {
           "account": {
-            "title": "Account"
+            "title": "Account",
+            "avatar": {
+              "title": "Avatar",
+              "description": "Click on the avatar to upload a custom one from your files.",
+              "recommendation": "An avatar is optional but strongly recommended.",
+              "uploading": "Uploading...",
+              "uploadAvatar": "Upload Avatar"
+            },
+            "name": {
+              "title": "Name",
+              "description": "Please enter your display name.",
+              "placeholder": "Enter your name",
+              "minLength": "Please use 3 characters at minimum.",
+              "maxLength": "Please use 32 characters at maximum."
+            },
+            "password": {
+              "title": "Change Password",
+              "description": "Enter your current password and a new password.",
+              "currentPassword": "Current Password",
+              "newPassword": "New Password",
+              "minLength": "Please use 8 characters at minimum.",
+              "currentRequired": "Current password is required",
+              "newMinLength": "Password must be at least 8 characters",
+              "showPassword": "Show password",
+              "hidePassword": "Hide password"
+            },
+            "save": "Save",
+            "saving": "Saving..."
           },
           "billing": {
             "title": "Billing"

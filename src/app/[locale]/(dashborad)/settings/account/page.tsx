@@ -1,5 +1,7 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { Separator } from '@/components/ui/separator';
+import { UpdateAvatarCard } from '@/components/settings/account/update-avatar-card';
+import { UpdateNameCard } from '@/components/settings/account/update-name-card';
+import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
 import { useTranslations } from 'next-intl';
 
 export default function SettingsAccountPage() {
@@ -20,12 +22,9 @@ export default function SettingsAccountPage() {
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-        </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+        <UpdateAvatarCard />
+        <UpdateNameCard />
+        <UpdatePasswordCard />
       </div>
     </>
   );
