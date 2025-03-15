@@ -8,6 +8,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { ReactNode } from 'react';
+import React from 'react';
 
 interface BreadcrumbItem {
   label: string;
@@ -28,7 +29,7 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
         <Breadcrumb>
           <BreadcrumbList>
             {breadcrumbs.map((item, index) => (
-              <>
+              <React.Fragment key={`breadcrumb-${index}`}>
                 {index > 0 && (
                   <BreadcrumbSeparator key={`sep-${index}`} className="hidden md:block" />
                 )}
@@ -42,7 +43,7 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
                     item.label
                   )}
                 </BreadcrumbItem>
-              </>
+              </React.Fragment>
             ))}
           </BreadcrumbList>
         </Breadcrumb>
