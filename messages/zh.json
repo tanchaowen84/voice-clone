@@ -105,7 +105,9 @@
       "title": "重置密码",
       "password": "密码",
       "reset": "重置密码",
-      "backToLogin": "返回登录"
+      "backToLogin": "返回登录",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码"
     },
     "error": {
       "title": "哎呀！出错了！",

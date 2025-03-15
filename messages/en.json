@@ -111,7 +111,9 @@
       "title": "Reset Password",
       "password": "Password",
       "reset": "Reset password",
-      "backToLogin": "Back to login"
+      "backToLogin": "Back to login",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
     },
     "error": {
       "title": "Oops! Something went wrong!",
