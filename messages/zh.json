@@ -262,6 +262,9 @@
   },
   "Dashboard": {
     "sidebar": {
+      "dashboard": {
+        "title": "工作台"
+      },
       "ai": {
         "title": "AI",
         "items": {

@@ -16,7 +16,6 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
 
-
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
   

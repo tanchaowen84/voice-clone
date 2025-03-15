@@ -266,6 +266,10 @@
   },
   "Dashboard": {
     "sidebar": {
+      "dashboard": {
+        "title": "Dashboard",
+        "href": "/dashboard"
+      },
       "ai": {
         "title": "AI",
         "items": {
