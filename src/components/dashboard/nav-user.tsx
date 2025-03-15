@@ -1,15 +1,6 @@
 'use client';
 
 import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -24,16 +15,26 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
-import { getInitials } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Sparkles,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { UserAvatar } from '../shared/user-avatar';
 
 export function NavUser() {
-  const router = useRouter();
+  const router = useLocaleRouter();
   const { isMobile } = useSidebar();
+  const t = useTranslations('Common');
+
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
-  console.log('NavUser, user:', user);
   if (!user) {
     return null;
   }
@@ -42,7 +43,7 @@ export function NavUser() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          console.log('sign out success');
+          // console.log('sign out success');
           router.push('/');
         },
         onError: (error) => {
@@ -60,17 +61,22 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent 
+              data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.image || undefined} alt={user.name} />
-                <AvatarFallback className="rounded-lg">
-                  {getInitials(user.name)}
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar
+                name={user.name || undefined}
+                image={user.image || undefined}
+                className="size-8 border"
+              />
+
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">
+                  {user.name}
+                </span>
+                <span className="truncate text-xs">
+                  {user.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -83,12 +89,11 @@ export function NavUser() {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.image || undefined} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">
-                    {getInitials(user.name)}
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                  name={user.name || undefined}
+                  image={user.image || undefined}
+                  className="size-8 border"
+                />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
@@ -96,6 +101,7 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
                 <Sparkles />
@@ -117,6 +123,7 @@ export function NavUser() {
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
@@ -126,7 +133,7 @@ export function NavUser() {
               }}
             >
               <LogOut />
-              Log out
+              {t('logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

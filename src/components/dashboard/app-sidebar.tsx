@@ -31,110 +31,52 @@ import { createTranslator } from '@/i18n/translator';
 import { useTranslations } from 'next-intl';
 import { Logo } from '../logo';
 import { LocaleLink } from '@/i18n/navigation';
+import { Routes } from '@/routes';
 
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   navMain: [
     {
       title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
+      url: '/ai/text',
+      icon: Bot,
       isActive: true,
       items: [
         {
-          title: 'History',
-          url: '#',
+          title: 'AI Text',
+          url: '/ai/text',
         },
         {
-          title: 'Starred',
-          url: '#',
+          title: 'AI Image',
+          url: '/ai/image',
         },
         {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
-      items: [
-        {
-          title: 'Genesis',
-          url: '#',
+          title: 'AI Video',
+          url: '/ai/video',
         },
         {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
+          title: 'AI Audio',
+          url: '/ai/audio',
         },
       ],
     },
     {
       title: 'Settings',
-      url: '#',
+      url: '/settings/general',
       icon: Settings2,
       items: [
         {
           title: 'General',
-          url: '#',
+          url: '/settings/general',
         },
         {
           title: 'Security',
-          url: '#',
+          url: '/settings/security',
         },
         {
           title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
+          url: '/settings/billing',
+        }
       ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Support',
-      url: '#',
-      icon: LifeBuoy,
-    },
-    {
-      title: 'Feedback',
-      url: '#',
-      icon: Send,
     },
   ],
   projects: [
@@ -152,6 +94,18 @@ const data = {
       name: 'Travel',
       url: '#',
       icon: Map,
+    },
+  ],
+  navSecondary: [
+    {
+      title: 'Support',
+      url: Routes.Contact,
+      icon: LifeBuoy,
+    },
+    {
+      title: 'Roadmap',
+      url: Routes.Roadmap,
+      icon: Send,
     },
   ],
 };

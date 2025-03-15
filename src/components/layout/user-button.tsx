@@ -65,7 +65,7 @@ export function UserButton() {
           <UserAvatar
             name={user?.name || undefined}
             image={user?.image || undefined}
-            className="size-10 border"
+            className="size-8 border"
           />
         </DrawerTrigger>
         <DrawerPortal>
@@ -81,7 +81,7 @@ export function UserButton() {
               <UserAvatar
                 name={user?.name || undefined}
                 image={user?.image || undefined}
-                className="size-10 border"
+                className="size-8 border"
               />
               <div className="flex flex-col">
                 {user?.name && <p className="font-medium">{user.name}</p>}
@@ -142,7 +142,7 @@ export function UserButton() {
         <UserAvatar
           name={user?.name || undefined}
           image={user?.image || undefined}
-          className="size-10 border"
+          className="size-8 border"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

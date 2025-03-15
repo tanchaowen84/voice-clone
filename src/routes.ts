@@ -28,12 +28,12 @@ export enum Routes {
   ResetPassword = '/auth/reset-password',
 
   Dashboard = '/dashboard',
-  Settings = '/dashboard/settings',
+  Settings = '/settings/general',
 
-  AIText = '/dashboard/features/ai-text',
-  AIImage = '/dashboard/features/ai-image',
-  AIVideo = '/dashboard/features/ai-video',
-  AIAudio = '/dashboard/features/ai-audio',
+  AIText = '/ai/text',
+  AIImage = '/ai/image',
+  AIVideo = '/ai/video',
+  AIAudio = '/ai/audio',
 
   HeroBlocks = '/blocks/hero',
   PricingBlocks = '/blocks/pricing',
