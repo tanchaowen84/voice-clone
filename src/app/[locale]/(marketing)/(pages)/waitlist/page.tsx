@@ -12,10 +12,10 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
   const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'Metadata'});
-  const pageTranslations = await getTranslations({locale, namespace: 'WaitlistPage'});
+  const pt = await getTranslations({locale, namespace: 'WaitlistPage'});
   return constructMetadata({
-    title: pageTranslations('title') + ' | ' + t('title'),
-    description: pageTranslations('description'),
+    title: pt('title') + ' | ' + t('title'),
+    description: pt('description'),
     canonicalUrl: `${getBaseUrlWithLocale(locale)}/waitlist`,
   });
 }

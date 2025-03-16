@@ -12,10 +12,10 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
   const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'Metadata'});
-  const pageTranslations = await getTranslations({locale, namespace: 'AuthPage.forgotPassword'});
+  const pt = await getTranslations({locale, namespace: 'AuthPage.forgotPassword'});
   
   return constructMetadata({
-    title: pageTranslations('title') + ' | ' + t('title'),
+    title: pt('title') + ' | ' + t('title'),
     description: t('description'),
     canonicalUrl: `${getBaseUrlWithLocale(locale)}/auth/forgot-password`,
   });

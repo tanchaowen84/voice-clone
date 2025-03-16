@@ -17,11 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
   const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'Metadata'});
-  const pageTranslations = await getTranslations({locale, namespace: 'ChangelogPage'});
+  const pt = await getTranslations({locale, namespace: 'ChangelogPage'});
   
   return constructMetadata({
-    title: pageTranslations('title') + ' | ' + t('title'),
-    description: pageTranslations('description'),
+    title: pt('title') + ' | ' + t('title'),
+    description: pt('description'),
     canonicalUrl: `${getBaseUrlWithLocale(locale)}/changelog`,
   });
 }
