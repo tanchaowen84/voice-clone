@@ -38,7 +38,7 @@ export function UserButton() {
       fetchOptions: {
         onSuccess: () => {
           console.log('sign out success');
-          localeRouter.push('/');
+          localeRouter.replace('/');
         },
         onError: (error) => {
           console.error('sign out error:', error);

@@ -24,19 +24,18 @@ export default function HeroSection4() {
                   <span className="bg-muted rounded-[calc(var(--radius)-0.25rem)] px-2 py-1 text-xs">
                     New
                   </span>
-                  <span className="text-sm">Introduction Tailus UI Html</span>
+                  <span className="text-sm">Introduce MkSaaS</span>
                   <span className="bg-(--color-border) block h-4 w-px"></span>
 
                   <ArrowRight className="size-4" />
                 </Link>
 
                 <h1 className="mt-8 text-balance text-4xl font-semibold md:text-5xl xl:text-6xl xl:[line-height:1.125]">
-                  Modern Software testing reimagined
+                  Launch your AI SaaS the easiest way
                 </h1>
                 <p className="mx-auto mt-8 hidden max-w-2xl text-wrap text-lg sm:block">
-                  Tailwindcss highly customizable components for building modern
-                  websites and applications that look and feel the way you mean
-                  it.
+                  MkSaaS is a boilerplate for building modern AI SaaS applications
+                  with Next.js, Tailwind CSS, Shadcn UI, Better Auth, Resend, Stripe, and Vercel AI SDK.
                 </p>
                 <p className="mx-auto mt-6 max-w-2xl text-wrap sm:hidden">
                   Highly customizable components for building modern websites
