@@ -1,5 +1,6 @@
 "use client";
 
+import { subscribeAction } from '@/actions/newsletter';
 import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -39,7 +40,7 @@ export function WaitlistFormCard() {
   const formSchema = z.object({
     email: z
       .string()
-      .email({ message: 'Please enter a valid email address' }),
+      .email({ message: t('emailValidation') }),
   });
 
   // Initialize the form
@@ -52,21 +53,21 @@ export function WaitlistFormCard() {
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
-    setError('');
-
     try {
-      // Here you would typically send the form data to your API
-      console.log('Form submitted:', values);
+      setError('');
+      setIsSubmitting(true);
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const result = await subscribeAction({
+        email: values.email,
+      });
 
-      // Show success message
-      toast.success(t('success'));
-
-      // Reset form
-      form.reset();
+      if (result?.data?.success) {
+        toast.success(t('success'));
+        form.reset();
+      } else {
+        setError(t('fail'));
+        toast.error(t('fail'));
+      }
     } catch (err) {
       console.error('Form submission error:', err);
       setError(t('fail'));
