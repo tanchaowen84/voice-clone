@@ -76,14 +76,16 @@
     "title": "Waitlist",
     "description": "Join our waitlist for latest news and updates",
     "subtitle": "Join our waitlist for latest news and updates",
-    "formTitle": "Join Our Waitlist",
-    "formDescription": "We will send you only one email every week, and no spam",
-    "email": "Email",
-    "emailValidation": "Please enter a valid email address",
-    "subscribe": "Subscribe",
-    "subscribing": "Subscribing...",
-    "success": "Subscribed successfully",
-    "fail": "Failed to subscribe"
+    "form": {
+      "title": "Join Our Waitlist",
+      "description": "We will send you only one email every week, and no spam",
+      "email": "Email",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing...",
+      "success": "Subscribed successfully",
+      "fail": "Failed to subscribe",
+      "emailValidation": "Please enter a valid email address"
+    }
   },
   "AuthPage": {
     "login": {

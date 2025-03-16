@@ -32,7 +32,7 @@ import { z } from 'zod';
  * This is a client component that handles the waitlist form submission
  */
 export function WaitlistFormCard() {
-  const t = useTranslations('WaitlistPage');
+  const t = useTranslations('WaitlistPage.form');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | undefined>('');
 
@@ -81,10 +81,10 @@ export function WaitlistFormCard() {
     <Card className="mx-auto max-w-lg overflow-hidden">
       <CardHeader>
         <CardTitle className="text-lg font-bold">
-          {t('formTitle')}
+          {t('title')}
         </CardTitle>
         <CardDescription>
-          {t('formDescription')}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <Form {...form}>

@@ -70,14 +70,16 @@
     "title": "邮件列表",
     "description": "加入我们的邮件列表，获取最新消息和更新",
     "subtitle": "加入我们的邮件列表，获取最新消息和更新",
-    "formTitle": "加入我们的邮件列表",
-    "formDescription": "我们每周只发送一封邮件，并且不会发送垃圾邮件",
-    "email": "邮箱",
-    "emailValidation": "请输入有效的邮箱地址",
-    "subscribe": "订阅",
-    "subscribing": "订阅中...",
-    "success": "订阅成功",
-    "fail": "订阅失败"
+    "form": {
+      "title": "加入我们的邮件列表",
+      "description": "我们每周只发送一封邮件，并且不会发送垃圾邮件",
+      "email": "邮箱",
+      "subscribe": "订阅",
+      "subscribing": "订阅中...",
+      "success": "订阅成功",
+      "fail": "订阅失败",
+      "emailValidation": "请输入有效的邮箱地址"
+    }
   },
   "AuthPage": {
     "login": {
