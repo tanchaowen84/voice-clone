@@ -11,13 +11,13 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from '@/components/ui/dialog';
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { useTranslations } from 'next-intl';
@@ -46,8 +46,6 @@ export function DeleteAccountCard() {
 
   // Handle account deletion
   const handleDeleteAccount = async () => {
-    setIsDeleting(true);
-
     await authClient.deleteUser(
       {},
       {
@@ -57,6 +55,7 @@ export function DeleteAccountCard() {
         },
         onResponse: () => {
           setIsDeleting(false);
+          setShowConfirmation(false);
         },
         onSuccess: () => {
           toast.success(t('deleteAccount.success'));
@@ -88,9 +87,11 @@ export function DeleteAccountCard() {
           {t('deleteAccount.warning')}
         </p>
 
-        <div className="mt-4">
-          <FormError message={error} />
-        </div>
+        {error && (
+          <div className="mt-4">
+            <FormError message={error} />
+          </div>
+        )}
       </CardContent>
       <CardFooter className="px-6 py-4 flex justify-end items-center bg-muted rounded-none">
         <Button
@@ -101,16 +102,18 @@ export function DeleteAccountCard() {
         </Button>
       </CardFooter>
 
-      {/* Confirmation Dialog */}
-      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="text-destructive">{t('deleteAccount.confirmTitle')}</DialogTitle>
-            <DialogDescription>
+      {/* Confirmation AlertDialog */}
+      <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-destructive">
+              {t('deleteAccount.confirmTitle')}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
               {t('deleteAccount.confirmDescription')}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
             <Button
               variant="outline"
               onClick={() => setShowConfirmation(false)}
@@ -124,9 +127,9 @@ export function DeleteAccountCard() {
             >
               {isDeleting ? t('deleteAccount.deleting') : t('deleteAccount.confirm')}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 } 

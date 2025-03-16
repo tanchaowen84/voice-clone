@@ -19,6 +19,7 @@ import { Portal } from '@radix-ui/react-portal';
 import {
   ArrowUpRightIcon,
   ChevronDownIcon,
+  ChevronRightIcon,
   ChevronUpIcon,
   MenuIcon,
   XIcon,
@@ -137,7 +138,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
       className="fixed w-full inset-0 z-50 mt-[72px] overflow-y-auto
       bg-background backdrop-blur-md animate-in fade-in-0"
     >
-      <div className="size-full flex flex-col items-start space-y-4 p-4">
+      <div className="size-full flex flex-col items-start space-y-4 px-4">
         {/* action buttons */}
         {userLoggedIn ? null : (
           <div className="w-full flex flex-col gap-4">
@@ -182,7 +183,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                   );
 
               return (
-                <li key={item.title} className="py-2">
+                <li key={item.title} className="py-1">
                   {item.items ? (
                     <Collapsible
                       open={expanded[item.title.toLowerCase()]}
@@ -207,9 +208,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                         >
                           <span className="text-base">{item.title}</span>
                           {expanded[item.title.toLowerCase()] ? (
-                            <ChevronUpIcon className="size-4" />
-                          ) : (
                             <ChevronDownIcon className="size-4" />
+                          ) : (
+                            <ChevronRightIcon className="size-4" />
                           )}
                         </Button>
                       </CollapsibleTrigger>
@@ -234,7 +235,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                   }
                                   className={cn(
                                     buttonVariants({ variant: 'ghost' }),
-                                    'group h-auto w-full justify-start gap-4 p-2',
+                                    'group h-auto w-full justify-start gap-4 p-1',
                                     'bg-transparent text-muted-foreground',
                                     'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
                                     isSubItemActive &&

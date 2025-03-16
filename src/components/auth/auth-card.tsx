@@ -38,7 +38,9 @@ export const AuthCard = ({
         </LocaleLink>
         <CardDescription>{headerLabel}</CardDescription>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent>
+        {children}
+      </CardContent>
       {showSocialLoginButton && (
         <CardFooter>
           <SocialLoginButton />

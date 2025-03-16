@@ -13,7 +13,7 @@ export const DividerWithText = ({
   className,
 }: DividerWithTextProps) => {
   return (
-    <div className={cn('relative flex items-center py-5', className)}>
+    <div className={cn('relative flex items-center', className)}>
       <div className="flex-grow border-t border-border"></div>
       <span className="flex-shrink mx-4 text-sm text-muted-foreground">
         {text}
