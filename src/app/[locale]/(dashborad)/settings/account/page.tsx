@@ -1,7 +1,7 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { UpdateAvatarCard } from '@/components/settings/account/update-avatar-card';
 import { UpdateNameCard } from '@/components/settings/account/update-name-card';
-import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
+import { ConditionalUpdatePasswordCard } from '@/components/settings/account/conditional-update-password-card';
 import { DeleteAccountCard } from '@/components/settings/account/delete-account-card';
 import { useTranslations } from 'next-intl';
 
@@ -19,6 +19,8 @@ export default function SettingsAccountPage() {
     },
   ];
 
+  
+
   return (
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />
@@ -28,7 +30,7 @@ export default function SettingsAccountPage() {
           <div className="space-y-6">
             <UpdateAvatarCard />
             <UpdateNameCard />
-            <UpdatePasswordCard />
+            <ConditionalUpdatePasswordCard />
             <DeleteAccountCard />
           </div>
         </div>

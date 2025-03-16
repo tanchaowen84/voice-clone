@@ -30,9 +30,14 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 /**
- * update user password
+ * Update user password
  * 
- * https://www.better-auth.com/docs/authentication/email-password#update-password
+ * This component allows users to update their password.
+ * NOTE: This should only be used for users with credential providers (email/password login).
+ * For conditional rendering based on provider type, use ConditionalUpdatePasswordCard instead.
+ * 
+ * @see ConditionalUpdatePasswordCard
+ * @see https://www.better-auth.com/docs/authentication/email-password#update-password
  */
 export function UpdatePasswordCard() {
   const router = useLocaleRouter();
@@ -67,8 +72,6 @@ export function UpdatePasswordCard() {
   if (!user) {
     return null;
   }
-
-  // TODO: if user account provider is not credential, we should not allow user to update password
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
