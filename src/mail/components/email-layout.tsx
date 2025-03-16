@@ -8,7 +8,7 @@ import {
   Tailwind,
   Text
 } from '@react-email/components';
-import { BaseEmailProps } from '../utils/types';
+import { BaseEmailProps } from '@/mail/types';
 import { createTranslator } from 'use-intl/core';
 
 interface EmailLayoutProps extends BaseEmailProps {

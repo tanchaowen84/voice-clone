@@ -1,5 +1,5 @@
 import { Locale, Messages } from 'next-intl';
-import { EmailTemplates } from '../emails';
+import { EmailTemplates } from './emails';
 
 export interface BaseEmailProps {
   locale: Locale;

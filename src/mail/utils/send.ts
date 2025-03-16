@@ -4,7 +4,7 @@ import { EmailTemplates } from '@/mail/emails';
 import { sendEmail } from '@/mail/provider/resend';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';
-import { Template } from './types';
+import { Template } from '@/mail/types';
 
 /**
  * send email
