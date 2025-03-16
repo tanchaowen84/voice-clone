@@ -28,12 +28,6 @@ import { z } from 'zod';
 
 /**
  * update user name
- * 
- * NOTICE: we update username instead of name in user table
- * 
- * TODO: by default, username is empty, how can we show the username after signup?
- * 
- * https://www.better-auth.com/docs/plugins/username
  */
 export function UpdateNameCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
@@ -53,13 +47,13 @@ export function UpdateNameCard() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: session?.user?.username || '',
+      name: session?.user?.name || '',
     },
   });
 
   useEffect(() => {
-    if (session?.user?.username) {
-      form.setValue('name', session.user.username);
+    if (session?.user?.name) {
+      form.setValue('name', session.user.name);
     }
   }, [session, form]);
 
@@ -72,14 +66,14 @@ export function UpdateNameCard() {
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Don't update if the name hasn't changed
-    if (values.name === session?.user?.username) {
+    if (values.name === session?.user?.name) {
       console.log("No changes to save");
       return;
     }
 
     const { data, error } = await authClient.updateUser(
       {
-        username: values.name,
+        name: values.name,
       },
       {
         onRequest: (ctx) => {

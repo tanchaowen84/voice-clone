@@ -101,6 +101,7 @@ export const auth = betterAuth({
   },
   plugins: [
     // https://www.better-auth.com/docs/plugins/username
+    // support sign in and sign up with username, but not implemented
     username({
       minUsernameLength: 3,
       maxUsernameLength: 30,
@@ -112,6 +113,7 @@ export const auth = betterAuth({
       }
     }),
     // https://www.better-auth.com/docs/plugins/admin
+    // support user management, ban/unban user, manage user roles, etc.
     admin(),
   ],
   onAPIError: {
