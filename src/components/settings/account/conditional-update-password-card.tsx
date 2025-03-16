@@ -1,12 +1,15 @@
 'use client';
 
 import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
+import { ResetPasswordCard } from '@/components/settings/account/reset-password-card';
 import { authClient } from '@/lib/auth-client';
 import { useEffect, useState } from 'react';
 
 /**
- * Conditionally renders the UpdatePasswordCard component
- * only if the user has a credential provider (email/password login)
+ * Conditionally renders either:
+ * - UpdatePasswordCard: if the user has a credential provider (email/password login)
+ * - ResetPasswordCard: if the user only has social login providers and has an email
+ * - Nothing: if the user has no credential provider and no email
  */
 export function ConditionalUpdatePasswordCard() {
   const { data: session } = authClient.useSession();
@@ -27,11 +30,11 @@ export function ConditionalUpdatePasswordCard() {
 
         // Check if the response is successful and contains accounts data
         if ('data' in accounts && Array.isArray(accounts.data)) {
-          // Check if any account has a credential provider (provider === 'credentials')
-          const hasCredentials = accounts.data.some(
+          // Check if any account has a credential provider (provider === 'credential')
+          const hasCredential = accounts.data.some(
             (account) => account.provider === 'credential'
           );
-          setHasCredentialProvider(hasCredentials);
+          setHasCredentialProvider(hasCredential);
         }
       } catch (error) {
         console.error('Error checking credential provider:', error);
@@ -43,10 +46,22 @@ export function ConditionalUpdatePasswordCard() {
     checkCredentialProvider();
   }, [session]);
 
-  // Don't render anything while loading or if user doesn't have credential provider
-  if (isLoading || !hasCredentialProvider) {
+  // Don't render anything while loading
+  if (isLoading) {
     return null;
   }
 
-  return <UpdatePasswordCard />;
+  // If user has credential provider, show UpdatePasswordCard
+  if (hasCredentialProvider) {
+    return <UpdatePasswordCard />;
+  }
+
+  // If user doesn't have credential provider but has an email, show ResetPasswordCard
+  // The forgot password flow requires an email address
+  if (session?.user?.email) {
+    return <ResetPasswordCard />;
+  }
+
+  // If user has no credential provider and no email, don't show anything
+  return null;
 } 

@@ -346,6 +346,12 @@
               "success": "Password updated successfully",
               "fail": "Failed to update password"
             },
+            "setupPassword": {
+              "title": "Set Up Password",
+              "description": "Set up a password to enable email login.",
+              "info": "Setting up a password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to set your password.",
+              "button": "Set Up Password"
+            },
             "deleteAccount": {
               "title": "Delete Account",
               "description": "Permanently remove your account and all of its contents",

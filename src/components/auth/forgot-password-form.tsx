@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { ForgotPasswordSchema } from '@/lib/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 import { Icons } from '@/components/icons/icons';
@@ -23,12 +23,14 @@ import { authClient } from '@/lib/auth-client';
 import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
+import { useSearchParams } from 'next/navigation';
 
 export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
   const t = useTranslations('AuthPage.forgotPassword');
+  const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -36,6 +38,14 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
       email: '',
     },
   });
+
+  // Pre-fill the email field if it's provided in the URL
+  useEffect(() => {
+    const emailFromUrl = searchParams.get('email');
+    if (emailFromUrl) {
+      form.setValue('email', emailFromUrl);
+    }
+  }, [searchParams, form]);
 
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
     console.log('forgotPassword, values:', values);

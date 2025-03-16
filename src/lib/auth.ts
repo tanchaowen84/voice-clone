@@ -46,6 +46,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
     async sendResetPassword({ user, url }, request) {
       const locale = getLocaleFromRequest(request);
+      // TODO: add locale to url
       await send({
         to: user.email,
         template: 'forgotPassword',
@@ -63,6 +64,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
+      // TODO: add locale to url
       await send({
         to: user.email,
         template: 'verifyEmail',

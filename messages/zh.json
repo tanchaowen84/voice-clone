@@ -341,6 +341,12 @@
               "success": "密码更新成功",
               "fail": "更新密码失败"
             },
+            "setupPassword": {
+              "title": "设置密码",
+              "description": "设置密码以启用邮箱登录",
+              "info": "设置密码将允许您除了社交登录方式外，还可以使用邮箱和密码登录，您将收到一封包含设置密码链接的电子邮件",
+              "button": "设置密码"
+            },
             "deleteAccount": {
               "title": "删除账号",
               "description": "永久删除您的账号和所有内容",
