@@ -74,9 +74,11 @@ export function DeleteAccountCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg border-destructive/50">
+    <Card className="max-w-md md:max-w-lg border-destructive/50 overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-bold text-destructive">{t('deleteAccount.title')}</CardTitle>
+        <CardTitle className="text-lg font-bold text-destructive">
+          {t('deleteAccount.title')}
+        </CardTitle>
         <CardDescription>
           {t('deleteAccount.description')}
         </CardDescription>
@@ -90,7 +92,7 @@ export function DeleteAccountCard() {
           <FormError message={error} />
         </div>
       </CardContent>
-      <CardFooter className="px-6 py-4 flex justify-end items-center bg-muted">
+      <CardFooter className="px-6 py-4 flex justify-end items-center bg-muted rounded-none">
         <Button
           variant="destructive"
           onClick={() => setShowConfirmation(true)}

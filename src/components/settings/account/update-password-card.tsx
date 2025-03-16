@@ -106,9 +106,11 @@ export function UpdatePasswordCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg">
+    <Card className="max-w-md md:max-w-lg overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-bold">{t('password.title')}</CardTitle>
+        <CardTitle className="text-lg font-bold">
+          {t('password.title')}
+        </CardTitle>
         <CardDescription>
           {t('password.description')}
         </CardDescription>
@@ -190,7 +192,7 @@ export function UpdatePasswordCard() {
             />
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">
               {t('password.hint')}
             </p>

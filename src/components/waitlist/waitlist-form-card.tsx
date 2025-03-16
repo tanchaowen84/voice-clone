@@ -78,7 +78,7 @@ export function WaitlistFormCard() {
   };
 
   return (
-    <Card className="mx-auto max-w-lg">
+    <Card className="mx-auto max-w-lg overflow-hidden">
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('formTitle')}
@@ -110,7 +110,7 @@ export function WaitlistFormCard() {
 
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? t('subscribing') : t('subscribe')}
             </Button>

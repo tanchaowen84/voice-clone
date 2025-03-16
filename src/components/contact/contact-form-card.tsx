@@ -84,10 +84,14 @@ export function ContactFormCard() {
   };
 
   return (
-    <Card className="mx-auto max-w-lg">
+    <Card className="mx-auto max-w-lg overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-bold">{t('formTitle')}</CardTitle>
-        <CardDescription>{t('formDescription')}</CardDescription>
+        <CardTitle className="text-lg font-bold">
+          {t('formTitle')}
+        </CardTitle>
+        <CardDescription>
+          {t('formDescription')}
+        </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -147,7 +151,7 @@ export function ContactFormCard() {
 
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? t('submitting') : t('submit')}
             </Button>

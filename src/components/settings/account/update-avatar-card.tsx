@@ -62,9 +62,11 @@ export function UpdateAvatarCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg">
+    <Card className="max-w-md md:max-w-lg overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-bold">{t('avatar.title')}</CardTitle>
+        <CardTitle className="text-lg font-bold">
+          {t('avatar.title')}
+        </CardTitle>
         <CardDescription>
           {t('avatar.description')}
         </CardDescription>
@@ -90,7 +92,7 @@ export function UpdateAvatarCard() {
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted">
+      <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
         <p className="text-sm text-muted-foreground">
           {t('avatar.recommendation')}
         </p>
