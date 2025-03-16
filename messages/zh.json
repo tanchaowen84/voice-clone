@@ -49,19 +49,27 @@
     "title": "联系我们",
     "description": "我们帮助您找到合适的计划",
     "subtitle": "我们帮助您找到合适的计划",
+    "formTitle": "联系我们",
     "formDescription": "如果您有任何问题或反馈，欢迎联系我们的团队",
     "name": "姓名",
     "email": "邮箱",
     "message": "消息",
-    "submit": "提交"
+    "submit": "提交",
+    "submitting": "提交中...",
+    "success": "消息发送成功",
+    "fail": "消息发送失败"
   },
   "WaitlistPage": {
     "title": "邮件列表",
     "description": "加入我们的邮件列表，获取最新消息和更新",
     "subtitle": "加入我们的邮件列表，获取最新消息和更新",
+    "formTitle": "加入我们的邮件列表",
     "formDescription": "我们每周只发送一封邮件，并且不会发送垃圾邮件",
     "email": "邮箱",
-    "subscribe": "订阅"
+    "subscribe": "订阅",
+    "subscribing": "订阅中...",
+    "success": "订阅成功",
+    "fail": "订阅失败"
   },
   "AuthPage": {
     "login": {

@@ -55,19 +55,27 @@
     "title": "Contact",
     "description": "We'll help you find the right plan for your business",
     "subtitle": "We'll help you find the right plan for your business",
+    "formTitle": "Contact Us",
     "formDescription": "If you have any questions or feedback, please reach out to our team",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "submit": "Submit"
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Message sent successfully",
+    "fail": "Failed to send message"
   },
   "WaitlistPage": {
     "title": "Waitlist",
     "description": "Join our waitlist for latest news and updates",
     "subtitle": "Join our waitlist for latest news and updates",
+    "formTitle": "Join Our Waitlist",
     "formDescription": "We will send you only one email every week, and no spam",
     "email": "Email",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "success": "Subscribed successfully",
+    "fail": "Failed to subscribe"
   },
   "AuthPage": {
     "login": {
