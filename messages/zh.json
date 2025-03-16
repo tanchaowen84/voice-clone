@@ -360,7 +360,8 @@
               "fail": "删除账号失败"
             },
             "save": "保存",
-            "saving": "保存中..."
+            "saving": "保存中...",
+            "cancel": "取消"
           },
           "billing": {
             "title": "账单"

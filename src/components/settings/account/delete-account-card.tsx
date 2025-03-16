@@ -113,7 +113,7 @@ export function DeleteAccountCard() {
               {t('deleteAccount.confirmDescription')}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className="flex justify-end gap-3">
             <Button
               variant="outline"
               onClick={() => setShowConfirmation(false)}

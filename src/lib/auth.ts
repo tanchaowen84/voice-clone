@@ -37,7 +37,9 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
     // https://www.better-auth.com/docs/concepts/session-management#session-freshness
-    freshAge: 60 * 60 * 24,
+    // https://www.better-auth.com/docs/concepts/users-accounts#authentication-requirements
+    // disable freshness check for user deletion
+    freshAge: 0 /* 60 * 60 * 24 */,
   },
   emailAndPassword: {
     enabled: true,
