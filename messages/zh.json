@@ -49,15 +49,22 @@
     "title": "联系我们",
     "description": "我们帮助您找到合适的计划",
     "subtitle": "我们帮助您找到合适的计划",
-    "formTitle": "联系我们",
-    "formDescription": "如果您有任何问题或反馈，欢迎联系我们的团队",
-    "name": "姓名",
-    "email": "邮箱",
-    "message": "消息",
-    "submit": "提交",
-    "submitting": "提交中...",
-    "success": "消息发送成功",
-    "fail": "消息发送失败"
+    "form": {
+      "title": "联系我们",
+      "description": "如果您有任何问题或反馈，请随时联系我们的团队",
+      "name": "姓名",
+      "email": "邮箱",
+      "message": "消息",
+      "submit": "提交",
+      "submitting": "提交中...",
+      "success": "消息发送成功",
+      "fail": "消息发送失败",
+      "nameMinLength": "姓名必须至少包含 3 个字符",
+      "nameMaxLength": "姓名必须不超过 30 个字符",
+      "emailValidation": "请输入有效的邮箱地址",
+      "messageMinLength": "消息必须至少包含 10 个字符",
+      "messageMaxLength": "消息必须不超过 500 个字符"
+    }
   },
   "WaitlistPage": {
     "title": "邮件列表",
@@ -371,25 +378,25 @@
     }
   },
   "Mail": {
-		"common": {
+    "common": {
       "team": "MkSaaS 团队",
       "copyright": "©️ {year} 版权所有。"
-		},
-		"verifyEmail": {
-			"title": "你好，{name}。",
-			"body": "请点击下面的链接验证您的邮箱地址。",
-			"confirmEmail": "确认邮箱",
-			"subject": "验证您的邮箱"
-		},
-		"forgotPassword": {
-			"title": "你好，{name}。",
-			"body": "请点击下面的链接重置您的密码。",
-			"resetPassword": "重置密码",
-			"subject": "重置您的密码"
-		},
-		"subscribeNewsletter": {
-			"body": "感谢您订阅我们的邮件列表，我们将为您提供最新的新闻和更新。",
-			"subject": "感谢您的订阅"
-		}
-	}
+    },
+    "verifyEmail": {
+      "title": "你好，{name}。",
+      "body": "请点击下面的链接验证您的邮箱地址。",
+      "confirmEmail": "确认邮箱",
+      "subject": "验证您的邮箱"
+    },
+    "forgotPassword": {
+      "title": "你好，{name}。",
+      "body": "请点击下面的链接重置您的密码。",
+      "resetPassword": "重置密码",
+      "subject": "重置您的密码"
+    },
+    "subscribeNewsletter": {
+      "body": "感谢您订阅我们的邮件列表，我们将为您提供最新的新闻和更新。",
+      "subject": "感谢您的订阅"
+    }
+  }
 }

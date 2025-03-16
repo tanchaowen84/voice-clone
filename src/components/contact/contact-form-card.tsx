@@ -29,7 +29,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 export function ContactFormCard() {
-  const t = useTranslations('ContactPage');
+  const t = useTranslations('ContactPage.form');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | undefined>('');
 
@@ -37,15 +37,15 @@ export function ContactFormCard() {
   const formSchema = z.object({
     name: z
       .string()
-      .min(3, { message: 'Name must be at least 3 characters' })
-      .max(30, { message: 'Name must not exceed 30 characters' }),
+      .min(3, t('nameMinLength'))
+      .max(30, t('nameMaxLength')),
     email: z
       .string()
-      .email({ message: 'Please enter a valid email address' }),
+      .email(t('emailValidation')),
     message: z
       .string()
-      .min(10, { message: 'Message must be at least 10 characters' })
-      .max(500, { message: 'Message must not exceed 500 characters' }),
+      .min(10, t('messageMinLength'))
+      .max(500, t('messageMaxLength')),
   });
 
   // Initialize the form
@@ -88,10 +88,10 @@ export function ContactFormCard() {
     <Card className="mx-auto max-w-lg overflow-hidden">
       <CardHeader>
         <CardTitle className="text-lg font-bold">
-          {t('formTitle')}
+          {t('title')}
         </CardTitle>
         <CardDescription>
-          {t('formDescription')}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <Form {...form}>
