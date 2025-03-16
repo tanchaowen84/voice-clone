@@ -15,7 +15,7 @@ export interface SendEmailProps {
 
 export type Template = keyof typeof EmailTemplates;
 
-export type SendEmailHandler = (params: SendEmailProps) => Promise<void>;
+export type SendEmailHandler = (params: SendEmailProps) => Promise<boolean>;
 
 /**
  * Email provider, currently only Resend is supported

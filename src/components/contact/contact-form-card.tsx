@@ -1,5 +1,6 @@
 "use client";
 
+import { contactAction } from '@/actions/mail';
 import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -63,17 +64,17 @@ export function ContactFormCard() {
     setError('');
 
     try {
-      // Here you would typically send the form data to your API
-      console.log('Form submitted:', values);
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Show success message
-      toast.success(t('success'));
-
-      // Reset form
-      form.reset();
+      // Submit form data using the contact server action
+      const result = await contactAction(values);
+      
+      if (result && result.data?.success) {
+        toast.success(t('success'));
+        form.reset();
+      } else {
+        const errorMessage = result?.data?.error || t('fail');
+        setError(errorMessage);
+        toast.error(errorMessage);
+      }
     } catch (err) {
       console.error('Form submission error:', err);
       setError(t('fail'));

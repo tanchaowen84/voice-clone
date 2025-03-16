@@ -6,6 +6,9 @@ const audienceId = process.env.RESEND_AUDIENCE_ID || 'test_audience_id';
 
 const resend = new Resend(apiKey);
 
+/**
+ * https://resend.com/docs/dashboard/audiences/contacts
+ */
 export const subscribeNewsletter: SubscribeNewsletterHandler = async ({ email }) => {
   if (!process.env.RESEND_API_KEY || !process.env.RESEND_AUDIENCE_ID) {
     console.warn('RESEND_API_KEY or RESEND_AUDIENCE_ID not set, skipping subscribe newsletter');

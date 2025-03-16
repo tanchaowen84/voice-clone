@@ -47,6 +47,7 @@ export const websiteConfig: WebsiteConfig = {
   },
   mail: {
     from: 'support@mksaas.com',
+    to: 'support@mksaas.com',
   },
   social: {
     github: 'https://github.com/MkSaaSHQ',

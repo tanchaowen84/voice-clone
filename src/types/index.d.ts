@@ -9,6 +9,7 @@ export type WebsiteConfig = {
   };
   mail: {
     from?: string;
+    to?: string;
   }
   social: {
     twitter?: string;

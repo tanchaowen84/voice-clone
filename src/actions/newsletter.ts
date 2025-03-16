@@ -24,6 +24,7 @@ export const subscribeAction = actionClient
       const subscribed = await subscribeToNewsletter(email);
 
       if (!subscribed) {
+        console.error('Failed to subscribe to the newsletter', email);
         return {
           success: false,
           error: 'Failed to subscribe to the newsletter',
@@ -50,6 +51,7 @@ export const unsubscribeAction = actionClient
       const unsubscribed = await unsubscribeFromNewsletter(email);
 
       if (!unsubscribed) {
+        console.error('Failed to unsubscribe from the newsletter', email);
         return {
           success: false,
           error: 'Failed to unsubscribe from the newsletter',
