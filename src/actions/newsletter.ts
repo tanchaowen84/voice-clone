@@ -2,7 +2,8 @@
 
 import {
   subscribe as subscribeToNewsletter,
-  unsubscribe as unsubscribeFromNewsletter
+  unsubscribe as unsubscribeFromNewsletter,
+  isSubscribed as checkIsSubscribed
 } from '@/newsletter';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
@@ -62,6 +63,27 @@ export const unsubscribeAction = actionClient
       console.error('Newsletter unsubscription error:', error);
       return {
         success: false,
+        error: 'An unexpected error occurred',
+      };
+    }
+  });
+
+// Create a safe action to check if a user is subscribed to the newsletter
+export const isSubscribedAction = actionClient
+  .schema(newsletterSchema)
+  .action(async ({ parsedInput: { email } }) => {
+    try {
+      const subscribed = await checkIsSubscribed(email);
+      
+      return {
+        success: true,
+        subscribed,
+      };
+    } catch (error) {
+      console.error('Newsletter subscription check error:', error);
+      return {
+        success: false,
+        subscribed: false,
         error: 'An unexpected error occurred',
       };
     }

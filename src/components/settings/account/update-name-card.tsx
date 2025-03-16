@@ -119,7 +119,7 @@ export function UpdateNameCard() {
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4">
             <FormField
               control={form.control}
               name="name"

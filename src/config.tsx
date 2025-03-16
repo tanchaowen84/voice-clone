@@ -11,6 +11,7 @@ import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import {
   AudioLinesIcon,
+  BellIcon,
   BotIcon,
   BuildingIcon,
   ChartNoAxesCombinedIcon,
@@ -406,6 +407,12 @@ export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
           title: t('Dashboard.sidebar.settings.items.billing.title'),
           icon: <CreditCardIcon className="site-4 shrink-0" />,
           href: Routes.SettingsBilling,
+          external: false,
+        },
+        {
+          title: t('Dashboard.sidebar.settings.items.notification.title'),
+          icon: <BellIcon className="site-4 shrink-0" />,
+          href: Routes.SettingsNotification,
           external: false,
         }
       ],

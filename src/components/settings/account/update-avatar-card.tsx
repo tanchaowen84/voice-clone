@@ -1,5 +1,6 @@
 'use client';
 
+import { FormError } from '@/components/shared/form-error';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,7 +19,8 @@ import { useEffect, useState } from 'react';
 export function UpdateAvatarCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isUploading, setIsUploading] = useState(false);
-  const { data: session, error } = authClient.useSession();
+  const [error, setError] = useState('');
+  const { data: session } = authClient.useSession();
   const [avatarUrl, setAvatarUrl] = useState('');
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export function UpdateAvatarCard() {
           {t('avatar.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <div className="flex flex-col items-center sm:flex-row gap-4">
           {/* avatar */}
           <Avatar className="h-16 w-16 border">
@@ -91,6 +93,8 @@ export function UpdateAvatarCard() {
             {isUploading ? t('avatar.uploading') : t('avatar.uploadAvatar')}
           </Button>
         </div>
+
+        <FormError message={error} />
       </CardContent>
       <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
         <p className="text-sm text-muted-foreground">

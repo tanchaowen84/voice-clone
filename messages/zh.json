@@ -349,6 +349,22 @@
           },
           "billing": {
             "title": "账单"
+          },
+          "notification": {
+            "title": "通知",
+            "newsletter": {
+              "title": "订阅",
+              "description": "管理您的邮件列表订阅偏好",
+              "checkboxLabel": "订阅邮件列表",
+              "checkboxDescription": "通过邮件接收更新、新闻和特别优惠",
+              "hint": "您可以随时更改订阅偏好",
+              "emailRequired": "订阅邮件列表需要邮箱",
+              "subscribeSuccess": "成功订阅邮件列表",
+              "subscribeFail": "订阅邮件列表失败",
+              "unsubscribeSuccess": "成功取消订阅邮件列表",
+              "unsubscribeFail": "取消订阅邮件列表失败",
+              "error": "更新订阅时发生错误"
+            }
           }
         }
       }

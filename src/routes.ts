@@ -30,6 +30,7 @@ export enum Routes {
   Dashboard = '/dashboard',
   SettingsAccount = '/settings/account',
   SettingsBilling = '/settings/billing',
+  SettingsNotification = '/settings/notification',
 
   AIText = '/ai/text',
   AIImage = '/ai/image',

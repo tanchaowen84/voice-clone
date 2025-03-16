@@ -355,6 +355,22 @@
           },
           "billing": {
             "title": "Billing"
+          },
+          "notification": {
+            "title": "Notification",
+            "newsletter": {
+              "title": "Newsletter Subscription",
+              "description": "Manage your newsletter subscription preferences",
+              "checkboxLabel": "Subscribe to newsletter",
+              "checkboxDescription": "Receive updates, news, and special offers via email",
+              "hint": "You can change your subscription preferences at any time",
+              "emailRequired": "Email is required to subscribe to the newsletter",
+              "subscribeSuccess": "Successfully subscribed to the newsletter",
+              "subscribeFail": "Failed to subscribe to the newsletter",
+              "unsubscribeSuccess": "Successfully unsubscribed from the newsletter",
+              "unsubscribeFail": "Failed to unsubscribe from the newsletter",
+              "error": "An error occurred while updating your subscription"
+            }
           }
         }
       }
