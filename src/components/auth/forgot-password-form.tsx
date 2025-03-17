@@ -71,7 +71,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
         },
         onError: (ctx) => {
           console.error('forgotPassword, error:', ctx.error);
-          setError(`${ctx.error.status} : ${ctx.error.statusText}`);
+          setError(`${ctx.error.status}: ${ctx.error.message}`);
         },
       }
     );

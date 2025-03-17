@@ -75,7 +75,7 @@ export const RegisterForm = () => {
         onError: (ctx) => {
           // sign up fail, display the error message
           console.error('register, error:', ctx.error);
-          setError(`${ctx.error.status}:${ctx.error.statusText}`);
+          setError(`${ctx.error.status}: ${ctx.error.message}`);
         },
       }
     );
