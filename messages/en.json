@@ -321,7 +321,9 @@
               "description": "Click upload button to upload a custom one",
               "recommendation": "An avatar is optional but strongly recommended",
               "uploading": "Uploading...",
-              "uploadAvatar": "Upload Avatar"
+              "uploadAvatar": "Upload Avatar",
+              "success": "Avatar updated successfully",
+              "fail": "Failed to update avatar"
             },
             "name": {
               "title": "Name",

@@ -12,16 +12,22 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { authClient } from '@/lib/auth-client';
+import { uploadFileFromBrowser } from '@/storage';
 import { User2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
+/**
+ * Update the user's avatar
+ */
 export function UpdateAvatarCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
-  const { data: session } = authClient.useSession();
+  const { data: session, refetch } = authClient.useSession();
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [tempAvatarUrl, setTempAvatarUrl] = useState('');
 
   useEffect(() => {
     if (session?.user?.image) {
@@ -34,11 +40,13 @@ export function UpdateAvatarCard() {
     return null;
   }
 
-  const handleAvatarClick = () => {
+  console.log('update avatar card, user', user);
+
+  const handleUploadClick = () => {
     // Create a hidden file input and trigger it
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = 'image/png, image/jpeg, image/webp';
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
@@ -50,17 +58,68 @@ export function UpdateAvatarCard() {
 
   const handleFileUpload = async (file: File) => {
     setIsUploading(true);
+    setError('');
 
-    // Create a temporary URL for preview
-    const tempUrl = URL.createObjectURL(file);
-    setAvatarUrl(tempUrl);
+    try {
+      // Create a temporary URL for preview and store the original URL
+      const tempUrl = URL.createObjectURL(file);
+      setTempAvatarUrl(tempUrl);
+      // Show temporary avatar immediately for better UX
+      setAvatarUrl(tempUrl);
 
-    // Here you would typically upload the file to your server
-    // For now, we're just simulating the upload
-    setTimeout(() => {
+      // Upload the file to storage
+      const result = await uploadFileFromBrowser(file, 'avatars');
+      // console.log('uploadFileFromBrowser, result', result);
+      const { url } = result;
+      console.log('uploadFileFromBrowser, url', url);
+
+      // Update the user's avatar using authClient
+      const { data, error } = await authClient.updateUser(
+        {
+          image: url,
+        },
+        {
+          onRequest: () => {
+            // console.log('update avatar, request:', ctx.url);
+          },
+          onResponse: () => {
+            // console.log('update avatar, response:', ctx.response);
+          },
+          onSuccess: () => {
+            // console.log('update avatar, success:', ctx.data);
+            // Set the permanent avatar URL on success
+            setAvatarUrl(url);
+            toast.success(t('avatar.success'));
+            // Refetch the session to get the latest data
+            refetch();
+          },
+          onError: (ctx) => {
+            console.error('update avatar, error:', ctx.error);
+            setError(`${ctx.error.status}: ${ctx.error.message}`);
+            // Restore the previous avatar on error
+            if (session?.user?.image) {
+              setAvatarUrl(session.user.image);
+            }
+            toast.error(t('avatar.fail'));
+          },
+        }
+      );
+    } catch (error) {
+      console.error('update avatar, error:', error);
+      setError(error instanceof Error ? error.message : t('avatar.fail'));
+      // Restore the previous avatar if there was an error
+      if (session?.user?.image) {
+        setAvatarUrl(session.user.image);
+      }
+      toast.error(t('avatar.fail'));
+    } finally {
       setIsUploading(false);
-      // In a real implementation, you would set the avatar URL to the URL returned by your server
-    }, 1000);
+      // Clean up temporary URL
+      if (tempAvatarUrl) {
+        URL.revokeObjectURL(tempAvatarUrl);
+        setTempAvatarUrl('');
+      }
+    }
   };
 
   return (
@@ -87,7 +146,7 @@ export function UpdateAvatarCard() {
           <Button
             variant="default"
             size="sm"
-            onClick={handleAvatarClick}
+            onClick={handleUploadClick}
             disabled={isUploading}
           >
             {isUploading ? t('avatar.uploading') : t('avatar.uploadAvatar')}

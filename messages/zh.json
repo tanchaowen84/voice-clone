@@ -316,7 +316,9 @@
               "description": "点击上传按钮上传自定义头像",
               "recommendation": "头像是可选的，但强烈推荐使用",
               "uploading": "上传中...",
-              "uploadAvatar": "上传头像"
+              "uploadAvatar": "上传头像",
+              "success": "头像更新成功",
+              "fail": "更新头像失败"
             },
             "name": {
               "title": "名字",
