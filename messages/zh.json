@@ -366,7 +366,51 @@
             "cancel": "取消"
           },
           "billing": {
-            "title": "账单"
+            "title": "账单与订阅",
+            "description": "管理您的订阅和账单信息",
+            "status": {
+              "active": "已激活",
+              "trial": "试用中",
+              "free": "免费版"
+            },
+            "interval": {
+              "month": "月",
+              "year": "年",
+              "oneTime": "一次性"
+            },
+            "currentPlan": {
+              "title": "当前方案",
+              "description": "您的当前订阅详情"
+            },
+            "nextBillingDate": "下次账单日期：",
+            "trialEnds": "试用结束日期：",
+            "freePlanMessage": "您当前使用的是功能有限的免费方案。",
+            "manageSubscription": "管理订阅",
+            "upgradeMessage": "升级到付费方案以获取更多功能",
+            "paymentMethod": {
+              "title": "支付方式",
+              "description": "管理您的支付方式",
+              "manageMessage": "通过 Stripe 客户门户管理您的支付方式。",
+              "securityMessage": "您可以通过 Stripe 门户安全地添加、删除或更新您的支付方式。",
+              "noMethodsMessage": "没有支付方式记录。",
+              "upgradePromptMessage": "升级到付费方案时，系统会提示您添加支付方式。"
+            },
+            "managePaymentMethods": "管理支付方式",
+            "upgradePlan": {
+              "title": "升级您的方案",
+              "description": "选择适合您的方案"
+            },
+            "trialDays": "{{days}} 天试用期",
+            "upgradeToPlan": "升级到 {{planName}}",
+            "customPricing": "定制价格",
+            "contactSales": "联系销售",
+            "billingHistory": {
+              "title": "账单历史",
+              "description": "查看并下载您的历史账单",
+              "accessMessage": "通过 Stripe 客户门户访问您的账单历史",
+              "noHistoryMessage": "没有可用的账单历史"
+            },
+            "viewBillingHistory": "查看账单历史"
           },
           "notification": {
             "title": "通知",

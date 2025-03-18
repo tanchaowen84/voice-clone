@@ -1,0 +1,94 @@
+import { PaymentConfig, PricePlan } from "../types";
+
+/**
+ * Free plan definition
+ */
+const freePlan: PricePlan = {
+  id: "free",
+  name: "Free",
+  description: "Basic features for personal use",
+  features: [
+    "Up to 3 projects",
+    "Basic analytics",
+    "Community support",
+    "1 GB storage"
+  ],
+  prices: [],
+  isFree: true,
+};
+
+/**
+ * Pro plan definition
+ */
+const proPlan: PricePlan = {
+  id: "pro",
+  name: "Pro",
+  description: "Advanced features for professionals",
+  features: [
+    "Unlimited projects",
+    "Advanced analytics",
+    "Priority support",
+    "10 GB storage",
+    "Custom domains",
+    "Team collaboration"
+  ],
+  prices: [
+    {
+      type: "recurring",
+      productId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
+      amount: 2900,
+      currency: "USD",
+      interval: "month",
+      trialPeriodDays: 7,
+    },
+    {
+      type: "recurring",
+      productId: process.env.STRIPE_PRICE_PRO_YEARLY!,
+      amount: 24900,
+      currency: "USD",
+      interval: "year",
+      trialPeriodDays: 7,
+    },
+  ],
+  isFree: false,
+  recommended: true,
+};
+
+/**
+ * Lifetime plan definition
+ */
+const lifetimePlan: PricePlan = {
+  id: "lifetime",
+  name: "Lifetime",
+  description: "Premium features with one-time payment",
+  features: [
+    "All Pro features",
+    "Enterprise-grade security",
+    "Dedicated support",
+    "100 GB storage",
+    "Advanced integrations",
+    "Custom branding",
+    "Lifetime updates"
+  ],
+  prices: [
+    {
+      type: "one_time",
+      productId: process.env.STRIPE_PRICE_LIFETIME!,
+      amount: 99900,
+      currency: "USD",
+    },
+  ],
+  isFree: false,
+};
+
+/**
+ * Payment configuration
+ */
+export const paymentConfig: PaymentConfig = {
+  plans: {
+    free: freePlan,
+    pro: proPlan,
+    lifetime: lifetimePlan,
+  },
+  defaultCurrency: "USD",
+}; 

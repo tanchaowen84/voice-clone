@@ -8,6 +8,10 @@ import { z } from 'zod';
 // Create a safe action client
 const actionClient = createSafeActionClient();
 
+/**
+ * TODO: When using Zod for validation, how can I localize error messages?
+ * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#server-actions
+ */
 // Contact form schema for validation
 const contactFormSchema = z.object({
   name: z

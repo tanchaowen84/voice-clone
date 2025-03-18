@@ -371,7 +371,51 @@
             "cancel": "Cancel"
           },
           "billing": {
-            "title": "Billing"
+            "title": "Billing & Subscription",
+            "description": "Manage your subscription and billing information",
+            "status": {
+              "active": "Active",
+              "trial": "Trial",
+              "free": "Free"
+            },
+            "interval": {
+              "month": "month",
+              "year": "year",
+              "oneTime": "one-time"
+            },
+            "currentPlan": {
+              "title": "Current Plan",
+              "description": "Your current subscription details"
+            },
+            "nextBillingDate": "Next billing date:",
+            "trialEnds": "Trial ends:",
+            "freePlanMessage": "You are currently on the free plan with limited features.",
+            "manageSubscription": "Manage Subscription",
+            "upgradeMessage": "Upgrade to a paid plan to access more features",
+            "paymentMethod": {
+              "title": "Payment Method",
+              "description": "Manage your payment methods",
+              "manageMessage": "Manage your payment methods through the Stripe Customer Portal.",
+              "securityMessage": "You can add, remove, or update your payment methods securely through the Stripe portal.",
+              "noMethodsMessage": "No payment methods on file.",
+              "upgradePromptMessage": "You'll be prompted to add a payment method when upgrading to a paid plan."
+            },
+            "managePaymentMethods": "Manage Payment Methods",
+            "upgradePlan": {
+              "title": "Upgrade Your Plan",
+              "description": "Choose a plan that works for you"
+            },
+            "trialDays": "{{days}} day trial",
+            "upgradeToPlan": "Upgrade to {{planName}}",
+            "customPricing": "Custom Pricing",
+            "contactSales": "Contact Sales",
+            "billingHistory": {
+              "title": "Billing History",
+              "description": "View and download your past invoices",
+              "accessMessage": "Access your billing history through the Stripe Customer Portal",
+              "noHistoryMessage": "No billing history available"
+            },
+            "viewBillingHistory": "View Billing History"
           },
           "notification": {
             "title": "Notification",
