@@ -1,10 +1,9 @@
-import { fontDMSans, fontSourceSans, fontSourceSerif4 } from '@/assets/fonts';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
+import { fontBricolageGrotesque, fontSourceSerif4 } from '@/assets/fonts';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
-import { Locale, hasLocale, NextIntlClientProvider } from 'next-intl';
+import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
@@ -41,10 +40,8 @@ export default async function LocaleLayout({
         suppressHydrationWarning
         className={cn(
           'size-full antialiased',
-          fontDMSans.className,
-          fontDMSans.variable,
+          fontBricolageGrotesque.className,
           fontSourceSerif4.variable,
-          fontSourceSans.variable,
           GeistSans.variable,
           GeistMono.variable
         )}

@@ -10,16 +10,10 @@ import { Source_Serif_4 } from 'next/font/google';
  * 2. Add font file to the assets/fonts folder
  * 3. Add font variable to the font object
  */
-// https://gwfh.mranftl.com/fonts/source-sans-3?subsets=latin
-export const fontSourceSans = localFont({
-  src: './source-sans-3-v15-latin-regular.woff2',
-  variable: '--font-source-sans',
-});
-
-// https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
-export const fontDMSansRegular = localFont({
-  src: './dm-sans-v15-latin-regular.woff2',
-  variable: '--font-dm-sans-regular',
+// https://gwfh.mranftl.com/fonts/bricolage-grotesque?subsets=latin
+export const fontBricolageGrotesque = localFont({
+  src: './bricolage-grotesque-v7-latin-regular.woff2',
+  variable: '--font-bricolage-grotesque',
 });
 
 // https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
@@ -28,12 +22,6 @@ export const fontDMSans = localFont({
   src: './dm-sans-v15-latin-500.woff2',
   variable: '--font-dm-sans',
 });
-
-// https://gwfh.mranftl.com/fonts/dm-serif-display?subsets=latin
-// export const fontDMSerifDisplay = localFont({
-//   src: './dm-serif-display-v15-latin-regular.woff2',
-//   variable: '--font-dm-serif-display',
-// });
 
 /**
  * [2] use google font

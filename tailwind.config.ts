@@ -18,6 +18,9 @@ export default {
     			],
     			serif: [
     				'var(--font-source-serif)'
+    			],
+    			bricolage: [
+    				'var(--font-bricolage-grotesque)'
     			]
     		},
     		colors: {
