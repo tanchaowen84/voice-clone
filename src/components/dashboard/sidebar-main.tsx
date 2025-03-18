@@ -14,7 +14,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
-import { getSidebarMainLinks } from '@/config';
+import { getSidebarLinks } from '@/config';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { MenuItem } from '@/types';
 import { ChevronRight } from 'lucide-react';
@@ -23,7 +23,7 @@ import * as React from 'react';
 
 export function SidebarMain() {
   const t = useTranslations();
-  const sidebarMainLinks = getSidebarMainLinks();
+  const sidebarLinks = getSidebarLinks();
   const pathname = useLocalePathname();
 
   // Function to check if a path is active
@@ -42,7 +42,7 @@ export function SidebarMain() {
     <SidebarGroup>
       {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
-        {sidebarMainLinks.map((item) => (
+        {sidebarLinks.map((item) => (
           <React.Fragment key={item.title}>
             {item.items?.length ? (
               <Collapsible
