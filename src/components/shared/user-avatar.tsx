@@ -3,7 +3,7 @@ import type { AvatarProps } from '@radix-ui/react-avatar';
 import { User2Icon } from 'lucide-react';
 
 interface UserAvatarProps extends AvatarProps {
-  name?: string;
+  name: string;
   image?: string;
 }
 
@@ -19,14 +19,14 @@ export function UserAvatar({ name, image, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>
       <AvatarImage
-        alt={name || 'user avatar'}
-        title={name || 'user avatar'}
+        alt={name}
+        title={name}
         src={image}
       />
       <AvatarFallback>
         <span className="sr-only">{name}</span>
         <User2Icon className="size-4" />
-        {/* {getInitials(name || '')} */}
+        {/* {getInitials(name)} */}
       </AvatarFallback>
     </Avatar>
   );

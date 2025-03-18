@@ -12,10 +12,10 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-
 import { constructMetadata } from '@/lib/metadata';
-import '@/styles/mdx.css';
 import { Locale } from 'next-intl';
+
+import '@/styles/mdx.css';
 
 /**
  * Gets the blog post from the params

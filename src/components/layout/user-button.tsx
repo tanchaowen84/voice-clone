@@ -26,10 +26,17 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 export function UserButton() {
-  const { data: session, error } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
   const t = useTranslations();
   const avatarLinks = getAvatarLinks();
+  const localeRouter = useLocaleRouter();
+  const [open, setOpen] = useState(false);
+  const closeDrawer = () => {
+    setOpen(false);
+  };
+
+  const { isMobile } = useMediaQuery();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -46,13 +53,9 @@ export function UserButton() {
     });
   };
 
-  const localeRouter = useLocaleRouter();
-  const [open, setOpen] = useState(false);
-  const closeDrawer = () => {
-    setOpen(false);
-  };
-
-  const { isMobile } = useMediaQuery();
+  if (!user) {
+    return null;
+  }
 
   // Mobile View, use Drawer
   if (isMobile) {
@@ -139,22 +142,20 @@ export function UserButton() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
         <UserAvatar
-          name={user?.name || undefined}
-          image={user?.image || undefined}
+          name={user.name}
+          image={user.image || undefined}
           className="size-8 border"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user?.name && <p className="font-medium">
+            <p className="font-medium">
               {user.name}
-            </p>}
-            {user?.email && (
-              <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user?.email}
-              </p>
-            )}
+            </p>
+            <p className="w-[200px] truncate text-sm text-muted-foreground">
+              {user.email}
+            </p>
           </div>
         </div>
         <DropdownMenuSeparator />
