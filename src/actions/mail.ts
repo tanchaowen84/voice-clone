@@ -41,6 +41,7 @@ export const contactAction = actionClient
 
       // Send email using the mail service
       // Customize the email template for your needs
+      // TODO: add locale to the email or customize it by yourself?
       const result = await send({
         to: websiteConfig.mail.to,
         subject: `Contact Form: Message from ${name}`,

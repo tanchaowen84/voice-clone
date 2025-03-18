@@ -1,89 +1,44 @@
 import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
+import { getMailProvider } from '@/mail';
 import { EmailTemplates } from '@/mail/emails';
-import { sendEmail } from '@/mail/provider/resend';
+import { SendRawEmailParams, SendTemplateParams, Template } from '@/mail/types';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';
-import { Template } from '@/mail/types';
 
 /**
- * send email
- *
- * 1. with given template, and context
- * 2. with given subject, text, and html
+ * Send email using the configured mail provider
+ * 
+ * @param params Email parameters
+ * @returns Success status
  */
-export async function send<T extends Template>(
-  params: {
-    to: string;
-    locale?: Locale;
-  } & (
-    | {
-        template: T;
-        context: Omit<
-          Parameters<(typeof EmailTemplates)[T]>[0],
-          'locale' | 'messages'
-        >;
-      }
-    | {
-        subject: string;
-        text?: string;
-        html?: string;
-      }
-  )
+export async function send(
+  params: SendTemplateParams | SendRawEmailParams
 ) {
-  const { to, locale = routing.defaultLocale } = params;
-  console.log('send, locale:', locale);
+  const provider = getMailProvider();
 
-  let html: string;
-  let text: string;
-  let subject: string;
-
-  // if template is provided, get the template
-  // otherwise, use the subject, text, and html
   if ('template' in params) {
-    const { template, context } = params;
-    const mailTemplate = await getTemplate({
-      template,
-      context,
-      locale,
-    });
-    subject = mailTemplate.subject;
-    text = mailTemplate.text;
-    html = mailTemplate.html;
+    // This is a template email
+    const result = await provider.sendTemplate(params);
+    return result.success;
   } else {
-    subject = params.subject;
-    text = params.text ?? '';
-    html = params.html ?? '';
-  }
-
-  try {
-    await sendEmail({
-      to,
-      subject,
-      text,
-      html,
-    });
-    return true;
-  } catch (e) {
-    console.error('Error sending email', e);
-    return false;
+    // This is a raw email
+    const result = await provider.sendRawEmail(params);
+    return result.success;
   }
 }
 
 /**
- * get rendered email for given template, context, and locale
+ * Get rendered email for given template, context, and locale
  */
-async function getTemplate<T extends Template>({
+export async function getTemplate<T extends Template>({
   template,
   context,
-  locale,
+  locale = routing.defaultLocale,
 }: {
   template: T;
-  context: Omit<
-    Parameters<(typeof EmailTemplates)[T]>[0],
-    'locale' | 'messages'
-  >;
-  locale: Locale;
+  context: Record<string, any>;
+  locale?: Locale;
 }) {
   const mainTemplate = EmailTemplates[template];
   const messages = await getMessagesForLocale(locale);
@@ -94,7 +49,7 @@ async function getTemplate<T extends Template>({
     messages,
   });
 
-  // get the subject from the messages
+  // Get the subject from the messages
   const subject =
     'subject' in messages.Mail[template as keyof Messages['Mail']]
       ? messages.Mail[template].subject
@@ -102,5 +57,6 @@ async function getTemplate<T extends Template>({
 
   const html = await render(email);
   const text = await render(email, { plainText: true });
+
   return { html, text, subject };
 }
