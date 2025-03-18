@@ -136,7 +136,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
       className="fixed w-full inset-0 z-50 mt-[72px] overflow-y-auto
       bg-background backdrop-blur-md animate-in fade-in-0"
     >
-      <div className="size-full flex flex-col items-start space-y-4 px-4">
+      <div className="size-full flex flex-col items-start space-y-4">
         {/* action buttons */}
         {userLoggedIn ? null : (
           <div className="w-full flex flex-col gap-4">
@@ -199,9 +199,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           className={cn(
                             'flex w-full items-center justify-between text-left',
                             'bg-transparent text-muted-foreground',
-                            'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
+                            'hover:bg-transparent hover:text-foreground',
+                            'focus:bg-transparent focus:text-foreground',
                             isActive &&
-                            'font-semibold bg-transparent text-primary'
+                            'font-semibold bg-transparent text-foreground'
                           )}
                         >
                           <span className="text-base">{item.title}</span>
@@ -235,9 +236,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     buttonVariants({ variant: 'ghost' }),
                                     'group h-auto w-full justify-start gap-4 p-1',
                                     'bg-transparent text-muted-foreground',
-                                    'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
+                                    'hover:bg-transparent hover:text-foreground',
+                                    'focus:bg-transparent focus:text-foreground',
                                     isSubItemActive &&
-                                    'font-semibold bg-transparent text-primary'
+                                    'font-semibold bg-transparent text-foreground'
                                   )}
                                   onClick={onLinkClicked}
                                 >
@@ -245,9 +247,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     className={cn(
                                       'flex size-8 shrink-0 items-center justify-center transition-colors',
                                       'bg-transparent text-muted-foreground',
-                                      'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                      'group-hover:bg-transparent group-hover:text-foreground',
+                                      'group-focus:bg-transparent group-focus:text-foreground',
                                       isSubItemActive &&
-                                      'bg-transparent text-primary'
+                                      'bg-transparent text-foreground'
                                     )}
                                   >
                                     {subItem.icon ? subItem.icon : null}
@@ -256,9 +259,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     <span
                                       className={cn(
                                         'text-sm text-muted-foreground',
-                                        'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                        'group-hover:bg-transparent group-hover:text-foreground',
+                                        'group-focus:bg-transparent group-focus:text-foreground',
                                         isSubItemActive &&
-                                        'font-semibold bg-transparent text-primary'
+                                        'font-semibold bg-transparent text-foreground'
                                       )}
                                     >
                                       {subItem.title}
@@ -267,9 +271,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                       <p
                                         className={cn(
                                           'text-xs text-muted-foreground',
-                                          'group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80',
+                                          'group-hover:bg-transparent group-hover:text-foreground/80',
+                                          'group-focus:bg-transparent group-focus:text-foreground/80',
                                           isSubItemActive &&
-                                          'bg-transparent text-primary/80'
+                                          'bg-transparent text-foreground/80'
                                         )}
                                       >
                                         {subItem.description}
@@ -280,9 +285,10 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     <ArrowUpRightIcon
                                       className={cn(
                                         'size-4 shrink-0 text-muted-foreground',
-                                        'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
+                                        'group-hover:bg-transparent group-hover:text-foreground',
+                                        'group-focus:bg-transparent group-focus:text-foreground',
                                         isSubItemActive &&
-                                        'bg-transparent text-primary'
+                                        'bg-transparent text-foreground'
                                       )}
                                     />
                                   )}
@@ -302,8 +308,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                         buttonVariants({ variant: 'ghost' }),
                         'w-full justify-start',
                         'bg-transparent text-muted-foreground',
-                        'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
-                        isActive && 'font-semibold bg-transparent text-primary'
+                        'hover:bg-transparent hover:text-foreground',
+                        'focus:bg-transparent focus:text-foreground',
+                        isActive && 'font-semibold bg-transparent text-foreground'
                       )}
                       onClick={onLinkClicked}
                     >
@@ -316,7 +323,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
         </ul>
 
         {/* bottom buttons */}
-        <div className="flex w-full items-center justify-between gap-4 border-t border-border/50 py-4">
+        <div className="flex w-full items-center justify-between gap-4 border-t border-border/50 p-4">
           <LocaleSelector />
           <ThemeSwitcherHorizontal />
         </div>
