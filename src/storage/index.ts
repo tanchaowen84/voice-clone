@@ -1,13 +1,55 @@
+import { storageConfig } from './config/storage-config';
+import { S3Provider } from './provider/s3';
 import {
-  uploadFile as s3UploadFile,
-  deleteFile as s3DeleteFile,
-  getPresignedUploadUrl as s3GetPresignedUploadUrl,
-  StorageError,
   ConfigurationError,
-  UploadError
-} from './provider/s3';
+  PresignedUploadUrlParams,
+  StorageConfig,
+  StorageError,
+  StorageProvider,
+  UploadError,
+  UploadFileParams,
+  UploadFileResult
+} from './types';
 
-export { StorageError, ConfigurationError, UploadError };
+// Re-export types for convenience
+export { ConfigurationError, StorageError, UploadError };
+export type {
+  PresignedUploadUrlParams, StorageConfig, StorageProvider, UploadFileParams,
+  UploadFileResult
+};
+
+/**
+ * Default storage configuration
+ */
+export const defaultStorageConfig: StorageConfig = storageConfig;
+
+/**
+ * Global storage provider instance
+ */
+let storageProvider: StorageProvider | null = null;
+
+/**
+ * Initialize the storage provider
+ * @returns initialized storage provider
+ */
+export const initializeStorageProvider = (): StorageProvider => {
+  if (!storageProvider) {
+    storageProvider = new S3Provider();
+  }
+  return storageProvider;
+};
+
+/**
+ * Get the storage provider
+ * @returns current storage provider instance
+ * @throws Error if provider is not initialized
+ */
+export const getStorageProvider = (): StorageProvider => {
+  if (!storageProvider) {
+    return initializeStorageProvider();
+  }
+  return storageProvider;
+};
 
 /**
  * Uploads a file to the configured storage provider
@@ -23,8 +65,9 @@ export const uploadFile = async (
   filename: string,
   contentType: string,
   folder?: string
-): Promise<{ url: string; key: string }> => {
-  return s3UploadFile(file, filename, contentType, folder);
+): Promise<UploadFileResult> => {
+  const provider = getStorageProvider();
+  return provider.uploadFile({ file, filename, contentType, folder });
 };
 
 /**
@@ -34,7 +77,8 @@ export const uploadFile = async (
  * @returns Promise that resolves when the file is deleted
  */
 export const deleteFile = async (key: string): Promise<void> => {
-  return s3DeleteFile(key);
+  const provider = getStorageProvider();
+  return provider.deleteFile(key);
 };
 
 /**
@@ -51,8 +95,9 @@ export const getPresignedUploadUrl = async (
   contentType: string,
   folder?: string,
   expiresIn: number = 3600
-): Promise<{ url: string; key: string }> => {
-  return s3GetPresignedUploadUrl(filename, contentType, folder, expiresIn);
+): Promise<UploadFileResult> => {
+  const provider = getStorageProvider();
+  return provider.getPresignedUploadUrl({ filename, contentType, folder, expiresIn });
 };
 
 /**
@@ -66,7 +111,7 @@ export const getPresignedUploadUrl = async (
 export const uploadFileFromBrowser = async (
   file: File,
   folder?: string
-): Promise<{ url: string; key: string }> => {
+): Promise<UploadFileResult> => {
   try {
     // For small files (< 10MB), use direct upload
     if (file.size < 10 * 1024 * 1024) {
