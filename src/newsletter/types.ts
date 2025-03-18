@@ -1,20 +1,20 @@
-export interface SubscribeNewsletterProps {
+export interface SubscribeNewsletterParams {
   email: string;
 }
 
-export interface UnsubscribeNewsletterProps {
+export interface UnsubscribeNewsletterParams {
   email: string;
 }
 
-export interface CheckSubscribeStatusProps {
+export interface CheckSubscribeStatusParams {
   email: string;
 }
 
-export type SubscribeNewsletterHandler = (params: SubscribeNewsletterProps) => Promise<boolean>;
+export type SubscribeNewsletterHandler = (params: SubscribeNewsletterParams) => Promise<boolean>;
 
-export type UnsubscribeNewsletterHandler = (params: UnsubscribeNewsletterProps) => Promise<boolean>;
+export type UnsubscribeNewsletterHandler = (params: UnsubscribeNewsletterParams) => Promise<boolean>;
 
-export type CheckSubscribeStatusHandler = (params: CheckSubscribeStatusProps) => Promise<boolean>;
+export type CheckSubscribeStatusHandler = (params: CheckSubscribeStatusParams) => Promise<boolean>;
 
 /**
  * Newsletter provider, currently only Resend is supported
@@ -23,4 +23,13 @@ export interface NewsletterProvider {
   subscribe: SubscribeNewsletterHandler;
   unsubscribe: UnsubscribeNewsletterHandler;
   checkSubscribeStatus: CheckSubscribeStatusHandler;
+  getProviderName(): string;
+}
+
+export interface NewsletterConfig {
+  provider?: string;
+  resend?: {
+    apiKey: string;
+    audienceId: string;
+  };
 }
