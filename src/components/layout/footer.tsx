@@ -6,15 +6,13 @@ import { Logo } from '@/components/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
 import { getFooterLinks, getSocialLinks } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
-import { createTranslator } from '@/i18n/translator';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
-  const translator = createTranslator(t);
-  const footerLinks = getFooterLinks(translator);
+  const footerLinks = getFooterLinks();
   const socialLinks = getSocialLinks();
 
   return (

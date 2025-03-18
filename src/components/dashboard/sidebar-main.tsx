@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/sidebar';
 import { getSidebarMainLinks } from '@/config';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
-import { createTranslator } from '@/i18n/translator';
 import { MenuItem } from '@/types';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -24,8 +23,7 @@ import * as React from 'react';
 
 export function SidebarMain() {
   const t = useTranslations();
-  const translator = createTranslator(t);
-  const sidebarMainLinks = getSidebarMainLinks(translator);
+  const sidebarMainLinks = getSidebarMainLinks();
   const pathname = useLocalePathname();
 
   // Function to check if a path is active

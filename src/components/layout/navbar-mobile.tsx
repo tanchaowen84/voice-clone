@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/collapsible';
 import { getMenuLinks } from '@/config';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
-import { createTranslator } from '@/i18n/translator';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
@@ -20,9 +19,8 @@ import {
   ArrowUpRightIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  ChevronUpIcon,
   MenuIcon,
-  XIcon,
+  XIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -129,8 +127,7 @@ interface MainMobileMenuProps {
 function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
   const t = useTranslations();
-  const translator = createTranslator(t);
-  const menuLinks = getMenuLinks(translator);
+  const menuLinks = getMenuLinks();
   const localePathname = useLocalePathname();
 
   return (
@@ -178,9 +175,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
               const isActive = item.href
                 ? localePathname.startsWith(item.href)
                 : item.items?.some(
-                    (subItem) =>
-                      subItem.href && localePathname.startsWith(subItem.href)
-                  );
+                  (subItem) =>
+                    subItem.href && localePathname.startsWith(subItem.href)
+                );
 
               return (
                 <li key={item.title} className="py-1">
@@ -203,7 +200,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                             'bg-transparent text-muted-foreground',
                             'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
                             isActive &&
-                              'font-semibold bg-transparent text-primary'
+                            'font-semibold bg-transparent text-primary'
                           )}
                         >
                           <span className="text-base">{item.title}</span>
@@ -239,7 +236,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     'bg-transparent text-muted-foreground',
                                     'hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary',
                                     isSubItemActive &&
-                                      'font-semibold bg-transparent text-primary'
+                                    'font-semibold bg-transparent text-primary'
                                   )}
                                   onClick={onLinkClicked}
                                 >
@@ -249,7 +246,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                       'bg-transparent text-muted-foreground',
                                       'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                       isSubItemActive &&
-                                        'bg-transparent text-primary'
+                                      'bg-transparent text-primary'
                                     )}
                                   >
                                     {subItem.icon ? subItem.icon : null}
@@ -260,7 +257,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                         'text-sm text-muted-foreground',
                                         'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                         isSubItemActive &&
-                                          'font-semibold bg-transparent text-primary'
+                                        'font-semibold bg-transparent text-primary'
                                       )}
                                     >
                                       {subItem.title}
@@ -271,7 +268,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                           'text-xs text-muted-foreground',
                                           'group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80',
                                           isSubItemActive &&
-                                            'bg-transparent text-primary/80'
+                                          'bg-transparent text-primary/80'
                                         )}
                                       >
                                         {subItem.description}
@@ -284,7 +281,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                         'size-4 shrink-0 text-muted-foreground',
                                         'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                         isSubItemActive &&
-                                          'bg-transparent text-primary'
+                                        'bg-transparent text-primary'
                                       )}
                                     />
                                   )}

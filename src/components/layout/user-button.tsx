@@ -18,20 +18,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { getAvatarLinks } from '@/config';
-import { createTranslator } from '@/i18n/translator';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
-import { useTranslations } from 'next-intl';
 import { LogOutIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 export function UserButton() {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   const t = useTranslations();
-  const translator = createTranslator(t);
-  const avatarLinks = getAvatarLinks(translator);
+  const avatarLinks = getAvatarLinks();
 
   const handleSignOut = async () => {
     await authClient.signOut({

@@ -19,7 +19,6 @@ import {
 import { getMenuLinks } from '@/config';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
-import { createTranslator } from '@/i18n/translator';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
@@ -44,8 +43,7 @@ export function Navbar({ scroll }: NavBarProps) {
   const { data: session, error } = authClient.useSession();
   const user = session?.user;
   const t = useTranslations();
-  const translator = createTranslator(t);
-  const menuLinks = getMenuLinks(translator);
+  const menuLinks = getMenuLinks();
   const localePathname = useLocalePathname();
 
   // console.log(`Navbar, user:`, user);
@@ -129,7 +127,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                             'bg-transparent text-muted-foreground',
                                             'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                             isSubItemActive &&
-                                              'bg-transparent text-primary'
+                                            'bg-transparent text-primary'
                                           )}
                                         >
                                           {subItem.icon ? subItem.icon : null}
@@ -140,7 +138,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                               'text-sm font-medium text-muted-foreground',
                                               'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                               isSubItemActive &&
-                                                'bg-transparent text-primary'
+                                              'bg-transparent text-primary'
                                             )}
                                           >
                                             {subItem.title}
@@ -151,7 +149,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                                 'text-sm text-muted-foreground',
                                                 'group-hover:bg-transparent group-hover:text-primary/80 group-focus:bg-transparent group-focus:text-primary/80',
                                                 isSubItemActive &&
-                                                  'bg-transparent text-primary/80'
+                                                'bg-transparent text-primary/80'
                                               )}
                                             >
                                               {subItem.description}
@@ -164,7 +162,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                               'size-4 shrink-0 text-muted-foreground',
                                               'group-hover:bg-transparent group-hover:text-primary group-focus:bg-transparent group-focus:text-primary',
                                               isSubItemActive &&
-                                                'bg-transparent text-primary'
+                                              'bg-transparent text-primary'
                                             )}
                                           />
                                         )}

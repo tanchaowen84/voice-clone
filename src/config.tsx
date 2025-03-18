@@ -6,7 +6,6 @@ import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
-import { TranslationFunction } from '@/i18n/translator';
 import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import {
@@ -37,6 +36,7 @@ import {
   UserCircleIcon,
   WandSparklesIcon
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 /**
  * website config, without translations
@@ -63,11 +63,15 @@ export const websiteConfig: WebsiteConfig = {
 
 /**
  * Get menu links with translations
+ * 
+ * NOTICE: used in client components only
  *
  * @param t - The translation function
  * @returns The menu links with translated titles and descriptions
  */
-export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
+export function getMenuLinks(): NestedMenuItem[] {
+  const t = useTranslations();
+
   return [
     {
       title: t('Marketing.navbar.features.title'),
@@ -242,10 +246,15 @@ export function getMenuLinks(t: TranslationFunction): NestedMenuItem[] {
 
 /**
  * Get footer links with translations
+ * 
+ * NOTICE: used in client components only
+ *
  * @param t - The translation function
  * @returns The footer links with translated titles
  */
-export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
+export function getFooterLinks(): NestedMenuItem[] {
+  const t = useTranslations();
+
   return [
     {
       title: t('Marketing.footer.product.title'),
@@ -332,10 +341,15 @@ export function getFooterLinks(t: TranslationFunction): NestedMenuItem[] {
 
 /**
  * Get avatar links with translations
+ * 
+ * NOTICE: used in client components only
+ *
  * @param t - The translation function
  * @returns The avatar links with translated titles
  */
-export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
+export function getAvatarLinks(): MenuItem[] {
+  const t = useTranslations();
+
   return [
     {
       title: t('Marketing.avatar.dashboard'),
@@ -353,10 +367,14 @@ export function getAvatarLinks(t: TranslationFunction): MenuItem[] {
 /**
  * Get sidebar main menu links with translations
  *
+ * NOTICE: used in client components only
+ *
  * @param t - The translation function
  * @returns The menu links with translated titles and descriptions
  */
-export function getSidebarMainLinks(t: TranslationFunction): NestedMenuItem[] {
+export function getSidebarMainLinks(): NestedMenuItem[] {
+  const t = useTranslations();
+
   return [
     {
       title: t('Dashboard.sidebar.dashboard.title'),
