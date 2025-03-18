@@ -21,13 +21,16 @@ import { getAvatarLinks } from '@/config';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
+import { User } from 'better-auth';
 import { LogOutIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-export function UserButton() {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
+interface UserButtonProps {
+  user: User;
+}
+
+export function UserButton({ user }: UserButtonProps) {
   const t = useTranslations();
   const avatarLinks = getAvatarLinks();
   const localeRouter = useLocaleRouter();
@@ -35,8 +38,6 @@ export function UserButton() {
   const closeDrawer = () => {
     setOpen(false);
   };
-
-  const { isMobile } = useMediaQuery();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -53,9 +54,7 @@ export function UserButton() {
     });
   };
 
-  if (!user) {
-    return null;
-  }
+  const { isMobile } = useMediaQuery();
 
   // Mobile View, use Drawer
   if (isMobile) {

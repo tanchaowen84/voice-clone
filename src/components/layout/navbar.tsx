@@ -40,7 +40,7 @@ const customNavigationMenuTriggerStyle = cn(
 
 export function Navbar({ scroll }: NavBarProps) {
   const scrolled = useScroll(50);
-  const { data: session, error } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
   const t = useTranslations();
   const menuLinks = getMenuLinks();
@@ -205,9 +205,7 @@ export function Navbar({ scroll }: NavBarProps) {
           {/* navbar right show sign in or user */}
           <div className="flex items-center gap-x-4">
             {user ? (
-              <div className="flex items-center">
-                <UserButton />
-              </div>
+              <UserButton user={user} />
             ) : (
               <div className="flex items-center gap-x-4">
                 <LoginWrapper mode="modal" asChild>

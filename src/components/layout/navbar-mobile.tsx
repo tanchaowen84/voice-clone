@@ -26,6 +26,7 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { UserButton } from './user-button';
+import { useEffect } from 'react';
 
 export function NavbarMobile({
   className,
@@ -37,7 +38,7 @@ export function NavbarMobile({
   const user = session?.user;
   const t = useTranslations();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleRouteChangeStart = () => {
       if (document.activeElement instanceof HTMLInputElement) {
         document.activeElement.blur();
@@ -54,7 +55,7 @@ export function NavbarMobile({
     setOpen((open) => (open ? !mediaQueryList.matches : false));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleChange();
     const mediaQueryList = window.matchMedia('(min-width: 1024px)');
     mediaQueryList.addEventListener('change', handleChange);
@@ -82,7 +83,7 @@ export function NavbarMobile({
         {/* navbar right shows menu icon */}
         <div className="flex items-center justify-end gap-4">
           {/* show user button if user is logged in */}
-          {user ? <UserButton /> : null}
+          {user ? <UserButton user={user} /> : null}
 
           <Button
             variant="ghost"
