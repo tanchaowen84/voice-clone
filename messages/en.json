@@ -378,8 +378,7 @@
             "newsletter": {
               "title": "Newsletter Subscription",
               "description": "Manage your newsletter subscription preferences",
-              "checkboxLabel": "Subscribe to newsletter",
-              "checkboxDescription": "Receive updates, news, and special offers via email",
+              "label": "Subscribe to newsletter",
               "hint": "You can change your subscription preferences at any time",
               "emailRequired": "Email is required to subscribe to the newsletter",
               "subscribeSuccess": "Successfully subscribed to the newsletter",
@@ -395,7 +394,7 @@
   },
   "Mail": {
     "common": {
-      "team": "MkSaaS Team",
+      "team": "{name} Team",
       "copyright": "©️ {year} All Rights Reserved."
     },
     "verifyEmail": {

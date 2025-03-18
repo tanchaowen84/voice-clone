@@ -12,16 +12,21 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { uploadFileFromBrowser } from '@/storage';
 import { User2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+interface UpdateAvatarCardProps {
+  className?: string;
+}
+
 /**
  * Update the user's avatar
  */
-export function UpdateAvatarCard() {
+export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
@@ -123,7 +128,7 @@ export function UpdateAvatarCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('avatar.title')}
@@ -133,7 +138,7 @@ export function UpdateAvatarCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex flex-col items-center sm:flex-row gap-4">
+        <div className="flex flex-col items-center sm:flex-row gap-4 sm:gap-8">
           {/* avatar */}
           <Avatar className="h-16 w-16 border">
             <AvatarImage src={avatarUrl ?? ''} alt={user.name} />
@@ -144,7 +149,7 @@ export function UpdateAvatarCard() {
 
           {/* upload button */}
           <Button
-            variant="default"
+            variant="outline"
             size="sm"
             onClick={handleUploadClick}
             disabled={isUploading}

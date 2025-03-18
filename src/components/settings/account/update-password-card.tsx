@@ -28,6 +28,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { cn } from '@/lib/utils';
+
+interface UpdatePasswordCardProps {
+  className?: string;
+}
 
 /**
  * Update user password
@@ -39,7 +44,7 @@ import { z } from 'zod';
  * @see ConditionalUpdatePasswordCard
  * @see https://www.better-auth.com/docs/authentication/email-password#update-password
  */
-export function UpdatePasswordCard() {
+export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   const router = useLocaleRouter();
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
@@ -109,7 +114,7 @@ export function UpdatePasswordCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('password.title')}

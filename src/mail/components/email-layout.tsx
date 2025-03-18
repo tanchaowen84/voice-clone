@@ -1,3 +1,4 @@
+import { BaseEmailProps } from '@/mail/types';
 import {
   Container,
   Font,
@@ -8,7 +9,6 @@ import {
   Tailwind,
   Text
 } from '@react-email/components';
-import { BaseEmailProps } from '@/mail/types';
 import { createTranslator } from 'use-intl/core';
 
 interface EmailLayoutProps extends BaseEmailProps {
@@ -42,7 +42,9 @@ export default function EmailLayout({ locale, messages, children }: EmailLayoutP
             {children}
 
             <Hr className="my-8" />
-            <Text className="mt-4">{t('Mail.common.team')}</Text>
+            <Text className="mt-4">
+              {t('Mail.common.team', { name: t('Site.name') })}
+            </Text>
             <Text>
               {t('Mail.common.copyright', { year: new Date().getFullYear() })}
             </Text>

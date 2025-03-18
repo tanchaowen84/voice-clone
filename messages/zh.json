@@ -373,8 +373,7 @@
             "newsletter": {
               "title": "订阅",
               "description": "管理您的邮件列表订阅偏好",
-              "checkboxLabel": "订阅邮件列表",
-              "checkboxDescription": "通过邮件接收更新、新闻和特别优惠",
+              "label": "订阅邮件列表",
               "hint": "您可以随时更改订阅偏好",
               "emailRequired": "订阅邮件列表需要邮箱",
               "subscribeSuccess": "成功订阅邮件列表",
@@ -390,7 +389,7 @@
   },
   "Mail": {
     "common": {
-      "team": "MkSaaS 团队",
+      "team": "{name} 团队",
       "copyright": "©️ {year} 版权所有。"
     },
     "verifyEmail": {

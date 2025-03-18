@@ -4,6 +4,11 @@ import { UpdatePasswordCard } from '@/components/settings/account/update-passwor
 import { ResetPasswordCard } from '@/components/settings/account/reset-password-card';
 import { authClient } from '@/lib/auth-client';
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+
+interface ConditionalUpdatePasswordCardProps {
+  className?: string;
+}
 
 /**
  * Conditionally renders either:
@@ -11,7 +16,7 @@ import { useEffect, useState } from 'react';
  * - ResetPasswordCard: if the user only has social login providers and has an email
  * - Nothing: if the user has no credential provider and no email
  */
-export function ConditionalUpdatePasswordCard() {
+export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePasswordCardProps) {
   const { data: session } = authClient.useSession();
   const [hasCredentialProvider, setHasCredentialProvider] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,13 +58,13 @@ export function ConditionalUpdatePasswordCard() {
 
   // If user has credential provider, show UpdatePasswordCard
   if (hasCredentialProvider) {
-    return <UpdatePasswordCard />;
+    return <UpdatePasswordCard className={className} />;
   }
 
   // If user doesn't have credential provider but has an email, show ResetPasswordCard
   // The forgot password flow requires an email address
   if (session?.user?.email) {
-    return <ResetPasswordCard />;
+    return <ResetPasswordCard className={className} />;
   }
 
   // If user has no credential provider and no email, don't show anything

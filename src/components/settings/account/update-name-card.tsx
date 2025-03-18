@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -26,10 +27,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+interface UpdateNameCardProps {
+  className?: string;
+}
+
 /**
  * update user name
  */
-export function UpdateNameCard() {
+export function UpdateNameCard({ className }: UpdateNameCardProps) {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -102,7 +107,7 @@ export function UpdateNameCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('name.title')}

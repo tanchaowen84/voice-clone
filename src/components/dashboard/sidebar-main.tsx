@@ -49,7 +49,9 @@ export function SidebarMain() {
             {item.items?.length ? (
               <Collapsible
                 asChild
-                defaultOpen={hasActiveChild(item.items)}
+                // NOTICE: show all collapsible items by default
+                defaultOpen={true}
+                // defaultOpen={hasActiveChild(item.items)}
                 className="group/collapsible"
               >
                 <SidebarMenuItem>

@@ -11,7 +11,12 @@ import {
 } from '@/components/ui/card';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
+
+interface ResetPasswordCardProps {
+  className?: string;
+}
 
 /**
  * Reset Password Card
@@ -31,7 +36,7 @@ import { useTranslations } from 'next-intl';
  * 
  * This effectively adds a credential provider to their account, enabling email/password login.
  */
-export function ResetPasswordCard() {
+export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
   const router = useLocaleRouter();
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const { data: session } = authClient.useSession();
@@ -46,7 +51,7 @@ export function ResetPasswordCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('setupPassword.title')}

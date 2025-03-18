@@ -20,11 +20,9 @@ export default function SettingsNotificationPage() {
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />
 
-      <div className="p-8">
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-6 max-w-6xl">
-          <div className="space-y-6">
-            <NewsletterFormCard />
-          </div>
+      <div className="px-4 py-8">
+        <div className="flex flex-col items-center space-y-6 w-full">
+          <NewsletterFormCard />
         </div>
       </div>
     </>

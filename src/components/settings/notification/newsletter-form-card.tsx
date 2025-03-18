@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import { authClient } from '@/lib/auth-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
@@ -29,13 +29,18 @@ import {
   unsubscribeAction, 
   isSubscribedAction 
 } from '@/actions/newsletter';
+import { cn } from '@/lib/utils';
+
+interface NewsletterFormCardProps {
+  className?: string;
+}
 
 /**
  * Newsletter subscription form card
  * 
  * Allows users to toggle their newsletter subscription status
  */
-export function NewsletterFormCard() {
+export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   const t = useTranslations('Dashboard.sidebar.settings.items.notification');
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -153,7 +158,7 @@ export function NewsletterFormCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('newsletter.title')}
@@ -169,25 +174,23 @@ export function NewsletterFormCard() {
               control={form.control}
               name="subscribed"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md p-4">
+                <FormItem className="flex flex-row items-center justify-between">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      {t('newsletter.label')}
+                    </FormLabel>
+                  </div>
                   <FormControl>
-                    <Checkbox
+                    <Switch
                       checked={field.value}
                       onCheckedChange={(checked) => {
                         field.onChange(checked);
-                        handleSubscriptionChange(checked === true);
+                        handleSubscriptionChange(checked);
                       }}
                       disabled={isUpdating}
+                      aria-readonly={isUpdating}
                     />
                   </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      {t('newsletter.checkboxLabel')}
-                    </FormLabel>
-                    <p className="text-sm text-muted-foreground">
-                      {t('newsletter.checkboxDescription')}
-                    </p>
-                  </div>
                 </FormItem>
               )}
             />

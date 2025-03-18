@@ -20,9 +20,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
+
+interface DeleteAccountCardProps {
+  className?: string;
+}
 
 /**
  * Delete user account
@@ -30,7 +35,7 @@ import { toast } from 'sonner';
  * This component allows users to permanently delete their account.
  * It includes a confirmation dialog to prevent accidental deletions.
  */
-export function DeleteAccountCard() {
+export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -76,7 +81,7 @@ export function DeleteAccountCard() {
   };
 
   return (
-    <Card className="max-w-md md:max-w-lg border-destructive/50 overflow-hidden">
+    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold text-destructive">
           {t('deleteAccount.title')}
