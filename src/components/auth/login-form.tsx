@@ -74,7 +74,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
         },
         onError: (ctx) => {
           console.error('login, error:', ctx.error);
-          setError(`${ctx.error.status}:${ctx.error.statusText}`);
+          setError(`${ctx.error.status}: ${ctx.error.message}`);
         },
       }
     );
