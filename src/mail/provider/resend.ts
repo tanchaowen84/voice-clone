@@ -1,36 +1,115 @@
 import { websiteConfig } from '@/config';
-import { SendEmailHandler } from '@/mail/types';
+import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams } from '@/mail/types';
+import { getTemplate } from '@/mail/mail';
 import { Resend } from 'resend';
 
-const apiKey = process.env.RESEND_API_KEY || 'test_api_key';
-
-const resend = new Resend(apiKey);
-
 /**
- * https://resend.com/docs/send-with-nextjs
+ * Resend mail provider implementation
  */
-export const sendEmail: SendEmailHandler = async ({ to, subject, html }) => {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY not set, skipping email send');
-    return false;
+export class ResendProvider implements MailProvider {
+  private resend: Resend;
+  private from: string;
+
+  /**
+   * Initialize Resend provider with API key
+   */
+  constructor() {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY environment variable is not set.');
+    }
+    
+    if (!websiteConfig.mail.from) {
+      throw new Error('Default from email address is not set in websiteConfig.');
+    }
+
+    const apiKey = process.env.RESEND_API_KEY;
+    this.resend = new Resend(apiKey);
+    this.from = websiteConfig.mail.from;
   }
 
-  if (!websiteConfig.mail.from || !to || !subject || !html) {
-    console.warn('Missing required fields for email send', { from: websiteConfig.mail.from, to, subject, html });
-    return false;
+  /**
+   * Send an email using a template
+   * @param params Parameters for sending a templated email
+   * @returns Send result
+   */
+  public async sendTemplate(params: SendTemplateParams): Promise<SendEmailResult> {
+    const { to, template, context, locale } = params;
+
+    try {
+      // Get rendered template
+      const mailTemplate = await getTemplate({
+        template,
+        context,
+        locale,
+      });
+
+      // Send using raw email
+      return this.sendRawEmail({
+        to,
+        subject: mailTemplate.subject,
+        html: mailTemplate.html,
+        text: mailTemplate.text,
+      });
+    } catch (error) {
+      console.error('Error sending template email:', error);
+      return {
+        success: false,
+        error,
+      };
+    }
   }
 
-  const { data, error } = await resend.emails.send({
-    from: websiteConfig.mail.from,
-    to,
-    subject,
-    html,
-  });
+  /**
+   * Send a raw email
+   * @param params Parameters for sending a raw email
+   * @returns Send result
+   */
+  public async sendRawEmail(params: SendRawEmailParams): Promise<SendEmailResult> {
+    const { to, subject, html, text } = params;
 
-  if (error) {
-    console.error('Error sending email', error);
-    return false;
+    if (!this.from || !to || !subject || !html) {
+      console.warn('Missing required fields for email send', { from: this.from, to, subject, html });
+      return {
+        success: false,
+        error: 'Missing required fields',
+      };
+    }
+
+    try {
+      const { data, error } = await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject,
+        html,
+        text,
+      });
+
+      if (error) {
+        console.error('Error sending email', error);
+        return {
+          success: false,
+          error,
+        };
+      }
+
+      return {
+        success: true,
+        messageId: data?.id,
+      };
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return {
+        success: false,
+        error,
+      };
+    }
   }
 
-  return true;
-};
+  /**
+   * Get the provider name
+   * @returns Provider name
+   */
+  public getProviderName(): string {
+    return 'resend';
+  }
+}

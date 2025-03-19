@@ -8,6 +8,10 @@ import { z } from 'zod';
 // Create a safe action client
 const actionClient = createSafeActionClient();
 
+/**
+ * TODO: When using Zod for validation, how can I localize error messages?
+ * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#server-actions
+ */
 // Contact form schema for validation
 const contactFormSchema = z.object({
   name: z
@@ -37,6 +41,7 @@ export const contactAction = actionClient
 
       // Send email using the mail service
       // Customize the email template for your needs
+      // TODO: add locale to the email or customize it by yourself?
       const result = await send({
         to: websiteConfig.mail.to,
         subject: `Contact Form: Message from ${name}`,
