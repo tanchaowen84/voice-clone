@@ -4,7 +4,7 @@ import { User2Icon } from 'lucide-react';
 
 interface UserAvatarProps extends AvatarProps {
   name: string;
-  image?: string;
+  image: string | null | undefined;
 }
 
 /**
@@ -21,7 +21,7 @@ export function UserAvatar({ name, image, ...props }: UserAvatarProps) {
       <AvatarImage
         alt={name}
         title={name}
-        src={image}
+        src={image ?? undefined}
       />
       <AvatarFallback>
         <span className="sr-only">{name}</span>

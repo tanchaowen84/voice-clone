@@ -1,19 +1,19 @@
 import { ResendNewsletterProvider } from './provider/resend';
 import {
-  CheckSubscribeStatusProps,
   NewsletterConfig,
   NewsletterProvider,
-  SubscribeNewsletterP,
-  UnsubscribeNewsletterProps
+  SubscribeNewsletterParams,
+  UnsubscribeNewsletterParams,
+  CheckSubscribeStatusParams
 } from './types';
 
 // Re-export types for convenience
 export type {
   NewsletterProvider,
   NewsletterConfig,
-  SubscribeNewsletterP as SubscribeNewsletterProps,
-  UnsubscribeNewsletterProps,
-  CheckSubscribeStatusProps
+  SubscribeNewsletterParams,
+  UnsubscribeNewsletterParams,
+  CheckSubscribeStatusParams
 };
 
 // Export provider implementation

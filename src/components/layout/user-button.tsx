@@ -62,8 +62,8 @@ export function UserButton({ user }: UserButtonProps) {
       <Drawer open={open} onClose={closeDrawer}>
         <DrawerTrigger onClick={() => setOpen(true)}>
           <UserAvatar
-            name={user?.name || undefined}
-            image={user?.image || undefined}
+            name={user.name}
+            image={user.image}
             className="size-8 border"
           />
         </DrawerTrigger>
@@ -78,19 +78,17 @@ export function UserButton({ user }: UserButtonProps) {
             </DrawerHeader>
             <div className="flex items-center justify-start gap-4 p-2">
               <UserAvatar
-                name={user?.name || undefined}
-                image={user?.image || undefined}
+                name={user.name}
+                image={user.image}
                 className="size-8 border"
               />
               <div className="flex flex-col">
-                {user?.name && <p className="font-medium">
+                <p className="font-medium">
                   {user.name}
-                </p>}
-                {user?.email && (
-                  <p className="w-[200px] truncate text-muted-foreground">
-                    {user?.email}
-                  </p>
-                )}
+                </p>
+                <p className="w-[200px] truncate text-muted-foreground">
+                  {user.email}
+                </p>
               </div>
             </div>
 
@@ -142,7 +140,7 @@ export function UserButton({ user }: UserButtonProps) {
       <DropdownMenuTrigger>
         <UserAvatar
           name={user.name}
-          image={user.image || undefined}
+          image={user.image}
           className="size-8 border"
         />
       </DropdownMenuTrigger>
