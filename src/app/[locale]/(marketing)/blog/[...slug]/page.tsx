@@ -15,8 +15,6 @@ import { notFound } from 'next/navigation';
 import { constructMetadata } from '@/lib/metadata';
 import { Locale } from 'next-intl';
 
-import '@/styles/mdx.css';
-
 /**
  * Gets the blog post from the params
  * @param props - The props of the page

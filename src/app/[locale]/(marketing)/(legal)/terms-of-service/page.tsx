@@ -8,8 +8,6 @@ import { constructMetadata } from '@/lib/metadata';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import '@/styles/mdx.css';
-
 export async function generateMetadata({
   params,
 }: {

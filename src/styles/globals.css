@@ -49,3 +49,35 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* MDX styles for code highlighting */
+@layer components {
+  /**
+   * Styles for rehype-pretty-code syntax highlighting
+   */
+  [data-rehype-pretty-code-figure] code {
+    @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
+    counter-reset: line;
+    box-decoration-break: clone;
+  }
+
+  [data-rehype-pretty-code-figure] [data-line] {
+    @apply inline-block min-h-[1rem] w-full px-4 py-0.5;
+  }
+
+  [data-rehype-pretty-code-figure] [data-line-numbers] [data-line] {
+    @apply px-2;
+  }
+
+  [data-rehype-pretty-code-figure] .line-highlighted span {
+    @apply relative;
+  }
+
+  [data-rehype-pretty-code-title] {
+    @apply mt-2 px-4 pt-6 text-sm font-medium text-foreground;
+  }
+
+  [data-rehype-pretty-code-title] + pre {
+    @apply mt-2;
+  }
+}

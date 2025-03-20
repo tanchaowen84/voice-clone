@@ -8,8 +8,6 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import '@/styles/mdx.css';
-
 export async function generateMetadata({
   params,
 }: {
