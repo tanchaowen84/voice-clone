@@ -124,12 +124,6 @@
   }
 }
 
-@utility line-highlighted {
-  [data-rehype-pretty-code-figure] & span {
-    @apply relative;
-  }
-}
-
 @layer base {
   /* Import theme variables from theme-xxx.css as you need */
   /* all the themes are from https://ui.shadcn.com/themes */
@@ -158,15 +152,6 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%}
-
-  html {
-    /* prevent the layout from shifting when the scrollbar appears or disappears. */
-    scrollbar-gutter: stable;
-    
-    /* Force the scrollbar to always be visible to prevent layout shifts */
-    /* can not set this, otherwise the theme switcher will disappear when click it after page scrolled */
-    /* overflow-y: scroll; */
-  }
 }
 
 @layer base {
@@ -175,6 +160,15 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    /* prevent the layout from shifting when the scrollbar appears or disappears. */
+    /* after upgrading to tailwindcss@4, no need to set this anymore, :-) */
+    /* scrollbar-gutter: stable; */
+    
+    /* Force the scrollbar to always be visible to prevent layout shifts */
+    /* can not set this, otherwise the theme switcher will disappear when click it after page scrolled */
+    /* overflow-y: scroll; */
   }
 }
 
@@ -203,5 +197,11 @@
 
   [data-rehype-pretty-code-title] + pre {
     @apply mt-2;
+  }
+}
+
+@utility line-highlighted {
+  [data-rehype-pretty-code-figure] & span {
+    @apply relative;
   }
 }
