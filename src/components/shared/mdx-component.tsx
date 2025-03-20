@@ -80,22 +80,25 @@ const components = {
     />
   ),
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className={cn('mt-6 leading-7', className)} {...props} />
+    <p className={cn('text-muted-foreground mt-6 leading-7', className)} {...props} />
   ),
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className={cn('my-6 ml-6 list-disc', className)} {...props} />
+    <ul className={cn('text-muted-foreground my-6 ml-6 list-disc', className)} {...props} />
   ),
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className={cn('my-6 ml-6 list-decimal', className)} {...props} />
+    <ol className={cn('text-muted-foreground my-6 ml-6 list-decimal', className)} {...props} />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li className={cn('mt-2', className)} {...props} />
+    <li className={cn('text-muted-foreground mt-2', className)} {...props} />
   ),
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote
       className={cn('mt-6 border-l-2 pl-6 italic', className)}
       {...props}
     />
+  ),
+  strong: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <strong className={cn('text-foreground', className)} {...props} />
   ),
   img: ({
     className,
@@ -130,7 +133,7 @@ const components = {
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       className={cn(
-        'border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right',
+        'text-muted-foreground border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right',
         className
       )}
       {...props}

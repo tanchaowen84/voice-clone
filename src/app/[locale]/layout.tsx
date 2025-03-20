@@ -38,7 +38,7 @@ export default async function LocaleLayout({
         suppressHydrationWarning
         className={cn(
           'size-full antialiased',
-          fontBricolageGrotesque.className,
+          fontDMSans.className,
           fontDMSans.variable,
           fontDMMono.variable,
           fontDMSerifText.variable,
