@@ -31,7 +31,7 @@ export const AuthCard = ({
   className,
 }: AuthCardProps) => {
   return (
-    <Card className={cn('shadow-sm border border-border', className)}>
+    <Card className={cn('shadow-xs border border-border', className)}>
       <CardHeader className="items-center">
         <LocaleLink href="/" prefetch={false}>
           <Logo className="mb-2" />

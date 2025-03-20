@@ -276,7 +276,7 @@ export default function BillingCard() {
                         <CardTitle>{plan.name}</CardTitle>
                         <CardDescription>{plan.description}</CardDescription>
                       </CardHeader>
-                      <CardContent className="flex-grow">
+                      <CardContent className="grow">
                         <div className="mb-4">
                           <span className="text-3xl font-bold">
                             {formatPrice(price.amount, price.currency)}
@@ -303,7 +303,7 @@ export default function BillingCard() {
                           {plan.features.map((feature, index) => (
                             <li key={index} className="flex items-start">
                               <svg
-                                className="h-5 w-5 text-primary flex-shrink-0 mr-2"
+                                className="h-5 w-5 text-primary shrink-0 mr-2"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -354,7 +354,7 @@ export default function BillingCard() {
                         {plan.features.map((feature, index) => (
                           <li key={index} className="flex items-start">
                             <svg
-                              className="h-5 w-5 text-primary flex-shrink-0 mr-2"
+                              className="h-5 w-5 text-primary shrink-0 mr-2"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"

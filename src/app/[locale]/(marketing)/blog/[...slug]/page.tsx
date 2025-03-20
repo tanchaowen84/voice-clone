@@ -109,7 +109,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           {/* Basic information */}
           <div className="space-y-8">
             {/* blog post image */}
-            <div className="group overflow-hidden relative aspect-[16/9] rounded-lg transition-all border">
+            <div className="group overflow-hidden relative aspect-16/9 rounded-lg transition-all border">
               {post.image && (
                 <Image
                   src={post.image}
@@ -158,7 +158,7 @@ export default async function BlogPostPage(props: NextPageProps) {
             <div className="bg-muted/50 rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">{t('author')}</h2>
               <div className="flex items-center gap-4">
-                <div className="relative h-8 w-8 flex-shrink-0">
+                <div className="relative h-8 w-8 shrink-0">
                   {post.author?.avatar && (
                     <Image
                       src={post.author.avatar}

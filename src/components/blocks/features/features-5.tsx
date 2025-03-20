@@ -51,7 +51,7 @@ export default function Features5() {
               />
               <Image
                 src="/images/blocks/payments-light.png"
-                className="rounded-[15px] shadow dark:hidden"
+                className="rounded-[15px] shadow-sm dark:hidden"
                 alt="payments illustration light"
                 width={1207}
                 height={929}

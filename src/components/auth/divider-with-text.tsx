@@ -14,11 +14,11 @@ export const DividerWithText = ({
 }: DividerWithTextProps) => {
   return (
     <div className={cn('relative flex items-center', className)}>
-      <div className="flex-grow border-t border-border"></div>
-      <span className="flex-shrink mx-4 text-sm text-muted-foreground">
+      <div className="grow border-t border-border"></div>
+      <span className="shrink mx-4 text-sm text-muted-foreground">
         {text}
       </span>
-      <div className="flex-grow border-t border-border"></div>
+      <div className="grow border-t border-border"></div>
     </div>
   );
 }; 

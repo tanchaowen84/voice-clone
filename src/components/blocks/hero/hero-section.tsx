@@ -65,7 +65,7 @@ export default function HeroSection() {
                   />
                   <div
                     aria-hidden
-                    className="from-background z-11 absolute inset-0 bg-gradient-to-l"
+                    className="from-background z-11 absolute inset-0 bg-linear-to-l"
                   />
                   <div
                     aria-hidden

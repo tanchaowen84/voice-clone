@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ThemeProvider } from 'next-themes';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { PropsWithChildren } from 'react';
-
+import { ActiveThemeProvider } from '@/components/layout/active-theme';
 export function Providers({ children }: PropsWithChildren) {
   return (
     <ThemeProvider
@@ -13,7 +13,9 @@ export function Providers({ children }: PropsWithChildren) {
       enableSystem
       disableTransitionOnChange
     >
-      <TooltipProvider>{children}</TooltipProvider>
+      <ActiveThemeProvider>
+        <TooltipProvider>{children}</TooltipProvider>
+      </ActiveThemeProvider>
     </ThemeProvider>
   );
 }
