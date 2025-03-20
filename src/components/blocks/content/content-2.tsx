@@ -63,7 +63,7 @@ export default function Content2() {
               />
               <Image
                 src="/images/blocks/charts-light.png"
-                className="rounded-[12px] shadow dark:hidden"
+                className="rounded-[12px] shadow-sm dark:hidden"
                 alt="payments illustration light"
                 width={1207}
                 height={929}
