@@ -1,4 +1,4 @@
-import { fontBricolageGrotesque, fontDMMono, fontDMSans, fontDMSerifDisplay, fontDMSerifText } from '@/assets/fonts';
+import { fontBricolageGrotesque, fontDMMono, fontDMSans, fontDMSerifText } from '@/assets/fonts';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
