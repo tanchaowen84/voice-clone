@@ -33,7 +33,7 @@ export default async function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* about section */}
-      <div className="relative max-w-screen-md mx-auto mb-24 mt-8 md:mt-16">
+      <div className="relative max-w-(--breakpoint-md) mx-auto mb-24 mt-8 md:mt-16">
         <div className="mx-auto flex flex-col justify-between">
           <div className="grid gap-8 sm:grid-cols-2">
             {/* avatar and name */}

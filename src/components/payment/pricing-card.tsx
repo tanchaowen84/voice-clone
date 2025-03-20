@@ -115,7 +115,7 @@ export function PricingCard({
         <CardTitle className="text-xl">{plan.name}</CardTitle>
         <CardDescription className="min-h-12">{plan.description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="grow">
         <div className="mb-3">
           <span className="text-3xl font-bold">{formattedPrice}</span>
           {priceLabel && (
@@ -136,7 +136,7 @@ export function PricingCard({
         <ul className="space-y-3 mb-6">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-start">
-              <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+              <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
               <span className="text-sm">{feature}</span>
             </li>
           ))}

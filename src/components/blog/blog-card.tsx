@@ -19,7 +19,7 @@ export default function BlogCard({ post }: BlogCardProps) {
     <LocaleLink href={`/blog/${slugParts.join('/')}`} className="block h-full">
       <div className="group flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
         {/* Image container - fixed aspect ratio */}
-        <div className="group overflow-hidden relative aspect-[16/9] w-full">
+        <div className="group overflow-hidden relative aspect-16/9 w-full">
           {post.image && (
             <div className="relative w-full h-full">
               <Image
@@ -54,7 +54,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             {/* Post title */}
             <h3 className="text-lg line-clamp-2 font-medium">
               <span
-                className="bg-gradient-to-r from-green-200 to-green-100 
+                className="bg-linear-to-r from-green-200 to-green-100 
                   bg-[length:0px_10px] bg-left-bottom bg-no-repeat
                   transition-[background-size]
                   duration-500
@@ -79,7 +79,7 @@ export default function BlogCard({ post }: BlogCardProps) {
           {/* Author and date */}
           <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between space-x-4 text-muted-foreground">
             <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8 flex-shrink-0">
+              <div className="relative h-8 w-8 shrink-0">
                 {post?.author?.avatar && (
                   <Image
                     src={post?.author?.avatar}
@@ -105,7 +105,7 @@ export default function BlogCard({ post }: BlogCardProps) {
 export function BlogCardSkeleton() {
   return (
     <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
-      <div className="overflow-hidden relative aspect-[16/9] w-full">
+      <div className="overflow-hidden relative aspect-16/9 w-full">
         <Skeleton className="w-full h-full" />
       </div>
       <div className="p-4 flex flex-col justify-between flex-1">

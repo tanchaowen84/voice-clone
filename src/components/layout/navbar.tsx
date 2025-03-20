@@ -34,7 +34,7 @@ const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
   'relative bg-transparent text-muted-foreground',
   'hover:bg-transparent hover:text-foreground focus:bg-transparent focus:text-foreground',
-  'data-[active]:font-semibold data-[active]:bg-transparent data-[active]:text-foreground',
+  'data-active:font-semibold data-active:bg-transparent data-active:text-foreground',
   'data-[state=open]:bg-transparent data-[state=open]:text-foreground'
 );
 
@@ -54,7 +54,7 @@ export function Navbar({ scroll }: NavBarProps) {
         'sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300',
         scroll
           ? scrolled
-            ? 'bg-background/80 backdrop-blur-md border-b supports-[backdrop-filter]:bg-background/60'
+            ? 'bg-background/80 backdrop-blur-md border-b supports-backdrop-filter:bg-background/60'
             : 'bg-background'
           : 'border-b bg-background'
       )}
@@ -117,7 +117,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                             : undefined
                                         }
                                         className="group flex select-none flex-row items-center gap-4 rounded-md 
-                                      p-2 leading-none no-underline outline-none transition-colors 
+                                      p-2 leading-none no-underline outline-hidden transition-colors 
                                       hover:bg-accent hover:text-accent-foreground 
                                       focus:bg-accent focus:text-accent-foreground"
                                       >
