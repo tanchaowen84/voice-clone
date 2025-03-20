@@ -45,7 +45,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
+
   /* animate-css for magic ui components */
   --animate-shiny-text: shiny-text 8s infinite;
   --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
@@ -89,6 +89,8 @@
   }
 }
 
+/* shadcn ui base colors for different themes */
+/* https://ui.shadcn.com/docs/theming#base-colors */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
