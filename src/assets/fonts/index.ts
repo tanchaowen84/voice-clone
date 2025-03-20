@@ -1,5 +1,5 @@
+import { DM_Mono, DM_Sans, DM_Serif_Text } from 'next/font/google';
 import localFont from 'next/font/local';
-import { Source_Serif_4 } from 'next/font/google';
 
 /**
  * This file shows how to customize the font by using local font or google font
@@ -16,13 +16,6 @@ export const fontBricolageGrotesque = localFont({
   variable: '--font-bricolage-grotesque',
 });
 
-// https://gwfh.mranftl.com/fonts/dm-sans?subsets=latin
-// download this font with weight 500
-export const fontDMSans = localFont({
-  src: './dm-sans-v15-latin-500.woff2',
-  variable: '--font-dm-sans',
-});
-
 /**
  * [2] use google font
  *
@@ -32,8 +25,23 @@ export const fontDMSans = localFont({
  * 2. CSS and font files are downloaded at build time and self-hosted with the rest of your static assets.
  * https://nextjs.org/docs/app/building-your-application/optimizing/fonts#google-fonts
  */
-export const fontSourceSerif4 = Source_Serif_4({
+export const fontDMSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-source-serif',
+  variable: '--font-dm-sans',
+  weight: ['500', '600', '700'],
+});
+
+export const fontDMMono = DM_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-mono',
+  weight: ['300', '400', '500'],
+});
+
+export const fontDMSerifText = DM_Serif_Text({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-serif-text',
+  weight: ['400'],
 });

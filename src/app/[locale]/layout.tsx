@@ -1,8 +1,6 @@
-import { fontBricolageGrotesque, fontSourceSerif4 } from '@/assets/fonts';
+import { fontBricolageGrotesque, fontDMMono, fontDMSans, fontDMSerifDisplay, fontDMSerifText } from '@/assets/fonts';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
 import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -41,9 +39,10 @@ export default async function LocaleLayout({
         className={cn(
           'size-full antialiased',
           fontBricolageGrotesque.className,
-          fontSourceSerif4.variable,
-          GeistSans.variable,
-          GeistMono.variable
+          fontDMSans.variable,
+          fontDMMono.variable,
+          fontDMSerifText.variable,
+          fontBricolageGrotesque.variable
         )}
       >
         <NextIntlClientProvider>

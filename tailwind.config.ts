@@ -11,17 +11,20 @@ export default {
     	extend: {
     		fontFamily: {
     			sans: [
-    				'var(--font-geist-sans)'
+    				'var(--font-dm-sans)'
     			],
     			mono: [
-    				'var(--font-geist-mono)'
+    				'var(--font-dm-mono)'
     			],
     			serif: [
-    				'var(--font-source-serif)'
+    				'var(--font-dm-serif-text)'
     			],
     			bricolage: [
     				'var(--font-bricolage-grotesque)'
-    			]
+    			],
+				heading: [
+					'var(--font-dm-sans)'
+				]
     		},
     		colors: {
     			background: 'hsl(var(--background))',
