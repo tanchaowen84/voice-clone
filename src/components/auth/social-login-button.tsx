@@ -73,7 +73,7 @@ export const SocialLoginButton = () => {
       <DividerWithText text={t('or')} />
       <Button
         size="lg"
-        className="w-full"
+        className="w-full cursor-pointer"
         variant="outline"
         onClick={() => onClick('google')}
         disabled={isLoading === 'google'}
@@ -81,13 +81,13 @@ export const SocialLoginButton = () => {
         {isLoading === 'google' ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />
         ) : (
-          <GoogleIcon className="size-5 mr-2" />
+          <GoogleIcon className="size-4 mr-2" />
         )}
         <span>{t('signInWithGoogle')}</span>
       </Button>
       <Button
         size="lg"
-        className="w-full"
+        className="w-full cursor-pointer"
         variant="outline"
         onClick={() => onClick('github')}
         disabled={isLoading === 'github'}
@@ -95,7 +95,7 @@ export const SocialLoginButton = () => {
         {isLoading === 'github' ? (
           <Icons.spinner className="mr-2 size-4 animate-spin" />
         ) : (
-          <GitHubIcon className="size-5 mr-2" />
+          <GitHubIcon className="size-4 mr-2" />
         )}
         <span>{t('signInWithGitHub')}</span>
       </Button>

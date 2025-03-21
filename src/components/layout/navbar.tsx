@@ -32,7 +32,7 @@ interface NavBarProps {
 
 const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
-  'relative bg-transparent text-muted-foreground',
+  'relative bg-transparent text-muted-foreground cursor-pointer',
   'hover:bg-transparent hover:text-foreground focus:bg-transparent focus:text-foreground',
   'data-active:font-semibold data-active:bg-transparent data-active:text-foreground',
   'data-[state=open]:bg-transparent data-[state=open]:text-foreground'
@@ -213,7 +213,7 @@ export function Navbar({ scroll }: NavBarProps) {
             ) : (
               <div className="flex items-center gap-x-4">
                 <LoginWrapper mode="modal" asChild>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="cursor-pointer">
                     {t('Common.login')}
                   </Button>
                 </LoginWrapper>

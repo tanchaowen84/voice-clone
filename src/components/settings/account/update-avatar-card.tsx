@@ -128,7 +128,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('avatar.title')}
@@ -153,6 +153,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
             size="sm"
             onClick={handleUploadClick}
             disabled={isUploading}
+            className="cursor-pointer"
           >
             {isUploading ? t('avatar.uploading') : t('avatar.uploadAvatar')}
           </Button>
@@ -160,7 +161,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
 
         <FormError message={error} />
       </CardContent>
-      <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
+      <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
         <p className="text-sm text-muted-foreground">
           {t('avatar.recommendation')}
         </p>

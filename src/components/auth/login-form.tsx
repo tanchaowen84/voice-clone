@@ -152,9 +152,9 @@ export const LoginForm = ({ className }: { className?: string }) => {
                         disabled={isPending}
                       >
                         {showPassword ? (
-                          <EyeOffIcon className="h-4 w-4 text-muted-foreground" />
+                          <EyeOffIcon className="size-4 text-muted-foreground" />
                         ) : (
-                          <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                          <EyeIcon className="size-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
                           {showPassword ? t('hidePassword') : t('showPassword')}

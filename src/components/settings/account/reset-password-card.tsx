@@ -51,7 +51,7 @@ export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('setupPassword.title')}
@@ -65,8 +65,8 @@ export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
           {t('setupPassword.info')}
         </p>
       </CardContent>
-      <CardFooter className="px-6 py-4 flex justify-end items-center bg-muted rounded-none">
-        <Button onClick={handleSetupPassword}>
+      <CardFooter className="mt-6 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+        <Button onClick={handleSetupPassword} className="cursor-pointer">
           {t('setupPassword.button')}
         </Button>
       </CardFooter>

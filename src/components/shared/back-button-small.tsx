@@ -30,7 +30,7 @@ export default function BackButtonSmall({
     >
       {/* if href is provided, use it, otherwise use the router.back() */}
       <Link href={href || '#'} onClick={handleBack}>
-        <ArrowLeftIcon className="size-5" />
+        <ArrowLeftIcon className="size-4" />
       </Link>
     </Button>
   );

@@ -95,9 +95,9 @@ export function NavbarMobile({
               justify-center rounded-md border"
           >
             {open ? (
-              <XIcon className="size-8" />
+              <XIcon className="size-4" />
             ) : (
-              <MenuIcon className="size-8" />
+              <MenuIcon className="size-4" />
             )}
           </Button>
         </div>
@@ -139,7 +139,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
       <div className="size-full flex flex-col items-start space-y-4">
         {/* action buttons */}
         {userLoggedIn ? null : (
-          <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col gap-4 px-4">
             <LocaleLink
               href={Routes.Login}
               onClick={onLinkClicked}
@@ -170,7 +170,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
         )}
 
         {/* main menu */}
-        <ul className="w-full">
+        <ul className="w-full px-4">
           {menuLinks &&
             menuLinks.map((item) => {
               const isActive = item.href

@@ -81,7 +81,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold text-destructive">
           {t('deleteAccount.title')}
@@ -101,10 +101,11 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
           </div>
         )}
       </CardContent>
-      <CardFooter className="px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+      <CardFooter className="mt-6 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
         <Button
           variant="destructive"
           onClick={() => setShowConfirmation(true)}
+          className="cursor-pointer"
         >
           {t('deleteAccount.button')}
         </Button>
@@ -125,6 +126,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
             <Button
               variant="outline"
               onClick={() => setShowConfirmation(false)}
+              className="cursor-pointer"
             >
               {t('cancel')}
             </Button>
@@ -132,6 +134,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
               variant="destructive"
               onClick={handleDeleteAccount}
               disabled={isDeleting}
+              className="cursor-pointer"
             >
               {isDeleting ? t('deleteAccount.deleting') : t('deleteAccount.confirm')}
             </Button>

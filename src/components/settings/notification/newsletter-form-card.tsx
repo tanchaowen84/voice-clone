@@ -158,7 +158,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('newsletter.title')}
@@ -189,6 +189,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
                       }}
                       disabled={isUpdating}
                       aria-readonly={isUpdating}
+                      className="cursor-pointer"
                     />
                   </FormControl>
                 </FormItem>
@@ -196,7 +197,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
             />
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="px-6 py-4 bg-muted rounded-none">
+          <CardFooter className="mt-6 px-6 py-4 bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">
               {t('newsletter.hint')}
             </p>

@@ -114,7 +114,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('password.title')}
@@ -180,13 +180,13 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         type="button"
                         variant="ghost"
                         size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        className="cursor-pointer absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                         onClick={() => setShowNewPassword(!showNewPassword)}
                       >
                         {showNewPassword ? (
-                          <EyeOffIcon className="h-4 w-4" />
+                          <EyeOffIcon className="size-4" />
                         ) : (
-                          <EyeIcon className="h-4 w-4" />
+                          <EyeIcon className="size-4" />
                         )}
                         <span className="sr-only">
                           {showNewPassword ? t('password.hidePassword') : t('password.showPassword')}
@@ -200,12 +200,12 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
             />
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="px-6 py-4 flex justify-between items-center bg-muted rounded-none">
+          <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">
               {t('password.hint')}
             </p>
 
-            <Button type="submit" disabled={isSaving}>
+            <Button type="submit" disabled={isSaving} className="cursor-pointer">
               {isSaving ? t('saving') : t('save')}
             </Button>
           </CardFooter>

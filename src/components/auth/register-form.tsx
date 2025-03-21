@@ -151,9 +151,9 @@ export const RegisterForm = () => {
                         disabled={isPending}
                       >
                         {showPassword ? (
-                          <EyeOffIcon className="h-4 w-4 text-muted-foreground" />
+                          <EyeOffIcon className="size-4 text-muted-foreground" />
                         ) : (
-                          <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                          <EyeIcon className="size-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
                           {showPassword ? t('hidePassword') : t('showPassword')}
@@ -172,7 +172,7 @@ export const RegisterForm = () => {
             disabled={isPending}
             size="lg"
             type="submit"
-            className="w-full flex items-center justify-center gap-2"
+            className="cursor-pointer w-full flex items-center justify-center gap-2"
           >
             {isPending ? (
               <Icons.spinner className="w-4 h-4 animate-spin" />
