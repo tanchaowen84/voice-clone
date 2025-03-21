@@ -9,8 +9,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator
+  SidebarMenuItem
 } from '@/components/ui/sidebar';
 import { getNavMainLinks } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
@@ -18,7 +17,6 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
 import { SidebarUpgradeCard } from './sidebar-upgrade-card';
-import { Separator } from '../ui/separator';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();

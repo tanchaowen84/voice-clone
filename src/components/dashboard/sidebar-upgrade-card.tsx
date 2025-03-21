@@ -6,11 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { LocaleLink } from "@/i18n/navigation";
+import { Routes } from "@/routes";
 import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function SidebarUpgradeCard() {
   const t = useTranslations('Dashboard.sidebar.upgrade');
+  
   return (
     <Card className="shadow-none">
       <CardHeader className="gap-2">
@@ -27,7 +30,9 @@ export function SidebarUpgradeCard() {
           className="cursor-pointer w-full shadow-none"
           size="sm"
         >
-          {t('button')}
+          <LocaleLink href={Routes.SettingsBilling}>
+            {t('button')}
+          </LocaleLink>
         </Button>
       </CardContent>
     </Card>
