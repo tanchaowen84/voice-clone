@@ -5,10 +5,21 @@ import {
 } from '@/components/ui/sidebar';
 import { PropsWithChildren } from 'react';
 
+/**
+ * inspired by dashboard-01
+ * https://ui.shadcn.com/blocks
+ */
 export default function DashboardLayout({children}: PropsWithChildren) {
   return (
-    <SidebarProvider>
-      <DashboardSidebar />
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <DashboardSidebar variant="inset" />
       
       <SidebarInset>
         {children}

@@ -1,7 +1,7 @@
 'use client';
 
-import { SidebarMain } from '@/components/dashboard/sidebar-main';
-import { SidebarUser } from '@/components/dashboard/sidebar-user';
+import { NavMain } from '@/components/dashboard/nav-main';
+import { NavUser } from '@/components/dashboard/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -9,29 +9,35 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  SidebarSeparator
 } from '@/components/ui/sidebar';
+import { getNavMainLinks } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
+import { SidebarUpgradeCard } from './sidebar-upgrade-card';
+import { Separator } from '../ui/separator';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
-  
+  const mainLinks = getNavMainLinks();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
               <LocaleLink href="/">
-                <Logo className="size-8" />
-                <div className="grid flex-1 text-left leading-tight">
-                  <span className="truncate font-semibold text-lg">
-                    {t('Site.name')}
-                  </span>
-                </div>
+                <Logo className="size-5 rounded-full" />
+                <span className="truncate font-semibold text-base">
+                  {t('Site.name')}
+                </span>
               </LocaleLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -39,11 +45,12 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMain />
+        <NavMain items={mainLinks} />
       </SidebarContent>
 
-      <SidebarFooter>
-        <SidebarUser />
+      <SidebarFooter className="flex flex-col gap-4">
+        <SidebarUpgradeCard />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

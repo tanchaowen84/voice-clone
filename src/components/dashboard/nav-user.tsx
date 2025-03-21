@@ -37,7 +37,7 @@ import { useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
 import { toast } from 'sonner';
 
-export function SidebarUser() {
+export function NavUser() {
   const { setTheme } = useTheme();
   const router = useLocaleRouter();
   const { isMobile } = useSidebar();
@@ -83,7 +83,7 @@ export function SidebarUser() {
   };
 
   return (
-    <SidebarMenu className="border-t pt-2">
+    <SidebarMenu className="border-t pt-4">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

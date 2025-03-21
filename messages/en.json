@@ -163,7 +163,7 @@
         "title": "Blog"
       },
       "ai": {
-        "title": "AI",
+        "title": "AI Tools",
         "items": {
           "text": {
             "title": "AI Text",
@@ -295,7 +295,7 @@
         "title": "Dashboard"
       },
       "ai": {
-        "title": "AI",
+        "title": "AI Tools",
         "items": {
           "text": {
             "title": "AI Text"
@@ -371,8 +371,8 @@
             "cancel": "Cancel"
           },
           "billing": {
-            "title": "Billing & Subscription",
-            "description": "Manage your subscription and billing information",
+            "title": "Billing",
+            "description": "Manage your billing information",
             "status": {
               "active": "Active",
               "trial": "Trial",
@@ -433,6 +433,11 @@
             }
           }
         }
+      },
+      "upgrade": {
+        "title": "Upgrade",
+        "description": "Upgrade to Pro to access all features",
+        "button": "Upgrade"
       }
     }
   },

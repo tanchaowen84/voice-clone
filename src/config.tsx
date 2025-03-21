@@ -365,14 +365,14 @@ export function getAvatarLinks(): MenuItem[] {
 }
 
 /**
- * Get sidebar menu links with translations
+ * Get sidebar navigation main links with translations
  *
  * NOTICE: used in client components only
  *
  * @param t - The translation function
  * @returns The menu links with translated titles and descriptions
  */
-export function getSidebarLinks(): NestedMenuItem[] {
+export function getNavMainLinks(): NestedMenuItem[] {
   const t = useTranslations();
 
   return [

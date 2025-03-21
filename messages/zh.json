@@ -157,7 +157,7 @@
         "title": "博客"
       },
       "ai": {
-        "title": "人工智能",
+        "title": "AI 工具",
         "items": {
           "text": {
             "title": "AI 文本",
@@ -290,7 +290,7 @@
         "title": "仪表盘"
       },
       "ai": {
-        "title": "AI",
+        "title": "AI 工具",
         "items": {
           "text": {
             "title": "AI 文本"
@@ -366,8 +366,8 @@
             "cancel": "取消"
           },
           "billing": {
-            "title": "账单与订阅",
-            "description": "管理您的订阅和账单信息",
+            "title": "账单",
+            "description": "管理您的账单信息",
             "status": {
               "active": "已激活",
               "trial": "试用中",
@@ -428,6 +428,11 @@
             }
           }
         }
+      },
+      "upgrade": {
+        "title": "升级",
+        "description": "升级到高级计划以获取所有功能",
+        "button": "升级"
       }
     }
   },
