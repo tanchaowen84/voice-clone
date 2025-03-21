@@ -36,7 +36,7 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          'size-6 px-0 rounded-full',
+          'size-6 px-0 rounded-full cursor-pointer',
           theme === 'light' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('light')}
@@ -49,7 +49,7 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          'size-6 px-0 rounded-full',
+          'size-6 px-0 rounded-full cursor-pointer',
           theme === 'dark' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('dark')}
@@ -62,7 +62,7 @@ export function ThemeSwitcherHorizontal() {
         variant="ghost"
         size="icon"
         className={cn(
-          'size-6 px-0 rounded-full',
+          'size-6 px-0 rounded-full cursor-pointer',
           theme === 'system' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('system')}

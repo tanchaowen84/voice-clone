@@ -64,7 +64,7 @@ export function UserButton({ user }: UserButtonProps) {
           <UserAvatar
             name={user.name}
             image={user.image}
-            className="size-8 border"
+            className="size-8 border cursor-pointer"
           />
         </DrawerTrigger>
         <DrawerPortal>
@@ -80,7 +80,7 @@ export function UserButton({ user }: UserButtonProps) {
               <UserAvatar
                 name={user.name}
                 image={user.image}
-                className="size-8 border"
+                className="size-8 border cursor-pointer"
               />
               <div className="flex flex-col">
                 <p className="font-medium">
@@ -141,7 +141,7 @@ export function UserButton({ user }: UserButtonProps) {
         <UserAvatar
           name={user.name}
           image={user.image}
-          className="size-8 border"
+          className="size-8 border cursor-pointer"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -27,7 +27,7 @@ export enum Routes {
   ForgotPassword = '/auth/forgot-password',
   ResetPassword = '/auth/reset-password',
 
-  Dashboard = '/dashboard',
+  Dashboard = '/dashboardv4',
   SettingsAccount = '/settings/account',
   SettingsBilling = '/settings/billing',
   SettingsNotifications = '/settings/notifications',

@@ -24,19 +24,19 @@ export function BlogCategoryListDesktop({
         type="single"
         value={slug || 'All'}
         aria-label="Toggle blog category"
-        className="h-9 overflow-hidden rounded-full border bg-background p-1 *:h-7 *:text-muted-foreground"
+        className="h-9 overflow-hidden rounded-md space-x-1 border bg-background p-1 *:h-7 *:text-muted-foreground"
       >
         <ToggleGroupItem
           key="All"
           value="All"
           className={cn(
-            'rounded-full px-5',
+            'rounded-sm px-2 cursor-pointer',
             'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground',
-            'hover:bg-muted hover:text-muted-foreground'
+            'hover:bg-accent hover:text-accent-foreground'
           )}
           aria-label={'Toggle all blog categories'}
         >
-          <LocaleLink href={'/blog'}>
+          <LocaleLink href={'/blog'} className="px-4">
             <h2>{t('all')}</h2>
           </LocaleLink>
         </ToggleGroupItem>
@@ -46,13 +46,13 @@ export function BlogCategoryListDesktop({
             key={category.slug}
             value={category.slug}
             className={cn(
-              'rounded-full px-5',
+              'rounded-sm px-2 cursor-pointer',
               'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground',
-              'hover:bg-muted hover:text-muted-foreground'
+              'hover:bg-accent hover:text-accent-foreground'
             )}
             aria-label={`Toggle blog category of ${category.name}`}
           >
-            <LocaleLink href={`/blog/category/${category.slug}`}>
+            <LocaleLink href={`/blog/category/${category.slug}`} className="px-4">
               <h2>{category.name}</h2>
             </LocaleLink>
           </ToggleGroupItem>

@@ -56,7 +56,7 @@ export default function LocaleSelector() {
       value={currentLocale}
       onValueChange={onSelectChange}
     >
-      <SelectTrigger className="w-fit">
+      <SelectTrigger className="w-fit cursor-pointer">
         <SelectValue
           placeholder={
             <span className="text-lg">{LOCALE_LIST[DEFAULT_LOCALE].flag}</span>

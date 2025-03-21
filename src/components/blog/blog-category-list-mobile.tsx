@@ -37,7 +37,7 @@ export function BlogCategoryListMobile({
     <Drawer open={open} onClose={closeDrawer}>
       <DrawerTrigger
         onClick={() => setOpen(true)}
-        className="flex items-center w-full p-4 border-y text-foreground/90"
+        className="flex items-center w-full p-4 border-y text-foreground/90 cursor-pointer"
       >
         <div className="flex items-center justify-between w-full gap-4">
           <div className="flex items-center gap-2">

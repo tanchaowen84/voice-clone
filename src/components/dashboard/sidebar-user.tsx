@@ -89,7 +89,7 @@ export function SidebarUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent 
+              className="cursor-pointer data-[state=open]:bg-sidebar-accent 
               data-[state=open]:text-sidebar-accent-foreground"
             >
               <UserAvatar
@@ -133,7 +133,7 @@ export function SidebarUser() {
 
             <DropdownMenuGroup>
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
+                <DropdownMenuSubTrigger className="cursor-pointer">
                   <LaptopIcon className="mr-2 size-4" />
                   <span>{t('Common.theme')}</span>
                 </DropdownMenuSubTrigger>
@@ -165,7 +165,7 @@ export function SidebarUser() {
 
             <DropdownMenuGroup>
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
+                <DropdownMenuSubTrigger className="cursor-pointer">
                   <Languages className="mr-2 size-4" />
                   <span>{t('Common.language')}</span>
                 </DropdownMenuSubTrigger>

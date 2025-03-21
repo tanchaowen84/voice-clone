@@ -91,8 +91,8 @@ export function NavbarMobile({
             aria-expanded={open}
             aria-label="Toggle Mobile Menu"
             onClick={handleToggleMobileMenu}
-            className="flex aspect-square h-fit select-none items-center 
-              justify-center rounded-md border"
+            className="size-8 flex aspect-square h-fit select-none items-center 
+              justify-center rounded-md border cursor-pointer"
           >
             {open ? (
               <XIcon className="size-4" />
@@ -198,7 +198,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           variant="ghost"
                           className={cn(
                             'flex w-full items-center justify-between text-left',
-                            'bg-transparent text-muted-foreground',
+                            'bg-transparent text-muted-foreground cursor-pointer',
                             'hover:bg-transparent hover:text-foreground',
                             'focus:bg-transparent focus:text-foreground',
                             isActive &&
@@ -214,7 +214,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                         </Button>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
-                        <ul className="mt-2 pl-4 space-y-2">
+                        <ul className="mt-2 space-y-2">
                           {item.items.map((subItem) => {
                             const isSubItemActive =
                               subItem.href &&
@@ -234,8 +234,8 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                   }
                                   className={cn(
                                     buttonVariants({ variant: 'ghost' }),
-                                    'group h-auto w-full justify-start gap-4 p-1',
-                                    'bg-transparent text-muted-foreground',
+                                    'group h-auto w-full justify-start gap-4 p-1 px-3',
+                                    'bg-transparent text-muted-foreground cursor-pointer',
                                     'hover:bg-transparent hover:text-foreground',
                                     'focus:bg-transparent focus:text-foreground',
                                     isSubItemActive &&
@@ -284,7 +284,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                   {subItem.external && (
                                     <ArrowUpRightIcon
                                       className={cn(
-                                        'size-4 shrink-0 text-muted-foreground',
+                                        'size-4 shrink-0 text-muted-foreground items-center',
                                         'group-hover:bg-transparent group-hover:text-foreground',
                                         'group-focus:bg-transparent group-focus:text-foreground',
                                         isSubItemActive &&
@@ -306,7 +306,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                       rel={item.external ? 'noopener noreferrer' : undefined}
                       className={cn(
                         buttonVariants({ variant: 'ghost' }),
-                        'w-full justify-start',
+                        'w-full justify-start cursor-pointer',
                         'bg-transparent text-muted-foreground',
                         'hover:bg-transparent hover:text-foreground',
                         'focus:bg-transparent focus:text-foreground',
