@@ -1,10 +1,12 @@
 'use client';
 
-import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
 import { ResetPasswordCard } from '@/components/settings/account/reset-password-card';
+import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { authClient } from '@/lib/auth-client';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
 
 interface ConditionalUpdatePasswordCardProps {
   className?: string;
@@ -53,7 +55,7 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 
   // Don't render anything while loading
   if (isLoading) {
-    return null;
+    return <PasswordSkeletonCard className={className} />;
   }
 
   // If user has credential provider, show UpdatePasswordCard
@@ -69,4 +71,27 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 
   // If user has no credential provider and no email, don't show anything
   return null;
-} 
+}
+
+function PasswordSkeletonCard({ className }: { className?: string }) {
+  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  return (
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>
+          {t('password.title')}
+        </CardTitle>
+        <CardDescription>
+          {t('password.description')}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-4 w-1/3" />
+      </CardContent>
+    </Card>
+  );
+}

@@ -46,9 +46,9 @@ export function NavMain({ items, }: { items: NestedMenuItem[] }) {
           </SidebarGroup>
         ) : (
           /* Render items without children directly in a SidebarMenu */
-          <SidebarGroup>
+          <SidebarGroup key={item.title}>
             <SidebarGroupContent className="flex flex-col gap-2">
-              <SidebarMenu key={item.title}>
+              <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={isActive(item.href)}>
                     <LocaleLink href={item.href || ''}>

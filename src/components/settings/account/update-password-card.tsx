@@ -29,6 +29,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface UpdatePasswordCardProps {
   className?: string;
@@ -114,7 +115,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('password.title')}
@@ -213,4 +214,27 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
       </Form>
     </Card>
   );
-} 
+}
+
+export function PasswordSkeletonCard({ className }: { className?: string }) {
+  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  return (
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>
+          {t('password.title')}
+        </CardTitle>
+        <CardDescription>
+          {t('password.description')}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-4 w-1/3" />
+      </CardContent>
+    </Card>
+  );
+}

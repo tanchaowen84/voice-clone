@@ -24,11 +24,22 @@ export default function SettingsAccountPage() {
       <DashboardHeader breadcrumbs={breadcrumbs} />
 
       <div className="px-4 py-8">
-        <div className="flex flex-col items-center space-y-6 w-full">
-          <UpdateAvatarCard />
-          <UpdateNameCard />
-          <ConditionalUpdatePasswordCard />
-          <DeleteAccountCard />
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              {t('Dashboard.sidebar.settings.items.account.title')}
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              {t('Dashboard.sidebar.settings.items.account.description')}
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <UpdateAvatarCard />
+            <UpdateNameCard />
+            <ConditionalUpdatePasswordCard />
+            <DeleteAccountCard />
+          </div>
         </div>
       </div>
     </>

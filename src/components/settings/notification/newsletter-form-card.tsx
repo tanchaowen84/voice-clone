@@ -24,12 +24,13 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { 
-  subscribeAction, 
-  unsubscribeAction, 
-  isSubscribedAction 
+import {
+  subscribeAction,
+  unsubscribeAction,
+  isSubscribedAction
 } from '@/actions/newsletter';
 import { cn } from '@/lib/utils';
+import { Loader2Icon } from 'lucide-react';
 
 interface NewsletterFormCardProps {
   className?: string;
@@ -47,7 +48,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   const [isSubscriptionChecked, setIsSubscriptionChecked] = useState(false);
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  
+
   // Create a schema for newsletter subscription
   const formSchema = z.object({
     subscribed: z.boolean().default(false),
@@ -69,7 +70,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
           setIsUpdating(true);
           // Check if the user is already subscribed using server action
           const statusResult = await isSubscribedAction({ email: user.email });
-          
+
           if (statusResult && statusResult.data?.success) {
             const isCurrentlySubscribed = statusResult.data.subscribed;
             setIsSubscriptionChecked(isCurrentlySubscribed);
@@ -95,7 +96,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
         }
       }
     };
-    
+
     checkSubscriptionStatus();
   }, [user?.email, form]);
 
@@ -118,7 +119,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
       if (value) {
         // Subscribe to newsletter using server action
         const subscribeResult = await subscribeAction({ email: user.email });
-        
+
         if (subscribeResult && subscribeResult.data?.success) {
           toast.success(t('newsletter.subscribeSuccess'));
           setIsSubscriptionChecked(true);
@@ -133,7 +134,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
       } else {
         // Unsubscribe from newsletter using server action
         const unsubscribeResult = await unsubscribeAction({ email: user.email });
-        
+
         if (unsubscribeResult && unsubscribeResult.data?.success) {
           toast.success(t('newsletter.unsubscribeSuccess'));
           setIsSubscriptionChecked(false);
@@ -158,7 +159,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('newsletter.title')}
@@ -181,16 +182,23 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
                     </FormLabel>
                   </div>
                   <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={(checked) => {
-                        field.onChange(checked);
-                        handleSubscriptionChange(checked);
-                      }}
-                      disabled={isUpdating}
-                      aria-readonly={isUpdating}
-                      className="cursor-pointer"
-                    />
+                    <div className="relative flex items-center">
+                      {isUpdating && (
+                        <div className="mr-2">
+                          <Loader2Icon className="h-4 w-4 animate-spin text-primary" />
+                        </div>
+                      )}
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked);
+                          handleSubscriptionChange(checked);
+                        }}
+                        disabled={isUpdating}
+                        aria-readonly={isUpdating}
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </FormControl>
                 </FormItem>
               )}

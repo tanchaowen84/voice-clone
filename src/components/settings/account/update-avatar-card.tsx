@@ -45,7 +45,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
     return null;
   }
 
-  console.log('update avatar card, user', user);
+  // console.log('update avatar card, user', user);
 
   const handleUploadClick = () => {
     // Create a hidden file input and trigger it
@@ -128,7 +128,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('avatar.title')}

@@ -316,6 +316,7 @@
         "items": {
           "account": {
             "title": "Account",
+            "description": "Manage your account information",
             "avatar": {
               "title": "Avatar",
               "description": "Click upload button to upload a custom one",
@@ -419,6 +420,7 @@
           },
           "notification": {
             "title": "Notification",
+            "description": "Manage your notification preferences",
             "newsletter": {
               "title": "Newsletter Subscription",
               "description": "Manage your newsletter subscription preferences",

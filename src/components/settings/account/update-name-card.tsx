@@ -107,7 +107,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold">
           {t('name.title')}

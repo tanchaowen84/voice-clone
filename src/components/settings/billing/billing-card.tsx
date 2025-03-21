@@ -55,7 +55,7 @@ const isEnterprisePlan = (plan: PricePlan): boolean => {
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.billing');
-  
+
   const [loading, setLoading] = useState(true);
   const [billingData, setBillingData] = useState<{
     subscription: typeof mockSubscription | typeof mockTrialSubscription | null;
@@ -70,10 +70,10 @@ export default function BillingCard() {
     const fetchBillingData = async () => {
       // In a real app, you would fetch this data from an API endpoint or server action
       // Example: const { data } = await getUserBillingData();
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Randomly select between different subscription states
       const random = Math.random();
       let subscription = null;
@@ -82,12 +82,12 @@ export default function BillingCard() {
       } else if (random < 0.66) {
         subscription = mockTrialSubscription;
       }
-      
+
       setBillingData({
         user: mockUser,
         subscription,
       });
-      
+
       setLoading(false);
     };
 
@@ -96,12 +96,12 @@ export default function BillingCard() {
 
   // Get all available plans
   const plans = getAllPlans();
-  
+
   // Find current plan details if subscription exists
-  const currentPlan = billingData.subscription 
+  const currentPlan = billingData.subscription
     ? plans.find(plan => plan.id === billingData.subscription?.planId)
     : plans.find(plan => plan.isFree);
-  
+
   // Determine current price details if subscription exists
   const currentPrice = billingData.subscription && currentPlan?.prices.find(
     price => price.productId === billingData.subscription?.priceId
@@ -109,20 +109,22 @@ export default function BillingCard() {
 
   // Calculate next billing date
   const nextBillingDate = billingData.subscription?.currentPeriodEnd
-    ? new Intl.DateTimeFormat('en-US', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-      }).format(billingData.subscription.currentPeriodEnd)
+    ? new Intl.DateTimeFormat('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }).format(billingData.subscription.currentPeriodEnd)
     : null;
 
   return (
     <div className="px-4 py-8">
       <div className="max-w-5xl mx-auto space-y-10">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t('title', {defaultValue: 'Billing & Subscription'})}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t('title')}
+          </h1>
           <p className="text-muted-foreground mt-2">
-            {t('description', {defaultValue: 'Manage your subscription and billing information'})}
+            {t('description')}
           </p>
         </div>
 
@@ -130,8 +132,8 @@ export default function BillingCard() {
           {/* Current Plan Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t('currentPlan.title', {defaultValue: 'Current Plan'})}</CardTitle>
-              <CardDescription>{t('currentPlan.description', {defaultValue: 'Your current subscription details'})}</CardDescription>
+              <CardTitle>{t('currentPlan.title')}</CardTitle>
+              <CardDescription>{t('currentPlan.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {loading ? (
@@ -146,34 +148,34 @@ export default function BillingCard() {
                   <div className="flex items-center justify-between">
                     <div className="font-medium">{currentPlan?.name}</div>
                     <Badge variant={currentPlan?.isFree ? 'outline' : 'default'}>
-                      {billingData.subscription?.status === 'active' ? 
-                        t('status.active', {defaultValue: 'Active'}) : 
-                       billingData.subscription?.status === 'trialing' ? 
-                        t('status.trial', {defaultValue: 'Trial'}) : 
-                        t('status.free', {defaultValue: 'Free'})}
+                      {billingData.subscription?.status === 'active' ?
+                        t('status.active') :
+                        billingData.subscription?.status === 'trialing' ?
+                          t('status.trial') :
+                          t('status.free')}
                     </Badge>
                   </div>
-                  
+
                   {billingData.subscription && currentPrice && (
                     <div className="text-sm text-muted-foreground space-y-1">
                       <div>
-                        {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === 'month' ? 
-                          t('interval.month', {defaultValue: 'month'}) : 
-                         currentPrice.interval === 'year' ? 
-                          t('interval.year', {defaultValue: 'year'}) : 
-                          t('interval.oneTime', {defaultValue: 'one-time'})}
+                        {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === 'month' ?
+                          t('interval.month') :
+                          currentPrice.interval === 'year' ?
+                            t('interval.year') :
+                            t('interval.oneTime')}
                       </div>
-                      
+
                       {nextBillingDate && (
-                        <div>{t('nextBillingDate', {defaultValue: 'Next billing date:'})} {nextBillingDate}</div>
+                        <div>{t('nextBillingDate')} {nextBillingDate}</div>
                       )}
-                      
+
                       {billingData.subscription.status === 'trialing' && (
                         <div className="text-amber-500">
-                          {t('trialEnds', {defaultValue: 'Trial ends:'})} {new Intl.DateTimeFormat('en-US', { 
-                            day: 'numeric', 
-                            month: 'long', 
-                            year: 'numeric' 
+                          {t('trialEnds')} {new Intl.DateTimeFormat('en-US', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
                           }).format(billingData.subscription.currentPeriodEnd)}
                         </div>
                       )}
@@ -182,7 +184,7 @@ export default function BillingCard() {
 
                   {currentPlan?.isFree && (
                     <div className="text-sm text-muted-foreground">
-                      {t('freePlanMessage', {defaultValue: 'You are currently on the free plan with limited features.'})}
+                      {t('freePlanMessage')}
                     </div>
                   )}
                 </>
@@ -192,15 +194,15 @@ export default function BillingCard() {
               {loading ? (
                 <Skeleton className="h-10 w-full" />
               ) : billingData.subscription ? (
-                <CustomerPortalButton 
+                <CustomerPortalButton
                   customerId={billingData.user.customerId}
                   className="w-full"
                 >
-                  {t('manageSubscription', {defaultValue: 'Manage Subscription'})}
+                  {t('manageSubscription')}
                 </CustomerPortalButton>
               ) : (
                 <div className="text-sm text-muted-foreground">
-                  {t('upgradeMessage', {defaultValue: 'Upgrade to a paid plan to access more features'})}
+                  {t('upgradeMessage')}
                 </div>
               )}
             </CardFooter>
@@ -209,8 +211,8 @@ export default function BillingCard() {
           {/* Payment Method Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t('paymentMethod.title', {defaultValue: 'Payment Method'})}</CardTitle>
-              <CardDescription>{t('paymentMethod.description', {defaultValue: 'Manage your payment methods'})}</CardDescription>
+              <CardTitle>{t('paymentMethod.title')}</CardTitle>
+              <CardDescription>{t('paymentMethod.description')}</CardDescription>
             </CardHeader>
             <CardContent>
               {loading ? (
@@ -221,16 +223,16 @@ export default function BillingCard() {
                 </div>
               ) : billingData.subscription ? (
                 <div className="text-sm">
-                  <p>{t('paymentMethod.manageMessage', {defaultValue: 'Manage your payment methods through the Stripe Customer Portal.'})}</p>
+                  <p>{t('paymentMethod.manageMessage')}</p>
                   <p className="mt-2 text-muted-foreground">
-                    {t('paymentMethod.securityMessage', {defaultValue: 'You can add, remove, or update your payment methods securely through the Stripe portal.'})}
+                    {t('paymentMethod.securityMessage')}
                   </p>
                 </div>
               ) : (
                 <div className="text-sm">
-                  <p>{t('paymentMethod.noMethodsMessage', {defaultValue: 'No payment methods on file.'})}</p>
+                  <p>{t('paymentMethod.noMethodsMessage')}</p>
                   <p className="mt-2 text-muted-foreground">
-                    {t('paymentMethod.upgradePromptMessage', {defaultValue: 'You\'ll be prompted to add a payment method when upgrading to a paid plan.'})}
+                    {t('paymentMethod.upgradePromptMessage')}
                   </p>
                 </div>
               )}
@@ -239,11 +241,11 @@ export default function BillingCard() {
               {loading ? (
                 <Skeleton className="h-10 w-full" />
               ) : billingData.subscription ? (
-                <CustomerPortalButton 
+                <CustomerPortalButton
                   customerId={billingData.user.customerId}
                   className="w-full"
                 >
-                  {t('managePaymentMethods', {defaultValue: 'Manage Payment Methods'})}
+                  {t('managePaymentMethods')}
                 </CustomerPortalButton>
               ) : (
                 <div />
@@ -256,9 +258,9 @@ export default function BillingCard() {
         {!loading && !billingData.subscription && (
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">{t('upgradePlan.title', {defaultValue: 'Upgrade Your Plan'})}</h2>
+              <h2 className="text-2xl font-bold tracking-tight">{t('upgradePlan.title')}</h2>
               <p className="text-muted-foreground mt-1">
-                {t('upgradePlan.description', {defaultValue: 'Choose a plan that works for you'})}
+                {t('upgradePlan.description')}
               </p>
             </div>
 
@@ -282,18 +284,17 @@ export default function BillingCard() {
                             {formatPrice(price.amount, price.currency)}
                           </span>
                           <span className="text-muted-foreground">
-                            {price.interval === 'month' ? 
-                              `/${t('interval.month', {defaultValue: 'month'})}` : 
-                             price.interval === 'year' ? 
-                              `/${t('interval.year', {defaultValue: 'year'})}` : 
-                              ''}
+                            {price.interval === 'month' ?
+                              `/${t('interval.month')}` :
+                              price.interval === 'year' ?
+                                `/${t('interval.year')}` :
+                                ''}
                           </span>
                         </div>
 
                         {price.trialPeriodDays && price.trialPeriodDays > 0 && (
                           <Badge variant="outline" className="mb-4">
                             {t('trialDays', {
-                              defaultValue: '{{days}} day trial',
                               days: price.trialPeriodDays
                             })}
                           </Badge>
@@ -329,7 +330,6 @@ export default function BillingCard() {
                           className="w-full"
                         >
                           {t('upgradeToPlan', {
-                            defaultValue: 'Upgrade to {{planName}}',
                             planName: plan.name
                           })}
                         </CheckoutButton>
@@ -372,9 +372,9 @@ export default function BillingCard() {
                       </ul>
 
                       <div className="flex flex-col items-start md:items-end">
-                        <span className="text-xl font-bold mb-2">{t('customPricing', {defaultValue: 'Custom Pricing'})}</span>
+                        <span className="text-xl font-bold mb-2">{t('customPricing')}</span>
                         <Button className="w-full md:w-auto" variant="default" asChild>
-                          <a href="mailto:sales@yourcompany.com">{t('contactSales', {defaultValue: 'Contact Sales'})}</a>
+                          <a href="mailto:sales@yourcompany.com">{t('contactSales')}</a>
                         </Button>
                       </div>
                     </div>
@@ -387,9 +387,9 @@ export default function BillingCard() {
         {/* Billing History */}
         <div className="space-y-6">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">{t('billingHistory.title', {defaultValue: 'Billing History'})}</h2>
+            <h2 className="text-2xl font-bold tracking-tight">{t('billingHistory.title')}</h2>
             <p className="text-muted-foreground mt-1">
-              {t('billingHistory.description', {defaultValue: 'View and download your past invoices'})}
+              {t('billingHistory.description')}
             </p>
           </div>
 
@@ -404,19 +404,19 @@ export default function BillingCard() {
               ) : billingData.subscription ? (
                 <div className="text-center py-4">
                   <p className="text-sm text-muted-foreground">
-                    {t('billingHistory.accessMessage', {defaultValue: 'Access your billing history through the Stripe Customer Portal'})}
+                    {t('billingHistory.accessMessage')}
                   </p>
-                  <CustomerPortalButton 
+                  <CustomerPortalButton
                     customerId={billingData.user.customerId}
                     className="mt-4"
                   >
-                    {t('viewBillingHistory', {defaultValue: 'View Billing History'})}
+                    {t('viewBillingHistory')}
                   </CustomerPortalButton>
                 </div>
               ) : (
                 <div className="text-center py-4">
                   <p className="text-sm text-muted-foreground">
-                    {t('billingHistory.noHistoryMessage', {defaultValue: 'No billing history available'})}
+                    {t('billingHistory.noHistoryMessage')}
                   </p>
                 </div>
               )}
