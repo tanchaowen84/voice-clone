@@ -317,7 +317,7 @@
       "settings": {
         "title": "设置",
         "items": {
-          "account": {
+          "profile": {
             "title": "账户",
             "description": "管理您的账户信息",
             "avatar": {

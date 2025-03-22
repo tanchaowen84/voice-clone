@@ -243,7 +243,7 @@ export default function BillingCard() {
               ) : billingData.subscription ? (
                 <CustomerPortalButton
                   customerId={billingData.user.customerId}
-                  className="w-full"
+                  className="w-full cursor-pointer"
                 >
                   {t('managePaymentMethods')}
                 </CustomerPortalButton>

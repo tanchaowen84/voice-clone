@@ -12,7 +12,7 @@ export default function SettingsAccountPage() {
       isCurrentPage: false,
     },
     {
-      label: t('Dashboard.sidebar.settings.items.account.title'),
+      label: t('Dashboard.sidebar.settings.items.profile.title'),
       isCurrentPage: true,
     },
   ];
@@ -25,10 +25,10 @@ export default function SettingsAccountPage() {
         <div className="max-w-5xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t('Dashboard.sidebar.settings.items.account.title')}
+              {t('Dashboard.sidebar.settings.items.profile.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              {t('Dashboard.sidebar.settings.items.account.description')}
+              {t('Dashboard.sidebar.settings.items.profile.description')}
             </p>
           </div>
 

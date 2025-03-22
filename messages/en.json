@@ -321,8 +321,8 @@
       "settings": {
         "title": "Settings",
         "items": {
-          "account": {
-            "title": "Account",
+          "profile": {
+            "title": "Profile",
             "description": "Manage your account information",
             "avatar": {
               "title": "Avatar",

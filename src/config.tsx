@@ -358,7 +358,7 @@ export function getAvatarLinks(): MenuItem[] {
     },
     {
       title: t('Marketing.avatar.settings'),
-      href: Routes.SettingsAccount,
+      href: Routes.SettingsProfile,
       icon: <Settings2Icon className="size-4 shrink-0" />,
     },
   ];
@@ -417,9 +417,9 @@ export function getNavMainLinks(): NestedMenuItem[] {
       icon: <Settings2Icon className="site-4 shrink-0" />,
       items: [
         {
-          title: t('Dashboard.sidebar.settings.items.account.title'),
+          title: t('Dashboard.sidebar.settings.items.profile.title'),
           icon: <UserCircleIcon className="site-4 shrink-0" />,
-          href: Routes.SettingsAccount,
+          href: Routes.SettingsProfile,
           external: false,
         },
         {
