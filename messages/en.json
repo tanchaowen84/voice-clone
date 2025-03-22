@@ -301,16 +301,20 @@
         "title": "AI Tools",
         "items": {
           "text": {
-            "title": "AI Text"
+            "title": "AI Text",
+            "description": "Show how to use AI to write stunning text"
           },
           "image": {
-            "title": "AI Image"
+            "title": "AI Image",
+            "description": "Show how to use AI to generate beautiful images"
           },
           "video": {
-            "title": "AI Video"
+            "title": "AI Video",
+            "description": "Show how to use AI to generate amazing videos"
           },
           "audio": {
-            "title": "AI Audio"
+            "title": "AI Audio",
+            "description": "Show how to use AI to generate wonderful audio"
           }
         }
       },

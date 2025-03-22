@@ -297,16 +297,20 @@
         "title": "AI 工具",
         "items": {
           "text": {
-            "title": "AI 文本"
+            "title": "AI 文本",
+            "description": "展示如何使用 AI 生成精彩文本"
           },
           "image": {
-            "title": "AI 图像"
+            "title": "AI 图像",
+            "description": "展示如何使用 AI 生成精美图像"
           },
           "video": {
-            "title": "AI 视频"
+            "title": "AI 视频",
+            "description": "展示如何使用 AI 生成惊人视频"
           },
           "audio": {
-            "title": "AI 音频"
+            "title": "AI 音频",
+            "description": "展示如何使用 AI 生成动听音频"
           }
         }
       },

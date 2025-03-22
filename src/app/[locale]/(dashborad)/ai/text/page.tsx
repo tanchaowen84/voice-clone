@@ -2,15 +2,15 @@ import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { useTranslations } from 'next-intl';
   
 export default function AITextPage() {
-  const t = useTranslations();
+  const t = useTranslations('Dashboard.sidebar.ai');
   
   const breadcrumbs = [
     {
-      label: t('Dashboard.sidebar.ai.title'),
+      label: t('title'),
       isCurrentPage: false,
     },
     {
-      label: t('Dashboard.sidebar.ai.items.text.title'),
+      label: t('items.text.title'),
       isCurrentPage: true,
     },
   ];
@@ -18,13 +18,18 @@ export default function AITextPage() {
   return (
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
+
+      <div className="px-4 lg:px-6 py-16">
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              {t('items.text.title')}
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              {t('items.text.description')}
+            </p>
+          </div>
         </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </>
   );
