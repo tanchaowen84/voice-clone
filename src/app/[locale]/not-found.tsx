@@ -23,7 +23,7 @@ export default function NotFound() {
         {t('message')}
       </p>
 
-      <Button asChild size="lg" variant="default">
+      <Button asChild size="lg" variant="default" className="cursor-pointer">
         <LocaleLink href="/">{t('backToHome')}</LocaleLink>
       </Button>
     </div>

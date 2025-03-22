@@ -32,7 +32,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <LocaleLink href="/">
-                <Logo className="size-5 rounded-full" />
+                <Logo className="size-5" />
                 <span className="truncate font-semibold text-base">
                   {t('Site.name')}
                 </span>

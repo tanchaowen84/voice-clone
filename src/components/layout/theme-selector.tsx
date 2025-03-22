@@ -62,7 +62,7 @@ export function ThemeSelector() {
         <SelectTrigger
           id="theme-selector"
           size="sm"
-          className="justify-start *:data-[slot=select-value]:w-12"
+          className="cursor-pointer justify-start *:data-[slot=select-value]:w-12"
         >
           <span className="text-muted-foreground hidden sm:block">
             Select a theme:
@@ -74,7 +74,9 @@ export function ThemeSelector() {
           <SelectGroup>
             <SelectLabel>Default</SelectLabel>
             {DEFAULT_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
+              <SelectItem key={theme.name} value={theme.value}
+                className="cursor-pointer"
+              >
                 {theme.name}
               </SelectItem>
             ))}
@@ -83,7 +85,9 @@ export function ThemeSelector() {
           <SelectGroup>
             <SelectLabel>Scaled</SelectLabel>
             {SCALED_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
+              <SelectItem key={theme.name} value={theme.value}
+                className="cursor-pointer"
+              >
                 {theme.name}
               </SelectItem>
             ))}
@@ -91,7 +95,9 @@ export function ThemeSelector() {
           <SelectGroup>
             <SelectLabel>Monospaced</SelectLabel>
             {MONO_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
+              <SelectItem key={theme.name} value={theme.value}
+                className="cursor-pointer"
+              >
                 {theme.name}
               </SelectItem>
             ))}
