@@ -1,8 +1,9 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { NewsletterFormCard } from '@/components/settings/notification/newsletter-form-card';
+import { ConditionalUpdatePasswordCard } from '@/components/settings/account/conditional-update-password-card';
+import { DeleteAccountCard } from '@/components/settings/account/delete-account-card';
 import { useTranslations } from 'next-intl';
 
-export default function SettingsNotificationPage() {
+export default function SettingsSecurityPage() {
   const t = useTranslations();
 
   const breadcrumbs = [
@@ -11,7 +12,7 @@ export default function SettingsNotificationPage() {
       isCurrentPage: false,
     },
     {
-      label: t('Dashboard.sidebar.settings.items.notification.title'),
+      label: t('Dashboard.sidebar.settings.items.security.title'),
       isCurrentPage: true,
     },
   ];
@@ -24,15 +25,16 @@ export default function SettingsNotificationPage() {
         <div className="max-w-5xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t('Dashboard.sidebar.settings.items.notification.title')}
+              {t('Dashboard.sidebar.settings.items.security.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              {t('Dashboard.sidebar.settings.items.notification.description')}
+              {t('Dashboard.sidebar.settings.items.security.description')}
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            <NewsletterFormCard />
+            <ConditionalUpdatePasswordCard />
+            <DeleteAccountCard />
           </div>
         </div>
       </div>

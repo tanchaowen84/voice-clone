@@ -47,7 +47,8 @@ interface UpdatePasswordCardProps {
  */
 export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   const router = useLocaleRouter();
-  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const ct = useTranslations('Common');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -207,7 +208,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
             </p>
 
             <Button type="submit" disabled={isSaving} className="cursor-pointer">
-              {isSaving ? t('saving') : t('save')}
+              {isSaving ? ct('saving') : ct('save')}
             </Button>
           </CardFooter>
         </form>
@@ -217,7 +218,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
 }
 
 export function PasswordSkeletonCard({ className }: { className?: string }) {
-  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security');
   return (
     <Card className={className}>
       <CardHeader>

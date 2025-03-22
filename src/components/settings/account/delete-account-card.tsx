@@ -36,7 +36,8 @@ interface DeleteAccountCardProps {
  * It includes a confirmation dialog to prevent accidental deletions.
  */
 export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
-  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const ct = useTranslations('Common');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -128,7 +129,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
               onClick={() => setShowConfirmation(false)}
               className="cursor-pointer"
             >
-              {t('cancel')}
+              {ct('cancel')}
             </Button>
             <Button
               variant="destructive"

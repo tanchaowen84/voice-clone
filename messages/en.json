@@ -13,6 +13,9 @@
     "dark": "Dark",
     "system": "System",
     "copy": "Copy",
+    "saving": "Saving...",
+    "save": "Save",
+    "cancel": "Cancel",
     "logoutFailed": "Failed to log out"
   },
   "Metadata": {
@@ -335,41 +338,7 @@
               "hint": "Please use 3-30 characters for your name",
               "success": "Name updated successfully",
               "fail": "Failed to update name"
-            },
-            "password": {
-              "title": "Change Password",
-              "description": "Enter your current password and a new password",
-              "currentPassword": "Current Password",
-              "currentRequired": "Current password is required",
-              "newPassword": "New Password",
-              "newMinLength": "Password must be at least 8 characters",
-              "hint": "Please use at least 8 characters for password",
-              "showPassword": "Show password",
-              "hidePassword": "Hide password",
-              "success": "Password updated successfully",
-              "fail": "Failed to update password"
-            },
-            "setupPassword": {
-              "title": "Set Up Password",
-              "description": "Set up a password to enable email login",
-              "info": "Setting up a password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to set your password",
-              "button": "Set Up Password"
-            },
-            "deleteAccount": {
-              "title": "Delete Account",
-              "description": "Permanently remove your account and all of its contents",
-              "warning": "This action is not reversible, so please continue with caution",
-              "button": "Delete Account",
-              "confirmTitle": "Delete Account",
-              "confirmDescription": "Are you sure you want to delete your account? This action cannot be undone.",
-              "confirm": "Delete",
-              "deleting": "Deleting...",
-              "success": "Account deleted successfully",
-              "fail": "Failed to delete account"
-            },
-            "save": "Save",
-            "saving": "Saving...",
-            "cancel": "Cancel"
+            }
           },
           "billing": {
             "title": "Billing",
@@ -432,6 +401,41 @@
               "unsubscribeSuccess": "Successfully unsubscribed from the newsletter",
               "unsubscribeFail": "Failed to unsubscribe from the newsletter",
               "error": "An error occurred while updating your subscription"
+            }
+          },
+          "security": {
+            "title": "Security",
+            "description": "Manage your security settings",
+            "password": {
+              "title": "Change Password",
+              "description": "Enter your current password and a new password",
+              "currentPassword": "Current Password",
+              "currentRequired": "Current password is required",
+              "newPassword": "New Password",
+              "newMinLength": "Password must be at least 8 characters",
+              "hint": "Please use at least 8 characters for password",
+              "showPassword": "Show password",
+              "hidePassword": "Hide password",
+              "success": "Password updated successfully",
+              "fail": "Failed to update password"
+            },
+            "setupPassword": {
+              "title": "Set Up Password",
+              "description": "Set up a password to enable email login",
+              "info": "Setting up a password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to set your password",
+              "button": "Set Up Password"
+            },
+            "deleteAccount": {
+              "title": "Delete Account",
+              "description": "Permanently remove your account and all of its contents",
+              "warning": "This action is not reversible, so please continue with caution",
+              "button": "Delete Account",
+              "confirmTitle": "Delete Account",
+              "confirmDescription": "Are you sure you want to delete your account? This action cannot be undone.",
+              "confirm": "Delete",
+              "deleting": "Deleting...",
+              "success": "Account deleted successfully",
+              "fail": "Failed to delete account"
             }
           }
         }

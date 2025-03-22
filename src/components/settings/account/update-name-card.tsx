@@ -35,6 +35,7 @@ interface UpdateNameCardProps {
  * update user name
  */
 export function UpdateNameCard({ className }: UpdateNameCardProps) {
+  const ct = useTranslations('Common');
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -142,7 +143,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
             </p>
 
             <Button type="submit" disabled={isSaving} className="cursor-pointer">
-              {isSaving ? t('saving') : t('save')}
+              {isSaving ? ct('saving') : ct('save')}
             </Button>
           </CardFooter>
         </form>

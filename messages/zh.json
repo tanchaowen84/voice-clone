@@ -12,7 +12,11 @@
     "light": "浅色模式",
     "dark": "深色模式",
     "system": "跟随系统",
-    "copy": "复制"
+    "copy": "复制",
+    "save": "保存",
+    "saving": "保存中...",
+    "cancel": "取消",
+    "logoutFailed": "退出失败"
   },
   "Metadata": {
     "title": "MkSaaS - 最好的 AI SaaS 模板",
@@ -311,10 +315,11 @@
         "items": {
           "account": {
             "title": "账户",
+            "description": "管理您的账户信息",
             "avatar": {
               "title": "头像",
               "description": "点击上传按钮上传自定义头像",
-              "recommendation": "头像是可选的，但强烈推荐使用",
+              "recommendation": "头像是可选的，但强烈推荐设置",
               "uploading": "上传中...",
               "uploadAvatar": "上传头像",
               "success": "头像更新成功",
@@ -329,41 +334,7 @@
               "hint": "请使用 3-30 个字符",
               "success": "名字更新成功",
               "fail": "更新名字失败"
-            },
-            "password": {
-              "title": "修改密码",
-              "description": "输入您的当前密码和新密码",
-              "currentPassword": "当前密码",
-              "currentRequired": "当前密码是必填项",
-              "newPassword": "新密码",
-              "newMinLength": "密码必须至少包含 8 个字符",
-              "hint": "请使用至少 8 个字符",
-              "showPassword": "显示密码",
-              "hidePassword": "隐藏密码",
-              "success": "密码更新成功",
-              "fail": "更新密码失败"
-            },
-            "setupPassword": {
-              "title": "设置密码",
-              "description": "设置密码以启用邮箱登录",
-              "info": "设置密码将允许您除了社交登录方式外，还可以使用邮箱和密码登录，您将收到一封包含设置密码链接的电子邮件",
-              "button": "设置密码"
-            },
-            "deleteAccount": {
-              "title": "删除账号",
-              "description": "永久删除您的账号和所有内容",
-              "warning": "此操作是不可逆的，请谨慎操作",
-              "button": "删除账号",
-              "confirmTitle": "删除账号",
-              "confirmDescription": "您确定要删除您的账号吗？此操作无法撤销",
-              "confirm": "删除",
-              "deleting": "删除中...",
-              "success": "账号删除成功",
-              "fail": "删除账号失败"
-            },
-            "save": "保存",
-            "saving": "保存中...",
-            "cancel": "取消"
+            }
           },
           "billing": {
             "title": "账单",
@@ -414,6 +385,7 @@
           },
           "notification": {
             "title": "通知",
+            "description": "管理您的通知设置",
             "newsletter": {
               "title": "订阅",
               "description": "管理您的邮件列表订阅偏好",
@@ -425,6 +397,41 @@
               "unsubscribeSuccess": "成功取消订阅邮件列表",
               "unsubscribeFail": "取消订阅邮件列表失败",
               "error": "更新订阅时发生错误"
+            }
+          },
+          "security": {
+            "title": "安全",
+            "description": "管理您的安全设置",
+            "password": {
+              "title": "修改密码",
+              "description": "输入您的当前密码和新密码",
+              "currentPassword": "当前密码",
+              "currentRequired": "当前密码是必填项",
+              "newPassword": "新密码",
+              "newMinLength": "密码必须至少包含 8 个字符",
+              "hint": "请使用至少 8 个字符",
+              "showPassword": "显示密码",
+              "hidePassword": "隐藏密码",
+              "success": "密码更新成功",
+              "fail": "更新密码失败"
+            },
+            "setupPassword": {
+              "title": "设置密码",
+              "description": "设置密码以启用邮箱登录",
+              "info": "设置密码将允许您除了社交登录方式外，还可以使用邮箱和密码登录，您将收到一封包含设置密码链接的电子邮件",
+              "button": "设置密码"
+            },
+            "deleteAccount": {
+              "title": "删除账号",
+              "description": "永久删除您的账号和所有内容",
+              "warning": "此操作是不可逆的，请谨慎操作",
+              "button": "删除账号",
+              "confirmTitle": "删除账号",
+              "confirmDescription": "您确定要删除您的账号吗？此操作无法撤销",
+              "confirm": "删除",
+              "deleting": "删除中...",
+              "success": "账号删除成功",
+              "fail": "删除账号失败"
             }
           }
         }

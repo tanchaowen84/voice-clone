@@ -429,6 +429,12 @@ export function getNavMainLinks(): NestedMenuItem[] {
           external: false,
         },
         {
+          title: t('Dashboard.sidebar.settings.items.security.title'),
+          icon: <ShieldCheckIcon className="site-4 shrink-0" />,
+          href: Routes.SettingsSecurity,
+          external: false,
+        },
+        {
           title: t('Dashboard.sidebar.settings.items.notification.title'),
           icon: <BellIcon className="site-4 shrink-0" />,
           href: Routes.SettingsNotifications,

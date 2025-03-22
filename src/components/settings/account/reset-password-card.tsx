@@ -38,7 +38,7 @@ interface ResetPasswordCardProps {
  */
 export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
   const router = useLocaleRouter();
-  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security');
   const { data: session } = authClient.useSession();
 
   const handleSetupPassword = () => {

@@ -22,7 +22,7 @@ export default function SettingsBillingPage() {
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />
 
-      <div className="px-4 py-8">
+      <div className="px-4 lg:px-6 py-8">
         <BillingCard />
       </div>
     </>
