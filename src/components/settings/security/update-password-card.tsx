@@ -39,6 +39,7 @@ interface UpdatePasswordCardProps {
  * Update user password
  * 
  * This component allows users to update their password.
+ * 
  * NOTE: This should only be used for users with credential providers (email/password login).
  * For conditional rendering based on provider type, use ConditionalUpdatePasswordCard instead.
  * 

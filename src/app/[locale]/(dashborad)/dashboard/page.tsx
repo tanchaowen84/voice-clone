@@ -4,7 +4,7 @@ import { DataTable } from '@/components/dashboard/data-table';
 import { SectionCards } from '@/components/dashboard/section-cards';
 import { useTranslations } from 'next-intl';
 
-import data from "../data.json";
+import data from "./data.json";
 
 export default function DashboardPage() {
   const t = useTranslations();

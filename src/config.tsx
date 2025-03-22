@@ -16,6 +16,7 @@ import {
   ChartNoAxesCombinedIcon,
   CircleDollarSignIcon,
   CircleHelpIcon,
+  CircleUserRoundIcon,
   CookieIcon,
   CreditCardIcon,
   FileTextIcon,
@@ -24,6 +25,7 @@ import {
   ImageIcon,
   LayoutDashboardIcon,
   ListChecksIcon,
+  LockKeyholeIcon,
   MailboxIcon,
   MailIcon,
   NewspaperIcon,
@@ -33,7 +35,6 @@ import {
   SquareKanbanIcon,
   SquarePenIcon,
   ThumbsUpIcon,
-  UserCircleIcon,
   WandSparklesIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -418,7 +419,7 @@ export function getNavMainLinks(): NestedMenuItem[] {
       items: [
         {
           title: t('Dashboard.sidebar.settings.items.profile.title'),
-          icon: <UserCircleIcon className="site-4 shrink-0" />,
+          icon: <CircleUserRoundIcon className="site-4 shrink-0" />,
           href: Routes.SettingsProfile,
           external: false,
         },
@@ -430,7 +431,7 @@ export function getNavMainLinks(): NestedMenuItem[] {
         },
         {
           title: t('Dashboard.sidebar.settings.items.security.title'),
-          icon: <ShieldCheckIcon className="site-4 shrink-0" />,
+          icon: <LockKeyholeIcon className="site-4 shrink-0" />,
           href: Routes.SettingsSecurity,
           external: false,
         },

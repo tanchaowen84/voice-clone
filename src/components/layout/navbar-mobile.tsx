@@ -197,7 +197,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           type="button"
                           variant="ghost"
                           className={cn(
-                            'flex w-full items-center justify-between text-left',
+                            'flex w-full !pl-0 items-center justify-between text-left',
                             'bg-transparent text-muted-foreground cursor-pointer',
                             'hover:bg-transparent hover:text-foreground',
                             'focus:bg-transparent focus:text-foreground',
@@ -213,8 +213,8 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           )}
                         </Button>
                       </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <ul className="mt-2 space-y-2">
+                      <CollapsibleContent className="pl-0">
+                        <ul className="mt-2 space-y-2 pl-0">
                           {item.items.map((subItem) => {
                             const isSubItemActive =
                               subItem.href &&
@@ -234,7 +234,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                   }
                                   className={cn(
                                     buttonVariants({ variant: 'ghost' }),
-                                    'group h-auto w-full justify-start gap-4 p-1 px-3',
+                                    'group h-auto w-full justify-start gap-4 p-1 !pl-0 !pr-3',
                                     'bg-transparent text-muted-foreground cursor-pointer',
                                     'hover:bg-transparent hover:text-foreground',
                                     'focus:bg-transparent focus:text-foreground',
@@ -245,7 +245,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                 >
                                   <div
                                     className={cn(
-                                      'flex size-8 shrink-0 items-center justify-center transition-colors',
+                                      'flex size-8 shrink-0 items-center justify-center transition-colors ml-0',
                                       'bg-transparent text-muted-foreground',
                                       'group-hover:bg-transparent group-hover:text-foreground',
                                       'group-focus:bg-transparent group-focus:text-foreground',
@@ -306,7 +306,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                       rel={item.external ? 'noopener noreferrer' : undefined}
                       className={cn(
                         buttonVariants({ variant: 'ghost' }),
-                        'w-full justify-start cursor-pointer',
+                        'w-full !pl-0 justify-start cursor-pointer group',
                         'bg-transparent text-muted-foreground',
                         'hover:bg-transparent hover:text-foreground',
                         'focus:bg-transparent focus:text-foreground',
@@ -314,7 +314,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                       )}
                       onClick={onLinkClicked}
                     >
-                      <span className="text-base">{item.title}</span>
+                      <div className="flex items-center w-full pl-0">
+                        <span className="text-base">{item.title}</span>
+                      </div>
                     </LocaleLink>
                   )}
                 </li>

@@ -26,7 +26,7 @@ interface ResetPasswordCardProps {
  * 
  * How it works:
  * 1. When a user signs in with a social provider, they don't have a password set up
- * 2. This card provides a way for them to set up a password using the forgot password flow
+ * 2. This component provides a way for them to set up a password using the forgot password flow
  * 3. The user clicks the button and is redirected to the forgot password page
  * 4. They enter their email (which is already associated with their account)
  * 5. They receive a password reset email

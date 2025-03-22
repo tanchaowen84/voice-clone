@@ -2,6 +2,7 @@
 
 import { createPortalAction } from '@/actions/payment';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -57,7 +58,7 @@ export function CustomerPortalButton({
     <Button
       variant={variant}
       size={size}
-      className={className}
+      className={cn(className, 'cursor-pointer')}
       onClick={handleClick}
       disabled={isLoading}
     >

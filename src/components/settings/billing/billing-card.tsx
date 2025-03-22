@@ -1,15 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { CheckoutButton } from '@/components/payment/checkout-button';
+import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
-import { CheckoutButton } from '@/components/payment/checkout-button';
 import { getAllPlans } from '@/payment';
 import { PricePlan } from '@/payment/types';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 // Utility function to format prices
 const formatPrice = (amount: number, currency: string = 'USD') => {
@@ -117,240 +117,134 @@ export default function BillingCard() {
     : null;
 
   return (
-    <div className="px-4 py-8">
-      <div className="max-w-5xl mx-auto space-y-10">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            {t('title')}
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            {t('description')}
-          </p>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Current Plan Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('currentPlan.title')}</CardTitle>
-              <CardDescription>{t('currentPlan.description')}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {loading ? (
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-1/3" />
-                  <Skeleton className="h-4 w-1/2" />
-                  <Skeleton className="h-4 w-2/3" />
-                  <Skeleton className="h-4 w-1/4" />
+    <div className="space-y-10">
+      <div className="grid gap-8 md:grid-cols-2">
+        {/* Current Plan Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('currentPlan.title')}</CardTitle>
+            <CardDescription>{t('currentPlan.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {loading ? (
+              <div className="space-y-3">
+                <Skeleton className="h-5 w-1/4" />
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-full" />
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <div className="font-medium">{currentPlan?.name}</div>
+                  <Badge variant={currentPlan?.isFree ? 'outline' : 'default'}>
+                    {billingData.subscription?.status === 'active' ?
+                      t('status.active') :
+                      billingData.subscription?.status === 'trialing' ?
+                        t('status.trial') :
+                        t('status.free')}
+                  </Badge>
                 </div>
-              ) : (
-                <>
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">{currentPlan?.name}</div>
-                    <Badge variant={currentPlan?.isFree ? 'outline' : 'default'}>
-                      {billingData.subscription?.status === 'active' ?
-                        t('status.active') :
-                        billingData.subscription?.status === 'trialing' ?
-                          t('status.trial') :
-                          t('status.free')}
-                    </Badge>
-                  </div>
 
-                  {billingData.subscription && currentPrice && (
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      <div>
-                        {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === 'month' ?
-                          t('interval.month') :
-                          currentPrice.interval === 'year' ?
-                            t('interval.year') :
-                            t('interval.oneTime')}
+                {billingData.subscription && currentPrice && (
+                  <div className="text-sm text-muted-foreground space-y-1">
+                    <div>
+                      {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === 'month' ?
+                        t('interval.month') :
+                        currentPrice.interval === 'year' ?
+                          t('interval.year') :
+                          t('interval.oneTime')}
+                    </div>
+
+                    {nextBillingDate && (
+                      <div>{t('nextBillingDate')} {nextBillingDate}</div>
+                    )}
+
+                    {billingData.subscription.status === 'trialing' && (
+                      <div className="text-amber-500">
+                        {t('trialEnds')} {new Intl.DateTimeFormat('en-US', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        }).format(billingData.subscription.currentPeriodEnd)}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {currentPlan?.isFree && (
+                  <div className="text-sm text-muted-foreground">
+                    {t('freePlanMessage')}
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+          <CardFooter>
+            {loading ? (
+              <Skeleton className="h-10 w-full" />
+            ) : billingData.subscription ? (
+              <CustomerPortalButton
+                customerId={billingData.user.customerId}
+                className="w-full"
+              >
+                {t('manageSubscription')}
+              </CustomerPortalButton>
+            ) : (
+              <div className="text-sm text-muted-foreground">
+                {t('upgradeMessage')}
+              </div>
+            )}
+          </CardFooter>
+        </Card>
+      </div>
+
+      {/* Upgrade Options */}
+      {!loading && !billingData.subscription && (
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">{t('upgradePlan.title')}</h2>
+            <p className="text-muted-foreground mt-1">
+              {t('upgradePlan.description')}
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {plans
+              .filter(plan => !plan.isFree && !isEnterprisePlan(plan))
+              .map(plan => {
+                // Get monthly price if available, otherwise first price
+                const price = plan.prices.find(p => p.type === 'recurring' && p.interval === 'month') || plan.prices[0];
+                if (!price) return null;
+
+                return (
+                  <Card key={plan.id} className="flex flex-col">
+                    <CardHeader>
+                      <CardTitle>{plan.name}</CardTitle>
+                      <CardDescription>{plan.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="grow">
+                      <div className="mb-4">
+                        <span className="text-3xl font-bold">
+                          {formatPrice(price.amount, price.currency)}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {price.interval === 'month' ?
+                            `/${t('interval.month')}` :
+                            price.interval === 'year' ?
+                              `/${t('interval.year')}` :
+                              ''}
+                        </span>
                       </div>
 
-                      {nextBillingDate && (
-                        <div>{t('nextBillingDate')} {nextBillingDate}</div>
-                      )}
-
-                      {billingData.subscription.status === 'trialing' && (
-                        <div className="text-amber-500">
-                          {t('trialEnds')} {new Intl.DateTimeFormat('en-US', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                          }).format(billingData.subscription.currentPeriodEnd)}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {currentPlan?.isFree && (
-                    <div className="text-sm text-muted-foreground">
-                      {t('freePlanMessage')}
-                    </div>
-                  )}
-                </>
-              )}
-            </CardContent>
-            <CardFooter>
-              {loading ? (
-                <Skeleton className="h-10 w-full" />
-              ) : billingData.subscription ? (
-                <CustomerPortalButton
-                  customerId={billingData.user.customerId}
-                  className="w-full"
-                >
-                  {t('manageSubscription')}
-                </CustomerPortalButton>
-              ) : (
-                <div className="text-sm text-muted-foreground">
-                  {t('upgradeMessage')}
-                </div>
-              )}
-            </CardFooter>
-          </Card>
-
-          {/* Payment Method Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('paymentMethod.title')}</CardTitle>
-              <CardDescription>{t('paymentMethod.description')}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {loading ? (
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-1/2" />
-                  <Skeleton className="h-4 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              ) : billingData.subscription ? (
-                <div className="text-sm">
-                  <p>{t('paymentMethod.manageMessage')}</p>
-                  <p className="mt-2 text-muted-foreground">
-                    {t('paymentMethod.securityMessage')}
-                  </p>
-                </div>
-              ) : (
-                <div className="text-sm">
-                  <p>{t('paymentMethod.noMethodsMessage')}</p>
-                  <p className="mt-2 text-muted-foreground">
-                    {t('paymentMethod.upgradePromptMessage')}
-                  </p>
-                </div>
-              )}
-            </CardContent>
-            <CardFooter>
-              {loading ? (
-                <Skeleton className="h-10 w-full" />
-              ) : billingData.subscription ? (
-                <CustomerPortalButton
-                  customerId={billingData.user.customerId}
-                  className="w-full cursor-pointer"
-                >
-                  {t('managePaymentMethods')}
-                </CustomerPortalButton>
-              ) : (
-                <div />
-              )}
-            </CardFooter>
-          </Card>
-        </div>
-
-        {/* Upgrade Options */}
-        {!loading && !billingData.subscription && (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">{t('upgradePlan.title')}</h2>
-              <p className="text-muted-foreground mt-1">
-                {t('upgradePlan.description')}
-              </p>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {plans
-                .filter(plan => !plan.isFree && !isEnterprisePlan(plan))
-                .map(plan => {
-                  // Get monthly price if available, otherwise first price
-                  const price = plan.prices.find(p => p.type === 'recurring' && p.interval === 'month') || plan.prices[0];
-                  if (!price) return null;
-
-                  return (
-                    <Card key={plan.id} className="flex flex-col">
-                      <CardHeader>
-                        <CardTitle>{plan.name}</CardTitle>
-                        <CardDescription>{plan.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="grow">
-                        <div className="mb-4">
-                          <span className="text-3xl font-bold">
-                            {formatPrice(price.amount, price.currency)}
-                          </span>
-                          <span className="text-muted-foreground">
-                            {price.interval === 'month' ?
-                              `/${t('interval.month')}` :
-                              price.interval === 'year' ?
-                                `/${t('interval.year')}` :
-                                ''}
-                          </span>
-                        </div>
-
-                        {price.trialPeriodDays && price.trialPeriodDays > 0 && (
-                          <Badge variant="outline" className="mb-4">
-                            {t('trialDays', {
-                              days: price.trialPeriodDays
-                            })}
-                          </Badge>
-                        )}
-
-                        <ul className="space-y-2 mb-6">
-                          {plan.features.map((feature, index) => (
-                            <li key={index} className="flex items-start">
-                              <svg
-                                className="h-5 w-5 text-primary shrink-0 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                              <span className="text-sm">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                      <CardFooter>
-                        <CheckoutButton
-                          planId={plan.id}
-                          priceId={price.productId}
-                          email={billingData.user.email}
-                          metadata={{ userId: billingData.user.id }}
-                          className="w-full"
-                        >
-                          {t('upgradeToPlan', {
-                            planName: plan.name
+                      {price.trialPeriodDays && price.trialPeriodDays > 0 && (
+                        <Badge variant="outline" className="mb-4">
+                          {t('trialDays', {
+                            days: price.trialPeriodDays
                           })}
-                        </CheckoutButton>
-                      </CardFooter>
-                    </Card>
-                  );
-                })}
-            </div>
+                        </Badge>
+                      )}
 
-            {/* Enterprise Plan */}
-            {plans
-              .filter(plan => isEnterprisePlan(plan))
-              .map(plan => (
-                <Card key={plan.id} className="bg-muted/40">
-                  <CardHeader>
-                    <CardTitle>{plan.name}</CardTitle>
-                    <CardDescription>{plan.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                      <ul className="space-y-2 mb-6 md:mb-0">
+                      <ul className="space-y-2 mb-6">
                         {plan.features.map((feature, index) => (
                           <li key={index} className="flex items-start">
                             <svg
@@ -370,59 +264,108 @@ export default function BillingCard() {
                           </li>
                         ))}
                       </ul>
+                    </CardContent>
+                    <CardFooter>
+                      <CheckoutButton
+                        planId={plan.id}
+                        priceId={price.productId}
+                        email={billingData.user.email}
+                        metadata={{ userId: billingData.user.id }}
+                        className="w-full"
+                      >
+                        {t('upgradeToPlan', {
+                          planName: plan.name
+                        })}
+                      </CheckoutButton>
+                    </CardFooter>
+                  </Card>
+                );
+              })}
+          </div>
 
-                      <div className="flex flex-col items-start md:items-end">
-                        <span className="text-xl font-bold mb-2">{t('customPricing')}</span>
-                        <Button className="w-full md:w-auto" variant="default" asChild>
-                          <a href="mailto:sales@yourcompany.com">{t('contactSales')}</a>
-                        </Button>
-                      </div>
+          {/* Enterprise Plan */}
+          {plans
+            .filter(plan => isEnterprisePlan(plan))
+            .map(plan => (
+              <Card key={plan.id} className="bg-muted/40">
+                <CardHeader>
+                  <CardTitle>{plan.name}</CardTitle>
+                  <CardDescription>{plan.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <ul className="space-y-2 mb-6 md:mb-0">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <svg
+                            className="h-5 w-5 text-primary shrink-0 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          <span className="text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-col items-start md:items-end">
+                      <span className="text-xl font-bold mb-2">{t('customPricing')}</span>
+                      <Button className="w-full md:w-auto" variant="default" asChild>
+                        <a href="mailto:sales@yourcompany.com">{t('contactSales')}</a>
+                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        )}
-
-        {/* Billing History */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">{t('billingHistory.title')}</h2>
-            <p className="text-muted-foreground mt-1">
-              {t('billingHistory.description')}
-            </p>
-          </div>
-
-          <Card>
-            <CardContent className="pt-6">
-              {loading ? (
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-5 w-full" />
-                </div>
-              ) : billingData.subscription ? (
-                <div className="text-center py-4">
-                  <p className="text-sm text-muted-foreground">
-                    {t('billingHistory.accessMessage')}
-                  </p>
-                  <CustomerPortalButton
-                    customerId={billingData.user.customerId}
-                    className="mt-4"
-                  >
-                    {t('viewBillingHistory')}
-                  </CustomerPortalButton>
-                </div>
-              ) : (
-                <div className="text-center py-4">
-                  <p className="text-sm text-muted-foreground">
-                    {t('billingHistory.noHistoryMessage')}
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
         </div>
+      )}
+
+      {/* Billing History */}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">{t('billingHistory.title')}</h2>
+          <p className="text-muted-foreground mt-1">
+            {t('billingHistory.description')}
+          </p>
+        </div>
+
+        <Card>
+          <CardContent className="pt-6">
+            {loading ? (
+              <div className="space-y-3">
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-5 w-full" />
+              </div>
+            ) : billingData.subscription ? (
+              <div className="text-center py-4">
+                <p className="text-sm text-muted-foreground">
+                  {t('billingHistory.accessMessage')}
+                </p>
+                <CustomerPortalButton
+                  customerId={billingData.user.customerId}
+                  className="mt-4"
+                >
+                  {t('viewBillingHistory')}
+                </CustomerPortalButton>
+              </div>
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-sm text-muted-foreground">
+                  {t('billingHistory.noHistoryMessage')}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

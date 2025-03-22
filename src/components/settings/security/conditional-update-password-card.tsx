@@ -17,6 +17,7 @@ interface ConditionalUpdatePasswordCardProps {
  * Conditionally renders either:
  * - UpdatePasswordCard: if the user has a credential provider (email/password login)
  * - ResetPasswordCard: if the user only has social login providers and has an email
+ * - PasswordSkeletonCard: when this component is still loading
  * - Nothing: if the user has no credential provider and no email
  */
 export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePasswordCardProps) {
