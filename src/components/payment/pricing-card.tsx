@@ -75,7 +75,8 @@ export function PricingCard({
   isCurrentPlan = false,
 }: PricingCardProps) {
   const price = getPriceForPlan(plan, interval, paymentType);
-  const formattedPrice = plan.isFree ? 'Free' : price ? formatPrice(price.amount, price.currency) : 'Not Available';
+  const formattedPrice = plan.isFree ? 'Free' : price ? 
+    formatPrice(price.amount, price.currency) : 'Not Available';
   
   // Generate pricing label based on payment type and interval
   let priceLabel = '';
