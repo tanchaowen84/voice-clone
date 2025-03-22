@@ -128,16 +128,16 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden py-0 pt-6 flex flex-col", className)}>
       <CardHeader>
-        <CardTitle className="text-lg font-bold">
+        <CardTitle className="text-lg font-semibold">
           {t('avatar.title')}
         </CardTitle>
         <CardDescription>
           {t('avatar.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1">
         <div className="flex flex-col items-center sm:flex-row gap-4 sm:gap-8">
           {/* avatar */}
           <Avatar className="h-16 w-16 border">
@@ -161,7 +161,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
 
         <FormError message={error} />
       </CardContent>
-      <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
+      <CardFooter className="mt-auto px-6 py-4 flex justify-between items-center bg-muted rounded-none">
         <p className="text-sm text-muted-foreground">
           {t('avatar.recommendation')}
         </p>

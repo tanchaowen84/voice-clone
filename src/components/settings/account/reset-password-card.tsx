@@ -51,21 +51,21 @@ export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>
-        <CardTitle className="text-lg font-bold">
+        <CardTitle className="text-lg font-semibold">
           {t('setupPassword.title')}
         </CardTitle>
         <CardDescription>
           {t('setupPassword.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1">
         <p className="text-sm text-muted-foreground">
           {t('setupPassword.info')}
         </p>
       </CardContent>
-      <CardFooter className="mt-6 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+      <CardFooter className="mt-auto px-6 py-4 flex justify-end items-center bg-muted rounded-none">
         <Button onClick={handleSetupPassword} className="cursor-pointer">
           {t('setupPassword.button')}
         </Button>

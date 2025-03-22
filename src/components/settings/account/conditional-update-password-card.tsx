@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { authClient } from '@/lib/auth-client';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ConditionalUpdatePasswordCardProps {
   className?: string;
@@ -55,7 +56,7 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 
   // Don't render anything while loading
   if (isLoading) {
-    return <PasswordSkeletonCard className={className} />;
+    return null;
   }
 
   // If user has credential provider, show UpdatePasswordCard
@@ -76,7 +77,7 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 function PasswordSkeletonCard({ className }: { className?: string }) {
   const t = useTranslations('Dashboard.sidebar.settings.items.account');
   return (
-    <Card className={className}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>
         <CardTitle>
           {t('password.title')}
@@ -85,7 +86,7 @@ function PasswordSkeletonCard({ className }: { className?: string }) {
           {t('password.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-4 flex-1">
         <Skeleton className="h-4 w-3/4" />
         <Skeleton className="h-4 w-1/2" />
         <Skeleton className="h-4 w-full" />

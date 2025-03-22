@@ -17,10 +17,14 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
 import { SidebarUpgradeCard } from './sidebar-upgrade-card';
+import { authClient } from '@/lib/auth-client';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
   const mainLinks = getNavMainLinks();
+
+  const { data: session, error } = authClient.useSession();
+  const user = session?.user;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -47,8 +51,10 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-4">
+        {/* TODO: show or hide based on user status */}
         <SidebarUpgradeCard />
-        <NavUser />
+
+        {user && <NavUser user={user} />}
       </SidebarFooter>
     </Sidebar>
   );

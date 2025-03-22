@@ -115,9 +115,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 h-full", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>
-        <CardTitle className="text-lg font-bold">
+        <CardTitle className="text-lg font-semibold">
           {t('password.title')}
         </CardTitle>
         <CardDescription>
@@ -125,8 +125,8 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
         </CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1">
+          <CardContent className="space-y-4 flex-1">
             <FormField
               control={form.control}
               name="currentPassword"

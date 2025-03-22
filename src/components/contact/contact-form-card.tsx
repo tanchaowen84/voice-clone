@@ -87,7 +87,7 @@ export function ContactFormCard() {
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-bold">
+        <CardTitle className="text-lg font-semibold">
           {t('title')}
         </CardTitle>
         <CardDescription>

@@ -9,7 +9,7 @@ import { PropsWithChildren } from 'react';
  * inspired by dashboard-01
  * https://ui.shadcn.com/blocks
  */
-export default function DashboardLayout({children}: PropsWithChildren) {
+export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <SidebarProvider
       style={
@@ -20,7 +20,7 @@ export default function DashboardLayout({children}: PropsWithChildren) {
       }
     >
       <DashboardSidebar variant="inset" />
-      
+
       <SidebarInset>
         {children}
       </SidebarInset>

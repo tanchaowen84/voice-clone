@@ -81,7 +81,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 h-full", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-bold text-destructive">
           {t('deleteAccount.title')}
@@ -90,7 +90,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
           {t('deleteAccount.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1">
         <p className="text-sm text-muted-foreground">
           {t('deleteAccount.warning')}
         </p>

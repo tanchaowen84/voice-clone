@@ -36,8 +36,14 @@ import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
 import { UserAvatar } from '../shared/user-avatar';
 import { toast } from 'sonner';
+import { User } from 'better-auth';
 
-export function NavUser() {
+interface NavUserProps {
+  user: User;
+  className?: string;
+}
+
+export function NavUser({ user, className }: NavUserProps) {
   const { setTheme } = useTheme();
   const router = useLocaleRouter();
   const { isMobile } = useSidebar();
@@ -47,11 +53,11 @@ export function NavUser() {
   const [, startTransition] = useTransition();
   const t = useTranslations();
 
-  const { data: session, error } = authClient.useSession();
-  const user = session?.user;
-  if (!user) {
-    return null;
-  }
+  // const { data: session, error } = authClient.useSession();
+  // const user = session?.user;
+  // if (!user) {
+  //   return null;
+  // }
 
   const setLocale = (nextLocale: Locale) => {
     setCurrentLocale(nextLocale);
