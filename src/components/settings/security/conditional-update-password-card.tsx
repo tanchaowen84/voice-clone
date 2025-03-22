@@ -56,7 +56,7 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 
   // Don't render anything while loading
   if (isLoading) {
-    return null;
+    return <PasswordSkeletonCard className={className} />;
   }
 
   // If user has credential provider, show UpdatePasswordCard
@@ -77,9 +77,9 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 function PasswordSkeletonCard({ className }: { className?: string }) {
   const t = useTranslations('Dashboard.sidebar.settings.items.security');
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col", className)}>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="text-lg font-semibold">
           {t('password.title')}
         </CardTitle>
         <CardDescription>
@@ -87,11 +87,11 @@ function PasswordSkeletonCard({ className }: { className?: string }) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 flex-1">
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-2/3" />
-        <Skeleton className="h-4 w-1/3" />
+        <Skeleton className="h-5 w-1/2" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-5 w-1/2" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-5 w-3/4" />
       </CardContent>
     </Card>
   );

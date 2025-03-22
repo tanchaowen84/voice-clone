@@ -409,7 +409,7 @@
               "currentRequired": "当前密码是必填项",
               "newPassword": "新密码",
               "newMinLength": "密码必须至少包含 8 个字符",
-              "hint": "请使用至少 8 个字符",
+              "hint": "请至少使用 8 个字符作为密码",
               "showPassword": "显示密码",
               "hidePassword": "隐藏密码",
               "success": "密码更新成功",

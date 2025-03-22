@@ -216,26 +216,3 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
     </Card>
   );
 }
-
-export function PasswordSkeletonCard({ className }: { className?: string }) {
-  const t = useTranslations('Dashboard.sidebar.settings.items.security');
-  return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>
-          {t('password.title')}
-        </CardTitle>
-        <CardDescription>
-          {t('password.description')}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-2/3" />
-        <Skeleton className="h-4 w-1/3" />
-      </CardContent>
-    </Card>
-  );
-}
