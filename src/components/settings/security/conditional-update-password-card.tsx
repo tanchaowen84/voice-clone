@@ -1,7 +1,7 @@
 'use client';
 
-import { ResetPasswordCard } from '@/components/settings/account/reset-password-card';
-import { UpdatePasswordCard } from '@/components/settings/account/update-password-card';
+import { ResetPasswordCard } from '@/components/settings/security/reset-password-card';
+import { UpdatePasswordCard } from '@/components/settings/security/update-password-card';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { authClient } from '@/lib/auth-client';
@@ -75,7 +75,7 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 }
 
 function PasswordSkeletonCard({ className }: { className?: string }) {
-  const t = useTranslations('Dashboard.sidebar.settings.items.account');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security');
   return (
     <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>

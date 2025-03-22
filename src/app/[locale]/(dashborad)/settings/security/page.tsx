@@ -1,6 +1,6 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { ConditionalUpdatePasswordCard } from '@/components/settings/account/conditional-update-password-card';
-import { DeleteAccountCard } from '@/components/settings/account/delete-account-card';
+import { ConditionalUpdatePasswordCard } from '@/components/settings/security/conditional-update-password-card';
+import { DeleteAccountCard } from '@/components/settings/security/delete-account-card';
 import { useTranslations } from 'next-intl';
 
 export default function SettingsSecurityPage() {
