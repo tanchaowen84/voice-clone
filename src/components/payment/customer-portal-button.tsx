@@ -1,6 +1,6 @@
 'use client';
 
-import { createPortalAction } from '@/actions/payment';
+import { createPortalAction } from '@/actions/create-customer-portal-session';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { createCheckoutAction } from '@/actions/payment';
+import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
@@ -53,8 +53,9 @@ export function CheckoutButton({
       // TODO: Handle error
     } catch (error) {
       console.error('Error creating checkout session:', error);
-      setIsLoading(false);
       // Here you could display an error notification
+    } finally {
+      setIsLoading(false);
     }
   };
 

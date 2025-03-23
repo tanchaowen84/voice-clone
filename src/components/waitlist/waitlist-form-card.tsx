@@ -1,6 +1,6 @@
 "use client";
 
-import { subscribeAction } from '@/actions/newsletter';
+import { subscribeNewsletterAction } from '@/actions/subscribe-newsletter';
 import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -57,7 +57,7 @@ export function WaitlistFormCard() {
       setError('');
       setIsSubmitting(true);
 
-      const result = await subscribeAction({
+      const result = await subscribeNewsletterAction({
         email: values.email,
       });
 

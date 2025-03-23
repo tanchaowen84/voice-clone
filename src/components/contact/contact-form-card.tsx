@@ -1,6 +1,6 @@
 "use client";
 
-import { contactAction } from '@/actions/mail';
+import { sendMessageAction } from '@/actions/send-message';
 import { FormError } from '@/components/shared/form-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -65,7 +65,7 @@ export function ContactFormCard() {
 
     try {
       // Submit form data using the contact server action
-      const result = await contactAction(values);
+      const result = await sendMessageAction(values);
       
       if (result && result.data?.success) {
         toast.success(t('success'));

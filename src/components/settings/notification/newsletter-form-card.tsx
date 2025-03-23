@@ -1,5 +1,8 @@
 'use client';
 
+import { checkSubscribeStatusAction } from '@/actions/check-newsletter-subscribe-status';
+import { subscribeNewsletterAction } from '@/actions/subscribe-newsletter';
+import { unsubscribeNewsletterAction } from '@/actions/unsubscribe-newsletter';
 import { FormError } from '@/components/shared/form-error';
 import {
   Card,
@@ -18,19 +21,14 @@ import {
 } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import {
-  subscribeAction,
-  unsubscribeAction,
-  isSubscribedAction
-} from '@/actions/newsletter';
-import { cn } from '@/lib/utils';
-import { Loader2Icon } from 'lucide-react';
 
 interface NewsletterFormCardProps {
   className?: string;
@@ -69,7 +67,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
         try {
           setIsUpdating(true);
           // Check if the user is already subscribed using server action
-          const statusResult = await isSubscribedAction({ email: user.email });
+          const statusResult = await checkSubscribeStatusAction({ email: user.email });
 
           if (statusResult && statusResult.data?.success) {
             const isCurrentlySubscribed = statusResult.data.subscribed;
@@ -118,7 +116,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
     try {
       if (value) {
         // Subscribe to newsletter using server action
-        const subscribeResult = await subscribeAction({ email: user.email });
+        const subscribeResult = await subscribeNewsletterAction({ email: user.email });
 
         if (subscribeResult && subscribeResult.data?.success) {
           toast.success(t('newsletter.subscribeSuccess'));
@@ -133,7 +131,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
         }
       } else {
         // Unsubscribe from newsletter using server action
-        const unsubscribeResult = await unsubscribeAction({ email: user.email });
+        const unsubscribeResult = await unsubscribeNewsletterAction({ email: user.email });
 
         if (unsubscribeResult && unsubscribeResult.data?.success) {
           toast.success(t('newsletter.unsubscribeSuccess'));

@@ -82,7 +82,7 @@ export function PricingCard({
   let priceLabel = '';
   if (!plan.isFree && price) {
     if (paymentType === 'one_time') {
-      priceLabel = 'lifetime';
+      priceLabel = ''; // lifetime
     } else if (interval === 'month') {
       priceLabel = '/month';
     } else if (interval === 'year') {

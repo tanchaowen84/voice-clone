@@ -28,7 +28,7 @@ const contactFormSchema = z.object({
 });
 
 // Create a safe action for contact form submission
-export const contactAction = actionClient
+export const sendMessageAction = actionClient
   .schema(contactFormSchema)
   .action(async ({ parsedInput }) => {
     try {
@@ -56,10 +56,10 @@ export const contactAction = actionClient
       });
 
       if (!result) {
-        console.error('Failed to send the contact form message');
+        console.error('Failed to send the message');
         return {
           success: false,
-          error: 'Failed to send your message',
+          error: 'Failed to send the message',
         };
       }
 
@@ -67,7 +67,7 @@ export const contactAction = actionClient
         success: true,
       };
     } catch (error) {
-      console.error('Contact form submission error:', error);
+      console.error('Send message error:', error);
       return {
         success: false,
         error: 'An unexpected error occurred',
