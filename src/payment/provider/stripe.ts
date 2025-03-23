@@ -99,10 +99,50 @@ export class StripeProvider implements PaymentProvider {
         metadata,
       });
 
+      // Update user record in database with the new customer ID (non-blocking)
+      this.updateUserWithCustomerId(customer.id, email || '').catch(error => {
+        console.error('Error updating user with customer ID:', error);
+      });
+
       return customer.id;
     } catch (error) {
       console.error('Error creating or getting customer:', error);
       throw new Error('Failed to create or get customer');
+    }
+  }
+
+  /**
+   * Updates a user record with a Stripe customer ID
+   * @param customerId Stripe customer ID
+   * @param email Customer email
+   * @returns Promise that resolves when the update is complete
+   */
+  private async updateUserWithCustomerId(customerId: string, email: string): Promise<void> {
+    try {
+      // Dynamic import to avoid circular dependencies
+      // TODO: can we avoid using dynamic import?
+      const { default: db } = await import('@/db/index');
+      const { user } = await import('@/db/schema');
+      const { eq } = await import('drizzle-orm');
+      
+      // Update user record with customer ID if email matches
+      const result = await db
+        .update(user)
+        .set({ 
+          customerId: customerId,
+          updatedAt: new Date() 
+        })
+        .where(eq(user.email, email))
+        .returning({ id: user.id });
+      
+      if (result.length > 0) {
+        console.log(`Updated user ${result[0].id} with customer ID ${customerId}`);
+      } else {
+        console.log(`No user found with email ${email}`);
+      }
+    } catch (error) {
+      console.error('update user with customer ID error:', error);
+      throw error; // Re-throw to be caught by the caller
     }
   }
 
@@ -151,8 +191,22 @@ export class StripeProvider implements PaymentProvider {
         },
       };
 
-      // If customer email is provided, add it to the checkout
+      // If customer email is provided, create or get a customer
       if (customerEmail) {
+        // Get customer name from metadata if available
+        const customerName = metadata?.name;
+        
+        // Create or get customer
+        const customerId = await this.createOrGetCustomer(
+          customerEmail,
+          customerName,
+          metadata
+        );
+        
+        // Add customer to checkout session
+        checkoutParams.customer = customerId;
+      } else {
+        // If no customer email provided, add email field to collect it during checkout
         checkoutParams.customer_email = customerEmail;
       }
 
@@ -396,5 +450,20 @@ export class StripeProvider implements PaymentProvider {
     } catch (error) {
       console.error('Error in default webhook handler:', error);
     }
+  }
+
+  /**
+   * Create a Stripe customer if one doesn't exist for the email
+   * @param email Customer email
+   * @param name Optional customer name
+   * @param metadata Optional metadata
+   * @returns Stripe customer ID
+   */
+  public async createCustomer(
+    email: string,
+    name?: string,
+    metadata?: Record<string, string>
+  ): Promise<string> {
+    return this.createOrGetCustomer(email, name, metadata);
   }
 }

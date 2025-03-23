@@ -8,7 +8,8 @@ This module provides a flexible payment integration with Stripe, supporting both
 - `/payment/index.ts` - Main payment interface and global provider instance
 - `/payment/provider/stripe.ts` - Stripe payment provider implementation
 - `/payment/config/payment-config.ts` - Payment plans configuration
-- `/actions/payment.ts` - Server actions for payment operations
+- `/actions/create-checkout-session.ts` - Server actions for creating checkout session
+- `/actions/create-customer-portal-session.ts` - Server actions for creating portal session
 - `/app/api/webhooks/stripe/route.ts` - API route for Stripe webhook events
 - `/app/[locale]/(marketing)/payment/success/page.tsx` - Success page for completed checkout
 - `/app/[locale]/(marketing)/payment/cancel/page.tsx` - Cancel page for abandoned checkout

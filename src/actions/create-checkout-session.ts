@@ -42,6 +42,7 @@ export const createCheckoutAction = actionClient
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/payment/success?session_id={CHECKOUT_SESSION_ID}`;
+      // TODO: maybe add a cancel url as param, do not redirect to the cancel page
       const cancelUrl = `${baseUrlWithLocale}/payment/cancel`;
       const params: CreateCheckoutParams = {
         planId,
