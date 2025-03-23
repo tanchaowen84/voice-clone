@@ -1,7 +1,9 @@
 {
-  "Site": {
+  "Metadata": {
     "name": "MkSaaS",
-    "tagline": "使用 MkSaaS 在几小时内轻松构建您的 AI SaaS"
+    "title": "MkSaaS - 最好的 AI SaaS 模板",
+    "tagline": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
+    "description": "MkSaaS 是构建 AI SaaS 的最佳模板，使用 MkSaaS 可以在几天内轻松构建您的 AI SaaS，简单且毫不费力。"
   },
   "Common": {
     "login": "登录",
@@ -17,10 +19,6 @@
     "saving": "保存中...",
     "cancel": "取消",
     "logoutFailed": "退出失败"
-  },
-  "Metadata": {
-    "title": "MkSaaS - 最好的 AI SaaS 模板",
-    "description": "MkSaaS 是构建 AI SaaS 的最佳模板，使用 MkSaaS 可以在几小时内轻松构建您的 AI SaaS，简单且毫不费力。"
   },
   "HomePage": {
     "title": "MkSaaS 示例",

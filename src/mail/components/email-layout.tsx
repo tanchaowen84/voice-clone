@@ -43,7 +43,7 @@ export default function EmailLayout({ locale, messages, children }: EmailLayoutP
 
             <Hr className="my-8" />
             <Text className="mt-4">
-              {t('Mail.common.team', { name: t('Site.name') })}
+              {t('Mail.common.team', { name: t('Metadata.name') })}
             </Text>
             <Text>
               {t('Mail.common.copyright', { year: new Date().getFullYear() })}

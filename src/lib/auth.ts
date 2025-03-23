@@ -13,7 +13,7 @@ import { admin, username } from 'better-auth/plugins';
  * https://www.better-auth.com/docs/reference/options
  */
 export const auth = betterAuth({
-  appName: defaultMessages.Site.name,
+  appName: defaultMessages.Metadata.name,
   database: drizzleAdapter(db, {
     provider: 'pg', // or "mysql", "sqlite"
     // The schema object that defines the tables and fields

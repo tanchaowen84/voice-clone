@@ -38,7 +38,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
               <LocaleLink href="/">
                 <Logo className="size-5 rounded-full" />
                 <span className="truncate font-semibold text-base">
-                  {t('Site.name')}
+                  {t('Metadata.name')}
                 </span>
               </LocaleLink>
             </SidebarMenuButton>

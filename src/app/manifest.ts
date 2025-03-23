@@ -22,9 +22,9 @@ import { type MetadataRoute } from 'next';
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: defaultMessages.Site.name,
-    short_name: defaultMessages.Site.name,
-    description: defaultMessages.Site.tagline,
+    name: defaultMessages.Metadata.name,
+    short_name: defaultMessages.Metadata.name,
+    description: defaultMessages.Metadata.description,
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

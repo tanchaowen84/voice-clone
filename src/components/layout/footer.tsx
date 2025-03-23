@@ -25,13 +25,13 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               <div className="items-center space-x-2 flex">
                 <Logo />
                 <span className="text-xl font-semibold">
-                  {t('Site.name')}
+                  {t('Metadata.name')}
                 </span>
               </div>
 
               {/* tagline */}
               <p className="text-muted-foreground text-base py-2 md:pr-12">
-                {t('Site.tagline')}
+                {t('Metadata.tagline')}
               </p>
 
               {/* social links */}
@@ -94,7 +94,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       <div className="border-t py-8">
         <Container className="px-4 flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {t('Site.name')} All Rights
+            &copy; {new Date().getFullYear()} {t('Metadata.name')} All Rights
             Reserved.
           </span>
 

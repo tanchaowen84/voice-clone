@@ -67,7 +67,7 @@ export function Navbar({ scroll }: NavBarProps) {
             <LocaleLink href="/" className="flex items-center space-x-2">
               <Logo />
               <span className="text-xl font-semibold">
-                {t('Site.name')}
+                {t('Metadata.name')}
               </span>
             </LocaleLink>
           </div>

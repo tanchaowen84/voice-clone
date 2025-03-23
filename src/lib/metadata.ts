@@ -2,6 +2,7 @@ import { websiteConfig } from '@/config';
 import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/get-base-url';
+import { defaultMessages } from '@/i18n/messages';
 
 /**
  * Construct the metadata object for the current page (in docs/guides)
@@ -21,6 +22,8 @@ export function constructMetadata({
   noIndex?: boolean;
   locale?: string;
 } = {}): Metadata {
+  title = title || defaultMessages.Metadata.name;
+  description = description || defaultMessages.Metadata.description;
   image = image || websiteConfig.metadata.image;
   const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
   return {
@@ -53,7 +56,7 @@ export function constructMetadata({
       apple: '/apple-touch-icon.png',
     },
     metadataBase: new URL(getBaseUrl()),
-    manifest: `${getBaseUrl()}/site.webmanifest`,
+    manifest: `${getBaseUrl()}/manifest.webmanifest`,
     ...(noIndex && {
       robots: {
         index: false,
