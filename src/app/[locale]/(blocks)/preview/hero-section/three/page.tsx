@@ -3,8 +3,8 @@ import { Mail, SendHorizonal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TextEffect } from '@/components/motion-primitives/text-effect';
 import { AnimatedGroup } from '@/components/motion-primitives/animated-group';
-import { HeroHeader } from '@/components/nsui/hero5-header';
-import { LogoCloud } from '@/components/nsui/logo-cloud';
+import { HeroHeader } from '@/components/blocks/hero5-header';
+import { LogoCloud } from '@/components/blocks/logo-cloud';
 import Image from 'next/image';
 
 const transitionVariants = {

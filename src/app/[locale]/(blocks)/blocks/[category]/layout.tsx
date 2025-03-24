@@ -1,5 +1,5 @@
-import CategoryNavigation from '@/components/nsui/blocks-nav';
-import { categories } from '@/components/nsui/blocks';
+import CategoryNavigation from '@/components/blocks/blocks-nav';
+import { categories } from '@/components/blocks/blocks';
 
 export default function CategoryLayout({
   children,

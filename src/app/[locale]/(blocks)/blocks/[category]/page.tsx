@@ -1,5 +1,5 @@
-import BlockPreview from '@/components/nsui/block-preview';
-import { blocks, categories } from '@/components/nsui/blocks';
+import BlockPreview from '@/components/blocks/block-preview';
+import { blocks, categories } from '@/components/blocks/blocks';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
