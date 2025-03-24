@@ -1,11 +1,14 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
 
 /**
+ * https://orm.drizzle.team/docs/get-started/neon-new
  * https://orm.drizzle.team/docs/connect-overview
  *
- * Drizzle ORM runs SQL queries on your database via database drivers.
- * Under the hood Drizzle will create a node-postgres driver instance.
+ * Using the browser-compatible Neon HTTP driver for better compatibility with Next.js
+ * This avoids the Node.js-specific modules that cause build issues
  */
-const db = drizzle(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL!);
+const db = drizzle({ client: sql });
 
 export default db;

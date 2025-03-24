@@ -451,19 +451,4 @@ export class StripeProvider implements PaymentProvider {
       console.error('Error in default webhook handler:', error);
     }
   }
-
-  /**
-   * Create a Stripe customer if one doesn't exist for the email
-   * @param email Customer email
-   * @param name Optional customer name
-   * @param metadata Optional metadata
-   * @returns Stripe customer ID
-   */
-  public async createCustomer(
-    email: string,
-    name?: string,
-    metadata?: Record<string, string>
-  ): Promise<string> {
-    return this.createOrGetCustomer(email, name, metadata);
-  }
 }
