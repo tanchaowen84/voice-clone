@@ -7,7 +7,7 @@ import { withContentCollections } from "@content-collections/next";
  */
 const nextConfig: NextConfig = {
   /* config options here */
-  
+
   // https://nextjs.org/docs/architecture/nextjs-compiler#remove-console
   // Remove all console.* calls in production only
   compiler: {
@@ -27,7 +27,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
 };
