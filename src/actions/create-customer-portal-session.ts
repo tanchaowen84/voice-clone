@@ -1,10 +1,12 @@
 'use server';
 
+import { auth } from "@/lib/auth";
 import { getBaseUrlWithLocale } from "@/lib/urls/get-base-url";
 import { createCustomerPortal } from "@/payment";
 import { CreatePortalParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';
+import { headers } from "next/headers";
 import { z } from 'zod';
 
 // Create a safe action client
@@ -22,6 +24,16 @@ const portalSchema = z.object({
 export const createPortalAction = actionClient
   .schema(portalSchema)
   .action(async ({ parsedInput }) => {
+    const authSession = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!authSession) {
+      return {
+        success: false,
+        error: 'Unauthorized',
+      };
+    }
+    
     try {
       const { customerId, returnUrl } = parsedInput;
 

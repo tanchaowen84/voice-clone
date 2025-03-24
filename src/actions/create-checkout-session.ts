@@ -1,10 +1,12 @@
 'use server';
 
+import { auth } from "@/lib/auth";
 import { getBaseUrlWithLocale } from "@/lib/urls/get-base-url";
 import { createCheckout, getPlanById } from "@/payment";
 import { CreateCheckoutParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';
+import { headers } from "next/headers";
 import { z } from 'zod';
 
 // Create a safe action client
@@ -24,6 +26,16 @@ const checkoutSchema = z.object({
 export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
+    const authSession = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!authSession) {
+      return {
+        success: false,
+        error: 'Unauthorized',
+      };
+    }
+
     try {
       const { planId, priceId, email, metadata } = parsedInput;
 

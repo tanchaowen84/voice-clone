@@ -1,7 +1,9 @@
 'use server';
 
+import { auth } from '@/lib/auth';
 import { unsubscribe } from '@/newsletter';
 import { createSafeActionClient } from 'next-safe-action';
+import { headers } from 'next/headers';
 import { z } from 'zod';
 
 // Create a safe action client
@@ -16,6 +18,16 @@ const newsletterSchema = z.object({
 export const unsubscribeNewsletterAction = actionClient
   .schema(newsletterSchema)
   .action(async ({ parsedInput: { email } }) => {
+    const authSession = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!authSession) {
+      return {
+        success: false,
+        error: 'Unauthorized',
+      };
+    }
+    
     try {
       const unsubscribed = await unsubscribe(email);
 
