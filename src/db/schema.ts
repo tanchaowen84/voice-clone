@@ -9,11 +9,11 @@ export const user = pgTable("user", {
 	createdAt: timestamp('created_at').notNull(),
 	updatedAt: timestamp('updated_at').notNull(),
 	username: text('username').unique(),
-	customerId: text('customer_id').unique(),
 	role: text('role'),
 	banned: boolean('banned'),
 	banReason: text('ban_reason'),
-	banExpires: timestamp('ban_expires')
+	banExpires: timestamp('ban_expires'),
+	customerId: text('customer_id')
 });
 
 export const session = pgTable("session", {

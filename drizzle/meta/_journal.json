@@ -29,6 +29,20 @@
       "when": 1742746797766,
       "tag": "0003_lowly_dormammu",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1742779245185,
+      "tag": "0004_known_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1742780851411,
+      "tag": "0005_modern_hex",
+      "breakpoints": true
     }
   ]
 }
