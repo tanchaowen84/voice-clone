@@ -1,4 +1,4 @@
-import FAQs from '@/components/blocks/faq/faqs';
+import FAQs from '@/components/sections/faq/faqs';
 import { Locale } from 'next-intl';
 
 interface FAQPageProps {

@@ -1,7 +1,7 @@
-import Pricing3 from '@/components/blocks/pricing/pricing-3';
-import Pricing4 from '@/components/blocks/pricing/pricing-4';
-import Pricing5 from '@/components/blocks/pricing/pricing-5';
-import PricingComparator from '@/components/blocks/pricing/pricing-comparator';
+import Pricing3 from '@/components/sections/pricing/pricing-3';
+import Pricing4 from '@/components/sections/pricing/pricing-4';
+import Pricing5 from '@/components/sections/pricing/pricing-5';
+import PricingComparator from '@/components/sections/pricing/pricing-comparator';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 

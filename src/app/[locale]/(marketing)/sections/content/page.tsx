@@ -1,9 +1,9 @@
-import Content from '@/components/blocks/content/content';
-import Content2 from '@/components/blocks/content/content-2';
-import Content3 from '@/components/blocks/content/content-3';
-import Content4 from '@/components/blocks/content/content-4';
-import Content5 from '@/components/blocks/content/content-5';
-import Content6 from '@/components/blocks/content/content-6';
+import Content from '@/components/sections/content/content';
+import Content2 from '@/components/sections/content/content-2';
+import Content3 from '@/components/sections/content/content-3';
+import Content4 from '@/components/sections/content/content-4';
+import Content5 from '@/components/sections/content/content-5';
+import Content6 from '@/components/sections/content/content-6';
 import { Locale } from 'next-intl';
 
 interface ContentPageProps {

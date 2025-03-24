@@ -1,7 +1,7 @@
-import Stats from '@/components/blocks/stats/stats';
-import Stats2 from '@/components/blocks/stats/stats-2';
-import Stats3 from '@/components/blocks/stats/stats-3';
-import Stats4 from '@/components/blocks/stats/stats-4';
+import Stats from '@/components/sections/stats/stats';
+import Stats2 from '@/components/sections/stats/stats-2';
+import Stats3 from '@/components/sections/stats/stats-3';
+import Stats4 from '@/components/sections/stats/stats-4';
 import { Locale } from 'next-intl';
 
 interface StatsPageProps {
