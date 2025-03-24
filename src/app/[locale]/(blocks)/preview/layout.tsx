@@ -1,10 +1,10 @@
-export const dynamic = 'force-static'
-export const revalidate = 3600 // Cache for 1 hour
+export const dynamic = 'force-static';
+export const revalidate = 3600; // Cache for 1 hour
 
 export default function BlockLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-    return <>{children}</>
+  return <>{children}</>;
 }
