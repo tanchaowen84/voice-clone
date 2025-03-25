@@ -7,10 +7,6 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-interface BlockCategoryPageProps {
-  params: Promise<{ category: string }>;
-}
-
 export const dynamic = 'force-static';
 export const revalidate = 3600;
 
@@ -32,6 +28,10 @@ export async function generateMetadata({
     description: t('description'),
     canonicalUrl: `${getBaseUrlWithLocale(locale)}/blocks/${category}`,
   });
+}
+
+interface BlockCategoryPageProps {
+  params: Promise<{ category: string }>;
 }
 
 export default async function BlockCategoryPage({

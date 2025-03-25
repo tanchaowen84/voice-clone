@@ -20,6 +20,7 @@ import Link from 'next/link';
 // import { OpenInV0Button } from './open-in-v0'
 import { isUrlCached } from '@/lib/serviceWorker';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { useCopyToClipboard } from '@/hooks/use-clipboard';
 
 export interface BlockPreviewProps {
   code?: string;
@@ -54,9 +55,8 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
   const [isIframeCached, setIsIframeCached] = useState(false);
 
   const terminalCode = `pnpm dlx shadcn@canary add https://nsui.irung.me/r/${category}-${titleToNumber(title)}.json`;
-
-  // const { copied, copy } = useCopyToClipboard({ code: code as string, title, category, eventName: 'block_copy' })
-  // const { copied: cliCopied, copy: cliCopy } = useCopyToClipboard({ code: terminalCode, title, category, eventName: 'block_cli_copy' })
+  const { copied, copy } = useCopyToClipboard({ code: code as string, title, category, eventName: 'block_copy' })
+  const { copied: cliCopied, copy: cliCopy } = useCopyToClipboard({ code: terminalCode, title, category, eventName: 'block_cli_copy' })
 
   const ref = useRef<ImperativePanelGroupHandle>(null);
   const isLarge = useMedia('(min-width: 1024px)');
@@ -239,32 +239,32 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
           <div className="flex items-center gap-2">
             {code && (
               <>
-                {/* <Button
-                                    onClick={cliCopy}
-                                    size="sm"
-                                    className="size-8 shadow-none md:w-fit"
-                                    variant="outline"
-                                    aria-label="copy code">
-                                    {cliCopied ? <Check className="size-4" /> : <Terminal className="!size-3.5" />}
-                                    <span className="hidden font-mono text-xs md:block">
-                                        pnpm dlx shadcn@canary add {category}-{titleToNumber(title)}
-                                    </span>
-                                </Button> */}
+                <Button
+                  onClick={cliCopy}
+                  size="sm"
+                  className="size-8 shadow-none md:w-fit"
+                  variant="outline"
+                  aria-label="copy code">
+                  {cliCopied ? <Check className="size-4" /> : <Terminal className="!size-3.5" />}
+                  <span className="hidden font-mono text-xs md:block">
+                    {/* pnpm dlx shadcn@canary add  */}{category}-{titleToNumber(title)}
+                  </span>
+                </Button>
                 <Separator className="!h-4" orientation="vertical" />
                 {/* <OpenInV0Button
-                                    {...{ title, category }}
-                                    block={`${category}-${titleToNumber(title)}`}
-                                /> */}
+                  {...{ title, category }}
+                  block={`${category}-${titleToNumber(title)}`}
+                /> */}
                 <Separator className="!h-4" orientation="vertical" />
 
                 {/* <Button
-                                    onClick={copy}
-                                    size="sm"
-                                    variant="ghost"
-                                    aria-label="copy code"
-                                    className="size-8">
-                                    {copied ? <Check className="size-4" /> : <Copy className="!size-3.5" />}
-                                </Button> */}
+                  onClick={copy}
+                  size="sm"
+                  variant="ghost"
+                  aria-label="copy code"
+                  className="size-8">
+                  {copied ? <Check className="size-4" /> : <Copy className="!size-3.5" />}
+                </Button> */}
               </>
             )}
           </div>
@@ -310,7 +310,7 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
                       className={cn(
                         'h-(--iframe-height) block min-h-56 w-full duration-200 will-change-auto',
                         !cachedHeight &&
-                          '@starting:opacity-0 @starting:blur-xl',
+                        '@starting:opacity-0 @starting:blur-xl',
                         isIframeCached && '!opacity-100 !blur-none'
                       )}
                       src={preview}
