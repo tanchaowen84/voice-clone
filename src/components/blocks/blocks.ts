@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+// import fs from 'fs';
+// import path from 'path';
 
 export interface Block {
   slug: string;

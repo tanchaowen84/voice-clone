@@ -220,49 +220,49 @@
         "title": "内置组件",
         "items": {
           "hero": {
-            "title": "Hero组件"
+            "title": "Hero 组件"
           },
           "logoCloud": {
-            "title": "Logo Cloud组件"
+            "title": "Logo Cloud 组件"
           },
           "features": {
-            "title": "Features组件"
+            "title": "Features 组件"
           },
           "content": {
-            "title": "Content组件"
+            "title": "Content 组件"
           },
           "stats": {
-            "title": "Stats组件"
+            "title": "Stats 组件"
           },
           "team": {
-            "title": "Team组件"
+            "title": "Team 组件"
           },
           "testimonials": {
-            "title": "Testimonials组件"
+            "title": "Testimonials 组件"
           },
           "callToAction": {
-            "title": "Call to Action组件"
+            "title": "Call to Action 组件"
           },
           "footer": {
-            "title": "Footer组件"
+            "title": "Footer 组件"
           },
           "pricing": {
-            "title": "Pricing组件"
+            "title": "Pricing 组件"
           },
           "comparator": {
-            "title": "Comparator组件"
+            "title": "Comparator 组件"
           },
           "faqs": {
-            "title": "FAQs组件"
+            "title": "FAQs 组件"
           },
           "login": {
-            "title": "Login组件"
+            "title": "Login 组件"
           },
           "signup": {
-            "title": "Signup组件"
+            "title": "Signup 组件"
           },
           "contact": {
-            "title": "Contact组件"
+            "title": "Contact 组件"
           }
         }
       }
