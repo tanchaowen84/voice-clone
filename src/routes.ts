@@ -38,14 +38,22 @@ export enum Routes {
   AIVideo = '/ai/video',
   AIAudio = '/ai/audio',
 
+  // Block routes
   HeroBlocks = '/blocks/hero-section',
-  PricingBlocks = '/blocks/pricing',
+  LogoBlocks = '/blocks/logo-cloud',
   FeaturesBlocks = '/blocks/features',
-  FAQBlocks = '/blocks/faq',
-  TestimonialsBlocks = '/blocks/testimonials',
-  StatsBlocks = '/blocks/stats',
-  CallToActionBlocks = '/blocks/call-to-action',
   ContentBlocks = '/blocks/content',
+  StatsBlocks = '/blocks/stats',
+  TeamBlocks = '/blocks/team',
+  TestimonialsBlocks = '/blocks/testimonials',
+  CallToActionBlocks = '/blocks/call-to-action',
+  FooterBlocks = '/blocks/footer',
+  PricingBlocks = '/blocks/pricing',
+  ComparatorBlocks = '/blocks/comparator',
+  FAQBlocks = '/blocks/faqs',
+  LoginBlocks = '/blocks/login',
+  SignupBlocks = '/blocks/signup',
+  ContactBlocks = '/blocks/contact',
 }
 
 /**

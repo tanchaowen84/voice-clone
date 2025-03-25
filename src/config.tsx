@@ -35,7 +35,13 @@ import {
   SquareKanbanIcon,
   SquarePenIcon,
   ThumbsUpIcon,
-  WandSparklesIcon
+  WandSparklesIcon,
+  SquareCodeIcon,
+  UsersIcon,
+  FootprintsIcon,
+  SplitSquareVerticalIcon,
+  LogInIcon,
+  UserPlusIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -199,9 +205,9 @@ export function getMenuLinks(): NestedMenuItem[] {
           external: false,
         },
         {
-          title: t('Marketing.navbar.blocks.items.pricing.title'),
-          icon: <CircleDollarSignIcon className="site-4 shrink-0" />,
-          href: Routes.PricingBlocks,
+          title: t('Marketing.navbar.blocks.items.logo.title'),
+          icon: <SquareCodeIcon className="site-4 shrink-0" />,
+          href: Routes.LogoBlocks,
           external: false,
         },
         {
@@ -211,15 +217,9 @@ export function getMenuLinks(): NestedMenuItem[] {
           external: false,
         },
         {
-          title: t('Marketing.navbar.blocks.items.faq.title'),
-          icon: <CircleHelpIcon className="site-4 shrink-0" />,
-          href: Routes.FAQBlocks,
-          external: false,
-        },
-        {
-          title: t('Marketing.navbar.blocks.items.testimonials.title'),
-          icon: <ThumbsUpIcon className="site-4 shrink-0" />,
-          href: Routes.TestimonialsBlocks,
+          title: t('Marketing.navbar.blocks.items.content.title'),
+          icon: <NewspaperIcon className="site-4 shrink-0" />,
+          href: Routes.ContentBlocks,
           external: false,
         },
         {
@@ -229,15 +229,63 @@ export function getMenuLinks(): NestedMenuItem[] {
           external: false,
         },
         {
+          title: t('Marketing.navbar.blocks.items.team.title'),
+          icon: <UsersIcon className="site-4 shrink-0" />,
+          href: Routes.TeamBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.testimonials.title'),
+          icon: <ThumbsUpIcon className="site-4 shrink-0" />,
+          href: Routes.TestimonialsBlocks,
+          external: false,
+        },
+        {
           title: t('Marketing.navbar.blocks.items.callToAction.title'),
           icon: <RocketIcon className="site-4 shrink-0" />,
           href: Routes.CallToActionBlocks,
           external: false,
         },
         {
-          title: t('Marketing.navbar.blocks.items.content.title'),
-          icon: <NewspaperIcon className="site-4 shrink-0" />,
-          href: Routes.ContentBlocks,
+          title: t('Marketing.navbar.blocks.items.footer.title'),
+          icon: <FootprintsIcon className="site-4 shrink-0" />,
+          href: Routes.FooterBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.pricing.title'),
+          icon: <CircleDollarSignIcon className="site-4 shrink-0" />,
+          href: Routes.PricingBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.comparator.title'),
+          icon: <SplitSquareVerticalIcon className="site-4 shrink-0" />,
+          href: Routes.ComparatorBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.faq.title'),
+          icon: <CircleHelpIcon className="site-4 shrink-0" />,
+          href: Routes.FAQBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.login.title'),
+          icon: <LogInIcon className="site-4 shrink-0" />,
+          href: Routes.LoginBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.signup.title'),
+          icon: <UserPlusIcon className="site-4 shrink-0" />,
+          href: Routes.SignupBlocks,
+          external: false,
+        },
+        {
+          title: t('Marketing.navbar.blocks.items.contact.title'),
+          icon: <MailIcon className="site-4 shrink-0" />,
+          href: Routes.ContactBlocks,
           external: false,
         },
       ],

@@ -227,26 +227,47 @@
           "hero": {
             "title": "Hero Blocks"
           },
-          "pricing": {
-            "title": "Pricing Blocks"
+          "logo": {
+            "title": "Logo Cloud Blocks"
           },
           "features": {
             "title": "Features Blocks"
           },
-          "faq": {
-            "title": "FAQ Blocks"
-          },
-          "testimonials": {
-            "title": "Testimonials Blocks"
+          "content": {
+            "title": "Content Blocks"
           },
           "stats": {
             "title": "Stats Blocks"
           },
+          "team": {
+            "title": "Team Blocks"
+          },
+          "testimonials": {
+            "title": "Testimonials Blocks"
+          },
           "callToAction": {
             "title": "Call to Action Blocks"
           },
-          "content": {
-            "title": "Content Blocks"
+          "footer": {
+            "title": "Footer Blocks"
+          },
+          "pricing": {
+            "title": "Pricing Blocks"
+          },
+          "comparator": {
+            "title": "Comparator Blocks"
+          },
+          "faq": {
+            "title": "FAQ Blocks"
+          },
+          "login": {
+            "title": "Login Blocks"
+          },
+          "signup": {
+            "title": "Signup Blocks"
+          },
+          "contact": {
+            "title": "Contact Blocks"
           }
         }
       }

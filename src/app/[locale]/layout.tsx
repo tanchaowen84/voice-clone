@@ -6,9 +6,9 @@ import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Providers } from './providers';
+import { TailwindIndicator } from '@/components/tailwind-indicator';
 
 import '@/styles/globals.css';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -52,7 +52,7 @@ export default async function LocaleLayout({
 
             <Toaster richColors position="top-right" offset={64} />
 
-            <TailwindIndicator />
+            {/* <TailwindIndicator /> */}
           </Providers>
         </NextIntlClientProvider>
       </body>

@@ -222,26 +222,47 @@
           "hero": {
             "title": "Hero组件"
           },
-          "pricing": {
-            "title": "Pricing组件"
+          "logoCloud": {
+            "title": "Logo Cloud组件"
           },
           "features": {
             "title": "Features组件"
           },
-          "faq": {
-            "title": "FAQ组件"
-          },
-          "testimonials": {
-            "title": "Testimonials组件"
+          "content": {
+            "title": "Content组件"
           },
           "stats": {
             "title": "Stats组件"
           },
+          "team": {
+            "title": "Team组件"
+          },
+          "testimonials": {
+            "title": "Testimonials组件"
+          },
           "callToAction": {
             "title": "Call to Action组件"
           },
-          "content": {
-            "title": "Content组件"
+          "footer": {
+            "title": "Footer组件"
+          },
+          "pricing": {
+            "title": "Pricing组件"
+          },
+          "comparator": {
+            "title": "Comparator组件"
+          },
+          "faqs": {
+            "title": "FAQs组件"
+          },
+          "login": {
+            "title": "Login组件"
+          },
+          "signup": {
+            "title": "Signup组件"
+          },
+          "contact": {
+            "title": "Contact组件"
           }
         }
       }
