@@ -37,6 +37,10 @@ export default function LocaleSwitcher() {
   }, [locale, setCurrentLocale]);
 
   const setLocale = (nextLocale: Locale) => {
+    if (locale === nextLocale) {
+      return;
+    }
+    
     setCurrentLocale(nextLocale);
 
     startTransition(() => {

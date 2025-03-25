@@ -3,23 +3,13 @@
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale } from 'next-intl';
-import { routing } from '@/i18n/routing';
 import { useParams } from 'next/navigation';
 
 export default function BlocksNav({ categories }: { categories: string[] }) {
   const pathname = useLocalePathname();
-  const params = useParams();
   
-  // Get locale from URL params, which should be more reliable than useLocale in this case
-  const urlLocale = params.locale as string;
-  
-  // Fallback to useLocale if params.locale is not available
-  const defaultLocale = useLocale();
-  const locale = urlLocale || defaultLocale;
-  
-  console.log("pathname", pathname);
-  console.log("locale from params", urlLocale);
-  console.log("locale from hook", defaultLocale);
+  // Remove the custom locale handling which is causing the inconsistency
+  // Just use the standard Next-intl locale system
   
   return (
     <div className="mt-4 dark:border-border/50 relative z-20 border-t">
@@ -42,7 +32,7 @@ export default function BlocksNav({ categories }: { categories: string[] }) {
                 >
                   <LocaleLink
                     href={href}
-                    locale={locale}
+                    // Remove explicit locale prop to use the system default locale behavior
                     className={cn(
                       isActive && 'text-foreground!',
                       'hover:bg-muted dark:text-muted-foreground hover:text-foreground flex h-7 w-fit items-center text-nowrap rounded-full px-2 text-sm text-zinc-700 lg:-mx-2 lg:px-3'

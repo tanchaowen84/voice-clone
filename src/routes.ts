@@ -66,6 +66,7 @@ export const publicRoutes = [
 
   // pages
   '/blog(/.*)?',
+  '/blocks(/.*)?',
   '/terms-of-service(/.*)?',
   '/privacy-policy(/.*)?',
   '/cookie-policy(/.*)?',
