@@ -30,7 +30,7 @@ const transitionVariants = {
 export default function HeroSection() {
   return (
     <>
-      <HeroHeader />
+      {/* <HeroHeader /> */}
       <main className="overflow-hidden">
         <div
           aria-hidden
@@ -41,7 +41,8 @@ export default function HeroSection() {
           <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
         </div>
         <section>
-          <div className="relative pt-24 md:pt-36">
+          {/* pt-24 md:pt-36 */}
+          <div className="relative">
             <AnimatedGroup
               variants={{
                 container: {
