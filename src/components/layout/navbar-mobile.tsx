@@ -197,7 +197,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           type="button"
                           variant="ghost"
                           className={cn(
-                            'flex w-full !pl-0 items-center justify-between text-left',
+                            'flex w-full !pl-2 items-center justify-between text-left',
                             'bg-transparent text-muted-foreground cursor-pointer',
                             'hover:bg-transparent hover:text-foreground',
                             'focus:bg-transparent focus:text-foreground',
@@ -213,7 +213,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                           )}
                         </Button>
                       </CollapsibleTrigger>
-                      <CollapsibleContent className="pl-0">
+                      <CollapsibleContent className="pl-2">
                         <ul className="mt-2 space-y-2 pl-0">
                           {item.items.map((subItem) => {
                             const isSubItemActive =
@@ -306,7 +306,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                       rel={item.external ? 'noopener noreferrer' : undefined}
                       className={cn(
                         buttonVariants({ variant: 'ghost' }),
-                        'w-full !pl-0 justify-start cursor-pointer group',
+                        'w-full !pl-2 justify-start cursor-pointer group',
                         'bg-transparent text-muted-foreground',
                         'hover:bg-transparent hover:text-foreground',
                         'focus:bg-transparent focus:text-foreground',

@@ -60,10 +60,6 @@ export function NavUser({ user, className }: NavUserProps) {
   // }
 
   const setLocale = (nextLocale: Locale) => {
-    if (currentLocale === nextLocale) {
-      return;
-    }
-    
     setCurrentLocale(nextLocale);
 
     startTransition(() => {
