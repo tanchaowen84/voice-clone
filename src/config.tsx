@@ -96,6 +96,11 @@ export function getMenuLinks(): NestedMenuItem[] {
       external: false,
     },
     {
+      title: t('Marketing.navbar.docs.title'),
+      href: Routes.Docs,
+      external: false,
+    },
+    {
       title: t('Marketing.navbar.ai.title'),
       items: [
         {

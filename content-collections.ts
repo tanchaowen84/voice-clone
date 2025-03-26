@@ -9,6 +9,11 @@ import { createHighlighter } from 'shiki';
 import path from "path";
 import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
 import { visit } from 'unist-util-visit';
+import {
+  createMetaSchema,
+  createDocSchema,
+  transformMDX,
+} from '@fumadocs/content-collections/configuration';
 
 /**
  * Content Collections documentation
@@ -16,6 +21,26 @@ import { visit } from 'unist-util-visit';
  * 2. https://www.content-collections.dev/docs/configuration
  * 3. https://www.content-collections.dev/docs/transform#join-collections
  */
+
+/**
+ * Fumadocs documentation
+ * 1. https://fumadocs.com/docs/configuration
+ */
+const docs = defineCollection({
+  name: 'docs',
+  directory: 'content/docs',
+  include: '**/*.mdx',
+  schema: createDocSchema,
+  transform: transformMDX,
+});
+
+const metas = defineCollection({
+  name: 'meta',
+  directory: 'content/docs',
+  include: '**/meta.json',
+  parser: 'json',
+  schema: createMetaSchema,
+});
 
 /**
  * Blog Author collection
@@ -338,5 +363,5 @@ const compileWithCodeCopy = async (
 };
 
 export default defineConfig({
-  collections: [authors, categories, posts, pages, releases]
+  collections: [docs, metas, authors, categories, posts, pages, releases]
 });

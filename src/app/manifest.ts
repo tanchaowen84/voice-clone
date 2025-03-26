@@ -4,7 +4,7 @@ import { type MetadataRoute } from 'next';
 /**
  * Generates the Web App Manifest for the application
  * 
- * generated file name: site.webmanifest
+ * generated file name: manifest.webmanifest
  *
  * ref: https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/manifest.ts
  *
