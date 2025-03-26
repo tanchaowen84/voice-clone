@@ -9,7 +9,7 @@ import FAQs from '../../preview/faqs/one/page';
 import Features from '../../preview/features/one/page';
 import HeroSection from '../../preview/hero-section/one/page';
 import LogoCloud from '../../preview/logo-cloud/one/page';
-import Pricing from '../../preview/pricing/one/page';
+import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
 import Testimonials from '../../preview/testimonials/one/page';
 
@@ -42,7 +42,7 @@ export default async function HomePage(props: HomePageProps) {
 
   return (
     <>
-      <div className="mt-8 flex flex-col gap-16 pb-16">
+      <div className="mt-8 flex flex-col">
         <div id="hero" className="">
           <HeroSection />
         </div>

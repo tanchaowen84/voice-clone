@@ -33,7 +33,10 @@ interface NavBarProps {
 const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
   'relative bg-transparent text-muted-foreground cursor-pointer',
-  'hover:bg-transparent hover:text-foreground focus:bg-transparent focus:text-foreground',
+  // 'hover:bg-transparent hover:text-foreground',
+  // 'focus:bg-transparent focus:text-foreground',
+  'hover:bg-accent hover:text-accent-foreground',
+  'focus:bg-accent focus:text-accent-foreground',
   'data-active:font-semibold data-active:bg-transparent data-active:text-foreground',
   'data-[state=open]:bg-transparent data-[state=open]:text-foreground'
 );
@@ -116,10 +119,14 @@ export function Navbar({ scroll }: NavBarProps) {
                                             ? 'noopener noreferrer'
                                             : undefined
                                         }
-                                        className="group flex select-none flex-row items-center gap-4 rounded-md 
-                                      p-2 leading-none no-underline outline-hidden transition-colors 
-                                      hover:bg-accent hover:text-accent-foreground 
-                                      focus:bg-accent focus:text-accent-foreground"
+                                        className={cn(
+                                          'group flex select-none flex-row items-center gap-4 rounded-md', 
+                                          'p-2 leading-none no-underline outline-hidden transition-colors', 
+                                          'hover:bg-accent hover:text-accent-foreground',
+                                          'focus:bg-accent focus:text-accent-foreground',
+                                          isSubItemActive &&
+                                          'bg-accent text-accent-foreground'
+                                        )}
                                       >
                                         <div
                                           className={cn(

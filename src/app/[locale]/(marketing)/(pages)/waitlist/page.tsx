@@ -24,7 +24,7 @@ export default async function WaitlistPage() {
   const t = await getTranslations('WaitlistPage');
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="mx-auto max-w-4xl space-y-8 pb-16">
       {/* Header */}
       <div className="space-y-4">
         <h1 className="text-center text-3xl font-bold tracking-tight">

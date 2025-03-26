@@ -1,26 +1,22 @@
 'use client';
 
-import type React from 'react';
-import { useState, useRef, useEffect } from 'react';
+import { Separator } from '@/components/ui/separator';
+import { useCopyToClipboard } from '@/hooks/use-clipboard';
+import { isUrlCached } from '@/lib/serviceWorker';
+import { cn, titleToNumber } from '@/lib/utils';
+import * as RadioGroup from '@radix-ui/react-radio-group';
 import { Check, Code2, Copy, Eye, Maximize, Terminal } from 'lucide-react';
+import Link from 'next/link';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Panel,
   PanelGroup,
   PanelResizeHandle,
   type ImperativePanelGroupHandle,
 } from 'react-resizable-panels';
-import { Separator } from '@/components/ui/separator';
-import * as RadioGroup from '@radix-ui/react-radio-group';
-// import { useCopyToClipboard } from '@/hooks/useClipboard'
 import { useMedia } from 'use-media';
-import { Button } from '../ui/button';
-import { cn, titleToNumber } from '@/lib/utils';
-// import CodeBlock from './code-block'
-import Link from 'next/link';
-// import { OpenInV0Button } from './open-in-v0'
-import { isUrlCached } from '@/lib/serviceWorker';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { useCopyToClipboard } from '@/hooks/use-clipboard';
+import { Button } from '@/components/ui/button';
 
 export interface BlockPreviewProps {
   code?: string;
@@ -247,7 +243,7 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
                   aria-label="copy code">
                   {cliCopied ? <Check className="size-4" /> : <Terminal className="!size-3.5" />}
                   <span className="hidden font-mono text-xs md:block">
-                    {/* pnpm dlx shadcn@canary add  */}{category}-{titleToNumber(title)}
+                    pnpm dlx shadcn@canary add {category}-{titleToNumber(title)}
                   </span>
                 </Button>
                 <Separator className="!h-4" orientation="vertical" />
@@ -257,15 +253,20 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
                 /> */}
                 <Separator className="!h-4" orientation="vertical" />
 
-                {/* <Button
+                <Button
                   onClick={copy}
                   size="sm"
                   variant="ghost"
                   aria-label="copy code"
                   className="size-8">
                   {copied ? <Check className="size-4" /> : <Copy className="!size-3.5" />}
-                </Button> */}
+                </Button>
               </>
+            )}
+            {!code && (
+              <span className="hidden font-mono text-sm md:block">
+                {/* pnpm dlx shadcn@canary add  */}{category}-{titleToNumber(title)}
+              </span>
             )}
           </div>
         </div>
@@ -346,12 +347,12 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
 
           <div className="bg-white dark:bg-transparent">
             {/* {mode == 'code' && (
-                            <CodeBlock
-                                code={code as string}
-                                lang="tsx"
-                                maxHeight={iframeHeight}
-                            />
-                        )} */}
+              <CodeBlock
+                code={code as string}
+                lang="tsx"
+                maxHeight={iframeHeight}
+              />
+            )} */}
           </div>
         </div>
       </div>

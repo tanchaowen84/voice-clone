@@ -267,7 +267,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     >
                                       {subItem.title}
                                     </span>
-                                    {subItem.description && (
+                                    {/* {subItem.description && (
                                       <p
                                         className={cn(
                                           'text-xs text-muted-foreground',
@@ -279,7 +279,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                       >
                                         {subItem.description}
                                       </p>
-                                    )}
+                                    )} */}
                                   </div>
                                   {subItem.external && (
                                     <ArrowUpRightIcon
