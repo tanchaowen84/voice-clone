@@ -158,6 +158,9 @@
       "blog": {
         "title": "博客"
       },
+      "docs": {
+        "title": "文档"
+      },
       "ai": {
         "title": "AI 工具",
         "items": {

@@ -163,6 +163,9 @@
       "blog": {
         "title": "Blog"
       },
+      "docs": {
+        "title": "Docs"
+      },
       "ai": {
         "title": "AI Tools",
         "items": {
