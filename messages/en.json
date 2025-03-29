@@ -152,6 +152,15 @@
     "noPostsFound": "No posts found",
     "allPosts": "All Posts"
   },
+  "DocsPage": {
+    "toc": "Table of Contents",
+    "search": "Search docs",
+    "lastUpdate": "Last updated on",
+    "searchNoResult": "No results",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "chooseLanguage": "Select language"
+  },
   "Marketing": {
     "navbar": {
       "features": {

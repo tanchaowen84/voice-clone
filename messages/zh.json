@@ -147,6 +147,15 @@
     "noPostsFound": "没有找到文章",
     "allPosts": "全部文章"
   },
+  "DocsPage": {
+    "toc": "目录",
+    "search": "搜索文档",
+    "lastUpdate": "最后更新于",
+    "searchNoResult": "没有结果",
+    "previousPage": "上一页",
+    "nextPage": "下一页",
+    "chooseLanguage": "选择语言"
+  },
   "Marketing": {
     "navbar": {
       "features": {
