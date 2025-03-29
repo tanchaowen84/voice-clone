@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useTransition, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -33,7 +33,7 @@ import { z } from 'zod';
  */
 export function WaitlistFormCard() {
   const t = useTranslations('WaitlistPage.form');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
 
   // Create a schema for waitlist form validation
@@ -52,29 +52,29 @@ export function WaitlistFormCard() {
   });
 
   // Handle form submission
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      setError('');
-      setIsSubmitting(true);
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    startTransition(async () => {
+      try {
+        setError('');
 
-      const result = await subscribeNewsletterAction({
-        email: values.email,
-      });
+        const result = await subscribeNewsletterAction({
+          email: values.email,
+        });
 
-      if (result?.data?.success) {
-        toast.success(t('success'));
-        form.reset();
-      } else {
+        if (result?.data?.success) {
+          toast.success(t('success'));
+          form.reset();
+        } else {
+          const errorMessage = result?.data?.error || t('fail');
+          setError(errorMessage);
+          toast.error(errorMessage);
+        }
+      } catch (err) {
+        console.error('Form submission error:', err);
         setError(t('fail'));
         toast.error(t('fail'));
       }
-    } catch (err) {
-      console.error('Form submission error:', err);
-      setError(t('fail'));
-      toast.error(t('fail'));
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
 
   return (
@@ -111,8 +111,8 @@ export function WaitlistFormCard() {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? t('subscribing') : t('subscribe')}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? t('subscribing') : t('subscribe')}
             </Button>
           </CardFooter>
         </form>

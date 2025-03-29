@@ -23,14 +23,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useTransition, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
+/**
+ * Contact form card component
+ * This is a client component that handles the contact form submission
+ */
 export function ContactFormCard() {
   const t = useTranslations('ContactPage.form');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
 
   // Create a schema for contact form validation
@@ -48,8 +52,11 @@ export function ContactFormCard() {
       .max(500, t('messageMaxLength')),
   });
 
+  // Form types
+  type ContactFormValues = z.infer<typeof formSchema>;
+
   // Initialize the form
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -59,29 +66,28 @@ export function ContactFormCard() {
   });
 
   // Handle form submission
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      // Submit form data using the contact server action
-      const result = await sendMessageAction(values);
-      
-      if (result && result.data?.success) {
-        toast.success(t('success'));
-        form.reset();
-      } else {
-        const errorMessage = result?.data?.error || t('fail');
-        setError(errorMessage);
-        toast.error(errorMessage);
+  const onSubmit = (values: ContactFormValues) => {
+    startTransition(async () => {
+      try {
+        setError('');
+        
+        // Submit form data using the contact server action
+        const result = await sendMessageAction(values);
+        
+        if (result && result.data?.success) {
+          toast.success(t('success'));
+          form.reset();
+        } else {
+          const errorMessage = result?.data?.error || t('fail');
+          setError(errorMessage);
+          toast.error(errorMessage);
+        }
+      } catch (err) {
+        console.error('Form submission error:', err);
+        setError(t('fail'));
+        toast.error(t('fail'));
       }
-    } catch (err) {
-      console.error('Form submission error:', err);
-      setError(t('fail'));
-      toast.error(t('fail'));
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
 
   return (
@@ -95,7 +101,7 @@ export function ContactFormCard() {
         </CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
           <CardContent className="space-y-6">
             <FormField
               control={form.control}
@@ -153,8 +159,12 @@ export function ContactFormCard() {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? t('submitting') : t('submit')}
+            <Button 
+              type="submit" 
+              disabled={isPending}
+              className="cursor-pointer"
+            >
+              {isPending ? t('submitting') : t('submit')}
             </Button>
           </CardFooter>
         </form>
