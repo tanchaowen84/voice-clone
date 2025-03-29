@@ -10,10 +10,12 @@
     "logout": "Log out",
     "signUp": "Sign up",
     "language": "Switch language",
-    "mode": "Toggle mode",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System",
+    "mode": {
+      "label": "Toggle mode",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
     "theme": {
       "label": "Toggle theme",
       "default-theme": "Default Theme",

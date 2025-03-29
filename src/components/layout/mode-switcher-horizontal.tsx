@@ -13,7 +13,7 @@ import { useTranslations } from 'next-intl';
 export function ModeSwitcherHorizontal() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const t = useTranslations('Common');
+  const t = useTranslations('Common.mode');
 
   // Only show the UI after hydration to prevent hydration mismatch
   useEffect(() => {

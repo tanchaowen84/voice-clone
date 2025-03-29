@@ -16,7 +16,7 @@ import { useTheme } from 'next-themes';
  */
 export function ModeSwitcher() {
   const { setTheme } = useTheme();
-  const t = useTranslations('Common');
+  const t = useTranslations('Common.mode');
 
   return (
     <DropdownMenu>
@@ -28,7 +28,7 @@ export function ModeSwitcher() {
         >
           <SunIcon className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">{t('mode')}</span>
+          <span className="sr-only">{t('label')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

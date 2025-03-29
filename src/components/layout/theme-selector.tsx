@@ -23,45 +23,45 @@ import { useTranslations } from "next-intl";
  */
 export function ThemeSelector() {
   const { activeTheme, setActiveTheme } = useThemeConfig();
-  const t = useTranslations('Common');
+  const t = useTranslations('Common.theme');
 
   const DEFAULT_THEMES = [
     {
-      name: t('theme.default'),
+      name: t('default'),
       value: "default",
     },
     {
-      name: t('theme.neutral'),
+      name: t('neutral'),
       value: "neutral",
     },
     {
-      name: t('theme.blue'),
+      name: t('blue'),
       value: "blue",
     },
     {
-      name: t('theme.green'),
+      name: t('green'),
       value: "green",
     },
     {
-      name: t('theme.amber'),
+      name: t('amber'),
       value: "amber",
     },
   ];
 
   const SCALED_THEMES = [
     {
-      name: t('theme.default-scaled'),
+      name: t('default-scaled'),
       value: "default-scaled",
     },
     {
-      name: t('theme.blue-scaled'),
+      name: t('blue-scaled'),
       value: "blue-scaled",
     },
   ];
 
   const MONO_THEMES = [
     {
-      name: t('theme.mono-scaled'),
+      name: t('mono-scaled'),
       value: "mono-scaled",
     },
   ];
@@ -69,7 +69,7 @@ export function ThemeSelector() {
   return (
     <div className="flex items-center gap-2">
       <Label htmlFor="theme-selector" className="sr-only">
-        {t('theme.label')}
+        {t('label')}
       </Label>
       <Select value={activeTheme} onValueChange={setActiveTheme}>
         <SelectTrigger
@@ -78,13 +78,13 @@ export function ThemeSelector() {
           className="cursor-pointer justify-start *:data-[slot=select-value]:w-12"
         >
           <span className="text-muted-foreground block sm:hidden">
-            {t('theme.label')}
+            {t('label')}
           </span>
-          <SelectValue placeholder={t('theme.label')} />
+          <SelectValue placeholder={t('label')} />
         </SelectTrigger>
         <SelectContent align="end">
           <SelectGroup>
-            <SelectLabel>{t('theme.default-theme')}</SelectLabel>
+            <SelectLabel>{t('default-theme')}</SelectLabel>
             {DEFAULT_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}
                 className="cursor-pointer"
@@ -95,7 +95,7 @@ export function ThemeSelector() {
           </SelectGroup>
           <SelectSeparator />
           <SelectGroup>
-            <SelectLabel>{t('theme.scaled-theme')}</SelectLabel>
+            <SelectLabel>{t('scaled-theme')}</SelectLabel>
             {SCALED_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}
                 className="cursor-pointer"
@@ -105,7 +105,7 @@ export function ThemeSelector() {
             ))}
           </SelectGroup>
           <SelectGroup>
-            <SelectLabel>{t('theme.mono-theme')}</SelectLabel>
+            <SelectLabel>{t('mono-theme')}</SelectLabel>
             {MONO_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}
                 className="cursor-pointer"
