@@ -169,7 +169,9 @@
     "searchNoResult": "No results",
     "previousPage": "Previous",
     "nextPage": "Next",
-    "chooseLanguage": "Select language"
+    "chooseLanguage": "Select language",
+    "homepage": "Homepage",
+    "title": "MkSaaS Docs"
   },
   "Marketing": {
     "navbar": {

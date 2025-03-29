@@ -1,13 +1,16 @@
-import { baseOptions } from '@/app/[locale]/docs/layout.config';
+import { LOCALE_LIST } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
-import { Translations } from 'fumadocs-ui/i18n';
+import { I18nProvider, Translations } from 'fumadocs-ui/i18n';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { DocsProviders } from './providers-docs';
-import { I18nProvider } from 'fumadocs-ui/i18n';
-import { LOCALE_LIST } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
+import { ModeSwitcher } from '@/components/layout/mode-switcher';
+import { Logo } from '@/components/logo';
+import { websiteConfig } from '@/config';
+import { docsI18nConfig } from '@/lib/docs/i18n';
 
 import '@/styles/docs.css';
 
@@ -36,6 +39,31 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
     previousPage: t('previousPage'),
     nextPage: t('nextPage'),
     chooseLanguage: t('chooseLanguage'),
+  };
+
+  const baseOptions: BaseLayoutProps = {
+    i18n: docsI18nConfig,
+    githubUrl: websiteConfig.social.github ?? undefined,
+    nav: {
+      title: (
+        <>
+          <Logo className="size-6" />
+          {t('title')}
+        </>
+      ),
+    },
+    links: [
+      {
+        text: t('homepage'),
+        url: '/',
+        active: 'nested-url',
+      }
+    ],
+    themeSwitch: {
+      enabled: true,
+      mode: 'light-dark-system',
+      component: <ModeSwitcher />
+    },
   };
 
   return (

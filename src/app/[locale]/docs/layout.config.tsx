@@ -7,7 +7,6 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
 /**
  * Docs layout configurations
- *
  * https://fumadocs.vercel.app/docs/ui/layouts/docs
  */
 export const baseOptions: BaseLayoutProps = {
