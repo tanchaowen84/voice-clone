@@ -23,6 +23,6 @@ export const config = {
     // (e.g. `/pathnames` -> `/zh/pathnames`)
     // Exclude API routes and other Next.js internal routes
     // if not exclude api routes, auth routes will not work
-    '/((?!api|_next|_vercel|docs|.*\\..*).*)',
+    '/((?!api|_next|_vercel|.*\\..*).*)',
   ],
 };
