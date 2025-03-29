@@ -49,6 +49,7 @@ import { useTranslations } from 'next-intl';
  * website config, without translations
  */
 export const websiteConfig: WebsiteConfig = {
+  theme: "amber",
   metadata: {
     image: '/og.png',
   },

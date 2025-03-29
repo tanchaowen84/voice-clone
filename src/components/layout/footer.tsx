@@ -1,7 +1,7 @@
 'use client';
 
 import Container from '@/components/container';
-import { ThemeSwitcherHorizontal } from '@/components/layout/theme-switcher-horizontal';
+import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { Logo } from '@/components/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
 import { getFooterLinks, getSocialLinks } from '@/config';
@@ -102,7 +102,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
 
           <div className="flex items-center gap-x-4">
             <ThemeSelector />
-            <ThemeSwitcherHorizontal />
+            <ModeSwitcherHorizontal />
           </div>
         </Container>
       </div>

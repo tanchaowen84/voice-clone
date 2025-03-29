@@ -1,4 +1,4 @@
-import { ThemeSwitcher } from '@/components/layout/theme-switcher';
+import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { Logo } from '@/components/logo';
 import { websiteConfig } from '@/config';
 import { defaultMessages } from '@/i18n/messages';
@@ -31,6 +31,6 @@ export const baseOptions: BaseLayoutProps = {
   themeSwitch: {
     enabled: true,
     mode: 'light-dark-system',
-    component: <ThemeSwitcher />
+    component: <ModeSwitcher />
   },
 };

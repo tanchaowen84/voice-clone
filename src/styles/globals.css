@@ -197,6 +197,11 @@ body {
   --header-height: calc(var(--spacing) * 12 + 1px);
 }
 
+/*
+ * All the themes are copied from the shadcn-ui dashboard example
+ * https://github.com/shadcn-ui/ui/blob/main/apps/v4/app/(examples)/dashboard/theme.css
+ * https://github.com/TheOrcDev/orcish-dashboard/blob/main/app/globals.css
+ */
 .theme-scaled {
   @media (min-width: 1024px) {
     --radius: 0.6rem;

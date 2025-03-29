@@ -1,5 +1,6 @@
 "use client";
 
+import { websiteConfig } from "@/config";
 import {
   ReactNode,
   createContext,
@@ -9,7 +10,7 @@ import {
 } from "react";
 
 const COOKIE_NAME = "active_theme";
-const DEFAULT_THEME = "blue";
+const DEFAULT_THEME = websiteConfig.theme ?? "default";
 
 function setThemeCookie(theme: string) {
   if (typeof window === "undefined") return;

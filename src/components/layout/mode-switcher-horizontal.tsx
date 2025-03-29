@@ -8,9 +8,9 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 /**
- * Theme switcher component, used in the footer, switch theme by theme variable
+ * Mode switcher component, used in the footer
  */
-export function ThemeSwitcherHorizontal() {
+export function ModeSwitcherHorizontal() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('Common');

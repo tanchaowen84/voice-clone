@@ -67,8 +67,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string; locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const {slug, locale} = await params;
-  
+  const { slug, locale } = await params;
+
   const post = await getBlogPostFromParams({
     params: Promise.resolve({ slug, locale }),
     searchParams: Promise.resolve({})
@@ -80,7 +80,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return constructMetadata({
     title: `${post.title} | ${t('title')}`,
@@ -126,13 +126,15 @@ export default async function BlogPostPage(props: NextPageProps) {
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="size-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{date}</p>
+                <span className="text-sm text-muted-foreground leading-none my-auto">
+                  {date}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <ClockIcon className="size-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground leading-none my-auto">
                   {estimateReadingTime(post.body.raw)}
-                </p>
+                </span>
               </div>
             </div>
 
@@ -168,7 +170,9 @@ export default async function BlogPostPage(props: NextPageProps) {
                     />
                   )}
                 </div>
-                <span className="line-clamp-1">{post.author?.name}</span>
+                <span className="line-clamp-1">
+                  {post.author?.name}
+                </span>
               </div>
             </div>
 

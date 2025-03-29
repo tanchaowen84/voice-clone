@@ -12,9 +12,9 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 /**
- * Theme switcher component, used in the navbar, switch theme by CSS transitions
+ * Mode switcher component, used in the navbar
  */
-export function ThemeSwitcher() {
+export function ModeSwitcher() {
   const { setTheme } = useTheme();
   const t = useTranslations('Common');
 
@@ -28,7 +28,7 @@ export function ThemeSwitcher() {
         >
           <SunIcon className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">{t('theme')}</span>
+          <span className="sr-only">{t('mode')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import React, { ReactNode } from 'react';
 import LocaleSwitcher from '../layout/locale-switcher';
-import { ThemeSwitcher } from '../layout/theme-switcher';
+import { ModeSwitcher } from '../layout/mode-switcher';
 import { ThemeSelector } from '../layout/theme-selector';
 
 interface BreadcrumbItem {
@@ -57,7 +57,7 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
           {actions}
 
           <ThemeSelector />
-          <ThemeSwitcher />
+          <ModeSwitcher />
           <LocaleSwitcher />
         </div>
       </div>
