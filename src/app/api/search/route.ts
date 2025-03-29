@@ -19,6 +19,9 @@ export const { GET } = createI18nSearchAPI('advanced', {
   // Get all pages from all languages and map them to search indexes
   indexes: source.getLanguages().flatMap(({ language, pages }) =>
     pages.map((page) => {
+      console.log('--------------------------------');
+      console.log('search index', language, page.data.title, page.url);
+      console.log('--------------------------------');
       return {
         title: page.data.title,
         description: page.data.description,

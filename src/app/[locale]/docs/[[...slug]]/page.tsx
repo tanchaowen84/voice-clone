@@ -10,6 +10,20 @@ import {
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { LOCALES } from '@/i18n/routing';
+
+export function generateStaticParams() {
+  const locales = LOCALES;
+  const slugParams = source.generateParams();
+  const params = locales.flatMap(locale => 
+    slugParams.map(param => ({
+      locale,
+      slug: param.slug
+    }))
+  );
+  
+  return params;
+}
 
 export async function generateMetadata({
   params,
