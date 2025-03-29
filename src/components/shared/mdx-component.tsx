@@ -15,6 +15,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { CopyButton } from './copy-button';
 
+// Create a context to track whether we're inside a pre element
+const PreContext = React.createContext(false);
+
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
@@ -37,7 +40,7 @@ const components = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        'font-heading mt-8 scroll-m-24 text-xl font-semibold tracking-tight',
+        'font-heading mt-8 scroll-m-24 text-xl font-medium tracking-tight',
         className
       )}
       {...props}
@@ -46,7 +49,7 @@ const components = {
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
-        'font-heading mt-8 scroll-m-24 text-lg font-semibold tracking-tight',
+        'font-heading mt-8 scroll-m-24 text-lg font-medium tracking-tight',
         className
       )}
       {...props}
@@ -55,7 +58,7 @@ const components = {
   h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h5
       className={cn(
-        'mt-8 scroll-m-24 text-base font-semibold tracking-tight',
+        'mt-8 scroll-m-24 text-base font-medium tracking-tight',
         className
       )}
       {...props}
@@ -64,7 +67,7 @@ const components = {
   h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h6
       className={cn(
-        'mt-8 scroll-m-24 text-sm font-semibold tracking-tight',
+        'mt-8 scroll-m-24 text-sm font-medium tracking-tight',
         className
       )}
       {...props}
@@ -163,34 +166,42 @@ const components = {
     
     return (
       <div className="my-4 group relative w-full overflow-hidden">
-        <pre
-          ref={preRef}
-          className={cn(
-            "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
-            className,
-          )}
-          {...props}
-        >
-          {children}
-        </pre>
+        <PreContext.Provider value={true}>
+          <pre
+            ref={preRef}
+            className={cn(
+              "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
+              className,
+            )}
+            {...props}
+          >
+            {children}
+          </pre>
+        </PreContext.Provider>
         {(codeContent || __rawString__) && (
           <CopyButton
             value={codeContent || __rawString__ || ''}
-            className="absolute right-4 top-4 z-20 opacity-70 hover:opacity-100 transition-all"
+            className="cursor-pointer absolute right-4 top-4 z-20 opacity-70 hover:opacity-100 transition-all"
           />
         )}
       </div>
     );
   },
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <code
-      className={cn(
-        'text-foreground font-medium relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm',
-        className
-      )}
-      {...props}
-    />
-  ),
+  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    // Check if this code component is inside a pre element
+    const isInsidePre = React.useContext(PreContext);
+    
+    return (
+      <code
+        className={cn(
+          'text-foreground font-medium relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm',
+          isInsidePre ? 'bg-transparent' : 'bg-accent',
+          className
+        )}
+        {...props}
+      />
+    );
+  },
   Accordion,
   AccordionContent: ({
     className,
