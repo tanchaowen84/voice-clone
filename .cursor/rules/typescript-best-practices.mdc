@@ -11,3 +11,4 @@ alwaysApply: false
 - Use strict null checks to prevent null and undefined errors
 - Implement proper type inference using generics for reusable components.
 - Utilize type guards and assertions for runtime type checking.
+- Use `pnpm` as default package manager if run Command in Terminal.
