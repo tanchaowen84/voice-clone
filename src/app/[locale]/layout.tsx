@@ -52,7 +52,7 @@ export default async function LocaleLayout({
 
             <Toaster richColors position="top-right" offset={64} />
 
-            {/* <TailwindIndicator /> */}
+            <TailwindIndicator />
           </Providers>
         </NextIntlClientProvider>
       </body>
