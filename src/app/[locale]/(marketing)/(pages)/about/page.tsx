@@ -40,7 +40,7 @@ export default async function AboutPage() {
             <div className="flex items-center gap-8">
               <Avatar className="size-32">
                 <AvatarImage
-                  className="rounded-full border-2 border-gray-200"
+                  className="rounded-full border-4 border-gray-200"
                   src="/logo.png"
                   alt="Avatar"
                 />

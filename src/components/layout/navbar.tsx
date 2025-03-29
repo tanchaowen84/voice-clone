@@ -33,8 +33,6 @@ interface NavBarProps {
 const customNavigationMenuTriggerStyle = cn(
   navigationMenuTriggerStyle(),
   'relative bg-transparent text-muted-foreground cursor-pointer',
-  // 'hover:bg-transparent hover:text-foreground',
-  // 'focus:bg-transparent focus:text-foreground',
   'hover:bg-accent hover:text-accent-foreground',
   'focus:bg-accent focus:text-accent-foreground',
   'data-active:font-semibold data-active:bg-transparent data-active:text-foreground',

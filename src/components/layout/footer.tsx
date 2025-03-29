@@ -9,6 +9,8 @@ import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import LocaleSwitcher from './locale-switcher';
+import { ThemeSelector } from './theme-selector';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
@@ -98,7 +100,10 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             Reserved.
           </span>
 
-          <ThemeSwitcherHorizontal />
+          <div className="flex items-center gap-x-4">
+            <ThemeSelector />
+            <ThemeSwitcherHorizontal />
+          </div>
         </Container>
       </div>
     </footer>

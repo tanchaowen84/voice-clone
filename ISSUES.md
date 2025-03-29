@@ -1,1 +1,1 @@
-1. Doc Search in Chinese not working
+1. When navigate to docs and navigate back to homepage, the page layout may shift when click the action buttons on the navbar
