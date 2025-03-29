@@ -1,0 +1,1 @@
+1. Doc Search in Chinese not working

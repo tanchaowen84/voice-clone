@@ -23,8 +23,7 @@ import {
  */
 
 /**
- * Fumadocs documentation
- * 
+ * Use Content Collections for Fumadocs
  * https://fumadocs.vercel.app/docs/headless/content-collections
  */
 const docs = defineCollection({

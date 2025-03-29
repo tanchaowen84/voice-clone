@@ -5,24 +5,56 @@ import {
   DocsBody,
   DocsDescription,
   DocsPage,
-  DocsTitle,
+  DocsTitle
 } from 'fumadocs-ui/page';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { Locale } from 'next-intl';
+import { notFound } from 'next/navigation';
+
+export async function generateMetadata({
+  params,
+}: DocPageProps) {
+  const { slug, locale } = await params;
+  const language = locale as string;
+  const page = source.getPage(slug, language);
+  if (!page) {
+    console.warn('docs page not found', slug, language);
+    notFound();
+  }
+
+  return {
+    title: page.data.title,
+    description: page.data.description,
+  } satisfies Metadata;
+}
+
+interface DocPageProps {
+  params: Promise<{
+    slug?: string[];
+    locale: Locale
+  }>;
+}
 
 export default async function Page({
   params,
-}: {
-  params: { slug?: string[]; locale: Locale };
-}) {
-  const page = source.getPage(params.slug, params.locale);
-  if (!page) notFound();
+}: DocPageProps) {
+  const { slug, locale } = await params;
+  const language = locale as string;
+  const page = source.getPage(slug, language);
+
+  if (!page) {
+    console.warn('docs page not found', slug, language);
+    notFound();
+  }
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
+      <DocsTitle>
+        {page.data.title}
+      </DocsTitle>
+      <DocsDescription>
+        {page.data.description}
+      </DocsDescription>
       <DocsBody>
         <MDXContent
           code={page.data.body}
@@ -36,22 +68,4 @@ export default async function Page({
       </DocsBody>
     </DocsPage>
   );
-}
-
-export function generateStaticParams() {
-  return source.generateParams();
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug?: string[]; locale: Locale };
-}) {
-  const page = source.getPage(params.slug, params.locale);
-  if (!page) notFound();
-
-  return {
-    title: page.data.title,
-    description: page.data.description,
-  } satisfies Metadata;
 }
