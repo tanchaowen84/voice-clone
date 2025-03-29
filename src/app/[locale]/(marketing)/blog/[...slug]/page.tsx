@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { constructMetadata } from '@/lib/metadata';
 import { Locale } from 'next-intl';
+import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 
 /**
  * Gets the blog post from the params
@@ -210,7 +211,7 @@ export default async function BlogPostPage(props: NextPageProps) {
       </div>
 
       {/* newsletter */}
-      {/* TODO: add newsletter */}
+      <NewsletterCard />
     </div>
   );
 }

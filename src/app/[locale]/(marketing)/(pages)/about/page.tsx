@@ -38,7 +38,7 @@ export default async function AboutPage() {
           <div className="grid gap-8 sm:grid-cols-2">
             {/* avatar and name */}
             <div className="flex items-center gap-8">
-              <Avatar className="size-32">
+              <Avatar className="size-32 p-0.5">
                 <AvatarImage
                   className="rounded-full border-4 border-gray-200"
                   src="/logo.png"

@@ -14,16 +14,20 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System",
-    "theme": "Toggle theme",
-    "theme-default": "Default",
-    "theme-blue": "Blue",
-    "theme-green": "Green",
-    "theme-amber": "Amber",
-    "theme-scaled": "Scaled",
-    "theme-blue-scaled": "Blue Scaled",
-    "theme-default-scaled": "Default Scaled",
-    "theme-mono": "Mono",
-    "theme-mono-scaled": "Mono Scaled",
+    "theme": {
+      "label": "Toggle theme",
+      "default-theme": "Default Theme",
+      "default": "Default",
+      "blue": "Blue",
+      "green": "Green",
+      "amber": "Amber",
+      "neutral": "Neutral",
+      "scaled-theme": "Scaled Theme",
+      "blue-scaled": "Blue Scaled",
+      "default-scaled": "Default Scaled",
+      "mono-theme": "Mono Theme",
+      "mono-scaled": "Mono Scaled"
+    },
     "copy": "Copy",
     "saving": "Saving...",
     "save": "Save",
@@ -85,17 +89,28 @@
   },
   "WaitlistPage": {
     "title": "Waitlist",
-    "description": "Join our waitlist for latest news and updates",
-    "subtitle": "Join our waitlist for latest news and updates",
+    "description": "Join our waitlist for the launch of our product",
+    "subtitle": "Join our waitlist for the launch of our product",
     "form": {
       "title": "Join Our Waitlist",
-      "description": "We will send you only one email every week, and no spam",
+      "description": "We will notify you when we launch our product",
       "email": "Email",
       "subscribe": "Subscribe",
       "subscribing": "Subscribing...",
       "success": "Subscribed successfully",
       "fail": "Failed to subscribe",
       "emailValidation": "Please enter a valid email address"
+    }
+  },
+  "Newsletter": {
+    "title": "Join the community",
+    "description": "Subscribe to our newsletter for the latest news and updates",
+    "form": {
+      "email": "Email",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing...",
+      "success": "Subscribed successfully",
+      "fail": "Failed to subscribe"
     }
   },
   "AuthPage": {

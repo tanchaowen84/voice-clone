@@ -26,6 +26,15 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+/**
+ * This component is used to provide the active theme to the application
+ * It also sets the theme cookie and updates the body class when the theme changes.
+ * 
+ * NOTICE: Since custom theme is set in useEffect, 
+ * it will not be applied until the component is mounted,
+ * for better user experience, we recommend to replace the 
+ * default theme with the custom theme in global.css.
+ */
 export function ActiveThemeProvider({
   children,
   initialTheme,

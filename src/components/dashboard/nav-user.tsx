@@ -141,7 +141,7 @@ export function NavUser({ user, className }: NavUserProps) {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger className="cursor-pointer">
                   <LaptopIcon className="mr-2 size-4" />
-                  <span>{t('Common.theme')}</span>
+                  <span>{t('Common.mode')}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem

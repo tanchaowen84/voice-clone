@@ -221,8 +221,12 @@ body {
   }
 }
 
-.theme-default,
-.theme-default-scaled {
+.theme-default{
+  /* default theme */
+}
+
+.theme-neutral,
+.theme-neutral-scaled {
   --primary: var(--color-neutral-600);
   --primary-foreground: var(--color-neutral-50);
 

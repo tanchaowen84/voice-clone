@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
  * website config, without translations
  */
 export type WebsiteConfig = {
-  theme: "default" | "blue" | "green" | "amber" | "default-scaled" | "blue-scaled" | "mono-scaled";
+  theme: "default" | "blue" | "green" | "amber" | "neutral" | "default-scaled" | "blue-scaled" | "mono-scaled";
   metadata: {
     image?: string;
   };
