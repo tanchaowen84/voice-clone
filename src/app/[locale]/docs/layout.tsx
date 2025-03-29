@@ -9,7 +9,7 @@ import { I18nProvider } from 'fumadocs-ui/i18n';
 
 import '@/styles/docs.css';
 
-const cn: Partial<Translations> = {
+const zhTranslations: Partial<Translations> = {
   toc: '目录',
   search: '搜索文档',
   lastUpdate: '最后更新于',
@@ -17,6 +17,22 @@ const cn: Partial<Translations> = {
   previousPage: '上一页',
   nextPage: '下一页',
   chooseLanguage: '选择语言',
+};
+
+const enTranslations: Partial<Translations> = {
+  toc: 'Table of Contents',
+  search: 'Search docs',
+  lastUpdate: 'Last updated on',
+  searchNoResult: 'No results',
+  previousPage: 'Previous',
+  nextPage: 'Next',
+  chooseLanguage: 'Select language',
+};
+
+// Map of locale to translations
+const translations: Record<string, Partial<Translations>> = {
+  zh: zhTranslations,
+  en: enTranslations,
 };
 
 // available languages that will be displayed on UI
@@ -28,7 +44,7 @@ const locales = [
   },
   {
     name: 'Chinese',
-    locale: 'cn',
+    locale: 'zh',
   },
 ];
 
@@ -42,7 +58,11 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
 
   return (
     <DocsProviders>
-      <I18nProvider locales={locales} locale={locale} translations={cn}>
+      <I18nProvider 
+        locales={locales} 
+        locale={locale} 
+        translations={translations[locale] || enTranslations}
+      >
         <DocsLayout tree={source.pageTree[locale]} {...baseOptions}>
           {children}
         </DocsLayout>
