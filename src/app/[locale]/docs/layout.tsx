@@ -6,6 +6,7 @@ import { Locale } from 'next-intl';
 import type { ReactNode } from 'react';
 import { DocsProviders } from './providers-docs';
 import { I18nProvider } from 'fumadocs-ui/i18n';
+import { LOCALE_LIST } from '@/i18n/routing';
 
 import '@/styles/docs.css';
 
@@ -37,16 +38,10 @@ const translations: Record<string, Partial<Translations>> = {
 
 // available languages that will be displayed on UI
 // make sure `locale` is consistent with your i18n config
-const locales = [
-  {
-    name: 'English',
-    locale: 'en',
-  },
-  {
-    name: 'Chinese',
-    locale: 'zh',
-  },
-];
+const locales = Object.entries(LOCALE_LIST).map(([locale, data]) => ({
+  name: data.name,
+  locale,
+}));
 
 interface DocsLayoutProps {
   children: ReactNode;
