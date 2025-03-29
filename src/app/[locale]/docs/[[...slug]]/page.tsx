@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { source } from '@/lib/docs/source';
 import { MDXContent } from '@content-collections/mdx/react';
 import defaultMdxComponents, { createRelativeLink } from 'fumadocs-ui/mdx';
 import {
