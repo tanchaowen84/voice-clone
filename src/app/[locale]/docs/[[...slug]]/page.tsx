@@ -5,7 +5,6 @@ import { LOCALES } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
 import { MDXContent } from '@content-collections/mdx/react';
 import Link from 'fumadocs-core/link';
-import { Popup, PopupContent, PopupTrigger } from 'fumadocs-twoslash/ui';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { File, Files, Folder } from 'fumadocs-ui/components/files';
@@ -139,9 +138,6 @@ export default async function DocPage({
                 </HoverCard>
               );
             },
-            Popup,
-            PopupContent,
-            PopupTrigger,
             Tabs,
             Tab,
             TypeTable,
