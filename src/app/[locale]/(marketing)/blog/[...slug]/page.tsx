@@ -150,7 +150,9 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <div className="max-w-none prose prose-slate dark:prose-invert prose-img:rounded-lg">
+          {/* in order to make the mdx.css work, we need to add the className prose to the div */}
+          {/* https://github.com/tailwindlabs/tailwindcss-typography */}
+          <div className="mt-8 max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
             <MDXContent
               code={post.body}
               components={defaultMdxComponents}

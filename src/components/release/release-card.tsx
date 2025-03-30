@@ -41,7 +41,7 @@ export function ReleaseCard({
         <Separator />
       </CardHeader>
       <CardContent>
-        <div className="max-w-none prose prose-slate dark:prose-invert prose-img:rounded-lg">
+        <div className="max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
           <MDXContent code={content} components={defaultMdxComponents} />
         </div>
       </CardContent>
