@@ -1,9 +1,10 @@
-import { Mdx } from '@/components/shared/mdx-component';
 import { getLocaleDate } from '@/lib/utils';
 import { Separator } from '@radix-ui/react-separator';
 import { Badge, CalendarIcon, TagIcon } from 'lucide-react';
 import { version } from 'os';
 import { Card, CardHeader, CardContent } from '../ui/card';
+import { MDXContent } from '@content-collections/mdx/react';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
 
 interface CustomPageProps {
   title: string;
@@ -39,7 +40,9 @@ export function CustomPage({
       {/* Content */}
       <Card className="mb-8">
         <CardContent>
-          <Mdx code={content} />
+          <div className="max-w-none prose prose-slate dark:prose-invert prose-img:rounded-lg">
+            <MDXContent code={content} components={defaultMdxComponents} />
+          </div>
         </CardContent>
       </Card>
     </div>

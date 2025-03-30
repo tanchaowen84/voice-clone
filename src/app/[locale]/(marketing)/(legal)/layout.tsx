@@ -1,6 +1,8 @@
 import Container from '@/components/container';
 import { PropsWithChildren } from 'react';
 
+import '@/styles/mdx.css';
+
 export default function LegalLayout({ children }: PropsWithChildren) {
   return (
     <Container className="py-16 px-4">

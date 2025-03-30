@@ -50,7 +50,7 @@ export default async function CookiePolicyPage(props: NextPageProps) {
       title={page.title}
       description={page.description}
       date={page.date}
-      content={page.body.code}
+      content={page.body}
     />
   );
 }

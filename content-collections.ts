@@ -1,19 +1,11 @@
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/routing";
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { compileMDX } from "@content-collections/mdx";
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypePrettyCode, { Options } from 'rehype-pretty-code';
-import rehypeSlug from 'rehype-slug';
-import { codeImport } from 'remark-code-import';
-import remarkGfm from 'remark-gfm';
-import { createHighlighter } from 'shiki';
-import path from "path";
-import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
-import { visit } from 'unist-util-visit';
 import {
-  createMetaSchema,
   createDocSchema,
+  createMetaSchema,
   transformMDX,
 } from '@fumadocs/content-collections/configuration';
+import path from "path";
 
 /**
  * Content Collections documentation
@@ -123,10 +115,12 @@ export const posts = defineCollection({
     published: z.boolean().default(true),
     categories: z.array(z.string()),
     author: z.string(),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+    locale: z.enum(LOCALES as [string, ...string[]]).optional(),
+    estimatedTime: z.number().optional() // Reading time in minutes
   }),
   transform: async (data, context) => {
-    const body = await compileWithCodeCopy(context, data);
+    // Use Fumadocs transformMDX for consistent MDX processing
+    const transformedData = await transformMDX(data, context);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -166,6 +160,11 @@ export const posts = defineCollection({
     const slugParamsParts = slugPath.split(path.sep).slice(1);
     const slugAsParams = slugParamsParts.join('/');
     
+    // Calculate estimated reading time
+    const wordCount = data.content.split(/\s+/).length;
+    const wordsPerMinute = 200; // Average reading speed: 200 words per minute
+    const estimatedTime = Math.max(Math.ceil(wordCount / wordsPerMinute), 1);
+    
     return {
       ...data,
       locale,
@@ -173,10 +172,9 @@ export const posts = defineCollection({
       categories: blogCategories,
       slug: `/${slugPath}`,
       slugAsParams,
-      body: {
-        raw: data.content,
-        code: body
-      }
+      estimatedTime,
+      body: transformedData.body, // Use processed MDX content directly
+      toc: transformedData.toc
     };
   }
 });
@@ -206,7 +204,8 @@ export const pages = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    const body = await compileWithCodeCopy(context, data);
+    // Use Fumadocs transformMDX for consistent MDX processing
+    const transformedData = await transformMDX(data, context);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -230,10 +229,8 @@ export const pages = defineCollection({
       locale,
       slug: `/${slugPath}`,
       slugAsParams,
-      body: {
-        raw: data.content,
-        code: body
-      }
+      body: transformedData.body,
+      toc: transformedData.toc
     };
   }
 });
@@ -264,7 +261,8 @@ export const releases = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    const body = await compileWithCodeCopy(context, data);
+    // Use Fumadocs transformMDX for consistent MDX processing
+    const transformedData = await transformMDX(data, context);
     
     // Determine the locale from the file path or use the provided locale
     const pathParts = data._meta.path.split(path.sep);
@@ -288,79 +286,11 @@ export const releases = defineCollection({
       locale,
       slug: `/${slugPath}`,
       slugAsParams,
-      body: {
-        raw: data.content,
-        code: body
-      }
+      body: transformedData.body,
+      toc: transformedData.toc
     };
   }
 });
-
-const prettyCodeOptions: Options = {
-  theme: 'github-dark',
-  getHighlighter: (options) =>
-    createHighlighter({
-      ...options
-    }),
-  onVisitLine(node) {
-    // Prevent lines from collapsing in `display: grid` mode, and allow empty
-    // lines to be copy/pasted
-    if (node.children.length === 0) {
-      node.children = [{ type: 'text', value: ' ' }];
-    }
-  },
-  onVisitHighlightedLine(node) {
-    if (!node.properties.className) {
-      node.properties.className = [];
-    }
-    node.properties.className.push('line--highlighted');
-  },
-  onVisitHighlightedChars(node) {
-    if (!node.properties.className) {
-      node.properties.className = [];
-    }
-    node.properties.className = ['word--highlighted'];
-  }
-};
-
-const compileWithCodeCopy = async (
-  context: any, 
-  data: any, 
-  options: { 
-    remarkPlugins?: any[]; 
-    rehypePlugins?: any[];
-  } = {}
-) => {
-  return await compileMDX(context, data, {
-    ...options,
-    remarkPlugins: [
-      remarkGfm,
-      codeImport,
-      ...(options.remarkPlugins || [])
-    ],
-    rehypePlugins: [
-      rehypeSlug,
-      [rehypePrettyCode, prettyCodeOptions],
-      // add __rawString__ to pre element
-      () => (tree) => {
-        visit(tree, (node) => {
-          if (node?.type === "element" && node?.tagName === "pre") {
-            const [codeEl] = node.children;
-            if (codeEl.tagName !== "code") return;
-            
-            // add __rawString__ as a property that will be passed to the React component
-            if (!node.properties) {
-              node.properties = {};
-            }
-            node.properties.__rawString__ = codeEl.children?.[0]?.value;
-          }
-        });
-      },
-      rehypeAutolinkHeadings,
-      ...(options.rehypePlugins || [])
-    ]
-  });
-};
 
 export default defineConfig({
   collections: [docs, metas, authors, categories, posts, pages, releases]

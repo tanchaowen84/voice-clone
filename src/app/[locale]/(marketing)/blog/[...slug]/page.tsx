@@ -1,10 +1,9 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
-import { Mdx } from '@/components/shared/mdx-component';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
-import { estimateReadingTime, getLocaleDate } from '@/lib/utils';
+import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
 import { CalendarIcon, ClockIcon } from 'lucide-react';
@@ -15,6 +14,10 @@ import { notFound } from 'next/navigation';
 import { constructMetadata } from '@/lib/metadata';
 import { Locale } from 'next-intl';
 import { NewsletterCard } from '@/components/newsletter/newsletter-card';
+import { MDXContent } from '@content-collections/mdx/react';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+
+import '@/styles/mdx.css';
 
 /**
  * Gets the blog post from the params
@@ -134,7 +137,7 @@ export default async function BlogPostPage(props: NextPageProps) {
               <div className="flex items-center gap-2">
                 <ClockIcon className="size-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground leading-none my-auto">
-                  {estimateReadingTime(post.body.raw)}
+                  {post.estimatedTime ? `${post.estimatedTime} min read` : 'Quick read'}
                 </span>
               </div>
             </div>
@@ -147,7 +150,12 @@ export default async function BlogPostPage(props: NextPageProps) {
           </div>
 
           {/* blog post content */}
-          <Mdx code={post.body.code} />
+          <div className="max-w-none prose prose-slate dark:prose-invert prose-img:rounded-lg">
+            <MDXContent
+              code={post.body}
+              components={defaultMdxComponents}
+            />
+          </div>
 
           <div className="flex items-center justify-start my-16">
             <AllPostsButton />

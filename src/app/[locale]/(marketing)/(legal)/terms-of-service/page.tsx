@@ -1,12 +1,12 @@
 import { CustomPage } from '@/components/page/custom-page';
+import { constructMetadata } from '@/lib/metadata';
 import { getCustomPage } from '@/lib/page/get-custom-page';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { constructMetadata } from '@/lib/metadata';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -50,7 +50,7 @@ export default async function TermsOfServicePage(props: NextPageProps) {
       title={page.title}
       description={page.description}
       date={page.date}
-      content={page.body.code}
+      content={page.body}
     />
   );
 }

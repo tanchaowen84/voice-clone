@@ -8,6 +8,8 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import '@/styles/mdx.css';
+
 export async function generateMetadata({
   params,
 }: {
@@ -60,7 +62,7 @@ export default async function ChangelogPage(props: NextPageProps) {
             description={release.description}
             date={release.date}
             version={release.version}
-            content={release.body.code}
+            content={release.body}
           />
         ))}
       </div>

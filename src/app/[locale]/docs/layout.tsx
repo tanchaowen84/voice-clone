@@ -12,7 +12,7 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-import '@/styles/docs.css';
+import '@/styles/mdx.css';
 
 // available languages that will be displayed on UI
 // make sure `locale` is consistent with your i18n config
