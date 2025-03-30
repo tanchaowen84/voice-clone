@@ -1,21 +1,21 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import { BlogToc } from '@/components/blog/blog-toc';
+import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
+import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
+import { MDXContent } from '@content-collections/mdx/react';
 import { allPosts } from 'content-collections';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { CalendarIcon, ClockIcon } from 'lucide-react';
 import type { Metadata } from 'next';
+import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { constructMetadata } from '@/lib/metadata';
-import { Locale } from 'next-intl';
-import { NewsletterCard } from '@/components/newsletter/newsletter-card';
-import { MDXContent } from '@content-collections/mdx/react';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
 
 import '@/styles/mdx.css';
 
@@ -137,7 +137,7 @@ export default async function BlogPostPage(props: NextPageProps) {
               <div className="flex items-center gap-2">
                 <ClockIcon className="size-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground leading-none my-auto">
-                  {post.estimatedTime ? `${post.estimatedTime} min read` : 'Quick read'}
+                  {post.estimatedTime}{t('readTime')}
                 </span>
               </div>
             </div>
