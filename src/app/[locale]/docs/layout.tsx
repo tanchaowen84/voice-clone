@@ -61,6 +61,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
     i18n: docsI18nConfig,
     githubUrl: websiteConfig.social.github ?? undefined,
     nav: {
+      url: '/docs',
       title: (
         <>
           <Logo className="size-6" />
