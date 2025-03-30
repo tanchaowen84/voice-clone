@@ -1,4 +1,9 @@
+import { Icons } from '@/components/icons/icons';
+import { ModeSwitcher } from '@/components/layout/mode-switcher';
+import { Logo } from '@/components/logo';
+import { websiteConfig } from '@/config';
 import { LOCALE_LIST } from '@/i18n/routing';
+import { docsI18nConfig } from '@/lib/docs/i18n';
 import { source } from '@/lib/docs/source';
 import { I18nProvider, Translations } from 'fumadocs-ui/i18n';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
@@ -6,11 +11,6 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
-import { DocsProviders } from './providers-docs';
-import { ModeSwitcher } from '@/components/layout/mode-switcher';
-import { Logo } from '@/components/logo';
-import { websiteConfig } from '@/config';
-import { docsI18nConfig } from '@/lib/docs/i18n';
 
 import '@/styles/docs.css';
 
@@ -41,6 +41,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
     chooseLanguage: t('chooseLanguage'),
   };
 
+  // Docs layout configurations
   const baseOptions: BaseLayoutProps = {
     i18n: docsI18nConfig,
     githubUrl: websiteConfig.social.github ?? undefined,
@@ -57,7 +58,18 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
         text: t('homepage'),
         url: '/',
         active: 'nested-url',
-      }
+      },
+      ...(websiteConfig.social.twitter
+        ? [
+          {
+            type: "icon" as const,
+            icon: <Icons.x />,
+            text: "X",
+            url: websiteConfig.social.twitter,
+            secondary: true,
+          }
+        ]
+        : [])
     ],
     themeSwitch: {
       enabled: true,
@@ -67,16 +79,14 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
   };
 
   return (
-    // <DocsProviders>
-      <I18nProvider 
-        locales={locales} 
-        locale={locale} 
-        translations={translations}
-      >
-        <DocsLayout tree={source.pageTree[locale]} {...baseOptions}>
-          {children}
-        </DocsLayout>
-      </I18nProvider>
-    // </DocsProviders>
+    <I18nProvider
+      locales={locales}
+      locale={locale}
+      translations={translations}
+    >
+      <DocsLayout tree={source.pageTree[locale]} {...baseOptions}>
+        {children}
+      </DocsLayout>
+    </I18nProvider>
   );
 }

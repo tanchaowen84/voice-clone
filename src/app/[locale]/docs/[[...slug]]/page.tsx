@@ -16,13 +16,13 @@ import { Mdx } from '@/components/shared/mdx-component';
 export function generateStaticParams() {
   const locales = LOCALES;
   const slugParams = source.generateParams();
-  const params = locales.flatMap(locale => 
+  const params = locales.flatMap(locale =>
     slugParams.map(param => ({
       locale,
       slug: param.slug
     }))
   );
-  
+
   return params;
 }
 
@@ -63,7 +63,12 @@ export default async function Page({
   }
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={page.data.toc}
+      full={page.data.full}
+      tableOfContent={{
+        style: "clerk",
+      }}
+    >
       <DocsTitle>
         {page.data.title}
       </DocsTitle>

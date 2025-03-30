@@ -329,7 +329,7 @@ body {
   
   /* Standalone code elements */
   code {
-    @apply relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium text-foreground bg-accent;
+    @apply relative rounded px-[0.3rem] py-[0.2rem] text-foreground bg-accent;
   }
   
   /* Code elements inside pre */
