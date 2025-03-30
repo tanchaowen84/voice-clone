@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+
+/* Fumadocs Themes */
+/* https://fumadocs.vercel.app/docs/ui/theme#themes */
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 

@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/routing";
-import { defineCollection, defineConfig } from "@content-collections/core";
+import { defineCollection, defineConfig, z } from "@content-collections/core";
 import {
   createDocSchema,
   createMetaSchema,
@@ -22,7 +22,11 @@ const docs = defineCollection({
   name: 'docs',
   directory: 'content/docs',
   include: '**/*.mdx',
-  schema: createDocSchema,
+  schema: (z) => ({
+    ...createDocSchema(z),
+    preview: z.string().optional(),
+    index: z.boolean().default(false),
+  }),
   transform: transformMDX,
 });
 

@@ -32,13 +32,13 @@ interface DocsLayoutProps {
  * https://fumadocs.vercel.app/docs/ui/navigation/links
  * https://fumadocs.vercel.app/docs/ui/navigation/sidebar
  * 
- * example:
+ * ref:
  * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/app/layout.config.tsx
  * 
  * 2. Organizing Pages
  * https://fumadocs.vercel.app/docs/ui/page-conventions
  * 
- * example:
+ * ref:
  * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/content/docs/ui/meta.json
  */
 export default async function DocsRootLayout({ children, params }: DocsLayoutProps) {

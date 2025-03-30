@@ -20,6 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@/content/*": ["./content/*"],
+      "@/public/*": ["./public/*"],
       "content-collections": ["./.content-collections/generated"]
     }
   },

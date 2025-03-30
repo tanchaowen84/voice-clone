@@ -1,0 +1,34 @@
+---
+title: Zoomable Image
+description: Allow zoom-in images in your documentation
+preview: zoomImage
+---
+
+## Usage
+
+Replace `img` with `ImageZoom` in your MDX components.
+
+```tsx title="app/docs/[[...slug]]/page.tsx"
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+
+return (
+  <MdxContent
+    components={{
+      ...defaultMdxComponents,
+      img: (props) => <ImageZoom {...(props as any)} />,
+      // other Mdx components
+    }}
+  />
+);
+```
+
+Now image zoom will be automatically enabled on all images.
+
+```mdx
+![Test](/banner.png)
+```
+
+### Image Optimization
+
+A default [`sizes` property](https://nextjs.org/docs/app/api-reference/components/image#sizes) will be defined for Next.js `<Image />` component if not specified.
