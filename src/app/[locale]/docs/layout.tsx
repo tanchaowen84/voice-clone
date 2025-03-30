@@ -67,7 +67,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
   };
 
   return (
-    <DocsProviders>
+    // <DocsProviders>
       <I18nProvider 
         locales={locales} 
         locale={locale} 
@@ -77,6 +77,6 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
           {children}
         </DocsLayout>
       </I18nProvider>
-    </DocsProviders>
+    // </DocsProviders>
   );
 }
