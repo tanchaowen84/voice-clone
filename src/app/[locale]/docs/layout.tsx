@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons/icons';
+import { XTwitterIcon } from '@/components/icons/x';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { Logo } from '@/components/logo';
 import { websiteConfig } from '@/config';
@@ -8,6 +8,7 @@ import { source } from '@/lib/docs/source';
 import { I18nProvider, Translations } from 'fumadocs-ui/i18n';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { BookIcon, HomeIcon } from 'lucide-react';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -26,6 +27,20 @@ interface DocsLayoutProps {
   params: Promise<{ locale: Locale }>;
 }
 
+/**
+ * 1. Configure navigation
+ * https://fumadocs.vercel.app/docs/ui/navigation/links
+ * https://fumadocs.vercel.app/docs/ui/navigation/sidebar
+ * 
+ * example:
+ * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/app/layout.config.tsx
+ * 
+ * 2. Organizing Pages
+ * https://fumadocs.vercel.app/docs/ui/page-conventions
+ * 
+ * example:
+ * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/content/docs/ui/meta.json
+ */
 export default async function DocsRootLayout({ children, params }: DocsLayoutProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'DocsPage' });
@@ -42,7 +57,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
   };
 
   // Docs layout configurations
-  const baseOptions: BaseLayoutProps = {
+  const docsOptions: BaseLayoutProps = {
     i18n: docsI18nConfig,
     githubUrl: websiteConfig.social.github ?? undefined,
     nav: {
@@ -57,13 +72,20 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
       {
         text: t('homepage'),
         url: '/',
-        active: 'nested-url',
+        icon: <HomeIcon />,
+        active: 'none',
+      },
+      {
+        text: t('blog'),
+        url: '/blog',
+        icon: <BookIcon />,
+        active: 'none',
       },
       ...(websiteConfig.social.twitter
         ? [
           {
             type: "icon" as const,
-            icon: <Icons.x />,
+            icon: <XTwitterIcon />,
             text: "X",
             url: websiteConfig.social.twitter,
             secondary: true,
@@ -84,7 +106,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
       locale={locale}
       translations={translations}
     >
-      <DocsLayout tree={source.pageTree[locale]} {...baseOptions}>
+      <DocsLayout tree={source.pageTree[locale]} {...docsOptions}>
         {children}
       </DocsLayout>
     </I18nProvider>

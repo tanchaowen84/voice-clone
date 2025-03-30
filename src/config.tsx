@@ -44,6 +44,7 @@ import {
   UserPlusIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { XTwitterIcon } from './components/icons/x';
 
 /**
  * website config, without translations
@@ -527,7 +528,7 @@ export function getSocialLinks(): MenuItem[] {
     socialLinks.push({
       title: 'Twitter',
       href: websiteConfig.social.twitter,
-      icon: <TwitterIcon className="size-4 shrink-0" />,
+      icon: <XTwitterIcon className="size-4 shrink-0" />,
     });
   }
 

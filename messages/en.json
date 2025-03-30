@@ -188,8 +188,9 @@
     "previousPage": "Previous",
     "nextPage": "Next",
     "chooseLanguage": "Select language",
+    "title": "MkSaaS Docs",
     "homepage": "Homepage",
-    "title": "MkSaaS Docs"
+    "blog": "Blog"
   },
   "Marketing": {
     "navbar": {
