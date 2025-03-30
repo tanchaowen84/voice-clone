@@ -305,9 +305,6 @@ body {
 
 /* MDX styles for code highlighting */
 @layer components {
-  /**
-   * Styles for rehype-pretty-code syntax highlighting
-   */
   [data-rehype-pretty-code-figure] code {
     @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
     counter-reset: line;
@@ -328,6 +325,16 @@ body {
 
   [data-rehype-pretty-code-title] + pre {
     @apply mt-2;
+  }
+  
+  /* Standalone code elements */
+  code {
+    @apply relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium text-foreground bg-accent;
+  }
+  
+  /* Code elements inside pre */
+  pre code {
+    @apply bg-transparent;
   }
 }
 

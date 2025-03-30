@@ -15,9 +15,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { CopyButton } from './copy-button';
 
-// Create a context to track whether we're inside a pre element
-const PreContext = React.createContext(false);
-
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
@@ -31,7 +28,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        'font-heading mb-4 mt-12 scroll-m-24 text-2xl font-semibold leading-8 tracking-tight',
+        'font-heading mb-4 mt-8 scroll-m-24 text-2xl font-semibold leading-8 tracking-tight',
         className
       )}
       {...props}
@@ -166,18 +163,16 @@ const components = {
     
     return (
       <div className="my-4 group relative w-full overflow-hidden">
-        <PreContext.Provider value={true}>
-          <pre
-            ref={preRef}
-            className={cn(
-              "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
-              className,
-            )}
-            {...props}
-          >
-            {children}
-          </pre>
-        </PreContext.Provider>
+        <pre
+          ref={preRef}
+          className={cn(
+            "max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-900 py-4 dark:bg-zinc-900",
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </pre>
         {(codeContent || __rawString__) && (
           <CopyButton
             value={codeContent || __rawString__ || ''}
@@ -187,21 +182,15 @@ const components = {
       </div>
     );
   },
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
-    // Check if this code component is inside a pre element
-    const isInsidePre = React.useContext(PreContext);
-    
-    return (
-      <code
-        className={cn(
-          'text-foreground font-medium relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm',
-          isInsidePre ? 'bg-transparent' : 'bg-accent',
-          className
-        )}
-        {...props}
-      />
-    );
-  },
+  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <code
+      className={cn(
+        'relative font-mono text-sm',
+        className
+      )}
+      {...props}
+    />
+  ),
   Accordion,
   AccordionContent: ({
     className,
@@ -256,9 +245,9 @@ const components = {
   ),
 };
 
-type MdxProps = {
+interface MdxProps {
   code: string;
-};
+}
 
 /**
  * render mdx content with custom components
