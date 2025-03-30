@@ -49,7 +49,7 @@ export default async function AboutPage() {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-4xl font-heading text-foreground">
+                <h1 className="text-4xl text-foreground">
                   {t('authorName')}
                 </h1>
                 <p className="text-base text-muted-foreground mt-2">

@@ -1,4 +1,4 @@
-import { fontBricolageGrotesque, fontDMMono, fontDMSans, fontDMSerifText } from '@/assets/fonts';
+import { fontBricolageGrotesque, fontNotoSans, fontNotoSansMono, fontNotoSerif } from '@/assets/fonts';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Providers } from './providers';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
 
 import '@/styles/globals.css';
 
@@ -39,10 +38,9 @@ export default async function LocaleLayout({
         suppressHydrationWarning
         className={cn(
           'size-full antialiased',
-          fontBricolageGrotesque.className,
-          fontDMSans.variable,
-          fontDMMono.variable,
-          fontDMSerifText.variable,
+          fontNotoSans.className,
+          fontNotoSerif.variable,
+          fontNotoSansMono.variable,
           fontBricolageGrotesque.variable
         )}
       >

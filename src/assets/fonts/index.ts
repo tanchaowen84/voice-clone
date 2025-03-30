@@ -1,5 +1,4 @@
-import { DM_Mono, DM_Sans, DM_Serif_Text } from 'next/font/google';
-import localFont from 'next/font/local';
+import { Bricolage_Grotesque, Noto_Sans, Noto_Sans_Mono, Noto_Serif } from 'next/font/google';
 
 /**
  * This file shows how to customize the font by using local font or google font
@@ -11,10 +10,10 @@ import localFont from 'next/font/local';
  * 3. Add font variable to the font object
  */
 // https://gwfh.mranftl.com/fonts/bricolage-grotesque?subsets=latin
-export const fontBricolageGrotesque = localFont({
-  src: './bricolage-grotesque-v7-latin-regular.woff2',
-  variable: '--font-bricolage-grotesque',
-});
+// export const fontBricolageGrotesque = localFont({
+//   src: './Bricolage Grotesque-grotesque-v7-latin-regular.woff2',
+//   variable: '--font-bricolage-grotesque',
+// });
 
 /**
  * [2] use google font
@@ -25,23 +24,34 @@ export const fontBricolageGrotesque = localFont({
  * 2. CSS and font files are downloaded at build time and self-hosted with the rest of your static assets.
  * https://nextjs.org/docs/app/building-your-application/optimizing/fonts#google-fonts
  */
-export const fontDMSans = DM_Sans({
+// https://fonts.google.com/noto/specimen/Noto+Sans
+export const fontNotoSans = Noto_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-dm-sans',
+  variable: '--font-noto-sans',
   weight: ['500', '600', '700'],
 });
 
-export const fontDMMono = DM_Mono({
+// https://fonts.google.com/noto/specimen/Noto+Serif
+export const fontNotoSerif = Noto_Serif({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-dm-mono',
-  weight: ['300', '400', '500'],
+  variable: '--font-noto-serif',
+  weight: ['400'],
 });
 
-export const fontDMSerifText = DM_Serif_Text({
+// https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+export const fontNotoSansMono = Noto_Sans_Mono({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-dm-serif-text',
+  variable: '--font-noto-sans-mono',
   weight: ['400'],
+});
+
+// https://fonts.google.com/specimen/Bricolage+Grotesque
+export const fontBricolageGrotesque = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-bricolage-grotesque',
+  weight: ['400', '500', '600', '700'],
 });

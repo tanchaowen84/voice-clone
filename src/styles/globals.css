@@ -8,12 +8,16 @@
  * https://ouassim.tech/notes/how-to-add-a-theme-selector-to-your-nextjs-app/
  */
 @theme inline {
-  --font-sans: var(--font-dm-sans);
-  --font-mono: var(--font-dm-mono);
-  --font-serif: var(--font-dm-serif-text);
+  /* font */
+  --font-sans: var(--font-noto-sans);
+  --font-mono: var(--font-noto-sans-mono);
+  --font-serif: var(--font-noto-serif);
   --font-bricolage: var(--font-bricolage-grotesque);
-  --font-heading: var(--font-dm-sans);
 
+  /* header height */
+  --header-height: calc(var(--spacing) * 12 + 1px);
+
+  /* colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -50,7 +54,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* animate-css for magic ui components */
+  /* animate */
   --animate-shiny-text: shiny-text 8s infinite;
   --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -194,11 +198,6 @@
 
 body {
   @apply overscroll-none bg-transparent;
-}
-
-:root {
-  /* --font-sans: var(--font-inter); */
-  --header-height: calc(var(--spacing) * 12 + 1px);
 }
 
 /*
