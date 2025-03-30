@@ -61,8 +61,6 @@ function PreviewRenderer({ preview }: { preview: string }): ReactNode {
   return null;
 }
 
-const generator = createGenerator();
-
 export const revalidate = false;
 
 interface DocPageProps {
@@ -150,7 +148,10 @@ export default async function DocPage({
             Tab,
             TypeTable,
             AutoTypeTable: (props) => (
-              <AutoTypeTable generator={generator} {...props} />
+              <AutoTypeTable 
+                generator={createGenerator()} 
+                {...props} 
+              />
             ),
             Accordion,
             Accordions,
