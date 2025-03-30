@@ -53,12 +53,6 @@ export function NavUser({ user, className }: NavUserProps) {
   const [, startTransition] = useTransition();
   const t = useTranslations();
 
-  // const { data: session, error } = authClient.useSession();
-  // const user = session?.user;
-  // if (!user) {
-  //   return null;
-  // }
-
   const setLocale = (nextLocale: Locale) => {
     setCurrentLocale(nextLocale);
 
@@ -141,7 +135,7 @@ export function NavUser({ user, className }: NavUserProps) {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger className="cursor-pointer">
                   <LaptopIcon className="mr-2 size-4" />
-                  <span>{t('Common.mode')}</span>
+                  <span>{t('Common.mode.label')}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem
@@ -149,21 +143,21 @@ export function NavUser({ user, className }: NavUserProps) {
                     onClick={() => setTheme('light')}
                   >
                     <SunIcon className="mr-2 size-4" />
-                    <span>{t('Common.light')}</span>
+                    <span>{t('Common.mode.light')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer"
                     onClick={() => setTheme('dark')}
                   >
                     <MoonIcon className="mr-2 size-4" />
-                    <span>{t('Common.dark')}</span>
+                    <span>{t('Common.mode.dark')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer"
                     onClick={() => setTheme('system')}
                   >
                     <LaptopIcon className="mr-2 size-4" />
-                    <span>{t('Common.system')}</span>
+                    <span>{t('Common.mode.system')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>

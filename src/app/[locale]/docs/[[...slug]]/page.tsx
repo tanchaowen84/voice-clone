@@ -1,3 +1,4 @@
+import { LOCALES } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
 import { MDXContent } from '@content-collections/mdx/react';
 import defaultMdxComponents, { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -10,8 +11,6 @@ import {
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { LOCALES } from '@/i18n/routing';
-import { Mdx } from '@/components/shared/mdx-component';
 
 export function generateStaticParams() {
   const locales = LOCALES;
