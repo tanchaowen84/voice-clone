@@ -88,8 +88,7 @@ export const authors = defineCollection({
     
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
-    
-    console.log(`author processed: ${fileName}, locale=${locale}`);
+    // console.log(`author processed: ${fileName}, locale=${locale}`);
     
     return {
       ...data,
@@ -122,8 +121,7 @@ export const categories = defineCollection({
     
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
-    
-    console.log(`category processed: ${fileName}, locale=${locale}`);
+    // console.log(`category processed: ${fileName}, locale=${locale}`);
     
     return {
       ...data,
@@ -172,8 +170,7 @@ export const posts = defineCollection({
     
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
-    
-    console.log(`post processed: ${fileName}, base=${base}, locale=${locale}`);
+    // console.log(`post processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Find the author by matching slug
     const blogAuthor = context
@@ -259,8 +256,7 @@ export const pages = defineCollection({
     
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
-    
-    console.log(`page processed: ${fileName}, base=${base}, locale=${locale}`);
+    // console.log(`page processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Get the collection name (e.g., "pages")
     const pathParts = data._meta.path.split(path.sep);
@@ -318,8 +314,7 @@ export const releases = defineCollection({
     
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
-    
-    console.log(`release processed: ${fileName}, base=${base}, locale=${locale}`);
+    // console.log(`release processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Get the collection name (e.g., "release")
     const pathParts = data._meta.path.split(path.sep);
