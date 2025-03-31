@@ -39,6 +39,32 @@ const metas = defineCollection({
 });
 
 /**
+ * Helper function to extract locale and base name from filename
+ * Handles filename formats:
+ * - name -> locale: DEFAULT_LOCALE, base: name
+ * - name.zh -> locale: zh, base: name
+ * 
+ * @param fileName Filename without extension (already has .mdx removed)
+ * @returns Object with locale and base name
+ */
+function extractLocaleAndBase(fileName: string): { locale: string; base: string } {
+  // Split filename into parts
+  const parts = fileName.split('.');
+  
+  if (parts.length === 1) {
+    // Simple filename without locale: xxx
+    return { locale: DEFAULT_LOCALE, base: parts[0] };
+  } else if (parts.length === 2 && LOCALES.includes(parts[1])) {
+    // Filename with locale: xxx.zh
+    return { locale: parts[1], base: parts[0] };
+  } else {
+    // Unexpected format, use first part as base and default locale
+    console.warn(`Unexpected filename format: ${fileName}`);
+    return { locale: DEFAULT_LOCALE, base: parts[0] };
+  }
+}
+
+/**
  * Blog Author collection
  * 
  * Authors are identified by their slug across all languages
@@ -56,20 +82,14 @@ export const authors = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    // Determine the locale from the file name or use the provided locale
-    const fileName = data._meta.path.split(path.sep).pop() || '';
-    const fileNameParts = fileName.split('.');
+    // Get the filename from the path
+    const filePath = data._meta.path;
+    const fileName = filePath.split(path.sep).pop() || '';
     
-    // Check if the file has a locale suffix (e.g., mksaas.zh.mdx)
-    let localeFromFileName = null;
-    if (fileNameParts.length > 2) {
-      const possibleLocale = fileNameParts[fileNameParts.length - 2];
-      if (LOCALES.includes(possibleLocale)) {
-        localeFromFileName = possibleLocale;
-      }
-    }
+    // Extract locale and base from filename
+    const { locale, base } = extractLocaleAndBase(fileName);
     
-    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    console.log(`author processed: ${fileName}, locale=${locale}`);
     
     return {
       ...data,
@@ -96,20 +116,14 @@ export const categories = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    // Determine the locale from the file name or use the provided locale
-    const fileName = data._meta.path.split(path.sep).pop() || '';
-    const fileNameParts = fileName.split('.');
+    // Get the filename from the path
+    const filePath = data._meta.path;
+    const fileName = filePath.split(path.sep).pop() || '';
     
-    // Check if the file has a locale suffix (e.g., tutorial.zh.mdx)
-    let localeFromFileName = null;
-    if (fileNameParts.length > 2) {
-      const possibleLocale = fileNameParts[fileNameParts.length - 2];
-      if (LOCALES.includes(possibleLocale)) {
-        localeFromFileName = possibleLocale;
-      }
-    }
+    // Extract locale and base from filename
+    const { locale, base } = extractLocaleAndBase(fileName);
     
-    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    console.log(`category processed: ${fileName}, locale=${locale}`);
     
     return {
       ...data,
@@ -117,41 +131,6 @@ export const categories = defineCollection({
     };
   }
 });
-
-/**
- * Helper function to extract the file basename, locale, and extension
- * @param fileName The file name to parse
- * @returns Object with base, locale, and extension
- */
-function parseFileName(fileName: string): { base: string; locale: string | null; ext: string } {
-  // Split the filename into parts
-  const parts = fileName.split('.');
-  
-  // Handle different cases based on the number of parts
-  if (parts.length === 1) {
-    // Filename with no extension (unlikely)
-    return { base: parts[0], locale: null, ext: '' };
-  } else if (parts.length === 2) {
-    // Regular filename with extension: example.mdx
-    return { base: parts[0], locale: null, ext: parts[1] };
-  } else {
-    // Check if the second-to-last part is a locale
-    const possibleLocale = parts[parts.length - 2];
-    const isLocale = LOCALES.includes(possibleLocale);
-    
-    if (isLocale) {
-      // Filename with locale: example.zh.mdx
-      // Join all parts except the last two with dots to handle filenames that contain dots
-      const base = parts.slice(0, parts.length - 2).join('.');
-      return { base, locale: possibleLocale, ext: parts[parts.length - 1] };
-    } else {
-      // Filename with dots but no locale: example.something.mdx
-      // Join all parts except the last one with dots
-      const base = parts.slice(0, parts.length - 1).join('.');
-      return { base, locale: null, ext: parts[parts.length - 1] };
-    }
-  }
-}
 
 /**
  * Blog Post collection
@@ -188,13 +167,13 @@ export const posts = defineCollection({
     const transformedData = await transformMDX(data, context);
     
     // Get the filename from the path
-    const fileName = data._meta.path.split(path.sep).pop() || '';
+    const filePath = data._meta.path;
+    const fileName = filePath.split(path.sep).pop() || '';
     
-    // Parse the filename into base, locale, and extension
-    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    // Extract locale and base from filename
+    const { locale, base } = extractLocaleAndBase(fileName);
     
-    // Use the locale from the file name or fall back to default
-    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    console.log(`post processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Find the author by matching slug
     const blogAuthor = context
@@ -230,8 +209,6 @@ export const posts = defineCollection({
     const wordsPerMinute = 200; // average reading speed: 200 words per minute
     const estimatedTime = Math.max(Math.ceil(wordCount / wordsPerMinute), 1);
     
-    // console.log(`Post processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
-    
     return {
       ...data,
       locale,
@@ -240,7 +217,7 @@ export const posts = defineCollection({
       slug,
       slugAsParams,
       estimatedTime,
-      body: transformedData.body, // Use processed MDX content directly
+      body: transformedData.body,
       toc: transformedData.toc
     };
   }
@@ -277,13 +254,13 @@ export const pages = defineCollection({
     const transformedData = await transformMDX(data, context);
     
     // Get the filename from the path
-    const fileName = data._meta.path.split(path.sep).pop() || '';
+    const filePath = data._meta.path;
+    const fileName = filePath.split(path.sep).pop() || '';
     
-    // Parse the filename into base, locale, and extension
-    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    // Extract locale and base from filename
+    const { locale, base } = extractLocaleAndBase(fileName);
     
-    // Use the locale from the file name or fall back to default
-    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    console.log(`page processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Get the collection name (e.g., "pages")
     const pathParts = data._meta.path.split(path.sep);
@@ -292,8 +269,6 @@ export const pages = defineCollection({
     // Create the slug and slugAsParams
     const slug = `/${collectionName}/${base}`;
     const slugAsParams = base;
-    
-    // console.log(`Page processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
     
     return {
       ...data,
@@ -338,13 +313,13 @@ export const releases = defineCollection({
     const transformedData = await transformMDX(data, context);
     
     // Get the filename from the path
-    const fileName = data._meta.path.split(path.sep).pop() || '';
+    const filePath = data._meta.path;
+    const fileName = filePath.split(path.sep).pop() || '';
     
-    // Parse the filename into base, locale, and extension
-    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    // Extract locale and base from filename
+    const { locale, base } = extractLocaleAndBase(fileName);
     
-    // Use the locale from the file name or fall back to default
-    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    console.log(`release processed: ${fileName}, base=${base}, locale=${locale}`);
     
     // Get the collection name (e.g., "release")
     const pathParts = data._meta.path.split(path.sep);
@@ -353,8 +328,6 @@ export const releases = defineCollection({
     // Create the slug and slugAsParams
     const slug = `/${collectionName}/${base}`;
     const slugAsParams = base;
-    
-    // console.log(`Release processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
     
     return {
       ...data,

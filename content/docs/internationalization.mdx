@@ -16,9 +16,9 @@ description: Support multiple languages in your documentation
 
 Define the i18n configurations in a file, we will import it with `@/ilb/i18n` in this guide.
 
-<include cwd meta='title="lib/i18n.ts"'>
+{/* <include cwd meta='title="lib/i18n.ts"'>
   ../../examples/i18n/lib/i18n.ts
-</include>
+</include> */}
 
 Pass it to the source loader.
 
@@ -122,7 +122,7 @@ export default async function RootLayout({
 
 Pass the locale to Fumadocs in your pages and layouts.
 
-```tsx title="/app/[lang]/(home)/layout.tsx" tab="Home Layout"
+{/* ```tsx title="/app/[lang]/(home)/layout.tsx" tab="Home Layout"
 import type { ReactNode } from 'react';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { baseOptions } from '@/app/layout.config';
@@ -180,7 +180,7 @@ export default async function Page({
   source.getPages(); // [!code --]
   source.getPages(lang); // [!code ++]
 }
-```
+``` */}
 
 ### Search
 
@@ -196,7 +196,7 @@ Configure i18n on your search solution.
 
 ## Writing Documents
 
-<include>../../shared/page-conventions.i18n.mdx</include>
+{/* <include>../../shared/page-conventions.i18n.mdx</include> */}
 
 ## Navigation
 

@@ -20,7 +20,7 @@ interface CustomMDXContentProps {
  * Enhanced MDX Content component that includes commonly used MDX components
  * It can be used for blog posts, documentation, and custom pages
  */
-export function CustomMDXContent({
+export async function CustomMDXContent({
   code,
   customComponents = {},
   includeFumadocsComponents = true,
@@ -28,6 +28,7 @@ export function CustomMDXContent({
   // Start with default components
   const baseComponents: Record<string, any> = {
     ...defaultMdxComponents,
+    ...((await import('lucide-react')) as unknown as MDXComponents),
     ...customComponents,
   };
 

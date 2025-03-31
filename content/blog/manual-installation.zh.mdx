@@ -1,0 +1,190 @@
+---
+title: 手动安装
+description: 从零开始创建一个新的 Fumadocs 项目
+image: /images/blog/mksaas-og.png
+date: 2025-03-31T12:00:00.000Z
+published: true
+categories: [company, product]
+author: mksaas
+---
+
+> 请先阅读[快速入门](/docs)指南了解基本概念。
+
+## 入门
+
+使用 `create-next-app` 创建一个新的 Next.js 应用程序，并安装所需的包。
+
+```package-install
+fumadocs-ui fumadocs-core
+```
+
+### 内容源
+
+Fumadocs 支持不同的内容源，您可以选择您喜欢的一种。
+
+以下是官方支持的源列表：
+
+- [设置 Fumadocs MDX](/docs/mdx)
+- [设置 Content Collections](/docs/headless/content-collections)
+
+请确保在继续之前按照其设置指南正确配置库，我们将在本指南中使用 `@/lib/source.ts` 导入源适配器。
+
+### 根布局
+
+将整个应用程序包装在 [Root Provider](/docs/layouts/root-provider) 中，并为 `body` 添加所需的样式。
+
+```tsx
+import { RootProvider } from 'fumadocs-ui/provider';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        // you can use Tailwind CSS too
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <RootProvider>{children}</RootProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 样式
+
+在您的 Next.js 应用程序上设置 Tailwind CSS v4，将以下内容添加到 `global.css`。
+
+```css title="Tailwind CSS"
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* path of `fumadocs-ui` relative to the CSS file */
+@source '../node_modules/fumadocs-ui/dist/**/*.js';
+```
+
+> 它不附带默认字体，您可以从 `next/font` 中选择一个。
+
+### 布局
+
+创建一个 `app/layout.config.tsx` 文件，放置我们布局的共享选项。
+
+```json doc-gen:file
+{
+  "file": "../../examples/next-mdx/app/layout.config.tsx",
+  "codeblock": {
+    "meta": "title=\"app/layout.config.tsx\""
+  }
+}
+```
+
+为我们的文档创建一个文件夹 `/app/docs`，并给它一个适当的布局。
+
+```json doc-gen:file
+{
+  "file": "../../examples/next-mdx/app/docs/layout.tsx",
+  "codeblock": {
+    "meta": "title=\"app/docs/layout.tsx\""
+  }
+}
+```
+
+> `pageTree` 指的是页面树，应该由您的内容源提供。
+
+### 页面
+
+为文档页面创建一个捕获所有路由 `/app/docs/[[...slug]]`。
+
+在页面中，将您的内容包装在 [Page](/docs/layouts/page) 组件中。
+这可能因您的内容源而异。您应该使用 `generateStaticParams` 配置静态渲染，并使用 `generateMetadata` 配置元数据。
+
+<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+
+```json doc-gen:file
+{
+  "file": "../../examples/next-mdx/app/docs/[[...slug]]/page.tsx",
+  "codeblock": {
+    "meta": "title=\"app/docs/[[...slug]]/page.tsx\" tab=\"Fumadocs MDX\""
+  }
+}
+```
+
+```json doc-gen:file
+{
+  "file": "../../examples/content-collections/app/docs/[[...slug]]/page.tsx",
+  "codeblock": {
+    "meta": "title=\"app/docs/[[...slug]]/page.tsx\" tab=\"Content Collections\""
+  }
+}
+```
+
+</Tabs>
+
+### 搜索
+
+使用基于 Orama 的默认文档搜索。
+
+<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+
+```json doc-gen:file
+{
+  "file": "../../examples/next-mdx/app/api/search/route.ts",
+  "codeblock": {
+    "meta": "title=\"app/api/search/route.ts\" tab=\"Fumadocs MDX\""
+  }
+}
+```
+
+```json doc-gen:file
+{
+  "file": "../../examples/content-collections/app/api/search/route.ts",
+  "codeblock": {
+    "meta": "title=\"app/api/search/route.ts\" tab=\"Content Collections\""
+  }
+}
+```
+
+</Tabs>
+
+了解更多关于[文档搜索](/docs/headless/search)的信息。
+
+### 完成
+
+您可以启动开发服务器并创建 MDX 文件。
+
+```mdx title="content/docs/index.mdx"
+---
+title: Hello World
+---
+
+## Introduction
+
+I love Anime.
+```
+
+## 自定义
+
+您可以为网站的其他页面使用 [Home Layout](/docs/layouts/home-layout)，它包含一个带有主题切换的导航栏。
+
+## 部署
+
+它应该在 Vercel 和 Netlify 上开箱即用。
+
+### Docker 部署
+
+如果您想使用 Docker 部署您的 Fumadocs 应用程序，并且已**配置了 Fumadocs MDX**，请确保将 `source.config.ts` 文件添加到 Dockerfile 中的 `WORKDIR`。
+以下片段取自官方 [Next.js Dockerfile 示例](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)：
+
+```zsh title="Dockerfile"
+WORKDIR /app
+
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* source.config.ts ./
+```
+
+这确保 Fumadocs MDX 在构建期间可以访问您的配置文件。
