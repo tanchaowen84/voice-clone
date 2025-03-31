@@ -42,11 +42,13 @@ const metas = defineCollection({
  * Blog Author collection
  * 
  * Authors are identified by their slug across all languages
+ * New format: content/author/authorname.{locale}.mdx
+ * Example: content/author/mksaas.mdx (default locale) and content/author/mksaas.zh.mdx (Chinese)
  */
 export const authors = defineCollection({
   name: 'author',
-  directory: 'content',
-  include: '**/author/*.mdx',
+  directory: 'content/author',
+  include: '**/*.mdx',
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
@@ -54,10 +56,20 @@ export const authors = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    // Determine the locale from the file path or use the provided locale
-    const pathParts = data._meta.path.split(path.sep);
-    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
-    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    // Determine the locale from the file name or use the provided locale
+    const fileName = data._meta.path.split(path.sep).pop() || '';
+    const fileNameParts = fileName.split('.');
+    
+    // Check if the file has a locale suffix (e.g., mksaas.zh.mdx)
+    let localeFromFileName = null;
+    if (fileNameParts.length > 2) {
+      const possibleLocale = fileNameParts[fileNameParts.length - 2];
+      if (LOCALES.includes(possibleLocale)) {
+        localeFromFileName = possibleLocale;
+      }
+    }
+    
+    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
     
     return {
       ...data,
@@ -70,11 +82,13 @@ export const authors = defineCollection({
  * Blog Category collection
  * 
  * Categories are identified by their slug across all languages
+ * New format: content/category/categoryname.{locale}.mdx
+ * Example: content/category/tutorial.mdx (default locale) and content/category/tutorial.zh.mdx (Chinese)
  */
 export const categories = defineCollection({
   name: 'category',
-  directory: 'content',
-  include: '**/category/*.mdx',
+  directory: 'content/category',
+  include: '**/*.mdx',
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
@@ -82,10 +96,20 @@ export const categories = defineCollection({
     locale: z.enum(LOCALES as [string, ...string[]]).optional()
   }),
   transform: async (data, context) => {
-    // Determine the locale from the file path or use the provided locale
-    const pathParts = data._meta.path.split(path.sep);
-    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
-    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    // Determine the locale from the file name or use the provided locale
+    const fileName = data._meta.path.split(path.sep).pop() || '';
+    const fileNameParts = fileName.split('.');
+    
+    // Check if the file has a locale suffix (e.g., tutorial.zh.mdx)
+    let localeFromFileName = null;
+    if (fileNameParts.length > 2) {
+      const possibleLocale = fileNameParts[fileNameParts.length - 2];
+      if (LOCALES.includes(possibleLocale)) {
+        localeFromFileName = possibleLocale;
+      }
+    }
+    
+    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
     
     return {
       ...data,
@@ -95,22 +119,59 @@ export const categories = defineCollection({
 });
 
 /**
+ * Helper function to extract the file basename, locale, and extension
+ * @param fileName The file name to parse
+ * @returns Object with base, locale, and extension
+ */
+function parseFileName(fileName: string): { base: string; locale: string | null; ext: string } {
+  // Split the filename into parts
+  const parts = fileName.split('.');
+  
+  // Handle different cases based on the number of parts
+  if (parts.length === 1) {
+    // Filename with no extension (unlikely)
+    return { base: parts[0], locale: null, ext: '' };
+  } else if (parts.length === 2) {
+    // Regular filename with extension: example.mdx
+    return { base: parts[0], locale: null, ext: parts[1] };
+  } else {
+    // Check if the second-to-last part is a locale
+    const possibleLocale = parts[parts.length - 2];
+    const isLocale = LOCALES.includes(possibleLocale);
+    
+    if (isLocale) {
+      // Filename with locale: example.zh.mdx
+      // Join all parts except the last two with dots to handle filenames that contain dots
+      const base = parts.slice(0, parts.length - 2).join('.');
+      return { base, locale: possibleLocale, ext: parts[parts.length - 1] };
+    } else {
+      // Filename with dots but no locale: example.something.mdx
+      // Join all parts except the last one with dots
+      const base = parts.slice(0, parts.length - 1).join('.');
+      return { base, locale: null, ext: parts[parts.length - 1] };
+    }
+  }
+}
+
+/**
  * Blog Post collection
  * 
- * 1. For a blog post at content/en/blog/first-post.mdx:
+ * New format: content/blog/post-slug.{locale}.mdx
+ * 
+ * 1. For a blog post at content/blog/first-post.mdx (default locale):
  * locale: en
  * slug: /blog/first-post
  * slugAsParams: first-post
  * 
- * 2. For a blog post at content/zh/blog/first-post.mdx:
+ * 2. For a blog post at content/blog/first-post.zh.mdx (Chinese locale):
  * locale: zh
  * slug: /blog/first-post
  * slugAsParams: first-post
  */
 export const posts = defineCollection({
   name: 'post',
-  directory: 'content',
-  include: '**/blog/**/*.mdx',
+  directory: 'content/blog',
+  include: '**/*.mdx',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
@@ -126,10 +187,14 @@ export const posts = defineCollection({
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
     
-    // Determine the locale from the file path or use the provided locale
-    const pathParts = data._meta.path.split(path.sep);
-    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
-    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    // Get the filename from the path
+    const fileName = data._meta.path.split(path.sep).pop() || '';
+    
+    // Parse the filename into base, locale, and extension
+    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    
+    // Use the locale from the file name or fall back to default
+    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
     
     // Find the author by matching slug
     const blogAuthor = context
@@ -152,29 +217,27 @@ export const posts = defineCollection({
       return category;
     }).filter(Boolean); // Remove null values
     
-    // Create a slug without the locale in the path
-    let slugPath = data._meta.path;
-    if (localeFromPath) {
-      // Remove the locale from the path for the slug
-      const pathWithoutLocale = pathParts.slice(1).join(path.sep);
-      slugPath = pathWithoutLocale;
-    }
+    // Get the collection name (e.g., "blog")
+    const pathParts = data._meta.path.split(path.sep);
+    const collectionName = pathParts[pathParts.length - 2];
     
-    // Create slugAsParams without the locale
-    const slugParamsParts = slugPath.split(path.sep).slice(1);
-    const slugAsParams = slugParamsParts.join('/');
+    // Create the slug and slugAsParams
+    const slug = `/${collectionName}/${base}`;
+    const slugAsParams = base;
     
     // Calculate estimated reading time
     const wordCount = data.content.split(/\s+/).length;
     const wordsPerMinute = 200; // average reading speed: 200 words per minute
     const estimatedTime = Math.max(Math.ceil(wordCount / wordsPerMinute), 1);
     
+    // console.log(`Post processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
+    
     return {
       ...data,
       locale,
       author: blogAuthor,
       categories: blogCategories,
-      slug: `/${slugPath}`,
+      slug,
       slugAsParams,
       estimatedTime,
       body: transformedData.body, // Use processed MDX content directly
@@ -186,20 +249,22 @@ export const posts = defineCollection({
 /**
  * Pages collection for policy pages like privacy-policy, terms-of-service, etc.
  * 
- * 1. For a page at content/en/pages/privacy-policy.md:
+ * New format: content/pages/page-slug.{locale}.mdx
+ * 
+ * 1. For a page at content/pages/privacy-policy.mdx (default locale):
  * locale: en
  * slug: /pages/privacy-policy
  * slugAsParams: privacy-policy
  * 
- * 2. For a page at content/zh/pages/privacy-policy.md:
+ * 2. For a page at content/pages/privacy-policy.zh.mdx (Chinese locale):
  * locale: zh
  * slug: /pages/privacy-policy
  * slugAsParams: privacy-policy
  */
 export const pages = defineCollection({
   name: 'page',
-  directory: 'content',
-  include: '**/pages/**/*.{md,mdx}',
+  directory: 'content/pages',
+  include: '**/*.{md,mdx}',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
@@ -211,27 +276,29 @@ export const pages = defineCollection({
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
     
-    // Determine the locale from the file path or use the provided locale
+    // Get the filename from the path
+    const fileName = data._meta.path.split(path.sep).pop() || '';
+    
+    // Parse the filename into base, locale, and extension
+    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    
+    // Use the locale from the file name or fall back to default
+    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    
+    // Get the collection name (e.g., "pages")
     const pathParts = data._meta.path.split(path.sep);
-    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
-    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    const collectionName = pathParts[pathParts.length - 2];
     
-    // Create a slug without the locale in the path
-    let slugPath = data._meta.path;
-    if (localeFromPath) {
-      // Remove the locale from the path for the slug
-      const pathWithoutLocale = pathParts.slice(1).join(path.sep);
-      slugPath = pathWithoutLocale;
-    }
+    // Create the slug and slugAsParams
+    const slug = `/${collectionName}/${base}`;
+    const slugAsParams = base;
     
-    // Create slugAsParams without the locale
-    const slugParamsParts = slugPath.split(path.sep).slice(1);
-    const slugAsParams = slugParamsParts.join('/');
+    // console.log(`Page processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
     
     return {
       ...data,
       locale,
-      slug: `/${slugPath}`,
+      slug,
       slugAsParams,
       body: transformedData.body,
       toc: transformedData.toc
@@ -242,20 +309,22 @@ export const pages = defineCollection({
 /**
  * Releases collection for changelog
  * 
- * 1. For a release at content/en/release/v1-0-0.md:
+ * New format: content/release/version-slug.{locale}.mdx
+ * 
+ * 1. For a release at content/release/v1-0-0.mdx (default locale):
  * locale: en
  * slug: /release/v1-0-0
  * slugAsParams: v1-0-0
  * 
- * 2. For a release at content/zh/release/v1-0-0.md:
+ * 2. For a release at content/release/v1-0-0.zh.mdx (Chinese locale):
  * locale: zh
  * slug: /release/v1-0-0
  * slugAsParams: v1-0-0
  */
 export const releases = defineCollection({
   name: 'release',
-  directory: 'content',
-  include: '**/release/**/*.{md,mdx}',
+  directory: 'content/release',
+  include: '**/*.{md,mdx}',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
@@ -268,27 +337,29 @@ export const releases = defineCollection({
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
     
-    // Determine the locale from the file path or use the provided locale
+    // Get the filename from the path
+    const fileName = data._meta.path.split(path.sep).pop() || '';
+    
+    // Parse the filename into base, locale, and extension
+    const { base, locale: localeFromFileName, ext } = parseFileName(fileName);
+    
+    // Use the locale from the file name or fall back to default
+    const locale = data.locale || localeFromFileName || DEFAULT_LOCALE;
+    
+    // Get the collection name (e.g., "release")
     const pathParts = data._meta.path.split(path.sep);
-    const localeFromPath = LOCALES.includes(pathParts[0]) ? pathParts[0] : null;
-    const locale = data.locale || localeFromPath || DEFAULT_LOCALE;
+    const collectionName = pathParts[pathParts.length - 2];
     
-    // Create a slug without the locale in the path
-    let slugPath = data._meta.path;
-    if (localeFromPath) {
-      // Remove the locale from the path for the slug
-      const pathWithoutLocale = pathParts.slice(1).join(path.sep);
-      slugPath = pathWithoutLocale;
-    }
+    // Create the slug and slugAsParams
+    const slug = `/${collectionName}/${base}`;
+    const slugAsParams = base;
     
-    // Create slugAsParams without the locale
-    const slugParamsParts = slugPath.split(path.sep).slice(1);
-    const slugAsParams = slugParamsParts.join('/');
+    // console.log(`Release processed: ${fileName}, slugAsParams=${slugAsParams}, slug=${slug}`);
     
     return {
       ...data,
       locale,
-      slug: `/${slugPath}`,
+      slug,
       slugAsParams,
       body: transformedData.body,
       toc: transformedData.toc

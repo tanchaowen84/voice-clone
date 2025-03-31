@@ -14,6 +14,7 @@ export default function BlogCard({ post }: BlogCardProps) {
 
   // Extract the slug parts for the Link component
   const slugParts = post.slugAsParams.split('/');
+  // console.log('BlogCard, slugParts', slugParts);
 
   return (
     <LocaleLink href={`/blog/${slugParts.join('/')}`} className="block h-full">
