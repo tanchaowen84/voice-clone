@@ -197,7 +197,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                       <li key={category.slug}>
                         <LocaleLink
                           href={`/blog/category/${category.slug}`}
-                          className="text-sm font-medium hover:text-primary"
+                          className="text-sm font-medium text-muted-foreground hover:text-primary"
                         >
                           {category.name}
                         </LocaleLink>

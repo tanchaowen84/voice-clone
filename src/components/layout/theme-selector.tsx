@@ -77,9 +77,6 @@ export function ThemeSelector() {
           size="sm"
           className="cursor-pointer justify-start *:data-[slot=select-value]:w-12"
         >
-          <span className="text-muted-foreground block sm:hidden">
-            {t('label')}
-          </span>
           <SelectValue placeholder={t('label')} />
         </SelectTrigger>
         <SelectContent align="end">
