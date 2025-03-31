@@ -1,10 +1,9 @@
-import { getLocaleDate } from '@/lib/utils';
-import { CalendarIcon, TagIcon } from 'lucide-react';
+import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { MDXContent } from '@content-collections/mdx/react';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { getLocaleDate } from '@/lib/utils';
+import { CalendarIcon, TagIcon } from 'lucide-react';
 
 interface ReleaseCardProps {
   title: string;
@@ -42,7 +41,7 @@ export function ReleaseCard({
       </CardHeader>
       <CardContent>
         <div className="max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-          <MDXContent code={content} components={defaultMdxComponents} />
+          <CustomMDXContent code={content} includeFumadocsComponents={false} />
         </div>
       </CardContent>
     </Card>

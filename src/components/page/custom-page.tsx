@@ -1,6 +1,5 @@
+import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { getLocaleDate } from '@/lib/utils';
-import { MDXContent } from '@content-collections/mdx/react';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { CalendarIcon } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 
@@ -39,7 +38,7 @@ export function CustomPage({
       <Card className="mb-8">
         <CardContent>
           <div className="max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-            <MDXContent code={content} components={defaultMdxComponents} />
+            <CustomMDXContent code={content} includeFumadocsComponents={false} />
           </div>
         </CardContent>
       </Card>

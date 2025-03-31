@@ -7,15 +7,14 @@ import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
-import { MDXContent } from '@content-collections/mdx/react';
 import { allPosts } from 'content-collections';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { CalendarIcon, ClockIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 
 import '@/styles/mdx.css';
 
@@ -153,9 +152,9 @@ export default async function BlogPostPage(props: NextPageProps) {
           {/* in order to make the mdx.css work, we need to add the className prose to the div */}
           {/* https://github.com/tailwindlabs/tailwindcss-typography */}
           <div className="mt-8 max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-            <MDXContent
+            <CustomMDXContent
               code={post.body}
-              components={defaultMdxComponents}
+              includeFumadocsComponents={true}
             />
           </div>
 

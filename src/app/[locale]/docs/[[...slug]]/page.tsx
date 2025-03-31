@@ -1,23 +1,14 @@
-import { UiOverview } from '@/components/docs/ui-overview';
-import { Wrapper } from '@/components/docs/preview/wrapper';
+import * as Preview from '@/components/docs/preview';
+import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { HoverCard, HoverCardContent, HoverCardTrigger, } from '@/components/ui/hover-card';
 import { LOCALES } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
-import { MDXContent } from '@content-collections/mdx/react';
 import Link from 'fumadocs-core/link';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Callout } from 'fumadocs-ui/components/callout';
-import { File, Files, Folder } from 'fumadocs-ui/components/files';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
-import type { MDXComponents } from 'mdx/types';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { ComponentProps, FC, ReactNode } from 'react';
-import * as Preview from '@/components/docs/preview';
+import { ReactNode } from 'react';
 
 export function generateStaticParams() {
   const locales = LOCALES;
@@ -105,12 +96,10 @@ export default async function DocPage({
         {preview ? <PreviewRenderer preview={preview} /> : null}
 
         {/* MDX Content */}
-        <MDXContent
+        <CustomMDXContent
           code={page.data.body}
-          components={{
-            ...defaultMdxComponents,
-            ...((await import('lucide-react')) as unknown as MDXComponents),
-            a: ({ href, ...props }) => {
+          customComponents={{
+            a: ({ href, ...props }: { href?: string;[key: string]: any }) => {
               const found = source.getPageByHref(href ?? '', {
                 dir: page.file.dirname,
               });
@@ -138,21 +127,10 @@ export default async function DocPage({
                 </HoverCard>
               );
             },
-            Tabs,
-            Tab,
-            TypeTable,
-            Accordion,
-            Accordions,
-            Wrapper,
-            File,
-            Folder,
-            Files,
-            blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
-            UiOverview,
-
             ...(await import('@/content/docs/components/tabs.client')),
             ...(await import('@/content/docs/theme.client')),
           }}
+          includeFumadocsComponents={true}
         />
       </DocsBody>
     </DocsPage>
