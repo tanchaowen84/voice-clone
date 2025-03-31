@@ -1,0 +1,31 @@
+---
+title: 内联目录
+description: 在文档中添加内联目录
+preview: inlineTOC
+---
+
+## 使用方法
+
+将 TOC 项目传递给组件。
+
+```mdx
+import { InlineTOC } from 'fumadocs-ui/components/inline-toc';
+
+<InlineTOC items={toc} />
+```
+
+### 在页面中使用
+
+您可以在每个页面中添加内联目录。
+
+```tsx
+<DocsPage>
+  ...
+  <InlineTOC items={toc} />
+  ...
+</DocsPage>
+```
+
+## 参考
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="InlineTOCProps" /> */} 

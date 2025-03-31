@@ -1,0 +1,34 @@
+---
+title: 可缩放图片
+description: 在文档中允许放大图片
+preview: zoomImage
+---
+
+## 使用方法
+
+在 MDX 组件中用 `ImageZoom` 替换 `img`。
+
+```tsx title="app/docs/[[...slug]]/page.tsx"
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+
+return (
+  <MdxContent
+    components={{
+      ...defaultMdxComponents,
+      img: (props) => <ImageZoom {...(props as any)} />,
+      // 其他 Mdx 组件
+    }}
+  />
+);
+```
+
+现在，所有图片都将自动启用图片缩放功能。
+
+```mdx
+![Test](/banner.png)
+```
+
+### 图片优化
+
+如果未指定，将为 Next.js `<Image />` 组件定义默认的 [`sizes` 属性](https://nextjs.org/docs/app/api-reference/components/image#sizes)。 

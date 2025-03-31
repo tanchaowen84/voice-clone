@@ -1,0 +1,160 @@
+---
+title: 文档布局
+description: 文档的布局
+---
+
+文档页面的布局，它包括一个侧边栏和仅限移动设备的导航栏。
+
+> 它是一个服务器组件，您不应该在客户端组件中引用它。
+
+## 使用方法
+
+将您的页面树传递给组件。
+
+```tsx title="layout.tsx"
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { baseOptions } from '@/app/layout.config';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <DocsLayout {...baseOptions} tree={tree}>
+      {children}
+    </DocsLayout>
+  );
+}
+```
+
+{/* <AutoTypeTable
+  path="./content/docs/props.ts"
+  type="Omit<DocsLayoutProps, 'children' | 'disableThemeSwitch'>"
+/> */}
+
+## 侧边栏
+
+```tsx title="layout.tsx"
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+
+<DocsLayout
+  sidebar={{
+    // sidebar options:
+    enabled: true,
+  }}
+/>;
+```
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="SidebarProps" /> */}
+
+### 侧边栏标签
+
+有关用法，请参见[导航指南](/docs/navigation/sidebar#sidebar-tabs)。
+
+#### 装饰
+
+更改标签的图标/样式。
+
+```tsx
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+
+<DocsLayout
+  sidebar={{
+    tabs: {
+      transform: (option, node) => ({
+        ...option,
+        icon: 'my icon',
+      }),
+    },
+  }}
+/>;
+```
+
+## 导航栏
+
+一个仅限移动设备的导航栏，我们建议从 `baseOptions` 自定义它。
+
+```tsx
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+
+export const baseOptions: BaseLayoutProps = {
+  githubUrl: 'https://github.com/fuma-nama/fumadocs',
+  nav: {
+    title: 'My App',
+  },
+};
+```
+
+{/* <AutoTypeTable
+  path="./content/docs/props.ts"
+  type="Omit<NavbarProps, 'children'>"
+/> */}
+
+### 透明模式
+
+要使导航栏背景透明，您可以配置透明模式。
+
+```tsx
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+
+export const baseOptions: BaseLayoutProps = {
+  nav: {
+    transparentMode: 'top',
+  },
+};
+```
+
+| 模式     | 描述                           |
+| -------- | ------------------------------ |
+| `always` | 始终使用透明背景               |
+| `top`    | 在页面顶部时                   |
+| `none`   | 禁用透明背景（默认）           |
+
+### 替换导航栏
+
+要替换文档布局中的导航栏，将 `nav.component` 设置为您自己的组件。
+
+```tsx title="layout.tsx"
+import { baseOptions } from '@/app/layout.config';
+import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <DocsLayout
+      {...baseOptions}
+      nav={{
+        component: <CustomNavbar />,
+      }}
+    >
+      {children}
+    </DocsLayout>
+  );
+}
+```
+
+Fumadocs 使用 **CSS 变量**来共享布局组件的大小，并将每个布局组件放置在适当的位置。
+
+您需要将 `--fd-nav-height` 覆盖为自定义导航栏的确切高度，这可以通过 CSS 样式表（例如在 `global.css` 中）完成：
+
+```css
+:root {
+  --fd-nav-height: 80px !important;
+}
+```
+
+## 高级
+
+### 禁用预取
+
+默认情况下，它使用启用了预取的 Next.js Link 组件。
+当链接组件出现在浏览器视口中时，内容（RSC 有效载荷）将被预取。
+
+在 Vercel 上，这可能会导致大量使用无服务器函数和数据缓存。
+它也可能会达到一些其他托管平台的限制。
+
+您可以禁用预取以减少 RSC 请求的数量。
+
+```tsx
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+
+<DocsLayout sidebar={{ prefetch: false }} />;
+``` 

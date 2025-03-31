@@ -1,0 +1,114 @@
+---
+title: 选项卡
+description:
+  使用 Radix UI 构建的选项卡组件，具有持久性和共享值等附加功能。
+preview: tabs
+---
+
+## 使用方法
+
+在 MDX 文档中导入它。
+
+```mdx
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+<Tabs items={['Javascript', 'Rust']}>
+  <Tab value="Javascript">Javascript 很奇怪</Tab>
+  <Tab value="Rust">Rust 很快</Tab>
+</Tabs>
+```
+
+### 不使用 `value`
+
+如果没有 `value`，它会从子元素索引中检测。请注意，这可能会在重新渲染时导致错误，如果选项卡可能会改变，不建议这样做。
+
+```mdx
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+<Tabs items={['Javascript', 'Rust']}>
+  <Tab>Javascript 很奇怪</Tab>
+  <Tab>Rust 很快</Tab>
+</Tabs>
+```
+
+### 共享值
+
+通过传递 `groupId` 属性，您可以在具有相同 ID 的所有选项卡之间共享值。
+
+```mdx
+<Tabs groupId="language" items={['Javascript', 'Rust']}>
+  <Tab value="Javascript">Javascript 很奇怪</Tab>
+  <Tab value="Rust">Rust 很快</Tab>
+</Tabs>
+```
+
+### 持久性
+
+您可以通过传递 `persist` 属性启用持久性。该值将存储在 `localStorage` 中，以其 ID 作为键。
+
+```mdx
+<Tabs groupId="language" items={['Javascript', 'Rust']} persist>
+  <Tab value="Javascript">Javascript 很奇怪</Tab>
+  <Tab value="Rust">Rust 很快</Tab>
+</Tabs>
+```
+
+> 持久性仅在您传递了 `id` 时有效。
+
+### 默认值
+
+通过传递 `defaultIndex` 设置默认值。
+
+```mdx
+<Tabs items={['Javascript', 'Rust']} defaultIndex={1}>
+  <Tab value="Javascript">Javascript 很奇怪</Tab>
+  <Tab value="Rust">Rust 很快</Tab>
+</Tabs>
+```
+
+### 链接到选项卡
+
+使用 HTML `id` 属性链接到特定选项卡。
+
+```mdx
+<Tabs items={['Javascript', 'Rust', 'C++']}>
+  <Tab value="Javascript">Javascript 很奇怪</Tab>
+  <Tab value="Rust">Rust 很快</Tab>
+  <Tab id="tab-cpp" value="C++">
+    `Hello World`
+  </Tab>
+</Tabs>
+```
+
+您可以在 URL 中添加哈希 `#tab-cpp` 并重新加载，C++ 选项卡将被激活。
+
+此外，可以在 `Tabs` 组件中将 `updateAnchor` 属性设置为 `true`，以便在每次选择新选项卡时自动更新 URL 哈希：
+
+```mdx
+<Tabs items={['Javascript', 'Rust', 'C++']} updateAnchor>
+  <Tab id="tab-js" value="Javascript">
+    Javascript 很奇怪
+  </Tab>
+  <Tab id="tab-rs" value="Rust">
+    Rust 很快
+  </Tab>
+  <Tab id="tab-cpp" value="C++">
+    `Hello World`
+  </Tab>
+</Tabs>
+```
+
+### 高级用法
+
+您可以直接从导出的 `Primitive` 中使用样式化的 Radix UI 原语。
+
+```mdx
+import { Primitive } from 'fumadocs-ui/components/tabs';
+
+<Primitive.Tabs>
+  <Primitive.TabsList>
+    <Primitive.TabsTrigger />
+  </Primitive.TabsList>
+  <Primitive.TabsContent />
+</Primitive.Tabs>
+``` 

@@ -1,0 +1,35 @@
+---
+title: 文件
+description: 在文档中显示文件结构
+preview: 'files'
+---
+
+## 使用方法
+
+将文件组件包装在 `Files` 中。
+
+```mdx
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="page.tsx" />
+    <File name="global.css" />
+  </Folder>
+  <Folder name="components">
+    <File name="button.tsx" />
+    <File name="tabs.tsx" />
+    <File name="dialog.tsx" />
+  </Folder>
+  <File name="package.json" />
+</Files>
+```
+
+### File
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="FileProps" /> */}
+
+### Folder
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="FolderProps" /> */} 

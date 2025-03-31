@@ -1,0 +1,53 @@
+---
+title: 根提供者
+description: Fumadocs UI 的上下文提供者
+---
+
+所有组件的上下文提供者，包括 `next-themes` 和搜索对话框的上下文。它应该位于根布局中。
+
+## 使用方法
+
+```jsx
+import { RootProvider } from 'fumadocs-ui/provider';
+
+export default function Layout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <RootProvider>{children}</RootProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 搜索对话框
+
+使用 `search` 选项自定义或禁用搜索对话框。
+
+```jsx
+<RootProvider
+  search={{
+    enabled: false,
+  }}
+>
+  {children}
+</RootProvider>
+```
+
+从[搜索](/docs/search)了解更多信息。
+
+### 主题提供者
+
+Fumadocs 通过 [`next-themes`](https://github.com/pacocoursey/next-themes) 支持明/暗模式。
+使用 `theme` 选项自定义或禁用它。
+
+```jsx
+<RootProvider
+  theme={{
+    enabled: false,
+  }}
+>
+  {children}
+</RootProvider>
+``` 

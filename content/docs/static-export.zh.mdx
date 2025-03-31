@@ -1,0 +1,55 @@
+---
+title: 静态导出
+description: 使用 Fumadocs 启用静态导出
+---
+
+## 概览
+
+Fumadocs 完全兼容 Next.js 静态导出，允许您将应用程序导出为不需要 Node.js 服务器的静态 HTML 站点。
+
+```js title="next.config.mjs"
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  output: 'export',
+};
+```
+
+## 搜索
+
+### 云解决方案
+
+由于搜索功能由远程服务器提供支持，静态导出无需配置即可工作。
+
+### 内置搜索
+
+Orama 搜索的默认搜索配置使用路由处理器，静态导出不支持这种方式。
+
+相反，您可以按照 [Orama 搜索](/docs/headless/search/orama#static-export) 指南静态构建搜索索引。
+并从 Root Provider 在搜索客户端上启用静态模式：
+
+```tsx title="app/layout.tsx"
+import { RootProvider } from 'fumadocs-ui/provider';
+import type { ReactNode } from 'react';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <RootProvider
+          search={{
+            options: {
+              type: 'static', // [!code highlight]
+            },
+          }}
+        >
+          {children}
+        </RootProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+这允许路由处理器被静态缓存到单个文件中，搜索将在浏览器中计算。 

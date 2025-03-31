@@ -1,0 +1,61 @@
+---
+title: 横幅
+description: 在您的网站添加横幅
+preview: banner
+---
+
+## 使用方法
+
+将元素放在根布局的顶部，您可以用它来显示公告。
+
+```tsx
+import { Banner } from 'fumadocs-ui/components/banner';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactElement {
+  return (
+    <html lang="en">
+      <body>
+        <Banner>Hello World</Banner>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### 变体
+
+更改默认变体。
+
+```tsx
+import { Banner } from 'fumadocs-ui/components/banner';
+
+<Banner variant="rainbow">Hello World</Banner>;
+```
+
+### 更改布局
+
+默认情况下，横幅使用 `style` 标签来修改 Fumadocs 布局（例如减少侧边栏高度）。
+您可以通过以下方式禁用它：
+
+```tsx
+import { Banner } from 'fumadocs-ui/components/banner';
+
+<Banner changeLayout={false}>Hello World</Banner>;
+```
+
+### 关闭
+
+要允许用户关闭横幅，请给横幅一个 ID。
+
+```tsx
+import { Banner } from 'fumadocs-ui/components/banner';
+
+<Banner id="hello-world">Hello World</Banner>;
+```
+
+状态将自动保持。 

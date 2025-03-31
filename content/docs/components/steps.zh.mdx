@@ -1,0 +1,57 @@
+---
+title: 步骤
+description: 在文档中添加步骤
+preview: steps
+---
+
+## 使用方法
+
+将您的步骤放入 `Steps` 容器中。
+
+```mdx
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<Steps>
+<Step>
+
+### 你好世界
+
+</Step>
+
+<Step>
+
+### 你好世界
+
+</Step>
+</Steps>
+```
+
+> 我们建议在 Tailwind CSS 项目中直接使用 Tailwind CSS 实用类。
+
+### 不使用导入
+
+您可以在不导入的情况下使用 Tailwind CSS 实用工具。
+
+```mdx
+<div className="fd-steps">
+  <div className="fd-step" />
+</div>
+```
+
+它支持仅对带有任意变体的标题添加步骤样式。
+
+```mdx
+<div className='fd-steps [&_h3]:fd-step'>
+
+### 你好世界
+
+</div>
+```
+
+<div className='fd-steps [&_h3]:fd-step'>
+
+### 你好世界
+
+您不再需要使用步骤组件了。
+
+</div> 

@@ -1,0 +1,38 @@
+---
+title: 代码块（动态）
+description: 也能高亮代码的代码块
+preview: dynamicCodeBlock
+---
+
+## 使用方法
+
+```tsx
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
+
+<DynamicCodeBlock lang="ts" code='console.log("Hello World")' />;
+```
+
+这个组件与 MDX [`CodeBlock`](/docs/mdx/codeblock) 组件不同，可以在不使用 MDX 的情况下使用。
+它使用 Shiki 高亮代码，并使用默认组件渲染它。
+
+特点：
+
+- 可以在服务器上预渲染
+- 在浏览器上懒加载语言和主题
+
+### 选项
+
+```tsx
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
+
+<DynamicCodeBlock
+  lang="ts"
+  code='console.log("Hello World")'
+  options={{
+    components: {
+      // 添加/覆盖组件
+    },
+    // 或 Shiki 选项
+  }}
+/>;
+``` 

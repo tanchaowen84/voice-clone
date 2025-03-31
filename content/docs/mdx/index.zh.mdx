@@ -1,0 +1,41 @@
+---
+title: MDX
+description: 默认 MDX 组件
+index: true
+---
+
+## 使用方法
+
+默认的 MDX 组件包括卡片、提示框、代码块和标题。
+
+```ts
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+```
+
+### 相对链接
+
+要支持 `href` 中带有相对文件路径的链接，请使用以下方式覆盖默认的 `a` 组件：
+
+```tsx
+import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { source } from '@/lib/source';
+
+const page = source.getPage(['...']);
+
+return (
+  <MdxContent
+    components={{
+      // override the `a` tag
+      a: createRelativeLink(source, page),
+    }}
+  />
+);
+```
+
+```mdx
+[My Link](./file.mdx)
+```
+
+[示例: `../(integrations)/open-graph.mdx`](<../(integrations)/open-graph.mdx>)
+
+<Callout type="warn">仅限服务器组件。</Callout> 

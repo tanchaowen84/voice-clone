@@ -1,0 +1,32 @@
+---
+title: 笔记本
+description: 文档布局的更紧凑版本
+---
+
+## 使用方法
+
+使用 `fumadocs-ui/layouts/notebook` 启用笔记本布局，它比默认布局更加紧凑。
+
+![Notebook](/images/docs/notebook.png)
+
+```tsx title="layout.tsx"
+import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
+import { baseOptions } from '@/app/layout.config';
+import { source } from '@/lib/source';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <DocsLayout
+      {...baseOptions}
+      // the position of navbar
+      nav={{ ...baseOptions.nav, mode: 'top' }}
+      // the position of Sidebar Tabs
+      tabMode="navbar"
+      tree={source.pageTree}
+    >
+      {children}
+    </DocsLayout>
+  );
+}
+``` 

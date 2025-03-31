@@ -1,0 +1,238 @@
+---
+title: 文档页面
+description: 文档中的页面
+---
+
+可以渲染完整页面的组件（标题、目录等）。
+
+## 正文
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page({ params }: { params: { slug?: string[] } }) {
+  const page = getPage(params);
+
+  return (
+    <DocsPage
+      title={page.title}
+      description={page.description}
+      mdx={page.body}
+      toc={page.toc}
+    />
+  );
+}
+```
+
+{/* <AutoTypeTable
+  path="./content/docs/props.ts"
+  type="Omit<DocsPageProps, 'children'>"
+/> */}
+
+### SEO
+
+为页面添加 SEO 优化，有几种方法。首先，允许文档生成器提供 `metadata` 帮助程序：
+
+```tsx title="api.ts"
+export { createMetadata } from 'fumadocs-core/docs';
+```
+
+默认值包括 **标题**、**描述**、**开放图形**（Open Graph）和 **Twitter** 图片、**规范**（Canonical）URL 和 locale 元数据。
+
+现在您可以直接使用它：
+
+```tsx title="page.tsx"
+import type { Metadata } from 'next';
+import { createMetadata } from '@/app/api';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string[] };
+}): Promise<Metadata> {
+  const page = await getPage(params);
+
+  return createMetadata({
+    page,
+    params,
+  });
+}
+```
+
+或者您可以手动构建它：
+
+```tsx title="page.tsx"
+import type { Metadata } from 'next';
+import { absoluteUrl } from 'fumadocs-core/utils/absolute-url';
+
+export const metadata: Metadata = {
+  title: 'My Page',
+  description: 'Page Description',
+  openGraph: {
+    title: 'My Page',
+    description: 'Page Description',
+    type: 'article',
+    url: absoluteUrl('/docs/my-page'),
+  },
+  twitter: {
+    title: 'My Page',
+    description: 'Page Description',
+    card: 'summary_large_image',
+  },
+  alternates: {
+    canonical: absoluteUrl('/docs/my-page'),
+  },
+};
+```
+
+## 内容目录
+
+支持无限级别的标题。从页面内容中提取，您应该通过 `toc` 字段传递它。
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { getToc } from 'fumadocs-core';
+
+export default function Page() {
+  const toc = getToc(content);
+
+  return <DocsPage toc={toc} />;
+}
+```
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="TOCItemProps[]" /> */}
+
+### 自定义内容目录
+
+可以定制 TOC（目录）的呈现方式，但您仍然需要通过 `toc` 字段传递真实的 TOC 项目。
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page() {
+  return (
+    <DocsPage tocClassName="hidden lg:block" toc={toc}>
+      <div>Custom TOC</div>
+    </DocsPage>
+  );
+}
+```
+
+## 最后更新时间
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page() {
+  return <DocsPage lastUpdatedAt={new Date()} />;
+}
+```
+
+## 页脚
+
+```tsx title="layout.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { baseOptions } from '@/app/layout.config';
+
+export default function Page() {
+  return (
+    <DocsPage
+      footer={{
+        text: 'Built with Fumadocs',
+      }}
+    />
+  );
+}
+```
+
+### 使用基础配置
+
+您可以创建一个 `baseOptions` 对象，用于所有页面和布局组件。
+
+```tsx title="layout.config.ts"
+import type { BasePageConfig } from 'fumadocs-ui/page';
+
+export const baseOptions: BasePageConfig = {
+  githubUrl: 'https://github.com/fuma-nama/fumadocs',
+  footer: {
+    text: 'Built with Fumadocs',
+  },
+};
+```
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { baseOptions } from '@/app/layout.config';
+
+export default function Page() {
+  return <DocsPage {...baseOptions} />;
+}
+```
+
+### 编辑链接
+
+```tsx
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page() {
+  return (
+    <DocsPage
+      gitTimestamp={true}
+      footer={{
+        // Edit Link
+        editLink: {
+          text: 'Edit this page',
+          url: 'https://github.com/username/repo/blob/main',
+        },
+      }}
+    />
+  );
+}
+```
+
+### 页面导航
+
+```tsx
+import { DocsPage } from 'fumadocs-ui/page';
+import { getPagesPath } from 'fumadocs-core';
+
+export default function Page({ params }: { params: { slug?: string[] } }) {
+  const pagePath = getPagesPath(params);
+  const prev = getAdjacentPages({ current: pagePath, dir: 'prev' });
+  const next = getAdjacentPages({ current: pagePath, dir: 'next' });
+
+  return (
+    <DocsPage
+      footer={{
+        navigation: {
+          prev: prev?.url
+            ? {
+                title: prev.title,
+                href: prev.url,
+              }
+            : undefined,
+          next: next?.url
+            ? {
+                title: next.title,
+                href: next.url,
+              }
+            : undefined,
+        },
+      }}
+    />
+  );
+}
+```
+
+#### 自定义获取相邻页面
+
+您可以在 `createAdjacentPages` 方法中应用 `includeInPageNav` 过滤器，该方法由文档生成器创建：
+
+```tsx title="api.ts"
+import { createAdjacentPages } from 'fumadocs-core/docs';
+import { tree } from '@/app/source';
+
+export const getAdjacentPages = createAdjacentPages(tree, {
+  includeInPageNav: (page) => !page.data.preview,
+});
+``` 

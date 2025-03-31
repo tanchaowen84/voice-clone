@@ -1,0 +1,56 @@
+---
+title: 卡片
+description: 在 MDX 文档中使用卡片组件
+preview: card
+---
+
+## 使用方法
+
+将其添加到您的 MDX 组件中。
+
+```tsx
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+<MDX
+  components={{
+    Card,
+    Cards,
+  }}
+/>;
+```
+
+有关用法，请参见 [Markdown](/docs/markdown#cards)。
+
+### Cards
+
+卡片的容器。
+
+### Card
+
+基于 Next.js 的 `<Link />`。
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="CardProps" /> */}
+
+<Callout title="图标的树摇优化" type="warn">
+
+如果您没有使用 Fumadocs MDX 来渲染 MDX（例如，使用 Contentlayer），请确保
+树摇优化正常工作。
+
+大多数图标库支持单独导入图标。
+
+```tsx
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+```
+
+作为解决方法，您也可以将图标传递给 MDX 组件。（这使用 Next.js 打包器而不是内容源）
+
+```tsx title="page.tsx"
+import { HomeIcon } from 'lucide-react';
+
+const components = {
+  ...defaultComponents,
+  HomeIcon,
+};
+```
+
+</Callout> 

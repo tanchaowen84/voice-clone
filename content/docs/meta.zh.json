@@ -1,0 +1,24 @@
+{
+  "title": "Framework",
+  "description": "The docs framework",
+  "icon": "Building2",
+  "root": true,
+  "pages": [
+    "---介绍---",
+    "index",
+    "what-is-fumadocs",
+    "comparisons",
+    "---设置---",
+    "manual-installation",
+    "static-export",
+    "---写作---",
+    "markdown",
+    "---UI---",
+    "customisation",
+    "theme",
+    "search",
+    "components",
+    "mdx",
+    "layouts"
+  ]
+}

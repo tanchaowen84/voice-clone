@@ -1,0 +1,79 @@
+---
+title: 代码块
+description: 在文档中添加代码块
+---
+
+<Wrapper>
+<div className="bg-fd-background rounded-lg prose-no-margin">
+
+```js title="config.js"
+import createMDX from 'fumadocs-mdx/config';
+
+const withMDX = createMDX();
+
+// [!code word:config]
+/** @type {import('next').NextConfig} */
+const config = {
+  // [!code highlight]
+  reactStrictMode: true, // [!code highlight]
+}; // [!code highlight]
+
+export default withMDX(config);
+```
+
+</div>
+</Wrapper>
+
+显示代码块，默认添加。
+
+- 复制按钮
+- 自定义标题和图标
+
+## 使用方法
+
+将 pre 元素包装在 `<CodeBlock />` 中，它作为代码块的包装器。
+
+```tsx
+import { Pre, CodeBlock } from 'fumadocs-ui/components/codeblock';
+
+<MDX
+  components={{
+    // HTML `ref` attribute conflicts with `forwardRef`
+    pre: ({ ref: _ref, ...props }) => (
+      <CodeBlock {...props}>
+        <Pre>{props.children}</Pre> {/* [!code highlight] */}
+      </CodeBlock>
+    ),
+  }}
+/>;
+```
+
+有关用法，请参见 [Markdown](/docs/markdown#codeblock)。
+
+### 保留背景
+
+使用由 Shiki（Rehype Code 插件）生成的背景颜色。
+
+```tsx
+import { Pre, CodeBlock } from 'fumadocs-ui/components/codeblock';
+
+<MDX
+  components={{
+    pre: ({ ref: _ref, ...props }) => (
+      <CodeBlock keepBackground {...props}>
+        <Pre>{props.children}</Pre>
+      </CodeBlock>
+    ),
+  }}
+/>;
+```
+
+### 图标
+
+通过向 `CodeBlock` 组件传递 `icon` 属性来指定自定义图标。
+
+默认情况下，图标将由自定义 Shiki 转换器注入。
+
+```js title="config.js"
+console.log('js');
+``` 

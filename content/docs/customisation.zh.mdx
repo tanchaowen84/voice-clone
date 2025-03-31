@@ -1,0 +1,60 @@
+---
+title: 概览
+description: Fumadocs UI 的概览
+---
+
+## 架构
+
+<UiOverview />
+
+|               |                                                         |
+| ------------- | ------------------------------------------------------- |
+| **侧边栏**   | 显示站点标题和导航元素。             |
+| **页面树** | 由您传递，主要作为侧边栏的项目渲染。 |
+| **文档页面** | 页面的所有内容。                          |
+| **目录**       | 文章内导航。                          |
+
+### 页面树
+
+侧边栏等导航元素使用[页面树](/docs/headless/page-tree)来渲染导航链接，它是描述所有可用页面和文件夹的树形结构。
+
+通常，它是使用 [`loader()`](/docs/headless/source-api) 从您的文件结构生成的，您可以了解[如何组织页面](/docs/page-conventions)。
+
+## 自定义
+
+### 布局
+
+您可以使用不同布局的暴露选项：
+
+<Cards>
+  <Card title="文档布局" href="/docs/layouts/docs">
+    文档的布局
+  </Card>
+  <Card title="文档页面" href="/docs/layouts/page">
+    文档内容的布局
+  </Card>
+  <Card title="笔记本布局" href="/docs/layouts/notebook">
+    文档布局的更紧凑版本
+  </Card>
+  <Card title="主页布局" href="/docs/layouts/home-layout">
+    其他页面的布局
+  </Card>
+</Cards>
+
+### 组件
+
+Fumadocs UI 还提供了样式化组件，用于交互式示例以增强您的文档，您可以使用暴露的道具如 `style` 和 `className` 来自定义它们。
+
+参见[组件](/docs/components)。
+
+### 设计系统
+
+由于设计系统是基于 Tailwind CSS 构建的，您可以[通过 CSS 变量](/docs/theme#colors)自定义它。
+
+### CLI
+
+如果这些都不适合您，Fumadocs CLI 是一个工具，可以将 Fumadocs UI 组件和布局安装到您的代码库中，类似于 Shadcn UI。允许您完全自定义 Fumadocs UI：
+
+```package-install
+npx fumadocs add
+``` 

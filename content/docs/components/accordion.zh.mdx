@@ -1,0 +1,42 @@
+---
+title: 手风琴
+description: 在文档中添加手风琴组件
+preview: accordion
+---
+
+## 使用方法
+
+基于 [Radix UI Accordion](https://www.radix-ui.com/primitives/docs/components/accordion)，对 FAQ 部分特别有用。
+
+```tsx
+import React from 'react';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Accordions type="single">
+  <Accordion title="我的标题">我的内容</Accordion>
+</Accordions>;
+```
+
+### Accordions
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="AccordionsProps" /> */}
+
+### Accordion
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="AccordionProps" /> */}
+
+### 链接到手风琴
+
+您可以为手风琴指定一个 `id`。当用户导航到带有指定 `id` 的哈希参数的页面时，手风琴将自动打开。
+
+```mdx
+<Accordions>
+<Accordion title="我的标题" id="my-title">
+
+我的内容
+
+</Accordion>
+</Accordions>
+```
+
+> 手风琴的值默认与标题相同。当存在 id 时，它将被用作值。 

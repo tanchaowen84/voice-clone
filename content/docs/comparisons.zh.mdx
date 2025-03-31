@@ -1,0 +1,68 @@
+---
+title: 对比
+description: Fumadocs 与其他现有框架有何不同？
+icon: GitCompareArrows
+---
+
+## Nextra
+
+Fumadocs 深受 Nextra 启发。例如，路由约定。这就是为什么 Fumadocs 中也存在 `meta.json`。
+
+Nextra 比 Fumadocs 更加固执己见。Fumadocs 由 App Router 加速。因此，它提供了许多服务器端功能，与简单编辑配置文件相比，您必须手动配置一些内容。
+
+如果您想要对一切都有更多的控制，比如将其添加到现有代码库或实现高级路由，Fumadocs 会表现得很出色。
+
+### 功能表
+
+| 功能             | Fumadocs     | Nextra                    |
+| ------------------- | ------------ | ------------------------- |
+| 静态生成   | 是          | 是                       |
+| 缓存              | 是          | 是                       |
+| 明/暗模式     | 是          | 是                       |
+| 语法高亮 | 是          | 是                       |
+| 目录   | 是          | 是                       |
+| 全文搜索    | 是          | 是                       |
+| 国际化                | 是          | 是                       |
+| 最后 Git 编辑时间  | 是          | 是                       |
+| 页面图标          | 是          | 是，通过 `_meta.js` 文件 |
+| RSC                 | 是          | 是                       |
+| 远程源       | 是          | 是                       |
+| SEO                 | 通过元数据 | 是                       |
+| 内置组件 | 是          | 是                       |
+| RTL 布局          | 是          | 是                       |
+
+### 附加功能
+
+通过第三方库支持的功能（如 [TypeDoc](https://typedoc.org)）不会在此列出。
+
+| 功能                    | Fumadocs | Nextra |
+| -------------------------- | -------- | ------ |
+| OpenAPI 集成        | 是      | 否     |
+| TypeScript 文档生成 | 是      | 否     |
+| TypeScript Twoslash        | 是      | 是    |
+
+## Mintlify
+
+Mintlify 是一项文档服务，与 Fumadocs 相比，它提供免费套餐，但并非完全免费和开源。
+
+Fumadocs 不如 Mintlify 强大，例如 Mintlify 的 OpenAPI 集成。
+作为 Fumadocs 的创建者，如果您对当前构建文档的方式感到满意，我不建议从 Mintlify 切换到 Fumadocs。
+然而，我相信 Fumadocs 是所有想要拥有优雅文档的 Next.js 开发者的合适工具。
+
+## Docusaurus
+
+Docusaurus 是一个基于 React.js 的强大框架。它通过插件和自定义主题提供了许多酷炫的功能。
+
+### 更好的开发者体验
+
+由于 Fumadocs 构建在 Next.js 之上，您每次都必须启动 Next.js 开发服务器来查看更改，并且相对于 Docusaurus，初始样板代码较多。
+
+对于简单的文档，如果您不需要任何特定于 Next.js 的功能，Docusaurus 可能是更好的选择。
+
+然而，当您想要使用 Next.js，或寻求更多的可定制性，如调整默认 UI 组件时，Fumadocs 可能是更好的选择。
+
+### 插件
+
+您可以通过插件轻松实现许多功能，他们的生态系统确实更大，并由许多贡献者维护。
+
+相比之下，Fumadocs 的灵活性允许您自己实现它们，可能需要更长的时间来调整它以达到您的满意度。 

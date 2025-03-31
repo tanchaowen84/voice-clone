@@ -1,0 +1,35 @@
+---
+title: 根切换器
+description: 在页面树之间切换
+preview: rootToggle
+---
+
+## 使用方法
+
+将此组件添加到您的侧边栏或您想要的其他地方。
+
+```tsx
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
+
+<DocsLayout
+  sidebar={{
+    banner: (
+      <RootToggle
+        options={[
+          {
+            title: '文件夹 1',
+            description: '文件夹 1 中的页面',
+            url: '/path/to/page-tree-1',
+          },
+          {
+            title: '文件夹 2',
+            description: '文件夹 2 中的页面',
+            url: '/path/to/page-tree-2',
+          },
+        ]}
+      />
+    ),
+  }}
+/>;
+``` 

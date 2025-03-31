@@ -1,0 +1,33 @@
+---
+title: 主页布局
+description: 其他页面的共享布局
+---
+
+## 使用方法
+
+在其他页面上添加导航栏和搜索对话框。
+
+```tsx title="/app/(home)/layout.tsx"
+import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { baseOptions } from '@/app/layout.config';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return <HomeLayout {...baseOptions}>{children}</HomeLayout>;
+}
+```
+
+创建一个[路由组](https://nextjs.org/docs/app/building-your-application/routing/route-groups)来在多个页面之间共享相同的布局。
+
+<Files>
+  <Folder name="(home)" defaultOpen>
+    <File name="page.tsx" />
+    <File name="layout.tsx" />
+  </Folder>
+  <Folder name="/docs">
+    <Folder name={'[[..slugs]]'}>
+      <File name="page.tsx" />
+    </Folder>
+    <File name="layout.tsx" />
+  </Folder>
+</Files> 
