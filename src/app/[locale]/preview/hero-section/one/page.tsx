@@ -71,7 +71,7 @@ export default function HeroSection() {
               className="absolute inset-0 -z-20"
             >
               <Image
-                src="https://res.cloudinary.com/dg4jhba5c/image/upload/v1741605538/night-background_ni3vqb.jpg"
+                src="/blocks/night-background.webp"
                 alt="background"
                 className="absolute inset-x-0 top-56 -z-20 hidden lg:top-32 dark:block"
                 width="3276"
