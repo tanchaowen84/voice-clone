@@ -1,5 +1,5 @@
 import BlogCard, { BlogCardSkeleton } from '@/components/blog/blog-card';
-import { POSTS_PER_PAGE } from '@/constants';
+import { websiteConfig } from '@/config';
 import { Post } from 'content-collections';
 
 interface BlogGridProps {
@@ -22,7 +22,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
 }
 
 export function BlogGridSkeleton({
-  count = POSTS_PER_PAGE,
+  count = websiteConfig.blog.paginationSize,
 }: { count?: number }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

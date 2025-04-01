@@ -58,6 +58,10 @@ export const websiteConfig: WebsiteConfig = {
     from: 'support@mksaas.com',
     to: 'support@mksaas.com',
   },
+  blog: {
+    paginationSize: 6,
+    relatedPostsSize: 3,
+  },
   social: {
     github: 'https://github.com/MkSaaSHQ',
     twitter: 'https://x.com/MkSaaSHQ',

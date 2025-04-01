@@ -174,7 +174,8 @@
     "readTime": " 分钟阅读",
     "all": "全部",
     "noPostsFound": "没有找到文章",
-    "allPosts": "全部文章"
+    "allPosts": "全部文章",
+    "morePosts": "更多文章"
   },
   "DocsPage": {
     "toc": "目录",

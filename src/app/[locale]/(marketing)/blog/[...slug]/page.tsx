@@ -1,20 +1,22 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
+import BlogGrid from '@/components/blog/blog-grid';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { NewsletterCard } from '@/components/newsletter/newsletter-card';
+import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
+import { websiteConfig } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
-import { allPosts } from 'content-collections';
-import { CalendarIcon, ClockIcon } from 'lucide-react';
+import { allPosts, Post } from 'content-collections';
+import { CalendarIcon, ClockIcon, FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 
 import '@/styles/mdx.css';
 
@@ -24,15 +26,10 @@ import '@/styles/mdx.css';
  * @returns The blog post
  *
  * How it works:
- * 1. /[locale]/blog/first-post:
+ * /[locale]/blog/first-post:
  * params.slug = ["first-post"]
  * slug becomes "first-post" after join('/')
  * Matches post where slugAsParams === "first-post" AND locale === params.locale
- *
- * 2. /[locale]/blog/2023/year-review:
- * params.slug = ["2023", "year-review"]
- * slug becomes "2023/year-review" after join('/')
- * Matches post where slugAsParams === "2023/year-review" AND locale === params.locale
  */
 async function getBlogPostFromParams(props: NextPageProps) {
   const params = await props.params;
@@ -63,6 +60,20 @@ async function getBlogPostFromParams(props: NextPageProps) {
   }
 
   return post;
+}
+
+/**
+ * get related posts, random pick from all posts with same locale, different slug,
+ * max size is websiteConfig.blog.relatedPostsSize
+ */
+async function getRelatedPosts(post: Post) {
+  const relatedPosts = allPosts
+    .filter((p) => p.locale === post.locale)
+    .filter((p) => p.slugAsParams !== post.slugAsParams)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, websiteConfig.blog.relatedPostsSize);
+
+  return relatedPosts;
 }
 
 export async function generateMetadata({
@@ -102,6 +113,9 @@ export default async function BlogPostPage(props: NextPageProps) {
   const date = getLocaleDate(publishDate);
   const toc = await getTableOfContents(post.content);
   const t = await getTranslations('BlogPage');
+
+  // get related posts
+  const relatedPosts = await getRelatedPosts(post);
 
   return (
     <div className="flex flex-col gap-8">
@@ -219,8 +233,24 @@ export default async function BlogPostPage(props: NextPageProps) {
         </div>
       </div>
 
+      {/* Footer section shows related posts */}
+      {relatedPosts && relatedPosts.length > 0 && (
+        <div className="flex flex-col gap-8 mt-8">
+          <div className="flex items-center gap-2">
+            <FileTextIcon className="size-4 text-muted-foreground" />
+            <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
+              {t('morePosts')}
+            </h2>
+          </div>
+
+          <BlogGrid posts={relatedPosts} />
+        </div>
+      )}
+
       {/* newsletter */}
-      <NewsletterCard />
+      <div className="flex items-center justify-start my-8">
+        <NewsletterCard />
+      </div>
     </div>
   );
 }

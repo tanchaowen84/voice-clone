@@ -11,7 +11,11 @@ export type WebsiteConfig = {
   mail: {
     from?: string;
     to?: string;
-  }
+  };
+  blog: {
+    paginationSize: number;
+    relatedPostsSize: number;
+  };
   social: {
     twitter?: string;
     github?: string;

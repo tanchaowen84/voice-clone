@@ -1,7 +1,7 @@
 import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
-import { POSTS_PER_PAGE } from '@/constants';
+import { websiteConfig } from '@/config';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
 import { NextPageProps } from '@/types/next-page-props';
@@ -29,13 +29,14 @@ export default async function BlogPage({
   params,
   searchParams,
 }: NextPageProps) {
+  const paginationSize = websiteConfig.blog.paginationSize;
   const resolvedParams = await params;
   const { locale } = resolvedParams;
   const resolvedSearchParams = await searchParams;
   const { page } = (resolvedSearchParams as { [key: string]: string }) || {};
   const currentPage = page ? Number(page) : 1;
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
+  const startIndex = (currentPage - 1) * paginationSize;
+  const endIndex = startIndex + paginationSize;
 
   // Filter posts by locale
   const localePosts = allPosts.filter(
@@ -56,7 +57,7 @@ export default async function BlogPage({
   // Paginate posts
   const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
   const totalCount = filteredPosts.length;
-  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(totalCount / paginationSize);
 
   // console.log("BlogPage, totalCount", totalCount, ", totalPages", totalPages,);
 
