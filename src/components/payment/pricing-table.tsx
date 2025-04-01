@@ -73,9 +73,9 @@ export function PricingTable({
             {hasYearlyOption && (
               <ToggleGroupItem value="year" className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground px-4 py-2">
                 Yearly
-                <span className="ml-1 bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                {/* <span className="ml-1 bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                   Save 25%
-                </span>
+                </span> */}
               </ToggleGroupItem>
             )}
           </ToggleGroup>
@@ -121,17 +121,7 @@ export function PricingTable({
           />
         ))}
       </div>
-
-      <div className="mt-10 text-center">
-        <h3 className="text-lg font-medium mb-4">Need a custom plan?</h3>
-        <a
-          href="/contact"
-          className="inline-flex items-center text-primary hover:underline"
-        >
-          Contact us for custom pricing
-          <ChevronRight className="h-4 w-4 ml-1" />
-        </a>
-      </div>
+      
     </div>
   );
 } 
