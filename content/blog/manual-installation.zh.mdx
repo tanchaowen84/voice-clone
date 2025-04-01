@@ -103,8 +103,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 在页面中，将您的内容包装在 [Page](/docs/layouts/page) 组件中。
 这可能因您的内容源而异。您应该使用 `generateStaticParams` 配置静态渲染，并使用 `generateMetadata` 配置元数据。
 
-<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+<Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
+<Tab value='Fumadocs MDX'>
 ```json doc-gen:file
 {
   "file": "../../examples/next-mdx/app/docs/[[...slug]]/page.tsx",
@@ -113,7 +114,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 }
 ```
+</Tab>
 
+<Tab value='Content Collections'>
 ```json doc-gen:file
 {
   "file": "../../examples/content-collections/app/docs/[[...slug]]/page.tsx",
@@ -122,15 +125,16 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 }
 ```
-
+</Tab>
 </Tabs>
 
 ### 搜索
 
 使用基于 Orama 的默认文档搜索。
 
-<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+<Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
+<Tab value='Fumadocs MDX'>
 ```json doc-gen:file
 {
   "file": "../../examples/next-mdx/app/api/search/route.ts",
@@ -139,7 +143,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 }
 ```
+</Tab>
 
+<Tab value='Content Collections'>
 ```json doc-gen:file
 {
   "file": "../../examples/content-collections/app/api/search/route.ts",
@@ -148,7 +154,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   }
 }
 ```
-
+</Tab>
 </Tabs>
 
 了解更多关于[文档搜索](/docs/headless/search)的信息。

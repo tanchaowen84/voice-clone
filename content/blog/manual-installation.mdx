@@ -103,8 +103,9 @@ Create a catch-all route `/app/docs/[[...slug]]` for docs pages.
 In the page, wrap your content in the [Page](/docs/layouts/page) component.
 It may vary depending on your content source. You should configure static rendering with `generateStaticParams` and metadata with `generateMetadata`.
 
-<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+<Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
+<Tab value='Fumadocs MDX'>
 ```json doc-gen:file
 {
   "file": "../../examples/next-mdx/app/docs/[[...slug]]/page.tsx",
@@ -113,7 +114,9 @@ It may vary depending on your content source. You should configure static render
   }
 }
 ```
+</Tab>
 
+<Tab value='Content Collections'>
 ```json doc-gen:file
 {
   "file": "../../examples/content-collections/app/docs/[[...slug]]/page.tsx",
@@ -122,6 +125,7 @@ It may vary depending on your content source. You should configure static render
   }
 }
 ```
+</Tab>
 
 </Tabs>
 
@@ -129,8 +133,9 @@ It may vary depending on your content source. You should configure static render
 
 Use the default document search based on Orama.
 
-<Tabs groupId='content-source' items={['Fumadocs MDX', 'Content Collections']}>
+<Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
+<Tab value='Fumadocs MDX'>
 ```json doc-gen:file
 {
   "file": "../../examples/next-mdx/app/api/search/route.ts",
@@ -139,7 +144,9 @@ Use the default document search based on Orama.
   }
 }
 ```
+</Tab>
 
+<Tab value='Content Collections'>
 ```json doc-gen:file
 {
   "file": "../../examples/content-collections/app/api/search/route.ts",
@@ -148,6 +155,7 @@ Use the default document search based on Orama.
   }
 }
 ```
+</Tab>
 
 </Tabs>
 

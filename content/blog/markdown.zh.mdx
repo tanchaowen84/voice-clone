@@ -252,3 +252,94 @@ console.log('Hello World');
 ````
 
 ### 高亮行 
+
+````md
+```tsx
+<div>Hello World</div>  // [\!code highlight]
+<div>Hello World</div>
+<div>Goodbye</div>
+<div>Hello World</div>
+```
+````
+
+### 高亮单词
+
+您可以通过添加 `[!code word:<match>]` 来高亮特定单词。
+
+````md
+```js
+// [\!code word:config]
+const config = {
+  reactStrictMode: true,
+};
+```
+````
+
+### 差异
+
+````mdx
+```ts
+console.log('hewwo'); // [\!code --]
+console.log('hello'); // [\!code ++]
+```
+````
+
+```ts
+console.log('hewwo'); // [!code --]
+console.log('hello'); // [!code ++]
+```
+
+### 标签组
+
+您可以使用 `<Tab />` 组件与代码块一起使用。
+
+````mdx
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+<Tabs items={['Tab 1', 'Tab 2']}>
+  <Tab value='Tab 1'>
+    ```ts
+    console.log('A');
+    ```
+  </Tab>
+  <Tab value='Tab 2'>
+    ```ts
+    console.log('B');
+    ```
+  </Tab>
+</Tabs>
+````
+
+> 注意，您可以在 MDX 文件中添加 MDX 组件，而不必导入它们。
+
+<Tabs items={['Tab 1', 'Tab 2']}>
+  <Tab value='Tab 1'>
+    ```ts
+    console.log('A');
+    ```
+  </Tab>
+  <Tab value='Tab 2'>
+    ```ts
+    console.log('B');
+    ```
+  </Tab>
+</Tabs>
+
+### 使用 Typescript Twoslash
+
+编写带有悬停类型信息和检测到类型错误的 Typescript 代码块。
+
+默认情况下未启用。参见 [Twoslash](/docs/twoslash)。
+
+## 图片
+
+所有内置内容源都能正确处理图片。
+图片会自动为 `next/image` 优化。
+
+```mdx
+![Image](/image.png)
+```
+
+## 可选功能
+
+一些您可以启用的可选插件。
