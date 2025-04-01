@@ -4,6 +4,9 @@ import { Post } from 'content-collections';
 import Image from 'next/image';
 import { LocaleLink } from '@/i18n/navigation';
 
+// Base64 SVG with Lucide image icon in the center
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiIGZpbGw9Im5vbmUiPgogIDxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjEyMDAiIGZpbGw9IiNFQUVBRUEiIHJ4PSIzIi8+CiAgPGcgZmlsbD0iIzk5OTk5OSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDgwLDQ4MCkgc2NhbGUoMTApIj4KICAgIDxwYXRoIGQ9Ik0xOS44OSAxMS40NTdBMi4wMzIgMi4wMzIgMCAwIDEgMTcuODY0IDEzLjVIMi4xMzZBMi4wMzIgMi4wMzIgMCAwIDEgLjExIDExLjQ1N1YyLjU0M0EyLjAzMiAyLjAzMiAwIDAgMSAyLjEzNi41aDE1LjcyOGEyLjAzMiAyLjAzMiAwIDAgMSAyLjAyNiAyLjA0M3Y4LjkxNHoiLz4KICAgIDxwYXRoIGQ9Ik0xOSA1LjVMMTQuMTkyIDEwIDkuNSA1LjUgNSA5Ljc1IDEgNi41IiBzdHJva2U9IiNmZmYiIHN0cm9rZVdpZHRoPSIxLjUiIHN0cm9rZUxpbmVjYXA9InJvdW5kIiBzdHJva2VMaW5lam9pbj0icm91bmQiLz4KICAgIDxjaXJjbGUgY3g9IjYuNSIgY3k9IjMuNSIgcj0iMS41IiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K';
+
 interface BlogCardProps {
   post: Post;
 }
@@ -28,6 +31,8 @@ export default function BlogCard({ post }: BlogCardProps) {
                 alt={post.title || 'image for blog post'}
                 title={post.title || 'image for blog post'}
                 className="object-cover hover:scale-105 transition-transform duration-300"
+                placeholder="blur"
+                blurDataURL={PLACEHOLDER_IMAGE}
                 fill
               />
 
@@ -107,7 +112,12 @@ export function BlogCardSkeleton() {
   return (
     <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
       <div className="overflow-hidden relative aspect-16/9 w-full">
-        <Skeleton className="w-full h-full" />
+        <Image
+          src={PLACEHOLDER_IMAGE}
+          alt="Loading placeholder"
+          className="object-cover"
+          fill
+        />
       </div>
       <div className="p-4 flex flex-col justify-between flex-1">
         <div>
