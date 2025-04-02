@@ -1,5 +1,5 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { ConditionalUpdatePasswordCard } from '@/components/settings/security/conditional-update-password-card';
+import { PasswordCardWrapper } from '@/components/settings/security/password-card-wrapper';
 import { DeleteAccountCard } from '@/components/settings/security/delete-account-card';
 import { useTranslations } from 'next-intl';
 
@@ -33,7 +33,7 @@ export default function SettingsSecurityPage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            <ConditionalUpdatePasswordCard />
+            <PasswordCardWrapper />
             <DeleteAccountCard />
           </div>
         </div>

@@ -48,8 +48,7 @@ interface UpdatePasswordCardProps {
  */
 export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   const router = useLocaleRouter();
-  const ct = useTranslations('Common');
-  const t = useTranslations('Dashboard.sidebar.settings.items.security');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security.updatePassword');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -60,10 +59,10 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
   const formSchema = z.object({
     currentPassword: z
       .string()
-      .min(1, { message: t('password.currentRequired') }),
+      .min(1, { message: t('currentRequired') }),
     newPassword: z
       .string()
-      .min(8, { message: t('password.newMinLength') }),
+      .min(8, { message: t('newMinLength') }),
   });
 
   // Initialize the form
@@ -102,7 +101,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
         onSuccess: (ctx) => {
           // update password success, user information stored in ctx.data
           // console.log("update password, success:", ctx.data);
-          toast.success(t('password.success'));
+          toast.success(t('success'));
           router.refresh();
           form.reset();
         },
@@ -111,7 +110,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
           // { "message": "Invalid password", "code": "INVALID_PASSWORD", "status": 400, "statusText": "BAD_REQUEST" }
           console.error('update password, error:', ctx.error);
           setError(`${ctx.error.status}: ${ctx.error.message}`);
-          toast.error(t('password.fail'));
+          toast.error(t('fail'));
         },
       });
   };
@@ -120,10 +119,10 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
     <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
-          {t('password.title')}
+          {t('title')}
         </CardTitle>
         <CardDescription>
-          {t('password.description')}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -135,13 +134,13 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {t('password.currentPassword')}
+                    {t('currentPassword')}
                   </FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
                         type={showCurrentPassword ? 'text' : 'password'}
-                        placeholder={t('password.currentPassword')}
+                        placeholder={t('currentPassword')}
                         {...field}
                       />
                       <Button
@@ -157,7 +156,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                           <EyeIcon className="h-4 w-4" />
                         )}
                         <span className="sr-only">
-                          {showCurrentPassword ? t('password.hidePassword') : t('password.showPassword')}
+                          {showCurrentPassword ? t('hidePassword') : t('showPassword')}
                         </span>
                       </Button>
                     </div>
@@ -171,12 +170,12 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('password.newPassword')}</FormLabel>
+                  <FormLabel>{t('newPassword')}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
                         type={showNewPassword ? 'text' : 'password'}
-                        placeholder={t('password.newPassword')}
+                        placeholder={t('newPassword')}
                         {...field}
                       />
                       <Button
@@ -192,7 +191,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                           <EyeIcon className="size-4" />
                         )}
                         <span className="sr-only">
-                          {showNewPassword ? t('password.hidePassword') : t('password.showPassword')}
+                          {showNewPassword ? t('hidePassword') : t('showPassword')}
                         </span>
                       </Button>
                     </div>
@@ -205,11 +204,11 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">
-              {t('password.hint')}
+              {t('hint')}
             </p>
 
             <Button type="submit" disabled={isSaving} className="cursor-pointer">
-              {isSaving ? ct('saving') : ct('save')}
+              {isSaving ? t('saving') : t('save')}
             </Button>
           </CardFooter>
         </form>

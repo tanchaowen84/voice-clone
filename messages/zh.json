@@ -470,7 +470,7 @@
           "security": {
             "title": "安全",
             "description": "管理您的安全设置",
-            "password": {
+            "updatePassword": {
               "title": "修改密码",
               "description": "输入您的当前密码和新密码",
               "currentPassword": "当前密码",
@@ -481,7 +481,9 @@
               "showPassword": "显示密码",
               "hidePassword": "隐藏密码",
               "success": "密码更新成功",
-              "fail": "更新密码失败"
+              "fail": "更新密码失败",
+              "saving": "保存中...",
+              "save": "保存"
             },
             "setupPassword": {
               "title": "设置密码",
@@ -497,6 +499,7 @@
               "confirmTitle": "删除账号",
               "confirmDescription": "您确定要删除您的账号吗？此操作无法撤销",
               "confirm": "删除",
+              "cancel": "取消",
               "deleting": "删除中...",
               "success": "账号删除成功",
               "fail": "删除账号失败"

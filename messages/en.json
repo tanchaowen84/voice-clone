@@ -473,7 +473,7 @@
           "security": {
             "title": "Security",
             "description": "Manage your security settings",
-            "password": {
+            "updatePassword": {
               "title": "Change Password",
               "description": "Enter your current password and a new password",
               "currentPassword": "Current Password",
@@ -484,7 +484,9 @@
               "showPassword": "Show password",
               "hidePassword": "Hide password",
               "success": "Password updated successfully",
-              "fail": "Failed to update password"
+              "fail": "Failed to update password",
+              "saving": "Saving...",
+              "save": "Save"
             },
             "setupPassword": {
               "title": "Set Up Password",
@@ -500,6 +502,7 @@
               "confirmTitle": "Delete Account",
               "confirmDescription": "Are you sure you want to delete your account? This action cannot be undone.",
               "confirm": "Delete",
+              "cancel": "Cancel",
               "deleting": "Deleting...",
               "success": "Account deleted successfully",
               "fail": "Failed to delete account"

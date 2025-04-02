@@ -1,6 +1,14 @@
 'use client';
 
 import { FormError } from '@/components/shared/form-error';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,14 +18,6 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@/components/ui/alert-dialog';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
@@ -25,19 +25,14 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-interface DeleteAccountCardProps {
-  className?: string;
-}
-
 /**
  * Delete user account
  * 
  * This component allows users to permanently delete their account.
  * It includes a confirmation dialog to prevent accidental deletions.
  */
-export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
-  const ct = useTranslations('Common');
-  const t = useTranslations('Dashboard.sidebar.settings.items.security');
+export function DeleteAccountCard() {
+  const t = useTranslations('Dashboard.sidebar.settings.items.security.deleteAccount');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -64,7 +59,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
           setShowConfirmation(false);
         },
         onSuccess: () => {
-          toast.success(t('deleteAccount.success'));
+          toast.success(t('success'));
           refetch();
           router.replace('/');
         },
@@ -75,25 +70,25 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
           // "status": 400, "statusText": "BAD_REQUEST" }
           // set freshAge to 0 to disable session refreshness check for user deletion
           setError(`${ctx.error.status}: ${ctx.error.message}`);
-          toast.error(t('deleteAccount.fail'));
+          toast.error(t('fail'));
         },
       }
     );
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col")}>
       <CardHeader>
         <CardTitle className="text-lg font-bold text-destructive">
-          {t('deleteAccount.title')}
+          {t('title')}
         </CardTitle>
         <CardDescription>
-          {t('deleteAccount.description')}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
         <p className="text-sm text-muted-foreground">
-          {t('deleteAccount.warning')}
+          {t('warning')}
         </p>
 
         {error && (
@@ -108,7 +103,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
           onClick={() => setShowConfirmation(true)}
           className="cursor-pointer"
         >
-          {t('deleteAccount.button')}
+          {t('button')}
         </Button>
       </CardFooter>
 
@@ -117,10 +112,10 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-destructive">
-              {t('deleteAccount.confirmTitle')}
+              {t('confirmTitle')}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {t('deleteAccount.confirmDescription')}
+              {t('confirmDescription')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-end gap-3">
@@ -129,7 +124,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
               onClick={() => setShowConfirmation(false)}
               className="cursor-pointer"
             >
-              {ct('cancel')}
+              {t('cancel')}
             </Button>
             <Button
               variant="destructive"
@@ -137,7 +132,7 @@ export function DeleteAccountCard({ className }: DeleteAccountCardProps) {
               disabled={isDeleting}
               className="cursor-pointer"
             >
-              {isDeleting ? t('deleteAccount.deleting') : t('deleteAccount.confirm')}
+              {isDeleting ? t('deleting') : t('confirm')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

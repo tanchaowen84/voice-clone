@@ -1,5 +1,3 @@
-"use client";
-
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import BillingCard from '@/components/settings/billing/billing-card';
 import { useTranslations } from 'next-intl';

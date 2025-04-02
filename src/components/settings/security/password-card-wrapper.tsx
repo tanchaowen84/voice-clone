@@ -9,18 +9,14 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-interface ConditionalUpdatePasswordCardProps {
-  className?: string;
-}
-
 /**
- * Conditionally renders either:
+ * PasswordCardWrapper renders either:
  * - UpdatePasswordCard: if the user has a credential provider (email/password login)
  * - ResetPasswordCard: if the user only has social login providers and has an email
  * - PasswordSkeletonCard: when this component is still loading
  * - Nothing: if the user has no credential provider and no email
  */
-export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePasswordCardProps) {
+export function PasswordCardWrapper() {
   const { data: session } = authClient.useSession();
   const [hasCredentialProvider, setHasCredentialProvider] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,28 +53,28 @@ export function ConditionalUpdatePasswordCard({ className }: ConditionalUpdatePa
 
   // Don't render anything while loading
   if (isLoading) {
-    return <PasswordSkeletonCard className={className} />;
+    return <PasswordSkeletonCard />;
   }
 
   // If user has credential provider, show UpdatePasswordCard
   if (hasCredentialProvider) {
-    return <UpdatePasswordCard className={className} />;
+    return <UpdatePasswordCard />;
   }
 
   // If user doesn't have credential provider but has an email, show ResetPasswordCard
   // The forgot password flow requires an email address
   if (session?.user?.email) {
-    return <ResetPasswordCard className={className} />;
+    return <ResetPasswordCard />;
   }
 
   // If user has no credential provider and no email, don't show anything
   return null;
 }
 
-function PasswordSkeletonCard({ className }: { className?: string }) {
+function PasswordSkeletonCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.security');
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col", className)}>
+    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col")}>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           {t('password.title')}

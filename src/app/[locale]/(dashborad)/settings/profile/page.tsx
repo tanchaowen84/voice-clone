@@ -3,7 +3,7 @@ import { UpdateAvatarCard } from '@/components/settings/account/update-avatar-ca
 import { UpdateNameCard } from '@/components/settings/account/update-name-card';
 import { useTranslations } from 'next-intl';
 
-export default function SettingsAccountPage() {
+export default function SettingsProfilePage() {
   const t = useTranslations();
 
   const breadcrumbs = [
