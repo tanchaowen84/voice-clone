@@ -175,7 +175,7 @@
     "author": "Author",
     "categories": "Categories",
     "tableOfContents": "Table of Contents",
-    "readTime": " min read",
+    "readTime": "{minutes} min read",
     "all": "All",
     "noPostsFound": "No posts found",
     "allPosts": "All Posts",
@@ -442,8 +442,8 @@
               "title": "Upgrade Your Plan",
               "description": "Choose a plan that works for you"
             },
-            "trialDays": "{{days}} day trial",
-            "upgradeToPlan": "Upgrade to {{planName}}",
+            "trialDays": "{days} day trial",
+            "upgradeToPlan": "Upgrade to {planName}",
             "customPricing": "Custom Pricing",
             "contactSales": "Contact Sales",
             "billingHistory": {

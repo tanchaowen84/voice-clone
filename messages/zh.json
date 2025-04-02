@@ -171,7 +171,7 @@
     "author": "作者",
     "categories": "分类",
     "tableOfContents": "目录",
-    "readTime": " 分钟阅读",
+    "readTime": "{minutes} 分钟阅读",
     "all": "全部",
     "noPostsFound": "没有找到文章",
     "allPosts": "全部文章",
@@ -439,8 +439,8 @@
               "title": "升级您的方案",
               "description": "选择适合您的方案"
             },
-            "trialDays": "{{days}} 天试用期",
-            "upgradeToPlan": "升级到 {{planName}}",
+            "trialDays": "{days} 天试用期",
+            "upgradeToPlan": "升级到 {planName}",
             "customPricing": "定制价格",
             "contactSales": "联系销售",
             "billingHistory": {

@@ -150,7 +150,7 @@ export default async function BlogPostPage(props: NextPageProps) {
               <div className="flex items-center gap-2">
                 <ClockIcon className="size-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground leading-none my-auto">
-                  {post.estimatedTime}{t('readTime')}
+                  {t('readTime', { minutes: post.estimatedTime })}
                 </span>
               </div>
             </div>
