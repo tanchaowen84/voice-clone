@@ -6,7 +6,7 @@ import {
   Folder,
   ImageZoom,
   InlineTOC,
-} from '@/components/docs/preview/lazy';
+} from '@/components/docs/lazy';
 import BannerImage from '@/public/images/docs/banner.png';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Callout } from 'fumadocs-ui/components/callout';
@@ -19,8 +19,6 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Home } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { Wrapper } from './wrapper';
-// import { owner, repo } from '@/lib/github';
-// import { GithubInfo } from 'fumadocs-ui/components/github-info';
 
 export function heading(): ReactNode {
   return (
@@ -256,16 +254,3 @@ export function banner(): ReactNode {
     </Wrapper>
   );
 }
-
-// export function githubInfo() {
-//   return (
-//     <Wrapper>
-//       <GithubInfo
-//         owner={owner}
-//         repo={repo}
-//         token={process.env.GITHUB_TOKEN}
-//         className="not-prose bg-fd-card"
-//       />
-//     </Wrapper>
-//   );
-// }

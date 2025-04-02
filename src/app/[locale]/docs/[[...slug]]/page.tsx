@@ -1,4 +1,4 @@
-import * as Preview from '@/components/docs/preview';
+import * as Preview from '@/components/docs';
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { HoverCard, HoverCardContent, HoverCardTrigger, } from '@/components/ui/hover-card';
 import { LOCALES } from '@/i18n/routing';
