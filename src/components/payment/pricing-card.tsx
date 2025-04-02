@@ -2,13 +2,13 @@
 
 import { Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { PlanInterval, PricePlan, Price, PaymentType } from '@/payment/types';
+import { PlanInterval, PricePlan, Price, PaymentType, PaymentTypes, PlanIntervals } from '@/payment/types';
 import { CheckoutButton } from './checkout-button';
 import { cn } from '@/lib/utils';
 
 interface PricingCardProps {
   plan: PricePlan;
-  interval: PlanInterval;
+  interval: PlanInterval; // 'month' or 'year'
   paymentType?: PaymentType; // 'recurring' or 'one_time'
   email?: string;
   metadata?: Record<string, string>;
@@ -22,11 +22,7 @@ interface PricingCardProps {
  * @param currency Currency code
  * @returns Formatted price string
  */
-function formatPrice(price: number | undefined, currency: string): string {
-  if (price === undefined) {
-    return 'Free';
-  }
-
+function formatPrice(price: number, currency: string): string {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
@@ -44,19 +40,19 @@ function formatPrice(price: number | undefined, currency: string): string {
  * @returns The price object or undefined if not found
  */
 function getPriceForPlan(
-  plan: PricePlan, 
+  plan: PricePlan,
   interval: PlanInterval,
-  paymentType: PaymentType = 'recurring'
+  paymentType: PaymentType = PaymentTypes.RECURRING
 ): Price | undefined {
-  if (plan.isFree) {
+  if (plan.isFree) { // Free plan has no price
     return undefined;
   }
-  
+
   return plan.prices.find(price => {
-    if (paymentType === 'one_time') {
-      return price.type === 'one_time';
+    if (paymentType === PaymentTypes.ONE_TIME) {
+      return price.type === PaymentTypes.ONE_TIME;
     }
-    return price.type === 'recurring' && price.interval === interval;
+    return price.type === PaymentTypes.RECURRING && price.interval === interval;
   });
 }
 
@@ -68,33 +64,42 @@ function getPriceForPlan(
 export function PricingCard({
   plan,
   interval,
-  paymentType = 'recurring',
+  paymentType = PaymentTypes.RECURRING,
   email,
   metadata,
   className,
   isCurrentPlan = false,
 }: PricingCardProps) {
   const price = getPriceForPlan(plan, interval, paymentType);
-  const formattedPrice = plan.isFree ? 'Free' : price ? 
-    formatPrice(price.amount, price.currency) : 'Not Available';
-  
-  // Generate pricing label based on payment type and interval
+
+  // generate formatted price
+  let formattedPrice = '';
+  if (plan.isFree) {
+    formattedPrice = 'Free';
+  } else if (price && price.amount > 0) { // price is available
+    formattedPrice = formatPrice(price.amount, price.currency);
+  } else {
+    formattedPrice = 'Not Available';
+  }
+
+  // generate pricing label based on payment type and interval
   let priceLabel = '';
   if (!plan.isFree && price) {
-    if (paymentType === 'one_time') {
+    if (paymentType === PaymentTypes.ONE_TIME) {
       priceLabel = ''; // lifetime
-    } else if (interval === 'month') {
+    } else if (interval === PlanIntervals.MONTH) {
       priceLabel = '/month';
-    } else if (interval === 'year') {
+    } else if (interval === PlanIntervals.YEAR) {
       priceLabel = '/year';
     }
   }
 
+  // check if plan is available and has a price
   const isPlanAvailable = plan.isFree || !!price;
   const hasTrialPeriod = price?.trialPeriodDays && price.trialPeriodDays > 0;
 
   return (
-    <Card 
+    <Card
       className={cn(
         "flex flex-col h-full overflow-hidden transition-all",
         plan.recommended && "border-blue-500 shadow-lg shadow-blue-100 dark:shadow-blue-900/20",
@@ -118,7 +123,9 @@ export function PricingCard({
       </CardHeader>
       <CardContent className="grow">
         <div className="mb-3">
-          <span className="text-3xl font-bold">{formattedPrice}</span>
+          <span className="text-3xl font-bold">
+            {formattedPrice}
+          </span>
           {priceLabel && (
             <span className="text-gray-500 dark:text-gray-400 ml-1">
               {priceLabel}
@@ -147,7 +154,7 @@ export function PricingCard({
         {plan.isFree ? (
           <div className="w-full">
             <div className="px-3 py-2 text-sm text-center bg-gray-100 dark:bg-gray-800 rounded-md w-full">
-              Free Plan - No Payment Required
+              Start for Free
             </div>
           </div>
         ) : isCurrentPlan ? (
@@ -164,7 +171,7 @@ export function PricingCard({
             metadata={metadata}
             className="w-full"
           >
-            {paymentType === 'one_time' ? 'Purchase Now' : 'Subscribe Now'}
+            {paymentType === PaymentTypes.ONE_TIME ? 'Purchase Now' : 'Subscribe Now'}
           </CheckoutButton>
         ) : (
           <div className="w-full">

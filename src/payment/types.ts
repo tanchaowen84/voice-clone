@@ -4,12 +4,22 @@ import { Locale, Messages } from 'next-intl';
 /**
  * Interval types for subscription plans
  */
-export type PlanInterval = 'month' | 'year';
+export type PlanInterval = PlanIntervals.MONTH | PlanIntervals.YEAR;
+
+export enum PlanIntervals {
+  MONTH = 'month',
+  YEAR = 'year',
+}
 
 /**
  * Payment type (recurring or one-time)
  */
-export type PaymentType = 'recurring' | 'one_time';
+export type PaymentType = PaymentTypes.RECURRING | PaymentTypes.ONE_TIME;
+
+export enum PaymentTypes {
+  RECURRING = 'recurring',
+  ONE_TIME = 'one_time',
+}
 
 /**
  * Status of a payment or subscription
@@ -30,7 +40,7 @@ export type PaymentStatus =
  */
 export interface Price {
   type: PaymentType;                 // Type of payment (recurring or one_time)
-  productId: string;                 // Stripe price ID
+  productId: string;                 // Stripe price ID (TODO: change to priceId)
   amount: number;                    // Price amount in currency units (dollars, euros, etc.)
   currency: string;                  // Currency code (e.g., USD)
   interval?: PlanInterval;           // Billing interval for recurring payments

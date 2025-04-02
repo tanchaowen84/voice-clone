@@ -36,7 +36,7 @@ const proPlan: PricePlan = {
     {
       type: "recurring",
       productId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
-      amount: 2900,
+      amount: 990,
       currency: "USD",
       interval: "month",
       trialPeriodDays: 7,
@@ -44,7 +44,7 @@ const proPlan: PricePlan = {
     {
       type: "recurring",
       productId: process.env.STRIPE_PRICE_PRO_YEARLY!,
-      amount: 24900,
+      amount: 9900,
       currency: "USD",
       interval: "year",
       trialPeriodDays: 7,
@@ -74,7 +74,7 @@ const lifetimePlan: PricePlan = {
     {
       type: "one_time",
       productId: process.env.STRIPE_PRICE_LIFETIME!,
-      amount: 99900,
+      amount: 19900,
       currency: "USD",
     },
   ],

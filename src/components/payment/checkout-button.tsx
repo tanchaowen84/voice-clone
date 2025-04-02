@@ -49,8 +49,9 @@ export function CheckoutButton({
       // Redirect to checkout
       if (result && result.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
+      } else {
+        console.error('Error creating checkout session:', result);
       }
-      // TODO: Handle error
     } catch (error) {
       console.error('Error creating checkout session:', error);
       // Here you could display an error notification

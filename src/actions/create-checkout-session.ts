@@ -26,15 +26,16 @@ const checkoutSchema = z.object({
 export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
-    const authSession = await auth.api.getSession({
-      headers: await headers(),
-    });
-    if (!authSession) {
-      return {
-        success: false,
-        error: 'Unauthorized',
-      };
-    }
+    // TODO: always request the user to login when checkout???
+    // const authSession = await auth.api.getSession({
+    //   headers: await headers(),
+    // });
+    // if (!authSession) {
+    //   return {
+    //     success: false,
+    //     error: 'Unauthorized',
+    //   };
+    // }
 
     try {
       const { planId, priceId, email, metadata } = parsedInput;
@@ -54,12 +55,12 @@ export const createCheckoutAction = actionClient
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/payment/success?session_id={CHECKOUT_SESSION_ID}`;
-      // TODO: maybe add a cancel url as param, do not redirect to the cancel page
+      // TODO: maybe add a cancel url as param, instead of redirecting to the cancel page
       const cancelUrl = `${baseUrlWithLocale}/payment/cancel`;
       const params: CreateCheckoutParams = {
         planId,
         priceId,
-        customerEmail: email,
+        customerEmail: email || undefined,
         metadata,
         successUrl,
         cancelUrl,
@@ -71,8 +72,8 @@ export const createCheckoutAction = actionClient
         success: true,
         data: result,
       };
-    } catch (error: any) {
-      console.error("Error creating checkout session:", error);
+    } catch (error: any) { // TODO: handle error type, error info in message
+      console.error("Create checkout session failed:", error);
       return {
         success: false,
         error: error.message || 'Failed to create checkout session',

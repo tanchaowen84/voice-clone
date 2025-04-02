@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType } from '../types';
+import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType, PaymentTypes } from '../types';
 import { getPlanById, findPriceInPlan } from '../index';
 
 /**
@@ -8,7 +8,7 @@ import { getPlanById, findPriceInPlan } from '../index';
 export class StripeProvider implements PaymentProvider {
   private stripe: Stripe;
   private webhookHandlers: Map<string, WebhookEventHandler[]>;
-  private webhookSecret: string;
+  private webhookSecret: string | undefined;
 
   /**
    * Initialize Stripe provider with API key
@@ -19,9 +19,9 @@ export class StripeProvider implements PaymentProvider {
       throw new Error('STRIPE_SECRET_KEY environment variable is not set');
     }
 
-    this.webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
+    this.webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     if (!this.webhookSecret) {
-      console.warn('STRIPE_WEBHOOK_SECRET is not set. Webhook signature verification will be skipped.');
+      throw new Error('STRIPE_WEBHOOK_SECRET environment variable is not set.');
     }
 
     // Initialize Stripe without specifying apiVersion to use default/latest version
@@ -83,12 +83,14 @@ export class StripeProvider implements PaymentProvider {
   ): Promise<string> {
     try {
       // Search for existing customer
+      // stripe.customers.retrieve(customerId) does not work with email
       const customers = await this.stripe.customers.list({
         email,
         limit: 1,
       });
 
-      if (customers.data.length > 0) {
+      // Find existing customer
+      if (customers.data && customers.data.length > 0) {
         return customers.data[0].id;
       }
 
@@ -100,13 +102,13 @@ export class StripeProvider implements PaymentProvider {
       });
 
       // Update user record in database with the new customer ID (non-blocking)
-      this.updateUserWithCustomerId(customer.id, email || '').catch(error => {
-        console.error('Error updating user with customer ID:', error);
+      this.updateUserWithCustomerId(customer.id, email).catch(error => {
+        console.error('Update user with customer ID failed:', error);
       });
 
       return customer.id;
     } catch (error) {
-      console.error('Error creating or getting customer:', error);
+      console.error('Create or get customer failed:', error);
       throw new Error('Failed to create or get customer');
     }
   }
@@ -141,7 +143,7 @@ export class StripeProvider implements PaymentProvider {
         console.log(`No user found with email ${email}`);
       }
     } catch (error) {
-      console.error('update user with customer ID error:', error);
+      console.error('Update user with customer ID failed:', error);
       throw error; // Re-throw to be caught by the caller
     }
   }
@@ -181,7 +183,7 @@ export class StripeProvider implements PaymentProvider {
       // Create checkout session parameters
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
-        mode: price.type === 'recurring' ? 'subscription' : 'payment',
+        mode: price.type === PaymentTypes.RECURRING ? 'subscription' : 'payment',
         success_url: successUrl,
         cancel_url: cancelUrl,
         metadata: {
@@ -205,13 +207,13 @@ export class StripeProvider implements PaymentProvider {
         
         // Add customer to checkout session
         checkoutParams.customer = customerId;
-      } else {
+      } else { // TODO: no need to login when checkout??? input email when checkout???
         // If no customer email provided, add email field to collect it during checkout
         checkoutParams.customer_email = customerEmail;
       }
 
       // Add trial period if it's a subscription and has trial days
-      if (price.type === 'recurring' && price.trialPeriodDays && price.trialPeriodDays > 0) {
+      if (price.type === PaymentTypes.RECURRING && price.trialPeriodDays && price.trialPeriodDays > 0) {
         checkoutParams.subscription_data = {
           trial_period_days: price.trialPeriodDays,
           metadata: {
@@ -230,7 +232,7 @@ export class StripeProvider implements PaymentProvider {
         id: session.id,
       };
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error('Create checkout session failed:', error);
       throw new Error('Failed to create checkout session');
     }
   }
@@ -253,7 +255,7 @@ export class StripeProvider implements PaymentProvider {
         url: session.url,
       };
     } catch (error) {
-      console.error('Error creating customer portal:', error);
+      console.error('Create customer portal failed:', error);
       throw new Error('Failed to create customer portal');
     }
   }
@@ -268,7 +270,7 @@ export class StripeProvider implements PaymentProvider {
 
     try {
       const customer = await this.stripe.customers.retrieve(customerId);
-
+      // customer may be deleted
       if (customer.deleted) {
         return null;
       }
@@ -280,7 +282,7 @@ export class StripeProvider implements PaymentProvider {
         metadata: customer.metadata as Record<string, string> || {},
       };
     } catch (error) {
-      console.error('Error getting customer:', error);
+      console.error('Get customer failed:', error);
       return null;
     }
   }
@@ -326,7 +328,7 @@ export class StripeProvider implements PaymentProvider {
         updatedAt: new Date(),
       };
     } catch (error) {
-      console.error('Error getting subscription:', error);
+      console.error('Get subscription failed:', error);
       return null;
     }
   }
@@ -381,7 +383,7 @@ export class StripeProvider implements PaymentProvider {
         await Promise.all(allHandlers.map(handler => handler(event)));
       }
     } catch (error) {
-      console.error('Error handling webhook event:', error);
+      console.error('Handle webhook event failed:', error);
       throw new Error('Failed to handle webhook event');
     }
   }
@@ -448,7 +450,7 @@ export class StripeProvider implements PaymentProvider {
         }
       }
     } catch (error) {
-      console.error('Error in default webhook handler:', error);
+      console.error('Default webhook handler failed:', error);
     }
   }
 }

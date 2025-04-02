@@ -133,8 +133,10 @@ export const getAllPlans = (): PricePlan[] => {
  */
 export const findPriceInPlan = (planId: string, priceId: string): Price | undefined => {
   const plan = getPlanById(planId);
-  if (!plan) return undefined;
-  
+  if (!plan) {
+    console.error(`Plan with ID ${planId} not found`);
+    return undefined;
+  }
   return plan.prices.find(price => price.productId === priceId);
 };
 
