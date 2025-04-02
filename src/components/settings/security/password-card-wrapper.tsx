@@ -72,15 +72,15 @@ export function PasswordCardWrapper() {
 }
 
 function PasswordSkeletonCard() {
-  const t = useTranslations('Dashboard.sidebar.settings.items.security');
+  const t = useTranslations('Dashboard.sidebar.settings.items.security.updatePassword');
   return (
     <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col")}>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
-          {t('password.title')}
+          {t('title')}
         </CardTitle>
         <CardDescription>
-          {t('password.description')}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 flex-1">

@@ -27,15 +27,15 @@ export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
     // TODO: always request the user to login when checkout???
-    // const authSession = await auth.api.getSession({
-    //   headers: await headers(),
-    // });
-    // if (!authSession) {
-    //   return {
-    //     success: false,
-    //     error: 'Unauthorized',
-    //   };
-    // }
+    const authSession = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!authSession) {
+      return {
+        success: false,
+        error: 'Unauthorized',
+      };
+    }
 
     try {
       const { planId, priceId, email, metadata } = parsedInput;

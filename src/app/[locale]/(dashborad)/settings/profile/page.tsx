@@ -1,6 +1,6 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { UpdateAvatarCard } from '@/components/settings/account/update-avatar-card';
-import { UpdateNameCard } from '@/components/settings/account/update-name-card';
+import { UpdateAvatarCard } from '@/components/settings/profile/update-avatar-card';
+import { UpdateNameCard } from '@/components/settings/profile/update-name-card';
 import { useTranslations } from 'next-intl';
 
 export default function SettingsProfilePage() {

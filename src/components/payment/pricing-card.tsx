@@ -3,7 +3,7 @@
 import { Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlanInterval, PricePlan, Price, PaymentType, PaymentTypes, PlanIntervals } from '@/payment/types';
-import { CheckoutButton } from './checkout-button';
+import { CheckoutButton } from './create-checkout-button';
 import { cn } from '@/lib/utils';
 
 interface PricingCardProps {

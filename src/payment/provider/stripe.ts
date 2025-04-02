@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType, PaymentTypes } from '../types';
+import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType, PaymentTypes, ListCustomerSubscriptionsParams } from '../types';
 import { getPlanById, findPriceInPlan } from '../index';
 
 /**
@@ -330,6 +330,62 @@ export class StripeProvider implements PaymentProvider {
     } catch (error) {
       console.error('Get subscription failed:', error);
       return null;
+    }
+  }
+
+  /**
+   * List customer subscriptions
+   * @param params Parameters for listing customer subscriptions
+   * @returns Array of subscription objects
+   */
+  public async listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]> {
+    const { customerId, status, limit = 10 } = params;
+
+    try {
+      // Retrieve customer subscriptions
+      const subscriptions = await this.stripe.subscriptions.list({
+        customer: customerId,
+        limit: limit,
+        expand: ['data.default_payment_method'],
+        // Sort by creation date, newest first
+        status: status as any, // Type cast to handle our custom status types
+      });
+
+      // Map to our subscription model
+      return subscriptions.data.map(subscription => {
+        // Determine the interval if available
+        let interval: PlanInterval | undefined = undefined;
+        if (subscription.items.data[0]?.plan.interval === 'month' || subscription.items.data[0]?.plan.interval === 'year') {
+          interval = subscription.items.data[0]?.plan.interval as PlanInterval;
+        }
+
+        // Extract plan ID and price ID from metadata or use defaults
+        const planId = subscription.metadata.planId || 'unknown';
+        const priceId = subscription.metadata.priceId || subscription.items.data[0]?.price.id || 'unknown';
+
+        return {
+          id: subscription.id,
+          customerId: subscription.customer as string,
+          status: this.mapSubscriptionStatus(subscription.status),
+          planId,
+          priceId,
+          interval,
+          currentPeriodStart: new Date(subscription.current_period_start * 1000),
+          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+          cancelAtPeriodEnd: subscription.cancel_at_period_end,
+          canceledAt: subscription.canceled_at
+            ? new Date(subscription.canceled_at * 1000)
+            : undefined,
+          trialEndDate: subscription.trial_end
+            ? new Date(subscription.trial_end * 1000)
+            : undefined,
+          createdAt: new Date(subscription.created * 1000),
+          updatedAt: new Date(),
+        };
+      });
+    } catch (error) {
+      console.error('List customer subscriptions failed:', error);
+      return [];
     }
   }
 

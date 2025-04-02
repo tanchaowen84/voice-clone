@@ -163,6 +163,15 @@ export interface GetSubscriptionParams {
 }
 
 /**
+ * Parameters for listing customer subscriptions
+ */
+export interface ListCustomerSubscriptionsParams {
+  customerId: string;
+  status?: PaymentStatus | PaymentStatus[];
+  limit?: number;
+}
+
+/**
  * Webhook event handler
  */
 export type WebhookEventHandler = (event: Stripe.Event) => Promise<void>;
@@ -190,6 +199,11 @@ export interface PaymentProvider {
    * Get subscription details
    */
   getSubscription(params: GetSubscriptionParams): Promise<Subscription | null>;
+  
+  /**
+   * List customer subscriptions
+   */
+  listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]>;
   
   /**
    * Handle webhook events

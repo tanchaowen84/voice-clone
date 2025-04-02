@@ -1,13 +1,14 @@
 'use client';
 
-import { CheckoutButton } from '@/components/payment/checkout-button';
+import { getUserBillingDataAction } from '@/actions/get-user-billing-data';
+import { CheckoutButton } from '@/components/payment/create-checkout-button';
 import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { getAllPlans } from '@/payment';
-import { PricePlan } from '@/payment/types';
+import { Subscription } from '@/payment/types';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -20,100 +21,70 @@ const formatPrice = (amount: number, currency: string = 'USD') => {
   }).format(amount / 100);
 };
 
-// Mock user data - in a real app, this would come from your auth system
-const mockUser = {
-  id: 'user_123',
-  email: 'user@example.com',
-  customerId: 'cus_mock123', // Stripe customer ID
-  name: 'John Doe',
-};
-
-// Mock subscription data
-const mockSubscription = {
-  id: 'sub_mock123',
-  status: 'active' as const,
-  planId: 'pro',
-  priceId: 'price_mock123',
-  interval: 'month' as const,
-  currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-};
-
-// Mock trial subscription data
-const mockTrialSubscription = {
-  id: 'sub_mocktrial123',
-  status: 'trialing' as const,
-  planId: 'pro',
-  priceId: 'price_mocktrial123',
-  interval: 'month' as const,
-  currentPeriodEnd: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
-};
-
-// Helper function to check if a plan is an enterprise plan based on metadata
-const isEnterprisePlan = (plan: PricePlan): boolean => {
-  return plan.id === 'enterprise' || plan.name.toLowerCase().includes('enterprise');
-};
-
 export default function BillingCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.billing');
+  const currentUser = useCurrentUser();
 
   const [loading, setLoading] = useState(true);
-  const [billingData, setBillingData] = useState<{
-    subscription: typeof mockSubscription | typeof mockTrialSubscription | null;
-    user: typeof mockUser;
-  }>({
-    subscription: null,
-    user: mockUser,
-  });
+  const [error, setError] = useState<string | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
 
-  // Simulate fetching billing data
+  // Fetch real subscription data
   useEffect(() => {
     const fetchBillingData = async () => {
-      // In a real app, you would fetch this data from an API endpoint or server action
-      // Example: const { data } = await getUserBillingData();
+      try {
+        if (!currentUser) {
+          setLoading(false);
+          return;
+        }
 
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+        // Use an empty object as default params if we don't have customer ID
+        const params = {
+          // Safely access customerId if it exists on the user object
+          customerId: (currentUser as any)?.customerId || undefined,
+        };
 
-      // Randomly select between different subscription states
-      const random = Math.random();
-      let subscription = null;
-      if (random < 0.33) {
-        subscription = mockSubscription;
-      } else if (random < 0.66) {
-        subscription = mockTrialSubscription;
+        const result = await getUserBillingDataAction(params);
+
+        if (result?.data?.success && result.data.data) {
+          // Now the API just returns the subscription directly
+          setSubscription(result.data.data);
+        } else if (result?.data?.error) {
+          setError(result.data.error);
+        } else {
+          setError('Failed to fetch subscription data');
+        }
+      } catch (err) {
+        console.error('Error fetching subscription data:', err);
+        setError('Failed to load subscription information');
+      } finally {
+        setLoading(false);
       }
-
-      setBillingData({
-        user: mockUser,
-        subscription,
-      });
-
-      setLoading(false);
     };
 
     fetchBillingData();
-  }, []);
+  }, [currentUser]);
 
   // Get all available plans
   const plans = getAllPlans();
 
   // Find current plan details if subscription exists
-  const currentPlan = billingData.subscription
-    ? plans.find(plan => plan.id === billingData.subscription?.planId)
+  const currentPlan = subscription
+    ? plans.find(plan => plan.id === subscription?.planId)
     : plans.find(plan => plan.isFree);
 
   // Determine current price details if subscription exists
-  const currentPrice = billingData.subscription && currentPlan?.prices.find(
-    price => price.productId === billingData.subscription?.priceId
+  const currentPrice = subscription && currentPlan?.prices.find(
+    price => price.productId === subscription?.priceId
   );
 
   // Calculate next billing date
-  const nextBillingDate = billingData.subscription?.currentPeriodEnd
+  const nextBillingDate = subscription?.currentPeriodEnd
     ? new Intl.DateTimeFormat('en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
-    }).format(billingData.subscription.currentPeriodEnd)
+    }).format(subscription.currentPeriodEnd)
     : null;
 
   return (
@@ -132,20 +103,22 @@ export default function BillingCard() {
                 <Skeleton className="h-6 w-full" />
                 <Skeleton className="h-6 w-full" />
               </div>
+            ) : error ? (
+              <div className="text-destructive text-sm">{error}</div>
             ) : (
               <>
                 <div className="flex items-center justify-between">
                   <div className="font-medium">{currentPlan?.name}</div>
                   <Badge variant={currentPlan?.isFree ? 'outline' : 'default'}>
-                    {billingData.subscription?.status === 'active' ?
+                    {subscription?.status === 'active' ?
                       t('status.active') :
-                      billingData.subscription?.status === 'trialing' ?
+                      subscription?.status === 'trialing' ?
                         t('status.trial') :
                         t('status.free')}
                   </Badge>
                 </div>
 
-                {billingData.subscription && currentPrice && (
+                {subscription && currentPrice && (
                   <div className="text-sm text-muted-foreground space-y-1">
                     <div>
                       {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === 'month' ?
@@ -159,13 +132,13 @@ export default function BillingCard() {
                       <div>{t('nextBillingDate')} {nextBillingDate}</div>
                     )}
 
-                    {billingData.subscription.status === 'trialing' && (
+                    {subscription.status === 'trialing' && (
                       <div className="text-amber-500">
                         {t('trialEnds')} {new Intl.DateTimeFormat('en-US', {
                           day: 'numeric',
                           month: 'long',
                           year: 'numeric'
-                        }).format(billingData.subscription.currentPeriodEnd)}
+                        }).format(subscription.currentPeriodEnd)}
                       </div>
                     )}
                   </div>
@@ -182,9 +155,13 @@ export default function BillingCard() {
           <CardFooter>
             {loading ? (
               <Skeleton className="h-10 w-full" />
-            ) : billingData.subscription ? (
+            ) : error ? (
+              <div className="text-sm text-muted-foreground">
+                {t('upgradeMessage')}
+              </div>
+            ) : subscription && (currentUser as any)?.customerId ? (
               <CustomerPortalButton
-                customerId={billingData.user.customerId}
+                customerId={(currentUser as any).customerId}
                 className="w-full"
               >
                 {t('manageSubscription')}
@@ -199,7 +176,7 @@ export default function BillingCard() {
       </div>
 
       {/* Upgrade Options */}
-      {!loading && !billingData.subscription && (
+      {!loading && !error && !subscription && (
         <div className="space-y-6">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">{t('upgradePlan.title')}</h2>
@@ -210,7 +187,7 @@ export default function BillingCard() {
 
           <div className="grid gap-4 md:grid-cols-2">
             {plans
-              .filter(plan => !plan.isFree && !isEnterprisePlan(plan))
+              .filter(plan => !plan.isFree && !plan.name.toLowerCase().includes('enterprise'))
               .map(plan => {
                 // Get monthly price if available, otherwise first price
                 const price = plan.prices.find(p => p.type === 'recurring' && p.interval === 'month') || plan.prices[0];
@@ -269,8 +246,8 @@ export default function BillingCard() {
                       <CheckoutButton
                         planId={plan.id}
                         priceId={price.productId}
-                        email={billingData.user.email}
-                        metadata={{ userId: billingData.user.id }}
+                        email={currentUser?.email || ''}
+                        metadata={{ userId: currentUser?.id || '' }}
                         className="w-full"
                       >
                         {t('upgradeToPlan', {
@@ -282,91 +259,8 @@ export default function BillingCard() {
                 );
               })}
           </div>
-
-          {/* Enterprise Plan */}
-          {plans
-            .filter(plan => isEnterprisePlan(plan))
-            .map(plan => (
-              <Card key={plan.id} className="bg-muted/40">
-                <CardHeader>
-                  <CardTitle>{plan.name}</CardTitle>
-                  <CardDescription>{plan.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <ul className="space-y-2 mb-6 md:mb-0">
-                      {plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-start">
-                          <svg
-                            className="h-5 w-5 text-primary shrink-0 mr-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-col items-start md:items-end">
-                      <span className="text-xl font-bold mb-2">{t('customPricing')}</span>
-                      <Button className="w-full md:w-auto" variant="default" asChild>
-                        <a href="mailto:sales@yourcompany.com">{t('contactSales')}</a>
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
         </div>
       )}
-
-      {/* Billing History */}
-      <div className="space-y-6">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">{t('billingHistory.title')}</h2>
-          <p className="text-muted-foreground mt-1">
-            {t('billingHistory.description')}
-          </p>
-        </div>
-
-        <Card>
-          <CardContent className="pt-6">
-            {loading ? (
-              <div className="space-y-3">
-                <Skeleton className="h-5 w-full" />
-                <Skeleton className="h-5 w-full" />
-                <Skeleton className="h-5 w-full" />
-              </div>
-            ) : billingData.subscription ? (
-              <div className="text-center py-4">
-                <p className="text-sm text-muted-foreground">
-                  {t('billingHistory.accessMessage')}
-                </p>
-                <CustomerPortalButton
-                  customerId={billingData.user.customerId}
-                  className="mt-4"
-                >
-                  {t('viewBillingHistory')}
-                </CustomerPortalButton>
-              </div>
-            ) : (
-              <div className="text-center py-4">
-                <p className="text-sm text-muted-foreground">
-                  {t('billingHistory.noHistoryMessage')}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 } 

@@ -488,11 +488,11 @@
               "saving": "Saving...",
               "save": "Save"
             },
-            "setupPassword": {
-              "title": "Set Up Password",
-              "description": "Set up a password to enable email login",
-              "info": "Setting up a password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to set your password",
-              "button": "Set Up Password"
+            "resetPassword": {
+              "title": "Reset Password",
+              "description": "Reset password to enable email login",
+              "info": "Resetting your password will allow you to sign in using your email and password in addition to your social login methods. You will receive an email with instructions to reset your password",
+              "button": "Reset Password"
             },
             "deleteAccount": {
               "title": "Delete Account",

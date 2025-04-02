@@ -1,4 +1,4 @@
-import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, WebhookEventHandler } from "./types";
+import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, WebhookEventHandler, ListCustomerSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
 import { paymentConfig } from "./config/payment-config";
 /**
@@ -156,5 +156,8 @@ export type {
   CheckoutResult,
   CreatePortalParams,
   PortalResult,
+  GetCustomerParams,
+  GetSubscriptionParams,
+  ListCustomerSubscriptionsParams,
   WebhookEventHandler,
 };
