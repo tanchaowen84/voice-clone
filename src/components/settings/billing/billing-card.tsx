@@ -246,8 +246,6 @@ export default function BillingCard() {
                       <CheckoutButton
                         planId={plan.id}
                         priceId={price.productId}
-                        email={currentUser?.email || ''}
-                        metadata={{ userId: currentUser?.id || '' }}
                         className="w-full"
                       >
                         {t('upgradeToPlan', {

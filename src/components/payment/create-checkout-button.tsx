@@ -8,7 +8,6 @@ import { useState } from 'react';
 interface CheckoutButtonProps {
   planId: string;
   priceId: string;
-  email?: string;
   metadata?: Record<string, string>;
   variant?: 'default' | 'outline' | 'destructive' | 'secondary' | 'ghost' | 'link' | null;
   size?: 'default' | 'sm' | 'lg' | 'icon' | null;
@@ -25,7 +24,6 @@ interface CheckoutButtonProps {
 export function CheckoutButton({
   planId,
   priceId,
-  email,
   metadata,
   variant = 'default',
   size = 'default',
@@ -42,7 +40,6 @@ export function CheckoutButton({
       const result = await createCheckoutAction({
         planId,
         priceId,
-        email,
         metadata,
       });
 

@@ -126,17 +126,17 @@ export class StripeProvider implements PaymentProvider {
       const { default: db } = await import('@/db/index');
       const { user } = await import('@/db/schema');
       const { eq } = await import('drizzle-orm');
-      
+
       // Update user record with customer ID if email matches
       const result = await db
         .update(user)
-        .set({ 
+        .set({
           customerId: customerId,
-          updatedAt: new Date() 
+          updatedAt: new Date()
         })
         .where(eq(user.email, email))
         .returning({ id: user.id });
-      
+
       if (result.length > 0) {
         console.log(`Updated user ${result[0].id} with customer ID ${customerId}`);
       } else {
@@ -193,27 +193,22 @@ export class StripeProvider implements PaymentProvider {
         },
       };
 
-      // If customer email is provided, create or get a customer
-      if (customerEmail) {
-        // Get customer name from metadata if available
-        const customerName = metadata?.name;
-        
-        // Create or get customer
-        const customerId = await this.createOrGetCustomer(
-          customerEmail,
-          customerName,
-          metadata
-        );
-        
-        // Add customer to checkout session
-        checkoutParams.customer = customerId;
-      } else { // TODO: no need to login when checkout??? input email when checkout???
-        // If no customer email provided, add email field to collect it during checkout
-        checkoutParams.customer_email = customerEmail;
-      }
+      // Get customer name from metadata if available
+      const customerName = metadata?.name;
+
+      // Create or get customer
+      const customerId = await this.createOrGetCustomer(
+        customerEmail,
+        customerName,
+        metadata
+      );
+
+      // Add customer to checkout session
+      checkoutParams.customer = customerId;
 
       // Add trial period if it's a subscription and has trial days
-      if (price.type === PaymentTypes.RECURRING && price.trialPeriodDays && price.trialPeriodDays > 0) {
+      if (price.type === PaymentTypes.RECURRING
+        && price.trialPeriodDays && price.trialPeriodDays > 0) {
         checkoutParams.subscription_data = {
           trial_period_days: price.trialPeriodDays,
           metadata: {

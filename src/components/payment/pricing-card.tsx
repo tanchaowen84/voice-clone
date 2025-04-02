@@ -10,7 +10,6 @@ interface PricingCardProps {
   plan: PricePlan;
   interval: PlanInterval; // 'month' or 'year'
   paymentType?: PaymentType; // 'recurring' or 'one_time'
-  email?: string;
   metadata?: Record<string, string>;
   className?: string;
   isCurrentPlan?: boolean;
@@ -65,7 +64,6 @@ export function PricingCard({
   plan,
   interval,
   paymentType = PaymentTypes.RECURRING,
-  email,
   metadata,
   className,
   isCurrentPlan = false,
@@ -167,7 +165,6 @@ export function PricingCard({
           <CheckoutButton
             planId={plan.id}
             priceId={price.productId}
-            email={email}
             metadata={metadata}
             className="w-full"
           >

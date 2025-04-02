@@ -1,5 +1,6 @@
 'use server';
 
+import { user } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { getBaseUrlWithLocale } from "@/lib/urls/get-base-url";
 import { createCheckout, getPlanById } from "@/payment";
@@ -13,10 +14,10 @@ import { z } from 'zod';
 const actionClient = createSafeActionClient();
 
 // Checkout schema for validation
+// metadata is optional, and may contain referral information if you need
 const checkoutSchema = z.object({
   planId: z.string().min(1, { message: 'Plan ID is required' }),
   priceId: z.string().min(1, { message: 'Price ID is required' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }).optional(),
   metadata: z.record(z.string()).optional(),
 });
 
@@ -26,7 +27,7 @@ const checkoutSchema = z.object({
 export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
-    // TODO: always request the user to login when checkout???
+    // request the user to login before checkout
     const authSession = await auth.api.getSession({
       headers: await headers(),
     });
@@ -38,7 +39,7 @@ export const createCheckoutAction = actionClient
     }
 
     try {
-      const { planId, priceId, email, metadata } = parsedInput;
+      const { planId, priceId, metadata } = parsedInput;
 
       // Get the current locale from the request
       const locale = await getLocale();
@@ -52,6 +53,11 @@ export const createCheckoutAction = actionClient
         };
       }
 
+      // add user id and name to metadata
+      const updatedMetadata = metadata || {};
+      updatedMetadata.userId = authSession.user.id;
+      updatedMetadata.name = authSession.user.name;
+
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/payment/success?session_id={CHECKOUT_SESSION_ID}`;
@@ -60,8 +66,8 @@ export const createCheckoutAction = actionClient
       const params: CreateCheckoutParams = {
         planId,
         priceId,
-        customerEmail: email || undefined,
-        metadata,
+        customerEmail: authSession.user.email,
+        metadata: updatedMetadata,
         successUrl,
         cancelUrl,
       };

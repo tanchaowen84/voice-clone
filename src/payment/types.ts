@@ -116,7 +116,7 @@ export interface Payment {
 export interface CreateCheckoutParams {
   planId: string;
   priceId: string;
-  customerEmail?: string;
+  customerEmail: string;
   successUrl?: string;
   cancelUrl?: string;
   metadata?: Record<string, string>;

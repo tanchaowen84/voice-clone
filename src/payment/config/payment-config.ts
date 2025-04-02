@@ -1,4 +1,4 @@
-import { PaymentConfig, PricePlan } from "../types";
+import { PaymentConfig, PaymentTypes, PlanIntervals, PricePlan } from "../types";
 
 /**
  * Free plan definition
@@ -34,19 +34,19 @@ const proPlan: PricePlan = {
   ],
   prices: [
     {
-      type: "recurring",
+      type: PaymentTypes.RECURRING,
       productId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
       amount: 990,
       currency: "USD",
-      interval: "month",
+      interval: PlanIntervals.MONTH,
       trialPeriodDays: 7,
     },
     {
-      type: "recurring",
+      type: PaymentTypes.RECURRING,
       productId: process.env.STRIPE_PRICE_PRO_YEARLY!,
       amount: 9900,
       currency: "USD",
-      interval: "year",
+      interval: PlanIntervals.YEAR,
       trialPeriodDays: 7,
     },
   ],
@@ -72,7 +72,7 @@ const lifetimePlan: PricePlan = {
   ],
   prices: [
     {
-      type: "one_time",
+      type: PaymentTypes.ONE_TIME,
       productId: process.env.STRIPE_PRICE_LIFETIME!,
       amount: 19900,
       currency: "USD",

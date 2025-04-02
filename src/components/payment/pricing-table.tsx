@@ -7,7 +7,6 @@ import { PricingCard } from './pricing-card';
 
 interface PricingTableProps {
   plans: PricePlan[];
-  email?: string;
   metadata?: Record<string, string>;
   currentPlanId?: string;
   className?: string;
@@ -21,7 +20,6 @@ interface PricingTableProps {
  */
 export function PricingTable({
   plans,
-  email,
   metadata,
   currentPlanId,
   className,
@@ -87,7 +85,6 @@ export function PricingTable({
             key={plan.id}
             plan={plan}
             interval={interval}
-            email={email}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}
           />
@@ -100,7 +97,6 @@ export function PricingTable({
             plan={plan}
             interval={interval}
             paymentType={PaymentTypes.RECURRING}
-            email={email}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}
           />
@@ -113,7 +109,6 @@ export function PricingTable({
             plan={plan}
             interval={interval}
             paymentType={PaymentTypes.ONE_TIME}
-            email={email}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}
           />
