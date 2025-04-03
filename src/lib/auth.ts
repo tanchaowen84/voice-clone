@@ -1,7 +1,7 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
-import { getLocaleFromRequest, addLocaleToUrl } from '@/lib/utils';
+import { addLocaleToUrl, getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -49,11 +49,11 @@ export const auth = betterAuth({
     async sendResetPassword({ user, url }, request) {
       const locale = getLocaleFromRequest(request);
       // console.log('[Auth] Reset password original URL:', url);
-      
+
       // Add locale to URL if necessary
       const localizedUrl = addLocaleToUrl(url, locale);
       // console.log('[Auth] Reset password localized URL:', localizedUrl);
-      
+
       await send({
         to: user.email,
         template: 'forgotPassword',
@@ -72,11 +72,11 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
       // console.log('[Auth] Verification email original URL:', url);
-      
+
       // Add locale to URL if necessary
       const localizedUrl = addLocaleToUrl(url, locale);
       // console.log('[Auth] Verification email localized URL:', localizedUrl);
-      
+
       await send({
         to: user.email,
         template: 'verifyEmail',
@@ -147,3 +147,6 @@ export const auth = betterAuth({
     },
   },
 });
+
+// https://www.better-auth.com/docs/concepts/typescript#additional-fields
+export type Session = typeof auth.$Infer.Session;
