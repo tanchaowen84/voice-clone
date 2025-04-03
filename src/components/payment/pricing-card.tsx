@@ -5,10 +5,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { PlanInterval, PricePlan, Price, PaymentType, PaymentTypes, PlanIntervals } from '@/payment/types';
 import { CheckoutButton } from './create-checkout-button';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface PricingCardProps {
   plan: PricePlan;
-  interval: PlanInterval; // 'month' or 'year'
+  interval?: PlanInterval; // 'month' or 'year'
   paymentType?: PaymentType; // 'recurring' or 'one_time'
   metadata?: Record<string, string>;
   className?: string;
@@ -40,13 +42,14 @@ function formatPrice(price: number, currency: string): string {
  */
 function getPriceForPlan(
   plan: PricePlan,
-  interval: PlanInterval,
-  paymentType: PaymentType = PaymentTypes.RECURRING
+  interval?: PlanInterval,
+  paymentType?: PaymentType
 ): Price | undefined {
   if (plan.isFree) { // Free plan has no price
     return undefined;
   }
 
+  // non-free plans must have a price
   return plan.prices.find(price => {
     if (paymentType === PaymentTypes.ONE_TIME) {
       return price.type === PaymentTypes.ONE_TIME;
@@ -63,121 +66,110 @@ function getPriceForPlan(
 export function PricingCard({
   plan,
   interval,
-  paymentType = PaymentTypes.RECURRING,
+  paymentType,
   metadata,
   className,
   isCurrentPlan = false,
 }: PricingCardProps) {
+  // price of free plan is undefined
   const price = getPriceForPlan(plan, interval, paymentType);
 
-  // generate formatted price
+  // generate formatted price and price label
   let formattedPrice = '';
+  let priceLabel = '';
   if (plan.isFree) {
-    formattedPrice = 'Free';
+    formattedPrice = '$0';
   } else if (price && price.amount > 0) { // price is available
     formattedPrice = formatPrice(price.amount, price.currency);
-  } else {
-    formattedPrice = 'Not Available';
-  }
-
-  // generate pricing label based on payment type and interval
-  let priceLabel = '';
-  if (!plan.isFree && price) {
-    if (paymentType === PaymentTypes.ONE_TIME) {
-      priceLabel = ''; // lifetime
-    } else if (interval === PlanIntervals.MONTH) {
+    if (interval === PlanIntervals.MONTH) {
       priceLabel = '/month';
     } else if (interval === PlanIntervals.YEAR) {
       priceLabel = '/year';
     }
+  } else {
+    formattedPrice = 'Not Available';
   }
 
-  // check if plan is available and has a price
-  const isPlanAvailable = plan.isFree || !!price;
+  // check if plan is not free and has a price
+  const isPaidPlan = !plan.isFree && !!price;
   const hasTrialPeriod = price?.trialPeriodDays && price.trialPeriodDays > 0;
 
   return (
     <Card
       className={cn(
-        "flex flex-col h-full overflow-hidden transition-all",
-        plan.recommended && "border-blue-500 shadow-lg shadow-blue-100 dark:shadow-blue-900/20",
-        isCurrentPlan && "border-green-500 shadow-lg shadow-green-100 dark:shadow-green-900/20",
+        "flex flex-col h-full",
+        plan.recommended && "relative",
+        isCurrentPlan && "border-blue-500 shadow-lg shadow-blue-100 dark:shadow-blue-900/20",
         className
       )}
     >
+      {plan.recommended && (
+        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 text-xs font-medium border border-purple-200 dark:border-purple-800 shadow-sm">
+          Popular
+        </span>
+      )}
+      {isCurrentPlan && (
+        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 text-xs font-medium border border-blue-200 dark:border-blue-800 shadow-sm">
+          Current Plan
+        </span>
+      )}
+
       <CardHeader>
-        {plan.recommended && (
-          <div className="px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-full w-fit mb-3">
-            Recommended
-          </div>
-        )}
-        {isCurrentPlan && (
-          <div className="px-3 py-1 text-xs font-semibold text-white bg-green-500 rounded-full w-fit mb-3">
-            Current Plan
-          </div>
-        )}
-        <CardTitle className="text-xl">{plan.name}</CardTitle>
-        <CardDescription className="min-h-12">{plan.description}</CardDescription>
-      </CardHeader>
-      <CardContent className="grow">
-        <div className="mb-3">
-          <span className="text-3xl font-bold">
+        <CardTitle className="font-medium">{plan.name}</CardTitle>
+
+        <div className="flex items-baseline gap-2">
+          <span className="my-4 block text-4xl font-semibold">
             {formattedPrice}
           </span>
-          {priceLabel && (
-            <span className="text-gray-500 dark:text-gray-400 ml-1">
-              {priceLabel}
-            </span>
-          )}
+          {priceLabel && <span className="text-2xl">{priceLabel}</span>}
         </div>
 
+        <CardDescription className="text-sm">{plan.description}</CardDescription>
+
+        {plan.isFree ? (
+          <Button asChild variant="outline" className="mt-4 w-full">
+            <Link href="">Get Started</Link>
+          </Button>
+        ) : isCurrentPlan ? (
+          <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
+            Your Current Plan
+          </Button>
+        ) : isPaidPlan ? (
+          <CheckoutButton
+            planId={plan.id}
+            priceId={price.productId}
+            metadata={metadata}
+            className="mt-4 w-full"
+          >
+            {paymentType === PaymentTypes.ONE_TIME ? 'Get Lifetime Access' : 'Get Started'}
+          </CheckoutButton>
+        ) : (
+          <Button disabled className="mt-4 w-full">
+            Not Available
+          </Button>
+        )}
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <hr className="border-dashed" />
+
         {hasTrialPeriod && (
-          <div className="mb-4">
-            <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded">
+          <div className="my-4">
+            <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
               {price.trialPeriodDays}-day free trial
             </span>
           </div>
         )}
 
-        <ul className="space-y-3 mb-6">
+        <ul className="list-outside space-y-4 text-sm">
           {plan.features.map((feature, i) => (
-            <li key={i} className="flex items-start">
-              <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
-              <span className="text-sm">{feature}</span>
+            <li key={i} className="flex items-center gap-2">
+              <Check className="size-4 text-green-500 dark:text-green-400" />
+              <span>{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
-      <CardFooter>
-        {plan.isFree ? (
-          <div className="w-full">
-            <div className="px-3 py-2 text-sm text-center bg-gray-100 dark:bg-gray-800 rounded-md w-full">
-              Start for Free
-            </div>
-          </div>
-        ) : isCurrentPlan ? (
-          <div className="w-full">
-            <div className="px-3 py-2 text-sm text-center bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-md w-full">
-              Your Current Plan
-            </div>
-          </div>
-        ) : isPlanAvailable && price ? (
-          <CheckoutButton
-            planId={plan.id}
-            priceId={price.productId}
-            metadata={metadata}
-            className="w-full"
-          >
-            {paymentType === PaymentTypes.ONE_TIME ? 'Purchase Now' : 'Subscribe Now'}
-          </CheckoutButton>
-        ) : (
-          <div className="w-full">
-            <div className="px-3 py-2 text-sm text-center bg-gray-100 dark:bg-gray-800 rounded-md w-full">
-              Not Available
-            </div>
-          </div>
-        )}
-      </CardFooter>
     </Card>
   );
 } 

@@ -1,10 +1,10 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { cn } from '@/lib/utils';
 import { PaymentTypes, PlanInterval, PlanIntervals, PricePlan } from '@/payment/types';
 import { useState } from 'react';
 import { PricingCard } from './pricing-card';
-
 interface PricingTableProps {
   plans: PricePlan[];
   metadata?: Record<string, string>;
@@ -39,13 +39,13 @@ export function PricingTable({
 
   // Check if any plan has a monthly price option
   const hasMonthlyOption = subscriptionPlans.some(plan =>
-    plan.prices.some(price => price.type === PaymentTypes.RECURRING 
+    plan.prices.some(price => price.type === PaymentTypes.RECURRING
       && price.interval === PlanIntervals.MONTH)
   );
 
   // Check if any plan has a yearly price option
   const hasYearlyOption = subscriptionPlans.some(plan =>
-    plan.prices.some(price => price.type === PaymentTypes.RECURRING 
+    plan.prices.some(price => price.type === PaymentTypes.RECURRING
       && price.interval === PlanIntervals.YEAR)
   );
 
@@ -54,7 +54,7 @@ export function PricingTable({
   };
 
   return (
-    <div className={className}>
+    <div className={cn("flex flex-col gap-8", className)}>
       {/* Show interval toggle if there are subscription plans */}
       {(hasMonthlyOption || hasYearlyOption) && subscriptionPlans.length > 0 && (
         <div className="flex justify-center mb-8">
@@ -65,12 +65,14 @@ export function PricingTable({
             className="border rounded-lg p-1"
           >
             {hasMonthlyOption && (
-              <ToggleGroupItem value="month" className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground px-4 py-2">
+              <ToggleGroupItem value="month" className={cn("px-4 py-2 cursor-pointer rounded-md",
+                "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
                 Monthly
               </ToggleGroupItem>
             )}
             {hasYearlyOption && (
-              <ToggleGroupItem value="year" className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground px-4 py-2">
+              <ToggleGroupItem value="year" className={cn("px-4 py-2 cursor-pointer rounded-md",
+                "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
                 Yearly
               </ToggleGroupItem>
             )}
@@ -84,7 +86,6 @@ export function PricingTable({
           <PricingCard
             key={plan.id}
             plan={plan}
-            interval={interval}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}
           />
@@ -107,7 +108,6 @@ export function PricingTable({
           <PricingCard
             key={plan.id}
             plan={plan}
-            interval={interval}
             paymentType={PaymentTypes.ONE_TIME}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}

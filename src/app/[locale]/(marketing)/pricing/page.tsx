@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { getAllPlans } from '@/payment';
 import { PricingTable } from '@/components/payment/pricing-table';
 import Container from '@/components/container';
+import { HeaderSection } from '@/components/shared/header-section';
 
 export async function generateMetadata({
   params,
@@ -35,22 +36,18 @@ export default async function PricingPage(props: PricingPageProps) {
   const plans = getAllPlans();
 
   return (
-    <Container>
-      <div className="mt-8 flex flex-col gap-16 pb-16 px-4">
-        <div className="py-12 w-full">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Simple, transparent pricing
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mx-auto">
-              Choose the plan that works best for you. All plans include core features, unlimited updates, and email support.
-            </p>
-          </div>
-
-          <PricingTable plans={plans} />
-          
-        </div>
+    <div className="mb-16">
+      <div className="mt-8 w-full flex flex-col items-center justify-center gap-8">
+        <HeaderSection
+          titleAs="h2"
+          title={t('title')}
+          subtitle={t('subtitle')}
+        />
       </div>
-    </Container>
+
+      <Container className="mt-8 px-4 max-w-6xl">
+        <PricingTable plans={plans} />
+      </Container>
+    </div>
   );
 }

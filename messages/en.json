@@ -42,7 +42,8 @@
   },
   "PricingPage": {
     "title": "Pricing",
-    "description": "Choose the plan that's right for you"
+    "description": "Choose the plan that works best for you",
+    "subtitle": "Choose the plan that works best for you"
   },
   "NotFoundPage": {
     "title": "404",
