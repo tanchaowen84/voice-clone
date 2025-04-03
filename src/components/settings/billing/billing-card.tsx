@@ -38,6 +38,8 @@ export default function BillingCard() {
           return;
         }
 
+        console.log('user customer id', (currentUser as any)?.customerId);
+
         // Use an empty object as default params if we don't have customer ID
         const params = {
           // Safely access customerId if it exists on the user object

@@ -42,7 +42,7 @@ export const createPortalAction = actionClient
 
       // Create the portal session with localized URL if no custom return URL is provided
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
-      const returnUrlWithLocale = returnUrl || `${baseUrlWithLocale}/account/billing`;
+      const returnUrlWithLocale = returnUrl || `${baseUrlWithLocale}/settings/billing`;
       const params: CreatePortalParams = {
         customerId,
         returnUrl: returnUrlWithLocale,

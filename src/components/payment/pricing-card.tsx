@@ -1,12 +1,12 @@
 'use client';
 
-import { Check } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { PlanInterval, PricePlan, Price, PaymentType, PaymentTypes, PlanIntervals } from '@/payment/types';
-import { CheckoutButton } from './create-checkout-button';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { LocaleLink } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
+import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
+import { Check } from 'lucide-react';
+import { CheckoutButton } from './create-checkout-button';
 
 interface PricingCardProps {
   plan: PricePlan;
@@ -128,7 +128,8 @@ export function PricingCard({
 
         {plan.isFree ? (
           <Button asChild variant="outline" className="mt-4 w-full">
-            <Link href="">Get Started</Link>
+            {/* TODO: add link to signup page */}
+            <LocaleLink href="/auth/login">Get Started For Free</LocaleLink>
           </Button>
         ) : isCurrentPlan ? (
           <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
@@ -139,7 +140,7 @@ export function PricingCard({
             planId={plan.id}
             priceId={price.productId}
             metadata={metadata}
-            className="mt-4 w-full"
+            className="mt-4 w-full cursor-pointer"
           >
             {paymentType === PaymentTypes.ONE_TIME ? 'Get Lifetime Access' : 'Get Started'}
           </CheckoutButton>

@@ -1,6 +1,5 @@
 'use server';
 
-import { user } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { getBaseUrlWithLocale } from "@/lib/urls/get-base-url";
 import { createCheckout, getPlanById } from "@/payment";
@@ -60,9 +59,9 @@ export const createCheckoutAction = actionClient
 
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
-      const successUrl = `${baseUrlWithLocale}/payment/success?session_id={CHECKOUT_SESSION_ID}`;
+      const successUrl = `${baseUrlWithLocale}/settings/billing?session_id={CHECKOUT_SESSION_ID}`;
       // TODO: maybe add a cancel url as param, instead of redirecting to the cancel page
-      const cancelUrl = `${baseUrlWithLocale}/payment/cancel`;
+      const cancelUrl = `${baseUrlWithLocale}/pricing`;
       const params: CreateCheckoutParams = {
         planId,
         priceId,

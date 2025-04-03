@@ -442,36 +442,36 @@ export function getNavMainLinks(): NestedMenuItem[] {
       href: Routes.Dashboard,
       external: false,
     },
-    {
-      title: t('Dashboard.sidebar.ai.title'),
-      icon: <BotIcon className="site-4 shrink-0" />,
-      items: [
-        {
-          title: t('Dashboard.sidebar.ai.items.text.title'),
-          icon: <SquarePenIcon className="site-4 shrink-0" />,
-          href: Routes.AIText,
-          external: false,
-        },
-        {
-          title: t('Dashboard.sidebar.ai.items.image.title'),
-          icon: <ImageIcon className="site-4 shrink-0" />,
-          href: Routes.AIImage,
-          external: false,
-        },
-        {
-          title: t('Dashboard.sidebar.ai.items.video.title'),
-          icon: <FilmIcon className="site-4 shrink-0" />,
-          href: Routes.AIVideo,
-          external: false,
-        },
-        {
-          title: t('Dashboard.sidebar.ai.items.audio.title'),
-          icon: <AudioLinesIcon className="site-4 shrink-0" />,
-          href: Routes.AIAudio,
-          external: false,
-        },
-      ],
-    },
+    // {
+    //   title: t('Dashboard.sidebar.ai.title'),
+    //   icon: <BotIcon className="site-4 shrink-0" />,
+    //   items: [
+    //     {
+    //       title: t('Dashboard.sidebar.ai.items.text.title'),
+    //       icon: <SquarePenIcon className="site-4 shrink-0" />,
+    //       href: Routes.AIText,
+    //       external: false,
+    //     },
+    //     {
+    //       title: t('Dashboard.sidebar.ai.items.image.title'),
+    //       icon: <ImageIcon className="site-4 shrink-0" />,
+    //       href: Routes.AIImage,
+    //       external: false,
+    //     },
+    //     {
+    //       title: t('Dashboard.sidebar.ai.items.video.title'),
+    //       icon: <FilmIcon className="site-4 shrink-0" />,
+    //       href: Routes.AIVideo,
+    //       external: false,
+    //     },
+    //     {
+    //       title: t('Dashboard.sidebar.ai.items.audio.title'),
+    //       icon: <AudioLinesIcon className="site-4 shrink-0" />,
+    //       href: Routes.AIAudio,
+    //       external: false,
+    //     },
+    //   ],
+    // },
     {
       title: t('Dashboard.sidebar.settings.title'),
       icon: <Settings2Icon className="site-4 shrink-0" />,
