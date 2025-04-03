@@ -55,10 +55,10 @@ export const createPortalAction = actionClient
         data: result,
       };
     } catch (error: any) {
-      console.error("Error creating customer portal session:", error);
+      console.error("Create customer portal error:", error);
       return {
         success: false,
-        error: error.message || 'Failed to create customer portal session',
+        error: error.message || 'Failed to create customer portal',
       };
     }
   });

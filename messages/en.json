@@ -33,6 +33,7 @@
     "copy": "Copy",
     "saving": "Saving...",
     "save": "Save",
+    "loading": "Loading...",
     "cancel": "Cancel",
     "logoutFailed": "Failed to log out"
   },
@@ -43,7 +44,26 @@
   "PricingPage": {
     "title": "Pricing",
     "description": "Choose the plan that works best for you",
-    "subtitle": "Choose the plan that works best for you"
+    "subtitle": "Choose the plan that works best for you",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "/month",
+      "perYear": "/year",
+      "popular": "Popular",
+      "currentPlan": "Current Plan",
+      "yourCurrentPlan": "Your Current Plan",
+      "getStartedForFree": "Get Started For Free",
+      "getLifetimeAccess": "Get Lifetime Access",
+      "getStarted": "Get Started",
+      "notAvailable": "Not Available",
+      "daysTrial": "{days}-day free trial"
+    },
+    "CheckoutButton": {
+      "loading": "Loading...",
+      "checkoutFailed": "Failed to open checkout page"
+    }
   },
   "NotFoundPage": {
     "title": "404",
@@ -453,7 +473,11 @@
               "accessMessage": "Access your billing history through the Stripe Customer Portal",
               "noHistoryMessage": "No billing history available"
             },
-            "viewBillingHistory": "View Billing History"
+            "viewBillingHistory": "View Billing History",
+            "CustomerPortalButton": {
+              "loading": "Loading...",
+              "createCustomerPortalFailed": "Failed to open customer portal"
+            }
           },
           "notification": {
             "title": "Notification",

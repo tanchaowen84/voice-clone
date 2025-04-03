@@ -6,6 +6,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { CheckoutButton } from './create-checkout-button';
 
 interface PricingCardProps {
@@ -71,6 +72,7 @@ export function PricingCard({
   className,
   isCurrentPlan = false,
 }: PricingCardProps) {
+  const t = useTranslations('PricingPage.PricingCard');
   // price of free plan is undefined
   const price = getPriceForPlan(plan, interval, paymentType);
 
@@ -78,16 +80,16 @@ export function PricingCard({
   let formattedPrice = '';
   let priceLabel = '';
   if (plan.isFree) {
-    formattedPrice = '$0';
+    formattedPrice = t('freePrice');
   } else if (price && price.amount > 0) { // price is available
     formattedPrice = formatPrice(price.amount, price.currency);
     if (interval === PlanIntervals.MONTH) {
-      priceLabel = '/month';
+      priceLabel = t('perMonth');
     } else if (interval === PlanIntervals.YEAR) {
-      priceLabel = '/year';
+      priceLabel = t('perYear');
     }
   } else {
-    formattedPrice = 'Not Available';
+    formattedPrice = t('notAvailable');
   }
 
   // check if plan is not free and has a price
@@ -104,13 +106,15 @@ export function PricingCard({
       )}
     >
       {plan.recommended && (
-        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 text-xs font-medium border border-purple-200 dark:border-purple-800 shadow-sm">
-          Popular
+        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
+        bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200  border-purple-200 dark:border-purple-800 shadow-sm">
+          {t('popular')}
         </span>
       )}
       {isCurrentPlan && (
-        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 text-xs font-medium border border-blue-200 dark:border-blue-800 shadow-sm">
-          Current Plan
+        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
+        bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-800 shadow-sm">
+          {t('currentPlan')}
         </span>
       )}
 
@@ -129,11 +133,12 @@ export function PricingCard({
         {plan.isFree ? (
           <Button asChild variant="outline" className="mt-4 w-full">
             {/* TODO: add link to signup page */}
-            <LocaleLink href="/auth/login">Get Started For Free</LocaleLink>
+            <LocaleLink href="/auth/login">{t('getStartedForFree')}</LocaleLink>
           </Button>
         ) : isCurrentPlan ? (
-          <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
-            Your Current Plan
+          <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 
+          text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
+            {t('yourCurrentPlan')}
           </Button>
         ) : isPaidPlan ? (
           <CheckoutButton
@@ -142,11 +147,11 @@ export function PricingCard({
             metadata={metadata}
             className="mt-4 w-full cursor-pointer"
           >
-            {paymentType === PaymentTypes.ONE_TIME ? 'Get Lifetime Access' : 'Get Started'}
+            {paymentType === PaymentTypes.ONE_TIME ? t('getLifetimeAccess') : t('getStarted')}
           </CheckoutButton>
         ) : (
           <Button disabled className="mt-4 w-full">
-            Not Available
+            {t('notAvailable')}
           </Button>
         )}
       </CardHeader>
@@ -156,8 +161,9 @@ export function PricingCard({
 
         {hasTrialPeriod && (
           <div className="my-4">
-            <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
-              {price.trialPeriodDays}-day free trial
+            <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
+            bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
+              {t('daysTrial', { days: price.trialPeriodDays as number })}
             </span>
           </div>
         )}

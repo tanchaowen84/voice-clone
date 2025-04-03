@@ -77,11 +77,11 @@ export const createCheckoutAction = actionClient
         success: true,
         data: result,
       };
-    } catch (error: any) { // TODO: handle error type, error info in message
-      console.error("Create checkout session failed:", error);
+    } catch (error: any) {
+      console.error("Create checkout session error:", error);
       return {
         success: false,
-        error: error.message || 'Failed to create checkout session',
+        error: error.message || 'Failed to create checkout',
       };
     }
   });

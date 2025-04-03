@@ -4,7 +4,9 @@ import { createPortalAction } from '@/actions/create-customer-portal-session';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface CustomerPortalButtonProps {
   customerId: string;
@@ -29,6 +31,7 @@ export function CustomerPortalButton({
   className,
   children,
 }: CustomerPortalButtonProps) {
+  const t = useTranslations('Dashboard.sidebar.settings.items.billing.CustomerPortalButton');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
@@ -44,13 +47,15 @@ export function CustomerPortalButton({
       // Redirect to customer portal
       if (result && result.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
+      } else {
+        console.error('Create customer portal failed:', result);
+        toast.error(t('createCustomerPortalFailed'));
       }
-
-      // TODO: Handle error
     } catch (error) {
-      console.error('Error creating customer portal:', error);
+      console.error('Create customer portal error:', error);
+      toast.error(t('createCustomerPortalFailed'));
+    } finally {
       setIsLoading(false);
-      // Here you could display an error notification
     }
   };
 
@@ -65,10 +70,10 @@ export function CustomerPortalButton({
       {isLoading ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Loading...
+          {t('loading')}
         </>
       ) : (
-        children || 'Manage Billing'
+        children
       )}
     </Button>
   );

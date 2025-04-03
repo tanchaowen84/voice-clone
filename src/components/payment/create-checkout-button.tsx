@@ -3,7 +3,9 @@
 import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface CheckoutButtonProps {
   planId: string;
@@ -30,6 +32,7 @@ export function CheckoutButton({
   className,
   children,
 }: CheckoutButtonProps) {
+  const t = useTranslations('PricingPage.CheckoutButton');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
@@ -47,11 +50,12 @@ export function CheckoutButton({
       if (result && result.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
       } else {
-        console.error('Error creating checkout session:', result);
+        console.error('Create checkout session failed:', result);
+        toast.error(t('checkoutFailed'));
       }
     } catch (error) {
-      console.error('Error creating checkout session:', error);
-      // Here you could display an error notification
+      console.error('Create checkout session error:', error);
+      toast.error(t('checkoutFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +72,7 @@ export function CheckoutButton({
       {isLoading ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Loading...
+          {t('loading')}
         </>
       ) : (
         children

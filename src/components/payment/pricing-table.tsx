@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import { PaymentTypes, PlanInterval, PlanIntervals, PricePlan } from '@/payment/types';
 import { useState } from 'react';
 import { PricingCard } from './pricing-card';
+import { useTranslations } from 'next-intl';
+
 interface PricingTableProps {
   plans: PricePlan[];
   metadata?: Record<string, string>;
@@ -24,6 +26,7 @@ export function PricingTable({
   currentPlanId,
   className,
 }: PricingTableProps) {
+  const t = useTranslations('PricingPage');
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
 
   // Filter plans into free, subscription and one-time plans
@@ -67,13 +70,13 @@ export function PricingTable({
             {hasMonthlyOption && (
               <ToggleGroupItem value="month" className={cn("px-4 py-2 cursor-pointer rounded-md",
                 "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
-                Monthly
+                {t('monthly')}
               </ToggleGroupItem>
             )}
             {hasYearlyOption && (
               <ToggleGroupItem value="year" className={cn("px-4 py-2 cursor-pointer rounded-md",
                 "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
-                Yearly
+                {t('yearly')}
               </ToggleGroupItem>
             )}
           </ToggleGroup>

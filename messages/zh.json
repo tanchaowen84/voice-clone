@@ -33,6 +33,7 @@
     "copy": "复制",
     "save": "保存",
     "saving": "保存中...",
+    "loading": "加载中...",
     "cancel": "取消",
     "logoutFailed": "退出失败"
   },
@@ -46,9 +47,24 @@
     "backToHome": "返回首页"
   },
   "PricingPage": {
-    "title": "定价",
-    "description": "选择最适合您的计划",
-    "subtitle": "选择最适合您的计划"
+    "title": "价格",
+    "description": "选择最适合您的付费计划",
+    "subtitle": "选择最适合您的付费计划",
+    "monthly": "月付",
+    "yearly": "年付",
+    "PricingCard": {
+      "freePrice": "$0",
+      "perMonth": "/月",
+      "perYear": "/年",
+      "popular": "热门",
+      "currentPlan": "当前方案",
+      "yourCurrentPlan": "您的当前方案",
+      "getStartedForFree": "开始免费使用",
+      "getLifetimeAccess": "开启终身会员",
+      "getStarted": "开启免费试用",
+      "notAvailable": "不可用",
+      "daysTrial": "{days} 天试用期"
+    }
   },
   "ErrorPage": {
     "title": "哎呀！出错了！",
