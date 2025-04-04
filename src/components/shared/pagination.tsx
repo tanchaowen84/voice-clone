@@ -9,7 +9,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useLocaleRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type CustomPaginationProps = {
   totalPages: number;
@@ -20,7 +21,7 @@ export default function CustomPagination({
   totalPages,
   routePreix,
 }: CustomPaginationProps) {
-  const router = useRouter();
+  const router = useLocaleRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 

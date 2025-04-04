@@ -9,9 +9,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { useLocaleRouter } from '@/i18n/navigation';
+import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { Routes } from '@/routes';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface LoginWrapperProps {
@@ -26,7 +26,7 @@ export const LoginWrapper = ({
   asChild,
 }: LoginWrapperProps) => {
   const router = useLocaleRouter();
-  const pathname = usePathname();
+  const pathname = useLocalePathname();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isTablet, isDesktop } = useMediaQuery();

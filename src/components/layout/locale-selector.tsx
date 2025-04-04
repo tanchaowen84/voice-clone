@@ -17,7 +17,7 @@ import { useEffect, useTransition } from 'react';
 /**
  * 1. LocaleSelector
  *
- * By combining usePathname with useRouter, you can change the locale for the current page
+ * By combining useLocaleRouter with useLocalePathname, you can change the locale for the current page
  * programmatically by navigating to the same pathname, while overriding the locale.
  * Depending on if you're using the pathnames setting, you optionally have to forward params
  * to potentially resolve an internal pathname.

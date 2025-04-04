@@ -3,9 +3,9 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
 import { PaymentTypes, PlanInterval, PlanIntervals, PricePlan } from '@/payment/types';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { PricingCard } from './pricing-card';
-import { useTranslations } from 'next-intl';
 
 interface PricingTableProps {
   plans: PricePlan[];
@@ -62,6 +62,7 @@ export function PricingTable({
       {(hasMonthlyOption || hasYearlyOption) && subscriptionPlans.length > 0 && (
         <div className="flex justify-center mb-8">
           <ToggleGroup
+            size="sm"
             type="single"
             value={interval}
             onValueChange={(value) => value && handleIntervalChange(value)}

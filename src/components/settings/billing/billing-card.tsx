@@ -13,7 +13,7 @@ import { getAllPlans } from '@/payment';
 import { PlanIntervals, Subscription } from '@/payment/types';
 import { RefreshCwIcon, RocketIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.billing');
@@ -23,6 +23,9 @@ export default function BillingCard() {
 
   const currentUser = useCurrentUser();
   const isLifetimeMember = currentUser?.lifetimeMember === true;
+
+  // Get all available plans
+  const plans = getAllPlans();
 
   // Fetch user subscription data if user has a subscription ID
   const fetchUserSubscription = async () => {
@@ -35,10 +38,8 @@ export default function BillingCard() {
         const result = await getUserSubscriptionAction();
         if (result?.data?.success && result.data.data) {
           setSubscription(result.data.data);
-        } else if (result?.data?.error) {
-          setError(result.data.error);
         } else {
-          setError(t('errorMessage'));
+          setError(result?.data?.error || t('errorMessage'));
         }
       } else {
         // Set subscription to null if user doesn't have one or is a lifetime member
@@ -56,28 +57,30 @@ export default function BillingCard() {
     fetchUserSubscription();
   }, [currentUser]);
 
-  // Get all available plans
-  const plans = getAllPlans();
+  // Use useMemo to derive values from subscription state
+  const { currentPlan, currentPrice, nextBillingDate, canUpgrade } = useMemo(() => {
+    // Determine current plan based on user status
+    const currentPlan = isLifetimeMember
+      ? plans.find(plan => plan.isLifetime)
+      : subscription
+        ? plans.find(plan => plan.id === subscription?.planId)
+        : plans.find(plan => plan.isFree);
 
-  // Determine current plan based on user status
-  const currentPlan = isLifetimeMember
-    ? plans.find(plan => plan.id === 'lifetime')
-    : subscription
-      ? plans.find(plan => plan.id === subscription?.planId)
-      : plans.find(plan => plan.isFree);
+    // Determine current price details if subscription exists
+    const currentPrice = subscription && currentPlan?.prices.find(
+      price => price.productId === subscription?.priceId
+    );
 
-  // Determine current price details if subscription exists
-  const currentPrice = subscription && currentPlan?.prices.find(
-    price => price.productId === subscription?.priceId
-  );
+    // Calculate next billing date for subscriptions
+    const nextBillingDate = subscription?.currentPeriodEnd
+      ? formatDate(subscription.currentPeriodEnd)
+      : null;
 
-  // Calculate next billing date for subscriptions
-  const nextBillingDate = subscription?.currentPeriodEnd
-    ? formatDate(subscription.currentPeriodEnd)
-    : null;
+    // Determine if the user can upgrade (not a lifetime member)
+    const canUpgrade = !isLifetimeMember;
 
-  // Determine if the user can upgrade (not a lifetime member)
-  const canUpgrade = !isLifetimeMember;
+    return { currentPlan, currentPrice, nextBillingDate, canUpgrade };
+  }, [isLifetimeMember, plans, subscription]);
 
   return (
     <div className="grid gap-8 md:grid-cols-2">
@@ -150,7 +153,7 @@ export default function BillingCard() {
             </>
           )}
         </CardContent>
-        <CardFooter className="flex flex-col gap-4 sm:flex-row sm:gap-2">
+        <CardFooter>
           {loading ? (
             <Skeleton className="h-10 w-full" />
           ) : error ? (
@@ -163,7 +166,8 @@ export default function BillingCard() {
               {t('retry')}
             </Button>
           ) : (
-            <>
+            <div className="grid w-full gap-3 lg:grid-cols-2">
+              {/* Manage subscription button */}
               {subscription && currentUser?.customerId && (
                 <CustomerPortalButton
                   customerId={currentUser.customerId}
@@ -181,12 +185,13 @@ export default function BillingCard() {
                   asChild
                 >
                   <LocaleLink href="/pricing">
-                    <RocketIcon className="size-4 mr-1" />
-                    {subscription ? 'View Other Plans' : 'Upgrade Plan'}
+                    {/* <RocketIcon className="size-4 mr-2" /> */}
+                    {'Change Plan'}
                   </LocaleLink>
                 </Button>
               )}
 
+              {/* Lifetime member billing history button */}
               {isLifetimeMember && currentUser?.customerId && (
                 <CustomerPortalButton
                   customerId={currentUser.customerId}
@@ -195,7 +200,7 @@ export default function BillingCard() {
                   {t('viewBillingHistory')}
                 </CustomerPortalButton>
               )}
-            </>
+            </div>
           )}
         </CardFooter>
       </Card>

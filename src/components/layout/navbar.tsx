@@ -1,9 +1,9 @@
 'use client';
 
-import { LoginWrapper } from '@/components/auth/login-button';
+import { LoginWrapper } from '@/components/auth/login-wrapper';
 import Container from '@/components/container';
-import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
+import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/layout/user-button';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
@@ -17,9 +17,9 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { getMenuLinks } from '@/config';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
-import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
@@ -40,12 +40,11 @@ const customNavigationMenuTriggerStyle = cn(
 );
 
 export function Navbar({ scroll }: NavBarProps) {
-  const scrolled = useScroll(50);
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
   const t = useTranslations();
+  const scrolled = useScroll(50);
   const menuLinks = getMenuLinks();
   const localePathname = useLocalePathname();
+  const currentUser = useCurrentUser();
 
   // console.log(`Navbar, user:`, user);
 
@@ -213,8 +212,8 @@ export function Navbar({ scroll }: NavBarProps) {
 
           {/* navbar right show sign in or user */}
           <div className="flex items-center gap-x-4">
-            {user ? (
-              <UserButton user={user} />
+            {currentUser ? (
+              <UserButton user={currentUser} />
             ) : (
               <div className="flex items-center gap-x-4">
                 <LoginWrapper mode="modal" asChild>

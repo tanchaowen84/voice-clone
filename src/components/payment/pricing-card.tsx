@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { LoginWrapper } from '../auth/login-button';
+import { LoginWrapper } from '../auth/login-wrapper';
 import { CheckoutButton } from './create-checkout-button';
 
 interface PricingCardProps {

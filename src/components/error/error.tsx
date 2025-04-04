@@ -2,9 +2,9 @@
 
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 /**
@@ -17,9 +17,9 @@ import { useTransition } from 'react';
  * https://x.com/asidorenko_/status/1841547623712407994
  */
 export default function Error({ reset }: { reset: () => void }) {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
   const t = useTranslations('ErrorPage');
+  const router = useLocaleRouter();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8">
@@ -40,10 +40,8 @@ export default function Error({ reset }: { reset: () => void }) {
             });
           }}
         >
-          {isPending ? (
+          {isPending && (
             <Loader2Icon className="mr-2 size-4 animate-spin" />
-          ) : (
-            ''
           )}
           {t('tryAgain')}
         </Button>

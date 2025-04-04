@@ -20,7 +20,7 @@ import { useEffect, useTransition } from 'react';
  * 
  * Allows users to switch between available locales using a dropdown menu.
  * 
- * Based on next-intl's useRouter and usePathname for locale navigation.
+ * Based on next-intl's useLocaleRouter and usePathname for locale navigation.
  * https://next-intl.dev/docs/routing/navigation#userouter
  */
 export default function LocaleSwitcher() {
