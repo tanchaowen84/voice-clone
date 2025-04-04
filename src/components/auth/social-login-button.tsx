@@ -15,10 +15,10 @@ import { DividerWithText } from '@/components/auth/divider-with-text';
  * social login buttons
  */
 export const SocialLoginButton = () => {
+  const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const [isLoading, setIsLoading] = useState<'google' | 'github' | null>(null);
-  const t = useTranslations('AuthPage.login');
 
   const onClick = async (provider: 'google' | 'github') => {
     await authClient.signIn.social(

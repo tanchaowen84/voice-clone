@@ -10,8 +10,8 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { getMenuLinks } from '@/config';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
-import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
@@ -24,19 +24,18 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { UserButton } from './user-button';
-import { useEffect } from 'react';
 
 export function NavbarMobile({
   className,
   ...other
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const t = useTranslations();
   const [open, setOpen] = React.useState<boolean>(false);
   const localePathname = useLocalePathname();
-  const { data: session, error } = authClient.useSession();
-  const user = session?.user;
-  const t = useTranslations();
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -80,10 +79,10 @@ export function NavbarMobile({
           </span>
         </LocaleLink>
 
-        {/* navbar right shows menu icon */}
+        {/* navbar right shows menu icon and user button */}
         <div className="flex items-center justify-end gap-4">
           {/* show user button if user is logged in */}
-          {user ? <UserButton user={user} /> : null}
+          {currentUser ? <UserButton user={currentUser} /> : null}
 
           <Button
             variant="ghost"
@@ -110,7 +109,7 @@ export function NavbarMobile({
             page will scroll when we scroll the mobile menu */}
           <RemoveScroll allowPinchZoom enabled>
             <MainMobileMenu
-              userLoggedIn={!!user}
+              userLoggedIn={!!currentUser}
               onLinkClicked={handleToggleMobileMenu}
             />
           </RemoveScroll>
@@ -267,6 +266,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     >
                                       {subItem.title}
                                     </span>
+                                    {/* hide description for now */}
                                     {/* {subItem.description && (
                                       <p
                                         className={cn(

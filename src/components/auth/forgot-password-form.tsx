@@ -113,10 +113,8 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
             type="submit"
             className="w-full flex items-center justify-center gap-2"
           >
-            {isPending ? (
-              <Icons.spinner className="w-4 h-4 animate-spin" />
-            ) : (
-              ''
+            {isPending && (
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             <span>{t('send')}</span>
           </Button>

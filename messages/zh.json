@@ -145,11 +145,7 @@
       "signInWithGitHub": "使用 GitHub 登录",
       "showPassword": "显示密码",
       "hidePassword": "隐藏密码",
-      "termsOfService": "服务条款",
-      "privacyPolicy": "隐私政策",
-      "byClickingContinue": "继续即表示您同意我们的 ",
-      "and": " 和 ",
-      "or": "或"
+       "or": "或"
     },
     "register": {
       "title": "注册",
@@ -183,6 +179,12 @@
       "tryAgain": "请重试",
       "backToLogin": "返回登录",
       "checkEmail": "请检查您的邮箱"
+    },
+    "common": {
+      "termsOfService": "服务条款",
+      "privacyPolicy": "隐私政策",
+      "byClickingContinue": "继续即表示您同意我们的 ",
+      "and": " 和 "
     }
   },
   "BlogPage": {

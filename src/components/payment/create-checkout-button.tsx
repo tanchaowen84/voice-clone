@@ -21,7 +21,9 @@ interface CheckoutButtonProps {
  * Checkout Button
  * 
  * This client component creates a Stripe checkout session and redirects to it
- * It's used to initiate the checkout process for a specific plan and price
+ * It's used to initiate the checkout process for a specific plan and price.
+ * 
+ * NOTICE: Login is required when using this button.
  */
 export function CheckoutButton({
   planId,
@@ -71,7 +73,7 @@ export function CheckoutButton({
     >
       {isLoading ? (
         <>
-          <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2Icon className="mr-2 size-4 animate-spin" />
           {t('loading')}
         </>
       ) : (

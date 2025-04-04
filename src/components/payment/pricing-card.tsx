@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
@@ -59,6 +60,7 @@ export function PricingCard({
 }: PricingCardProps) {
   const t = useTranslations('PricingPage.PricingCard');
   const price = getPriceForPlan(plan, interval, paymentType);
+  const currentUser = useCurrentUser();
 
   // generate formatted price and price label
   let formattedPrice = '';
@@ -115,18 +117,24 @@ export function PricingCard({
         <CardDescription className="text-sm">{plan.description}</CardDescription>
 
         {plan.isFree ? (
-          <LoginWrapper mode="modal" asChild>
-            <Button variant="outline" className="mt-4 w-full cursor-pointer">
+          currentUser ? (
+            <Button variant="outline" className="mt-4 w-full disabled">
               {t('getStartedForFree')}
             </Button>
-          </LoginWrapper>
+          ) : (
+            <LoginWrapper mode="modal" asChild>
+              <Button variant="outline" className="mt-4 w-full cursor-pointer">
+                {t('getStartedForFree')}
+              </Button>
+            </LoginWrapper>
+          )
         ) : isCurrentPlan ? (
           <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 
           text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
             {t('yourCurrentPlan')}
           </Button>
         ) : isPaidPlan ? (
-          <LoginWrapper mode="modal" asChild>
+          currentUser ? (
             <CheckoutButton
               planId={plan.id}
               priceId={price.productId}
@@ -135,7 +143,13 @@ export function PricingCard({
             >
               {plan.isLifetime ? t('getLifetimeAccess') : t('getStarted')}
             </CheckoutButton>
-          </LoginWrapper>
+          ) : (
+            <LoginWrapper mode="modal" asChild>
+              <Button variant="default" className="mt-4 w-full cursor-pointer">
+                {t('getStarted')}
+              </Button>
+            </LoginWrapper>
+          )
         ) : (
           <Button disabled className="mt-4 w-full">
             {t('notAvailable')}

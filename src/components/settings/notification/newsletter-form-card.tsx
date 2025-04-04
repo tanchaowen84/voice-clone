@@ -182,9 +182,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
                   <FormControl>
                     <div className="relative flex items-center">
                       {isLoading && (
-                        <div className="mr-2">
-                          <Loader2Icon className="h-4 w-4 animate-spin text-primary" />
-                        </div>
+                        <Loader2Icon className="mr-2 size-4 animate-spin text-primary" />
                       )}
                       <Switch
                         checked={field.value}

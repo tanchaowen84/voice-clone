@@ -149,10 +149,6 @@
       "signInWithGitHub": "Sign In with GitHub",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
-      "termsOfService": "Terms of Service",
-      "privacyPolicy": "Privacy Policy",
-      "byClickingContinue": "By clicking continue, you agree to our ",
-      "and": " and ",
       "or": "Or continue with"
     },
     "register": {
@@ -187,6 +183,12 @@
       "tryAgain": "Please try again.",
       "backToLogin": "Back to login",
       "checkEmail": "Please check your email inbox"
+    },
+    "common": {
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "byClickingContinue": "By clicking continue, you agree to our ",
+      "and": " and "
     }
   },
   "BlogPage": {

@@ -24,7 +24,7 @@ export async function generateMetadata({
 }
 
 export default async function LoginPage() {
-  const t = await getTranslations('AuthPage.login');
+  const t = await getTranslations('AuthPage.common');
 
   return (
     <div className="flex flex-col gap-4">
