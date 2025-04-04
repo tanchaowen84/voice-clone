@@ -57,10 +57,10 @@ export function PricingTable({
   };
 
   return (
-    <div className={cn("flex flex-col gap-8", className)}>
+    <div className={cn("flex flex-col gap-12", className)}>
       {/* Show interval toggle if there are subscription plans */}
       {(hasMonthlyOption || hasYearlyOption) && subscriptionPlans.length > 0 && (
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center">
           <ToggleGroup
             size="sm"
             type="single"

@@ -31,6 +31,7 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
+
         <Breadcrumb>
           <BreadcrumbList className="text-base font-medium">
             {breadcrumbs.map((item, index) => (
@@ -52,6 +53,7 @@ export function DashboardHeader({ breadcrumbs, actions }: DashboardHeaderProps) 
             ))}
           </BreadcrumbList>
         </Breadcrumb>
+        
         {/* dashboard header actions on the right side */}
         <div className="ml-auto flex items-center gap-3 px-4">
           {actions}
