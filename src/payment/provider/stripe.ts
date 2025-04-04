@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType, PaymentTypes, ListCustomerSubscriptionsParams } from '../types';
+import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, PaymentType, PaymentTypes, ListCustomerSubscriptionsParams } from '../types';
 import { getPlanById, findPriceInPlan } from '../index';
 import db from '@/db/index';
 import { user } from '@/db/schema';
@@ -12,7 +12,6 @@ export class StripeProvider implements PaymentProvider {
   
   private stripe: Stripe;
   private webhookSecret: string;
-  private webhookHandlers: Map<string, WebhookEventHandler[]>;
 
   /**
    * Initialize Stripe provider with API key
@@ -31,7 +30,6 @@ export class StripeProvider implements PaymentProvider {
     // Initialize Stripe without specifying apiVersion to use default/latest version
     this.stripe = new Stripe(apiKey);
     this.webhookSecret = webhookSecret;
-    this.webhookHandlers = new Map();
   }
 
   /**
@@ -384,26 +382,12 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Register webhook event handler
-   * @param eventType Webhook event type
-   * @param handler Event handler function
-   */
-  public registerWebhookHandler(eventType: string, handler: WebhookEventHandler): void {
-    if (!this.webhookHandlers.has(eventType)) {
-      this.webhookHandlers.set(eventType, []);
-    }
-
-    this.webhookHandlers.get(eventType)?.push(handler);
-  }
-
-  /**
    * Handle webhook event
    * @param payload Raw webhook payload
    * @param signature Webhook signature
    */
   public async handleWebhookEvent(payload: string, signature: string): Promise<void> {
     let event: Stripe.Event;
-    console.log('handle webhook event, hook secret:', this.webhookSecret);
 
     try {
       // Verify the event signature if webhook secret is available
@@ -412,21 +396,8 @@ export class StripeProvider implements PaymentProvider {
         signature,
         this.webhookSecret
       );
-
-      console.log(`Received Stripe webhook event: ${event.type}`);
-
-      // Process the event based on type
-      const handlers = this.webhookHandlers.get(event.type) || [];
-      const defaultHandlers = this.webhookHandlers.get('*') || [];
-      const allHandlers = [...handlers, ...defaultHandlers];
-
-      // If no custom handlers are registered, use default handling logic
-      if (allHandlers.length === 0) {
-        await this.defaultWebhookHandler(event);
-      } else {
-        // Execute all registered handlers
-        await Promise.all(allHandlers.map(handler => handler(event)));
-      }
+      // Process the event with the default handler
+      await this.defaultWebhookHandler(event);
     } catch (error) {
       console.error('handle webhook event error:', error);
       throw new Error('Failed to handle webhook event');
@@ -439,7 +410,8 @@ export class StripeProvider implements PaymentProvider {
    */
   private async defaultWebhookHandler(event: Stripe.Event): Promise<void> {
     const eventType = event.type;
-
+    console.log(`handle webhook event, type: ${eventType}`);
+    
     try {
       // Handle subscription events
       if (eventType.startsWith('customer.subscription.')) {

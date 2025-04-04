@@ -174,11 +174,6 @@ export interface ListCustomerSubscriptionsParams {
 }
 
 /**
- * Webhook event handler
- */
-export type WebhookEventHandler = (event: Stripe.Event) => Promise<void>;
-
-/**
  * Payment provider interface
  */
 export interface PaymentProvider {
@@ -211,9 +206,4 @@ export interface PaymentProvider {
    * Handle webhook events
    */
   handleWebhookEvent(payload: string, signature: string): Promise<void>;
-  
-  /**
-   * Register webhook event handlers
-   */
-  registerWebhookHandler(eventType: string, handler: WebhookEventHandler): void;
 }

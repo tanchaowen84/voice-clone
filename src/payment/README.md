@@ -166,13 +166,7 @@ The webhook handler processes events like:
 - `payment_intent.succeeded`
 - `payment_intent.payment_failed`
 
-Custom webhook handlers can be registered using:
-
-```typescript
-registerWebhookHandler('checkout.session.completed', async (event) => {
-  // Handle the event
-});
-```
+The webhook functionality is implemented in the `defaultWebhookHandler` method of the Stripe provider.
 
 ## Integration Steps
 
@@ -218,9 +212,6 @@ getCustomer(params: GetCustomerParams): Promise<Customer | null>;
 
 // Get a subscription by ID
 getSubscription(params: GetSubscriptionParams): Promise<Subscription | null>;
-
-// Register a webhook event handler
-registerWebhookHandler(eventType: string, handler: WebhookEventHandler): void;
 
 // Handle a webhook event
 handleWebhookEvent(payload: string, signature: string): Promise<void>;

@@ -1,4 +1,4 @@
-import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, WebhookEventHandler, ListCustomerSubscriptionsParams } from "./types";
+import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, ListCustomerSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
 import { paymentConfig } from "./config/payment-config";
 
@@ -97,19 +97,6 @@ export const handleWebhookEvent = async (
 };
 
 /**
- * Register webhook event handler
- * @param eventType Webhook event type
- * @param handler Event handler function
- */
-export const registerWebhookHandler = (
-  eventType: string,
-  handler: WebhookEventHandler
-): void => {
-  const provider = getPaymentProvider();
-  provider.registerWebhookHandler(eventType, handler);
-};
-
-/**
  * Get plan by ID
  * @param planId Plan ID
  * @returns Plan or undefined if not found
@@ -160,5 +147,4 @@ export type {
   GetCustomerParams,
   GetSubscriptionParams,
   ListCustomerSubscriptionsParams,
-  WebhookEventHandler,
 };

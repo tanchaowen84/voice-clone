@@ -68,13 +68,13 @@ export function PricingTable({
             className="border rounded-lg p-1"
           >
             {hasMonthlyOption && (
-              <ToggleGroupItem value="month" className={cn("px-4 py-2 cursor-pointer rounded-md",
+              <ToggleGroupItem value="month" className={cn("px-3 py-0 cursor-pointer text-sm rounded-md",
                 "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
                 {t('monthly')}
               </ToggleGroupItem>
             )}
             {hasYearlyOption && (
-              <ToggleGroupItem value="year" className={cn("px-4 py-2 cursor-pointer rounded-md",
+              <ToggleGroupItem value="year" className={cn("px-3 py-0 cursor-pointer text-sm rounded-md",
                 "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground")}>
                 {t('yearly')}
               </ToggleGroupItem>
