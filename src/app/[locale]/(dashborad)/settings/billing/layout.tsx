@@ -1,9 +1,9 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { NextPageProps } from '@/types/next-page-props';
 import { getTranslations } from 'next-intl/server';
-import { PropsWithChildren } from 'react';
 
-interface BillingLayoutProps extends PropsWithChildren, NextPageProps {}
+interface BillingLayoutProps {
+  children: React.ReactNode;
+}
 
 export default async function BillingLayout({
   children,

@@ -1,9 +1,9 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
-import { NextPageProps } from '@/types/next-page-props';
 import { getTranslations } from 'next-intl/server';
-import { PropsWithChildren } from 'react';
 
-interface ProfileLayoutProps extends PropsWithChildren, NextPageProps {}
+interface ProfileLayoutProps {
+  children: React.ReactNode;
+}
 
 export default async function ProfileLayout({
   children,
