@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'An unexpected error occurred while getting the file URL' },
+      { error: 'Something went wrong while getting the file URL' },
       { status: 500 }
     );
   }

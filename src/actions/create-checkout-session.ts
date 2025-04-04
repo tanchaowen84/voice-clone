@@ -1,12 +1,11 @@
 'use server';
 
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/server";
 import { getBaseUrlWithLocale } from "@/lib/urls/get-base-url";
 import { createCheckout, getPlanById } from "@/payment";
 import { CreateCheckoutParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';
-import { headers } from "next/headers";
 import { z } from 'zod';
 
 // Create a safe action client
@@ -27,9 +26,7 @@ export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
     // request the user to login before checkout
-    const authSession = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const authSession = await getSession();
     if (!authSession) {
       return {
         success: false,
@@ -60,7 +57,8 @@ export const createCheckoutAction = actionClient
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/settings/billing?session_id={CHECKOUT_SESSION_ID}`;
-      // TODO: maybe add a cancel url as param, instead of redirecting to the cancel page
+      // TODO: add a cancel url as param, instead of redirecting to the cancel page
+      // TODO: add locale to the params?
       const cancelUrl = `${baseUrlWithLocale}/pricing`;
       const params: CreateCheckoutParams = {
         planId,
@@ -77,11 +75,11 @@ export const createCheckoutAction = actionClient
         success: true,
         data: result,
       };
-    } catch (error: any) {
-      console.error("Create checkout session error:", error);
+    } catch (error) {
+      console.error("create checkout session error:", error);
       return {
         success: false,
-        error: error.message || 'Failed to create checkout',
+        error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
   });

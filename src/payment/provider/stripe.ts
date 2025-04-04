@@ -181,6 +181,7 @@ export class StripeProvider implements PaymentProvider {
       }];
 
       // Create checkout session parameters
+      // TODO: add locale to checkout params
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
         mode: price.type === PaymentTypes.RECURRING ? 'subscription' : 'payment',

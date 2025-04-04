@@ -21,7 +21,7 @@ export default function SettingsNotificationPage() {
       <DashboardHeader breadcrumbs={breadcrumbs} />
 
       <div className="px-4 lg:px-6 py-16">
-        <div className="max-w-5xl mx-auto space-y-10">
+        <div className="max-w-6xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
               {t('Dashboard.sidebar.settings.items.notification.title')}

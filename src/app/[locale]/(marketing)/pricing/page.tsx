@@ -1,12 +1,12 @@
+import Container from '@/components/container';
+import { PricingTable } from '@/components/payment/pricing-table';
+import { HeaderSection } from '@/components/shared/header-section';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getAllPlans } from '@/payment';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import { getAllPlans } from '@/payment';
-import { PricingTable } from '@/components/payment/pricing-table';
-import Container from '@/components/container';
-import { HeaderSection } from '@/components/shared/header-section';
 
 export async function generateMetadata({
   params,
@@ -23,13 +23,7 @@ export async function generateMetadata({
   });
 }
 
-interface PricingPageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default async function PricingPage(props: PricingPageProps) {
-  const params = await props.params;
-  const { locale } = params;
+export default async function PricingPage() {
   const t = await getTranslations('PricingPage');
 
   // Get all plans as an array

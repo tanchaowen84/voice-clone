@@ -43,6 +43,20 @@
       "when": 1742780851411,
       "tag": "0005_modern_hex",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1743688468952,
+      "tag": "0006_deep_mother_askani",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1743693630071,
+      "tag": "0007_overconfident_adam_destine",
+      "breakpoints": true
     }
   ]
 }

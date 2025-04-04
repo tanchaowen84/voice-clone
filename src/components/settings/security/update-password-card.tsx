@@ -46,12 +46,12 @@ interface UpdatePasswordCardProps {
  * @see https://www.better-auth.com/docs/authentication/email-password#update-password
  */
 export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
-  const router = useLocaleRouter();
   const t = useTranslations('Dashboard.sidebar.settings.items.security.updatePassword');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [error, setError] = useState<string | undefined>('');
+  const router = useLocaleRouter();
   const { data: session } = authClient.useSession();
 
   // Create a schema for password validation
@@ -81,7 +81,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { data, error } = await authClient.changePassword(
+    await authClient.changePassword(
       {
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
@@ -107,7 +107,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
         onError: (ctx) => {
           // update password fail, display the error message
           // { "message": "Invalid password", "code": "INVALID_PASSWORD", "status": 400, "statusText": "BAD_REQUEST" }
-          console.error('update password, error:', ctx.error);
+          console.error('update password error:', ctx.error);
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(t('fail'));
         },

@@ -117,7 +117,6 @@ export function PricingTable({
           />
         ))}
       </div>
-
     </div>
   );
 } 

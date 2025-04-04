@@ -35,7 +35,6 @@ interface UpdateNameCardProps {
  * update user name
  */
 export function UpdateNameCard({ className }: UpdateNameCardProps) {
-  const ct = useTranslations('Common');
   const t = useTranslations('Dashboard.sidebar.settings.items.profile');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | undefined>('');
@@ -77,7 +76,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
       return;
     }
 
-    const { data, error } = await authClient.updateUser(
+    await authClient.updateUser(
       {
         name: values.name,
       },
@@ -100,7 +99,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
         },
         onError: (ctx) => {
           // update name fail, display the error message
-          console.error('update name, error:', ctx.error);
+          console.error('update name error:', ctx.error);
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(t('name.fail'));
         },
@@ -143,7 +142,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
             </p>
 
             <Button type="submit" disabled={isSaving} className="cursor-pointer">
-              {isSaving ? ct('saving') : ct('save')}
+              {isSaving ? t('name.saving') : t('name.save')}
             </Button>
           </CardFooter>
         </form>

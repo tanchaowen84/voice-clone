@@ -431,7 +431,8 @@
             "status": {
               "active": "已激活",
               "trial": "试用中",
-              "free": "免费版"
+              "free": "免费版",
+              "lifetime": "终身版"
             },
             "interval": {
               "month": "月",
@@ -440,11 +441,10 @@
             },
             "currentPlan": {
               "title": "当前方案",
-              "description": "您的当前订阅详情"
+              "description": "您当前的方案详情"
             },
             "nextBillingDate": "下次账单日期：",
             "trialEnds": "试用结束日期：",
-            "freePlanMessage": "您当前使用的是功能有限的免费方案。",
             "manageSubscription": "管理订阅",
             "upgradeMessage": "升级到付费方案以获取更多功能",
             "paymentMethod": {
@@ -470,7 +470,14 @@
               "accessMessage": "通过 Stripe 客户门户访问您的账单历史",
               "noHistoryMessage": "没有可用的账单历史"
             },
-            "viewBillingHistory": "查看账单历史"
+            "viewBillingHistory": "查看账单历史",
+            "CustomerPortalButton": {
+              "loading": "加载中...",
+              "createCustomerPortalFailed": "打开Stripe客户页面失败"
+            },
+            "retry": "重试",
+            "freePlanMessage": "您当前使用的是功能有限的免费方案",
+            "lifetimeMessage": "您拥有所有高级功能的终身访问权限"
           },
           "notification": {
             "title": "通知",
@@ -530,7 +537,7 @@
       },
       "upgrade": {
         "title": "升级",
-        "description": "升级到高级计划以获取所有功能",
+        "description": "升级到Pro以获取所有功能",
         "button": "升级"
       }
     }

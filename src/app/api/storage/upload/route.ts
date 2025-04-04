@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'An unexpected error occurred while uploading the file' },
+      { error: 'Something went wrong while uploading the file' },
       { status: 500 }
     );
   }

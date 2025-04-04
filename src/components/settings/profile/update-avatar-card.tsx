@@ -29,7 +29,7 @@ interface UpdateAvatarCardProps {
 export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   const t = useTranslations('Dashboard.sidebar.settings.items.profile');
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | undefined>('');
   const { data: session, refetch } = authClient.useSession();
   const [avatarUrl, setAvatarUrl] = useState('');
   const [tempAvatarUrl, setTempAvatarUrl] = useState('');
@@ -44,8 +44,6 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   if (!user) {
     return null;
   }
-
-  // console.log('update avatar card, user', user);
 
   const handleUploadClick = () => {
     // Create a hidden file input and trigger it
@@ -79,7 +77,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
       console.log('uploadFileFromBrowser, url', url);
 
       // Update the user's avatar using authClient
-      const { data, error } = await authClient.updateUser(
+      await authClient.updateUser(
         {
           image: url,
         },
@@ -99,7 +97,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
             refetch();
           },
           onError: (ctx) => {
-            console.error('update avatar, error:', ctx.error);
+            console.error('update avatar error:', ctx.error);
             setError(`${ctx.error.status}: ${ctx.error.message}`);
             // Restore the previous avatar on error
             if (session?.user?.image) {
@@ -110,7 +108,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
         }
       );
     } catch (error) {
-      console.error('update avatar, error:', error);
+      console.error('update avatar error:', error);
       setError(error instanceof Error ? error.message : t('avatar.fail'));
       // Restore the previous avatar if there was an error
       if (session?.user?.image) {

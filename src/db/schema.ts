@@ -13,7 +13,9 @@ export const user = pgTable("user", {
 	banned: boolean('banned'),
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
-	customerId: text('customer_id')
+	customerId: text('customer_id'),
+	subscriptionId: text('subscription_id'),
+	lifetimeMember: boolean('lifetime_member')
 });
 
 export const session = pgTable("session", {

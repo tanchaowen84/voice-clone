@@ -57,6 +57,8 @@ export interface PricePlan {
   features: string[];                // List of features included in this plan
   prices: Price[];                   // Available prices for this plan
   isFree: boolean;                   // Whether this is a free plan
+  // isLifetime: boolean;               // Whether this is a lifetime plan
+  // isSubscription: boolean;           // Whether this is a subscription plan
   recommended?: boolean;             // Whether to mark this plan as recommended in UI
 }
 

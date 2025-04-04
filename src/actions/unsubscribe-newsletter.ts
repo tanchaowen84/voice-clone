@@ -1,9 +1,8 @@
 'use server';
 
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/server';
 import { unsubscribe } from '@/newsletter';
 import { createSafeActionClient } from 'next-safe-action';
-import { headers } from 'next/headers';
 import { z } from 'zod';
 
 // Create a safe action client
@@ -18,9 +17,7 @@ const newsletterSchema = z.object({
 export const unsubscribeNewsletterAction = actionClient
   .schema(newsletterSchema)
   .action(async ({ parsedInput: { email } }) => {
-    const authSession = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const authSession = await getSession();
     if (!authSession) {
       return {
         success: false,
@@ -32,7 +29,7 @@ export const unsubscribeNewsletterAction = actionClient
       const unsubscribed = await unsubscribe(email);
 
       if (!unsubscribed) {
-        console.error('Failed to unsubscribe from the newsletter', email);
+        console.error('unsubscribe newsletter error:', email);
         return {
           success: false,
           error: 'Failed to unsubscribe from the newsletter',
@@ -43,10 +40,10 @@ export const unsubscribeNewsletterAction = actionClient
         success: true,
       };
     } catch (error) {
-      console.error('Newsletter unsubscription error:', error);
+      console.error('unsubscribe newsletter error:', error);
       return {
         success: false,
-        error: 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
   });

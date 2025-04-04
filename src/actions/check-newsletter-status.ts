@@ -13,7 +13,7 @@ const newsletterSchema = z.object({
 });
 
 // Create a safe action to check if a user is subscribed to the newsletter
-export const checkSubscribeStatusAction = actionClient
+export const checkNewsletterStatusAction = actionClient
   .schema(newsletterSchema)
   .action(async ({ parsedInput: { email } }) => {
     try {
@@ -24,11 +24,11 @@ export const checkSubscribeStatusAction = actionClient
         subscribed,
       };
     } catch (error) {
-      console.error('Newsletter subscription check error:', error);
+      console.error('check newsletter status error:', error);
       return {
         success: false,
         subscribed: false,
-        error: 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
   });

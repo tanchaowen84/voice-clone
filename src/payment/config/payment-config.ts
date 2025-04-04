@@ -15,6 +15,8 @@ const freePlan: PricePlan = {
   ],
   prices: [],
   isFree: true,
+  // isLifetime: false,
+  // isSubscription: true,
 };
 
 /**
@@ -51,6 +53,8 @@ const proPlan: PricePlan = {
     },
   ],
   isFree: false,
+  // isLifetime: false,
+  // isSubscription: true,
   recommended: true,
 };
 
@@ -79,6 +83,8 @@ const lifetimePlan: PricePlan = {
     },
   ],
   isFree: false,
+  // isLifetime: true,
+  // isSubscription: false,
 };
 
 /**

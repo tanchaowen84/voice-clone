@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "lifetime_member" boolean;

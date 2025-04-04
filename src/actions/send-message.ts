@@ -31,6 +31,7 @@ const contactFormSchema = z.object({
 export const sendMessageAction = actionClient
   .schema(contactFormSchema)
   .action(async ({ parsedInput }) => {
+    // Do not check if the user is authenticated here
     try {
       const { name, email, message } = parsedInput;
 
@@ -56,7 +57,7 @@ export const sendMessageAction = actionClient
       });
 
       if (!result) {
-        console.error('Failed to send the message');
+        console.error('send message error');
         return {
           success: false,
           error: 'Failed to send the message',
@@ -67,10 +68,10 @@ export const sendMessageAction = actionClient
         success: true,
       };
     } catch (error) {
-      console.error('Send message error:', error);
+      console.error('send message error:', error);
       return {
         success: false,
-        error: 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
   });

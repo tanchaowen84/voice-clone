@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'An unexpected error occurred while generating pre-signed URL' },
+      { error: 'Something went wrong while generating pre-signed URL' },
       { status: 500 }
     );
   }

@@ -16,11 +16,12 @@ const newsletterSchema = z.object({
 export const subscribeNewsletterAction = actionClient
   .schema(newsletterSchema)
   .action(async ({ parsedInput: { email } }) => {
+    // Do not check if the user is authenticated here
     try {
       const subscribed = await subscribe(email);
 
       if (!subscribed) {
-        console.error('Failed to subscribe to the newsletter', email);
+        console.error('subscribe newsletter error:', email);
         return {
           success: false,
           error: 'Failed to subscribe to the newsletter',
@@ -31,10 +32,10 @@ export const subscribeNewsletterAction = actionClient
         success: true,
       };
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
+      console.error('subscribe newsletter error:', error);
       return {
         success: false,
-        error: 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
   });
