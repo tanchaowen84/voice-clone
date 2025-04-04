@@ -49,10 +49,11 @@ export const createCheckoutAction = actionClient
         };
       }
 
-      // add user id and name to metadata
+      // add user id, name and email to metadata
       const updatedMetadata = metadata || {};
       updatedMetadata.userId = authSession.user.id;
       updatedMetadata.name = authSession.user.name;
+      updatedMetadata.email = authSession.user.email;
 
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);

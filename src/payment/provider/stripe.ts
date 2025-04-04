@@ -9,7 +9,7 @@ import { eq, and } from 'drizzle-orm';
  * Stripe payment provider implementation
  */
 export class StripeProvider implements PaymentProvider {
-  
+
   private stripe: Stripe;
   private webhookSecret: string;
 
@@ -84,8 +84,7 @@ export class StripeProvider implements PaymentProvider {
     metadata?: Record<string, string>
   ): Promise<string> {
     try {
-      // Search for existing customer
-      // stripe.customers.retrieve(customerId) does not work with email
+      // Search for existing customer, stripe.customers.retrieve does not work with email
       const customers = await this.stripe.customers.list({
         email,
         limit: 1,
@@ -104,13 +103,11 @@ export class StripeProvider implements PaymentProvider {
       });
 
       // Update user record in database with the new customer ID (non-blocking)
-      this.updateUserWithCustomerId(customer.id, email).catch(error => {
-        console.error('Update user with customer ID failed:', error);
-      });
+      await this.updateUserWithCustomerId(customer.id, email);
 
       return customer.id;
     } catch (error) {
-      console.error('Create or get customer failed:', error);
+      console.error('Create or get customer error:', error);
       throw new Error('Failed to create or get customer');
     }
   }
@@ -134,13 +131,14 @@ export class StripeProvider implements PaymentProvider {
         .returning({ id: user.id });
 
       if (result.length > 0) {
-        console.log(`Updated user ${result[0].id} with customer ID ${customerId}`);
+        console.log(`Updated user ${email} with customer ID ${customerId}`);
       } else {
         console.log(`No user found with email ${email}`);
       }
     } catch (error) {
-      console.error('Update user with customer ID failed:', error);
-      throw error; // Re-throw to be caught by the caller
+      console.error('Update user with customer ID error:', error);
+      // Re-throw to be caught by the caller
+      throw new Error('Failed to update user with customer ID');
     }
   }
 
@@ -224,7 +222,7 @@ export class StripeProvider implements PaymentProvider {
         id: session.id,
       };
     } catch (error) {
-      console.error('Create checkout session failed:', error);
+      console.error('Create checkout session error:', error);
       throw new Error('Failed to create checkout session');
     }
   }
@@ -247,7 +245,7 @@ export class StripeProvider implements PaymentProvider {
         url: session.url,
       };
     } catch (error) {
-      console.error('Create customer portal failed:', error);
+      console.error('Create customer portal error:', error);
       throw new Error('Failed to create customer portal');
     }
   }
@@ -274,7 +272,7 @@ export class StripeProvider implements PaymentProvider {
         metadata: customer.metadata as Record<string, string> || {},
       };
     } catch (error) {
-      console.error('Get customer failed:', error);
+      console.error('Get customer error:', error);
       return null;
     }
   }
@@ -387,17 +385,15 @@ export class StripeProvider implements PaymentProvider {
    * @param signature Webhook signature
    */
   public async handleWebhookEvent(payload: string, signature: string): Promise<void> {
-    let event: Stripe.Event;
-
     try {
       // Verify the event signature if webhook secret is available
-      event = this.stripe.webhooks.constructEvent(
+      const event = this.stripe.webhooks.constructEvent(
         payload,
         signature,
         this.webhookSecret
       );
       // Process the event with the default handler
-      await this.defaultWebhookHandler(event);
+      await this.webhookEventHandler(event);
     } catch (error) {
       console.error('handle webhook event error:', error);
       throw new Error('Failed to handle webhook event');
@@ -408,19 +404,19 @@ export class StripeProvider implements PaymentProvider {
    * Default webhook handler for common event types
    * @param event Stripe event
    */
-  private async defaultWebhookHandler(event: Stripe.Event): Promise<void> {
-    const eventType = event.type;
-    console.log(`handle webhook event, type: ${eventType}`);
-    
+  private async webhookEventHandler(event: Stripe.Event): Promise<void> {
     try {
+      const eventType = event.type;
+      console.log(`handle webhook event, type: ${eventType}`);
+
       // Handle subscription events
       if (eventType.startsWith('customer.subscription.')) {
         const subscription = event.data.object as Stripe.Subscription;
         console.log(`Processing subscription ${subscription.id}, status: ${subscription.status}`);
-        
+
         // Get customerId from subscription
         const customerId = subscription.customer as string;
-        
+
         // Process based on subscription status and event type
         switch (eventType) {
           case 'customer.subscription.created': {
@@ -434,13 +430,13 @@ export class StripeProvider implements PaymentProvider {
               })
               .where(eq(user.customerId, customerId))
               .returning({ id: user.id });
-              
+
             if (result.length > 0) {
               console.log(`Updated user ${customerId} with subscription ${subscription.id}`);
             } else {
               console.warn(`Update operation performed but no rows were updated for customerId ${customerId}`);
             }
-            
+
             break;
           }
           case 'customer.subscription.updated': {
@@ -452,7 +448,7 @@ export class StripeProvider implements PaymentProvider {
                 updatedAt: new Date()
               })
               .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
-              
+
             console.log(`Updated subscription status for user ${customerId} to ${subscription.status}`);
             break;
           }
@@ -466,10 +462,10 @@ export class StripeProvider implements PaymentProvider {
                 updatedAt: new Date()
               })
               .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
-              
+
             console.log(`Removed subscription from user ${customerId}`);
             break;
-          } 
+          }
           case 'customer.subscription.trial_will_end': {
             // Trial ending soon - we could trigger an email notification here
             console.log(`Trial ending soon for subscription ${subscription.id}, customerId ${customerId}`);
@@ -481,16 +477,16 @@ export class StripeProvider implements PaymentProvider {
       else if (eventType.startsWith('checkout.')) {
         if (eventType === 'checkout.session.completed') {
           const session = event.data.object as Stripe.Checkout.Session;
-          
+
           // Only process one-time payments (likely for lifetime plan)
           if (session.mode === 'payment') {
             const customerId = session.customer as string;
             console.log(`Processing one-time payment for customer ${customerId}`);
-            
+
             // Check if this was for a lifetime plan (via metadata)
             const metadata = session.metadata || {};
             const planId = metadata.planId;
-            
+
             if (planId === 'lifetime') {
               // Mark user as lifetime member
               await db
@@ -500,7 +496,7 @@ export class StripeProvider implements PaymentProvider {
                   updatedAt: new Date()
                 })
                 .where(eq(user.customerId, customerId));
-                
+
               console.log(`Marked user ${customerId} as lifetime member`);
             } else {
               // Handle other one-time payments if needed, like increase user credits
@@ -510,7 +506,7 @@ export class StripeProvider implements PaymentProvider {
         }
       }
     } catch (error) {
-      console.error('default webhook handler error:', error);
+      console.error('webhook event handler error:', error);
       throw new Error('Failed to handle webhook event');
     }
   }
