@@ -7,10 +7,7 @@ interface ProfileLayoutProps extends PropsWithChildren, NextPageProps {}
 
 export default async function ProfileLayout({
   children,
-  params,
 }: ProfileLayoutProps) {
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
   const t = await getTranslations('Dashboard.sidebar.settings');
 
   const breadcrumbs = [

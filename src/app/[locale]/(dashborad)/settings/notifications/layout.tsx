@@ -7,10 +7,7 @@ interface NotificationsLayoutProps extends PropsWithChildren, NextPageProps {}
 
 export default async function NotificationsLayout({
   children,
-  params,
 }: NotificationsLayoutProps) {
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
   const t = await getTranslations('Dashboard.sidebar.settings');
 
   const breadcrumbs = [

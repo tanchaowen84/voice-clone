@@ -31,12 +31,6 @@ export async function generateMetadata({
 
   const t = await getTranslations({locale, namespace: 'Metadata'});
 
-  // TODO: add og image
-  // const ogImageUrl = new URL(`${getBaseUrl()}/api/og`);
-  // ogImageUrl.searchParams.append('title', category.name);
-  // ogImageUrl.searchParams.append('description', category.description || '');
-  // ogImageUrl.searchParams.append('type', 'Blog Category');
-
   return constructMetadata({
     title: `${category.name} | ${t('title')}`,
     description: category.description,

@@ -7,10 +7,7 @@ interface BillingLayoutProps extends PropsWithChildren, NextPageProps {}
 
 export default async function BillingLayout({
   children,
-  params,
 }: BillingLayoutProps) {
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
   const t = await getTranslations('Dashboard.sidebar.settings');
 
   const breadcrumbs = [

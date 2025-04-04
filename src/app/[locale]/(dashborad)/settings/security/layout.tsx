@@ -7,10 +7,7 @@ interface SecurityLayoutProps extends PropsWithChildren, NextPageProps {}
 
 export default async function SecurityLayout({
   children,
-  params,
 }: SecurityLayoutProps) {
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
   const t = await getTranslations('Dashboard.sidebar.settings');
 
   const breadcrumbs = [
