@@ -15,6 +15,7 @@ export const user = pgTable("user", {
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
 	subscriptionId: text('subscription_id'),
+	subscriptionStatus: text('subscription_status'),
 	lifetimeMember: boolean('lifetime_member')
 });
 

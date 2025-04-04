@@ -1,14 +1,18 @@
 import Stripe from 'stripe';
 import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, WebhookEventHandler, PaymentType, PaymentTypes, ListCustomerSubscriptionsParams } from '../types';
 import { getPlanById, findPriceInPlan } from '../index';
+import db from '@/db/index';
+import { user } from '@/db/schema';
+import { eq, and } from 'drizzle-orm';
 
 /**
  * Stripe payment provider implementation
  */
 export class StripeProvider implements PaymentProvider {
+  
   private stripe: Stripe;
+  private webhookSecret: string;
   private webhookHandlers: Map<string, WebhookEventHandler[]>;
-  private webhookSecret: string | undefined;
 
   /**
    * Initialize Stripe provider with API key
@@ -19,14 +23,14 @@ export class StripeProvider implements PaymentProvider {
       throw new Error('STRIPE_SECRET_KEY environment variable is not set');
     }
 
-    this.webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (!this.webhookSecret) {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
       throw new Error('STRIPE_WEBHOOK_SECRET environment variable is not set.');
     }
 
     // Initialize Stripe without specifying apiVersion to use default/latest version
     this.stripe = new Stripe(apiKey);
-
+    this.webhookSecret = webhookSecret;
     this.webhookHandlers = new Map();
   }
 
@@ -121,12 +125,6 @@ export class StripeProvider implements PaymentProvider {
    */
   private async updateUserWithCustomerId(customerId: string, email: string): Promise<void> {
     try {
-      // Dynamic import to avoid circular dependencies
-      // TODO: can we avoid using dynamic import?
-      const { default: db } = await import('@/db/index');
-      const { user } = await import('@/db/schema');
-      const { eq } = await import('drizzle-orm');
-
       // Update user record with customer ID if email matches
       const result = await db
         .update(user)
@@ -405,26 +403,21 @@ export class StripeProvider implements PaymentProvider {
    */
   public async handleWebhookEvent(payload: string, signature: string): Promise<void> {
     let event: Stripe.Event;
+    console.log('handle webhook event, hook secret:', this.webhookSecret);
 
     try {
       // Verify the event signature if webhook secret is available
-      if (this.webhookSecret) {
-        event = this.stripe.webhooks.constructEvent(
-          payload,
-          signature,
-          this.webhookSecret
-        );
-      } else {
-        // Parse the event payload without verification
-        event = JSON.parse(payload) as Stripe.Event;
-      }
+      event = this.stripe.webhooks.constructEvent(
+        payload,
+        signature,
+        this.webhookSecret
+      );
 
       console.log(`Received Stripe webhook event: ${event.type}`);
 
       // Process the event based on type
       const handlers = this.webhookHandlers.get(event.type) || [];
       const defaultHandlers = this.webhookHandlers.get('*') || [];
-
       const allHandlers = [...handlers, ...defaultHandlers];
 
       // If no custom handlers are registered, use default handling logic
@@ -435,7 +428,7 @@ export class StripeProvider implements PaymentProvider {
         await Promise.all(allHandlers.map(handler => handler(event)));
       }
     } catch (error) {
-      console.error('Handle webhook event failed:', error);
+      console.error('handle webhook event error:', error);
       throw new Error('Failed to handle webhook event');
     }
   }
@@ -451,58 +444,102 @@ export class StripeProvider implements PaymentProvider {
       // Handle subscription events
       if (eventType.startsWith('customer.subscription.')) {
         const subscription = event.data.object as Stripe.Subscription;
-        console.log(`Subscription ${subscription.id} is ${subscription.status}`);
-
-        // Process based on subscription status
+        console.log(`Processing subscription ${subscription.id}, status: ${subscription.status}`);
+        
+        // Get customerId from subscription
+        const customerId = subscription.customer as string;
+        
+        // Process based on subscription status and event type
         switch (eventType) {
-          case 'customer.subscription.created':
-            // Handle subscription creation
+          case 'customer.subscription.created': {
+            // New subscription created - update user record with subscription ID and status
+            const result = await db
+              .update(user)
+              .set({
+                subscriptionId: subscription.id,
+                subscriptionStatus: subscription.status,
+                updatedAt: new Date()
+              })
+              .where(eq(user.customerId, customerId))
+              .returning({ id: user.id });
+              
+            if (result.length > 0) {
+              console.log(`Updated user ${customerId} with subscription ${subscription.id}`);
+            } else {
+              console.warn(`Update operation performed but no rows were updated for customerId ${customerId}`);
+            }
+            
             break;
-          case 'customer.subscription.updated':
-            // Handle subscription update
+          }
+          case 'customer.subscription.updated': {
+            // Subscription was updated - update status
+            await db
+              .update(user)
+              .set({
+                subscriptionStatus: subscription.status,
+                updatedAt: new Date()
+              })
+              .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
+              
+            console.log(`Updated subscription status for user ${customerId} to ${subscription.status}`);
             break;
-          case 'customer.subscription.deleted':
-            // Handle subscription cancellation
+          }
+          case 'customer.subscription.deleted': {
+            // Subscription was cancelled/deleted - remove from user
+            await db
+              .update(user)
+              .set({
+                subscriptionId: null,
+                subscriptionStatus: 'canceled',
+                updatedAt: new Date()
+              })
+              .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
+              
+            console.log(`Removed subscription from user ${customerId}`);
             break;
-          case 'customer.subscription.trial_will_end':
-            // Handle trial ending soon
+          } 
+          case 'customer.subscription.trial_will_end': {
+            // Trial ending soon - we could trigger an email notification here
+            console.log(`Trial ending soon for subscription ${subscription.id}, customerId ${customerId}`);
             break;
-        }
-      }
-      // Handle payment events
-      else if (eventType.startsWith('payment_intent.')) {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log(`Payment ${paymentIntent.id} is ${paymentIntent.status}`);
-
-        switch (eventType) {
-          case 'payment_intent.succeeded':
-            // Handle successful payment
-            break;
-          case 'payment_intent.payment_failed':
-            // Handle failed payment
-            break;
+          }
         }
       }
       // Handle checkout events
       else if (eventType.startsWith('checkout.')) {
         if (eventType === 'checkout.session.completed') {
           const session = event.data.object as Stripe.Checkout.Session;
-          console.log(`Checkout session ${session.id} completed`);
-
-          // Handle completed checkout
-          if (session.mode === 'subscription') {
-            // Handle subscription checkout
-            const subscriptionId = session.subscription as string;
-            console.log(`New subscription: ${subscriptionId}`);
-          } else if (session.mode === 'payment') {
-            // Handle one-time payment checkout
-            const paymentIntentId = session.payment_intent as string;
-            console.log(`One-time payment: ${paymentIntentId}`);
+          
+          // Only process one-time payments (likely for lifetime plan)
+          if (session.mode === 'payment') {
+            const customerId = session.customer as string;
+            console.log(`Processing one-time payment for customer ${customerId}`);
+            
+            // Check if this was for a lifetime plan (via metadata)
+            const metadata = session.metadata || {};
+            const planId = metadata.planId;
+            
+            if (planId === 'lifetime') {
+              // Mark user as lifetime member
+              await db
+                .update(user)
+                .set({
+                  lifetimeMember: true,
+                  updatedAt: new Date()
+                })
+                .where(eq(user.customerId, customerId));
+                
+              console.log(`Marked user ${customerId} as lifetime member`);
+            } else {
+              // Handle other one-time payments if needed, like increase user credits
+              console.log(`One-time payment for non-lifetime plan: ${planId}, customerId: ${customerId}`);
+            }
           }
         }
       }
     } catch (error) {
-      console.error('Default webhook handler failed:', error);
+      console.error('default webhook handler error:', error);
+      throw new Error('Failed to handle webhook event');
     }
   }
 }

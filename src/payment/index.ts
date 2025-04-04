@@ -1,6 +1,7 @@
 import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, WebhookEventHandler, ListCustomerSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
 import { paymentConfig } from "./config/payment-config";
+
 /**
  * Default payment configuration
  */

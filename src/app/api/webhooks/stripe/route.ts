@@ -2,15 +2,6 @@ import { handleWebhookEvent } from '@/payment';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * Disable body parsing as we need the raw body for signature verification
- */
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}; 
-
-/**
  * Stripe webhook handler
  * This endpoint receives webhook events from Stripe and processes them
  * 
