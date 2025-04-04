@@ -26,12 +26,21 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
+import { SocialLoginButton } from './social-login-button';
 
-export const LoginForm = ({ className }: { className?: string }) => {
+export interface LoginFormProps {
+  className?: string;
+  callbackUrl?: string;
+}
+
+export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginFormProps) => {
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
   const urlError = searchParams.get('error');
+  const paramCallbackUrl = searchParams.get('callbackUrl');
+  // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || DEFAULT_LOGIN_REDIRECT;
+  console.log('login form, callbackUrl', callbackUrl);
 
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
@@ -50,11 +59,11 @@ export const LoginForm = ({ className }: { className?: string }) => {
     // 1. if callbackUrl is provided, user will be redirected to the callbackURL after login successfully.
     // if user email is not verified, a new verification email will be sent to the user with the callbackURL.
     // 2. if callbackUrl is not provided, we should redirect manually in the onSuccess callback.
-    const { data, error } = await authClient.signIn.email(
+    await authClient.signIn.email(
       {
         email: values.email,
         password: values.password,
-        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+        callbackURL: callbackUrl,
       },
       {
         onRequest: (ctx) => {
@@ -89,7 +98,6 @@ export const LoginForm = ({ className }: { className?: string }) => {
       headerLabel={t('welcomeBack')}
       bottomButtonLabel={t('signUpHint')}
       bottomButtonHref={`${Routes.Register}`}
-      showSocialLoginButton
       className={cn('border-none', className)}
     >
       <Form {...form}>
@@ -182,6 +190,9 @@ export const LoginForm = ({ className }: { className?: string }) => {
           </Button>
         </form>
       </Form>
+      <div className="mt-4">
+        <SocialLoginButton callbackUrl={callbackUrl} />
+      </div>
     </AuthCard>
   );
 };

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useLocalePathname } from '@/i18n/navigation';
 import { LoginWrapper } from '../auth/login-wrapper';
 import { CheckoutButton } from './create-checkout-button';
 
@@ -61,7 +62,8 @@ export function PricingCard({
   const t = useTranslations('PricingPage.PricingCard');
   const price = getPriceForPlan(plan, interval, paymentType);
   const currentUser = useCurrentUser();
-
+  const currentPath = useLocalePathname();
+  console.log('pricing card, currentPath', currentPath);
   // generate formatted price and price label
   let formattedPrice = '';
   let priceLabel = '';
@@ -122,7 +124,7 @@ export function PricingCard({
               {t('getStartedForFree')}
             </Button>
           ) : (
-            <LoginWrapper mode="modal" asChild>
+            <LoginWrapper mode="modal" asChild callbackUrl={currentPath}>
               <Button variant="outline" className="mt-4 w-full cursor-pointer">
                 {t('getStartedForFree')}
               </Button>
@@ -144,7 +146,7 @@ export function PricingCard({
               {plan.isLifetime ? t('getLifetimeAccess') : t('getStarted')}
             </CheckoutButton>
           ) : (
-            <LoginWrapper mode="modal" asChild>
+            <LoginWrapper mode="modal" asChild callbackUrl={currentPath}>
               <Button variant="default" className="mt-4 w-full cursor-pointer">
                 {t('getStarted')}
               </Button>

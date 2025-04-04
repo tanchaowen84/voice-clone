@@ -11,14 +11,20 @@ import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 import { DividerWithText } from '@/components/auth/divider-with-text';
 
+interface SocialLoginButtonProps {
+  callbackUrl?: string;
+}
+
 /**
  * social login buttons
  */
-export const SocialLoginButton = () => {
+export const SocialLoginButton = ({ callbackUrl: propCallbackUrl }: SocialLoginButtonProps) => {
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const paramCallbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || DEFAULT_LOGIN_REDIRECT;
   const [isLoading, setIsLoading] = useState<'google' | 'github' | null>(null);
+  console.log('social login button, callbackUrl', callbackUrl);
 
   const onClick = async (provider: 'google' | 'github') => {
     await authClient.signIn.social(
@@ -32,7 +38,7 @@ export const SocialLoginButton = () => {
          * a url to redirect after the user authenticates with the provider
          * @default "/"
          */
-        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+        callbackURL: callbackUrl,
         /**
          * a url to redirect if an error occurs during the sign in process
          */
@@ -61,7 +67,7 @@ export const SocialLoginButton = () => {
           setIsLoading(null);
         },
         onError: (ctx) => {
-          console.log('onError', ctx.error.message);
+          console.log('social login error', ctx.error.message);
           setIsLoading(null);
         },
       }

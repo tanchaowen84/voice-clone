@@ -71,8 +71,8 @@ export function NavUser({ user, className }: NavUserProps) {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          // console.log('sign out success');
-          router.push('/');
+          console.log('sign out success');
+          router.replace('/');
         },
         onError: (error) => {
           console.error('sign out error:', error);

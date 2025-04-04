@@ -25,6 +25,7 @@ import { User } from 'better-auth';
 import { LogOutIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface UserButtonProps {
   user: User;
@@ -48,7 +49,7 @@ export function UserButton({ user }: UserButtonProps) {
         },
         onError: (error) => {
           console.error('sign out error:', error);
-          // TODO: show error message
+          toast.error(t('Common.logoutFailed'));
         },
       },
     });

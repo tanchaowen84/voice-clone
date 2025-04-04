@@ -24,12 +24,19 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
+import { SocialLoginButton } from './social-login-button';
 
-export const RegisterForm = () => {
+interface RegisterFormProps {
+  callbackUrl?: string;
+}
+
+export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps) => {
   const t = useTranslations('AuthPage.register');
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
-
+  const paramCallbackUrl = searchParams.get('callbackUrl');
+  // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || DEFAULT_LOGIN_REDIRECT;
+  console.log('register form, callbackUrl', callbackUrl);
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
@@ -54,7 +61,7 @@ export const RegisterForm = () => {
         email: values.email,
         password: values.password,
         name: values.name,
-        callbackURL: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+        callbackURL: callbackUrl,
       },
       {
         onRequest: (ctx) => {
@@ -90,7 +97,6 @@ export const RegisterForm = () => {
       headerLabel={t('createAccount')}
       bottomButtonLabel={t('signInHint')}
       bottomButtonHref={`${Routes.Login}`}
-      showSocialLoginButton
       className="border-none"
     >
       <Form {...form}>
@@ -181,6 +187,9 @@ export const RegisterForm = () => {
           </Button>
         </form>
       </Form>
+      <div className="mt-4">
+        <SocialLoginButton callbackUrl={callbackUrl} />
+      </div>
     </AuthCard>
   );
 };
