@@ -1,9 +1,9 @@
-import Stripe from 'stripe';
-import { PaymentProvider, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, Customer, GetSubscriptionParams, Subscription, PaymentStatus, PlanInterval, PaymentType, PaymentTypes, ListCustomerSubscriptionsParams } from '../types';
-import { getPlanById, findPriceInPlan } from '../index';
 import db from '@/db/index';
 import { user } from '@/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
+import Stripe from 'stripe';
+import { findPriceInPlan, getPlanById } from '../index';
+import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, Customer, GetCustomerParams, GetSubscriptionParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PortalResult, Subscription } from '../types';
 
 /**
  * Stripe payment provider implementation
@@ -30,45 +30,6 @@ export class StripeProvider implements PaymentProvider {
     // Initialize Stripe without specifying apiVersion to use default/latest version
     this.stripe = new Stripe(apiKey);
     this.webhookSecret = webhookSecret;
-  }
-
-  /**
-   * Convert Stripe subscription status to PaymentStatus
-   * @param status Stripe subscription status
-   * @returns PaymentStatus
-   */
-  private mapSubscriptionStatus(status: Stripe.Subscription.Status): PaymentStatus {
-    const statusMap: Record<string, PaymentStatus> = {
-      active: 'active',
-      canceled: 'canceled',
-      incomplete: 'incomplete',
-      incomplete_expired: 'failed',
-      past_due: 'past_due',
-      trialing: 'trialing',
-      unpaid: 'unpaid',
-      paused: 'past_due', // Map paused to past_due as a reasonable default
-    };
-
-    return statusMap[status] || 'failed';
-  }
-
-  /**
-   * Convert Stripe payment intent status to PaymentStatus
-   * @param status Stripe payment intent status
-   * @returns PaymentStatus
-   */
-  private mapPaymentIntentStatus(status: Stripe.PaymentIntent.Status): PaymentStatus {
-    const statusMap: Record<string, PaymentStatus> = {
-      succeeded: 'completed',
-      processing: 'processing',
-      requires_payment_method: 'incomplete',
-      requires_confirmation: 'incomplete',
-      requires_action: 'incomplete',
-      requires_capture: 'processing',
-      canceled: 'canceled',
-    };
-
-    return statusMap[status] || 'failed';
   }
 
   /**
@@ -148,7 +109,7 @@ export class StripeProvider implements PaymentProvider {
    * @returns Checkout result
    */
   public async createCheckout(params: CreateCheckoutParams): Promise<CheckoutResult> {
-    const { planId, priceId, customerEmail, successUrl, cancelUrl, metadata } = params;
+    const { planId, priceId, customerEmail, successUrl, cancelUrl, metadata, locale } = params;
 
     try {
       // Get plan and price
@@ -175,7 +136,6 @@ export class StripeProvider implements PaymentProvider {
       }];
 
       // Create checkout session parameters
-      // TODO: add locale to checkout params
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
         mode: price.type === PaymentTypes.RECURRING ? 'subscription' : 'payment',
@@ -187,6 +147,11 @@ export class StripeProvider implements PaymentProvider {
           ...metadata,
         },
       };
+
+      // Add locale if provided
+      if (locale) {
+        checkoutParams.locale = this.mapLocaleToStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
+      }
 
       // Get customer name from metadata if available
       const customerName = metadata?.name;
@@ -487,7 +452,14 @@ export class StripeProvider implements PaymentProvider {
             const metadata = session.metadata || {};
             const planId = metadata.planId;
 
-            if (planId === 'lifetime') {
+            // Safely handle the case where planId might not exist
+            if (!planId) {
+              console.log(`No planId found in metadata for checkout session ${session.id}, customerId: ${customerId}`);
+              return;
+            }
+
+            const plan = getPlanById(planId);
+            if (plan && plan.isLifetime) {
               // Mark user as lifetime member
               await db
                 .update(user)
@@ -509,5 +481,55 @@ export class StripeProvider implements PaymentProvider {
       console.error('webhook event handler error:', error);
       throw new Error('Failed to handle webhook event');
     }
+  }
+
+  /**
+   * Map application locale to Stripe's supported locales
+   * @param locale Application locale (e.g., 'en', 'zh-CN')
+   * @returns Stripe locale string
+   */
+  private mapLocaleToStripeLocale(locale: string): string {
+    // Stripe supported locales as of 2023: 
+    // https://stripe.com/docs/js/appendix/supported_locales
+    const stripeLocales = [
+      'bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fil',
+      'fr', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'ms',
+      'mt', 'nb', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv',
+      'th', 'tr', 'vi', 'zh'
+    ];
+
+    // First check if the exact locale is supported
+    if (stripeLocales.includes(locale)) {
+      return locale;
+    }
+
+    // If not, try to get the base language
+    const baseLocale = locale.split('-')[0];
+    if (stripeLocales.includes(baseLocale)) {
+      return baseLocale;
+    }
+
+    // Default to auto to let Stripe detect the language
+    return 'auto';
+  }
+
+  /**
+   * Convert Stripe subscription status to PaymentStatus
+   * @param status Stripe subscription status
+   * @returns PaymentStatus
+   */
+  private mapSubscriptionStatus(status: Stripe.Subscription.Status): PaymentStatus {
+    const statusMap: Record<string, PaymentStatus> = {
+      active: 'active',
+      canceled: 'canceled',
+      incomplete: 'incomplete',
+      incomplete_expired: 'failed',
+      past_due: 'past_due',
+      trialing: 'trialing',
+      unpaid: 'unpaid',
+      paused: 'past_due', // Map paused to past_due as a reasonable default
+    };
+
+    return statusMap[status] || 'failed';
   }
 }

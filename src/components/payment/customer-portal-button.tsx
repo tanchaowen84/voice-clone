@@ -3,7 +3,7 @@
 import { createPortalAction } from '@/actions/create-customer-portal-session';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -48,7 +48,7 @@ export function CustomerPortalButton({
       if (result && result.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
       } else {
-        console.error('Create customer portal failed:', result);
+        console.error('Create customer portal error, result:', result);
         toast.error(t('createCustomerPortalFailed'));
       }
     } catch (error) {
@@ -69,7 +69,7 @@ export function CustomerPortalButton({
     >
       {isLoading ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
           {t('loading')}
         </>
       ) : (

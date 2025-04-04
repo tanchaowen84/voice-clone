@@ -26,10 +26,10 @@ import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 
 export const ForgotPasswordForm = ({ className }: { className?: string }) => {
+  const t = useTranslations('AuthPage.forgotPassword');
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
-  const t = useTranslations('AuthPage.forgotPassword');
   const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
@@ -48,8 +48,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   }, [searchParams, form]);
 
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
-    console.log('forgotPassword, values:', values);
-    const { data, error } = await authClient.forgetPassword(
+    await authClient.forgetPassword(
       {
         email: values.email,
         redirectTo: `${Routes.ResetPassword}`,

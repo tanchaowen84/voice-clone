@@ -8,29 +8,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
+import { formatDate, formatPrice } from '@/lib/formatter';
 import { getAllPlans } from '@/payment';
 import { PlanIntervals, Subscription } from '@/payment/types';
 import { RefreshCwIcon, RocketIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-
-// Utility function to format prices
-const formatPrice = (amount: number, currency: string = 'USD') => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 0,
-  }).format(amount / 100);
-};
-
-// Utility function to format dates
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(date);
-};
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.sidebar.settings.items.billing');

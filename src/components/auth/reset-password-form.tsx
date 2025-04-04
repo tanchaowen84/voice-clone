@@ -14,13 +14,14 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { ResetPasswordSchema } from '@/lib/schemas';
 import { Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { notFound, useRouter, useSearchParams } from 'next/navigation';
+import { notFound, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
@@ -42,7 +43,7 @@ export const ResetPasswordForm = () => {
     notFound();
   }
 
-  const router = useRouter();
+  const router = useLocaleRouter();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
@@ -61,7 +62,7 @@ export const ResetPasswordForm = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof ResetPasswordSchema>) => {
-    const { data, error } = await authClient.resetPassword(
+    await authClient.resetPassword(
       {
         newPassword: values.password,
         token,

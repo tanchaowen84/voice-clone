@@ -1,5 +1,6 @@
 'use client';
 
+import { LoginForm } from '@/components/auth/login-form';
 import {
   Dialog,
   DialogContent,
@@ -7,10 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { LoginForm } from '@/components/auth/login-form';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Routes, authRoutes } from '@/routes';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useLocaleRouter } from '@/i18n/navigation';
+import { Routes } from '@/routes';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface LoginWrapperProps {
@@ -24,7 +25,7 @@ export const LoginWrapper = ({
   mode = 'redirect',
   asChild,
 }: LoginWrapperProps) => {
-  const router = useRouter();
+  const router = useLocaleRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,18 +42,15 @@ export const LoginWrapper = ({
 
   // 1. don't open the modal if the user is already in the auth pages
   // 2. keep isTablet or isDesktop open, if user resizes the window
-  // 3. TODO: pathname as Routes ???
-  const isAuthRoute = authRoutes.includes(pathname as Routes);
-  if (mode === 'modal' && !isAuthRoute && (isTablet || isDesktop)) {
+  if (mode === 'modal' && (isTablet || isDesktop)) {
     return (
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[400px] p-0">
           <DialogHeader>
-            {/* `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users. */}
             <DialogTitle />
           </DialogHeader>
-          <LoginForm className="" />
+          <LoginForm />
         </DialogContent>
       </Dialog>
     );

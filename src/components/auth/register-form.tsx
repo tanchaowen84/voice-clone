@@ -26,9 +26,9 @@ import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
 export const RegisterForm = () => {
+  const t = useTranslations('AuthPage.register');
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
-  const t = useTranslations('AuthPage.register');
 
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
@@ -49,7 +49,7 @@ export const RegisterForm = () => {
     // the user will be redirected to the callbackURL after the email is verified.
     // 2. if requireEmailVerification is false, the user will not be redirected to the callbackURL,
     // we should redirect to the callbackURL manually in the onSuccess callback.
-    const { data, error } = await authClient.signUp.email(
+    await authClient.signUp.email(
       {
         email: values.email,
         password: values.password,

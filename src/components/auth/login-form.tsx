@@ -28,10 +28,10 @@ import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
 export const LoginForm = ({ className }: { className?: string }) => {
+  const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const urlError = searchParams.get('error');
-  const t = useTranslations('AuthPage.login');
 
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');

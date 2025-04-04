@@ -1,5 +1,4 @@
-import { Stripe } from 'stripe';
-import { Locale, Messages } from 'next-intl';
+import { Locale } from 'next-intl';
 
 /**
  * Interval types for subscription plans
@@ -24,7 +23,7 @@ export enum PaymentTypes {
 /**
  * Status of a payment or subscription
  */
-export type PaymentStatus = 
+export type PaymentStatus =
   | 'active'     // Subscription is active
   | 'canceled'   // Subscription has been canceled
   | 'incomplete' // Payment not completed
@@ -58,7 +57,6 @@ export interface PricePlan {
   prices: Price[];                   // Available prices for this plan
   isFree: boolean;                   // Whether this is a free plan
   isLifetime: boolean;               // Whether this is a lifetime plan
-  // isSubscription: boolean;           // Whether this is a subscription plan
   recommended?: boolean;             // Whether to mark this plan as recommended in UI
 }
 
@@ -123,7 +121,6 @@ export interface CreateCheckoutParams {
   cancelUrl?: string;
   metadata?: Record<string, string>;
   locale?: Locale;
-  messages?: Messages;
 }
 
 /**
@@ -181,27 +178,27 @@ export interface PaymentProvider {
    * Create a checkout session for a plan
    */
   createCheckout(params: CreateCheckoutParams): Promise<CheckoutResult>;
-  
+
   /**
    * Create a customer portal session
    */
   createCustomerPortal(params: CreatePortalParams): Promise<PortalResult>;
-  
+
   /**
    * Get customer details
    */
   getCustomer(params: GetCustomerParams): Promise<Customer | null>;
-  
+
   /**
    * Get subscription details
    */
   getSubscription(params: GetSubscriptionParams): Promise<Subscription | null>;
-  
+
   /**
    * List customer subscriptions
    */
   listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]>;
-  
+
   /**
    * Handle webhook events
    */

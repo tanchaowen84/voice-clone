@@ -2,11 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LocaleLink } from '@/i18n/navigation';
+import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { LoginWrapper } from '../auth/login-button';
 import { CheckoutButton } from './create-checkout-button';
 
 interface PricingCardProps {
@@ -16,22 +17,6 @@ interface PricingCardProps {
   metadata?: Record<string, string>;
   className?: string;
   isCurrentPlan?: boolean;
-}
-
-/**
- * Format a price for display
- * @param price Price amount in currency units (dollars, euros, etc.)
- * @param currency Currency code
- * @returns Formatted price string
- */
-function formatPrice(price: number, currency: string): string {
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 0,
-  });
-
-  return formatter.format(price / 100); // Convert from cents to dollars
 }
 
 /**
@@ -73,7 +58,6 @@ export function PricingCard({
   isCurrentPlan = false,
 }: PricingCardProps) {
   const t = useTranslations('PricingPage.PricingCard');
-  // price of free plan is undefined
   const price = getPriceForPlan(plan, interval, paymentType);
 
   // generate formatted price and price label
@@ -131,24 +115,27 @@ export function PricingCard({
         <CardDescription className="text-sm">{plan.description}</CardDescription>
 
         {plan.isFree ? (
-          <Button asChild variant="outline" className="mt-4 w-full">
-            {/* TODO: add link to signup page */}
-            <LocaleLink href="/auth/login">{t('getStartedForFree')}</LocaleLink>
-          </Button>
+          <LoginWrapper mode="modal" asChild>
+            <Button variant="outline" className="mt-4 w-full cursor-pointer">
+              {t('getStartedForFree')}
+            </Button>
+          </LoginWrapper>
         ) : isCurrentPlan ? (
           <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 
           text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
             {t('yourCurrentPlan')}
           </Button>
         ) : isPaidPlan ? (
-          <CheckoutButton
-            planId={plan.id}
-            priceId={price.productId}
-            metadata={metadata}
-            className="mt-4 w-full cursor-pointer"
-          >
-            {paymentType === PaymentTypes.ONE_TIME ? t('getLifetimeAccess') : t('getStarted')}
-          </CheckoutButton>
+          <LoginWrapper mode="modal" asChild>
+            <CheckoutButton
+              planId={plan.id}
+              priceId={price.productId}
+              metadata={metadata}
+              className="mt-4 w-full cursor-pointer"
+            >
+              {plan.isLifetime ? t('getLifetimeAccess') : t('getStarted')}
+            </CheckoutButton>
+          </LoginWrapper>
         ) : (
           <Button disabled className="mt-4 w-full">
             {t('notAvailable')}
