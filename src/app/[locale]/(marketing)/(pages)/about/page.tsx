@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { MailIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';

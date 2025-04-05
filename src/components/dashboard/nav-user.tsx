@@ -34,7 +34,7 @@ import { Locale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
-import { UserAvatar } from '../shared/user-avatar';
+import { UserAvatar } from '../layout/user-avatar';
 import { toast } from 'sonner';
 import { User } from 'better-auth';
 

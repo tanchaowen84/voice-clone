@@ -1,6 +1,6 @@
 import { XTwitterIcon } from '@/components/icons/x';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { websiteConfig } from '@/config';
 import { LOCALE_LIST } from '@/i18n/routing';
 import { docsI18nConfig } from '@/lib/docs/i18n';

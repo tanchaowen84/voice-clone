@@ -7,7 +7,7 @@ import { websiteConfig } from '@/config';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts, Post } from 'content-collections';

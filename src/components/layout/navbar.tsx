@@ -1,11 +1,11 @@
 'use client';
 
 import { LoginWrapper } from '@/components/auth/login-wrapper';
-import Container from '@/components/shared/container';
+import Container from '@/components/layout/container';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/layout/user-button';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,

@@ -1,4 +1,4 @@
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import Link from 'next/link';
 
 const links = [

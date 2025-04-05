@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { getLocalePathname } from '@/i18n/navigation';
-import { getBaseUrl } from './lib/urls/get-base-url';
+import { getBaseUrl } from './lib/urls/urls';
 import { Locale } from 'next-intl';
 
 /**

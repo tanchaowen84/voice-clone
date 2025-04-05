@@ -1,4 +1,4 @@
-import Container from '@/components/shared/container';
+import Container from '@/components/layout/container';
 import { PropsWithChildren } from 'react';
 
 export default function BlogPostLayout({ children }: PropsWithChildren) {

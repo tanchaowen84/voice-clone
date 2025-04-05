@@ -1,7 +1,7 @@
 import { websiteConfig } from '@/config';
 import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
-import { getBaseUrl } from './urls/get-base-url';
+import { getBaseUrl } from './urls/urls';
 import { defaultMessages } from '@/i18n/messages';
 
 /**

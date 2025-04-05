@@ -1,7 +1,7 @@
 import { LoginForm } from '@/components/auth/login-form';
 import { LocaleLink } from '@/i18n/navigation';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Routes } from '@/routes';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';

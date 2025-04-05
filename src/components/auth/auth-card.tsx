@@ -1,7 +1,7 @@
 'use client';
 
 import { BottomLink } from '@/components/auth/bottom-link';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import {
   Card,
   CardContent,

@@ -1,11 +1,12 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
-import { addLocaleToUrl, getLocaleFromRequest } from '@/lib/utils';
+import { getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin, username } from 'better-auth/plugins';
+import { getUrlWithLocale } from './urls/urls';
 
 /**
  * TODO: init username when user signup
@@ -51,7 +52,7 @@ export const auth = betterAuth({
       // console.log('[Auth] Reset password original URL:', url);
 
       // Add locale to URL if necessary
-      const localizedUrl = addLocaleToUrl(url, locale);
+      const localizedUrl = getUrlWithLocale(url, locale);
       // console.log('[Auth] Reset password localized URL:', localizedUrl);
 
       await send({
@@ -74,7 +75,7 @@ export const auth = betterAuth({
       // console.log('[Auth] Verification email original URL:', url);
 
       // Add locale to URL if necessary
-      const localizedUrl = addLocaleToUrl(url, locale);
+      const localizedUrl = getUrlWithLocale(url, locale);
       // console.log('[Auth] Verification email localized URL:', localizedUrl);
 
       await send({

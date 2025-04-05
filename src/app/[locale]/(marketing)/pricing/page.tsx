@@ -1,8 +1,8 @@
-import Container from '@/components/shared/container';
+import Container from '@/components/layout/container';
 import { PricingTable } from '@/components/payment/pricing-table';
-import { HeaderSection } from '@/components/shared/header-section';
+import { HeaderSection } from '@/components/layout/header-section';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { getAllPlans } from '@/payment';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';

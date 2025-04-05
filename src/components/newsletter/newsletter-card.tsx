@@ -1,6 +1,6 @@
 'use client';
 
-import { HeaderSection } from '@/components/shared/header-section';
+import { HeaderSection } from '@/components/layout/header-section';
 import { NewsletterForm } from '@/components/newsletter/newsletter-form';
 import { useTranslations } from 'next-intl';
 

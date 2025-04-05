@@ -1,7 +1,7 @@
 import { ReleaseCard } from '@/components/release/release-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getReleases } from '@/lib/release/get-releases';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';

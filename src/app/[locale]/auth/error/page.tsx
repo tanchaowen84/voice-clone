@@ -1,6 +1,6 @@
 import { ErrorCard } from '@/components/auth/error-card';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';

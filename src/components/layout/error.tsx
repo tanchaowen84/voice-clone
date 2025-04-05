@@ -1,6 +1,6 @@
 'use client';
 
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { Loader2Icon } from 'lucide-react';

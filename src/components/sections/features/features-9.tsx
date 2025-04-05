@@ -1,5 +1,5 @@
 'use client';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { Activity, Map as MapIcon, MessageCircle } from 'lucide-react';
 import DottedMap from 'dotted-map';
 import { Area, AreaChart, CartesianGrid } from 'recharts';

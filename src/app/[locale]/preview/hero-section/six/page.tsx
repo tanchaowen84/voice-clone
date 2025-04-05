@@ -1,5 +1,5 @@
 'use client';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Mail, Menu, SendHorizonal, X } from 'lucide-react';
 import Image from 'next/image';

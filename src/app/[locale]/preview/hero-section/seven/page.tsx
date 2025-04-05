@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 import Link from 'next/link';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@/components/layout/logo';
 import { ArrowRight, Menu, Rocket, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

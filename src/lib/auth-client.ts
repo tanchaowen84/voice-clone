@@ -1,6 +1,6 @@
 import { createAuthClient } from 'better-auth/react';
 import { adminClient, inferAdditionalFields, usernameClient } from 'better-auth/client/plugins';
-import { getBaseUrl } from './urls/get-base-url';
+import { getBaseUrl } from './urls/urls';
 import { auth } from './auth';
 
 /**

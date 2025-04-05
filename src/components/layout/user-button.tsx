@@ -1,6 +1,6 @@
 'use client';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
+import { UserAvatar } from '@/components/layout/user-avatar';
 import {
   Drawer,
   DrawerContent,

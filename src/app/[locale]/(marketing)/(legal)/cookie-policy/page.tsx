@@ -1,7 +1,7 @@
 import { CustomPage } from '@/components/page/custom-page';
 import { constructMetadata } from '@/lib/metadata';
 import { getCustomPage } from '@/lib/page/get-custom-page';
-import { getBaseUrlWithLocale } from '@/lib/urls/get-base-url';
+import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';

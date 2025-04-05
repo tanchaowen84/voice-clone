@@ -1,6 +1,6 @@
 import { BlogCategoryFilter } from '@/components/blog/blog-category-filter';
-import Container from '@/components/shared/container';
-import { HeaderSection } from '@/components/shared/header-section';
+import Container from '@/components/layout/container';
+import { HeaderSection } from '@/components/layout/header-section';
 import { PropsWithChildren } from 'react';
 import { allCategories } from 'content-collections';
 import { getTranslations } from 'next-intl/server';
