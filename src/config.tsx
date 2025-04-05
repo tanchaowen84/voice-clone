@@ -449,25 +449,25 @@ export function getSidebarLinks(): NestedMenuItem[] {
       icon: <Settings2Icon className="site-4 shrink-0" />,
       items: [
         {
-          title: t('Dashboard.settings.items.profile.title'),
+          title: t('Dashboard.'settings.profile.title'),
           icon: <CircleUserRoundIcon className="site-4 shrink-0" />,
           href: Routes.SettingsProfile,
           external: false,
         },
         {
-          title: t('Dashboard.settings.items.billing.title'),
+          title: t('Dashboard.'settings.billing.title'),
           icon: <CreditCardIcon className="site-4 shrink-0" />,
           href: Routes.SettingsBilling,
           external: false,
         },
         {
-          title: t('Dashboard.settings.items.security.title'),
+          title: t('Dashboard.'settings.security.title'),
           icon: <LockKeyholeIcon className="site-4 shrink-0" />,
           href: Routes.SettingsSecurity,
           external: false,
         },
         {
-          title: t('Dashboard.settings.items.notification.title'),
+          title: t('Dashboard.'settings.notification.title'),
           icon: <BellIcon className="site-4 shrink-0" />,
           href: Routes.SettingsNotifications,
           external: false,

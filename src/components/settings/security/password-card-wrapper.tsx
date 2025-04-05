@@ -72,7 +72,7 @@ export function PasswordCardWrapper() {
 }
 
 function PasswordSkeletonCard() {
-  const t = useTranslations('Dashboard.settings.items.security.updatePassword');
+  const t = useTranslations('Dashboard.'settings.security.updatePassword');
   return (
     <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col")}>
       <CardHeader>

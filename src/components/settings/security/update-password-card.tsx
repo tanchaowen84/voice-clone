@@ -46,7 +46,7 @@ interface UpdatePasswordCardProps {
  * @see https://www.better-auth.com/docs/authentication/email-password#update-password
  */
 export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
-  const t = useTranslations('Dashboard.settings.items.security.updatePassword');
+  const t = useTranslations('Dashboard.'settings.security.updatePassword');
   const [isSaving, setIsSaving] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);

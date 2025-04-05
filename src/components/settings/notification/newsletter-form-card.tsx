@@ -40,7 +40,7 @@ interface NewsletterFormCardProps {
  * Allows users to toggle their newsletter subscription status
  */
 export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
-  const t = useTranslations('Dashboard.settings.items.notification');
+  const t = useTranslations('Dashboard.'settings.notification');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>('');
   const [isSubscriptionChecked, setIsSubscriptionChecked] = useState(false);

@@ -37,7 +37,7 @@ interface ResetPasswordCardProps {
  * This effectively adds a credential provider to their account, enabling email/password login.
  */
 export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
-  const t = useTranslations('Dashboard.settings.items.security.resetPassword');
+  const t = useTranslations('Dashboard.'settings.security.resetPassword');
   const router = useLocaleRouter();
   const { data: session } = authClient.useSession();
 
