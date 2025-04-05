@@ -166,17 +166,21 @@ export class StripeProvider implements PaymentProvider {
       // Add customer to checkout session
       checkoutParams.customer = customerId;
 
-      // Add trial period if it's a subscription and has trial days
-      if (price.type === PaymentTypes.RECURRING
-        && price.trialPeriodDays && price.trialPeriodDays > 0) {
+      // Add subscription data for recurring payments
+      if (price.type === PaymentTypes.RECURRING) {
+        // Initialize subscription_data with metadata
         checkoutParams.subscription_data = {
-          trial_period_days: price.trialPeriodDays,
           metadata: {
             planId,
             priceId,
             ...metadata,
           },
         };
+        
+        // Add trial period if applicable
+        if (price.trialPeriodDays && price.trialPeriodDays > 0) {
+          checkoutParams.subscription_data.trial_period_days = price.trialPeriodDays;
+        }
       }
 
       // Create the checkout session
@@ -280,10 +284,9 @@ export class StripeProvider implements PaymentProvider {
           ? new Date(subscription.trial_end * 1000)
           : undefined,
         createdAt: new Date(subscription.created * 1000),
-        updatedAt: new Date(),
       };
     } catch (error) {
-      console.error('Get subscription failed:', error);
+      console.error('Get subscription error:', error);
       return null;
     }
   }
@@ -305,12 +308,14 @@ export class StripeProvider implements PaymentProvider {
         // Sort by creation date, newest first
         status: status as any, // Type cast to handle our custom status types
       });
+      console.log('list customer subscriptions:', subscriptions);
 
       // Map to our subscription model
       return subscriptions.data.map(subscription => {
         // Determine the interval if available
         let interval: PlanInterval | undefined = undefined;
-        if (subscription.items.data[0]?.plan.interval === 'month' || subscription.items.data[0]?.plan.interval === 'year') {
+        if (subscription.items.data[0]?.plan.interval === 'month'
+          || subscription.items.data[0]?.plan.interval === 'year') {
           interval = subscription.items.data[0]?.plan.interval as PlanInterval;
         }
 
@@ -339,7 +344,7 @@ export class StripeProvider implements PaymentProvider {
         };
       });
     } catch (error) {
-      console.error('List customer subscriptions failed:', error);
+      console.error('List customer subscriptions error:', error);
       return [];
     }
   }

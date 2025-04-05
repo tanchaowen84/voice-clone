@@ -383,6 +383,7 @@
     },
     "avatar": {
       "dashboard": "工作台",
+      "billing": "账单",
       "settings": "设置"
     }
   },
@@ -441,10 +442,11 @@
         },
         "nextBillingDate": "下次账单日期：",
         "trialEnds": "试用结束日期：",
-        "manageSubscription": "管理订阅",
         "freePlanMessage": "您当前使用的是功能有限的免费方案",
         "lifetimeMessage": "您拥有所有高级功能的终身使用权限",
-        "viewBillingHistory": "查看账单历史",
+        "manageSubscription": "管理订阅",
+        "billingHistory": "账单历史",
+        "manageBilling": "管理订阅和账单",
         "retry": "重试",
         "errorMessage": "获取数据失败"
       },

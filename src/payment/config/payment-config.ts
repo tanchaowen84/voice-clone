@@ -16,7 +16,6 @@ const freePlan: PricePlan = {
   prices: [],
   isFree: true,
   isLifetime: false,
-  // isSubscription: true,
 };
 
 /**
@@ -41,7 +40,6 @@ const proPlan: PricePlan = {
       amount: 990,
       currency: "USD",
       interval: PlanIntervals.MONTH,
-      trialPeriodDays: 7,
     },
     {
       type: PaymentTypes.RECURRING,
@@ -49,12 +47,10 @@ const proPlan: PricePlan = {
       amount: 9900,
       currency: "USD",
       interval: PlanIntervals.YEAR,
-      trialPeriodDays: 7,
     },
   ],
   isFree: false,
   isLifetime: false,
-  // isSubscription: true,
   recommended: true,
 };
 
@@ -84,7 +80,6 @@ const lifetimePlan: PricePlan = {
   ],
   isFree: false,
   isLifetime: true,
-  // isSubscription: false,
 };
 
 /**

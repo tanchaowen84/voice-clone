@@ -6,8 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
 import { formatDate, formatPrice } from '@/lib/formatter';
 import { getAllPlans } from '@/payment';
 import { PlanIntervals, Subscription } from '@/payment/types';
@@ -17,11 +17,13 @@ import { useEffect, useMemo, useState } from 'react';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.settings.billing');
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | undefined>('');
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
-  const currentUser = useCurrentUser();
+  // const currentUser = useCurrentUser();
+  const { data: session, isPending } = authClient.useSession();
+  const currentUser = session?.user;
   const isLifetimeMember = currentUser?.lifetimeMember === true;
 
   // Get all available plans
@@ -29,7 +31,7 @@ export default function BillingCard() {
 
   // Fetch user subscription data if user has a subscription ID
   const fetchUserSubscription = async () => {
-    setLoading(true);
+    setIsLoading(true);
     setError('');
 
     try {
@@ -49,7 +51,7 @@ export default function BillingCard() {
       console.error('fetch subscription data error:', error);
       setError(t('errorMessage'));
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +79,9 @@ export default function BillingCard() {
       : null;
 
     // Determine if the user can upgrade (not a lifetime member)
-    const canUpgrade = !isLifetimeMember;
+    // const canUpgrade = !isLifetimeMember;
+    // Determine if the user can upgrade (free plan)
+    const canUpgrade = currentPlan?.isFree;
 
     return { currentPlan, currentPrice, nextBillingDate, canUpgrade };
   }, [isLifetimeMember, plans, subscription]);
@@ -91,7 +95,7 @@ export default function BillingCard() {
           <CardDescription>{t('currentPlan.description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {loading ? (
+          {isPending || isLoading ? (
             <div className="space-y-3">
               <Skeleton className="h-6 w-1/2" />
               <Skeleton className="h-6 w-full" />
@@ -154,7 +158,7 @@ export default function BillingCard() {
           )}
         </CardContent>
         <CardFooter>
-          {loading ? (
+          {isPending || isLoading ? (
             <Skeleton className="h-10 w-full" />
           ) : error ? (
             <Button
@@ -166,14 +170,14 @@ export default function BillingCard() {
               {t('retry')}
             </Button>
           ) : (
-            <div className="grid w-full gap-3 lg:grid-cols-2">
+            <div className="grid w-full gap-3">
               {/* Manage subscription button */}
-              {subscription && currentUser?.customerId && (
+              {currentUser?.customerId && (
                 <CustomerPortalButton
                   customerId={currentUser.customerId}
                   className="w-full"
                 >
-                  {t('manageSubscription')}
+                  {t('manageBilling')}
                 </CustomerPortalButton>
               )}
 
@@ -186,19 +190,9 @@ export default function BillingCard() {
                 >
                   <LocaleLink href="/pricing">
                     {/* <RocketIcon className="size-4 mr-2" /> */}
-                    {'Change Plan'}
+                    {t('upgradePlan')}
                   </LocaleLink>
                 </Button>
-              )}
-
-              {/* Lifetime member billing history button */}
-              {isLifetimeMember && currentUser?.customerId && (
-                <CustomerPortalButton
-                  customerId={currentUser.customerId}
-                  className="w-full"
-                >
-                  {t('viewBillingHistory')}
-                </CustomerPortalButton>
               )}
             </div>
           )}

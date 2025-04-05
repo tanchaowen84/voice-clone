@@ -18,7 +18,7 @@ export const getUserSubscriptionAction = actionClient
       headers: await headers(),
     });
 
-    if (!session?.user) {
+    if (!session?.user || !session.user.customerId) {
       return {
         success: false,
         error: 'Unauthorized',
@@ -28,39 +28,37 @@ export const getUserSubscriptionAction = actionClient
     try {
       // Get the effective customer ID (from session or input)
       const customerId = session.user.customerId;
-      const subscriptionId = session.user.subscriptionId;
+      // const subscriptionId = session.user.subscriptionId;
+      console.log('customerId:', customerId);
 
-      // If we have a subscription ID, fetch the subscription details directly
       let subscriptionData = null;
-      if (subscriptionId) {
-        subscriptionData = await getSubscription({ subscriptionId });
-      }
-      // If we have a customer ID but no subscription ID, try to find the active subscription for this customer
-      else if (customerId) {
-        // Get the payment provider to access its methods
-        const provider = getPaymentProvider();
+      // Get the payment provider to access its methods
+      const provider = getPaymentProvider();
 
-        // Find the customer's most recent active subscription
-        const subscriptions = await provider.listCustomerSubscriptions({
-          customerId: customerId
-        });
+      // Find the customer's most recent active subscription
+      const subscriptions = await provider.listCustomerSubscriptions({
+        customerId: customerId
+      });
+      console.log('get user subscriptions:', subscriptions);
 
-        // Find the most recent active subscription (if any)
-        if (subscriptions && subscriptions.length > 0) {
-          // First try to find an active subscription
-          const activeSubscription = subscriptions.find(sub =>
-            sub.status === 'active' || sub.status === 'trialing'
-          );
+      // Find the most recent active subscription (if any)
+      if (subscriptions && subscriptions.length > 0) {
+        // First try to find an active subscription
+        const activeSubscription = subscriptions.find(sub =>
+          sub.status === 'active' || sub.status === 'trialing'
+        );
 
-          // If found, use it
-          if (activeSubscription) {
-            subscriptionData = activeSubscription;
-          }
-          // Otherwise, use the most recent subscription (first in the list, as they should be sorted by date)
-          else if (subscriptions.length > 0) {
-            subscriptionData = subscriptions[0];
-          }
+        // If found, use it
+        if (activeSubscription) {
+          subscriptionData = activeSubscription;
         }
+        // Otherwise, use the most recent subscription (first in the list, as they should be sorted by date)
+        else if (subscriptions.length > 0) {
+          subscriptionData = subscriptions[0];
+        }
+        console.log('find subscription:', subscriptionData, 'for customerId:', customerId);
+      } else {
+        console.log('no subscriptions found for customerId:', customerId);
       }
 
       return {
@@ -68,7 +66,7 @@ export const getUserSubscriptionAction = actionClient
         data: subscriptionData,
       };
     } catch (error) {
-      console.error("fetch user subscription data error:", error);
+      console.error("get user subscription data error:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Something went wrong',

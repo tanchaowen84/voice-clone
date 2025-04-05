@@ -8,12 +8,26 @@ import {
 } from "@/components/ui/card";
 import { LocaleLink } from "@/i18n/navigation";
 import { Routes } from "@/routes";
+import { Session } from "@/lib/auth";
 import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function SidebarUpgradeCard() {
+interface SidebarUpgradeCardProps {
+  user: Session['user'];
+}
+
+export function SidebarUpgradeCard({ user }: SidebarUpgradeCardProps) {
   const t = useTranslations('Dashboard.upgrade');
-  
+
+  // user is a member if they have a lifetime membership or an active/trialing subscription
+  const isMember = user?.lifetimeMember ||
+    (user?.subscriptionId && (user.subscriptionStatus === 'active' || user.subscriptionStatus === 'trialing'));
+
+  // if user is a member, don't show the upgrade card
+  if (isMember) {
+    return null;
+  }
+
   return (
     <Card className="shadow-none">
       <CardHeader className="gap-2">

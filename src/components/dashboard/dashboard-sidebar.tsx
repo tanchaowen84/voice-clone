@@ -25,10 +25,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
   const sidebarLinks = getSidebarLinks();
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
-
-  // user is a member if they have a lifetime membership or an active subscription
-  const isMember = currentUser?.lifetimeMember ||
-    (currentUser?.subscriptionId && currentUser?.subscriptionStatus === 'active');
+  // console.log('sidebar currentUser:', currentUser);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -59,7 +56,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
         {!isPending && (
           <>
             {/* show upgrade card if user is not a member */}
-            {!isMember && <SidebarUpgradeCard />}
+            {currentUser && <SidebarUpgradeCard user={currentUser} />}
 
             {/* show user profile if user is logged in */}
             {currentUser && <NavUser user={currentUser} />}

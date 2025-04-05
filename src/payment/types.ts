@@ -94,7 +94,6 @@ export interface Subscription {
   canceledAt?: Date;
   trialEndDate?: Date;
   createdAt: Date;
-  updatedAt: Date;
 }
 
 /**
