@@ -78,8 +78,7 @@ export const authors = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    avatar: z.string(),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+    avatar: z.string()
   }),
   transform: async (data, context) => {
     // Get the filename from the path
@@ -111,8 +110,7 @@ export const categories = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    description: z.string(),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+    description: z.string()
   }),
   transform: async (data, context) => {
     // Get the filename from the path
@@ -157,7 +155,6 @@ export const posts = defineCollection({
     published: z.boolean().default(true),
     categories: z.array(z.string()),
     author: z.string(),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional(),
     estimatedTime: z.number().optional() // Reading time in minutes
   }),
   transform: async (data, context) => {
@@ -238,13 +235,12 @@ export const posts = defineCollection({
 export const pages = defineCollection({
   name: 'page',
   directory: 'content/pages',
-  include: '**/*.{md,mdx}',
+  include: '**/*.mdx',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
     date: z.string().datetime(),
-    published: z.boolean().default(true),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+    published: z.boolean().default(true)
   }),
   transform: async (data, context) => {
     // Use Fumadocs transformMDX for consistent MDX processing
@@ -295,14 +291,13 @@ export const pages = defineCollection({
 export const releases = defineCollection({
   name: 'release',
   directory: 'content/release',
-  include: '**/*.{md,mdx}',
+  include: '**/*.mdx',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
     date: z.string().datetime(),
     version: z.string(),
-    published: z.boolean().default(true),
-    locale: z.enum(LOCALES as [string, ...string[]]).optional()
+    published: z.boolean().default(true)
   }),
   transform: async (data, context) => {
     // Use Fumadocs transformMDX for consistent MDX processing
