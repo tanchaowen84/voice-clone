@@ -50,10 +50,10 @@ export const createCheckoutAction = actionClient
       }
 
       // add user id, name and email to metadata
-      const updatedMetadata = metadata || {};
-      updatedMetadata.userId = authSession.user.id;
-      updatedMetadata.name = authSession.user.name;
-      updatedMetadata.email = authSession.user.email;
+      const customMetadata = metadata || {};
+      customMetadata.userId = authSession.user.id;
+      customMetadata.name = authSession.user.name;
+      customMetadata.email = authSession.user.email;
 
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
@@ -63,14 +63,14 @@ export const createCheckoutAction = actionClient
         planId,
         priceId,
         customerEmail: authSession.user.email,
-        metadata: updatedMetadata,
+        metadata: customMetadata,
         successUrl,
         cancelUrl,
         locale,
       };
 
       const result = await createCheckout(params);
-
+      console.log('create checkout session result:', result);
       return {
         success: true,
         data: result,

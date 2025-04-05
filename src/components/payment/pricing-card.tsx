@@ -64,6 +64,7 @@ export function PricingCard({
   const currentUser = useCurrentUser();
   const currentPath = useLocalePathname();
   console.log('pricing card, currentPath', currentPath);
+  
   // generate formatted price and price label
   let formattedPrice = '';
   let priceLabel = '';
@@ -82,6 +83,7 @@ export function PricingCard({
 
   // check if plan is not free and has a price
   const isPaidPlan = !plan.isFree && !!price;
+  // check if plan has a trial period, period is greater than 0
   const hasTrialPeriod = price?.trialPeriodDays && price.trialPeriodDays > 0;
 
   return (

@@ -2,10 +2,10 @@
 
 import { LoginWrapper } from '@/components/auth/login-wrapper';
 import Container from '@/components/layout/container';
+import { Logo } from '@/components/layout/logo';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/layout/user-button';
-import { Logo } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -17,13 +17,14 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { getMenuLinks } from '@/config';
-import { useCurrentUser } from '@/hooks/use-current-user';
 import { useScroll } from '@/hooks/use-scroll';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Skeleton } from '../ui/skeleton';
 import LocaleSwitcher from './locale-switcher';
 
 interface NavBarProps {
@@ -44,7 +45,8 @@ export function Navbar({ scroll }: NavBarProps) {
   const scrolled = useScroll(50);
   const menuLinks = getMenuLinks();
   const localePathname = useLocalePathname();
-  const currentUser = useCurrentUser();
+  const { data: session, isPending } = authClient.useSession();
+  const currentUser = session?.user;
 
   // console.log(`Navbar, user:`, user);
 
@@ -117,8 +119,8 @@ export function Navbar({ scroll }: NavBarProps) {
                                             : undefined
                                         }
                                         className={cn(
-                                          'group flex select-none flex-row items-center gap-4 rounded-md', 
-                                          'p-2 leading-none no-underline outline-hidden transition-colors', 
+                                          'group flex select-none flex-row items-center gap-4 rounded-md',
+                                          'p-2 leading-none no-underline outline-hidden transition-colors',
                                           'hover:bg-accent hover:text-accent-foreground',
                                           'focus:bg-accent focus:text-accent-foreground',
                                           isSubItemActive &&
@@ -212,22 +214,26 @@ export function Navbar({ scroll }: NavBarProps) {
 
           {/* navbar right show sign in or user */}
           <div className="flex items-center gap-x-4">
-            {currentUser ? (
-              <UserButton user={currentUser} />
+            {isPending ? (
+              <Skeleton className="size-8 border rounded-full" />
             ) : (
-              <div className="flex items-center gap-x-4">
-                <LoginWrapper mode="modal" asChild>
-                  <Button variant="outline" size="sm" className="cursor-pointer">
-                    {t('Common.login')}
-                  </Button>
-                </LoginWrapper>
+              currentUser ? (
+                <UserButton user={currentUser} />
+              ) : (
+                <div className="flex items-center gap-x-4">
+                  <LoginWrapper mode="modal" asChild>
+                    <Button variant="outline" size="sm" className="cursor-pointer">
+                      {t('Common.login')}
+                    </Button>
+                  </LoginWrapper>
 
-                <Button asChild size="sm" variant="default">
-                  <LocaleLink href={Routes.Register}>
-                    {t('Common.signUp')}
-                  </LocaleLink>
-                </Button>
-              </div>
+                  <Button asChild size="sm" variant="default">
+                    <LocaleLink href={Routes.Register}>
+                      {t('Common.signUp')}
+                    </LocaleLink>
+                  </Button>
+                </div>
+              )
             )}
 
             <ModeSwitcher />

@@ -27,6 +27,8 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { UserButton } from './user-button';
+import { authClient } from '@/lib/auth-client';
+import { Skeleton } from '../ui/skeleton';
 
 export function NavbarMobile({
   className,
@@ -35,7 +37,8 @@ export function NavbarMobile({
   const t = useTranslations();
   const [open, setOpen] = React.useState<boolean>(false);
   const localePathname = useLocalePathname();
-  const currentUser = useCurrentUser();
+  const { data: session, isPending } = authClient.useSession();
+  const currentUser = session?.user;
 
   useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -82,7 +85,11 @@ export function NavbarMobile({
         {/* navbar right shows menu icon and user button */}
         <div className="flex items-center justify-end gap-4">
           {/* show user button if user is logged in */}
-          {currentUser ? <UserButton user={currentUser} /> : null}
+          {isPending ? (
+            <Skeleton className="size-8 border rounded-full" />
+          ) : (
+            currentUser ? <UserButton user={currentUser} /> : null
+          )}
 
           <Button
             variant="ghost"
@@ -108,10 +115,13 @@ export function NavbarMobile({
           {/* if we don't add RemoveScroll component, the underlying 
             page will scroll when we scroll the mobile menu */}
           <RemoveScroll allowPinchZoom enabled>
-            <MainMobileMenu
-              userLoggedIn={!!currentUser}
-              onLinkClicked={handleToggleMobileMenu}
-            />
+            {/* Only render MainMobileMenu when not in loading state */}
+            {!isPending && (
+              <MainMobileMenu
+                userLoggedIn={!!currentUser}
+                onLinkClicked={handleToggleMobileMenu}
+              />
+            )}
           </RemoveScroll>
         </Portal>
       )}

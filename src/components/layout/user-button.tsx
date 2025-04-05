@@ -36,6 +36,7 @@ export function UserButton({ user }: UserButtonProps) {
   const avatarLinks = getAvatarLinks();
   const localeRouter = useLocaleRouter();
   const [open, setOpen] = useState(false);
+  
   const closeDrawer = () => {
     setOpen(false);
   };

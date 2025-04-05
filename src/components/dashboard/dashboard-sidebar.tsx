@@ -12,7 +12,7 @@ import {
   SidebarMenuItem
 } from '@/components/ui/sidebar';
 import { getSidebarLinks } from '@/config';
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { authClient } from '@/lib/auth-client';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
@@ -23,7 +23,8 @@ import { SidebarUpgradeCard } from './sidebar-upgrade-card';
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
   const sidebarLinks = getSidebarLinks();
-  const currentUser = useCurrentUser();
+  const { data: session, isPending } = authClient.useSession();
+  const currentUser = session?.user;
 
   // user is a member if they have a lifetime membership or an active subscription
   const isMember = currentUser?.lifetimeMember ||
@@ -54,11 +55,16 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-4">
-        {/* show upgrade card if user is not a member */}
-        {!isMember && <SidebarUpgradeCard />}
+        {/* Only show UI components when not in loading state */}
+        {!isPending && (
+          <>
+            {/* show upgrade card if user is not a member */}
+            {!isMember && <SidebarUpgradeCard />}
 
-        {/* show user profile if user is logged in */}
-        {currentUser && <NavUser user={currentUser} />}
+            {/* show user profile if user is logged in */}
+            {currentUser && <NavUser user={currentUser} />}
+          </>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
