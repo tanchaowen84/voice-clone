@@ -93,12 +93,15 @@ export function PricingCard({
         className
       )}
     >
+      {/* show popular badge if plan is recommended */}
       {plan.recommended && (
         <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
         bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200  border-purple-200 dark:border-purple-800 shadow-sm">
           {t('popular')}
         </span>
       )}
+
+      {/* show current plan badge if plan is current plan */}
       {isCurrentPlan && (
         <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
         bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-800 shadow-sm">
@@ -109,6 +112,7 @@ export function PricingCard({
       <CardHeader>
         <CardTitle className="font-medium">{plan.name}</CardTitle>
 
+        {/* show price and price label */}
         <div className="flex items-baseline gap-2">
           <span className="my-4 block text-4xl font-semibold">
             {formattedPrice}
@@ -118,6 +122,7 @@ export function PricingCard({
 
         <CardDescription className="text-sm">{plan.description}</CardDescription>
 
+        {/* show action buttons based on plans */}
         {plan.isFree ? (
           currentUser ? (
             <Button variant="outline" className="mt-4 w-full disabled">
@@ -162,6 +167,7 @@ export function PricingCard({
       <CardContent className="space-y-4">
         <hr className="border-dashed" />
 
+        {/* show trial period if it exists */}
         {hasTrialPeriod && (
           <div className="my-4">
             <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
@@ -171,6 +177,7 @@ export function PricingCard({
           </div>
         )}
 
+        {/* show features of this plan */}
         <ul className="list-outside space-y-4 text-sm">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">

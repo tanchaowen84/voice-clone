@@ -11,20 +11,22 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import { getNavMainLinks } from '@/config';
+import { getSidebarLinks } from '@/config';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../logo';
 import { SidebarUpgradeCard } from './sidebar-upgrade-card';
-import { authClient } from '@/lib/auth-client';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
-  const mainLinks = getNavMainLinks();
+  const sidebarLinks = getSidebarLinks();
+  const currentUser = useCurrentUser();
 
-  const { data: session, error } = authClient.useSession();
-  const user = session?.user;
+  // user is a member if they have a lifetime membership or an active subscription
+  const isMember = currentUser?.lifetimeMember || 
+    (currentUser?.subscriptionId && currentUser?.subscriptionStatus === 'active');
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -47,14 +49,15 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarHeader>
 
       <SidebarContent>
-        <NavMain items={mainLinks} />
+        <NavMain items={sidebarLinks} />
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-4">
-        {/* TODO: show or hide based on user status */}
-        <SidebarUpgradeCard />
+        {/* show upgrade card if user is not a member */}
+        {!isMember && <SidebarUpgradeCard />}
 
-        {user && <NavUser user={user} />}
+        {/* show user profile if user is logged in */}
+        {currentUser && <NavUser user={currentUser} />}
       </SidebarFooter>
     </Sidebar>
   );

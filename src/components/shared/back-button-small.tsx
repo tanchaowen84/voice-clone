@@ -1,10 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useLocaleRouter } from '@/i18n/navigation';
+import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { ArrowLeftIcon } from 'lucide-react';
-import Link from 'next/link';
 
 interface BackButtonSmallProps {
   href?: string;
@@ -29,9 +28,9 @@ export default function BackButtonSmall({
       asChild
     >
       {/* if href is provided, use it, otherwise use the router.back() */}
-      <Link href={href || '#'} onClick={handleBack}>
+      <LocaleLink href={href || '#'} onClick={handleBack}>
         <ArrowLeftIcon className="size-4" />
-      </Link>
+      </LocaleLink>
     </Button>
   );
 }
