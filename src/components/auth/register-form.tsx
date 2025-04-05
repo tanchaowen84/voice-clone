@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { RegisterSchema } from '@/lib/schemas';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
@@ -23,7 +22,7 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type * as z from 'zod';
+import * as z from 'zod';
 import { SocialLoginButton } from './social-login-button';
 
 interface RegisterFormProps {
@@ -41,6 +40,18 @@ export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const RegisterSchema = z.object({
+    email: z.string().email({
+      message: t('emailRequired'),
+    }),
+    password: z.string().min(1, {
+      message: t('passwordRequired'),
+    }),
+    name: z.string().min(1, {
+      message: t('nameRequired'),
+    }),
+  });
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),

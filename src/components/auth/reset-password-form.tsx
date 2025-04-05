@@ -16,7 +16,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
-import { ResetPasswordSchema } from '@/lib/schemas';
 import { Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
@@ -24,12 +23,13 @@ import { useTranslations } from 'next-intl';
 import { notFound, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type * as z from 'zod';
+import * as z from 'zod';
 
 /**
  * https://www.better-auth.com/docs/authentication/email-password#forget-password
  */
 export const ResetPasswordForm = () => {
+  const t = useTranslations('AuthPage.resetPassword');
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   if (!token) {
@@ -48,7 +48,12 @@ export const ResetPasswordForm = () => {
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const t = useTranslations('AuthPage.resetPassword');
+
+  const ResetPasswordSchema = z.object({
+    password: z.string().min(8, {
+      message: t('minLength'),
+    }),
+  });
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),

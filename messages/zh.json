@@ -150,7 +150,9 @@
       "signInWithGitHub": "使用 GitHub 登录",
       "showPassword": "显示密码",
       "hidePassword": "隐藏密码",
-      "or": "或以社媒账号登录"
+      "or": "或以社媒账号登录",
+      "emailRequired": "请输入邮箱",
+      "passwordRequired": "请输入密码"
     },
     "register": {
       "title": "注册",
@@ -162,14 +164,18 @@
       "signInHint": "已经有账号？登录",
       "checkEmail": "请检查您的邮箱",
       "showPassword": "显示密码",
-      "hidePassword": "隐藏密码"
+      "hidePassword": "隐藏密码",
+      "nameRequired": "请输入姓名",
+      "emailRequired": "请输入邮箱",
+      "passwordRequired": "请输入密码"
     },
     "forgotPassword": {
       "title": "忘记密码",
       "email": "邮箱",
       "send": "发送重置密码链接",
       "backToLogin": "返回登录",
-      "checkEmail": "请检查您的邮箱"
+      "checkEmail": "请检查您的邮箱",
+      "emailRequired": "请输入邮箱"
     },
     "resetPassword": {
       "title": "重置密码",
@@ -177,7 +183,8 @@
       "reset": "重置密码",
       "backToLogin": "返回登录",
       "showPassword": "显示密码",
-      "hidePassword": "隐藏密码"
+      "hidePassword": "隐藏密码",
+      "minLength": "密码必须至少包含 8 个字符"
     },
     "error": {
       "title": "哎呀！出错了！",

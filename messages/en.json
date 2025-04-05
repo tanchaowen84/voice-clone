@@ -150,7 +150,9 @@
       "signInWithGitHub": "Sign In with GitHub",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
-      "or": "Or continue with"
+      "or": "Or continue with",
+      "emailRequired": "Please enter your email",
+      "passwordRequired": "Please enter your password"
     },
     "register": {
       "title": "Register",
@@ -162,14 +164,18 @@
       "signInHint": "Already have an account? Sign in",
       "checkEmail": "Please check your email inbox",
       "showPassword": "Show password",
-      "hidePassword": "Hide password"
+      "hidePassword": "Hide password",
+      "nameRequired": "Please enter your name",
+      "emailRequired": "Please enter your email",
+      "passwordRequired": "Please enter your password"
     },
     "forgotPassword": {
       "title": "Forgot Password",
       "email": "Email",
       "send": "Send reset link",
       "backToLogin": "Back to login",
-      "checkEmail": "Please check your email inbox"
+      "checkEmail": "Please check your email inbox",
+      "emailRequired": "Please enter your email"
     },
     "resetPassword": {
       "title": "Reset Password",
@@ -177,7 +183,8 @@
       "reset": "Reset password",
       "backToLogin": "Back to login",
       "showPassword": "Show password",
-      "hidePassword": "Hide password"
+      "hidePassword": "Hide password",
+      "minLength": "Password must be at least 8 characters"
     },
     "error": {
       "title": "Oops! Something went wrong!",

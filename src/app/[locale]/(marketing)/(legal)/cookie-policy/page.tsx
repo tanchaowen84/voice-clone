@@ -1,6 +1,6 @@
 import { CustomPage } from '@/components/page/custom-page';
 import { constructMetadata } from '@/lib/metadata';
-import { getCustomPage } from '@/lib/page/get-custom-page';
+import { getPage } from '@/lib/page/get-page';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
   const {locale} = await params;
-  const page = await getCustomPage('cookie-policy', locale);
+  const page = await getPage('cookie-policy', locale);
 
   if (!page) {
     console.warn(
@@ -39,7 +39,7 @@ export default async function CookiePolicyPage(props: NextPageProps) {
   }
 
   const locale = params.locale as string;
-  const page = await getCustomPage('cookie-policy', locale);
+  const page = await getPage('cookie-policy', locale);
 
   if (!page) {
     notFound();

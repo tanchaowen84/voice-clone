@@ -1,5 +1,4 @@
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
-import { shouldAppendLocale } from '@/lib/urls/urls';
 import { type ClassValue, clsx } from 'clsx';
 import { parse as parseCookies } from 'cookie';
 import { Locale } from 'next-intl';

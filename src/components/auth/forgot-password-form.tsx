@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthCard } from '@/components/auth/auth-card';
+import { Icons } from '@/components/icons/icons';
 import { FormError } from '@/components/shared/form-error';
 import { FormSuccess } from '@/components/shared/form-success';
 import { Button } from '@/components/ui/button';
@@ -13,17 +14,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ForgotPasswordSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useTransition, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import type * as z from 'zod';
-import { Icons } from '@/components/icons/icons';
 import { authClient } from '@/lib/auth-client';
-import { Routes } from '@/routes';
-import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
+import { Routes } from '@/routes';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   const t = useTranslations('AuthPage.forgotPassword');
@@ -31,6 +30,12 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
   const searchParams = useSearchParams();
+
+  const ForgotPasswordSchema = z.object({
+    email: z.string().email({
+      message: t('emailRequired'),
+    }),
+  });
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),

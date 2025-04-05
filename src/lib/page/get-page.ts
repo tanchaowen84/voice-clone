@@ -2,12 +2,12 @@ import { allPages } from 'content-collections';
 import { Locale } from 'next-intl';
 
 /**
- * Gets a custom page from the content collection
- * @param type The type of custom page to get (e.g., 'privacy-policy', 'terms-of-service')
+ * Gets a page from the content collection
+ * @param type The type of page to get (e.g., 'privacy-policy', 'terms-of-service')
  * @param locale The locale to get the page for
- * @returns The custom page or undefined if not found
+ * @returns The page or undefined if not found
  */
-export async function getCustomPage(type: string, locale: Locale) {
+export async function getPage(type: string, locale: Locale) {
   // Find page with matching slug and locale
   const page = allPages.find(
     (page) => page.slugAsParams === `${type}` && page.locale === locale
