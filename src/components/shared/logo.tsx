@@ -1,3 +1,5 @@
+'use client';
+
 import { websiteConfig } from '@/config';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
@@ -6,7 +8,7 @@ import Image from 'next/image';
 export function Logo({ className }: { className?: string }) {
   const theme = useTheme();
   const logoLight = websiteConfig.logo.light ?? '/logo.png';
-  const logoDark = websiteConfig.logo.dark ?? '/logo-dark.png';
+  const logoDark = websiteConfig.logo.dark ?? logoLight;
   const logo = theme.theme === 'dark' ? logoDark : logoLight;
 
   return (
