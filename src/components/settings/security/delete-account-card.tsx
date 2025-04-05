@@ -32,7 +32,7 @@ import { toast } from 'sonner';
  * It includes a confirmation dialog to prevent accidental deletions.
  */
 export function DeleteAccountCard() {
-  const t = useTranslations('Dashboard.sidebar.settings.items.security.deleteAccount');
+  const t = useTranslations('Dashboard.settings.items.security.deleteAccount');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | undefined>('');

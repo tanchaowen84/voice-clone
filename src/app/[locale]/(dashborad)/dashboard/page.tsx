@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
   const breadcrumbs = [
     {
-      label: t('Dashboard.sidebar.dashboard.title'),
+      label: t('Dashboard.dashboard.title'),
       isCurrentPage: true,
     },
   ];

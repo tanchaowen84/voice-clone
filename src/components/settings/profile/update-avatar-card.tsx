@@ -27,7 +27,7 @@ interface UpdateAvatarCardProps {
  * Update the user's avatar
  */
 export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
-  const t = useTranslations('Dashboard.sidebar.settings.items.profile');
+  const t = useTranslations('Dashboard.settings.items.profile');
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | undefined>('');
   const { data: session, refetch } = authClient.useSession();

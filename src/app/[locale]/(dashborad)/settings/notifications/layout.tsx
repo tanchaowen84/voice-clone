@@ -8,7 +8,7 @@ interface NotificationsLayoutProps {
 export default async function NotificationsLayout({
   children,
 }: NotificationsLayoutProps) {
-  const t = await getTranslations('Dashboard.sidebar.settings');
+  const t = await getTranslations('Dashboard.settings');
 
   const breadcrumbs = [
     {

@@ -8,7 +8,7 @@ interface ProfileLayoutProps {
 export default async function ProfileLayout({
   children,
 }: ProfileLayoutProps) {
-  const t = await getTranslations('Dashboard.sidebar.settings');
+  const t = await getTranslations('Dashboard.settings');
 
   const breadcrumbs = [
     {

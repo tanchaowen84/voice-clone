@@ -16,7 +16,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
 export default function BillingCard() {
-  const t = useTranslations('Dashboard.sidebar.settings.items.billing');
+  const t = useTranslations('Dashboard.settings.items.billing');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | undefined>('');
   const [subscription, setSubscription] = useState<Subscription | null>(null);

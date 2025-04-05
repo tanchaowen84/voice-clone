@@ -12,7 +12,7 @@ import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function SidebarUpgradeCard() {
-  const t = useTranslations('Dashboard.sidebar.upgrade');
+  const t = useTranslations('Dashboard.upgrade');
   
   return (
     <Card className="shadow-none">

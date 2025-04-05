@@ -8,7 +8,7 @@ interface SecurityLayoutProps {
 export default async function SecurityLayout({
   children,
 }: SecurityLayoutProps) {
-  const t = await getTranslations('Dashboard.sidebar.settings');
+  const t = await getTranslations('Dashboard.settings');
 
   const breadcrumbs = [
     {
