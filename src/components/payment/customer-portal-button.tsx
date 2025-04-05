@@ -31,7 +31,7 @@ export function CustomerPortalButton({
   className,
   children,
 }: CustomerPortalButtonProps) {
-  const t = useTranslations('Dashboard.'settings.billing.CustomerPortalButton');
+  const t = useTranslations('Dashboard.settings.billing.CustomerPortalButton');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {

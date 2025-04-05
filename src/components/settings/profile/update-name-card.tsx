@@ -35,7 +35,7 @@ interface UpdateNameCardProps {
  * update user name
  */
 export function UpdateNameCard({ className }: UpdateNameCardProps) {
-  const t = useTranslations('Dashboard.'settings.profile');
+  const t = useTranslations('Dashboard.settings.profile');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | undefined>('');
   const { data: session, refetch } = authClient.useSession();
