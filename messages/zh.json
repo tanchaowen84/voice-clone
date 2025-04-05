@@ -145,7 +145,7 @@
       "signInWithGitHub": "使用 GitHub 登录",
       "showPassword": "显示密码",
       "hidePassword": "隐藏密码",
-       "or": "或"
+      "or": "或"
     },
     "register": {
       "title": "注册",
@@ -429,7 +429,7 @@
           },
           "billing": {
             "title": "账单",
-            "description": "管理您的账单信息",
+            "description": "管理您的订阅和账单信息",
             "status": {
               "active": "已激活",
               "trial": "试用中",

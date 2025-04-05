@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/shared/logo';
 import { ArrowRight, Menu, Rocket, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';

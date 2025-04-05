@@ -11,7 +11,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { formatDate, formatPrice } from '@/lib/formatter';
 import { getAllPlans } from '@/payment';
 import { PlanIntervals, Subscription } from '@/payment/types';
-import { RefreshCwIcon, RocketIcon } from 'lucide-react';
+import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 

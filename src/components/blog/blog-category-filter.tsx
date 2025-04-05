@@ -1,4 +1,4 @@
-import Container from '@/components/container';
+import Container from '@/components/shared/container';
 import { Category } from 'content-collections';
 import { BlogCategoryListDesktop } from './blog-category-list-desktop';
 import { BlogCategoryListMobile } from './blog-category-list-mobile';

@@ -1,5 +1,5 @@
 import { BlogCategoryFilter } from '@/components/blog/blog-category-filter';
-import Container from '@/components/container';
+import Container from '@/components/shared/container';
 import { HeaderSection } from '@/components/shared/header-section';
 import { PropsWithChildren } from 'react';
 import { allCategories } from 'content-collections';

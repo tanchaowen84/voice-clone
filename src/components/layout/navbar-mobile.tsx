@@ -2,7 +2,7 @@
 
 import LocaleSelector from '@/components/layout/locale-selector';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/shared/logo';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Collapsible,

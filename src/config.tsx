@@ -54,6 +54,10 @@ export const websiteConfig: WebsiteConfig = {
   metadata: {
     image: '/og.png',
   },
+  logo: {
+    light: '/logo.png',
+    dark: '/logo-dark.png',
+  },
   mail: {
     from: 'support@mksaas.com',
     to: 'support@mksaas.com',
@@ -64,9 +68,9 @@ export const websiteConfig: WebsiteConfig = {
   },
   social: {
     github: 'https://github.com/MkSaaSHQ',
-    twitter: 'https://x.com/MkSaaSHQ',
+    twitter: 'https://x.com/mksaascom',
+    youtube: 'https://www.youtube.com/@MkSaaS',
     blueSky: 'https://bsky.app/profile/mksaas.com',
-    youtube: 'https://www.youtube.com/@MkSaaSHQ',
     linkedin: 'https://linkedin.com/company/mksaas',
     facebook: 'https://facebook.com/mksaas',
     instagram: 'https://instagram.com/mksaas',

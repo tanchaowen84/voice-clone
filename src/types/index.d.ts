@@ -8,6 +8,10 @@ export type WebsiteConfig = {
   metadata: {
     image?: string;
   };
+  logo: {
+    light?: string;
+    dark?: string;
+  };
   mail: {
     from?: string;
     to?: string;

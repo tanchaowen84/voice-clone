@@ -1,4 +1,4 @@
-import Container from '@/components/container';
+import Container from '@/components/shared/container';
 import { PricingTable } from '@/components/payment/pricing-table';
 import { HeaderSection } from '@/components/shared/header-section';
 import { constructMetadata } from '@/lib/metadata';

@@ -1,7 +1,7 @@
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { MkSaaSLogo } from '@/components/logo-mksaas';
+import { MkSaaSLogo } from '@/components/shared/logo-mksaas';
 
 export default function BuiltWithButton() {
   return (

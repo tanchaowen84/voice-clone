@@ -434,7 +434,7 @@
           },
           "billing": {
             "title": "Billing",
-            "description": "Manage your billing information",
+            "description": "Manage your subscription and billing details",
             "status": {
               "active": "Active",
               "trial": "Trial",

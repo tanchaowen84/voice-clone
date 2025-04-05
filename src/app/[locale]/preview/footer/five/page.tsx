@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/shared/logo';
 
 const enterpriseLinks = [
   { href: '#', label: 'About' },

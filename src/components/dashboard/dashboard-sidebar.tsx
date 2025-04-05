@@ -16,7 +16,7 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { Logo } from '../logo';
+import { Logo } from '../shared/logo';
 import { SidebarUpgradeCard } from './sidebar-upgrade-card';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
