@@ -82,14 +82,14 @@ export default function HeroSection2() {
                 <div className="bg-radial-[at_65%_25%] to-background z-1 -inset-17 absolute from-transparent to-40%"></div>
                 <Image
                   className="hidden dark:block"
-                  src="/images/blocks/music.webp"
+                  src="/blocks/music.png"
                   alt="app illustration"
                   width={2796}
                   height={2008}
                 />
                 <Image
                   className="dark:hidden"
-                  src="/images/blocks/music-light.webp"
+                  src="/blocks/music-light.png"
                   alt="app illustration"
                   width={2796}
                   height={2008}

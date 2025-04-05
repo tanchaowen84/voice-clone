@@ -60,14 +60,14 @@ export default function HeroSection4() {
               <div className="relative mx-auto max-w-6xl overflow-hidden px-4">
                 <Image
                   className="z-2 border-border/25 relative hidden rounded-2xl border dark:block"
-                  src="/images/blocks/music.png"
+                  src="/blocks/music.png"
                   alt="app screen"
                   width={2796}
                   height={2008}
                 />
                 <Image
                   className="z-2 border-border/25 relative rounded-2xl border dark:hidden"
-                  src="/images/blocks/music-light.png"
+                  src="/blocks/music-light.png"
                   alt="app screen"
                   width={2796}
                   height={2008}

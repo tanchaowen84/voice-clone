@@ -1,1 +1,0 @@
-1. When navigate to docs and navigate back to homepage, the page layout may shift when click the action buttons on the navbar

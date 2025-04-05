@@ -55,14 +55,14 @@ export default function Content2() {
             ></div>
             <div className="border-border/50 relative rounded-2xl border border-dotted p-2">
               <Image
-                src="/images/blocks/charts.png"
+                src="/blocks/charts.png"
                 className="hidden rounded-[12px] dark:block"
                 alt="payments illustration dark"
                 width={1207}
                 height={929}
               />
               <Image
-                src="/images/blocks/charts-light.png"
+                src="/blocks/charts-light.png"
                 className="rounded-[12px] shadow-sm dark:hidden"
                 alt="payments illustration light"
                 width={1207}

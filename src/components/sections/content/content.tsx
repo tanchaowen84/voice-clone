@@ -16,14 +16,14 @@ export default function Content() {
           <div className="relative mb-6 sm:mb-0">
             <div className="bg-linear-to-b aspect-76/59 relative rounded-2xl from-zinc-300 to-transparent p-px dark:from-zinc-700">
               <Image
-                src="/images/blocks/payments.png"
+                src="/blocks/payments.png"
                 className="hidden rounded-[15px] dark:block"
                 alt="payments illustration dark"
                 width={1207}
                 height={929}
               />
               <Image
-                src="/images/blocks/payments-light.png"
+                src="/blocks/payments-light.png"
                 className="rounded-[15px] shadow-sm dark:hidden"
                 alt="payments illustration light"
                 width={1207}

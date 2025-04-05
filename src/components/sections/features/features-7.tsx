@@ -25,21 +25,21 @@ export default function Features7() {
               <div className="aspect-88/36 relative">
                 <div className="bg-radial-[at_75%_25%] to-background z-1 -inset-17 absolute from-transparent to-75%"></div>
                 <Image
-                  src="/images/blocks/mail-upper.png"
+                  src="/blocks/mail-upper.png"
                   className="absolute inset-0 z-10"
                   alt="payments illustration dark"
                   width={2797}
                   height={1137}
                 />
                 <Image
-                  src="/images/blocks/mail-back.png"
+                  src="/blocks/mail-back.png"
                   className="hidden dark:block"
                   alt="payments illustration dark"
                   width={2797}
                   height={1137}
                 />
                 <Image
-                  src="/images/blocks/mail-back-light.png"
+                  src="/blocks/mail-back-light.png"
                   className="dark:hidden"
                   alt="payments illustration light"
                   width={2797}

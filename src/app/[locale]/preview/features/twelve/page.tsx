@@ -22,19 +22,19 @@ export default function Features() {
 
   const images = {
     'item-1': {
-      image: '/images/blocks/charts.png',
+      image: '/blocks/charts.png',
       alt: 'Database visualization',
     },
     'item-2': {
-      image: '/images/blocks/music.png',
+      image: '/blocks/music.png',
       alt: 'Security authentication',
     },
     'item-3': {
-      image: '/images/blocks/mail2.png',
+      image: '/blocks/mail2.png',
       alt: 'Identity management',
     },
     'item-4': {
-      image: '/images/blocks/payments.png',
+      image: '/blocks/payments.png',
       alt: 'Analytics dashboard',
     },
   };
