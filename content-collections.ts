@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/routing";
-import { defineCollection, defineConfig, z } from "@content-collections/core";
+import { defineCollection, defineConfig } from "@content-collections/core";
 import {
   createDocSchema,
   createMetaSchema,
@@ -50,7 +50,7 @@ const metas = defineCollection({
 function extractLocaleAndBase(fileName: string): { locale: string; base: string } {
   // Split filename into parts
   const parts = fileName.split('.');
-  
+
   if (parts.length === 1) {
     // Simple filename without locale: xxx
     return { locale: DEFAULT_LOCALE, base: parts[0] };
@@ -78,17 +78,18 @@ export const authors = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    avatar: z.string()
+    avatar: z.string(),
+    locale: z.string().optional().default(DEFAULT_LOCALE)
   }),
   transform: async (data, context) => {
     // Get the filename from the path
     const filePath = data._meta.path;
     const fileName = filePath.split(path.sep).pop() || '';
-    
+
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`author processed: ${fileName}, locale=${locale}`);
-    
+
     return {
       ...data,
       locale,
@@ -110,17 +111,18 @@ export const categories = defineCollection({
   schema: (z) => ({
     slug: z.string(),
     name: z.string(),
-    description: z.string()
+    description: z.string(),
+    locale: z.string().optional().default(DEFAULT_LOCALE)
   }),
   transform: async (data, context) => {
     // Get the filename from the path
     const filePath = data._meta.path;
     const fileName = filePath.split(path.sep).pop() || '';
-    
+
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`category processed: ${fileName}, locale=${locale}`);
-    
+
     return {
       ...data,
       locale
@@ -160,49 +162,42 @@ export const posts = defineCollection({
   transform: async (data, context) => {
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
-    
+
     // Get the filename from the path
     const filePath = data._meta.path;
     const fileName = filePath.split(path.sep).pop() || '';
-    
+
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`post processed: ${fileName}, base=${base}, locale=${locale}`);
-    
-    // Find the author by matching slug
+
+    // Find the author by matching slug and locale
     const blogAuthor = context
       .documents(authors)
-      .find((a) => a.slug === data.author && a.locale === locale) || 
-      context
-      .documents(authors)
-      .find((a) => a.slug === data.author);
-    
-    // Find categories by matching slug
+      .find((a) => a.slug === data.author && a.locale === locale);
+
+    // Find categories by matching slug and locale
     const blogCategories = data.categories.map(categorySlug => {
-      // Try to find a category with matching slug and locale
       const category = context
         .documents(categories)
-        .find(c => c.slug === categorySlug && c.locale === locale) || 
-        context
-        .documents(categories)
-        .find(c => c.slug === categorySlug);
-      
+        .find(c => c.slug === categorySlug && c.locale === locale);
+
       return category;
     }).filter(Boolean); // Remove null values
-    
+
     // Get the collection name (e.g., "blog")
     const pathParts = data._meta.path.split(path.sep);
     const collectionName = pathParts[pathParts.length - 2];
-    
+
     // Create the slug and slugAsParams
     const slug = `/${collectionName}/${base}`;
     const slugAsParams = base;
-    
+
     // Calculate estimated reading time
     const wordCount = data.content.split(/\s+/).length;
     const wordsPerMinute = 200; // average reading speed: 200 words per minute
     const estimatedTime = Math.max(Math.ceil(wordCount / wordsPerMinute), 1);
-    
+
     return {
       ...data,
       locale,
@@ -245,23 +240,23 @@ export const pages = defineCollection({
   transform: async (data, context) => {
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
-    
+
     // Get the filename from the path
     const filePath = data._meta.path;
     const fileName = filePath.split(path.sep).pop() || '';
-    
+
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`page processed: ${fileName}, base=${base}, locale=${locale}`);
-    
+
     // Get the collection name (e.g., "pages")
     const pathParts = data._meta.path.split(path.sep);
     const collectionName = pathParts[pathParts.length - 2];
-    
+
     // Create the slug and slugAsParams
     const slug = `/${collectionName}/${base}`;
     const slugAsParams = base;
-    
+
     return {
       ...data,
       locale,
@@ -302,23 +297,23 @@ export const releases = defineCollection({
   transform: async (data, context) => {
     // Use Fumadocs transformMDX for consistent MDX processing
     const transformedData = await transformMDX(data, context);
-    
+
     // Get the filename from the path
     const filePath = data._meta.path;
     const fileName = filePath.split(path.sep).pop() || '';
-    
+
     // Extract locale and base from filename
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`release processed: ${fileName}, base=${base}, locale=${locale}`);
-    
+
     // Get the collection name (e.g., "release")
     const pathParts = data._meta.path.split(path.sep);
     const collectionName = pathParts[pathParts.length - 2];
-    
+
     // Create the slug and slugAsParams
     const slug = `/${collectionName}/${base}`;
     const slugAsParams = base;
-    
+
     return {
       ...data,
       locale,

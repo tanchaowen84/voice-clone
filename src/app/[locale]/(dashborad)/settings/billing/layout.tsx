@@ -16,7 +16,7 @@ export default async function BillingLayout({
       isCurrentPage: false,
     },
     {
-      label: t('items.billing.title'),
+      label: t('billing.title'),
       isCurrentPage: true,
     },
   ];
@@ -29,10 +29,10 @@ export default async function BillingLayout({
         <div className="max-w-6xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t('items.billing.title')}
+              {t('billing.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              {t('items.billing.description')}
+              {t('billing.description')}
             </p>
           </div>
 

@@ -16,7 +16,7 @@ export default async function SecurityLayout({
       isCurrentPage: false,
     },
     {
-      label: t('items.security.title'),
+      label: t('security.title'),
       isCurrentPage: true,
     },
   ];
@@ -29,10 +29,10 @@ export default async function SecurityLayout({
         <div className="max-w-6xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t('items.security.title')}
+              {t('security.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              {t('items.security.description')}
+              {t('security.description')}
             </p>
           </div>
 

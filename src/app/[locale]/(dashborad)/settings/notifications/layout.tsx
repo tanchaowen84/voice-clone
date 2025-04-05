@@ -16,7 +16,7 @@ export default async function NotificationsLayout({
       isCurrentPage: false,
     },
     {
-      label: t('items.notification.title'),
+      label: t('notification.title'),
       isCurrentPage: true,
     },
   ];
@@ -29,10 +29,10 @@ export default async function NotificationsLayout({
         <div className="max-w-6xl mx-auto space-y-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t('items.notification.title')}
+              {t('notification.title')}
             </h1>
             <p className="text-muted-foreground mt-2">
-              {t('items.notification.description')}
+              {t('notification.description')}
             </p>
           </div>
 

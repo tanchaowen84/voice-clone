@@ -428,6 +428,10 @@
           "title": "Current Plan",
           "description": "Your current plan details"
         },
+        "CustomerPortalButton": {
+          "loading": "Loading...",
+          "createCustomerPortalFailed": "Failed to open Stripe customer portal"
+        },
         "nextBillingDate": "Next billing date:",
         "trialEnds": "Trial ends:",
         "manageSubscription": "Manage Subscription",

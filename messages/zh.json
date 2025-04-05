@@ -428,6 +428,10 @@
           "title": "当前方案",
           "description": "您当前的方案详情"
         },
+        "CustomerPortalButton": {
+          "loading": "加载中...",
+          "createCustomerPortalFailed": "打开Stripe客户界面失败"
+        },
         "nextBillingDate": "下次账单日期：",
         "trialEnds": "试用结束日期：",
         "manageSubscription": "管理订阅",
