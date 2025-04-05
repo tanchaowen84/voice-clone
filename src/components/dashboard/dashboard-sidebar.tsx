@@ -14,6 +14,7 @@ import {
 import { getSidebarLinks } from '@/config';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
+import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../shared/logo';
@@ -25,7 +26,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
   const currentUser = useCurrentUser();
 
   // user is a member if they have a lifetime membership or an active subscription
-  const isMember = currentUser?.lifetimeMember || 
+  const isMember = currentUser?.lifetimeMember ||
     (currentUser?.subscriptionId && currentUser?.subscriptionStatus === 'active');
 
   return (
@@ -37,7 +38,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <LocaleLink href="/">
+              <LocaleLink href={Routes.Root}>
                 <Logo className="size-5" />
                 <span className="truncate font-semibold text-base">
                   {t('Metadata.name')}

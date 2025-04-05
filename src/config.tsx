@@ -4,14 +4,12 @@ import { GitHubIcon } from '@/components/icons/github';
 import { InstagramIcon } from '@/components/icons/instagram';
 import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
-import { TwitterIcon } from '@/components/icons/twitter';
 import { YouTubeIcon } from '@/components/icons/youtube';
 import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import {
   AudioLinesIcon,
   BellIcon,
-  BotIcon,
   BuildingIcon,
   ChartNoAxesCombinedIcon,
   CircleDollarSignIcon,
@@ -22,26 +20,26 @@ import {
   FileTextIcon,
   FilmIcon,
   FlameIcon,
+  FootprintsIcon,
   ImageIcon,
   LayoutDashboardIcon,
   ListChecksIcon,
   LockKeyholeIcon,
+  LogInIcon,
   MailboxIcon,
   MailIcon,
   NewspaperIcon,
   RocketIcon,
   Settings2Icon,
   ShieldCheckIcon,
+  SplitSquareVerticalIcon,
+  SquareCodeIcon,
   SquareKanbanIcon,
   SquarePenIcon,
   ThumbsUpIcon,
-  WandSparklesIcon,
-  SquareCodeIcon,
+  UserPlusIcon,
   UsersIcon,
-  FootprintsIcon,
-  SplitSquareVerticalIcon,
-  LogInIcon,
-  UserPlusIcon
+  WandSparklesIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { XTwitterIcon } from './components/icons/x';
@@ -446,36 +444,6 @@ export function getSidebarLinks(): NestedMenuItem[] {
       href: Routes.Dashboard,
       external: false,
     },
-    // {
-    //   title: t('Dashboard.sidebar.ai.title'),
-    //   icon: <BotIcon className="site-4 shrink-0" />,
-    //   items: [
-    //     {
-    //       title: t('Dashboard.sidebar.ai.items.text.title'),
-    //       icon: <SquarePenIcon className="site-4 shrink-0" />,
-    //       href: Routes.AIText,
-    //       external: false,
-    //     },
-    //     {
-    //       title: t('Dashboard.sidebar.ai.items.image.title'),
-    //       icon: <ImageIcon className="site-4 shrink-0" />,
-    //       href: Routes.AIImage,
-    //       external: false,
-    //     },
-    //     {
-    //       title: t('Dashboard.sidebar.ai.items.video.title'),
-    //       icon: <FilmIcon className="site-4 shrink-0" />,
-    //       href: Routes.AIVideo,
-    //       external: false,
-    //     },
-    //     {
-    //       title: t('Dashboard.sidebar.ai.items.audio.title'),
-    //       icon: <AudioLinesIcon className="site-4 shrink-0" />,
-    //       href: Routes.AIAudio,
-    //       external: false,
-    //     },
-    //   ],
-    // },
     {
       title: t('Dashboard.sidebar.settings.title'),
       icon: <Settings2Icon className="site-4 shrink-0" />,

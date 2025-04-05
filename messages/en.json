@@ -81,7 +81,7 @@
     "subtitle": "Learn more about our company, mission, and values",
     "authorName": "MkSaaS",
     "authorBio": "AI SaaS Boilerplate",
-    "authorIntroduction": "👋 Hi there! This is MkSaaS, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better. If you have any questions, welcome to contact me.",
+    "introduction": "👋 Hi there! This is MkSaaS, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better. If you have any questions, welcome to contact me.",
     "talkWithMe": "Talk with me"
   },
   "ChangelogPage": {
@@ -133,7 +133,8 @@
       "subscribe": "Subscribe",
       "subscribing": "Subscribing...",
       "success": "Subscribed successfully",
-      "fail": "Failed to subscribe"
+      "fail": "Failed to subscribe",
+      "emailValidation": "Please enter a valid email address"
     }
   },
   "AuthPage": {
@@ -382,27 +383,6 @@
     "sidebar": {
       "dashboard": {
         "title": "Dashboard"
-      },
-      "ai": {
-        "title": "AI Tools",
-        "items": {
-          "text": {
-            "title": "AI Text",
-            "description": "Show how to use AI to write stunning text"
-          },
-          "image": {
-            "title": "AI Image",
-            "description": "Show how to use AI to generate beautiful images"
-          },
-          "video": {
-            "title": "AI Video",
-            "description": "Show how to use AI to generate amazing videos"
-          },
-          "audio": {
-            "title": "AI Audio",
-            "description": "Show how to use AI to generate wonderful audio"
-          }
-        }
       },
       "settings": {
         "title": "Settings",

@@ -41,11 +41,6 @@
     "title": "MkSaaS 示例",
     "description": "这是一个使用 MkSaaS 构建网站的简单示例"
   },
-  "NotFoundPage": {
-    "title": "404",
-    "message": "抱歉，您正在寻找的页面不存在",
-    "backToHome": "返回首页"
-  },
   "PricingPage": {
     "title": "价格",
     "description": "选择最适合您的付费计划",
@@ -61,10 +56,19 @@
       "yourCurrentPlan": "您的当前方案",
       "getStartedForFree": "开始免费使用",
       "getLifetimeAccess": "开启终身会员",
-      "getStarted": "开启免费试用",
+      "getStarted": "开始免费试用",
       "notAvailable": "不可用",
       "daysTrial": "{days} 天试用期"
+    },
+    "CheckoutButton": {
+      "loading": "加载中...",
+      "checkoutFailed": "打开结账页面失败"
     }
+  },
+  "NotFoundPage": {
+    "title": "404",
+    "message": "抱歉，您正在寻找的页面不存在",
+    "backToHome": "返回首页"
   },
   "ErrorPage": {
     "title": "哎呀！出错了！",
@@ -77,11 +81,12 @@
     "subtitle": "了解更多关于我们的公司、使命和价值观",
     "authorName": "MkSaaS",
     "authorBio": "最好的 AI SaaS 模板",
-    "authorIntroduction": "👋 你好，这里是 MkSaaS，一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
+    "introduction": "👋 你好，这里是 MkSaaS，一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
     "talkWithMe": "联系我"
   },
   "ChangelogPage": {
     "title": "更新日志",
+    "description": "查看我们产品的最新动态",
     "subtitle": "查看我们产品的最新动态"
   },
   "ContactPage": {
@@ -145,7 +150,7 @@
       "signInWithGitHub": "使用 GitHub 登录",
       "showPassword": "显示密码",
       "hidePassword": "隐藏密码",
-      "or": "或"
+      "or": "或以社媒账号登录"
     },
     "register": {
       "title": "注册",
@@ -363,7 +368,7 @@
       "legal": {
         "title": "法律",
         "items": {
-          "cookiePolicy": "Cookie 政策",
+          "cookiePolicy": "Cookie政策",
           "privacyPolicy": "隐私政策",
           "termsOfService": "服务条款"
         }
@@ -371,35 +376,13 @@
     },
     "avatar": {
       "dashboard": "工作台",
-      "settings": "设置",
-      "logout": "退出"
+      "settings": "设置"
     }
   },
   "Dashboard": {
     "sidebar": {
       "dashboard": {
         "title": "仪表盘"
-      },
-      "ai": {
-        "title": "AI 工具",
-        "items": {
-          "text": {
-            "title": "AI 文本",
-            "description": "展示如何使用 AI 生成精彩文本"
-          },
-          "image": {
-            "title": "AI 图像",
-            "description": "展示如何使用 AI 生成精美图像"
-          },
-          "video": {
-            "title": "AI 视频",
-            "description": "展示如何使用 AI 生成惊人视频"
-          },
-          "audio": {
-            "title": "AI 音频",
-            "description": "展示如何使用 AI 生成动听音频"
-          }
-        }
       },
       "settings": {
         "title": "设置",

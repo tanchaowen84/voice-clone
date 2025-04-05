@@ -61,7 +61,7 @@ export default async function AboutPage() {
             {/* introduction */}
             <div>
               <p className="mb-8 text-base text-muted-foreground">
-                {t('authorIntroduction')}
+                {t('introduction')}
               </p>
 
               <div className="flex items-center gap-4">

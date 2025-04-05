@@ -3,41 +3,41 @@
  */
 export enum Routes {
   Root = '/',
-  DefaultLoginRedirect = '/dashboard',
 
-  Features = '/#features',
   FAQ = '/#faq',
+  Features = '/#features',
   Pricing = '/pricing',
-
-  TermsOfService = '/terms-of-service',
-  PrivacyPolicy = '/privacy-policy',
-  CookiePolicy = '/cookie-policy',
 
   Blog = '/blog',
   Docs = '/docs',
-  Changelog = '/changelog',
-  Roadmap = 'https://mksaas.featurebase.app',
-
   About = '/about',
   Contact = '/contact',
   Waitlist = '/waitlist',
+  Changelog = '/changelog',
+  Roadmap = 'https://mksaas.featurebase.app',
 
+  CookiePolicy = '/cookie-policy',
+  PrivacyPolicy = '/privacy-policy',
+  TermsOfService = '/terms-of-service',
+
+  // auth routes
   Login = '/auth/login',
   Register = '/auth/register',
   AuthError = '/auth/error',
   ForgotPassword = '/auth/forgot-password',
   ResetPassword = '/auth/reset-password',
 
+  AIText = '/ai/text',
+  AIImage = '/ai/image',
+  AIVideo = '/ai/video',
+  AIAudio = '/ai/audio',
+
+  // dashboard routes
   Dashboard = '/dashboard',
   SettingsProfile = '/settings/profile',
   SettingsBilling = '/settings/billing',
   SettingsSecurity = '/settings/security',
   SettingsNotifications = '/settings/notifications',
-
-  AIText = '/ai/text',
-  AIImage = '/ai/image',
-  AIVideo = '/ai/video',
-  AIAudio = '/ai/audio',
 
   // Block routes
   HeroBlocks = '/blocks/hero-section',

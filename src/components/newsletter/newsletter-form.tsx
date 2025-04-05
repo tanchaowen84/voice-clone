@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { type NewsletterFormData, NewsletterFormSchema } from '@/lib/schemas';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
@@ -22,12 +21,24 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { z } from 'zod';
 
 export function NewsletterForm() {
-  const [isPending, startTransition] = useTransition();
   const t = useTranslations('Newsletter.form');
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
 
+  // newsletter schema
+  const NewsletterFormSchema = z.object({
+    email: z.string().email({
+      message: t('emailValidation'),
+    }),
+  });
+
+  // newsletter form data
+  type NewsletterFormData = z.infer<typeof NewsletterFormSchema>;
+
+  // initialize the form
   const form = useForm<NewsletterFormData>({
     resolver: zodResolver(NewsletterFormSchema),
     defaultValues: {
@@ -35,6 +46,7 @@ export function NewsletterForm() {
     },
   });
 
+  // handle form submission
   function onSubmit(data: NewsletterFormData) {
     startTransition(async () => {
       try {
