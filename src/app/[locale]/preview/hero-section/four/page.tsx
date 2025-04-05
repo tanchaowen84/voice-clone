@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { HeroHeader } from '@/components/blocks/hero8-header';
-import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider';
-import { ProgressiveBlur } from '@/components/motion-primitives/progressive-blur';
+import { InfiniteSlider } from '@/components/motion/infinite-slider';
+import { ProgressiveBlur } from '@/components/motion/progressive-blur';
 
 export default function HeroSection() {
   return (
