@@ -11,6 +11,7 @@ import { Routes } from "@/routes";
 import { Session } from "@/lib/auth";
 import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSubscription } from "@/hooks/use-subscription";
 
 interface UpgradeCardProps {
   user: Session['user'];
@@ -18,13 +19,11 @@ interface UpgradeCardProps {
 
 export function UpgradeCard({ user }: UpgradeCardProps) {
   const t = useTranslations('Dashboard.upgrade');
+  const { isLoading, isLifetimeMember, hasActiveSubscription } = useSubscription();
 
-  // user is a member if they have a lifetime membership or an active/trialing subscription
-  // const isMember = user?.lifetimeMember ||
-  //   (user?.subscriptionId && (user.subscriptionStatus === 'active' || user.subscriptionStatus === 'trialing'));
-  const isMember = user?.lifetimeMember;
-  // if user is a member, don't show the upgrade card
-  if (isMember) {
+  // Don't show the upgrade card if the user has a lifetime membership or an active subscription
+  const isMember = isLifetimeMember || hasActiveSubscription;
+  if (isLoading || isMember) {
     return null;
   }
 

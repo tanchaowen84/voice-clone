@@ -1,6 +1,7 @@
 'use client';
 
 import { ActiveThemeProvider } from '@/components/layout/active-theme';
+import { SubscriptionProvider } from '@/components/providers/subscription-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { ThemeProvider, useTheme } from 'next-themes';
@@ -15,6 +16,7 @@ import { PropsWithChildren } from 'react';
  * - ActiveThemeProvider: Provides the active theme to the app.
  * - RootProvider: Provides the root provider for Fumadocs UI.
  * - TooltipProvider: Provides the tooltip to the app.
+ * - SubscriptionProvider: Provides the subscription state to the app.
  */
 export function Providers({ children }: PropsWithChildren) {
   const theme = useTheme();
@@ -29,7 +31,9 @@ export function Providers({ children }: PropsWithChildren) {
       <ActiveThemeProvider>
         <RootProvider theme={theme}>
           <TooltipProvider>
-            {children}
+            <SubscriptionProvider>
+              {children}
+            </SubscriptionProvider>
           </TooltipProvider>
         </RootProvider>
       </ActiveThemeProvider>

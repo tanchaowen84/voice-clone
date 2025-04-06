@@ -22,6 +22,7 @@ import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { LOCALE_LIST, routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
 import { useLocaleStore } from '@/stores/locale-store';
+import { useSubscriptionStore } from '@/stores/subscription-store';
 import {
   ChevronsUpDown,
   Languages,
@@ -50,6 +51,7 @@ export function NavUser({ user, className }: NavUserProps) {
   const pathname = useLocalePathname();
   const params = useParams();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
+  const { resetState } = useSubscriptionStore();
   const [, startTransition] = useTransition();
   const t = useTranslations();
 
@@ -72,6 +74,8 @@ export function NavUser({ user, className }: NavUserProps) {
       fetchOptions: {
         onSuccess: () => {
           console.log('sign out success');
+          // Reset subscription state on sign out
+          resetState();
           router.replace('/');
         },
         onError: (error) => {

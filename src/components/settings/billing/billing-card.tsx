@@ -1,6 +1,5 @@
 'use client';
 
-import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
 import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,96 +9,58 @@ import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { formatDate, formatPrice } from '@/lib/formatter';
 import { getAllPlans } from '@/payment';
-import { PlanIntervals, Subscription } from '@/payment/types';
+import { PlanIntervals } from '@/payment/types';
 import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSubscription } from '@/hooks/use-subscription';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.settings.billing');
   const [error, setError] = useState<string | undefined>('');
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
+  
+  // Use our subscription hook
+  const { 
+    subscription, 
+    isLifetimeMember, 
+    isFreePlan, 
+    isLoading: isLoadingSubscription, 
+    refetch,
+    error: subscriptionError 
+  } = useSubscription();
 
-  // Get user session
+  // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
-  console.log('billing card, currentUser:', currentUser);
-
-  // Check if user is a lifetime member
-  const isLifetimePlan = currentUser?.lifetimeMember === true;
-  const hasCustomerId = Boolean(currentUser?.customerId);
 
   // Get all available plans
   const plans = getAllPlans();
-  console.log('billing card, plans:', plans);
 
   // Determine current plan based on user status
-  const currentPlan = isLifetimePlan
+  const currentPlan = isLifetimeMember
     ? plans.find(plan => plan.isLifetime)
     : subscription
       ? plans.find(plan => plan.id === subscription?.planId)
       : plans.find(plan => plan.isFree);
-  console.log('billing card, currentPlan:', currentPlan);
-
-  // Show upgrade button if user is on free plan
-  // OPTIMIZE: should we show upgrade button if user has a subscription?
-  const isFreePlan = currentPlan?.isFree;
-  const canUpgrade = !isFreePlan;
-  console.log('billing card, canUpgrade:', canUpgrade);
 
   // Get subscription price details
   const currentPrice = subscription && currentPlan?.prices.find(
     price => price.priceId === subscription?.priceId
   );
-  console.log('billing card, currentPrice:', currentPrice);
 
   // Format next billing date if subscription is active
   const nextBillingDate = subscription?.currentPeriodEnd
     ? formatDate(subscription.currentPeriodEnd)
     : null;
-  console.log('billing card, nextBillingDate:', nextBillingDate);
-
-  // Fetch customer subscription data
-  const fetchSubscription = async () => {
-    console.log('fetchSubscription, isLifetimeMember:', isLifetimePlan, 'hasCustomerId:', hasCustomerId);
-    // Skip fetching if user is a lifetime member
-    if (isLifetimePlan) return;
-
-    // Skip fetching if user doesn't have a customer ID
-    if (!hasCustomerId) return;
-
-    setIsLoadingSubscription(true);
-    setError('');
-
-    try {
-      const result = await getCustomerSubscriptionAction();
-
-      if (result?.data?.success && result.data.data) {
-        setSubscription(result.data.data);
-      } else {
-        setError(result?.data?.error || t('errorMessage'));
-      }
-    } catch (error) {
-      console.error('Fetch subscription error:', error);
-      setError(t('errorMessage'));
-    } finally {
-      setIsLoadingSubscription(false);
-    }
-  };
-
-  // Fetch subscription when user data is available
-  useEffect(() => {
-    if (!isLoadingSession && currentUser) {
-      fetchSubscription();
-    }
-  }, [isLoadingSession, currentUser]);
 
   // Determine if we are in a loading state
-  const isLoading = isLoadingSession || isLoadingSubscription;
+  const isPageLoading = isLoadingSubscription || isLoadingSession;
+
+  // Handle errors from the subscription store
+  const displayError = error || subscriptionError;
 
   // Render loading skeleton
-  if (isLoading) {
+  if (isPageLoading) {
     return (
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
@@ -123,7 +84,7 @@ export default function BillingCard() {
   }
 
   // Render error state
-  if (error) {
+  if (displayError) {
     return (
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
@@ -132,13 +93,13 @@ export default function BillingCard() {
             <CardDescription>{t('currentPlan.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-destructive text-sm">{error}</div>
+            <div className="text-destructive text-sm">{displayError}</div>
           </CardContent>
           <CardFooter>
             <Button
               variant="outline"
               className="w-full cursor-pointer"
-              onClick={fetchSubscription}
+              onClick={() => refetch()}
             >
               <RefreshCwIcon className="size-4 mr-1" />
               {t('retry')}
@@ -162,8 +123,8 @@ export default function BillingCard() {
             <div className="text-3xl font-medium">
               {currentPlan?.name}
             </div>
-            <Badge variant={currentPlan?.isFree || isLifetimePlan ? 'outline' : 'default'}>
-              {isLifetimePlan
+            <Badge variant={isFreePlan || isLifetimeMember ? 'outline' : 'default'}>
+              {isLifetimeMember
                 ? t('status.lifetime')
                 : subscription?.status === 'active'
                   ? t('status.active')
@@ -181,7 +142,7 @@ export default function BillingCard() {
           )}
 
           {/* Lifetime plan message */}
-          {isLifetimePlan && (
+          {isLifetimeMember && (
             <div className="text-sm text-muted-foreground">
               {t('lifetimeMessage')}
             </div>
@@ -212,7 +173,7 @@ export default function BillingCard() {
         </CardContent>
         <CardFooter>
           <div className="w-full gap-4 flex flex-col">
-            {/* Show upgrade plan button - only shown if user can upgrade */}
+            {/* Show upgrade plan button - only shown if user is on free plan */}
             {isFreePlan && (
               <Button
                 variant="default"
@@ -226,7 +187,7 @@ export default function BillingCard() {
             )}
 
             {/* Manage billing button - only shown if user is lifetime member */}
-            {isLifetimePlan && currentUser?.customerId && (
+            {isLifetimeMember && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}
                 className="w-full"
