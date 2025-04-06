@@ -27,7 +27,7 @@ export default function BillingCard() {
   console.log('billing card, currentUser:', currentUser);
 
   // Check if user is a lifetime member
-  const isLifetimeMember = currentUser?.lifetimeMember === true;
+  const isLifetimePlan = currentUser?.lifetimeMember === true;
   const hasCustomerId = Boolean(currentUser?.customerId);
 
   // Get all available plans
@@ -35,7 +35,7 @@ export default function BillingCard() {
   console.log('billing card, plans:', plans);
 
   // Determine current plan based on user status
-  const currentPlan = isLifetimeMember
+  const currentPlan = isLifetimePlan
     ? plans.find(plan => plan.isLifetime)
     : subscription
       ? plans.find(plan => plan.id === subscription?.planId)
@@ -43,7 +43,9 @@ export default function BillingCard() {
   console.log('billing card, currentPlan:', currentPlan);
 
   // Show upgrade button if user is on free plan
-  const canUpgrade = currentPlan?.isFree;
+  // OPTIMIZE: should we show upgrade button if user has a subscription?
+  const isFreePlan = currentPlan?.isFree;
+  const canUpgrade = !isFreePlan;
   console.log('billing card, canUpgrade:', canUpgrade);
 
   // Get subscription price details
@@ -60,9 +62,9 @@ export default function BillingCard() {
 
   // Fetch customer subscription data
   const fetchSubscription = async () => {
-    console.log('fetchSubscription, isLifetimeMember:', isLifetimeMember, 'hasCustomerId:', hasCustomerId);
+    console.log('fetchSubscription, isLifetimeMember:', isLifetimePlan, 'hasCustomerId:', hasCustomerId);
     // Skip fetching if user is a lifetime member
-    if (isLifetimeMember) return;
+    if (isLifetimePlan) return;
 
     // Skip fetching if user doesn't have a customer ID
     if (!hasCustomerId) return;
@@ -155,12 +157,13 @@ export default function BillingCard() {
           <CardDescription>{t('currentPlan.description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Plan name and status */}
           <div className="flex items-center justify-between">
             <div className="text-3xl font-medium">
               {currentPlan?.name}
             </div>
-            <Badge variant={currentPlan?.isFree || isLifetimeMember ? 'outline' : 'default'}>
-              {isLifetimeMember
+            <Badge variant={currentPlan?.isFree || isLifetimePlan ? 'outline' : 'default'}>
+              {isLifetimePlan
                 ? t('status.lifetime')
                 : subscription?.status === 'active'
                   ? t('status.active')
@@ -170,11 +173,25 @@ export default function BillingCard() {
             </Badge>
           </div>
 
-          {/* Subscription plan details */}
+          {/* Free plan message */}
+          {isFreePlan && (
+            <div className="text-sm text-muted-foreground">
+              {t('freePlanMessage')}
+            </div>
+          )}
+
+          {/* Lifetime plan message */}
+          {isLifetimePlan && (
+            <div className="text-sm text-muted-foreground">
+              {t('lifetimeMessage')}
+            </div>
+          )}
+
+          {/* Subscription plan message */}
           {subscription && currentPrice && (
-            <div className="text-sm text-muted-foreground space-y-1">
+            <div className="text-sm text-muted-foreground space-y-2">
               <div>
-                {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === PlanIntervals.MONTH ?
+                {t('price')} {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === PlanIntervals.MONTH ?
                   t('interval.month') :
                   currentPrice.interval === PlanIntervals.YEAR ?
                     t('interval.year') :
@@ -192,25 +209,24 @@ export default function BillingCard() {
               )}
             </div>
           )}
-
-          {/* Free plan message */}
-          {currentPlan?.isFree && (
-            <div className="text-sm text-muted-foreground">
-              {t('freePlanMessage')}
-            </div>
-          )}
-
-          {/* Lifetime access message */}
-          {isLifetimeMember && (
-            <div className="text-sm text-muted-foreground">
-              {t('lifetimeMessage')}
-            </div>
-          )}
         </CardContent>
         <CardFooter>
-          <div className="grid w-full gap-3">
-            {/* Manage subscription button - only shown if user has a customer ID */}
-            {hasCustomerId && currentUser?.customerId && (
+          <div className="w-full gap-4 flex flex-col">
+            {/* Show upgrade plan button - only shown if user can upgrade */}
+            {isFreePlan && (
+              <Button
+                variant="default"
+                className="w-full cursor-pointer"
+                asChild
+              >
+                <LocaleLink href="/pricing">
+                  {t('upgradePlan')}
+                </LocaleLink>
+              </Button>
+            )}
+
+            {/* Manage billing button - only shown if user is lifetime member */}
+            {isLifetimePlan && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}
                 className="w-full"
@@ -219,17 +235,14 @@ export default function BillingCard() {
               </CustomerPortalButton>
             )}
 
-            {/* View pricing plans button - only shown if user can upgrade */}
-            {canUpgrade && (
-              <Button
-                variant={subscription ? "outline" : "default"}
-                className="w-full cursor-pointer"
-                asChild
+            {/* Manage subscription button - only shown if user has subscription */}
+            {subscription && currentUser?.customerId && (
+              <CustomerPortalButton
+                customerId={currentUser.customerId}
+                className="w-full"
               >
-                <LocaleLink href="/pricing">
-                  {t('upgradePlan')}
-                </LocaleLink>
-              </Button>
+                {t('manageSubscription')}
+              </CustomerPortalButton>
             )}
           </div>
         </CardFooter>

@@ -440,13 +440,13 @@
           "loading": "加载中...",
           "createCustomerPortalFailed": "打开Stripe客户界面失败"
         },
+        "price": "价格：",
         "nextBillingDate": "下次账单日期：",
         "trialEnds": "试用结束日期：",
         "freePlanMessage": "您当前使用的是功能有限的免费方案",
         "lifetimeMessage": "您拥有所有高级功能的终身使用权限",
-        "manageSubscription": "管理订阅",
-        "billingHistory": "账单历史",
-        "manageBilling": "管理订阅和账单",
+        "manageSubscription": "管理订阅和账单",
+        "manageBilling": "管理账单",
         "retry": "重试",
         "errorMessage": "获取数据失败"
       },

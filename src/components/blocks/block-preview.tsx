@@ -1,9 +1,10 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCopyToClipboard } from '@/hooks/use-clipboard';
 import { isUrlCached } from '@/lib/serviceWorker';
-import { cn, titleToNumber } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { Check, Code2, Copy, Eye, Maximize, Terminal } from 'lucide-react';
 import Link from 'next/link';
@@ -16,7 +17,6 @@ import {
   type ImperativePanelGroupHandle,
 } from 'react-resizable-panels';
 import { useMedia } from 'use-media';
-import { Button } from '@/components/ui/button';
 
 export interface BlockPreviewProps {
   code?: string;
@@ -35,6 +35,11 @@ const MDSIZE = 62;
 const LGSIZE = 82;
 
 const getCacheKey = (src: string) => `iframe-cache-${src}`;
+
+const titleToNumber = (title: string): number => {
+  const titles = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+  return titles.indexOf(title.toLowerCase()) + 1;
+};
 
 export const BlockPreview: React.FC<BlockPreviewProps> = ({
   code,
