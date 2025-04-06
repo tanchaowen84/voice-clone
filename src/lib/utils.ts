@@ -1,55 +1,6 @@
-import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { type ClassValue, clsx } from 'clsx';
-import { parse as parseCookies } from 'cookie';
-import { Locale } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-export const titleToNumber = (title: string): number => {
-    const titles = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
-    return titles.indexOf(title.toLowerCase()) + 1;
-};
-
-/**
- * Gets the initials of a name used for avatar placeholders display in UIs.
- *
- * This function extracts initials from a name by:
- * - Taking first letters of up to 2 words
- * - Converting them to uppercase
- * - Joining them together
- *
- * Examples:
- * "John Doe" → "JD"
- * "Alice Bob Charles" → "AB" (only first 2 words)
- * "jane" → "J"
- * "John Doe" → "JD" (handles multiple spaces)
- *
- * @param name - The name to get the initials of
- * @returns The initials of the name
- */
-export function getInitials(name: string): string {
-  if (!name) {
-    return '';
-  }
-  return name
-    .replace(/\s+/, ' ')
-    .split(' ')
-    .slice(0, 2)
-    .map((v) => v && v[0].toUpperCase())
-    .join('');
-}
-
-/**
- * Gets the locale from a request by parsing the cookies
- * If no locale is found in the cookies, returns the default locale
- *
- * @param request - The request to get the locale from
- * @returns The locale from the request or the default locale
- */
-export function getLocaleFromRequest(request?: Request): Locale {
-  const cookies = parseCookies(request?.headers.get('cookie') ?? '');
-  return (cookies[LOCALE_COOKIE_NAME] as Locale) ?? routing.defaultLocale;
 }

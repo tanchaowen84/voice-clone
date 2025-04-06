@@ -1,12 +1,15 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
-import { getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
 import { getUrlWithLocale } from './urls/urls';
+import { routing } from '@/i18n/routing';
+import { LOCALE_COOKIE_NAME } from '@/i18n/routing';
+import { Locale } from 'next-intl';
+import { parse as parseCookies } from 'cookie';
 
 /**
  * https://www.better-auth.com/docs/reference/options
@@ -47,11 +50,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
     async sendResetPassword({ user, url }, request) {
       const locale = getLocaleFromRequest(request);
-      // console.log('[Auth] Reset password original URL:', url);
-
-      // Add locale to URL if necessary
       const localizedUrl = getUrlWithLocale(url, locale);
-      // console.log('[Auth] Reset password localized URL:', localizedUrl);
 
       await send({
         to: user.email,
@@ -70,11 +69,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
-      // console.log('[Auth] Verification email original URL:', url);
-
-      // Add locale to URL if necessary
       const localizedUrl = getUrlWithLocale(url, locale);
-      // console.log('[Auth] Verification email localized URL:', localizedUrl);
 
       await send({
         to: user.email,
@@ -143,3 +138,16 @@ export const auth = betterAuth({
 
 // https://www.better-auth.com/docs/concepts/typescript#additional-fields
 export type Session = typeof auth.$Infer.Session;
+
+
+/**
+ * Gets the locale from a request by parsing the cookies
+ * If no locale is found in the cookies, returns the default locale
+ *
+ * @param request - The request to get the locale from
+ * @returns The locale from the request or the default locale
+ */
+export function getLocaleFromRequest(request?: Request): Locale {
+  const cookies = parseCookies(request?.headers.get('cookie') ?? '');
+  return (cookies[LOCALE_COOKIE_NAME] as Locale) ?? routing.defaultLocale;
+}
