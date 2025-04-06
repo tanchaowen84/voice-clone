@@ -146,7 +146,7 @@ export function PricingCard({
           currentUser ? (
             <CheckoutButton
               planId={plan.id}
-              priceId={price.productId}
+              priceId={price.priceId}
               metadata={metadata}
               className="mt-4 w-full cursor-pointer"
             >

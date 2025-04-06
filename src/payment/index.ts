@@ -113,7 +113,7 @@ export const findPriceInPlan = (planId: string, priceId: string): Price | undefi
     console.error(`Plan with ID ${planId} not found`);
     return undefined;
   }
-  return plan.prices.find(price => price.productId === priceId);
+  return plan.prices.find(price => price.priceId === priceId);
 };
 
 /**
@@ -124,7 +124,7 @@ export const findPriceInPlan = (planId: string, priceId: string): Price | undefi
 export const findPlanByPriceId = (priceId: string): PricePlan | undefined => {
   const plans = getAllPlans();
   for (const plan of plans) {
-    const matchingPrice = plan.prices.find(price => price.productId === priceId);
+    const matchingPrice = plan.prices.find(price => price.priceId === priceId);
     if (matchingPrice) {
       return plan;
     }

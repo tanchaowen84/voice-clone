@@ -39,7 +39,7 @@ export type PaymentStatus =
  */
 export interface Price {
   type: PaymentType;                 // Type of payment (recurring or one_time)
-  productId: string;                 // Stripe price ID (TODO: change to priceId)
+  priceId: string;                   // Stripe price ID (not product id)
   amount: number;                    // Price amount in currency units (dollars, euros, etc.)
   currency: string;                  // Currency code (e.g., USD)
   interval?: PlanInterval;           // Billing interval for recurring payments

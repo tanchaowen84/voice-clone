@@ -72,7 +72,7 @@ export default function BillingCard() {
 
     // Determine current price details if subscription exists
     const currentPrice = subscription && currentPlan?.prices.find(
-      price => price.productId === subscription?.priceId
+      price => price.priceId === subscription?.priceId
     );
 
     // Calculate next billing date for subscriptions
