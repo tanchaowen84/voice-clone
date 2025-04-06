@@ -1,9 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { getLocaleDate } from '@/lib/utils';
+import { PLACEHOLDER_IMAGE } from '@/constants';
+import { LocaleLink } from '@/i18n/navigation';
+import { formatDate } from '@/lib/formatter';
 import { Post } from 'content-collections';
 import Image from 'next/image';
-import { LocaleLink } from '@/i18n/navigation';
-import { PLACEHOLDER_IMAGE } from '@/constants';
 
 interface BlogCardProps {
   post: Post;
@@ -11,7 +11,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ post }: BlogCardProps) {
   const publishDate = post.date;
-  const date = getLocaleDate(publishDate);
+  const date = formatDate(new Date(publishDate));
 
   // Extract the slug parts for the Link component
   const slugParts = post.slugAsParams.split('/');

@@ -8,7 +8,6 @@ import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
-import { getLocaleDate } from '@/lib/utils';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts, Post } from 'content-collections';
 import { CalendarIcon, ClockIcon, FileTextIcon } from 'lucide-react';
@@ -17,6 +16,7 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { formatDate } from '@/lib/formatter';
 
 import '@/styles/mdx.css';
 
@@ -110,7 +110,7 @@ export default async function BlogPostPage(props: NextPageProps) {
   }
 
   const publishDate = post.date;
-  const date = getLocaleDate(publishDate);
+  const date = formatDate(new Date(publishDate));
   const toc = await getTableOfContents(post.content);
   const t = await getTranslations('BlogPage');
 

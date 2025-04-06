@@ -2,7 +2,7 @@ import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { getLocaleDate } from '@/lib/utils';
+import { formatDate } from '@/lib/formatter';
 import { CalendarIcon, TagIcon } from 'lucide-react';
 
 interface ReleaseCardProps {
@@ -20,7 +20,7 @@ export function ReleaseCard({
   version,
   content,
 }: ReleaseCardProps) {
-  const formattedDate = getLocaleDate(date);
+  const formattedDate = formatDate(new Date(date));
 
   return (
     <Card className="mb-8">

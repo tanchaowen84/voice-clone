@@ -43,17 +43,6 @@ export function getInitials(name: string): string {
 }
 
 /**
- * get locale date string, like "2024/10/01"
- */
-export function getLocaleDate(input: string | number): string {
-  const date = new Date(input);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${year}/${month}/${day}`;
-}
-
-/**
  * Gets the locale from a request by parsing the cookies
  * If no locale is found in the cookies, returns the default locale
  *

@@ -1,5 +1,5 @@
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
-import { getLocaleDate } from '@/lib/utils';
+import { formatDate } from '@/lib/formatter';
 import { CalendarIcon } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 
@@ -16,7 +16,7 @@ export function CustomPage({
   date,
   content,
 }: CustomPageProps) {
-  const formattedDate = getLocaleDate(date);
+  const formattedDate = formatDate(new Date(date));
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
