@@ -1,4 +1,4 @@
-import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, GetSubscriptionParams, ListCustomerSubscriptionsParams } from "./types";
+import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, GetCustomerParams, ListCustomerSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
 import { paymentConfig } from "./config/payment-config";
 
@@ -72,18 +72,6 @@ export const getCustomer = async (
 };
 
 /**
- * Get subscription details
- * @param params Parameters for retrieving the subscription
- * @returns Subscription data or null if not found
- */
-export const getSubscription = async (
-  params: GetSubscriptionParams
-): Promise<Subscription | null> => {
-  const provider = getPaymentProvider();
-  return provider.getSubscription(params);
-};
-
-/**
  * Handle webhook event
  * @param payload Raw webhook payload
  * @param signature Webhook signature
@@ -128,6 +116,22 @@ export const findPriceInPlan = (planId: string, priceId: string): Price | undefi
   return plan.prices.find(price => price.productId === priceId);
 };
 
+/**
+ * Find plan by price ID
+ * @param priceId Price ID (Stripe price ID)
+ * @returns Plan or undefined if not found
+ */
+export const findPlanByPriceId = (priceId: string): PricePlan | undefined => {
+  const plans = getAllPlans();
+  for (const plan of plans) {
+    const matchingPrice = plan.prices.find(price => price.productId === priceId);
+    if (matchingPrice) {
+      return plan;
+    }
+  }
+  return undefined;
+};
+
 // Export types for convenience
 export type {
   PaymentProvider,
@@ -145,6 +149,5 @@ export type {
   CreatePortalParams,
   PortalResult,
   GetCustomerParams,
-  GetSubscriptionParams,
   ListCustomerSubscriptionsParams,
 };

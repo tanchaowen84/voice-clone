@@ -29,6 +29,8 @@ export default function BillingCard() {
   // Get all available plans
   const plans = getAllPlans();
 
+  // TODO: when currentUser has no customerId, then we assume the user is in Free Plan
+
   // Fetch user subscription data if user has a subscription ID
   const fetchUserSubscription = async () => {
     setIsLoading(true);

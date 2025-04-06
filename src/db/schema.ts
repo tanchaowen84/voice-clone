@@ -58,6 +58,7 @@ export const subscription = pgTable("subscription", {
 	id: text("id").primaryKey(),
 	planId: text('plan_id').notNull(),
 	priceId: text('price_id').notNull(),
+	interval: text('interval').notNull(),
 	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
 	customerId: text('customer_id'),
 	subscriptionId: text('subscription_id'),

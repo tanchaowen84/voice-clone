@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from "@/lib/auth";
-import { getPaymentProvider, getSubscription } from "@/payment";
+import { getPaymentProvider } from "@/payment";
 import { createSafeActionClient } from 'next-safe-action';
 import { headers } from "next/headers";
 
@@ -18,18 +18,26 @@ export const getUserSubscriptionAction = actionClient
       headers: await headers(),
     });
 
-    if (!session?.user || !session.user.customerId) {
+    if (!session?.user) {
       return {
         success: false,
         error: 'Unauthorized',
       };
     }
 
+    // TODO: need to refresh session when user just logged in and pay
+
     try {
       // Get the effective customer ID (from session or input)
       const customerId = session.user.customerId;
       // const subscriptionId = session.user.subscriptionId;
       console.log('customerId:', customerId);
+      if (!customerId) {
+        return {
+          success: false,
+          error: 'No customerId found',
+        };
+      }
 
       let subscriptionData = null;
       // Get the payment provider to access its methods

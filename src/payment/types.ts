@@ -154,13 +154,6 @@ export interface GetCustomerParams {
 }
 
 /**
- * Parameters for retrieving a subscription
- */
-export interface GetSubscriptionParams {
-  subscriptionId: string;
-}
-
-/**
  * Parameters for listing customer subscriptions
  */
 export interface ListCustomerSubscriptionsParams {
@@ -187,11 +180,6 @@ export interface PaymentProvider {
    * Get customer details
    */
   getCustomer(params: GetCustomerParams): Promise<Customer | null>;
-
-  /**
-   * Get subscription details
-   */
-  getSubscription(params: GetSubscriptionParams): Promise<Subscription | null>;
 
   /**
    * List customer subscriptions

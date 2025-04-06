@@ -3,8 +3,8 @@ import { subscription as subscriptionTable, user } from '@/db/schema';
 import { randomUUID } from 'crypto';
 import { eq } from 'drizzle-orm';
 import Stripe from 'stripe';
-import { findPriceInPlan, getPlanById } from '../index';
-import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, Customer, GetCustomerParams, GetSubscriptionParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PortalResult, Subscription } from '../types';
+import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
+import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, Customer, GetCustomerParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription } from '../types';
 
 /**
  * Stripe payment provider implementation
@@ -57,6 +57,8 @@ export class StripeProvider implements PaymentProvider {
         return customers.data[0].id;
       }
 
+      // TODO: sometimes we have customer in stripe, but not in our database
+
       // Create new customer
       const customer = await this.stripe.customers.create({
         email,
@@ -101,6 +103,31 @@ export class StripeProvider implements PaymentProvider {
       console.error('Update user with customer ID error:', error);
       // Re-throw to be caught by the caller
       throw new Error('Failed to update user with customer ID');
+    }
+  }
+
+  /**
+   * Finds a user by customerId
+   * @param customerId Stripe customer ID
+   * @returns User ID or undefined if not found
+   */
+  private async findUserIdByCustomerId(customerId: string): Promise<string | undefined> {
+    try {
+      // Query the user table for a matching customerId
+      const result = await db
+        .select({ id: user.id })
+        .from(user)
+        .where(eq(user.customerId, customerId))
+        .limit(1);
+
+      if (result.length > 0) {
+        return result[0].id;
+      }
+
+      return undefined;
+    } catch (error) {
+      console.error('Find user by customer ID error:', error);
+      return undefined;
     }
   }
 
@@ -249,51 +276,6 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Get subscription details
-   * @param params Parameters for retrieving the subscription
-   * @returns Subscription data or null if not found
-   */
-  public async getSubscription(params: GetSubscriptionParams): Promise<Subscription | null> {
-    const { subscriptionId } = params;
-
-    try {
-      const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
-
-      // Determine the interval if available
-      let interval: PlanInterval | undefined = undefined;
-      if (subscription.items.data[0]?.plan.interval === 'month' || subscription.items.data[0]?.plan.interval === 'year') {
-        interval = subscription.items.data[0]?.plan.interval as PlanInterval;
-      }
-
-      // Extract plan ID and price ID from metadata or use defaults
-      const planId = subscription.metadata.planId || 'unknown';
-      const priceId = subscription.metadata.priceId || subscription.items.data[0]?.price.id || 'unknown';
-
-      return {
-        id: subscription.id,
-        customerId: subscription.customer as string,
-        status: this.mapSubscriptionStatus(subscription.status),
-        planId,
-        priceId,
-        interval,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        canceledAt: subscription.canceled_at
-          ? new Date(subscription.canceled_at * 1000)
-          : undefined,
-        trialEndDate: subscription.trial_end
-          ? new Date(subscription.trial_end * 1000)
-          : undefined,
-        createdAt: new Date(subscription.created * 1000),
-      };
-    } catch (error) {
-      console.error('Get subscription error:', error);
-      return null;
-    }
-  }
-
-  /**
    * List customer subscriptions
    * @param params Parameters for listing customer subscriptions
    * @returns Array of subscription objects
@@ -315,20 +297,17 @@ export class StripeProvider implements PaymentProvider {
       // Map to our subscription model
       return subscriptions.data.map(subscription => {
         // Determine the interval if available
-        let interval: PlanInterval | undefined = undefined;
-        if (subscription.items.data[0]?.plan.interval === 'month'
-          || subscription.items.data[0]?.plan.interval === 'year') {
-          interval = subscription.items.data[0]?.plan.interval as PlanInterval;
-        }
+        const interval = this.mapStripeIntervalToPlanInterval(subscription);
 
         // Extract plan ID and price ID from metadata or use defaults
+        // TODO: we need other ways to get userId, planId, priceId, etc.
         const planId = subscription.metadata.planId || 'unknown';
         const priceId = subscription.metadata.priceId || subscription.items.data[0]?.price.id || 'unknown';
 
         return {
           id: subscription.id,
           customerId: subscription.customer as string,
-          status: this.mapSubscriptionStatus(subscription.status),
+          status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
           planId,
           priceId,
           interval,
@@ -363,8 +342,39 @@ export class StripeProvider implements PaymentProvider {
         signature,
         this.webhookSecret
       );
-      // Process the event with the default handler
-      await this.webhookEventHandler(event);
+      const eventType = event.type;
+      console.log(`handle webhook event, type: ${eventType}`);
+
+      // Handle subscription events
+      if (eventType.startsWith('customer.subscription.')) {
+        const stripeSubscription = event.data.object as Stripe.Subscription;
+
+        // Process based on subscription status and event type
+        switch (eventType) {
+          case 'customer.subscription.created': {
+            await this.onCreateSubscription(stripeSubscription);
+            break;
+          }
+          case 'customer.subscription.updated': {
+            await this.onUpdateSubscription(stripeSubscription);
+            break;
+          }
+          case 'customer.subscription.deleted': {
+            await this.onDeleteSubscription(stripeSubscription);
+            break;
+          }
+        }
+      } else if (eventType.startsWith('checkout.')) {
+        // Handle checkout events
+        if (eventType === 'checkout.session.completed') {
+          const session = event.data.object as Stripe.Checkout.Session;
+
+          // Only process one-time payments (likely for lifetime plan)
+          if (session.mode === 'payment') {
+            await this.onOnetimePayment(session);
+          }
+        }
+      }
     } catch (error) {
       console.error('handle webhook event error:', error);
       throw new Error('Failed to handle webhook event');
@@ -372,150 +382,236 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Default webhook handler for common event types
-   * @param event Stripe event
+   * Create subscription record
+   * @param stripeSubscription Stripe subscription
    */
-  private async webhookEventHandler(event: Stripe.Event): Promise<void> {
-    try {
-      const eventType = event.type;
-      console.log(`handle webhook event, type: ${eventType}`);
+  private async onCreateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
+    console.log(`Create subscription for Stripe subscription ${stripeSubscription.id}`);
+    const customerId = stripeSubscription.customer as string;
 
-      // Handle subscription events
-      if (eventType.startsWith('customer.subscription.')) {
-        const stripeSubscription = event.data.object as Stripe.Subscription;
-        // Get customerId from subscription
-        const customerId = stripeSubscription.customer as string;
-        console.log(`Processing subscription ${stripeSubscription.id} for user ${customerId}, status: ${stripeSubscription.status}`);
+    // get priceId from subscription items (this is always available)
+    const priceId = stripeSubscription.items.data[0]?.price.id;
+    if (!priceId) {
+      console.warn(`No priceId found for subscription ${stripeSubscription.id}`);
+      return;
+    }
 
-        // Extract information from metadata, then we do not need to query the database for userId
-        const userId = stripeSubscription.metadata.userId || 'unknown';
-        const planId = stripeSubscription.metadata.planId || 'unknown';
-        const priceId = stripeSubscription.metadata.priceId || stripeSubscription.items.data[0]?.price.id || 'unknown';
-
-        // Process based on subscription status and event type
-        switch (eventType) {
-          case 'customer.subscription.created': {
-            // Create new subscription record with a unique ID
-            const newSubscriptionId = randomUUID();
-            const result = await db.insert(subscriptionTable).values({
-              id: newSubscriptionId,
-              planId: planId,
-              priceId: priceId,
-              userId: userId,
-              customerId: customerId,
-              subscriptionId: stripeSubscription.id,
-              status: this.mapSubscriptionStatus(stripeSubscription.status),
-              periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : null,
-              periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : null,
-              cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-              trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : null,
-              trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : null,
-              createdAt: new Date(),
-              updatedAt: new Date()
-            }).returning({ id: subscriptionTable.id });
-
-            if (result.length > 0) {
-              console.log(`Created new subscription ${newSubscriptionId} for Stripe subscription ${stripeSubscription.id}`);
-            } else {
-              console.warn(`No subscription created for Stripe subscription ${stripeSubscription.id}`);
-            }
-            break;
-          }
-          case 'customer.subscription.updated': {
-            // Update subscription record
-            const result = await db
-              .update(subscriptionTable)
-              .set({
-                status: this.mapSubscriptionStatus(stripeSubscription.status),
-                periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : undefined,
-                periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : undefined,
-                cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-                trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : undefined,
-                updatedAt: new Date()
-              })
-              .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
-              .returning({ id: subscriptionTable.id });
-
-            if (result.length > 0) {
-              console.log(`Updated subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
-            } else {
-              console.warn(`No subscription found for Stripe subscription ${stripeSubscription.id}`);
-            }
-            break;
-          }
-          case 'customer.subscription.deleted': {
-            // Update subscription record, set status to canceled
-            const result = await db
-              .update(subscriptionTable)
-              .set({
-                status: this.mapSubscriptionStatus(stripeSubscription.status),
-                updatedAt: new Date()
-              })
-              .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
-              .returning({ id: subscriptionTable.id });
-
-            if (result.length > 0) {
-              console.log(`Marked subscription ${stripeSubscription.id} as canceled`);
-            } else {
-              console.warn(`No subscription found to cancel for Stripe subscription ${stripeSubscription.id}`);
-            }
-            break;
-          }
-          case 'customer.subscription.trial_will_end': {
-            // Just log for now, could send notifications or update the subscription record
-            console.log(`Trial ending soon for subscription ${stripeSubscription.id}, customerId ${customerId}`);
-            break;
-          }
-        }
+    // get userId from metadata or find it by customerId from database
+    let userId = stripeSubscription.metadata.userId;
+    if (!userId) {
+      const foundUserId = await this.findUserIdByCustomerId(customerId);
+      if (!foundUserId) {
+        console.warn(`No user found for customer ${customerId}, skipping subscription creation`);
+        return;
       }
-      // Handle checkout events
-      else if (eventType.startsWith('checkout.')) {
-        if (eventType === 'checkout.session.completed') {
-          const session = event.data.object as Stripe.Checkout.Session;
+      userId = foundUserId;
+      console.log(`Found userId ${userId} for customer ${customerId} from database`);
+    } else {
+      console.log(`Using userId ${userId} from subscription metadata`);
+    }
 
-          // Only process one-time payments (likely for lifetime plan)
-          if (session.mode === 'payment') {
-            const customerId = session.customer as string;
-            console.log(`Processing one-time payment for customer ${customerId}`);
-
-            // Check if this was for a lifetime plan (via metadata)
-            const metadata = session.metadata || {};
-            const planId = metadata.planId;
-
-            // Safely handle the case where planId might not exist
-            if (!planId) {
-              console.log(`No planId found for checkout session ${session.id}`);
-              return;
-            }
-
-            const plan = getPlanById(planId);
-            if (plan && plan.isLifetime) {
-              // Mark user as lifetime member by customerId
-              const result = await db
-                .update(user)
-                .set({
-                  lifetimeMember: true,
-                  updatedAt: new Date()
-                })
-                .where(eq(user.customerId, customerId))
-                .returning({ id: user.id });
-
-              if (result.length === 0) {
-                console.warn(`No user ${customerId} marked as lifetime member`);
-                return;
-              } else {
-                console.log(`Marked user ${customerId} as lifetime member`);
-              }
-            } else {
-              // Handle other one-time payments if needed, like increase user credits
-              console.log(`One-time payment for non-lifetime plan: ${planId}, customerId: ${customerId}`);
-            }
-          }
-        }
+    // get planId from metadata or find it by priceId from payment config
+    let planId = stripeSubscription.metadata.planId;
+    if (!planId) {
+      const foundPlan = findPlanByPriceId(priceId);
+      if (!foundPlan) {
+        console.warn(`No plan found for price ${priceId}, skipping subscription creation`);
+        return;
       }
-    } catch (error) {
-      console.error('webhook event handler error:', error);
-      throw new Error('Failed to handle webhook event');
+      planId = foundPlan.id;
+      console.log(`Found planId ${planId} for price ${priceId} from config`);
+    } else {
+      console.log(`Using planId ${planId} from subscription metadata`);
+    }
+
+    // prepare create fields
+    const createFields: any = {
+      id: randomUUID(),
+      planId: planId,
+      priceId: priceId,
+      userId: userId,
+      customerId: customerId,
+      subscriptionId: stripeSubscription.id,
+      interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
+      status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
+      periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : null,
+      periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : null,
+      cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
+      trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : null,
+      trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    const result = await db.insert(subscriptionTable)
+      .values(createFields)
+      .returning({ id: subscriptionTable.id });
+
+    if (result.length > 0) {
+      console.log(`Created new subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+    } else {
+      console.warn(`No subscription created for Stripe subscription ${stripeSubscription.id}`);
+    }
+  }
+
+  /**
+   * Update subscription record
+   * @param stripeSubscription Stripe subscription
+   */
+  private async onUpdateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
+    console.log(`Update subscription for Stripe subscription ${stripeSubscription.id}`);
+    const customerId = stripeSubscription.customer as string;
+
+    // get priceId from subscription items (this is always available)
+    const priceId = stripeSubscription.items.data[0]?.price.id;
+    if (!priceId) {
+      console.warn(`No priceId found for subscription ${stripeSubscription.id}`);
+      return;
+    }
+
+    // get userId from metadata or find it by customerId from database
+    // NOTICE: when user updates subscription in portal, we can not get userId from metadata
+    let userId = stripeSubscription.metadata.userId;
+    if (!userId) {
+      const foundUserId = await this.findUserIdByCustomerId(customerId);
+      if (!foundUserId) {
+        console.warn(`No user found for customer ${customerId}, skipping subscription creation`);
+        return;
+      }
+      userId = foundUserId;
+      console.log(`Found userId ${userId} for customer ${customerId} from database`);
+    } else {
+      console.log(`Using userId ${userId} from subscription metadata`);
+    }
+
+    // get planId from metadata or find it by priceId from payment config
+    // NOTICE: when user updates subscription in portal, we can not get planId from metadata
+    let planId = stripeSubscription.metadata.planId;
+    let shouldUpdatePlanId = false;
+    if (!planId) {
+      const foundPlan = findPlanByPriceId(priceId);
+      if (!foundPlan) {
+        shouldUpdatePlanId = false;
+        console.warn(`No plan found for price ${priceId}, did you update the plans and prices in payment config?`);
+      } else {
+        planId = foundPlan.id;
+        shouldUpdatePlanId = true;
+        console.log(`Found planId ${planId} for price ${priceId} from config`);
+      }
+    } else {
+      console.log(`Using planId ${planId} from subscription metadata`);
+    }
+
+    // prepare update fields
+    const updateFields: any = {
+      priceId: priceId,
+      interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
+      status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
+      periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : undefined,
+      periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : undefined,
+      cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
+      trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : undefined,
+      trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : undefined,
+      updatedAt: new Date()
+    };
+
+    // Only include planId if it should be updated
+    if (shouldUpdatePlanId && planId) {
+      updateFields.planId = planId;
+    }
+
+    const result = await db
+      .update(subscriptionTable)
+      .set(updateFields)
+      .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
+      .returning({ id: subscriptionTable.id });
+
+    if (result.length > 0) {
+      console.log(`Updated subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+    } else {
+      console.warn(`No subscription found for Stripe subscription ${stripeSubscription.id}`);
+    }
+  }
+
+  /**
+   * Update subscription record, set status to canceled
+   * @param stripeSubscription Stripe subscription
+   */
+  private async onDeleteSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
+    const result = await db
+      .update(subscriptionTable)
+      .set({
+        status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
+        updatedAt: new Date()
+      })
+      .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
+      .returning({ id: subscriptionTable.id });
+
+    if (result.length > 0) {
+      console.log(`Marked subscription ${stripeSubscription.id} as canceled`);
+    } else {
+      console.warn(`No subscription found to cancel for Stripe subscription ${stripeSubscription.id}`);
+    }
+  }
+
+  /**
+   * Handle one-time payment
+   * @param session Stripe checkout session
+   */
+  private async onOnetimePayment(session: Stripe.Checkout.Session): Promise<void> {
+    const customerId = session.customer as string;
+    console.log(`Handle onetime payment for customer ${customerId}`);
+
+    // get priceId from session line items
+    const priceId = session.line_items?.data[0]?.price?.id;
+    if (!priceId) {
+      console.warn(`No priceId found for checkout session ${session.id}`);
+      return;
+    }
+
+    // find plan by priceId, we can not be sure if there is planId in metadata
+    const plan = findPlanByPriceId(priceId);
+    if (!plan) {
+      console.warn(`No plan found for price ${priceId}`);
+      return;
+    }
+
+    if (plan.isLifetime) {
+      // mark user as lifetime member by customerId
+      const result = await db
+        .update(user)
+        .set({
+          lifetimeMember: true,
+          updatedAt: new Date()
+        })
+        .where(eq(user.customerId, customerId))
+        .returning({ id: user.id });
+
+      if (result.length === 0) {
+        console.warn(`No user ${customerId} marked as lifetime member`);
+        return;
+      } else {
+        console.log(`Marked user ${customerId} as lifetime member`);
+      }
+    } else {
+      // handle other onetime payments if needed, like increase user credits
+      console.log(`Onetime payment for non-lifetime plan: ${plan.id}, customerId: ${customerId}`);
+    }
+  }
+
+  /**
+   * Map Stripe subscription interval to our own interval types
+   * @param subscription Stripe subscription
+   * @returns PlanInterval
+   */
+  private mapStripeIntervalToPlanInterval(subscription: Stripe.Subscription): PlanInterval {
+    switch (subscription.items.data[0]?.plan.interval) {
+      case 'month':
+        return PlanIntervals.MONTH;
+      case 'year':
+        return PlanIntervals.YEAR;
+      default:
+        return PlanIntervals.MONTH;
     }
   }
 
@@ -555,7 +651,7 @@ export class StripeProvider implements PaymentProvider {
    * @param status Stripe subscription status
    * @returns PaymentStatus
    */
-  private mapSubscriptionStatus(status: Stripe.Subscription.Status): PaymentStatus {
+  private mapSubscriptionStatusToPaymentStatus(status: Stripe.Subscription.Status): PaymentStatus {
     const statusMap: Record<string, PaymentStatus> = {
       active: 'active',
       canceled: 'canceled',
