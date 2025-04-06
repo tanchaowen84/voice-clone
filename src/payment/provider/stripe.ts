@@ -552,8 +552,9 @@ export class StripeProvider implements PaymentProvider {
     const customerId = session.customer as string;
     console.log(`Handle onetime payment for customer ${customerId}`);
 
-    // get priceId from session line items
-    const priceId = session.line_items?.data[0]?.price?.id;
+    // get priceId from session metadata, not from line items
+    // const priceId = session.line_items?.data[0]?.price?.id;
+    const priceId = session.metadata?.priceId;
     if (!priceId) {
       console.warn(`No priceId found for checkout session ${session.id}`);
       return;

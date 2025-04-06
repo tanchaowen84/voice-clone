@@ -32,6 +32,7 @@ export default function BillingCard() {
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
+  console.log('billing card, currentUser', currentUser);
 
   // Get all available plans
   const plans = getAllPlans();
