@@ -63,7 +63,7 @@ export function PricingCard({
   const price = getPriceForPlan(plan, interval, paymentType);
   const currentUser = useCurrentUser();
   const currentPath = useLocalePathname();
-  console.log('pricing card, currentPath', currentPath);
+  // console.log('pricing card, currentPath', currentPath);
   
   // generate formatted price and price label
   let formattedPrice = '';

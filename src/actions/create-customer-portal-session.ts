@@ -47,7 +47,7 @@ export const createPortalAction = actionClient
       };
 
       const result = await createCustomerPortal(params);
-
+      // console.log('create customer portal result:', result);
       return {
         success: true,
         data: result,

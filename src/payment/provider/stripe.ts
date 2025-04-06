@@ -35,6 +35,11 @@ export class StripeProvider implements PaymentProvider {
 
   /**
    * Create a customer in Stripe if not exists
+   * 
+   * NOTICE: if you want to delete user in database,
+   * please delete customer in Stripe as well,
+   * otherwise, no customer id will be saved in database.
+   * 
    * @param email Customer email
    * @param name Optional customer name
    * @param metadata Optional metadata
@@ -57,8 +62,6 @@ export class StripeProvider implements PaymentProvider {
         return customers.data[0].id;
       }
 
-      // TODO: sometimes we have customer in stripe, but not in our database
-
       // Create new customer
       const customer = await this.stripe.customers.create({
         email,
@@ -66,7 +69,7 @@ export class StripeProvider implements PaymentProvider {
         metadata,
       });
 
-      // Update user record in database with the new customer ID (non-blocking)
+      // Update user record in database with the new customer ID
       await this.updateUserWithCustomerId(customer.id, email);
 
       return customer.id;
@@ -292,17 +295,19 @@ export class StripeProvider implements PaymentProvider {
         // Sort by creation date, newest first
         status: status as any, // Type cast to handle our custom status types
       });
-      console.log('list customer subscriptions:', subscriptions);
+      // console.log('list customer subscriptions:', subscriptions);
 
       // Map to our subscription model
       return subscriptions.data.map(subscription => {
-        // Determine the interval if available
+        // determine the interval if available
         const interval = this.mapStripeIntervalToPlanInterval(subscription);
 
-        // Extract plan ID and price ID from metadata or use defaults
-        // TODO: we need other ways to get userId, planId, priceId, etc.
-        const planId = subscription.metadata.planId || 'unknown';
-        const priceId = subscription.metadata.priceId || subscription.items.data[0]?.price.id || 'unknown';
+        // get priceId from subscription items (this is always available)
+        const priceId = subscription.items.data[0]?.price.id;
+
+        // get planId from config or metadata
+        const foundPlan = findPlanByPriceId(priceId);
+        const planId = foundPlan?.id || subscription.metadata.planId || 'unknown';
 
         return {
           id: subscription.id,
@@ -315,11 +320,9 @@ export class StripeProvider implements PaymentProvider {
           currentPeriodEnd: new Date(subscription.current_period_end * 1000),
           cancelAtPeriodEnd: subscription.cancel_at_period_end,
           canceledAt: subscription.canceled_at
-            ? new Date(subscription.canceled_at * 1000)
-            : undefined,
+            ? new Date(subscription.canceled_at * 1000) : undefined,
           trialEndDate: subscription.trial_end
-            ? new Date(subscription.trial_end * 1000)
-            : undefined,
+            ? new Date(subscription.trial_end * 1000) : undefined,
           createdAt: new Date(subscription.created * 1000),
         };
       });
@@ -434,11 +437,15 @@ export class StripeProvider implements PaymentProvider {
       subscriptionId: stripeSubscription.id,
       interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
       status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
-      periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : null,
-      periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : null,
+      periodStart: stripeSubscription.current_period_start ?
+        new Date(stripeSubscription.current_period_start * 1000) : null,
+      periodEnd: stripeSubscription.current_period_end ?
+        new Date(stripeSubscription.current_period_end * 1000) : null,
       cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-      trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : null,
-      trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : null,
+      trialStart: stripeSubscription.trial_start ?
+        new Date(stripeSubscription.trial_start * 1000) : null,
+      trialEnd: stripeSubscription.trial_end ?
+        new Date(stripeSubscription.trial_end * 1000) : null,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -460,7 +467,6 @@ export class StripeProvider implements PaymentProvider {
    */
   private async onUpdateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
     console.log(`Update subscription for Stripe subscription ${stripeSubscription.id}`);
-    const customerId = stripeSubscription.customer as string;
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
@@ -469,37 +475,17 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // get userId from metadata or find it by customerId from database
-    // NOTICE: when user updates subscription in portal, we can not get userId from metadata
-    let userId = stripeSubscription.metadata.userId;
-    if (!userId) {
-      const foundUserId = await this.findUserIdByCustomerId(customerId);
-      if (!foundUserId) {
-        console.warn(`No user found for customer ${customerId}, skipping subscription creation`);
-        return;
-      }
-      userId = foundUserId;
-      console.log(`Found userId ${userId} for customer ${customerId} from database`);
-    } else {
-      console.log(`Using userId ${userId} from subscription metadata`);
-    }
-
-    // get planId from metadata or find it by priceId from payment config
-    // NOTICE: when user updates subscription in portal, we can not get planId from metadata
-    let planId = stripeSubscription.metadata.planId;
+    // we can not trust the planId from metadata when updating subscription, so get it from config
+    let planId;
     let shouldUpdatePlanId = false;
-    if (!planId) {
-      const foundPlan = findPlanByPriceId(priceId);
-      if (!foundPlan) {
-        shouldUpdatePlanId = false;
-        console.warn(`No plan found for price ${priceId}, did you update the plans and prices in payment config?`);
-      } else {
-        planId = foundPlan.id;
-        shouldUpdatePlanId = true;
-        console.log(`Found planId ${planId} for price ${priceId} from config`);
-      }
+    const foundPlan = findPlanByPriceId(priceId);
+    if (!foundPlan) {
+      shouldUpdatePlanId = false;
+      console.warn(`No plan found for price ${priceId}, did you update the plans and prices in payment config?`);
     } else {
-      console.log(`Using planId ${planId} from subscription metadata`);
+      planId = foundPlan.id;
+      shouldUpdatePlanId = true;
+      console.log(`Found planId ${planId} for price ${priceId} from config`);
     }
 
     // prepare update fields
@@ -507,11 +493,15 @@ export class StripeProvider implements PaymentProvider {
       priceId: priceId,
       interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
       status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
-      periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : undefined,
-      periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : undefined,
+      periodStart: stripeSubscription.current_period_start ?
+        new Date(stripeSubscription.current_period_start * 1000) : undefined,
+      periodEnd: stripeSubscription.current_period_end ?
+        new Date(stripeSubscription.current_period_end * 1000) : undefined,
       cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-      trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : undefined,
-      trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : undefined,
+      trialStart: stripeSubscription.trial_start ?
+        new Date(stripeSubscription.trial_start * 1000) : undefined,
+      trialEnd: stripeSubscription.trial_end ?
+        new Date(stripeSubscription.trial_end * 1000) : undefined,
       updatedAt: new Date()
     };
 

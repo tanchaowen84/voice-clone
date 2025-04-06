@@ -25,17 +25,15 @@ export const getUserSubscriptionAction = actionClient
       };
     }
 
-    // TODO: need to refresh session when user just logged in and pay
-
     try {
       // Get the effective customer ID (from session or input)
       const customerId = session.user.customerId;
       // const subscriptionId = session.user.subscriptionId;
-      console.log('customerId:', customerId);
       if (!customerId) {
+        console.log('get user subscription, no customerId');
         return {
-          success: false,
-          error: 'No customerId found',
+          success: true,
+          data: null,
         };
       }
 
@@ -47,7 +45,7 @@ export const getUserSubscriptionAction = actionClient
       const subscriptions = await provider.listCustomerSubscriptions({
         customerId: customerId
       });
-      console.log('get user subscriptions:', subscriptions);
+      // console.log('get user subscriptions:', subscriptions);
 
       // Find the most recent active subscription (if any)
       if (subscriptions && subscriptions.length > 0) {

@@ -84,6 +84,9 @@ const lifetimePlan: PricePlan = {
 
 /**
  * Payment configuration
+ * 
+ * NOTICE:
+ * 1. One priceId can only be used by one plan.
  */
 export const paymentConfig: PaymentConfig = {
   plans: {

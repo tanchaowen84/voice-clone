@@ -70,7 +70,7 @@ export const createCheckoutAction = actionClient
       };
 
       const result = await createCheckout(params);
-      console.log('create checkout session result:', result);
+      // console.log('create checkout session result:', result);
       return {
         success: true,
         data: result,

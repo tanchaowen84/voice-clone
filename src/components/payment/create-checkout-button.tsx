@@ -2,6 +2,7 @@
 
 import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth-client';
 import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -36,6 +37,8 @@ export function CheckoutButton({
 }: CheckoutButtonProps) {
   const t = useTranslations('PricingPage.CheckoutButton');
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session, refetch } = authClient.useSession();
+  const currentUser = session?.user;
 
   const handleClick = async () => {
     try {
@@ -50,6 +53,12 @@ export function CheckoutButton({
 
       // Redirect to checkout
       if (result && result.data?.success && result.data.data?.url) {
+        // Update session if user has no customerId
+        if (!currentUser?.customerId && refetch) {
+          await refetch();
+        }
+        
+        // redirect to checkout page
         window.location.href = result.data.data?.url;
       } else {
         console.error('Create checkout session error, result:', result);

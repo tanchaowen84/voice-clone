@@ -24,6 +24,7 @@ export default function BillingCard() {
   // const currentUser = useCurrentUser();
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
+  console.log('billing card, currentUser:', currentUser);
   const isLifetimeMember = currentUser?.lifetimeMember === true;
 
   // Get all available plans
