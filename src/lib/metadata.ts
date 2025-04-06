@@ -36,7 +36,7 @@ export function constructMetadata({
       : undefined,
     openGraph: {
       type: 'website',
-      locale: 'en_US', // TODO: use locale
+      locale: 'en_US',
       url: canonicalUrl,
       title,
       description,

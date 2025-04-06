@@ -5,12 +5,10 @@ import { getLocaleFromRequest } from '@/lib/utils';
 import { send } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { admin, username } from 'better-auth/plugins';
+import { admin } from 'better-auth/plugins';
 import { getUrlWithLocale } from './urls/urls';
 
 /**
- * TODO: init username when user signup
- * 
  * https://www.better-auth.com/docs/reference/options
  */
 export const auth = betterAuth({
@@ -130,18 +128,6 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    // https://www.better-auth.com/docs/plugins/username
-    // support sign in and sign up with username, but not implemented
-    username({
-      minUsernameLength: 3,
-      maxUsernameLength: 30,
-      usernameValidator: (username) => {
-        if (username === "admin" || username === "administrator") {
-          return false;
-        }
-        return true;
-      }
-    }),
     // https://www.better-auth.com/docs/plugins/admin
     // support user management, ban/unban user, manage user roles, etc.
     admin(),

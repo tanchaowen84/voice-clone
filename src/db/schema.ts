@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, boolean, primaryKey, foreignKey } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -8,7 +8,6 @@ export const user = pgTable("user", {
 	image: text('image'),
 	createdAt: timestamp('created_at').notNull(),
 	updatedAt: timestamp('updated_at').notNull(),
-	username: text('username').unique(),
 	role: text('role'),
 	banned: boolean('banned'),
 	banReason: text('ban_reason'),
