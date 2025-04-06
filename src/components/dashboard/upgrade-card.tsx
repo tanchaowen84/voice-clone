@@ -12,11 +12,11 @@ import { Session } from "@/lib/auth";
 import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-interface SidebarUpgradeCardProps {
+interface UpgradeCardProps {
   user: Session['user'];
 }
 
-export function SidebarUpgradeCard({ user }: SidebarUpgradeCardProps) {
+export function UpgradeCard({ user }: UpgradeCardProps) {
   const t = useTranslations('Dashboard.upgrade');
 
   // user is a member if they have a lifetime membership or an active/trialing subscription

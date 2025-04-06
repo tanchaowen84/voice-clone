@@ -18,7 +18,7 @@ import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Logo } from '../layout/logo';
-import { SidebarUpgradeCard } from './sidebar-upgrade-card';
+import { UpgradeCard } from './upgrade-card';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
@@ -56,7 +56,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
         {!isPending && (
           <>
             {/* show upgrade card if user is not a member */}
-            {currentUser && <SidebarUpgradeCard user={currentUser} />}
+            {currentUser && <UpgradeCard user={currentUser} />}
 
             {/* show user profile if user is logged in */}
             {currentUser && <NavUser user={currentUser} />}
