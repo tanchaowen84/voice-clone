@@ -16,9 +16,9 @@ export enum Routes {
   Changelog = '/changelog',
   Roadmap = 'https://mksaas.featurebase.app',
 
-  CookiePolicy = '/cookie-policy',
-  PrivacyPolicy = '/privacy-policy',
-  TermsOfService = '/terms-of-service',
+  CookiePolicy = '/cookie',
+  PrivacyPolicy = '/privacy',
+  TermsOfService = '/terms',
 
   // auth routes
   Login = '/auth/login',
