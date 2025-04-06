@@ -123,18 +123,6 @@ export const auth = betterAuth({
         defaultValue: false,
         input: false, // don't allow user to set lifetimeMember
       },
-      subscriptionId: {
-        type: "string",
-        required: false,
-        defaultValue: "",
-        input: false, // don't allow user to set subscriptionId
-      },
-      subscriptionStatus: {
-        type: "string",
-        required: false,
-        defaultValue: "",
-        input: false, // don't allow user to set subscriptionStatus
-      },
     },
     // https://www.better-auth.com/docs/concepts/users-accounts#delete-user
     deleteUser: {

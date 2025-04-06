@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, boolean, primaryKey, foreignKey } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -15,8 +15,6 @@ export const user = pgTable("user", {
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
 	lifetimeMember: boolean('lifetime_member'),
-	subscriptionId: text('subscription_id'),
-	subscriptionStatus: text('subscription_status'),
 });
 
 export const session = pgTable("session", {
@@ -54,4 +52,21 @@ export const verification = pgTable("verification", {
 	expiresAt: timestamp('expires_at').notNull(),
 	createdAt: timestamp('created_at'),
 	updatedAt: timestamp('updated_at')
+});
+
+export const subscription = pgTable("subscription", {
+	id: text("id").primaryKey(),
+	planId: text('plan_id').notNull(),
+	priceId: text('price_id').notNull(),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	customerId: text('customer_id'),
+	subscriptionId: text('subscription_id'),
+	status: text('status').notNull(),
+	periodStart: timestamp('period_start'),
+	periodEnd: timestamp('period_end'),
+	cancelAtPeriodEnd: boolean('cancel_at_period_end'),
+	trialStart: timestamp('trial_start'),
+	trialEnd: timestamp('trial_end'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });

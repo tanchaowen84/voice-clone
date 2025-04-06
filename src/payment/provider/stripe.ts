@@ -1,5 +1,6 @@
 import db from '@/db/index';
-import { user } from '@/db/schema';
+import { subscription as subscriptionTable, user } from '@/db/schema';
+import { randomUUID } from 'crypto';
 import { eq } from 'drizzle-orm';
 import Stripe from 'stripe';
 import { findPriceInPlan, getPlanById } from '../index';
@@ -176,7 +177,7 @@ export class StripeProvider implements PaymentProvider {
             ...metadata,
           },
         };
-        
+
         // Add trial period if applicable
         if (price.trialPeriodDays && price.trialPeriodDays > 0) {
           checkoutParams.subscription_data.trial_period_days = price.trialPeriodDays;
@@ -341,7 +342,6 @@ export class StripeProvider implements PaymentProvider {
             ? new Date(subscription.trial_end * 1000)
             : undefined,
           createdAt: new Date(subscription.created * 1000),
-          updatedAt: new Date(),
         };
       });
     } catch (error) {
@@ -382,64 +382,88 @@ export class StripeProvider implements PaymentProvider {
 
       // Handle subscription events
       if (eventType.startsWith('customer.subscription.')) {
-        const subscription = event.data.object as Stripe.Subscription;
-        console.log(`Processing subscription ${subscription.id}, status: ${subscription.status}`);
-
+        const stripeSubscription = event.data.object as Stripe.Subscription;
         // Get customerId from subscription
-        const customerId = subscription.customer as string;
+        const customerId = stripeSubscription.customer as string;
+        console.log(`Processing subscription ${stripeSubscription.id} for user ${customerId}, status: ${stripeSubscription.status}`);
+
+        // Extract information from metadata, then we do not need to query the database for userId
+        const userId = stripeSubscription.metadata.userId || 'unknown';
+        const planId = stripeSubscription.metadata.planId || 'unknown';
+        const priceId = stripeSubscription.metadata.priceId || stripeSubscription.items.data[0]?.price.id || 'unknown';
 
         // Process based on subscription status and event type
         switch (eventType) {
           case 'customer.subscription.created': {
-            // New subscription created - update user record with subscription ID and status
-            const result = await db
-              .update(user)
-              .set({
-                subscriptionId: subscription.id,
-                subscriptionStatus: subscription.status,
-                updatedAt: new Date()
-              })
-              .where(eq(user.customerId, customerId))
-              .returning({ id: user.id });
+            // Create new subscription record with a unique ID
+            const newSubscriptionId = randomUUID();
+            const result = await db.insert(subscriptionTable).values({
+              id: newSubscriptionId,
+              planId: planId,
+              priceId: priceId,
+              userId: userId,
+              customerId: customerId,
+              subscriptionId: stripeSubscription.id,
+              status: this.mapSubscriptionStatus(stripeSubscription.status),
+              periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : null,
+              periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : null,
+              cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
+              trialStart: stripeSubscription.trial_start ? new Date(stripeSubscription.trial_start * 1000) : null,
+              trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : null,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            }).returning({ id: subscriptionTable.id });
 
             if (result.length > 0) {
-              console.log(`Updated user ${customerId} with subscription ${subscription.id}`);
+              console.log(`Created new subscription ${newSubscriptionId} for Stripe subscription ${stripeSubscription.id}`);
             } else {
-              console.warn(`Update operation performed but no rows were updated for customerId ${customerId}`);
+              console.warn(`No subscription created for Stripe subscription ${stripeSubscription.id}`);
             }
-
             break;
           }
           case 'customer.subscription.updated': {
-            // Subscription was updated - update status
-            await db
-              .update(user)
+            // Update subscription record
+            const result = await db
+              .update(subscriptionTable)
               .set({
-                subscriptionStatus: subscription.status,
+                status: this.mapSubscriptionStatus(stripeSubscription.status),
+                periodStart: stripeSubscription.current_period_start ? new Date(stripeSubscription.current_period_start * 1000) : undefined,
+                periodEnd: stripeSubscription.current_period_end ? new Date(stripeSubscription.current_period_end * 1000) : undefined,
+                cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
+                trialEnd: stripeSubscription.trial_end ? new Date(stripeSubscription.trial_end * 1000) : undefined,
                 updatedAt: new Date()
               })
-              .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
+              .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
+              .returning({ id: subscriptionTable.id });
 
-            console.log(`Updated subscription status for user ${customerId} to ${subscription.status}`);
+            if (result.length > 0) {
+              console.log(`Updated subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+            } else {
+              console.warn(`No subscription found for Stripe subscription ${stripeSubscription.id}`);
+            }
             break;
           }
           case 'customer.subscription.deleted': {
-            // Subscription was cancelled/deleted - remove from user
-            await db
-              .update(user)
+            // Update subscription record, set status to canceled
+            const result = await db
+              .update(subscriptionTable)
               .set({
-                subscriptionId: null,
-                subscriptionStatus: 'canceled',
+                status: this.mapSubscriptionStatus(stripeSubscription.status),
                 updatedAt: new Date()
               })
-              .where(eq(user.customerId, customerId) && eq(user.subscriptionId, subscription.id));
+              .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
+              .returning({ id: subscriptionTable.id });
 
-            console.log(`Removed subscription from user ${customerId}`);
+            if (result.length > 0) {
+              console.log(`Marked subscription ${stripeSubscription.id} as canceled`);
+            } else {
+              console.warn(`No subscription found to cancel for Stripe subscription ${stripeSubscription.id}`);
+            }
             break;
           }
           case 'customer.subscription.trial_will_end': {
-            // Trial ending soon - we could trigger an email notification here
-            console.log(`Trial ending soon for subscription ${subscription.id}, customerId ${customerId}`);
+            // Just log for now, could send notifications or update the subscription record
+            console.log(`Trial ending soon for subscription ${stripeSubscription.id}, customerId ${customerId}`);
             break;
           }
         }
@@ -460,22 +484,28 @@ export class StripeProvider implements PaymentProvider {
 
             // Safely handle the case where planId might not exist
             if (!planId) {
-              console.log(`No planId found in metadata for checkout session ${session.id}, customerId: ${customerId}`);
+              console.log(`No planId found for checkout session ${session.id}`);
               return;
             }
 
             const plan = getPlanById(planId);
             if (plan && plan.isLifetime) {
-              // Mark user as lifetime member
-              await db
+              // Mark user as lifetime member by customerId
+              const result = await db
                 .update(user)
                 .set({
                   lifetimeMember: true,
                   updatedAt: new Date()
                 })
-                .where(eq(user.customerId, customerId));
+                .where(eq(user.customerId, customerId))
+                .returning({ id: user.id });
 
-              console.log(`Marked user ${customerId} as lifetime member`);
+              if (result.length === 0) {
+                console.warn(`No user ${customerId} marked as lifetime member`);
+                return;
+              } else {
+                console.log(`Marked user ${customerId} as lifetime member`);
+              }
             } else {
               // Handle other one-time payments if needed, like increase user credits
               console.log(`One-time payment for non-lifetime plan: ${planId}, customerId: ${customerId}`);
@@ -521,6 +551,7 @@ export class StripeProvider implements PaymentProvider {
 
   /**
    * Convert Stripe subscription status to PaymentStatus
+   * We narrow down the status to our own status types
    * @param status Stripe subscription status
    * @returns PaymentStatus
    */
