@@ -20,9 +20,9 @@ export function UpgradeCard({ user }: UpgradeCardProps) {
   const t = useTranslations('Dashboard.upgrade');
 
   // user is a member if they have a lifetime membership or an active/trialing subscription
-  const isMember = user?.lifetimeMember ||
-    (user?.subscriptionId && (user.subscriptionStatus === 'active' || user.subscriptionStatus === 'trialing'));
-
+  // const isMember = user?.lifetimeMember ||
+  //   (user?.subscriptionId && (user.subscriptionStatus === 'active' || user.subscriptionStatus === 'trialing'));
+  const isMember = user?.lifetimeMember;
   // if user is a member, don't show the upgrade card
   if (isMember) {
     return null;

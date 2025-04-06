@@ -35,8 +35,8 @@ export default function BillingCard() {
     setError('');
 
     try {
-      // Only fetch subscription data if user has a subscription ID and is not a lifetime member
-      if (currentUser?.subscriptionId && !isLifetimeMember) {
+      // fetch subscription data if user is not a lifetime member
+      if (!isLifetimeMember) {
         const result = await getUserSubscriptionAction();
         if (result?.data?.success && result.data.data) {
           setSubscription(result.data.data);

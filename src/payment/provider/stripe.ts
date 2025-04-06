@@ -202,12 +202,13 @@ export class StripeProvider implements PaymentProvider {
    * @returns Portal result
    */
   public async createCustomerPortal(params: CreatePortalParams): Promise<PortalResult> {
-    const { customerId, returnUrl } = params;
+    const { customerId, returnUrl, locale } = params;
 
     try {
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
         return_url: returnUrl,
+        locale: locale ? this.mapLocaleToStripeLocale(locale) as Stripe.BillingPortal.SessionCreateParams.Locale : undefined,
       });
 
       return {

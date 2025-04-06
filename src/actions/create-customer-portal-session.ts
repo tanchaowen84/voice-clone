@@ -43,6 +43,7 @@ export const createPortalAction = actionClient
       const params: CreatePortalParams = {
         customerId,
         returnUrl: returnUrlWithLocale,
+        locale
       };
 
       const result = await createCustomerPortal(params);
