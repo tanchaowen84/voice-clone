@@ -36,14 +36,14 @@ const proPlan: PricePlan = {
   prices: [
     {
       type: PaymentTypes.RECURRING,
-      priceId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
+      priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
       amount: 990,
       currency: "USD",
       interval: PlanIntervals.MONTH,
     },
     {
       type: PaymentTypes.RECURRING,
-      priceId: process.env.STRIPE_PRICE_PRO_YEARLY!,
+      priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
       amount: 9900,
       currency: "USD",
       interval: PlanIntervals.YEAR,
@@ -73,7 +73,7 @@ const lifetimePlan: PricePlan = {
   prices: [
     {
       type: PaymentTypes.ONE_TIME,
-      priceId: process.env.STRIPE_PRICE_LIFETIME!,
+      priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
       amount: 19900,
       currency: "USD",
     },

@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from "@/lib/auth";
-import { getPaymentProvider } from "@/payment";
+import { listCustomerSubscriptions } from "@/payment";
 import { createSafeActionClient } from 'next-safe-action';
 import { headers } from "next/headers";
 
@@ -9,9 +9,9 @@ import { headers } from "next/headers";
 const actionClient = createSafeActionClient();
 
 /**
- * Get user subscription data - only returns the subscription data
+ * Get customer subscription data - only returns the subscription data
  */
-export const getUserSubscriptionAction = actionClient
+export const getCustomerSubscriptionAction = actionClient
   .action(async () => {
     // Get the current user session
     const session = await auth.api.getSession({
@@ -26,27 +26,24 @@ export const getUserSubscriptionAction = actionClient
     }
 
     try {
-      // Get the effective customer ID (from session or input)
+      // Get the effective customer ID from session
       const customerId = session.user.customerId;
       // const subscriptionId = session.user.subscriptionId;
       if (!customerId) {
-        console.log('get user subscription, no customerId');
+        console.warn('get user subscription, no customerId');
         return {
           success: true,
           data: null,
         };
       }
 
-      let subscriptionData = null;
-      // Get the payment provider to access its methods
-      const provider = getPaymentProvider();
-
       // Find the customer's most recent active subscription
-      const subscriptions = await provider.listCustomerSubscriptions({
+      const subscriptions = await listCustomerSubscriptions({
         customerId: customerId
       });
       // console.log('get user subscriptions:', subscriptions);
 
+      let subscriptionData = null;
       // Find the most recent active subscription (if any)
       if (subscriptions && subscriptions.length > 0) {
         // First try to find an active subscription
@@ -57,12 +54,12 @@ export const getUserSubscriptionAction = actionClient
         // If found, use it
         if (activeSubscription) {
           subscriptionData = activeSubscription;
-        }
-        // Otherwise, use the most recent subscription (first in the list, as they should be sorted by date)
-        else if (subscriptions.length > 0) {
+        } else if (subscriptions.length > 0) {
+          // Otherwise, use the most recent subscription 
+          // first in the list, as they should be sorted by date
           subscriptionData = subscriptions[0];
         }
-        console.log('find subscription:', subscriptionData, 'for customerId:', customerId);
+        console.log('find subscription for customerId:', customerId);
       } else {
         console.log('no subscriptions found for customerId:', customerId);
       }

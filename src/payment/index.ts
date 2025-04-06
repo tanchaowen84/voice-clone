@@ -85,6 +85,18 @@ export const handleWebhookEvent = async (
 };
 
 /**
+ * List customer subscriptions
+ * @param params Parameters for listing customer subscriptions
+ * @returns Array of subscriptions
+ */
+export const listCustomerSubscriptions = async (
+  params: ListCustomerSubscriptionsParams
+): Promise<Subscription[]> => {
+  const provider = getPaymentProvider();
+  return provider.listCustomerSubscriptions(params);
+};
+
+/**
  * Get plan by ID
  * @param planId Plan ID
  * @returns Plan or undefined if not found

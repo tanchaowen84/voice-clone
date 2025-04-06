@@ -1,6 +1,6 @@
 'use client';
 
-import { getUserSubscriptionAction } from '@/actions/get-user-subscription';
+import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
 import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,192 +13,225 @@ import { getAllPlans } from '@/payment';
 import { PlanIntervals, Subscription } from '@/payment/types';
 import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.settings.billing');
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | undefined>('');
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
 
-  // const currentUser = useCurrentUser();
-  const { data: session, isPending } = authClient.useSession();
+  // Get user session
+  const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
   console.log('billing card, currentUser:', currentUser);
+
+  // Check if user is a lifetime member
   const isLifetimeMember = currentUser?.lifetimeMember === true;
+  const hasCustomerId = Boolean(currentUser?.customerId);
 
   // Get all available plans
   const plans = getAllPlans();
+  console.log('billing card, plans:', plans);
 
-  // TODO: when currentUser has no customerId, then we assume the user is in Free Plan
+  // Determine current plan based on user status
+  const currentPlan = isLifetimeMember
+    ? plans.find(plan => plan.isLifetime)
+    : subscription
+      ? plans.find(plan => plan.id === subscription?.planId)
+      : plans.find(plan => plan.isFree);
+  console.log('billing card, currentPlan:', currentPlan);
 
-  // Fetch user subscription data if user has a subscription ID
-  const fetchUserSubscription = async () => {
-    setIsLoading(true);
+  // Show upgrade button if user is on free plan
+  const canUpgrade = currentPlan?.isFree;
+  console.log('billing card, canUpgrade:', canUpgrade);
+
+  // Get subscription price details
+  const currentPrice = subscription && currentPlan?.prices.find(
+    price => price.priceId === subscription?.priceId
+  );
+  console.log('billing card, currentPrice:', currentPrice);
+
+  // Format next billing date if subscription is active
+  const nextBillingDate = subscription?.currentPeriodEnd
+    ? formatDate(subscription.currentPeriodEnd)
+    : null;
+  console.log('billing card, nextBillingDate:', nextBillingDate);
+
+  // Fetch customer subscription data
+  const fetchSubscription = async () => {
+    console.log('fetchSubscription, isLifetimeMember:', isLifetimeMember, 'hasCustomerId:', hasCustomerId);
+    // Skip fetching if user is a lifetime member
+    if (isLifetimeMember) return;
+
+    // Skip fetching if user doesn't have a customer ID
+    if (!hasCustomerId) return;
+
+    setIsLoadingSubscription(true);
     setError('');
 
     try {
-      // fetch subscription data if user is not a lifetime member
-      if (!isLifetimeMember) {
-        const result = await getUserSubscriptionAction();
-        if (result?.data?.success && result.data.data) {
-          setSubscription(result.data.data);
-        } else {
-          setError(result?.data?.error || t('errorMessage'));
-        }
+      const result = await getCustomerSubscriptionAction();
+
+      if (result?.data?.success && result.data.data) {
+        setSubscription(result.data.data);
       } else {
-        // Set subscription to null if user doesn't have one or is a lifetime member
-        setSubscription(null);
+        setError(result?.data?.error || t('errorMessage'));
       }
     } catch (error) {
-      console.error('fetch subscription data error:', error);
+      console.error('Fetch subscription error:', error);
       setError(t('errorMessage'));
     } finally {
-      setIsLoading(false);
+      setIsLoadingSubscription(false);
     }
   };
 
+  // Fetch subscription when user data is available
   useEffect(() => {
-    fetchUserSubscription();
-  }, [currentUser]);
+    if (!isLoadingSession && currentUser) {
+      fetchSubscription();
+    }
+  }, [isLoadingSession, currentUser]);
 
-  // Use useMemo to derive values from subscription state
-  const { currentPlan, currentPrice, nextBillingDate, canUpgrade } = useMemo(() => {
-    // Determine current plan based on user status
-    const currentPlan = isLifetimeMember
-      ? plans.find(plan => plan.isLifetime)
-      : subscription
-        ? plans.find(plan => plan.id === subscription?.planId)
-        : plans.find(plan => plan.isFree);
+  // Determine if we are in a loading state
+  const isLoading = isLoadingSession || isLoadingSubscription;
 
-    // Determine current price details if subscription exists
-    const currentPrice = subscription && currentPlan?.prices.find(
-      price => price.priceId === subscription?.priceId
+  // Render loading skeleton
+  if (isLoading) {
+    return (
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('currentPlan.title')}</CardTitle>
+            <CardDescription>{t('currentPlan.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <Skeleton className="h-6 w-1/2" />
+              <Skeleton className="h-6 w-full" />
+              <Skeleton className="h-6 w-full" />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Skeleton className="h-10 w-full" />
+          </CardFooter>
+        </Card>
+      </div>
     );
+  }
 
-    // Calculate next billing date for subscriptions
-    const nextBillingDate = subscription?.currentPeriodEnd
-      ? formatDate(subscription.currentPeriodEnd)
-      : null;
-
-    // Determine if the user can upgrade (not a lifetime member)
-    // const canUpgrade = !isLifetimeMember;
-    // Determine if the user can upgrade (free plan)
-    const canUpgrade = currentPlan?.isFree;
-
-    return { currentPlan, currentPrice, nextBillingDate, canUpgrade };
-  }, [isLifetimeMember, plans, subscription]);
+  // Render error state
+  if (error) {
+    return (
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('currentPlan.title')}</CardTitle>
+            <CardDescription>{t('currentPlan.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="text-destructive text-sm">{error}</div>
+          </CardContent>
+          <CardFooter>
+            <Button
+              variant="outline"
+              className="w-full cursor-pointer"
+              onClick={fetchSubscription}
+            >
+              <RefreshCwIcon className="size-4 mr-1" />
+              {t('retry')}
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-8 md:grid-cols-2">
-      {/* Current Plan Card */}
       <Card>
         <CardHeader>
           <CardTitle>{t('currentPlan.title')}</CardTitle>
           <CardDescription>{t('currentPlan.description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {isPending || isLoading ? (
-            <div className="space-y-3">
-              <Skeleton className="h-6 w-1/2" />
-              <Skeleton className="h-6 w-full" />
-              <Skeleton className="h-6 w-full" />
+          <div className="flex items-center justify-between">
+            <div className="text-3xl font-medium">
+              {currentPlan?.name}
             </div>
-          ) : error ? (
-            <div className="text-destructive text-sm">{error}</div>
-          ) : (
-            <>
-              <div className="flex items-center justify-between">
-                <div className="font-medium">{currentPlan?.name}</div>
-                <Badge variant={currentPlan?.isFree || isLifetimeMember ? 'outline' : 'default'}>
-                  {isLifetimeMember
-                    ? t('status.lifetime')
-                    : subscription?.status === 'active'
-                      ? t('status.active')
-                      : subscription?.status === 'trialing'
-                        ? t('status.trial')
-                        : t('status.free')}
-                </Badge>
+            <Badge variant={currentPlan?.isFree || isLifetimeMember ? 'outline' : 'default'}>
+              {isLifetimeMember
+                ? t('status.lifetime')
+                : subscription?.status === 'active'
+                  ? t('status.active')
+                  : subscription?.status === 'trialing'
+                    ? t('status.trial')
+                    : t('status.free')}
+            </Badge>
+          </div>
+
+          {/* Subscription plan details */}
+          {subscription && currentPrice && (
+            <div className="text-sm text-muted-foreground space-y-1">
+              <div>
+                {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === PlanIntervals.MONTH ?
+                  t('interval.month') :
+                  currentPrice.interval === PlanIntervals.YEAR ?
+                    t('interval.year') :
+                    t('interval.oneTime')}
               </div>
 
-              {/* Subscription plan details */}
-              {subscription && currentPrice && (
-                <div className="text-sm text-muted-foreground space-y-1">
-                  <div>
-                    {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === PlanIntervals.MONTH ?
-                      t('interval.month') :
-                      currentPrice.interval === PlanIntervals.YEAR ?
-                        t('interval.year') :
-                        t('interval.oneTime')}
-                  </div>
-
-                  {nextBillingDate && (
-                    <div>{t('nextBillingDate')} {nextBillingDate}</div>
-                  )}
-
-                  {subscription.status === 'trialing' && (
-                    <div className="text-amber-500">
-                      {t('trialEnds')} {formatDate(subscription.currentPeriodEnd)}
-                    </div>
-                  )}
-                </div>
+              {nextBillingDate && (
+                <div>{t('nextBillingDate')} {nextBillingDate}</div>
               )}
 
-              {/* Free plan message */}
-              {currentPlan?.isFree && (
-                <div className="text-sm text-muted-foreground">
-                  {t('freePlanMessage')}
+              {subscription.status === 'trialing' && (
+                <div className="text-amber-500">
+                  {t('trialEnds')} {formatDate(subscription.currentPeriodEnd)}
                 </div>
               )}
+            </div>
+          )}
 
-              {/* Lifetime access message */}
-              {isLifetimeMember && (
-                <div className="text-sm text-muted-foreground">
-                  {t('lifetimeMessage')}
-                </div>
-              )}
-            </>
+          {/* Free plan message */}
+          {currentPlan?.isFree && (
+            <div className="text-sm text-muted-foreground">
+              {t('freePlanMessage')}
+            </div>
+          )}
+
+          {/* Lifetime access message */}
+          {isLifetimeMember && (
+            <div className="text-sm text-muted-foreground">
+              {t('lifetimeMessage')}
+            </div>
           )}
         </CardContent>
         <CardFooter>
-          {isPending || isLoading ? (
-            <Skeleton className="h-10 w-full" />
-          ) : error ? (
-            <Button
-              variant="outline"
-              className="w-full cursor-pointer"
-              onClick={fetchUserSubscription}
-            >
-              <RefreshCwIcon className="size-4 mr-1" />
-              {t('retry')}
-            </Button>
-          ) : (
-            <div className="grid w-full gap-3">
-              {/* Manage subscription button */}
-              {currentUser?.customerId && (
-                <CustomerPortalButton
-                  customerId={currentUser.customerId}
-                  className="w-full"
-                >
-                  {t('manageBilling')}
-                </CustomerPortalButton>
-              )}
+          <div className="grid w-full gap-3">
+            {/* Manage subscription button - only shown if user has a customer ID */}
+            {hasCustomerId && currentUser?.customerId && (
+              <CustomerPortalButton
+                customerId={currentUser.customerId}
+                className="w-full"
+              >
+                {t('manageBilling')}
+              </CustomerPortalButton>
+            )}
 
-              {/* View pricing plans button - only shown if user can upgrade */}
-              {canUpgrade && (
-                <Button
-                  variant={subscription ? "outline" : "default"}
-                  className="w-full cursor-pointer"
-                  asChild
-                >
-                  <LocaleLink href="/pricing">
-                    {/* <RocketIcon className="size-4 mr-2" /> */}
-                    {t('upgradePlan')}
-                  </LocaleLink>
-                </Button>
-              )}
-            </div>
-          )}
+            {/* View pricing plans button - only shown if user can upgrade */}
+            {canUpgrade && (
+              <Button
+                variant={subscription ? "outline" : "default"}
+                className="w-full cursor-pointer"
+                asChild
+              >
+                <LocaleLink href="/pricing">
+                  {t('upgradePlan')}
+                </LocaleLink>
+              </Button>
+            )}
+          </div>
         </CardFooter>
       </Card>
     </div>
