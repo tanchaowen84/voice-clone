@@ -531,6 +531,12 @@
     "subscribeNewsletter": {
       "body": "感谢您订阅我们的邮件列表，我们将为您提供最新的新闻和更新。",
       "subject": "感谢您的订阅"
+    },
+    "contactMessage": {
+      "name": "姓名: {name}",
+      "email": "邮箱: {email}",
+      "message": "消息: {message}",
+      "subject": "来自网站的联系消息"
     }
   }
 }

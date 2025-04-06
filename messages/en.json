@@ -532,6 +532,12 @@
     "subscribeNewsletter": {
       "body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
       "subject": "Thanks for subscribing"
+    },
+    "contactMessage": {
+      "name": "Name: {name}",
+      "email": "Email: {email}",
+      "message": "Message: {message}",
+      "subject": "Contact Message from Website"
     }
   }
 }

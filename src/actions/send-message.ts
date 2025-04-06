@@ -2,6 +2,7 @@
 
 import { websiteConfig } from '@/config';
 import { send } from '@/mail';
+import { getLocale } from 'next-intl/server';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
@@ -9,20 +10,17 @@ import { z } from 'zod';
 const actionClient = createSafeActionClient();
 
 /**
- * TODO: When using Zod for validation, how can I localize error messages?
+ * DOC: When using Zod for validation, how can I localize error messages?
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#server-actions
  */
 // Contact form schema for validation
 const contactFormSchema = z.object({
-  name: z
-    .string()
+  name: z.string()
     .min(3, { message: 'Name must be at least 3 characters' })
     .max(30, { message: 'Name must not exceed 30 characters' }),
-  email: z
-    .string()
+  email: z.string()
     .email({ message: 'Please enter a valid email address' }),
-  message: z
-    .string()
+  message: z.string()
     .min(10, { message: 'Message must be at least 10 characters' })
     .max(500, { message: 'Message must not exceed 500 characters' }),
 });
@@ -40,20 +38,18 @@ export const sendMessageAction = actionClient
         throw new Error('The mail receiver is not set');
       }
 
-      // Send email using the mail service
-      // Customize the email template for your needs
-      // TODO: add locale to the email or customize it by yourself?
+      const locale = await getLocale();
+
+      // Send message as an email to admin
       const result = await send({
         to: websiteConfig.mail.to,
-        subject: `Contact Form: Message from ${name}`,
-        text: '',
-        html: `
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <br />
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br />')}</p>
-        `,
+        template: 'contactMessage',
+        context: {
+          name,
+          email,
+          message,
+        },
+        locale,
       });
 
       if (!result) {

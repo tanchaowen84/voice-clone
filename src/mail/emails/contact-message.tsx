@@ -1,35 +1,34 @@
 import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
-import EmailButton from '@/mail/components/email-button';
 import EmailLayout from '@/mail/components/email-layout';
 import type { BaseEmailProps } from '@/mail/types';
 import { Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
-interface ForgotPasswordProps extends BaseEmailProps {
-  url: string;
+interface ContactMessageProps extends BaseEmailProps {
   name: string;
+  email: string;
+  message: string;
 }
 
-export function ForgotPassword({ url, name, locale, messages, }: ForgotPasswordProps) {
+export function ContactMessage({ name, email, message, locale, messages }: ContactMessageProps) {
   const t = createTranslator({ locale, messages, });
-  
+
   return (
     <EmailLayout locale={locale} messages={messages}>
-      <Text>{t('Mail.forgotPassword.title', { name })}</Text>
-      <Text>{t('Mail.forgotPassword.body')}</Text>
-      <EmailButton href={url}>
-        {t('Mail.forgotPassword.resetPassword')}
-      </EmailButton>
+      <Text>{t('Mail.contactMessage.name', { name })}</Text>
+      <Text>{t('Mail.contactMessage.email', { email })}</Text>
+      <Text>{t('Mail.contactMessage.message', { message })}</Text>
     </EmailLayout>
   );
 }
 
-ForgotPassword.PreviewProps = {
+ContactMessage.PreviewProps = {
   locale: routing.defaultLocale,
   messages: defaultMessages,
-  url: 'https://mksaas.com',
   name: 'username',
+  email: 'username@example.com',
+  message: 'This is a test message',
 };
 
-export default ForgotPassword;
+export default ContactMessage;
