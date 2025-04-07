@@ -1,9 +1,9 @@
 import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
-import { getAllPlans } from '@/payment';
-import { PlanIntervals, Subscription } from '@/payment/types';
-import { create } from 'zustand';
-import { Session } from '@/lib/auth';
 import { getUserLifetimeStatusAction } from '@/actions/get-user-lifetime-status';
+import { Session } from '@/lib/auth';
+import { getAllPlans } from '@/payment';
+import { Subscription } from '@/payment/types';
+import { create } from 'zustand';
 
 /**
  * Subscription state interface
@@ -13,7 +13,7 @@ export interface SubscriptionState {
   subscription: Subscription | null;
   // Current user's plan information
   currentPlanId: string | null;
-  // Lifetime plan member
+  // Lifetime member
   isLifetimeMember: boolean;
   // Free plan
   isFreePlan: boolean;
@@ -68,27 +68,20 @@ export const useSubscriptionStore = create<SubscriptionState>((set, get) => ({
       return;
     }
 
+    // Check if user is a lifetime member directly from the database
+    let isLifetimeMember = false;
+    try {
+      const result = await getUserLifetimeStatusAction({ userId: user.id });
+      if (result?.data?.success) {
+        isLifetimeMember = result.data.isLifetimeMember || false;
+        console.log('check user lifetime status result', result);
+      }
+    } catch (error) {
+      console.error('check user lifetime status error:', error);
+    }
+
     // Get all available plans
     const plans = getAllPlans();
-
-    // Check if user is a lifetime member from session first
-    let isLifetimeMember = Boolean(user.lifetimeMember);
-    
-    // If not a lifetime member according to session, check the database directly
-    // This handles the case where the session hasn't been updated yet after purchase
-    if (!isLifetimeMember && user.id) {
-      try {
-        const result = await getUserLifetimeStatusAction({ userId: user.id });
-        if (result?.data?.success) {
-          isLifetimeMember = result.data.isLifetimeMember || false;
-          console.log('check user lifetime status result', result);
-        }
-      } catch (error) {
-        console.error('check user lifetime status error:', error);
-        // Continue with session data if database check fails
-      }
-    }
-    
     // Skip fetching if user doesn't have a customer ID (except for lifetime members)
     if (!user.customerId && !isLifetimeMember) {
       const freePlan = plans.find(plan => plan.isFree);
@@ -127,15 +120,13 @@ export const useSubscriptionStore = create<SubscriptionState>((set, get) => ({
 
       if (result?.data?.success) {
         const subscriptionData = result.data.data;
-        
+
         // Set subscription state
         if (subscriptionData) {
           // Determine if subscription is active
-          const isActive = subscriptionData.status === 'active' || subscriptionData.status === 'trialing';
-          
-          // Get the plan from the subscription
-          // const currentPlan = plans.find(plan => plan.id === subscriptionData.planId);
-          
+          const isActive = subscriptionData.status === 'active'
+            || subscriptionData.status === 'trialing';
+
           set({
             subscription: subscriptionData,
             currentPlanId: subscriptionData.planId,

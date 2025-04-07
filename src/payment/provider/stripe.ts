@@ -1,8 +1,8 @@
-import db from '@/db/index';
-import { subscription as subscriptionTable, user } from '@/db/schema';
-import { randomUUID } from 'crypto';
+import { Stripe } from 'stripe';
+import db from '@/db';
+import { user, subscription } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import Stripe from 'stripe';
+import { randomUUID } from 'crypto';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
 import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, Customer, GetCustomerParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription } from '../types';
 
@@ -450,9 +450,9 @@ export class StripeProvider implements PaymentProvider {
       updatedAt: new Date()
     };
 
-    const result = await db.insert(subscriptionTable)
+    const result = await db.insert(subscription)
       .values(createFields)
-      .returning({ id: subscriptionTable.id });
+      .returning({ id: subscription.id });
 
     if (result.length > 0) {
       console.log(`Created new subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
@@ -511,10 +511,10 @@ export class StripeProvider implements PaymentProvider {
     }
 
     const result = await db
-      .update(subscriptionTable)
+      .update(subscription)
       .set(updateFields)
-      .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
-      .returning({ id: subscriptionTable.id });
+      .where(eq(subscription.subscriptionId, stripeSubscription.id))
+      .returning({ id: subscription.id });
 
     if (result.length > 0) {
       console.log(`Updated subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
@@ -529,13 +529,13 @@ export class StripeProvider implements PaymentProvider {
    */
   private async onDeleteSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
     const result = await db
-      .update(subscriptionTable)
+      .update(subscription)
       .set({
         status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
         updatedAt: new Date()
       })
-      .where(eq(subscriptionTable.subscriptionId, stripeSubscription.id))
-      .returning({ id: subscriptionTable.id });
+      .where(eq(subscription.subscriptionId, stripeSubscription.id))
+      .returning({ id: subscription.id });
 
     if (result.length > 0) {
       console.log(`Marked subscription ${stripeSubscription.id} as canceled`);
@@ -568,21 +568,50 @@ export class StripeProvider implements PaymentProvider {
     }
 
     if (plan.isLifetime) {
-      // mark user as lifetime member by customerId
-      const result = await db
-        .update(user)
-        .set({
-          lifetimeMember: true,
-          updatedAt: new Date()
-        })
+      // Find user by customerId
+      const userResult = await db
+        .select({ id: user.id })
+        .from(user)
         .where(eq(user.customerId, customerId))
-        .returning({ id: user.id });
+        .limit(1);
+
+      if (userResult.length === 0) {
+        console.warn(`No user found with customerId ${customerId}`);
+        return;
+      }
+
+      const userId = userResult[0].id;
+      
+      // Create a subscription record for lifetime membership
+      const now = new Date();
+      // Far future date for lifetime membership (100 years)
+      const farFutureDate = new Date(now);
+      farFutureDate.setFullYear(farFutureDate.getFullYear() + 100);
+      
+      const result = await db
+        .insert(subscription)
+        .values({
+          id: randomUUID(),
+          planId: plan.id,
+          priceId: priceId,
+          interval: 'year', // Using year for lifetime plans
+          userId: userId,
+          customerId: customerId,
+          subscriptionId: session.id, // Use checkout session ID
+          status: 'active', // Always active for lifetime
+          periodStart: now,
+          periodEnd: farFutureDate, // Far future date
+          cancelAtPeriodEnd: false,
+          createdAt: now,
+          updatedAt: now,
+        })
+        .returning({ id: subscription.id });
 
       if (result.length === 0) {
-        console.warn(`No user ${customerId} marked as lifetime member`);
+        console.warn(`Failed to create lifetime subscription for user ${userId}`);
         return;
       } else {
-        console.log(`Marked user ${customerId} as lifetime member`);
+        console.log(`Created lifetime subscription for user ${userId}`);
       }
     } else {
       // handle other onetime payments if needed, like increase user credits

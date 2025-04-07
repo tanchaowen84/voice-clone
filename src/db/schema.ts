@@ -13,7 +13,6 @@ export const user = pgTable("user", {
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
-	lifetimeMember: boolean('lifetime_member'),
 });
 
 export const session = pgTable("session", {

@@ -4,9 +4,10 @@ import { auth } from "@/lib/auth";
 import { createSafeActionClient } from 'next-safe-action';
 import { headers } from "next/headers";
 import db from "@/db";
-import { user } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { subscription } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 import { z } from "zod";
+import { getAllPlans } from "@/payment";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -45,17 +46,39 @@ export const getUserLifetimeStatusAction = actionClient
     }
 
     try {
-      // Query the database directly for the user's lifetime status
+      // Get lifetime plans
+      const plans = getAllPlans();
+      const lifetimePlanIds = plans
+        .filter(plan => plan.isLifetime)
+        .map(plan => plan.id);
+      
+      if (lifetimePlanIds.length === 0) {
+        return {
+          success: false,
+          error: 'No lifetime plans defined in the system',
+        };
+      }
+
+      // Query the database for active lifetime subscriptions
       const result = await db
-        .select({ lifetimeMember: user.lifetimeMember })
-        .from(user)
-        .where(eq(user.id, userId))
-        .limit(1);
+        .select({ id: subscription.id, planId: subscription.planId })
+        .from(subscription)
+        .where(
+          and(
+            eq(subscription.userId, userId),
+            eq(subscription.status, 'active')
+          )
+        );
+
+      // Check if any subscription has a lifetime plan
+      const hasLifetimeSubscription = result.some(sub => 
+        lifetimePlanIds.includes(sub.planId)
+      );
 
       // Return the result
       return {
         success: true,
-        isLifetimeMember: Boolean(result[0]?.lifetimeMember),
+        isLifetimeMember: hasLifetimeSubscription,
       };
     } catch (error) {
       console.error("get user lifetime status error:", error);

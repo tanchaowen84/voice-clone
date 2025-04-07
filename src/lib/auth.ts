@@ -110,12 +110,6 @@ export const auth = betterAuth({
         defaultValue: "",
         input: false, // don't allow user to set customerId
       },
-      lifetimeMember: {
-        type: "boolean",
-        required: false,
-        defaultValue: false,
-        input: false, // don't allow user to set lifetimeMember
-      },
     },
     // https://www.better-auth.com/docs/concepts/users-accounts#delete-user
     deleteUser: {
