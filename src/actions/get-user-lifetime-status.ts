@@ -4,7 +4,7 @@ import db from "@/db";
 import { subscription } from "@/db/schema";
 import { getSession } from "@/lib/server";
 import { getAllPlans } from "@/payment";
-import { SubscriptionTypes } from "@/payment/types";
+import { PaymentTypes } from "@/payment/types";
 import { and, eq } from "drizzle-orm";
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from "zod";
@@ -69,7 +69,7 @@ export const getUserLifetimeStatusAction = actionClient
         .where(
           and(
             eq(subscription.userId, userId),
-            eq(subscription.type, SubscriptionTypes.ONE_TIME),
+            eq(subscription.type, PaymentTypes.ONE_TIME),
             eq(subscription.status, 'completed') // TODO: change to enum
           )
         );

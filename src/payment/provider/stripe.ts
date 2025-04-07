@@ -4,7 +4,19 @@ import { user, subscription } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
-import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription, SubscriptionTypes } from '../types';
+import { 
+  CheckoutResult, 
+  CreateCheckoutParams, 
+  CreatePortalParams, 
+  ListCustomerSubscriptionsParams, 
+  PaymentProvider, 
+  PaymentStatus, 
+  PaymentTypes, 
+  PlanInterval, 
+  PlanIntervals, 
+  PortalResult, 
+  Subscription
+} from '../types';
 
 /**
  * Stripe payment provider implementation
@@ -171,7 +183,7 @@ export class StripeProvider implements PaymentProvider {
       // Create checkout session parameters
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
-        mode: price.type === PaymentTypes.RECURRING ? 'subscription' : 'payment',
+        mode: price.type === PaymentTypes.SUBSCRIPTION ? 'subscription' : 'payment',
         success_url: successUrl,
         cancel_url: cancelUrl,
         metadata: customMetadata,
@@ -192,7 +204,7 @@ export class StripeProvider implements PaymentProvider {
       }
 
       // Add subscription data for recurring payments
-      if (price.type === PaymentTypes.RECURRING) {
+      if (price.type === PaymentTypes.SUBSCRIPTION) {
         // Initialize subscription_data with metadata
         checkoutParams.subscription_data = {
           metadata: customMetadata,
@@ -278,7 +290,7 @@ export class StripeProvider implements PaymentProvider {
           status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
           planId,
           priceId,
-          type: SubscriptionTypes.SUBSCRIPTION, // Regular subscriptions from Stripe are recurring
+          type: PaymentTypes.SUBSCRIPTION, // Regular subscriptions from Stripe are recurring
           interval,
           currentPeriodStart: new Date(subscription.current_period_start * 1000),
           currentPeriodEnd: new Date(subscription.current_period_end * 1000),
@@ -396,7 +408,7 @@ export class StripeProvider implements PaymentProvider {
       id: randomUUID(),
       planId: planId,
       priceId: priceId,
-      type: SubscriptionTypes.SUBSCRIPTION,
+      type: PaymentTypes.SUBSCRIPTION,
       userId: userId,
       customerId: customerId,
       subscriptionId: stripeSubscription.id,
@@ -547,7 +559,7 @@ export class StripeProvider implements PaymentProvider {
         id: randomUUID(),
         planId: planId,
         priceId: priceId,
-        type: SubscriptionTypes.ONE_TIME,
+        type: PaymentTypes.ONE_TIME,
         userId: userId,
         customerId: customerId,
         status: 'completed', // One-time payments are always completed

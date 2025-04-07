@@ -11,13 +11,13 @@ export enum PlanIntervals {
 }
 
 /**
- * Payment type (recurring or one-time)
+ * Payment type (subscription or one-time)
  */
-export type PaymentType = PaymentTypes.RECURRING | PaymentTypes.ONE_TIME;
+export type PaymentType = PaymentTypes.SUBSCRIPTION | PaymentTypes.ONE_TIME;
 
 export enum PaymentTypes {
-  RECURRING = 'recurring',
-  ONE_TIME = 'one_time',
+  SUBSCRIPTION = 'subscription',  // Regular recurring subscription
+  ONE_TIME = 'one_time',          // One-time payment
 }
 
 /**
@@ -39,7 +39,7 @@ export type PaymentStatus =
  * Price definition for a plan
  */
 export interface Price {
-  type: PaymentType;                 // Type of payment (recurring or one_time)
+  type: PaymentType;                 // Type of payment (subscription or one_time)
   priceId: string;                   // Stripe price ID (not product id)
   amount: number;                    // Price amount in currency units (dollars, euros, etc.)
   currency: string;                  // Currency code (e.g., USD)
@@ -80,16 +80,6 @@ export interface Customer {
 }
 
 /**
- * Subscription type (subscription or one-time)
- */
-export type SubscriptionType = SubscriptionTypes.SUBSCRIPTION | SubscriptionTypes.ONE_TIME;
-
-export enum SubscriptionTypes {
-  SUBSCRIPTION = 'subscription',
-  ONE_TIME = 'one_time',
-}
-
-/**
  * Subscription data
  */
 export interface Subscription {
@@ -98,7 +88,7 @@ export interface Subscription {
   status: PaymentStatus;
   planId: string;
   priceId: string;
-  type: SubscriptionType;
+  type: PaymentType;
   interval?: PlanInterval;
   currentPeriodStart: Date;
   currentPeriodEnd?: Date;
