@@ -164,7 +164,7 @@ export default function BillingCard() {
                 <div>{t('nextBillingDate')} {nextBillingDate}</div>
               )}
 
-              {subscription.status === 'trialing' && (
+              {subscription.status === 'trialing' && subscription.currentPeriodEnd && (
                 <div className="text-amber-500">
                   {t('trialEnds')} {formatDate(subscription.currentPeriodEnd)}
                 </div>

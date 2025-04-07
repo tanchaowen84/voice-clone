@@ -4,7 +4,7 @@ import { user, subscription } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
-import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, Customer, GetCustomerParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription } from '../types';
+import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, ListCustomerSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription, SubscriptionTypes } from '../types';
 
 /**
  * Stripe payment provider implementation
@@ -278,6 +278,7 @@ export class StripeProvider implements PaymentProvider {
           status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
           planId,
           priceId,
+          type: SubscriptionTypes.SUBSCRIPTION, // Regular subscriptions from Stripe are recurring
           interval,
           currentPeriodStart: new Date(subscription.current_period_start * 1000),
           currentPeriodEnd: new Date(subscription.current_period_end * 1000),
@@ -395,6 +396,7 @@ export class StripeProvider implements PaymentProvider {
       id: randomUUID(),
       planId: planId,
       priceId: priceId,
+      type: SubscriptionTypes.SUBSCRIPTION,
       userId: userId,
       customerId: customerId,
       subscriptionId: stripeSubscription.id,
@@ -536,48 +538,30 @@ export class StripeProvider implements PaymentProvider {
       console.warn(`No planId found for checkout session ${session.id}`);
       return;
     }
+    
+    // Create a one-time payment record
+    const now = new Date();    
+    const result = await db
+      .insert(subscription)
+      .values({
+        id: randomUUID(),
+        planId: planId,
+        priceId: priceId,
+        type: SubscriptionTypes.ONE_TIME,
+        userId: userId,
+        customerId: customerId,
+        status: 'completed', // One-time payments are always completed
+        periodStart: now,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .returning({ id: subscription.id });
 
-    const plan = getPlanById(planId);
-    if (!plan) {
-      console.warn(`No plan found for planId ${planId}`);
+    if (result.length === 0) {
+      console.warn(`Failed to create one-time payment record for user ${userId}`);
       return;
-    }
-
-    if (plan.isLifetime) {
-      // Create a subscription record for lifetime membership
-      const now = new Date();
-      // Far future date for lifetime membership (100 years)
-      const farFutureDate = new Date(now);
-      farFutureDate.setFullYear(farFutureDate.getFullYear() + 100);
-      
-      const result = await db
-        .insert(subscription)
-        .values({
-          id: randomUUID(),
-          planId: planId,
-          priceId: priceId,
-          interval: 'year', // Using year for lifetime plans
-          userId: userId,
-          customerId: customerId,
-          subscriptionId: session.id, // Use checkout session ID
-          status: 'active', // Always active for lifetime
-          periodStart: now,
-          periodEnd: farFutureDate, // Far future date
-          cancelAtPeriodEnd: false,
-          createdAt: now,
-          updatedAt: now,
-        })
-        .returning({ id: subscription.id });
-
-      if (result.length === 0) {
-        console.warn(`Failed to create lifetime subscription for user ${userId}`);
-        return;
-      } else {
-        console.log(`Created lifetime subscription for user ${userId}`);
-      }
     } else {
-      // handle other onetime payments if needed, like increase user credits
-      console.log(`Onetime payment for non-lifetime plan: ${plan.id}, customerId: ${customerId}`);
+      console.log(`Created one-time payment record for user ${userId}, plan: ${planId}`);
     }
   }
 

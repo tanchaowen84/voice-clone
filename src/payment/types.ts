@@ -80,6 +80,16 @@ export interface Customer {
 }
 
 /**
+ * Subscription type (subscription or one-time)
+ */
+export type SubscriptionType = SubscriptionTypes.SUBSCRIPTION | SubscriptionTypes.ONE_TIME;
+
+export enum SubscriptionTypes {
+  SUBSCRIPTION = 'subscription',
+  ONE_TIME = 'one_time',
+}
+
+/**
  * Subscription data
  */
 export interface Subscription {
@@ -88,10 +98,11 @@ export interface Subscription {
   status: PaymentStatus;
   planId: string;
   priceId: string;
+  type: SubscriptionType;
   interval?: PlanInterval;
   currentPeriodStart: Date;
-  currentPeriodEnd: Date;
-  cancelAtPeriodEnd: boolean;
+  currentPeriodEnd?: Date;
+  cancelAtPeriodEnd?: boolean;
   canceledAt?: Date;
   trialEndDate?: Date;
   createdAt: Date;

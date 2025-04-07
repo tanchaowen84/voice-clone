@@ -1,14 +1,13 @@
 'use server';
 
-import { auth } from "@/lib/auth";
-import { createSafeActionClient } from 'next-safe-action';
-import { headers } from "next/headers";
 import db from "@/db";
 import { subscription } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
-import { z } from "zod";
-import { getAllPlans } from "@/payment";
 import { getSession } from "@/lib/server";
+import { getAllPlans } from "@/payment";
+import { SubscriptionTypes } from "@/payment/types";
+import { and, eq } from "drizzle-orm";
+import { createSafeActionClient } from 'next-safe-action';
+import { z } from "zod";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -19,13 +18,18 @@ const schema = z.object({
 });
 
 /**
- * Get user's lifetime membership status directly from the database
+ * Get user lifetime membership status directly from the database
+ * 
+ * NOTICE: If you first add lifetime plan and then delete it, 
+ * the user with lifetime plan should be considered as a lifetime member as well,
+ * in order to do this, you have to update the logic to check the lifetime status,
+ * for example, just check the planId is `lifetime` or not.
  */
 export const getUserLifetimeStatusAction = actionClient
   .schema(schema)
   .action(async ({ parsedInput }) => {
     const { userId } = parsedInput;
-    
+
     // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
@@ -49,7 +53,8 @@ export const getUserLifetimeStatusAction = actionClient
       const lifetimePlanIds = plans
         .filter(plan => plan.isLifetime)
         .map(plan => plan.id);
-      
+
+      // Check if there are any lifetime plans defined in the system
       if (lifetimePlanIds.length === 0) {
         return {
           success: false,
@@ -57,23 +62,23 @@ export const getUserLifetimeStatusAction = actionClient
         };
       }
 
-      // Query the database for active lifetime subscriptions
+      // Query the database for one-time payments with lifetime plans
       const result = await db
-        .select({ id: subscription.id, planId: subscription.planId })
+        .select({ id: subscription.id, planId: subscription.planId, type: subscription.type })
         .from(subscription)
         .where(
           and(
             eq(subscription.userId, userId),
-            eq(subscription.status, 'active')
+            eq(subscription.type, SubscriptionTypes.ONE_TIME),
+            eq(subscription.status, 'completed') // TODO: change to enum
           )
         );
 
       // Check if any subscription has a lifetime plan
-      const hasLifetimeSubscription = result.some(sub => 
-        lifetimePlanIds.includes(sub.planId)
+      const hasLifetimeSubscription = result.some(subscription =>
+        lifetimePlanIds.includes(subscription.planId)
       );
 
-      // Return the result
       return {
         success: true,
         isLifetimeMember: hasLifetimeSubscription,
