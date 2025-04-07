@@ -22,7 +22,6 @@ import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { LOCALE_LIST, routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
 import { useLocaleStore } from '@/stores/locale-store';
-import { useSubscriptionStore } from '@/stores/subscription-store';
 import {
   ChevronsUpDown,
   Languages,
@@ -38,6 +37,7 @@ import { useTransition } from 'react';
 import { UserAvatar } from '../layout/user-avatar';
 import { toast } from 'sonner';
 import { User } from 'better-auth';
+import { usePaymentStore } from '@/stores/payment-store';
 
 interface NavUserProps {
   user: User;
@@ -51,7 +51,7 @@ export function NavUser({ user, className }: NavUserProps) {
   const pathname = useLocalePathname();
   const params = useParams();
   const { currentLocale, setCurrentLocale } = useLocaleStore();
-  const { resetState } = useSubscriptionStore();
+  const { resetState } = usePaymentStore();
   const [, startTransition] = useTransition();
   const t = useTranslations();
 
@@ -74,7 +74,7 @@ export function NavUser({ user, className }: NavUserProps) {
       fetchOptions: {
         onSuccess: () => {
           console.log('sign out success');
-          // Reset subscription state on sign out
+          // Reset payment state on sign out
           resetState();
           router.replace('/');
         },

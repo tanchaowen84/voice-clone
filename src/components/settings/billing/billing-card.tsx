@@ -13,21 +13,21 @@ import { PlanIntervals } from '@/payment/types';
 import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useSubscription } from '@/hooks/use-subscription';
+import { usePayment } from '@/hooks/use-payment';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.settings.billing');
   const [error, setError] = useState<string | undefined>('');
   
-  // Use our subscription hook
+  // Use our payment hook
   const { 
+    isLoading: isLoadingPayment,
+    error: paymentError,
     subscription, 
     isLifetimeMember, 
-    isFreePlan, 
-    isLoading: isLoadingSubscription, 
-    refetch,
-    error: subscriptionError 
-  } = useSubscription();
+    isFreePlan,
+    refetch
+  } = usePayment();
 
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
@@ -55,10 +55,10 @@ export default function BillingCard() {
     : null;
 
   // Determine if we are in a loading state
-  const isPageLoading = isLoadingSubscription || isLoadingSession;
+  const isPageLoading = isLoadingPayment || isLoadingSession;
 
-  // Handle errors from the subscription store
-  const displayError = error || subscriptionError;
+  // Handle errors from the payment store
+  const displayError = paymentError || error;
 
   // Render loading skeleton
   if (isPageLoading) {

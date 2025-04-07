@@ -33,7 +33,7 @@ export function PricingTable({
   const freePlans = plans.filter(plan => plan.isFree);
 
   const subscriptionPlans = plans.filter(plan =>
-    !plan.isFree && plan.prices.some(price => price.type === PaymentTypes.RECURRING)
+    !plan.isFree && plan.prices.some(price => price.type === PaymentTypes.SUBSCRIPTION)
   );
 
   const oneTimePlans = plans.filter(plan =>
@@ -42,13 +42,13 @@ export function PricingTable({
 
   // Check if any plan has a monthly price option
   const hasMonthlyOption = subscriptionPlans.some(plan =>
-    plan.prices.some(price => price.type === PaymentTypes.RECURRING
+    plan.prices.some(price => price.type === PaymentTypes.SUBSCRIPTION
       && price.interval === PlanIntervals.MONTH)
   );
 
   // Check if any plan has a yearly price option
   const hasYearlyOption = subscriptionPlans.some(plan =>
-    plan.prices.some(price => price.type === PaymentTypes.RECURRING
+    plan.prices.some(price => price.type === PaymentTypes.SUBSCRIPTION
       && price.interval === PlanIntervals.YEAR)
   );
 
@@ -101,7 +101,7 @@ export function PricingTable({
             key={plan.id}
             plan={plan}
             interval={interval}
-            paymentType={PaymentTypes.RECURRING}
+            paymentType={PaymentTypes.SUBSCRIPTION}
             metadata={metadata}
             isCurrentPlan={currentPlanId === plan.id}
           />

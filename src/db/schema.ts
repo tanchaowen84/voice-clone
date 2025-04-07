@@ -52,7 +52,7 @@ export const verification = pgTable("verification", {
 	updatedAt: timestamp('updated_at')
 });
 
-export const subscription = pgTable("subscription", {
+export const payment = pgTable("payment", {
 	id: text("id").primaryKey(),
 	planId: text('plan_id').notNull(),
 	priceId: text('price_id').notNull(),

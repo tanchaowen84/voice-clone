@@ -1,6 +1,6 @@
 import { Stripe } from 'stripe';
 import db from '@/db';
-import { user, subscription } from '@/db/schema';
+import { user, payment } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
@@ -361,11 +361,11 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Create subscription record
+   * Create payment record
    * @param stripeSubscription Stripe subscription
    */
   private async onCreateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`Create subscription for Stripe subscription ${stripeSubscription.id}`);
+    console.log(`Create payment record for Stripe subscription ${stripeSubscription.id}`);
     const customerId = stripeSubscription.customer as string;
 
     // get priceId from subscription items (this is always available)
@@ -380,7 +380,7 @@ export class StripeProvider implements PaymentProvider {
     if (!userId) {
       const foundUserId = await this.findUserIdByCustomerId(customerId);
       if (!foundUserId) {
-        console.warn(`No user found for customer ${customerId}, skipping subscription creation`);
+        console.warn(`No user found for customer ${customerId}, skipping payment record creation`);
         return;
       }
       userId = foundUserId;
@@ -394,7 +394,7 @@ export class StripeProvider implements PaymentProvider {
     if (!planId) {
       const foundPlan = findPlanByPriceId(priceId);
       if (!foundPlan) {
-        console.warn(`No plan found for price ${priceId}, skipping subscription creation`);
+        console.warn(`No plan found for price ${priceId}, skipping payment record creation`);
         return;
       }
       planId = foundPlan.id;
@@ -427,23 +427,23 @@ export class StripeProvider implements PaymentProvider {
       updatedAt: new Date()
     };
 
-    const result = await db.insert(subscription)
+    const result = await db.insert(payment)
       .values(createFields)
-      .returning({ id: subscription.id });
+      .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Created new subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(`Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
     } else {
-      console.warn(`No subscription created for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`No payment record created for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
   /**
-   * Update subscription record
+   * Update payment record
    * @param stripeSubscription Stripe subscription
    */
   private async onUpdateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`Update subscription for Stripe subscription ${stripeSubscription.id}`);
+    console.log(`Update payment record for Stripe subscription ${stripeSubscription.id}`);
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
@@ -488,36 +488,36 @@ export class StripeProvider implements PaymentProvider {
     }
 
     const result = await db
-      .update(subscription)
+      .update(payment)
       .set(updateFields)
-      .where(eq(subscription.subscriptionId, stripeSubscription.id))
-      .returning({ id: subscription.id });
+      .where(eq(payment.subscriptionId, stripeSubscription.id))
+      .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Updated subscription ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(`Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
     } else {
-      console.warn(`No subscription found for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`No payment record found for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
   /**
-   * Update subscription record, set status to canceled
+   * Update payment record, set status to canceled
    * @param stripeSubscription Stripe subscription
    */
   private async onDeleteSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
     const result = await db
-      .update(subscription)
+      .update(payment)
       .set({
         status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
         updatedAt: new Date()
       })
-      .where(eq(subscription.subscriptionId, stripeSubscription.id))
-      .returning({ id: subscription.id });
+      .where(eq(payment.subscriptionId, stripeSubscription.id))
+      .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Marked subscription ${stripeSubscription.id} as canceled`);
+      console.log(`Marked payment record for subscription ${stripeSubscription.id} as canceled`);
     } else {
-      console.warn(`No subscription found to cancel for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
@@ -554,7 +554,7 @@ export class StripeProvider implements PaymentProvider {
     // Create a one-time payment record
     const now = new Date();    
     const result = await db
-      .insert(subscription)
+      .insert(payment)
       .values({
         id: randomUUID(),
         planId: planId,
@@ -567,7 +567,7 @@ export class StripeProvider implements PaymentProvider {
         createdAt: now,
         updatedAt: now,
       })
-      .returning({ id: subscription.id });
+      .returning({ id: payment.id });
 
     if (result.length === 0) {
       console.warn(`Failed to create one-time payment record for user ${userId}`);

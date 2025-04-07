@@ -49,7 +49,7 @@ Payment plans are defined in `/payment/config/payment-config.ts`. Each plan can 
   prices: [
     {
       productId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
-      type: "recurring",
+      type: "SUBSCRIPTION",
       interval: "month",
       amount: 2900,
       currency: "USD",
@@ -57,7 +57,7 @@ Payment plans are defined in `/payment/config/payment-config.ts`. Each plan can 
     },
     {
       productId: process.env.STRIPE_PRICE_PRO_YEARLY!,
-      type: "recurring",
+      type: "SUBSCRIPTION",
       interval: "year",
       amount: 24900,
       currency: "USD",
@@ -146,7 +146,7 @@ Displays a single pricing plan with checkout button:
 <PricingCard
   plan={plan}
   interval="month"
-  paymentType="recurring"
+  paymentType="SUBSCRIPTION"
   email="user@example.com"
   metadata={{ userId: "user_123" }}
   isCurrentPlan={false}

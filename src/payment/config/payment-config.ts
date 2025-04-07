@@ -35,14 +35,14 @@ const proPlan: PricePlan = {
   ],
   prices: [
     {
-      type: PaymentTypes.RECURRING,
+      type: PaymentTypes.SUBSCRIPTION,
       priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
       amount: 990,
       currency: "USD",
       interval: PlanIntervals.MONTH,
     },
     {
-      type: PaymentTypes.RECURRING,
+      type: PaymentTypes.SUBSCRIPTION,
       priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
       amount: 9900,
       currency: "USD",

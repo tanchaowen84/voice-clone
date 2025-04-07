@@ -15,7 +15,7 @@ import { CheckoutButton } from './create-checkout-button';
 interface PricingCardProps {
   plan: PricePlan;
   interval?: PlanInterval; // 'month' or 'year'
-  paymentType?: PaymentType; // 'recurring' or 'one_time'
+  paymentType?: PaymentType; // 'subscription' or 'one_time'
   metadata?: Record<string, string>;
   className?: string;
   isCurrentPlan?: boolean;
@@ -25,7 +25,7 @@ interface PricingCardProps {
  * Get the appropriate price object for the selected interval and payment type
  * @param plan The price plan
  * @param interval The selected interval (month or year)
- * @param paymentType The payment type (recurring or one_time)
+ * @param paymentType The payment type (SUBSCRIPTION or one_time)
  * @returns The price object or undefined if not found
  */
 function getPriceForPlan(
@@ -42,7 +42,7 @@ function getPriceForPlan(
     if (paymentType === PaymentTypes.ONE_TIME) {
       return price.type === PaymentTypes.ONE_TIME;
     }
-    return price.type === PaymentTypes.RECURRING && price.interval === interval;
+    return price.type === PaymentTypes.SUBSCRIPTION && price.interval === interval;
   });
 }
 

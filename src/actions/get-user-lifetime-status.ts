@@ -1,7 +1,7 @@
 'use server';
 
 import db from "@/db";
-import { subscription } from "@/db/schema";
+import { payment } from "@/db/schema";
 import { getSession } from "@/lib/server";
 import { getAllPlans } from "@/payment";
 import { PaymentTypes } from "@/payment/types";
@@ -64,24 +64,24 @@ export const getUserLifetimeStatusAction = actionClient
 
       // Query the database for one-time payments with lifetime plans
       const result = await db
-        .select({ id: subscription.id, planId: subscription.planId, type: subscription.type })
-        .from(subscription)
+        .select({ id: payment.id, planId: payment.planId, type: payment.type })
+        .from(payment)
         .where(
           and(
-            eq(subscription.userId, userId),
-            eq(subscription.type, PaymentTypes.ONE_TIME),
-            eq(subscription.status, 'completed') // TODO: change to enum
+            eq(payment.userId, userId),
+            eq(payment.type, PaymentTypes.ONE_TIME),
+            eq(payment.status, 'completed') // TODO: change to enum
           )
         );
 
-      // Check if any subscription has a lifetime plan
-      const hasLifetimeSubscription = result.some(subscription =>
-        lifetimePlanIds.includes(subscription.planId)
+      // Check if any payment has a lifetime plan
+      const hasLifetimePayment = result.some(paymentRecord =>
+        lifetimePlanIds.includes(paymentRecord.planId)
       );
 
       return {
         success: true,
-        isLifetimeMember: hasLifetimeSubscription,
+        isLifetimeMember: hasLifetimePayment,
       };
     } catch (error) {
       console.error("get user lifetime status error:", error);

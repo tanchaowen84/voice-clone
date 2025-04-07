@@ -21,7 +21,7 @@ import { getAvatarLinks } from '@/config';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
-import { useSubscriptionStore } from '@/stores/subscription-store';
+import { usePaymentStore } from '@/stores/payment-store';
 import { User } from 'better-auth';
 import { LogOutIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -37,7 +37,7 @@ export function UserButton({ user }: UserButtonProps) {
   const avatarLinks = getAvatarLinks();
   const localeRouter = useLocaleRouter();
   const [open, setOpen] = useState(false);
-  const { resetState } = useSubscriptionStore();
+  const { resetState } = usePaymentStore();
   
   const closeDrawer = () => {
     setOpen(false);
@@ -48,7 +48,7 @@ export function UserButton({ user }: UserButtonProps) {
       fetchOptions: {
         onSuccess: () => {
           console.log('sign out success');
-          // Reset subscription state on sign out
+          // Reset payment state on sign out
           resetState();
           localeRouter.replace('/');
         },
