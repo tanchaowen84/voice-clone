@@ -17,8 +17,8 @@ const newsletterSchema = z.object({
 export const unsubscribeNewsletterAction = actionClient
   .schema(newsletterSchema)
   .action(async ({ parsedInput: { email } }) => {
-    const authSession = await getSession();
-    if (!authSession) {
+    const session = await getSession();
+    if (!session) {
       return {
         success: false,
         error: 'Unauthorized',

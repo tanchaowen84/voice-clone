@@ -8,6 +8,7 @@ import { subscription } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 import { getAllPlans } from "@/payment";
+import { getSession } from "@/lib/server";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -26,11 +27,8 @@ export const getUserLifetimeStatusAction = actionClient
     const { userId } = parsedInput;
     
     // Get the current user session for authorization
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!session?.user) {
+    const session = await getSession();
+    if (!session) {
       return {
         success: false,
         error: 'Unauthorized',

@@ -147,13 +147,6 @@ export interface PortalResult {
 }
 
 /**
- * Parameters for retrieving a customer
- */
-export interface GetCustomerParams {
-  customerId: string;
-}
-
-/**
  * Parameters for listing customer subscriptions
  */
 export interface ListCustomerSubscriptionsParams {
@@ -175,11 +168,6 @@ export interface PaymentProvider {
    * Create a customer portal session
    */
   createCustomerPortal(params: CreatePortalParams): Promise<PortalResult>;
-
-  /**
-   * Get customer details
-   */
-  getCustomer(params: GetCustomerParams): Promise<Customer | null>;
 
   /**
    * List customer subscriptions

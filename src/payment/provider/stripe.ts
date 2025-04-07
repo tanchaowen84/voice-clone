@@ -38,20 +38,15 @@ export class StripeProvider implements PaymentProvider {
    * 
    * NOTICE: if you want to delete user in database,
    * please delete customer in Stripe as well,
-   * otherwise, no customer id will be saved in database.
+   * otherwise, the user wont have a customer id in database,
+   * and will not be able to make payments.
    * 
    * @param email Customer email
-   * @param name Optional customer name
-   * @param metadata Optional metadata
    * @returns Stripe customer ID
    */
-  private async createOrGetCustomer(
-    email: string,
-    name?: string,
-    metadata?: Record<string, string>
-  ): Promise<string> {
+  private async createOrGetCustomer( email: string ): Promise<string> {
     try {
-      // Search for existing customer, stripe.customers.retrieve does not work with email
+      // Search for existing customer
       const customers = await this.stripe.customers.list({
         email,
         limit: 1,
@@ -63,11 +58,7 @@ export class StripeProvider implements PaymentProvider {
       }
 
       // Create new customer
-      const customer = await this.stripe.customers.create({
-        email,
-        name: name || undefined,
-        metadata,
-      });
+      const customer = await this.stripe.customers.create({ email });
 
       // Update user record in database with the new customer ID
       await this.updateUserWithCustomerId(customer.id, email);
@@ -104,7 +95,6 @@ export class StripeProvider implements PaymentProvider {
       }
     } catch (error) {
       console.error('Update user with customer ID error:', error);
-      // Re-throw to be caught by the caller
       throw new Error('Failed to update user with customer ID');
     }
   }
@@ -125,6 +115,8 @@ export class StripeProvider implements PaymentProvider {
 
       if (result.length > 0) {
         return result[0].id;
+      } else {
+        console.warn(`No user found with customerId ${customerId}`);
       }
 
       return undefined;
@@ -157,8 +149,18 @@ export class StripeProvider implements PaymentProvider {
       // Find price in plan
       const price = findPriceInPlan(planId, priceId);
       if (!price) {
-        throw new Error(`Price with ID ${priceId} not found in plan ${planId}`);
+        throw new Error(`Price ID ${priceId} not found in plan ${planId}`);
       }
+
+      // Create or get customer
+      const customerId = await this.createOrGetCustomer(customerEmail);
+
+      // Add planId and priceId to metadata
+      const customMetadata = {
+        ...metadata,
+        planId,
+        priceId,
+      };
 
       // Set up the line items
       const lineItems = [{
@@ -172,40 +174,28 @@ export class StripeProvider implements PaymentProvider {
         mode: price.type === PaymentTypes.RECURRING ? 'subscription' : 'payment',
         success_url: successUrl,
         cancel_url: cancelUrl,
-        metadata: {
-          planId,
-          priceId,
-          ...metadata,
-        },
+        metadata: customMetadata,
       };
+
+      // Add customer to checkout session
+      checkoutParams.customer = customerId;
 
       // Add locale if provided
       if (locale) {
         checkoutParams.locale = this.mapLocaleToStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
       }
 
-      // Get customer name from metadata if available
-      const customerName = metadata?.name;
-
-      // Create or get customer
-      const customerId = await this.createOrGetCustomer(
-        customerEmail,
-        customerName,
-        metadata
-      );
-
-      // Add customer to checkout session
-      checkoutParams.customer = customerId;
+      if (price.type === PaymentTypes.ONE_TIME) {
+        checkoutParams.payment_intent_data = {
+          metadata: customMetadata,
+        };
+      }
 
       // Add subscription data for recurring payments
       if (price.type === PaymentTypes.RECURRING) {
         // Initialize subscription_data with metadata
         checkoutParams.subscription_data = {
-          metadata: {
-            planId,
-            priceId,
-            ...metadata,
-          },
+          metadata: customMetadata,
         };
 
         // Add trial period if applicable
@@ -248,33 +238,6 @@ export class StripeProvider implements PaymentProvider {
     } catch (error) {
       console.error('Create customer portal error:', error);
       throw new Error('Failed to create customer portal');
-    }
-  }
-
-  /**
-   * Get customer details
-   * @param params Parameters for retrieving the customer
-   * @returns Customer data or null if not found
-   */
-  public async getCustomer(params: GetCustomerParams): Promise<Customer | null> {
-    const { customerId } = params;
-
-    try {
-      const customer = await this.stripe.customers.retrieve(customerId);
-      // customer may be deleted
-      if (customer.deleted) {
-        return null;
-      }
-
-      return {
-        id: customer.id,
-        email: customer.email || '',
-        name: customer.name || undefined,
-        metadata: customer.metadata as Record<string, string> || {},
-      };
-    } catch (error) {
-      console.error('Get customer error:', error);
-      return null;
     }
   }
 

@@ -26,8 +26,8 @@ export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
     // request the user to login before checkout
-    const authSession = await getSession();
-    if (!authSession) {
+    const session = await getSession();
+    if (!session) {
       return {
         success: false,
         error: 'Unauthorized',
@@ -49,12 +49,6 @@ export const createCheckoutAction = actionClient
         };
       }
 
-      // add user id, name and email to metadata
-      const customMetadata = metadata || {};
-      customMetadata.userId = authSession.user.id;
-      customMetadata.name = authSession.user.name;
-      customMetadata.email = authSession.user.email;
-
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/settings/billing?session_id={CHECKOUT_SESSION_ID}`;
@@ -62,8 +56,8 @@ export const createCheckoutAction = actionClient
       const params: CreateCheckoutParams = {
         planId,
         priceId,
-        customerEmail: authSession.user.email,
-        metadata: customMetadata,
+        customerEmail: session.user.email,
+        metadata,
         successUrl,
         cancelUrl,
         locale,

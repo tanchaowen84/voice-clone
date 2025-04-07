@@ -60,18 +60,6 @@ export const createCustomerPortal = async (
 };
 
 /**
- * Get customer details
- * @param params Parameters for retrieving the customer
- * @returns Customer data or null if not found
- */
-export const getCustomer = async (
-  params: GetCustomerParams
-): Promise<Customer | null> => {
-  const provider = getPaymentProvider();
-  return provider.getCustomer(params);
-};
-
-/**
  * Handle webhook event
  * @param payload Raw webhook payload
  * @param signature Webhook signature

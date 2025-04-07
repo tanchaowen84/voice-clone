@@ -1,9 +1,8 @@
 'use server';
 
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/server";
 import { listCustomerSubscriptions } from "@/payment";
 import { createSafeActionClient } from 'next-safe-action';
-import { headers } from "next/headers";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -13,12 +12,8 @@ const actionClient = createSafeActionClient();
  */
 export const getCustomerSubscriptionAction = actionClient
   .action(async () => {
-    // Get the current user session
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!session?.user) {
+    const session = await getSession();
+    if (!session) {
       return {
         success: false,
         error: 'Unauthorized',

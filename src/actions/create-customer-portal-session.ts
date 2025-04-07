@@ -23,8 +23,8 @@ const portalSchema = z.object({
 export const createPortalAction = actionClient
   .schema(portalSchema)
   .action(async ({ parsedInput }) => {
-    const authSession = await getSession();
-    if (!authSession) {
+    const session = await getSession();
+    if (!session) {
       return {
         success: false,
         error: 'Unauthorized',
