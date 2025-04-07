@@ -28,6 +28,7 @@ export type PaymentStatus =
   | 'canceled'   // Subscription has been canceled
   | 'incomplete' // Payment not completed
   | 'past_due'   // Payment is past due
+  | 'paused'     // Subscription is paused
   | 'trialing'   // In trial period
   | 'unpaid'     // Payment failed
   | 'completed'  // One-time payment completed

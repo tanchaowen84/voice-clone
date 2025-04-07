@@ -49,6 +49,12 @@ export const createCheckoutAction = actionClient
         };
       }
 
+      // Add user id to metadata, so we can get it in the webhook event
+      const customMetadata = {
+        ...metadata,
+        userId: session.user.id,
+      };
+
       // Create the checkout session with localized URLs
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const successUrl = `${baseUrlWithLocale}/settings/billing?session_id={CHECKOUT_SESSION_ID}`;
@@ -57,7 +63,7 @@ export const createCheckoutAction = actionClient
         planId,
         priceId,
         customerEmail: session.user.email,
-        metadata,
+        metadata: customMetadata,
         successUrl,
         cancelUrl,
         locale,

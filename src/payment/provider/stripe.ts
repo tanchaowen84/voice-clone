@@ -155,7 +155,7 @@ export class StripeProvider implements PaymentProvider {
       // Create or get customer
       const customerId = await this.createOrGetCustomer(customerEmail);
 
-      // Add planId and priceId to metadata
+      // Add planId and priceId to metadata, so we can get it in the webhook event
       const customMetadata = {
         ...metadata,
         planId,
@@ -515,6 +515,13 @@ export class StripeProvider implements PaymentProvider {
     const customerId = session.customer as string;
     console.log(`Handle onetime payment for customer ${customerId}`);
 
+    // get userId from session metadata, we add it in the createCheckout session
+    const userId = session.metadata?.userId;
+    if (!userId) {
+      console.warn(`No userId found for checkout session ${session.id}`);
+      return;
+    }
+
     // get priceId from session metadata, not from line items
     // const priceId = session.line_items?.data[0]?.price?.id;
     const priceId = session.metadata?.priceId;
@@ -523,28 +530,20 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // find plan by priceId, we can not be sure if there is planId in metadata
-    const plan = findPlanByPriceId(priceId);
+    // get planId from session metadata, we add it in the createCheckout session
+    const planId = session.metadata?.planId;
+    if (!planId) {
+      console.warn(`No planId found for checkout session ${session.id}`);
+      return;
+    }
+
+    const plan = getPlanById(planId);
     if (!plan) {
-      console.warn(`No plan found for price ${priceId}`);
+      console.warn(`No plan found for planId ${planId}`);
       return;
     }
 
     if (plan.isLifetime) {
-      // Find user by customerId
-      const userResult = await db
-        .select({ id: user.id })
-        .from(user)
-        .where(eq(user.customerId, customerId))
-        .limit(1);
-
-      if (userResult.length === 0) {
-        console.warn(`No user found with customerId ${customerId}`);
-        return;
-      }
-
-      const userId = userResult[0].id;
-      
       // Create a subscription record for lifetime membership
       const now = new Date();
       // Far future date for lifetime membership (100 years)
@@ -555,7 +554,7 @@ export class StripeProvider implements PaymentProvider {
         .insert(subscription)
         .values({
           id: randomUUID(),
-          planId: plan.id,
+          planId: planId,
           priceId: priceId,
           interval: 'year', // Using year for lifetime plans
           userId: userId,
@@ -629,8 +628,8 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Convert Stripe subscription status to PaymentStatus
-   * We narrow down the status to our own status types
+   * Convert Stripe subscription status to PaymentStatus,
+   * we narrow down the status to our own status types
    * @param status Stripe subscription status
    * @returns PaymentStatus
    */
@@ -643,7 +642,7 @@ export class StripeProvider implements PaymentProvider {
       past_due: 'past_due',
       trialing: 'trialing',
       unpaid: 'unpaid',
-      paused: 'past_due', // Map paused to past_due as a reasonable default
+      paused: 'paused',
     };
 
     return statusMap[status] || 'failed';
