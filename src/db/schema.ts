@@ -59,7 +59,7 @@ export const payment = pgTable("payment", {
 	type: text('type').notNull(),
 	interval: text('interval'),
 	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
-	customerId: text('customer_id'),
+	customerId: text('customer_id').notNull(),
 	subscriptionId: text('subscription_id'),
 	status: text('status').notNull(),
 	periodStart: timestamp('period_start'),

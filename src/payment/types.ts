@@ -90,10 +90,10 @@ export interface Subscription {
   priceId: string;
   type: PaymentType;
   interval?: PlanInterval;
-  currentPeriodStart: Date;
+  currentPeriodStart?: Date;
   currentPeriodEnd?: Date;
   cancelAtPeriodEnd?: boolean;
-  canceledAt?: Date;
+  trialStartDate?: Date;
   trialEndDate?: Date;
   createdAt: Date;
 }
@@ -153,8 +153,6 @@ export interface PortalResult {
  */
 export interface ListCustomerSubscriptionsParams {
   customerId: string;
-  status?: PaymentStatus | PaymentStatus[];
-  limit?: number;
 }
 
 /**

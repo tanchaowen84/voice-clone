@@ -1,7 +1,7 @@
 import { Stripe } from 'stripe';
 import db from '@/db';
 import { user, payment } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
 import { 
@@ -259,49 +259,32 @@ export class StripeProvider implements PaymentProvider {
    * @returns Array of subscription objects
    */
   public async listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]> {
-    const { customerId, status, limit = 10 } = params;
+    const { customerId } = params;
 
     try {
-      // Retrieve customer subscriptions
-      const subscriptions = await this.stripe.subscriptions.list({
-        customer: customerId,
-        limit: limit,
-        expand: ['data.default_payment_method'],
-        // Sort by creation date, newest first
-        status: status as any, // Type cast to handle our custom status types
-      });
-      // console.log('list customer subscriptions:', subscriptions);
-
-      // Map to our subscription model
-      return subscriptions.data.map(subscription => {
-        // determine the interval if available
-        const interval = this.mapStripeIntervalToPlanInterval(subscription);
-
-        // get priceId from subscription items (this is always available)
-        const priceId = subscription.items.data[0]?.price.id;
-
-        // get planId from config or metadata
-        const foundPlan = findPlanByPriceId(priceId);
-        const planId = foundPlan?.id || subscription.metadata.planId || 'unknown';
-
-        return {
-          id: subscription.id,
-          customerId: subscription.customer as string,
-          status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
-          planId,
-          priceId,
-          type: PaymentTypes.SUBSCRIPTION, // Regular subscriptions from Stripe are recurring
-          interval,
-          currentPeriodStart: new Date(subscription.current_period_start * 1000),
-          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-          cancelAtPeriodEnd: subscription.cancel_at_period_end,
-          canceledAt: subscription.canceled_at
-            ? new Date(subscription.canceled_at * 1000) : undefined,
-          trialEndDate: subscription.trial_end
-            ? new Date(subscription.trial_end * 1000) : undefined,
-          createdAt: new Date(subscription.created * 1000),
-        };
-      });
+      // Build query to fetch subscriptions from database
+       const subscriptions = await db
+        .select()
+        .from(payment)
+        .where(eq(payment.customerId, customerId))
+        .orderBy(desc(payment.createdAt)); // Sort by creation date, newest first
+      
+      // Map database records to our subscription model
+      return subscriptions.map(subscription => ({
+        id: subscription.subscriptionId || '',
+        customerId: subscription.customerId,
+        status: subscription.status as PaymentStatus,
+        planId: subscription.planId,
+        priceId: subscription.priceId,
+        type: subscription.type as PaymentTypes,
+        interval: subscription.interval as PlanInterval,
+        currentPeriodStart: subscription.periodStart || undefined,
+        currentPeriodEnd: subscription.periodEnd || undefined,
+        cancelAtPeriodEnd: subscription.cancelAtPeriodEnd || false,
+        trialStartDate: subscription.trialStart || undefined,
+        trialEndDate: subscription.trialEnd || undefined,
+        createdAt: subscription.createdAt,
+      }));
     } catch (error) {
       console.error('List customer subscriptions error:', error);
       return [];
@@ -594,6 +577,27 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
+   * Convert Stripe subscription status to PaymentStatus,
+   * we narrow down the status to our own status types
+   * @param status Stripe subscription status
+   * @returns PaymentStatus
+   */
+  private mapSubscriptionStatusToPaymentStatus(status: Stripe.Subscription.Status): PaymentStatus {
+    const statusMap: Record<string, PaymentStatus> = {
+      active: 'active',
+      canceled: 'canceled',
+      incomplete: 'incomplete',
+      incomplete_expired: 'failed',
+      past_due: 'past_due',
+      trialing: 'trialing',
+      unpaid: 'unpaid',
+      paused: 'paused',
+    };
+
+    return statusMap[status] || 'failed';
+  }
+
+  /**
    * Map application locale to Stripe's supported locales
    * @param locale Application locale (e.g., 'en', 'zh-CN')
    * @returns Stripe locale string
@@ -621,26 +625,5 @@ export class StripeProvider implements PaymentProvider {
 
     // Default to auto to let Stripe detect the language
     return 'auto';
-  }
-
-  /**
-   * Convert Stripe subscription status to PaymentStatus,
-   * we narrow down the status to our own status types
-   * @param status Stripe subscription status
-   * @returns PaymentStatus
-   */
-  private mapSubscriptionStatusToPaymentStatus(status: Stripe.Subscription.Status): PaymentStatus {
-    const statusMap: Record<string, PaymentStatus> = {
-      active: 'active',
-      canceled: 'canceled',
-      incomplete: 'incomplete',
-      incomplete_expired: 'failed',
-      past_due: 'past_due',
-      trialing: 'trialing',
-      unpaid: 'unpaid',
-      paused: 'paused',
-    };
-
-    return statusMap[status] || 'failed';
   }
 }
