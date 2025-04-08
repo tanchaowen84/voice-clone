@@ -1,20 +1,20 @@
-import { Stripe } from 'stripe';
 import db from '@/db';
-import { user, payment } from '@/db/schema';
-import { eq, and, desc } from 'drizzle-orm';
+import { payment, user } from '@/db/schema';
 import { randomUUID } from 'crypto';
+import { desc, eq } from 'drizzle-orm';
+import { Stripe } from 'stripe';
 import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
-import { 
-  CheckoutResult, 
-  CreateCheckoutParams, 
-  CreatePortalParams, 
-  ListCustomerSubscriptionsParams, 
-  PaymentProvider, 
-  PaymentStatus, 
-  PaymentTypes, 
-  PlanInterval, 
-  PlanIntervals, 
-  PortalResult, 
+import {
+  CheckoutResult,
+  CreateCheckoutParams,
+  CreatePortalParams,
+  getCustomerSubscriptionsParams,
+  PaymentProvider,
+  PaymentStatus,
+  PaymentTypes,
+  PlanInterval,
+  PlanIntervals,
+  PortalResult,
   Subscription
 } from '../types';
 
@@ -56,7 +56,7 @@ export class StripeProvider implements PaymentProvider {
    * @param email Customer email
    * @returns Stripe customer ID
    */
-  private async createOrGetCustomer( email: string ): Promise<string> {
+  private async createOrGetCustomer(email: string): Promise<string> {
     try {
       // Search for existing customer
       const customers = await this.stripe.customers.list({
@@ -184,8 +184,8 @@ export class StripeProvider implements PaymentProvider {
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
         mode: price.type === PaymentTypes.SUBSCRIPTION ? 'subscription' : 'payment',
-        success_url: successUrl,
-        cancel_url: cancelUrl,
+        success_url: successUrl ?? '',
+        cancel_url: cancelUrl ?? '',
         metadata: customMetadata,
       };
 
@@ -197,6 +197,7 @@ export class StripeProvider implements PaymentProvider {
         checkoutParams.locale = this.mapLocaleToStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
       }
 
+      // Add payment intent data for one-time payments
       if (price.type === PaymentTypes.ONE_TIME) {
         checkoutParams.payment_intent_data = {
           metadata: customMetadata,
@@ -240,7 +241,7 @@ export class StripeProvider implements PaymentProvider {
     try {
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
-        return_url: returnUrl,
+        return_url: returnUrl ?? '',
         locale: locale ? this.mapLocaleToStripeLocale(locale) as Stripe.BillingPortal.SessionCreateParams.Locale : undefined,
       });
 
@@ -258,17 +259,17 @@ export class StripeProvider implements PaymentProvider {
    * @param params Parameters for listing customer subscriptions
    * @returns Array of subscription objects
    */
-  public async listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]> {
+  public async getCustomerSubscriptions(params: getCustomerSubscriptionsParams): Promise<Subscription[]> {
     const { customerId } = params;
 
     try {
       // Build query to fetch subscriptions from database
-       const subscriptions = await db
+      const subscriptions = await db
         .select()
         .from(payment)
         .where(eq(payment.customerId, customerId))
         .orderBy(desc(payment.createdAt)); // Sort by creation date, newest first
-      
+
       // Map database records to our subscription model
       return subscriptions.map(subscription => ({
         id: subscription.subscriptionId || '',
@@ -533,9 +534,9 @@ export class StripeProvider implements PaymentProvider {
       console.warn(`No planId found for checkout session ${session.id}`);
       return;
     }
-    
+
     // Create a one-time payment record
-    const now = new Date();    
+    const now = new Date();
     const result = await db
       .insert(payment)
       .values({

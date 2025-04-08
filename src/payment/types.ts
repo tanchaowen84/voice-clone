@@ -151,7 +151,7 @@ export interface PortalResult {
 /**
  * Parameters for listing customer subscriptions
  */
-export interface ListCustomerSubscriptionsParams {
+export interface getCustomerSubscriptionsParams {
   customerId: string;
 }
 
@@ -160,7 +160,7 @@ export interface ListCustomerSubscriptionsParams {
  */
 export interface PaymentProvider {
   /**
-   * Create a checkout session for a plan
+   * Create a checkout session
    */
   createCheckout(params: CreateCheckoutParams): Promise<CheckoutResult>;
 
@@ -170,9 +170,9 @@ export interface PaymentProvider {
   createCustomerPortal(params: CreatePortalParams): Promise<PortalResult>;
 
   /**
-   * List customer subscriptions
+   * Get customer subscriptions
    */
-  listCustomerSubscriptions(params: ListCustomerSubscriptionsParams): Promise<Subscription[]>;
+  getCustomerSubscriptions(params: getCustomerSubscriptionsParams): Promise<Subscription[]>;
 
   /**
    * Handle webhook events

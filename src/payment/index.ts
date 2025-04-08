@@ -1,4 +1,4 @@
-import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, ListCustomerSubscriptionsParams } from "./types";
+import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, getCustomerSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
 import { paymentConfig } from "./config/payment-config";
 
@@ -78,10 +78,10 @@ export const handleWebhookEvent = async (
  * @returns Array of subscriptions
  */
 export const listCustomerSubscriptions = async (
-  params: ListCustomerSubscriptionsParams
+  params: getCustomerSubscriptionsParams
 ): Promise<Subscription[]> => {
   const provider = getPaymentProvider();
-  return provider.listCustomerSubscriptions(params);
+  return provider.getCustomerSubscriptions(params);
 };
 
 /**
@@ -148,5 +148,5 @@ export type {
   CheckoutResult,
   CreatePortalParams,
   PortalResult,
-  ListCustomerSubscriptionsParams,
+  getCustomerSubscriptionsParams as ListCustomerSubscriptionsParams,
 };
