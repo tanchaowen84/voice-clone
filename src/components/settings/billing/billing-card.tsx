@@ -45,7 +45,7 @@ export default function BillingCard() {
 
   // Determine if we are in a loading state
   const isPageLoading = isLoadingPayment || isLoadingSession;
-  console.log('billing card, isLoadingPayment', isLoadingPayment, 'isLoadingSession', isLoadingSession);
+  // console.log('billing card, isLoadingPayment', isLoadingPayment, 'isLoadingSession', isLoadingSession);
 
   // Render loading skeleton
   if (isPageLoading) {
@@ -164,7 +164,7 @@ export default function BillingCard() {
           )}
         </CardContent>
         <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
-            {/* Show upgrade plan button - only shown if user is on free plan */}
+            {/* user is on free plan, show upgrade plan button */}
             {isFreePlan && (
               <Button
                 variant="default"
@@ -177,7 +177,7 @@ export default function BillingCard() {
               </Button>
             )}
 
-            {/* Manage billing button - only shown if user is lifetime member */}
+            {/* user is lifetime member, show manage billing button */}
             {isLifetimeMember && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}
@@ -187,7 +187,7 @@ export default function BillingCard() {
               </CustomerPortalButton>
             )}
 
-            {/* Manage subscription button - only shown if user has subscription */}
+            {/* user has subscription, show manage subscription button */}
             {subscription && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}

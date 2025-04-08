@@ -1,24 +1,22 @@
 import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
 import { getUserLifetimeStatusAction } from '@/actions/get-user-lifetime-status';
 import { Session } from '@/lib/auth';
-import { getAllPlans, getPlanById } from '@/payment';
-import { Subscription, PricePlan } from '@/payment/types';
+import { getAllPlans } from '@/payment';
+import { PricePlan, Subscription } from '@/payment/types';
 import { create } from 'zustand';
 
 /**
  * Payment state interface
  */
 export interface PaymentState {
-  // Current user's plan
+  // Current plan
   currentPlan: PricePlan | null;
-  // Subscription data
+  // Active subscription
   subscription: Subscription | null;
   // Loading state 
   isLoading: boolean;
   // Error state
   error: string | null;
-  // Last fetch time
-  lastFetched: number | null;
 
   // Actions
   fetchPayment: (user: Session['user'] | null | undefined) => Promise<void>;
@@ -35,7 +33,6 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
   subscription: null,
   isLoading: false,
   error: null,
-  lastFetched: null,
 
   /**
    * Fetch payment and subscription data for the current user
@@ -50,8 +47,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       set({
         currentPlan: null,
         subscription: null,
-        error: null,
-        lastFetched: Date.now()
+        error: null
       });
       return;
     }
@@ -85,12 +81,11 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
         currentPlan: lifetimePlan || null,
         subscription: null,
         isLoading: false,
-        error: null,
-        lastFetched: Date.now()
+        error: null
       });
       return;
     }
-    
+
     // Skip fetching if user doesn't have a customer ID (except for lifetime members)
     if (!user.customerId) {
       console.log('setting free plan for user', user.id);
@@ -98,8 +93,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
         currentPlan: freePlan || null,
         subscription: null,
         isLoading: false,
-        error: null,
-        lastFetched: Date.now()
+        error: null
       });
       return;
     }
@@ -117,8 +111,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
             currentPlan: plan,
             subscription: subscriptionData,
             isLoading: false,
-            error: null,
-            lastFetched: Date.now()
+            error: null
           });
         } else { // No subscription found - set to free plan
           console.log('no subscription found, setting free plan for user', user.id);
@@ -126,24 +119,21 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
             currentPlan: freePlan || null,
             subscription: null,
             isLoading: false,
-            error: null,
-            lastFetched: Date.now()
+            error: null
           });
         }
       } else { // Failed to fetch subscription
         console.warn('Failed to fetch subscription for user', user.id, result?.data?.error);
         set({
           error: result?.data?.error || 'Failed to fetch payment data',
-          isLoading: false,
-          lastFetched: Date.now()
+          isLoading: false
         });
       }
     } catch (error) {
       console.error('Fetch payment data error:', error);
       set({
         error: 'Failed to fetch payment data',
-        isLoading: false,
-        lastFetched: Date.now()
+        isLoading: false
       });
     } finally {
       set({ isLoading: false });
@@ -158,8 +148,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       currentPlan: null,
       subscription: null,
       isLoading: false,
-      error: null,
-      lastFetched: null
+      error: null
     });
   }
 })); 

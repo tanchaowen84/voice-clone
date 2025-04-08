@@ -14,24 +14,19 @@ export function usePayment() {
     subscription, 
     isLoading, 
     error,
-    lastFetched, 
     fetchPayment 
   } = usePaymentStore();
   
   const { data: session } = authClient.useSession();
 
   useEffect(() => {
-    // If we have a user and we haven't fetched payment info in the last 5 minutes
     const currentUser = session?.user;
-    const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
-
-    if (currentUser && (!lastFetched || lastFetched < fiveMinutesAgo)) {
+    // Fetch payment data whenever the user session changes
+    if (currentUser) {
       console.log('fetching payment info for user', currentUser.id);
       fetchPayment(currentUser);
-    } else {
-      console.warn('no user or last fetched is less than 5 minutes ago');
     }
-  }, [session, lastFetched, fetchPayment]);
+  }, [session, fetchPayment]);
 
   return {
     currentPlan,
@@ -40,7 +35,10 @@ export function usePayment() {
     error,
     refetch: () => {
       const currentUser = session?.user;
-      fetchPayment(currentUser);
+      if (currentUser) {
+        console.log('refetching payment info for user', currentUser.id);
+        fetchPayment(currentUser);
+      }
     }
   };
 } 

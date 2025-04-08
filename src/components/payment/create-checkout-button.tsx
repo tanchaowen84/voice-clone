@@ -37,8 +37,7 @@ export function CheckoutButton({
 }: CheckoutButtonProps) {
   const t = useTranslations('PricingPage.CheckoutButton');
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session, refetch } = authClient.useSession();
-  const currentUser = session?.user;
+  const { refetch } = authClient.useSession();
 
   const handleClick = async () => {
     try {
@@ -53,8 +52,8 @@ export function CheckoutButton({
 
       // Redirect to checkout
       if (result && result.data?.success && result.data.data?.url) {
-        // Update session if user has no customerId
-        if (!currentUser?.customerId && refetch) {
+        // TODO: Always refetch session to ensure we have the latest user data
+        if (refetch) {
           await refetch();
         }
         
