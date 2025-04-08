@@ -26,7 +26,7 @@ interface CustomerPortalButtonProps {
 export function CustomerPortalButton({
   customerId,
   returnUrl,
-  variant = 'outline',
+  variant = 'default',
   size = 'default',
   className,
   children,

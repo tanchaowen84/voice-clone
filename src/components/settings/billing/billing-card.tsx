@@ -5,44 +5,33 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { usePayment } from '@/hooks/use-payment';
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { formatDate, formatPrice } from '@/lib/formatter';
-import { getAllPlans } from '@/payment';
+import { cn } from '@/lib/utils';
 import { PlanIntervals } from '@/payment/types';
 import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { usePayment } from '@/hooks/use-payment';
 
 export default function BillingCard() {
   const t = useTranslations('Dashboard.settings.billing');
-  const [error, setError] = useState<string | undefined>('');
-  
-  // Use our payment hook
-  const { 
+
+  const {
     isLoading: isLoadingPayment,
     error: paymentError,
-    subscription, 
-    isLifetimeMember, 
-    isFreePlan,
+    subscription,
+    currentPlan,
     refetch
   } = usePayment();
+  const isFreePlan = currentPlan?.isFree || false;
+  const isLifetimeMember = currentPlan?.isLifetime || false;
+  console.log('billing card, currentPlan', currentPlan);
 
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
   console.log('billing card, currentUser', currentUser);
-
-  // Get all available plans
-  const plans = getAllPlans();
-
-  // Determine current plan based on user status
-  const currentPlan = isLifetimeMember
-    ? plans.find(plan => plan.isLifetime)
-    : subscription
-      ? plans.find(plan => plan.id === subscription?.planId)
-      : plans.find(plan => plan.isFree);
 
   // Get subscription price details
   const currentPrice = subscription && currentPlan?.prices.find(
@@ -56,9 +45,7 @@ export default function BillingCard() {
 
   // Determine if we are in a loading state
   const isPageLoading = isLoadingPayment || isLoadingSession;
-
-  // Handle errors from the payment store
-  const displayError = paymentError || error;
+  console.log('billing card, isLoadingPayment', isLoadingPayment, 'isLoadingSession', isLoadingSession);
 
   // Render loading skeleton
   if (isPageLoading) {
@@ -85,7 +72,7 @@ export default function BillingCard() {
   }
 
   // Render error state
-  if (displayError) {
+  if (paymentError) {
     return (
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
@@ -94,7 +81,7 @@ export default function BillingCard() {
             <CardDescription>{t('currentPlan.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-destructive text-sm">{displayError}</div>
+            <div className="text-destructive text-sm">{paymentError}</div>
           </CardContent>
           <CardFooter>
             <Button
@@ -112,13 +99,17 @@ export default function BillingCard() {
   }
 
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      <Card>
+    <div className="grid md:grid-cols-2 gap-8">
+      <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
         <CardHeader>
-          <CardTitle>{t('currentPlan.title')}</CardTitle>
-          <CardDescription>{t('currentPlan.description')}</CardDescription>
+          <CardTitle className="text-lg font-semibold">
+            {t('currentPlan.title')}
+          </CardTitle>
+          <CardDescription>
+            {t('currentPlan.description')}
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1">
           {/* Plan name and status */}
           <div className="flex items-center justify-between">
             <div className="text-3xl font-medium">
@@ -172,13 +163,12 @@ export default function BillingCard() {
             </div>
           )}
         </CardContent>
-        <CardFooter>
-          <div className="w-full gap-4 flex flex-col">
+        <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
             {/* Show upgrade plan button - only shown if user is on free plan */}
             {isFreePlan && (
               <Button
                 variant="default"
-                className="w-full cursor-pointer"
+                className="cursor-pointer"
                 asChild
               >
                 <LocaleLink href="/pricing">
@@ -191,7 +181,7 @@ export default function BillingCard() {
             {isLifetimeMember && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}
-                className="w-full"
+                className=""
               >
                 {t('manageBilling')}
               </CustomerPortalButton>
@@ -201,12 +191,11 @@ export default function BillingCard() {
             {subscription && currentUser?.customerId && (
               <CustomerPortalButton
                 customerId={currentUser.customerId}
-                className="w-full"
+                className=""
               >
                 {t('manageSubscription')}
               </CustomerPortalButton>
             )}
-          </div>
         </CardFooter>
       </Card>
     </div>

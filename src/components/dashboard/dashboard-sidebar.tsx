@@ -56,7 +56,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
         {!isPending && (
           <>
             {/* show upgrade card if user is not a member */}
-            {currentUser && <UpgradeCard user={currentUser} />}
+            <UpgradeCard />
 
             {/* show user profile if user is logged in */}
             {currentUser && <NavUser user={currentUser} />}

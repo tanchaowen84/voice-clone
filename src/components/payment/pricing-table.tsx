@@ -10,24 +10,27 @@ import { PricingCard } from './pricing-card';
 interface PricingTableProps {
   plans: PricePlan[];
   metadata?: Record<string, string>;
-  currentPlanId?: string;
+  currentPlan?: PricePlan | null;
   className?: string;
 }
 
 /**
  * Pricing Table Component
  * 
- * Displays all pricing plans with interval selection tabs for subscription plans
- * Free plans and one-time purchase plans are always displayed
+ * Displays all pricing plans with interval selection tabs for subscription plans,
+ * free plans and one-time purchase plans are always displayed
  */
 export function PricingTable({
   plans,
   metadata,
-  currentPlanId,
+  currentPlan,
   className,
 }: PricingTableProps) {
   const t = useTranslations('PricingPage');
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
+
+  // Current plan ID for comparison
+  const currentPlanId = currentPlan?.id || null;
 
   // Filter plans into free, subscription and one-time plans
   const freePlans = plans.filter(plan => plan.isFree);

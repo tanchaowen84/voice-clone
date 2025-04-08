@@ -1,22 +1,16 @@
 import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
 import { getUserLifetimeStatusAction } from '@/actions/get-user-lifetime-status';
 import { Session } from '@/lib/auth';
-import { getAllPlans } from '@/payment';
-import { Subscription } from '@/payment/types';
+import { getAllPlans, getPlanById } from '@/payment';
+import { Subscription, PricePlan } from '@/payment/types';
 import { create } from 'zustand';
 
 /**
  * Payment state interface
  */
 export interface PaymentState {
-  // Current user's plan information
-  currentPlanId: string | null;
-  // Lifetime member
-  isLifetimeMember: boolean;
-  // Free plan
-  isFreePlan: boolean;
-  // Active subscription
-  hasActiveSubscription: boolean;
+  // Current user's plan
+  currentPlan: PricePlan | null;
   // Subscription data
   subscription: Subscription | null;
   // Loading state 
@@ -37,10 +31,7 @@ export interface PaymentState {
  */
 export const usePaymentStore = create<PaymentState>((set, get) => ({
   // Initial state
-  currentPlanId: null,
-  isLifetimeMember: false,
-  isFreePlan: true,
-  hasActiveSubscription: false,
+  currentPlan: null,
   subscription: null,
   isLoading: false,
   error: null,
@@ -57,10 +48,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
     // Skip if no user is provided
     if (!user) {
       set({
-        currentPlanId: null,
-        isLifetimeMember: false,
-        isFreePlan: true,
-        hasActiveSubscription: false,
+        currentPlan: null,
         subscription: null,
         error: null,
         lastFetched: Date.now()
@@ -78,6 +66,8 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       if (result?.data?.success) {
         isLifetimeMember = result.data.isLifetimeMember || false;
         console.log('check user lifetime status result', result);
+      } else {
+        console.warn('check user lifetime status failed');
       }
     } catch (error) {
       console.error('check user lifetime status error:', error);
@@ -85,31 +75,29 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
 
     // Get all available plans
     const plans = getAllPlans();
-    
-    // Skip fetching if user doesn't have a customer ID (except for lifetime members)
-    if (!user.customerId && !isLifetimeMember) {
-      const freePlan = plans.find(plan => plan.isFree);
+    const freePlan = plans.find(plan => plan.isFree);
+    const lifetimePlan = plans.find(plan => plan.isLifetime);
+
+    // If lifetime member, set the lifetime plan
+    if (isLifetimeMember) {
+      console.log('setting lifetime plan for user', user.id);
       set({
-        currentPlanId: freePlan?.id || null,
-        isLifetimeMember: false,
-        isFreePlan: true,
-        hasActiveSubscription: false,
+        currentPlan: lifetimePlan || null,
         subscription: null,
+        isLoading: false,
         error: null,
         lastFetched: Date.now()
       });
       return;
     }
-
-    // If lifetime member, set the lifetime plan
-    if (isLifetimeMember) {
-      const lifetimePlan = plans.find(plan => plan.isLifetime);
+    
+    // Skip fetching if user doesn't have a customer ID (except for lifetime members)
+    if (!user.customerId) {
+      console.log('setting free plan for user', user.id);
       set({
-        currentPlanId: lifetimePlan?.id || null,
-        isLifetimeMember: true,
-        isFreePlan: false,
-        hasActiveSubscription: false,
+        currentPlan: freePlan || null,
         subscription: null,
+        isLoading: false,
         error: null,
         lastFetched: Date.now()
       });
@@ -118,40 +106,32 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
 
     try {
       const result = await getCustomerSubscriptionAction();
-
       if (result?.data?.success) {
         const subscriptionData = result.data.data;
 
         // Set subscription state
         if (subscriptionData) {
-          // Determine if subscription is active
-          const isActive = subscriptionData.status === 'active'
-            || subscriptionData.status === 'trialing';
-
+          const plan = plans.find(p => p.id === subscriptionData.planId) || null;
+          console.log('subscription found, setting plan for user', user.id, plan?.id);
           set({
-            currentPlanId: subscriptionData.planId,
-            isLifetimeMember: false,
-            isFreePlan: false,
-            hasActiveSubscription: isActive,
+            currentPlan: plan,
             subscription: subscriptionData,
+            isLoading: false,
             error: null,
             lastFetched: Date.now()
           });
-        } else {
-          // No subscription found - set to free plan
-          const freePlan = plans.find(plan => plan.isFree);
+        } else { // No subscription found - set to free plan
+          console.log('no subscription found, setting free plan for user', user.id);
           set({
-            currentPlanId: freePlan?.id || null,
-            isLifetimeMember: false,
-            isFreePlan: true,
-            hasActiveSubscription: false,
+            currentPlan: freePlan || null,
             subscription: null,
+            isLoading: false,
             error: null,
             lastFetched: Date.now()
           });
         }
-      } else {
-        // Error fetching subscription
+      } else { // Failed to fetch subscription
+        console.warn('Failed to fetch subscription for user', user.id, result?.data?.error);
         set({
           error: result?.data?.error || 'Failed to fetch payment data',
           isLoading: false,
@@ -175,10 +155,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
    */
   resetState: () => {
     set({
-      currentPlanId: null,
-      isLifetimeMember: false,
-      isFreePlan: true,
-      hasActiveSubscription: false,
+      currentPlan: null,
       subscription: null,
       isLoading: false,
       error: null,

@@ -10,10 +10,7 @@ import { authClient } from '@/lib/auth-client';
  */
 export function usePayment() {
   const { 
-    currentPlanId,
-    isLifetimeMember,
-    isFreePlan,
-    hasActiveSubscription,
+    currentPlan,
     subscription, 
     isLoading, 
     error,
@@ -29,15 +26,15 @@ export function usePayment() {
     const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
 
     if (currentUser && (!lastFetched || lastFetched < fiveMinutesAgo)) {
+      console.log('fetching payment info for user', currentUser.id);
       fetchPayment(currentUser);
+    } else {
+      console.warn('no user or last fetched is less than 5 minutes ago');
     }
   }, [session, lastFetched, fetchPayment]);
 
   return {
-    currentPlanId,
-    isLifetimeMember,
-    isFreePlan,
-    hasActiveSubscription,
+    currentPlan,
     subscription,
     isLoading,
     error,

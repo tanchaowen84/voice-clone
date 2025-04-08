@@ -8,7 +8,9 @@ import { createSafeActionClient } from 'next-safe-action';
 const actionClient = createSafeActionClient();
 
 /**
- * Get customer subscription data - only returns the subscription data
+ * Get customer subscription data
+ * If the user has multiple subscriptions, 
+ * it returns the most recent active or trialing one
  */
 export const getCustomerSubscriptionAction = actionClient
   .action(async () => {
@@ -51,7 +53,7 @@ export const getCustomerSubscriptionAction = actionClient
           subscriptionData = activeSubscription;
         } else if (subscriptions.length > 0) {
           // Otherwise, use the most recent subscription 
-          // first in the list, as they should be sorted by date
+          // first in the list, as they have been sorted by date
           subscriptionData = subscriptions[0];
         }
         console.log('find subscription for customerId:', customerId);

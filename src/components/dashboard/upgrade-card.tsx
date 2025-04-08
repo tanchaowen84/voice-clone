@@ -6,23 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { usePayment } from '@/hooks/use-payment';
 import { LocaleLink } from "@/i18n/navigation";
 import { Routes } from "@/routes";
-import { Session } from "@/lib/auth";
 import { SparklesIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePayment } from '@/hooks/use-payment';
 
-interface UpgradeCardProps {
-  user: Session['user'];
-}
-
-export function UpgradeCard({ user }: UpgradeCardProps) {
+export function UpgradeCard() {
   const t = useTranslations('Dashboard.upgrade');
-  const { isLoading, isLifetimeMember, hasActiveSubscription } = usePayment();
+  const { isLoading, currentPlan, subscription } = usePayment();
 
-  // Don't show the upgrade card if the user has a lifetime membership or an active subscription
-  const isMember = isLifetimeMember || hasActiveSubscription;
+  // Don't show the upgrade card if the user has a lifetime membership or a subscription
+  const isMember = currentPlan?.isLifetime || !!subscription;
+
   if (isLoading || isMember) {
     return null;
   }
