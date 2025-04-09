@@ -1,6 +1,6 @@
 import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, getSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
-import { websiteConfig } from "@/config";
+import { websiteConfig } from "@/config/website";
 
 /**
  * Global payment provider instance

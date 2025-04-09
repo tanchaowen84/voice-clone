@@ -3,7 +3,7 @@ import BlogGrid from '@/components/blog/blog-grid';
 import { BlogToc } from '@/components/blog/blog-toc';
 import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { constructMetadata } from '@/lib/metadata';

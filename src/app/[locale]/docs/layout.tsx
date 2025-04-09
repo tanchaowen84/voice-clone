@@ -1,7 +1,7 @@
 import { XTwitterIcon } from '@/components/icons/x';
 import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { Logo } from '@/components/layout/logo';
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { LOCALE_LIST } from '@/i18n/routing';
 import { docsI18nConfig } from '@/lib/docs/i18n';
 import { source } from '@/lib/docs/source';

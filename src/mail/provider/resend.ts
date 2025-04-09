@@ -1,4 +1,4 @@
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams } from '@/mail/types';
 import { getTemplate } from '@/mail';
 import { Resend } from 'resend';

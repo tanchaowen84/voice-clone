@@ -1,5 +1,5 @@
 import BlogCard, { BlogCardSkeleton } from '@/components/blog/blog-card';
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { Post } from 'content-collections';
 
 interface BlogGridProps {

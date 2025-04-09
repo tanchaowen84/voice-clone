@@ -1,4 +1,4 @@
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/urls';

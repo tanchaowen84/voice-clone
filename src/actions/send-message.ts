@@ -1,6 +1,6 @@
 'use server';
 
-import { websiteConfig } from '@/config';
+import { websiteConfig } from '@/config/website';
 import { sendEmail } from '@/mail';
 import { getLocale } from 'next-intl/server';
 import { createSafeActionClient } from 'next-safe-action';

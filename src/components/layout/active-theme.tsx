@@ -1,6 +1,6 @@
 "use client";
 
-import { websiteConfig } from "@/config";
+import { websiteConfig } from "@/config/website";
 import {
   ReactNode,
   createContext,
