@@ -12,14 +12,14 @@ interface ForgotPasswordProps extends BaseEmailProps {
 }
 
 export function ForgotPassword({ url, name, locale, messages, }: ForgotPasswordProps) {
-  const t = createTranslator({ locale, messages, });
+  const t = createTranslator({ locale, messages, namespace: 'Mail.forgotPassword' });
   
   return (
     <EmailLayout locale={locale} messages={messages}>
-      <Text>{t('Mail.forgotPassword.title', { name })}</Text>
-      <Text>{t('Mail.forgotPassword.body')}</Text>
+      <Text>{t('title', { name })}</Text>
+      <Text>{t('body')}</Text>
       <EmailButton href={url}>
-        {t('Mail.forgotPassword.resetPassword')}
+        {t('resetPassword')}
       </EmailButton>
     </EmailLayout>
   );

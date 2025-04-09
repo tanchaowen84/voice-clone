@@ -32,14 +32,14 @@ export interface SendEmailResult {
 /**
  * Email template types
  */
-export type Template = keyof typeof EmailTemplates;
+export type EmailTemplate = keyof typeof EmailTemplates;
 
 /**
  * Parameters for sending an email using a template
  */
 export interface SendTemplateParams {
   to: string;
-  template: Template;
+  template: EmailTemplate;
   context: Record<string, any>;
   locale?: Locale;
 }
@@ -53,14 +53,6 @@ export interface SendRawEmailParams {
   html: string;
   text?: string;
   locale?: Locale;
-}
-
-/**
- * Mail provider configuration
- */
-export interface MailConfig {
-  defaultFromEmail: string;
-  defaultLocale: Locale;
 }
 
 /**

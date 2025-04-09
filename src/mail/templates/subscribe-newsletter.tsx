@@ -9,14 +9,14 @@ interface SubscribeNewsletterProps extends BaseEmailProps {
 }
 
 export function SubscribeNewsletter({ locale, messages }: SubscribeNewsletterProps) {
-  const t = createTranslator({ locale, messages, });
+  const t = createTranslator({ locale, messages, namespace: 'Mail.subscribeNewsletter' });
 
   return (
     <EmailLayout locale={locale} messages={messages}>
       <Heading className="text-xl">
-        {t('Mail.subscribeNewsletter.subject')}
+        {t('subject')}
       </Heading>
-      <Text>{t('Mail.subscribeNewsletter.body')}</Text>
+      <Text>{t('body')}</Text>
     </EmailLayout>
   );
 }

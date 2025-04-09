@@ -2,7 +2,7 @@ import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import { getMailProvider } from '@/mail';
 import { EmailTemplates } from '@/mail/templates';
-import { SendRawEmailParams, SendTemplateParams, Template } from '@/mail/types';
+import { SendRawEmailParams, SendTemplateParams, EmailTemplate } from '@/mail/types';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';
 
@@ -31,7 +31,7 @@ export async function send(
 /**
  * Get rendered email for given template, context, and locale
  */
-export async function getTemplate<T extends Template>({
+export async function getTemplate<T extends EmailTemplate>({
   template,
   context,
   locale = routing.defaultLocale,

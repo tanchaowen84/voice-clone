@@ -1,11 +1,5 @@
-import { MailProvider, MailConfig, SendTemplateParams, SendRawEmailParams, SendEmailResult, Template } from './types';
 import { ResendProvider } from './provider/resend';
-import { mailConfig } from './config/mail-config';
-
-/**
- * Default mail configuration
- */
-export const defaultMailConfig: MailConfig = mailConfig;
+import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate } from './types';
 
 /**
  * Global mail provider instance
@@ -58,17 +52,13 @@ export const sendRawEmail = async (params: SendRawEmailParams):
 };
 
 // Export from mail.ts
-export { send, getTemplate } from './mail';
+export { getTemplate, send } from './mail';
 
 // Export email templates
 export { EmailTemplates } from './templates';
 
 // Export types for convenience
 export type {
-  MailProvider,
-  MailConfig,
-  SendTemplateParams,
-  SendRawEmailParams,
-  SendEmailResult,
-  Template,
+  MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate as Template
 };
+

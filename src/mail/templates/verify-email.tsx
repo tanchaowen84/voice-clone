@@ -12,13 +12,13 @@ interface VerifyEmailProps extends BaseEmailProps {
 }
 
 export function VerifyEmail({ url, name, locale, messages }: VerifyEmailProps) {
-  const t = createTranslator({ locale, messages, });
+  const t = createTranslator({ locale, messages, namespace: 'Mail.verifyEmail' });
   
   return (
     <EmailLayout locale={locale} messages={messages}>
-      <Text>{t('Mail.verifyEmail.title', { name })}</Text>
-      <Text>{t('Mail.verifyEmail.body')}</Text>
-      <EmailButton href={url}>{t('Mail.verifyEmail.confirmEmail')}</EmailButton>
+      <Text>{t('title', { name })}</Text>
+      <Text>{t('body')}</Text>
+      <EmailButton href={url}>{t('confirmEmail')}</EmailButton>
     </EmailLayout>
   );
 }
