@@ -1,7 +1,7 @@
 'use server';
 
 import { websiteConfig } from '@/config';
-import { send } from '@/mail';
+import { sendEmail } from '@/mail';
 import { getLocale } from 'next-intl/server';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
@@ -41,7 +41,7 @@ export const sendMessageAction = actionClient
       const locale = await getLocale();
 
       // Send message as an email to admin
-      const result = await send({
+      const result = await sendEmail({
         to: websiteConfig.mail.to,
         template: 'contactMessage',
         context: {

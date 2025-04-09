@@ -12,7 +12,7 @@ import { Locale, Messages } from 'next-intl';
  * @param params Email parameters
  * @returns Success status
  */
-export async function send(
+export async function sendEmail(
   params: SendTemplateParams | SendRawEmailParams
 ) {
   const provider = getMailProvider();

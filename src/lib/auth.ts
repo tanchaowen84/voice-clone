@@ -1,7 +1,7 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
-import { send } from '@/mail';
+import { sendEmail } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
@@ -52,7 +52,7 @@ export const auth = betterAuth({
       const locale = getLocaleFromRequest(request);
       const localizedUrl = getUrlWithLocale(url, locale);
 
-      await send({
+      await sendEmail({
         to: user.email,
         template: 'forgotPassword',
         context: {
@@ -71,7 +71,7 @@ export const auth = betterAuth({
       const locale = getLocaleFromRequest(request);
       const localizedUrl = getUrlWithLocale(url, locale);
 
-      await send({
+      await sendEmail({
         to: user.email,
         template: 'verifyEmail',
         context: {

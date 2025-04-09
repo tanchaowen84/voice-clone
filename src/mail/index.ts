@@ -52,7 +52,7 @@ export const sendRawEmail = async (params: SendRawEmailParams):
 };
 
 // Export from mail.ts
-export { getTemplate, send } from './mail';
+export { getTemplate, sendEmail } from './mail';
 
 // Export email templates
 export { EmailTemplates } from './templates';
