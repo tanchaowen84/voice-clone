@@ -3,7 +3,7 @@
 import db from "@/db";
 import { payment } from "@/db/schema";
 import { getSession } from "@/lib/server";
-import { getAllPlans } from "@/payment";
+import { getAllPricePlans } from "@/payment";
 import { PaymentTypes } from "@/payment/types";
 import { and, eq } from "drizzle-orm";
 import { createSafeActionClient } from 'next-safe-action';
@@ -51,7 +51,7 @@ export const getLifetimeStatusAction = actionClient
 
     try {
       // Get lifetime plans
-      const plans = getAllPlans();
+      const plans = getAllPricePlans();
       const lifetimePlanIds = plans
         .filter(plan => plan.isLifetime)
         .map(plan => plan.id);

@@ -1,6 +1,7 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { getPricePlanInfos } from '@/config';
 import { cn } from '@/lib/utils';
 import { PaymentTypes, PlanInterval, PlanIntervals, PricePlan } from '@/payment/types';
 import { useTranslations } from 'next-intl';
@@ -8,7 +9,6 @@ import { useState } from 'react';
 import { PricingCard } from './pricing-card';
 
 interface PricingTableProps {
-  plans: PricePlan[];
   metadata?: Record<string, string>;
   currentPlan?: PricePlan | null;
   className?: string;
@@ -23,7 +23,6 @@ interface PricingTableProps {
  * 3. If a price is disabled, it will not be displayed in the pricing table
  */
 export function PricingTable({
-  plans,
   metadata,
   currentPlan,
   className,
@@ -31,6 +30,10 @@ export function PricingTable({
   const t = useTranslations('PricingPage');
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
 
+  // Get plans either from props or from the config
+  const paymentConfig = getPricePlanInfos();
+  const plans = Object.values(paymentConfig.plans);
+  
   // Current plan ID for comparison
   const currentPlanId = currentPlan?.id || null;
 

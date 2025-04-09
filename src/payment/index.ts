@@ -1,11 +1,6 @@
 import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, getSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
-import { paymentConfig } from "./config/payment-config";
-
-/**
- * Default payment configuration
- */
-export const defaultPaymentConfig: PaymentConfig = paymentConfig;
+import { websiteConfig } from "@/config";
 
 /**
  * Global payment provider instance
@@ -90,15 +85,15 @@ export const getSubscriptions = async (
  * @returns Plan or undefined if not found
  */
 export const getPlanById = (planId: string): PricePlan | undefined => {
-  return defaultPaymentConfig.plans[planId];
+  return websiteConfig.payment.plans[planId];
 };
 
 /**
- * Get all available plans
+ * Get all price plans
  * @returns Array of price plans
  */
-export const getAllPlans = (): PricePlan[] => {
-  return Object.values(defaultPaymentConfig.plans);
+export const getAllPricePlans = (): PricePlan[] => {
+  return Object.values(websiteConfig.payment.plans);
 };
 
 /**
@@ -122,7 +117,7 @@ export const findPriceInPlan = (planId: string, priceId: string): Price | undefi
  * @returns Plan or undefined if not found
  */
 export const findPlanByPriceId = (priceId: string): PricePlan | undefined => {
-  const plans = getAllPlans();
+  const plans = getAllPricePlans();
   for (const plan of plans) {
     const matchingPrice = plan.prices.find(price => price.priceId === priceId);
     if (matchingPrice) {

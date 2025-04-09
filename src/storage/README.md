@@ -67,8 +67,6 @@ STORAGE_REGION=us-east-1
 STORAGE_ACCESS_KEY_ID=your-access-key
 STORAGE_SECRET_ACCESS_KEY=your-secret-key
 STORAGE_BUCKET_NAME=your-bucket-name
-
-# Optional
 STORAGE_ENDPOINT=https://custom-endpoint.com
 STORAGE_PUBLIC_URL=https://cdn.example.com
 STORAGE_FORCE_PATH_STYLE=true

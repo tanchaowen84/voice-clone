@@ -512,6 +512,43 @@
       "button": "Upgrade"
     }
   },
+  "PricePlans": {
+    "free": {
+      "name": "Free",
+      "description": "Basic features for personal use",
+      "features": {
+        "projects": "Up to 3 projects",
+        "storage": "1 GB storage",
+        "analytics": "Basic analytics",
+        "support": "Community support"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Advanced features for professionals",
+      "features": {
+        "projects": "Unlimited projects",
+        "storage": "10 GB storage",
+        "analytics": "Advanced analytics",
+        "support": "Priority support",
+        "domains": "Custom domains",
+        "collaboration": "Team collaboration"
+      }
+    },
+    "lifetime": {
+      "name": "Lifetime",
+      "description": "Premium features with one-time payment",
+      "features": {
+        "proFeatures": "All Pro features",
+        "storage": "100 GB storage",
+        "support": "Dedicated support",
+        "security": "Enterprise-grade security",
+        "integrations": "Advanced integrations",
+        "branding": "Custom branding",
+        "updates": "Lifetime updates"
+      }
+    }
+  },
   "Mail": {
     "common": {
       "team": "{name} Team",

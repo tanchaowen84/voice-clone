@@ -511,6 +511,43 @@
       "button": "升级"
     }
   },
+  "PricePlans": {
+    "free": {
+      "name": "免费版",
+      "description": "适用于个人使用的基本功能",
+      "features": {
+        "projects": "最多3个项目",
+        "storage": "1GB存储空间",
+        "analytics": "基础分析功能",
+        "support": "社区支持"
+      }
+    },
+    "pro": {
+      "name": "专业版",
+      "description": "专业人士的高级功能",
+      "features": {
+        "projects": "无限项目",
+        "storage": "10GB存储空间",
+        "analytics": "高级分析功能",
+        "support": "优先支持",
+        "domains": "自定义域名",
+        "collaboration": "团队协作"
+      }
+    },
+    "lifetime": {
+      "name": "终身版",
+      "description": "一次性付款获得所有高级功能",
+      "features": {
+        "proFeatures": "所有专业版功能",
+        "storage": "100GB存储空间",
+        "support": "专属支持",
+        "security": "企业级安全",
+        "integrations": "高级集成",
+        "branding": "自定义品牌",
+        "updates": "终身更新"
+      }
+    }
+  },
   "Mail": {
     "common": {
       "team": "{name} 团队",

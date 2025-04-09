@@ -182,7 +182,7 @@ export function PricingCard({
 
         {/* show features of this plan */}
         <ul className="list-outside space-y-4 text-sm">
-          {plan.features.map((feature, i) => (
+          {plan.features?.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
               <CheckCircleIcon className="size-4 text-green-500 dark:text-green-400" />
               <span>{feature}</span>

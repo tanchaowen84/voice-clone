@@ -61,9 +61,9 @@ export interface Price {
  */
 export interface PricePlan {
   id: string;                        // Unique identifier for the plan
-  name: string;                      // Display name of the plan
-  description: string;               // Description of the plan features
-  features: string[];                // List of features included in this plan
+  name?: string;                      // Display name of the plan
+  description?: string;               // Description of the plan features
+  features?: string[];                // List of features included in this plan
   prices: Price[];                   // Available prices for this plan
   isFree: boolean;                   // Whether this is a free plan
   isLifetime: boolean;               // Whether this is a lifetime plan
@@ -76,7 +76,6 @@ export interface PricePlan {
  */
 export interface PaymentConfig {
   plans: Record<string, PricePlan>;  // Plans indexed by ID
-  defaultCurrency: string;           // Default currency
 }
 
 /**

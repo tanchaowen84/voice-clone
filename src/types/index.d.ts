@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { PaymentConfig } from '@/payment/types';
 
 /**
  * website config, without translations
@@ -30,6 +31,7 @@ export type WebsiteConfig = {
     instagram?: string;
     tiktok?: string;
   };
+  payment: PaymentConfig;
 };
 
 /**

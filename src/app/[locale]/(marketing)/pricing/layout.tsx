@@ -1,7 +1,7 @@
 import { HeaderSection } from '@/components/layout/header-section';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
-import { getAllPlans } from '@/payment';
+import { getAllPricePlans } from '@/payment';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -29,7 +29,7 @@ export default async function PricingPageLayout({
   const t = await getTranslations('PricingPage');
 
   // Get all plans as an array
-  const plans = getAllPlans();
+  const plans = getAllPricePlans();
 
   return (
     <div className="mb-16">

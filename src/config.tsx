@@ -5,6 +5,11 @@ import { InstagramIcon } from '@/components/icons/instagram';
 import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { YouTubeIcon } from '@/components/icons/youtube';
+import {
+  PaymentConfig,
+  PaymentTypes,
+  PlanIntervals
+} from '@/payment/types';
 import { Routes } from '@/routes';
 import { MenuItem, NestedMenuItem, WebsiteConfig } from '@/types';
 import {
@@ -73,6 +78,51 @@ export const websiteConfig: WebsiteConfig = {
     facebook: 'https://facebook.com/mksaas',
     instagram: 'https://instagram.com/mksaas',
     tiktok: 'https://tiktok.com/@mksaas',
+  },
+  payment: {
+    plans: {
+      free: {
+        id: "free",
+        prices: [],
+        isFree: true,
+        isLifetime: false,
+      },
+      pro: {
+        id: "pro",
+        prices: [
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
+            amount: 990,
+            currency: "USD",
+            interval: PlanIntervals.MONTH,
+          },
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
+            amount: 9900,
+            currency: "USD",
+            interval: PlanIntervals.YEAR,
+          },
+        ],
+        isFree: false,
+        isLifetime: false,
+        recommended: true,
+      },
+      lifetime: {
+        id: "lifetime",
+        prices: [
+          {
+            type: PaymentTypes.ONE_TIME,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
+            amount: 19900,
+            currency: "USD",
+          },
+        ],
+        isFree: false,
+        isLifetime: true,
+      }
+    }
   }
 };
 
@@ -562,4 +612,62 @@ export function getSocialLinks(): MenuItem[] {
   }
 
   return socialLinks;
+}
+
+/**
+ * Get price plans with translations for client components
+ * 
+ * NOTICE: This function should only be used in client components
+ *
+ * @returns The price plans with translated content
+ */
+export function getPricePlanInfos(): PaymentConfig {
+  const t = useTranslations('PricePlans');
+  const { payment } = websiteConfig;
+
+  // Create a deep clone of the payment config to avoid modifying the original
+  const paymentConfig: PaymentConfig = {
+    plans: JSON.parse(JSON.stringify(payment.plans))
+  };
+
+  // Add translated content to each plan
+  if (paymentConfig.plans.free) {
+    paymentConfig.plans.free.name = t('free.name');
+    paymentConfig.plans.free.description = t('free.description');
+    paymentConfig.plans.free.features = [
+      t('free.features.projects'),
+      t('free.features.analytics'),
+      t('free.features.support'),
+      t('free.features.storage')
+    ];
+  }
+
+  if (paymentConfig.plans.pro) {
+    paymentConfig.plans.pro.name = t('pro.name');
+    paymentConfig.plans.pro.description = t('pro.description');
+    paymentConfig.plans.pro.features = [
+      t('pro.features.projects'),
+      t('pro.features.analytics'),
+      t('pro.features.support'),
+      t('pro.features.storage'),
+      t('pro.features.domains'),
+      t('pro.features.collaboration')
+    ];
+  }
+
+  if (paymentConfig.plans.lifetime) {
+    paymentConfig.plans.lifetime.name = t('lifetime.name');
+    paymentConfig.plans.lifetime.description = t('lifetime.description');
+    paymentConfig.plans.lifetime.features = [
+      t('lifetime.features.proFeatures'),
+      t('lifetime.features.security'),
+      t('lifetime.features.support'),
+      t('lifetime.features.storage'),
+      t('lifetime.features.integrations'),
+      t('lifetime.features.branding'),
+      t('lifetime.features.updates')
+    ];
+  }
+
+  return paymentConfig;
 }
