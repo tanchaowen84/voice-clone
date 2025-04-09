@@ -1,7 +1,7 @@
 import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import { getMailProvider } from '@/mail';
-import { EmailTemplates } from '@/mail/emails';
+import { EmailTemplates } from '@/mail/templates';
 import { SendRawEmailParams, SendTemplateParams, Template } from '@/mail/types';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';

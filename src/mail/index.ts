@@ -61,7 +61,7 @@ export const sendRawEmail = async (params: SendRawEmailParams):
 export { send, getTemplate } from './mail';
 
 // Export email templates
-export { EmailTemplates } from './emails';
+export { EmailTemplates } from './templates';
 
 // Export types for convenience
 export type {
