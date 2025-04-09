@@ -8,7 +8,7 @@ import {
   CheckoutResult,
   CreateCheckoutParams,
   CreatePortalParams,
-  getCustomerSubscriptionsParams,
+  getSubscriptionsParams,
   PaymentProvider,
   PaymentStatus,
   PaymentTypes,
@@ -47,12 +47,6 @@ export class StripeProvider implements PaymentProvider {
 
   /**
    * Create a customer in Stripe if not exists
-   * 
-   * NOTICE: if you want to delete user in database,
-   * please delete customer in Stripe as well,
-   * otherwise, the user wont have a customer id in database,
-   * and will not be able to make payments.
-   * 
    * @param email Customer email
    * @returns Stripe customer ID
    */
@@ -66,7 +60,17 @@ export class StripeProvider implements PaymentProvider {
 
       // Find existing customer
       if (customers.data && customers.data.length > 0) {
-        return customers.data[0].id;
+        const customerId = customers.data[0].id;
+
+        // Find user id by customer id
+        const userId = await this.findUserIdByCustomerId(customerId);
+        // user does not exist, update user with customer id
+        // in case you deleted user in database, but forgot to delete customer in Stripe
+        if (!userId) {
+          console.log(`User ${email} does not exist, update with customer id ${customerId}`);
+          await this.updateUserWithCustomerId(customerId, email);
+        }
+        return customerId;
       }
 
       // Create new customer
@@ -202,6 +206,10 @@ export class StripeProvider implements PaymentProvider {
         checkoutParams.payment_intent_data = {
           metadata: customMetadata,
         };
+        // Automatically create an invoice for the one-time payment
+        checkoutParams.invoice_creation = {
+          enabled: true,
+        };
       }
 
       // Add subscription data for recurring payments
@@ -255,19 +263,19 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * List customer subscriptions
-   * @param params Parameters for listing customer subscriptions
+   * Get subscriptions
+   * @param params Parameters for getting subscriptions
    * @returns Array of subscription objects
    */
-  public async getCustomerSubscriptions(params: getCustomerSubscriptionsParams): Promise<Subscription[]> {
-    const { customerId } = params;
+  public async getSubscriptions(params: getSubscriptionsParams): Promise<Subscription[]> {
+    const { userId } = params;
 
     try {
       // Build query to fetch subscriptions from database
       const subscriptions = await db
         .select()
         .from(payment)
-        .where(eq(payment.customerId, customerId))
+        .where(eq(payment.userId, userId))
         .orderBy(desc(payment.createdAt)); // Sort by creation date, newest first
 
       // Map database records to our subscription model

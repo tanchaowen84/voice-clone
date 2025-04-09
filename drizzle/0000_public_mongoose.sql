@@ -21,7 +21,7 @@ CREATE TABLE "payment" (
 	"type" text NOT NULL,
 	"interval" text,
 	"user_id" text NOT NULL,
-	"customer_id" text,
+	"customer_id" text NOT NULL,
 	"subscription_id" text,
 	"status" text NOT NULL,
 	"period_start" timestamp,

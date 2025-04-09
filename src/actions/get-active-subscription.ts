@@ -1,42 +1,52 @@
 'use server';
 
 import { getSession } from "@/lib/server";
-import { listCustomerSubscriptions } from "@/payment";
+import { getSubscriptions } from "@/payment";
 import { createSafeActionClient } from 'next-safe-action';
+import { z } from "zod";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
 
+// Input schema
+const schema = z.object({
+  userId: z.string().min(1, { message: 'User ID is required' }),
+});
+
 /**
- * Get customer subscription data
+ * Get active subscription data
+ * 
  * If the user has multiple subscriptions, 
  * it returns the most recent active or trialing one
  */
-export const getCustomerSubscriptionAction = actionClient
-  .action(async () => {
+export const getActiveSubscriptionAction = actionClient
+  .schema(schema)
+  .action(async ({ parsedInput }) => {
+    const { userId } = parsedInput;
+
+    // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
+      console.warn(`unauthorized request to get active subscription for user ${userId}`);
       return {
         success: false,
         error: 'Unauthorized',
       };
     }
 
-    try {
-      // Get the effective customer ID from session
-      const customerId = session.user.customerId;
-      // const subscriptionId = session.user.subscriptionId;
-      if (!customerId) {
-        console.warn('get user subscription, no customerId');
-        return {
-          success: true,
-          data: null,
-        };
-      }
+    // Only allow users to check their own status unless they're admins
+    if (session.user.id !== userId && session.user.role !== 'admin') {
+      console.warn(`current user ${session.user.id} is not authorized to get active subscription for user ${userId}`);
+      return {
+        success: false,
+        error: 'Not authorized to do this action',
+      };
+    }
 
-      // Find the customer's most recent active subscription
-      const subscriptions = await listCustomerSubscriptions({
-        customerId: customerId
+    try {
+      // Find the user's most recent active subscription
+      const subscriptions = await getSubscriptions({
+        userId: session.user.id
       });
       // console.log('get user subscriptions:', subscriptions);
 
@@ -56,9 +66,9 @@ export const getCustomerSubscriptionAction = actionClient
           // first in the list, as they have been sorted by date
           subscriptionData = subscriptions[0];
         }
-        console.log('find subscription for customerId:', customerId);
+        console.log('find subscription for userId:', session.user.id);
       } else {
-        console.log('no subscriptions found for customerId:', customerId);
+        console.log('no subscriptions found for userId:', session.user.id);
       }
 
       return {

@@ -149,10 +149,10 @@ export interface PortalResult {
 }
 
 /**
- * Parameters for listing customer subscriptions
+ * Parameters for getting customer subscriptions
  */
-export interface getCustomerSubscriptionsParams {
-  customerId: string;
+export interface getSubscriptionsParams {
+  userId: string;
 }
 
 /**
@@ -172,7 +172,7 @@ export interface PaymentProvider {
   /**
    * Get customer subscriptions
    */
-  getCustomerSubscriptions(params: getCustomerSubscriptionsParams): Promise<Subscription[]>;
+  getSubscriptions(params: getSubscriptionsParams): Promise<Subscription[]>;
 
   /**
    * Handle webhook events

@@ -2,13 +2,13 @@
 
 import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { Button } from '@/components/ui/button';
-import { authClient } from '@/lib/auth-client';
 import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 interface CheckoutButtonProps {
+  userId: string;
   planId: string;
   priceId: string;
   metadata?: Record<string, string>;
@@ -27,6 +27,7 @@ interface CheckoutButtonProps {
  * NOTICE: Login is required when using this button.
  */
 export function CheckoutButton({
+  userId,
   planId,
   priceId,
   metadata,
@@ -37,7 +38,6 @@ export function CheckoutButton({
 }: CheckoutButtonProps) {
   const t = useTranslations('PricingPage.CheckoutButton');
   const [isLoading, setIsLoading] = useState(false);
-  const { refetch } = authClient.useSession();
 
   const handleClick = async () => {
     try {
@@ -45,6 +45,7 @@ export function CheckoutButton({
 
       // Create checkout session using server action
       const result = await createCheckoutAction({
+        userId,
         planId,
         priceId,
         metadata,
@@ -52,11 +53,6 @@ export function CheckoutButton({
 
       // Redirect to checkout
       if (result && result.data?.success && result.data.data?.url) {
-        // TODO: Always refetch session to ensure we have the latest user data
-        if (refetch) {
-          await refetch();
-        }
-        
         // redirect to checkout page
         window.location.href = result.data.data?.url;
       } else {

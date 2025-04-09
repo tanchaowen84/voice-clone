@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 interface CustomerPortalButtonProps {
-  customerId: string;
+  userId: string;
   returnUrl?: string;
   variant?: 'default' | 'outline' | 'destructive' | 'secondary' | 'ghost' | 'link' | null;
   size?: 'default' | 'sm' | 'lg' | 'icon' | null;
@@ -22,9 +22,11 @@ interface CustomerPortalButtonProps {
  * 
  * This client component opens the Stripe customer portal
  * It's used to let customers manage their billing, subscriptions, and payment methods
+ * 
+ * NOTICE: Login is required when using this button.
  */
 export function CustomerPortalButton({
-  customerId,
+  userId,
   returnUrl,
   variant = 'default',
   size = 'default',
@@ -40,7 +42,7 @@ export function CustomerPortalButton({
 
       // Create customer portal session using server action
       const result = await createPortalAction({
-        customerId,
+        userId,
         returnUrl,
       });
 

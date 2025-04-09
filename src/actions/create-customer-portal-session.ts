@@ -1,9 +1,12 @@
 'use server';
 
+import db from "@/db";
+import { user } from "@/db/schema";
 import { getSession } from "@/lib/server";
 import { getBaseUrlWithLocale } from "@/lib/urls/urls";
 import { createCustomerPortal } from "@/payment";
 import { CreatePortalParams } from "@/payment/types";
+import { eq } from "drizzle-orm";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
@@ -13,7 +16,7 @@ const actionClient = createSafeActionClient();
 
 // Portal schema for validation
 const portalSchema = z.object({
-  customerId: z.string().min(1, { message: 'Customer ID is required' }),
+  userId: z.string().min(1, { message: 'User ID is required' }),
   returnUrl: z.string().url({ message: 'Return URL must be a valid URL' }).optional(),
 });
 
@@ -23,16 +26,42 @@ const portalSchema = z.object({
 export const createPortalAction = actionClient
   .schema(portalSchema)
   .action(async ({ parsedInput }) => {
+    const { userId, returnUrl } = parsedInput;
+    
+    // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
+      console.warn(`unauthorized request to create portal session for user ${userId}`);
       return {
         success: false,
         error: 'Unauthorized',
       };
     }
 
+    // Only allow users to create their own portal session
+    if (session.user.id !== userId) {
+      console.warn(`current user ${session.user.id} is not authorized to create portal session for user ${userId}`);
+      return {
+        success: false,
+        error: 'Not authorized to do this action',
+      };
+    }
+
     try {
-      const { customerId, returnUrl } = parsedInput;
+      // Get the user's customer ID from the database
+      const customerResult = await db
+        .select({ customerId: user.customerId })
+        .from(user)
+        .where(eq(user.id, session.user.id))
+        .limit(1);
+
+      if (customerResult.length <= 0 || !customerResult[0].customerId) {
+        console.error(`No customer found for user ${session.user.id}`);
+        return {
+          success: false,
+          error: 'No customer found for user',
+        };
+      }
 
       // Get the current locale from the request
       const locale = await getLocale();
@@ -41,7 +70,7 @@ export const createPortalAction = actionClient
       const baseUrlWithLocale = getBaseUrlWithLocale(locale);
       const returnUrlWithLocale = returnUrl || `${baseUrlWithLocale}/settings/billing`;
       const params: CreatePortalParams = {
-        customerId,
+        customerId: customerResult[0].customerId,
         returnUrl: returnUrlWithLocale,
         locale
       };

@@ -19,7 +19,7 @@ export default function BillingCard() {
 
   const {
     isLoading: isLoadingPayment,
-    error: paymentError,
+    error: loadPaymentError,
     subscription,
     currentPlan,
     refetch
@@ -72,7 +72,7 @@ export default function BillingCard() {
   }
 
   // Render error state
-  if (paymentError) {
+  if (loadPaymentError) {
     return (
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
@@ -81,7 +81,7 @@ export default function BillingCard() {
             <CardDescription>{t('currentPlan.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-destructive text-sm">{paymentError}</div>
+            <div className="text-destructive text-sm">{loadPaymentError}</div>
           </CardContent>
           <CardFooter>
             <Button
@@ -115,7 +115,7 @@ export default function BillingCard() {
             <div className="text-3xl font-medium">
               {currentPlan?.name}
             </div>
-            <Badge variant={isFreePlan || isLifetimeMember ? 'outline' : 'default'}>
+            <Badge variant='outline'>
               {isLifetimeMember
                 ? t('status.lifetime')
                 : subscription?.status === 'active'
@@ -178,9 +178,9 @@ export default function BillingCard() {
             )}
 
             {/* user is lifetime member, show manage billing button */}
-            {isLifetimeMember && currentUser?.customerId && (
+            {isLifetimeMember && currentUser && (
               <CustomerPortalButton
-                customerId={currentUser.customerId}
+                userId={currentUser.id}
                 className=""
               >
                 {t('manageBilling')}
@@ -188,9 +188,9 @@ export default function BillingCard() {
             )}
 
             {/* user has subscription, show manage subscription button */}
-            {subscription && currentUser?.customerId && (
+            {subscription && currentUser && (
               <CustomerPortalButton
-                customerId={currentUser.customerId}
+                userId={currentUser.id}
                 className=""
               >
                 {t('manageSubscription')}

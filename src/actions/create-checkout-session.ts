@@ -14,6 +14,7 @@ const actionClient = createSafeActionClient();
 // Checkout schema for validation
 // metadata is optional, and may contain referral information if you need
 const checkoutSchema = z.object({
+  userId: z.string().min(1, { message: 'User ID is required' }),
   planId: z.string().min(1, { message: 'Plan ID is required' }),
   priceId: z.string().min(1, { message: 'Price ID is required' }),
   metadata: z.record(z.string()).optional(),
@@ -25,18 +26,28 @@ const checkoutSchema = z.object({
 export const createCheckoutAction = actionClient
   .schema(checkoutSchema)
   .action(async ({ parsedInput }) => {
-    // request the user to login before checkout
+    const { userId, planId, priceId, metadata } = parsedInput;
+
+    // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
+      console.warn(`unauthorized request to create checkout session for user ${userId}`);
       return {
         success: false,
         error: 'Unauthorized',
       };
     }
 
-    try {
-      const { planId, priceId, metadata } = parsedInput;
+    // Only allow users to create their own checkout session
+    if (session.user.id !== userId) {
+      console.warn(`current user ${session.user.id} is not authorized to create checkout session for user ${userId}`);
+      return {
+        success: false,
+        error: 'Not authorized to do this action',
+      };
+    }
 
+    try {
       // Get the current locale from the request
       const locale = await getLocale();
 

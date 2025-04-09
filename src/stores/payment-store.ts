@@ -1,5 +1,5 @@
-import { getCustomerSubscriptionAction } from '@/actions/get-customer-subscription';
-import { getUserLifetimeStatusAction } from '@/actions/get-user-lifetime-status';
+import { getActiveSubscriptionAction } from '@/actions/get-active-subscription';
+import { getLifetimeStatusAction } from '@/actions/get-lifetime-status';
 import { Session } from '@/lib/auth';
 import { getAllPlans } from '@/payment';
 import { PricePlan, Subscription } from '@/payment/types';
@@ -55,28 +55,36 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
     // Fetch subscription data
     set({ isLoading: true, error: null });
 
-    // Check if user is a lifetime member directly from the database
-    let isLifetimeMember = false;
-    try {
-      const result = await getUserLifetimeStatusAction({ userId: user.id });
-      if (result?.data?.success) {
-        isLifetimeMember = result.data.isLifetimeMember || false;
-        console.log('check user lifetime status result', result);
-      } else {
-        console.warn('check user lifetime status failed');
-      }
-    } catch (error) {
-      console.error('check user lifetime status error:', error);
-    }
-
     // Get all available plans
     const plans = getAllPlans();
     const freePlan = plans.find(plan => plan.isFree);
     const lifetimePlan = plans.find(plan => plan.isLifetime);
 
+    // Check if user is a lifetime member directly from the database
+    let isLifetimeMember = false;
+    try {
+      const result = await getLifetimeStatusAction({ userId: user.id });
+      if (result?.data?.success) {
+        isLifetimeMember = result.data.isLifetimeMember || false;
+        console.log('get lifetime status result', result);
+      } else {
+        console.warn('get lifetime status failed', result?.data?.error);
+        // set({
+        //   error: result?.data?.error || 'Failed to fetch payment data',
+        //   isLoading: false
+        // });
+      }
+    } catch (error) {
+      console.error('get lifetime status error:', error);
+      // set({
+      //   error: 'Failed to fetch payment data',
+      //   isLoading: false
+      // });
+    }
+
     // If lifetime member, set the lifetime plan
     if (isLifetimeMember) {
-      console.log('setting lifetime plan for user', user.id);
+      console.log('set lifetime plan for user', user.id);
       set({
         currentPlan: lifetimePlan || null,
         subscription: null,
@@ -86,30 +94,19 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       return;
     }
 
-    // Skip fetching if user doesn't have a customer ID (except for lifetime members)
-    if (!user.customerId) {
-      console.log('setting free plan for user', user.id);
-      set({
-        currentPlan: freePlan || null,
-        subscription: null,
-        isLoading: false,
-        error: null
-      });
-      return;
-    }
-
     try {
-      const result = await getCustomerSubscriptionAction();
+      // Check if user has an active subscription
+      const result = await getActiveSubscriptionAction({ userId: user.id });
       if (result?.data?.success) {
-        const subscriptionData = result.data.data;
+        const activeSubscription = result.data.data;
 
         // Set subscription state
-        if (subscriptionData) {
-          const plan = plans.find(p => p.id === subscriptionData.planId) || null;
+        if (activeSubscription) {
+          const plan = plans.find(p => p.id === activeSubscription.planId) || null;
           console.log('subscription found, setting plan for user', user.id, plan?.id);
           set({
             currentPlan: plan,
-            subscription: subscriptionData,
+            subscription: activeSubscription,
             isLoading: false,
             error: null
           });
@@ -123,14 +120,14 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
           });
         }
       } else { // Failed to fetch subscription
-        console.warn('Failed to fetch subscription for user', user.id, result?.data?.error);
+        console.error('fetch subscription for user failed', result?.data?.error);
         set({
           error: result?.data?.error || 'Failed to fetch payment data',
           isLoading: false
         });
       }
     } catch (error) {
-      console.error('Fetch payment data error:', error);
+      console.error('fetch payment data error:', error);
       set({
         error: 'Failed to fetch payment data',
         isLoading: false

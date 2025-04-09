@@ -14,7 +14,7 @@ const actionClient = createSafeActionClient();
 
 // Input schema
 const schema = z.object({
-  userId: z.string(),
+  userId: z.string().min(1, { message: 'User ID is required' }),
 });
 
 /**
@@ -25,7 +25,7 @@ const schema = z.object({
  * in order to do this, you have to update the logic to check the lifetime status,
  * for example, just check the planId is `lifetime` or not.
  */
-export const getUserLifetimeStatusAction = actionClient
+export const getLifetimeStatusAction = actionClient
   .schema(schema)
   .action(async ({ parsedInput }) => {
     const { userId } = parsedInput;
@@ -33,6 +33,7 @@ export const getUserLifetimeStatusAction = actionClient
     // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
+      console.warn(`unauthorized request to get lifetime status for user ${userId}`);
       return {
         success: false,
         error: 'Unauthorized',
@@ -41,9 +42,10 @@ export const getUserLifetimeStatusAction = actionClient
 
     // Only allow users to check their own status unless they're admins
     if (session.user.id !== userId && session.user.role !== 'admin') {
+      console.warn(`current user ${session.user.id} is not authorized to get lifetime status for user ${userId}`);
       return {
         success: false,
-        error: 'Not authorized to view this user data',
+        error: 'Not authorized to do this action',
       };
     }
 

@@ -9,6 +9,7 @@
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "docs": "content-collections build",
     "email": "email dev --dir src/mail/emails --port 3333"
