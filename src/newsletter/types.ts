@@ -25,11 +25,3 @@ export interface NewsletterProvider {
   checkSubscribeStatus: CheckSubscribeStatusHandler;
   getProviderName(): string;
 }
-
-export interface NewsletterConfig {
-  provider?: string;
-  resend?: {
-    apiKey: string;
-    audienceId: string;
-  };
-}

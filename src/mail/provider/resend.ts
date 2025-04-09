@@ -28,6 +28,14 @@ export class ResendProvider implements MailProvider {
   }
 
   /**
+   * Get the provider name
+   * @returns Provider name
+   */
+  public getProviderName(): string {
+    return 'resend';
+  }
+
+  /**
    * Send an email using a template
    * @param params Parameters for sending a templated email
    * @returns Send result
@@ -103,13 +111,5 @@ export class ResendProvider implements MailProvider {
         error,
       };
     }
-  }
-
-  /**
-   * Get the provider name
-   * @returns Provider name
-   */
-  public getProviderName(): string {
-    return 'resend';
   }
 }

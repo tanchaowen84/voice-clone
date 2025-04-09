@@ -2,6 +2,14 @@
 
 This module provides functionality for managing newsletter subscriptions using various email service providers. Currently, it supports [Resend](https://resend.com) for handling newsletter subscriptions.
 
+## Structure
+
+The newsletter system is designed with the following components:
+
+- **Provider Interface**: A common interface for newsletter providers in `types.ts`
+- **Providers**: Implementations for different newsletter service providers
+- **Configuration**: Configuration for newsletter defaults and settings
+
 ## Features
 
 - Subscribe users to newsletters
@@ -13,7 +21,7 @@ This module provides functionality for managing newsletter subscriptions using v
 ## Basic Usage
 
 ```typescript
-import { subscribe, unsubscribe, isSubscribed } from '@/src/newsletter';
+import { subscribe, unsubscribe, isSubscribed } from '@/newsletter';
 
 // Subscribe a user to the newsletter
 const success = await subscribe('user@example.com');
@@ -38,15 +46,10 @@ RESEND_AUDIENCE_ID=your-audience-id
 Or you can configure it programmatically:
 
 ```typescript
-import { initializeNewsletterProvider } from '@/src/newsletter';
+import { initializeNewsletterProvider } from '@/newsletter';
 
 // Configure with Resend
-initializeNewsletterProvider({
-  resend: {
-    apiKey: 'your-api-key',
-    audienceId: 'your-audience-id'
-  }
-});
+initializeNewsletterProvider();
 ```
 
 ## Advanced Usage
@@ -56,7 +59,7 @@ initializeNewsletterProvider({
 If you need more control, you can interact with the newsletter provider directly:
 
 ```typescript
-import { getNewsletterProvider } from '@/src/newsletter';
+import { getNewsletterProvider } from '@/newsletter';
 
 const provider = getNewsletterProvider();
 
@@ -64,32 +67,12 @@ const provider = getNewsletterProvider();
 const result = await provider.subscribe({ email: 'user@example.com' });
 ```
 
-### Creating a Provider Instance Manually
-
-You can create a provider instance directly without configuring the global instance:
-
-```typescript
-import { createNewsletterProvider, ResendNewsletterProvider } from '@/src/newsletter';
-
-// Using the factory function
-const resendProvider = createNewsletterProvider('resend', {
-  apiKey: 'your-api-key',
-  audienceId: 'your-audience-id'
-});
-
-// Or creating an instance directly
-const manualProvider = new ResendNewsletterProvider(
-  'your-api-key',
-  'your-audience-id'
-);
-```
-
 ### Using a Custom Provider Implementation
 
 You can create and use your own newsletter provider implementation:
 
 ```typescript
-import { NewsletterProvider, SubscribeNewsletterProps } from '@/src/newsletter';
+import { NewsletterProvider, SubscribeNewsletterProps } from '@/newsletter';
 
 class CustomNewsletterProvider implements NewsletterProvider {
   async subscribe(params: SubscribeNewsletterProps): Promise<boolean> {
@@ -128,8 +111,7 @@ const result = await customProvider.subscribe({ email: 'user@example.com' });
 ### Provider Management
 
 - `getNewsletterProvider()`: Get the configured newsletter provider instance
-- `initializeNewsletterProvider(config?)`: Initialize the newsletter provider with specific options
-- `createNewsletterProvider(type, config)`: Create a new provider instance of the specified type
+- `initializeNewsletterProvider()`: Initialize the newsletter provider
 
 ### Provider Interface
 
@@ -142,7 +124,6 @@ The `NewsletterProvider` interface defines the following methods:
 
 ### Types
 
-- `SubscribeNewsletterProps`: Parameters for subscribing a user
-- `UnsubscribeNewsletterProps`: Parameters for unsubscribing a user
-- `CheckSubscribeStatusProps`: Parameters for checking subscription status
-- `NewsletterConfig`: Configuration options for the newsletter module 
+- `SubscribeNewsletterParams`: Parameters for subscribing a user
+- `UnsubscribeNewsletterParams`: Parameters for unsubscribing a user
+- `CheckSubscribeStatusParams`: Parameters for checking subscription status

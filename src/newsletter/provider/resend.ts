@@ -8,15 +8,31 @@ export class ResendNewsletterProvider implements NewsletterProvider {
   private resend: Resend;
   private audienceId: string;
 
-  constructor(apiKey: string, audienceId: string) {
-    this.resend = new Resend(apiKey);
-    this.audienceId = audienceId;
+  constructor() {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY environment variable is not set.');
+    }
+    if (!process.env.RESEND_AUDIENCE_ID) {
+      throw new Error('RESEND_AUDIENCE_ID environment variable is not set.');
+    }
+
+    this.resend = new Resend(process.env.RESEND_API_KEY);
+    this.audienceId = process.env.RESEND_AUDIENCE_ID;
   }
 
-  getProviderName(): string {
+  /**
+   * Get the provider name
+   * @returns Provider name
+   */
+  public getProviderName(): string {
     return 'Resend';
   }
 
+  /**
+   * Subscribe a user to the newsletter
+   * @param email The email address to subscribe
+   * @returns True if the subscription was successful, false otherwise
+   */
   async subscribe({ email }: SubscribeNewsletterParams): Promise<boolean> {
     try {
       // First, list all contacts to find the one with the matching email
@@ -43,7 +59,7 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
-        }        
+        }
       }
 
       // If the contact already exists, update it
@@ -68,6 +84,11 @@ export class ResendNewsletterProvider implements NewsletterProvider {
     }
   }
 
+  /**
+   * Unsubscribe a user from the newsletter
+   * @param email The email address to unsubscribe
+   * @returns True if the unsubscription was successful, false otherwise
+   */
   async unsubscribe({ email }: UnsubscribeNewsletterParams): Promise<boolean> {
     try {
       const result = await this.resend.contacts.update({
@@ -89,6 +110,11 @@ export class ResendNewsletterProvider implements NewsletterProvider {
     }
   }
 
+  /**
+   * Check if a user is subscribed to the newsletter
+   * @param email The email address to check
+   * @returns True if the user is subscribed, false otherwise
+   */
   async checkSubscribeStatus({ email }: CheckSubscribeStatusParams): Promise<boolean> {
     try {
       // First, list all contacts to find the one with the matching email

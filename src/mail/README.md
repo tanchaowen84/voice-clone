@@ -6,8 +6,8 @@ This module provides email functionality for the application. It supports sendin
 
 The email system is designed with the following components:
 
-- **Provider Interface**: A common interface for email providers
-- **Email Templates**: React-based email templates for different purposes
+- **Provider Interface**: A common interface for email providers in `types.ts`
+- **Email Templates**: React-based email templates for different purposes in the `templates` directory
 - **Configuration**: Configuration for email defaults and settings
 
 ## Usage
@@ -40,13 +40,13 @@ await sendEmail({
 ### Using the Mail Provider Directly
 
 ```typescript
-import { getMailProvider, sendTemplate, sendRawEmail } from '@/mail';
+import { getMailProvider } from '@/mail';
 
 // Get the provider
 const provider = getMailProvider();
 
 // Send template email
-const result = await sendTemplate({
+const result = await provider.sendTemplate({
   to: 'user@example.com',
   template: 'welcomeEmail',
   context: {
@@ -62,7 +62,7 @@ if (result.success) {
 }
 
 // Send raw email
-await sendRawEmail({
+await provider.sendRawEmail({
   to: 'user@example.com',
   subject: 'Raw email example',
   html: '<p>This is a raw email</p>',
@@ -84,7 +84,7 @@ Email templates are React components stored in the `templates` directory. Each t
 
 1. Create a React component in the `templates` directory
 2. Make sure it accepts `BaseEmailProps` plus any specific props
-3. Add it to the `EmailTemplates` object in `index.ts`
+3. Add it to the `EmailTemplates` interface in `types.ts`
 4. Add corresponding subject translations in the i18n messages
 
 Example:
@@ -112,15 +112,13 @@ export function MyNewEmail({ username, messages, locale }: MyNewEmailProps) {
 }
 ```
 
-Then add it to `index.ts`:
+Then update the `types.ts` file to include your new template:
 
 ```typescript
-import { MyNewEmail } from './templates/my-new-email';
-
-export const EmailTemplates = {
+export interface EmailTemplates {
   // ... existing templates
-  myNewEmail: MyNewEmail,
-} as const;
+  myNewEmail: React.ComponentType<MyNewEmailProps>;
+}
 ```
 
 ## Configuration

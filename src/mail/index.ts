@@ -1,25 +1,14 @@
-import { ResendProvider } from './provider/resend';
-import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate, EmailTemplates } from './types';
 import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import { render } from '@react-email/render';
 import { Locale, Messages } from 'next-intl';
+import { ResendProvider } from './provider/resend';
+import { EmailTemplate, EmailTemplates, MailProvider, SendRawEmailParams, SendTemplateParams } from './types';
 
 /**
  * Global mail provider instance
  */
 let mailProvider: MailProvider | null = null;
-
-/**
- * Initialize the mail provider
- * @returns initialized mail provider
- */
-export const initializeMailProvider = (): MailProvider => {
-  if (!mailProvider) {
-    mailProvider = new ResendProvider();
-  }
-  return mailProvider;
-};
 
 /**
  * Get the mail provider
@@ -29,6 +18,17 @@ export const initializeMailProvider = (): MailProvider => {
 export const getMailProvider = (): MailProvider => {
   if (!mailProvider) {
     return initializeMailProvider();
+  }
+  return mailProvider;
+};
+
+/**
+ * Initialize the mail provider
+ * @returns initialized mail provider
+ */
+export const initializeMailProvider = (): MailProvider => {
+  if (!mailProvider) {
+    mailProvider = new ResendProvider();
   }
   return mailProvider;
 };
@@ -87,9 +87,3 @@ export async function getTemplate<T extends EmailTemplate>({
 
   return { html, text, subject };
 }
-
-// Export types for convenience
-export type {
-  MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate
-};
-
