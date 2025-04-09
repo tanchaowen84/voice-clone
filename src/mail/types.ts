@@ -1,5 +1,23 @@
 import { Locale, Messages } from 'next-intl';
-import { EmailTemplates } from './templates';
+import { VerifyEmail } from './templates/verify-email';
+import { ForgotPassword } from './templates/forgot-password';
+import { SubscribeNewsletter } from './templates/subscribe-newsletter';
+import { ContactMessage } from './templates/contact-message';
+
+/**
+ * list all the email templates here
+ */
+export const EmailTemplates = {
+  forgotPassword: ForgotPassword,
+  verifyEmail: VerifyEmail,
+  subscribeNewsletter: SubscribeNewsletter,
+  contactMessage: ContactMessage,
+} as const;
+
+/**
+ * Email template types
+ */
+export type EmailTemplate = keyof typeof EmailTemplates;
 
 /**
  * Base email component props
@@ -28,11 +46,6 @@ export interface SendEmailResult {
   messageId?: string;
   error?: any;
 }
-
-/**
- * Email template types
- */
-export type EmailTemplate = keyof typeof EmailTemplates;
 
 /**
  * Parameters for sending an email using a template

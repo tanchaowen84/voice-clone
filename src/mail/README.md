@@ -15,10 +15,10 @@ The email system is designed with the following components:
 ### Basic Usage
 
 ```typescript
-import { send } from '@/mail';
+import { sendEmail } from '@/mail';
 
 // Send using a template
-await send({
+await sendEmail({
   to: 'user@example.com',
   template: 'verifyEmail',
   context: {
@@ -29,7 +29,7 @@ await send({
 });
 
 // Send a raw email
-await send({
+await sendEmail({
   to: 'user@example.com',
   subject: 'Welcome to our platform',
   html: '<h1>Hello!</h1><p>Welcome to our platform.</p>',
@@ -71,25 +71,26 @@ await sendRawEmail({
 
 ## Email Templates
 
-Email templates are React components stored in the `emails` directory. Each template has specific props and is rendered to HTML/text when sent.
+Email templates are React components stored in the `templates` directory. Each template has specific props and is rendered to HTML/text when sent.
 
 ### Available Templates
 
 - `verifyEmail`: For email verification
 - `forgotPassword`: For password reset
-- `subscribeNewsletter`: For new user subscribed
+- `subscribeNewsletter`: For newsletter subscription
+- `contactMessage`: For contact form messages
 
 ### Creating a New Template
 
-1. Create a React component in the `emails` directory
+1. Create a React component in the `templates` directory
 2. Make sure it accepts `BaseEmailProps` plus any specific props
-3. Add it to the `EmailTemplates` export in `emails/index.ts`
+3. Add it to the `EmailTemplates` object in `index.ts`
 4. Add corresponding subject translations in the i18n messages
 
 Example:
 
 ```tsx
-// emails/MyNewEmail.tsx
+// templates/my-new-email.tsx
 import { BaseEmailProps } from '@/mail/types';
 import { Body, Container, Head, Html, Text } from '@react-email/components';
 
@@ -97,7 +98,7 @@ interface MyNewEmailProps extends BaseEmailProps {
   username: string;
 }
 
-export default function MyNewEmail({ username, messages, locale }: MyNewEmailProps) {
+export function MyNewEmail({ username, messages, locale }: MyNewEmailProps) {
   return (
     <Html lang={locale}>
       <Head />
@@ -111,15 +112,15 @@ export default function MyNewEmail({ username, messages, locale }: MyNewEmailPro
 }
 ```
 
-Then add it to `emails/index.ts`:
+Then add it to `index.ts`:
 
 ```typescript
-import MyNewEmail from './MyNewEmail';
+import { MyNewEmail } from './templates/my-new-email';
 
 export const EmailTemplates = {
   // ... existing templates
   myNewEmail: MyNewEmail,
-};
+} as const;
 ```
 
 ## Configuration

@@ -1,5 +1,9 @@
 import { ResendProvider } from './provider/resend';
-import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate } from './types';
+import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate, EmailTemplates } from './types';
+import { getMessagesForLocale } from '@/i18n/messages';
+import { routing } from '@/i18n/routing';
+import { render } from '@react-email/render';
+import { Locale, Messages } from 'next-intl';
 
 /**
  * Global mail provider instance
@@ -30,35 +34,62 @@ export const getMailProvider = (): MailProvider => {
 };
 
 /**
- * Send an email using a template
- * @param params Parameters for sending the templated email
- * @returns Send result
+ * Send email using the configured mail provider
+ * 
+ * @param params Email parameters
+ * @returns Success status
  */
-export const sendTemplate = async (params: SendTemplateParams):
-  Promise<SendEmailResult> => {
+export async function sendEmail(
+  params: SendTemplateParams | SendRawEmailParams
+) {
   const provider = getMailProvider();
-  return provider.sendTemplate(params);
-};
+
+  if ('template' in params) {
+    // This is a template email
+    const result = await provider.sendTemplate(params);
+    return result.success;
+  } else {
+    // This is a raw email
+    const result = await provider.sendRawEmail(params);
+    return result.success;
+  }
+}
 
 /**
- * Send a raw email
- * @param params Parameters for sending the raw email
- * @returns Send result
+ * Get rendered email for given template, context, and locale
  */
-export const sendRawEmail = async (params: SendRawEmailParams):
-  Promise<SendEmailResult> => {
-  const provider = getMailProvider();
-  return provider.sendRawEmail(params);
-};
+export async function getTemplate<T extends EmailTemplate>({
+  template,
+  context,
+  locale = routing.defaultLocale,
+}: {
+  template: T;
+  context: Record<string, any>;
+  locale?: Locale;
+}) {
+  const mainTemplate = EmailTemplates[template];
+  const messages = await getMessagesForLocale(locale);
 
-// Export from mail.ts
-export { getTemplate, sendEmail } from './mail';
+  const email = mainTemplate({
+    ...(context as any),
+    locale,
+    messages,
+  });
 
-// Export email templates
-export { EmailTemplates } from './templates';
+  // Get the subject from the messages
+  const subject =
+    'subject' in messages.Mail[template as keyof Messages['Mail']]
+      ? messages.Mail[template].subject
+      : '';
+
+  const html = await render(email);
+  const text = await render(email, { plainText: true });
+
+  return { html, text, subject };
+}
 
 // Export types for convenience
 export type {
-  MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate as Template
+  MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams, EmailTemplate
 };
 
