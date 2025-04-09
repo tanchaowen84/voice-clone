@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { StorageError } from '@/storage';
+import { StorageError } from '@/storage/types';
 
 export async function POST(request: NextRequest) {
   try {

@@ -1,22 +1,10 @@
 import { storageConfig } from './config/storage-config';
 import { S3Provider } from './provider/s3';
-import {
-  ConfigurationError,
-  PresignedUploadUrlParams,
-  StorageConfig,
-  StorageError,
-  StorageProvider,
-  UploadError,
-  UploadFileParams,
-  UploadFileResult
-} from './types';
+import { StorageConfig, StorageProvider, UploadFileResult } from './types';
 
-// Re-export types for convenience
-export { ConfigurationError, StorageError, UploadError };
-export type {
-  PresignedUploadUrlParams, StorageConfig, StorageProvider, UploadFileParams,
-  UploadFileResult
-};
+const API_STORAGE_UPLOAD = '/api/storage/upload';
+const API_STORAGE_PRESIGNED_URL = '/api/storage/presigned-url';
+const API_STORAGE_FILE_URL = '/api/storage/file-url';
 
 /**
  * Default storage configuration
@@ -29,17 +17,6 @@ export const defaultStorageConfig: StorageConfig = storageConfig;
 let storageProvider: StorageProvider | null = null;
 
 /**
- * Initialize the storage provider
- * @returns initialized storage provider
- */
-export const initializeStorageProvider = (): StorageProvider => {
-  if (!storageProvider) {
-    storageProvider = new S3Provider();
-  }
-  return storageProvider;
-};
-
-/**
  * Get the storage provider
  * @returns current storage provider instance
  * @throws Error if provider is not initialized
@@ -47,6 +24,17 @@ export const initializeStorageProvider = (): StorageProvider => {
 export const getStorageProvider = (): StorageProvider => {
   if (!storageProvider) {
     return initializeStorageProvider();
+  }
+  return storageProvider;
+};
+
+/**
+ * Initialize the storage provider
+ * @returns initialized storage provider
+ */
+export const initializeStorageProvider = (): StorageProvider => {
+  if (!storageProvider) {
+    storageProvider = new S3Provider();
   }
   return storageProvider;
 };
@@ -119,7 +107,7 @@ export const uploadFileFromBrowser = async (
       formData.append('file', file);
       formData.append('folder', folder || '');
 
-      const response = await fetch('/api/storage/upload', {
+      const response = await fetch(API_STORAGE_UPLOAD, {
         method: 'POST',
         body: formData,
       });
@@ -134,7 +122,7 @@ export const uploadFileFromBrowser = async (
     // For larger files, use pre-signed URL
     else {
       // First, get a pre-signed URL
-      const presignedUrlResponse = await fetch('/api/storage/presigned-url', {
+      const presignedUrlResponse = await fetch(API_STORAGE_PRESIGNED_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,7 +155,7 @@ export const uploadFileFromBrowser = async (
       }
 
       // Get the public URL
-      const fileUrlResponse = await fetch('/api/storage/file-url', {
+      const fileUrlResponse = await fetch(API_STORAGE_FILE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadFile, StorageError } from '@/storage';
+import { uploadFile } from '@/storage';
+import { StorageError } from '@/storage/types';
 
 export async function POST(request: NextRequest) {
   try {

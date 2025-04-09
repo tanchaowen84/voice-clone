@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getPresignedUploadUrl, StorageError } from '@/storage';
+import { getPresignedUploadUrl } from '@/storage';
 import { randomUUID } from 'crypto';
+import { StorageError } from '@/storage/types';
 
 export async function POST(request: NextRequest) {
   try {

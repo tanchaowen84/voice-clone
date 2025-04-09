@@ -30,6 +30,13 @@ export class S3Provider implements StorageProvider {
   }
 
   /**
+   * Get the provider name
+   */
+  public getProviderName(): string {
+    return 'S3';
+  }
+
+  /**
    * Get the S3 client instance
    */
   private getS3Client(): S3Client {
@@ -193,15 +200,4 @@ export class S3Provider implements StorageProvider {
       throw new StorageError(message);
     }
   }
-
-  /**
-   * Get the provider name
-   */
-  public getProviderName(): string {
-    return 'S3';
-  }
 }
-
-// For backward compatibility
-export { ConfigurationError, StorageError, UploadError } from '../types';
-
