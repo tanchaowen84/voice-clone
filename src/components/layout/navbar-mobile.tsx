@@ -9,7 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { getMenuLinks } from '@/config';
+import { getNavbarConfig } from '@/config/navbar-config';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
@@ -137,7 +137,7 @@ interface MainMobileMenuProps {
 function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
   const t = useTranslations();
-  const menuLinks = getMenuLinks();
+  const menuLinks = getNavbarConfig();
   const localePathname = useLocalePathname();
 
   return (

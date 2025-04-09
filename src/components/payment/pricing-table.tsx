@@ -1,7 +1,7 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { getPricePlanInfos } from '@/config';
+import { getPricePlans } from '@/config/payment-config';
 import { cn } from '@/lib/utils';
 import { PaymentTypes, PlanInterval, PlanIntervals, PricePlan } from '@/payment/types';
 import { useTranslations } from 'next-intl';
@@ -31,7 +31,7 @@ export function PricingTable({
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
 
   // Get plans either from props or from the config
-  const paymentConfig = getPricePlanInfos();
+  const paymentConfig = getPricePlans();
   const plans = Object.values(paymentConfig.plans);
   
   // Current plan ID for comparison

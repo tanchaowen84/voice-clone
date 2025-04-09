@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
-import { getSidebarLinks } from '@/config';
+import { getSidebarConfig } from '@/config/sidebar-config';
 import { authClient } from '@/lib/auth-client';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
@@ -22,7 +22,7 @@ import { UpgradeCard } from './upgrade-card';
 
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
-  const sidebarLinks = getSidebarLinks();
+  const sidebarLinks = getSidebarConfig();
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
   // console.log('sidebar currentUser:', currentUser);
