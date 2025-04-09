@@ -6,7 +6,7 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
-import { Check } from 'lucide-react';
+import { Check, CheckCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useLocalePathname } from '@/i18n/navigation';
 import { LoginWrapper } from '../auth/login-wrapper';
@@ -184,7 +184,7 @@ export function PricingCard({
         <ul className="list-outside space-y-4 text-sm">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
-              <Check className="size-4 text-green-500 dark:text-green-400" />
+              <CheckCircleIcon className="size-4 text-green-500 dark:text-green-400" />
               <span>{feature}</span>
             </li>
           ))}

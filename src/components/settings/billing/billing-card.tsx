@@ -26,12 +26,12 @@ export default function BillingCard() {
   } = usePayment();
   const isFreePlan = currentPlan?.isFree || false;
   const isLifetimeMember = currentPlan?.isLifetime || false;
-  console.log('billing card, currentPlan', currentPlan);
+  // console.log('billing card, currentPlan', currentPlan);
 
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
-  console.log('billing card, currentUser', currentUser);
+  // console.log('billing card, currentUser', currentUser);
 
   // Get subscription price details
   const currentPrice = subscription && currentPlan?.prices.find(

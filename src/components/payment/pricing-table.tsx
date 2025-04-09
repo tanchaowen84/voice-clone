@@ -17,8 +17,10 @@ interface PricingTableProps {
 /**
  * Pricing Table Component
  * 
- * Displays all pricing plans with interval selection tabs for subscription plans,
+ * 1. Displays all pricing plans with interval selection tabs for subscription plans,
  * free plans and one-time purchase plans are always displayed
+ * 2. If a plan is disabled, it will not be displayed in the pricing table
+ * 3. If a price is disabled, it will not be displayed in the pricing table
  */
 export function PricingTable({
   plans,
@@ -33,14 +35,16 @@ export function PricingTable({
   const currentPlanId = currentPlan?.id || null;
 
   // Filter plans into free, subscription and one-time plans
-  const freePlans = plans.filter(plan => plan.isFree);
+  const freePlans = plans.filter(plan => plan.isFree && !plan.disabled);
 
   const subscriptionPlans = plans.filter(plan =>
-    !plan.isFree && plan.prices.some(price => price.type === PaymentTypes.SUBSCRIPTION)
+    !plan.isFree && !plan.disabled
+    && plan.prices.some(price => !price.disabled && price.type === PaymentTypes.SUBSCRIPTION)
   );
 
   const oneTimePlans = plans.filter(plan =>
-    !plan.isFree && plan.prices.some(price => price.type === PaymentTypes.ONE_TIME)
+    !plan.isFree && !plan.disabled
+    && plan.prices.some(price => !price.disabled && price.type === PaymentTypes.ONE_TIME)
   );
 
   // Check if any plan has a monthly price option

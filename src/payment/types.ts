@@ -45,10 +45,19 @@ export interface Price {
   currency: string;                  // Currency code (e.g., USD)
   interval?: PlanInterval;           // Billing interval for recurring payments
   trialPeriodDays?: number;          // Free trial period in days
+  disabled?: boolean;                // Whether to disable this price in UI
 }
 
 /**
  * Price plan definition
+ * 
+ * 1. When to set the plan disabled?
+ * When the plan is not available anymore, but you should keep it for existing users
+ * who have already purchased it, otherwise they can not see the plan in the Billing page.
+ * 
+ * 2. When to set the price disabled?
+ * When the price is not available anymore, but you should keep it for existing users
+ * who have already purchased it, otherwise they can not see the price in the Billing page.
  */
 export interface PricePlan {
   id: string;                        // Unique identifier for the plan
@@ -59,6 +68,7 @@ export interface PricePlan {
   isFree: boolean;                   // Whether this is a free plan
   isLifetime: boolean;               // Whether this is a lifetime plan
   recommended?: boolean;             // Whether to mark this plan as recommended in UI
+  disabled?: boolean;                // Whether to disable this plan in UI
 }
 
 /**
