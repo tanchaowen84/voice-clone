@@ -14,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 type Href = Parameters<typeof getLocalePathname>[0]['href'];
 
 /**
+ * TODO: add more entries for the sitemap
+ * 
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#sitemap
  * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/sitemap.ts
  */

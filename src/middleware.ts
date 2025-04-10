@@ -3,6 +3,8 @@ import { routing } from './i18n/routing';
 
 export default createMiddleware(routing);
 
+// TODO: add middleware rules for protected routes
+
 /**
  * Next.js internationalized routing
  *

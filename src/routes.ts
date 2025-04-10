@@ -1,5 +1,7 @@
 /**
  * The routes for the application
+ * 
+ * TODO: add config for the routes
  */
 export enum Routes {
   Root = '/',

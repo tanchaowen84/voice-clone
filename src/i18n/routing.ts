@@ -1,5 +1,6 @@
 import { defineRouting } from 'next-intl/routing';
 
+// TODO: add config for the locales
 export const LOCALE_LIST: Record<string, { flag: string; name: string }> = {
   en: { flag: '🇺🇸', name: 'English' },
   zh: { flag: '🇨🇳', name: '中文' },
