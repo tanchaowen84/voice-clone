@@ -13,21 +13,21 @@ import { useTranslations } from 'next-intl';
  * @returns The avatar config with translated titles
  */
 export function getAvatarConfig(): MenuItem[] {
-  const t = useTranslations();
+  const t = useTranslations('Marketing.avatar');
 
   return [
     {
-      title: t('Marketing.avatar.dashboard'),
+      title: t('dashboard'),
       href: Routes.Dashboard,
       icon: <LayoutDashboardIcon className="size-4 shrink-0" />,
     },
     {
-      title: t('Marketing.avatar.billing'),
+      title: t('billing'),
       href: Routes.SettingsBilling,
       icon: <CreditCardIcon className="size-4 shrink-0" />,
     },
     {
-      title: t('Marketing.avatar.settings'),
+      title: t('settings'),
       href: Routes.SettingsProfile,
       icon: <Settings2Icon className="size-4 shrink-0" />,
     },

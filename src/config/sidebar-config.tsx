@@ -20,39 +20,39 @@ import { useTranslations } from 'next-intl';
  * @returns The sidebar config with translated titles and descriptions
  */
 export function getSidebarConfig(): NestedMenuItem[] {
-  const t = useTranslations();
+  const t = useTranslations('Dashboard');
 
   return [
     {
-      title: t('Dashboard.dashboard.title'),
+      title: t('dashboard.title'),
       icon: <LayoutDashboardIcon className="site-4 shrink-0" />,
       href: Routes.Dashboard,
       external: false,
     },
     {
-      title: t('Dashboard.settings.title'),
+      title: t('settings.title'),
       icon: <Settings2Icon className="site-4 shrink-0" />,
       items: [
         {
-          title: t('Dashboard.settings.profile.title'),
+          title: t('settings.profile.title'),
           icon: <CircleUserRoundIcon className="site-4 shrink-0" />,
           href: Routes.SettingsProfile,
           external: false,
         },
         {
-          title: t('Dashboard.settings.billing.title'),
+          title: t('settings.billing.title'),
           icon: <CreditCardIcon className="site-4 shrink-0" />,
           href: Routes.SettingsBilling,
           external: false,
         },
         {
-          title: t('Dashboard.settings.security.title'),
+          title: t('settings.security.title'),
           icon: <LockKeyholeIcon className="site-4 shrink-0" />,
           href: Routes.SettingsSecurity,
           external: false,
         },
         {
-          title: t('Dashboard.settings.notification.title'),
+          title: t('settings.notification.title'),
           icon: <BellIcon className="site-4 shrink-0" />,
           href: Routes.SettingsNotifications,
           external: false,

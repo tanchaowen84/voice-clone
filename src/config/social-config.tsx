@@ -22,15 +22,6 @@ import { websiteConfig } from './website';
 export function getSocialConfig(): MenuItem[] {
   const socialLinks: MenuItem[] = [];
 
-  // Only add social links that are configured in websiteConfig
-  if (websiteConfig.mail.from) {
-    socialLinks.push({
-      title: 'Email',
-      href: `mailto:${websiteConfig.mail.from}`,
-      icon: <MailIcon className="size-4 shrink-0" />,
-    });
-  }
-
   if (websiteConfig.social.github) {
     socialLinks.push({
       title: 'GitHub',
