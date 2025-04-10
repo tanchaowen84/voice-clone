@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { PLACEHOLDER_IMAGE } from '@/constants';
+import { PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { LocaleLink } from '@/i18n/navigation';
 import { formatDate } from '@/lib/formatter';
 import { Post } from 'content-collections';
