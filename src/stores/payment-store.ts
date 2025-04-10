@@ -1,7 +1,7 @@
 import { getActiveSubscriptionAction } from '@/actions/get-active-subscription';
 import { getLifetimeStatusAction } from '@/actions/get-lifetime-status';
 import { Session } from '@/lib/auth';
-import { getAllPricePlans } from '@/payment';
+import { getAllPricePlans } from '@/lib/price-plan';
 import { PricePlan, Subscription } from '@/payment/types';
 import { create } from 'zustand';
 
@@ -55,7 +55,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
     // Fetch subscription data
     set({ isLoading: true, error: null });
 
-    // Get all price plans
+    // Get all price plans using the server-side function that doesn't have translations
     let plans: PricePlan[] = getAllPricePlans();
 
     const freePlan = plans.find(plan => plan.isFree);

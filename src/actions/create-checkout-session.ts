@@ -1,8 +1,9 @@
 'use server';
 
 import { getSession } from "@/lib/server";
+import { getPlanById } from "@/lib/price-plan";
 import { getBaseUrlWithLocale } from "@/lib/urls/urls";
-import { createCheckout, getPlanById } from "@/payment";
+import { createCheckout } from "@/payment";
 import { CreateCheckoutParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';

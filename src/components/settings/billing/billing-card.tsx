@@ -26,7 +26,8 @@ export default function BillingCard() {
   } = usePayment();
   const isFreePlan = currentPlan?.isFree || false;
   const isLifetimeMember = currentPlan?.isLifetime || false;
-  // console.log('billing card, currentPlan', currentPlan);
+  console.log('billing card, currentPlan', currentPlan);
+  console.log('billing card, subscription', subscription);
 
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
@@ -116,13 +117,11 @@ export default function BillingCard() {
               {currentPlan?.name}
             </div>
             <Badge variant='outline'>
-              {isLifetimeMember
-                ? t('status.lifetime')
-                : subscription?.status === 'active'
-                  ? t('status.active')
-                  : subscription?.status === 'trialing'
-                    ? t('status.trial')
-                    : t('status.free')}
+              {subscription?.status === 'active'
+                ? t('status.active')
+                : subscription?.status === 'trialing'
+                  ? t('status.trial')
+                  : ''}
             </Badge>
           </div>
 

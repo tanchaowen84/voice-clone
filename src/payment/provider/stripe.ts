@@ -1,22 +1,10 @@
 import db from '@/db';
 import { payment, user } from '@/db/schema';
+import { findPlanByPriceId, findPriceInPlan, getPlanById } from '@/lib/price-plan';
 import { randomUUID } from 'crypto';
 import { desc, eq } from 'drizzle-orm';
 import { Stripe } from 'stripe';
-import { findPlanByPriceId, findPriceInPlan, getPlanById } from '../index';
-import {
-  CheckoutResult,
-  CreateCheckoutParams,
-  CreatePortalParams,
-  getSubscriptionsParams,
-  PaymentProvider,
-  PaymentStatus,
-  PaymentTypes,
-  PlanInterval,
-  PlanIntervals,
-  PortalResult,
-  Subscription
-} from '../types';
+import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, getSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription } from '../types';
 
 /**
  * Stripe payment provider implementation

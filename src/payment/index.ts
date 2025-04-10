@@ -1,6 +1,5 @@
-import { PaymentProvider, PricePlan, PaymentConfig, Customer, Subscription, Payment, PaymentStatus, PlanInterval, PaymentType, Price, CreateCheckoutParams, CheckoutResult, CreatePortalParams, PortalResult, getSubscriptionsParams } from "./types";
 import { StripeProvider } from "./provider/stripe";
-import { websiteConfig } from "@/config/website";
+import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, PaymentProvider, PortalResult, Subscription, getSubscriptionsParams } from "./types";
 
 /**
  * Global payment provider instance
@@ -77,71 +76,4 @@ export const getSubscriptions = async (
 ): Promise<Subscription[]> => {
   const provider = getPaymentProvider();
   return provider.getSubscriptions(params);
-};
-
-/**
- * Get plan by ID
- * @param planId Plan ID
- * @returns Plan or undefined if not found
- */
-export const getPlanById = (planId: string): PricePlan | undefined => {
-  return websiteConfig.payment.plans[planId];
-};
-
-/**
- * Get all price plans
- * @returns Array of price plans
- */
-export const getAllPricePlans = (): PricePlan[] => {
-  return Object.values(websiteConfig.payment.plans);
-};
-
-/**
- * Find price in a plan by ID
- * @param planId Plan ID
- * @param priceId Price ID (Stripe price ID)
- * @returns Price or undefined if not found
- */
-export const findPriceInPlan = (planId: string, priceId: string): Price | undefined => {
-  const plan = getPlanById(planId);
-  if (!plan) {
-    console.error(`Plan with ID ${planId} not found`);
-    return undefined;
-  }
-  return plan.prices.find(price => price.priceId === priceId);
-};
-
-/**
- * Find plan by price ID
- * @param priceId Price ID (Stripe price ID)
- * @returns Plan or undefined if not found
- */
-export const findPlanByPriceId = (priceId: string): PricePlan | undefined => {
-  const plans = getAllPricePlans();
-  for (const plan of plans) {
-    const matchingPrice = plan.prices.find(price => price.priceId === priceId);
-    if (matchingPrice) {
-      return plan;
-    }
-  }
-  return undefined;
-};
-
-// Export types for convenience
-export type {
-  PaymentProvider,
-  PricePlan,
-  PaymentConfig,
-  Price,
-  PaymentType,
-  Customer,
-  Subscription,
-  Payment,
-  PaymentStatus,
-  PlanInterval,
-  CreateCheckoutParams,
-  CheckoutResult,
-  CreatePortalParams,
-  PortalResult,
-  getSubscriptionsParams as ListCustomerSubscriptionsParams,
 };

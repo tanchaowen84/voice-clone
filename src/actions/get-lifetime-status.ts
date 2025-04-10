@@ -3,7 +3,7 @@
 import db from "@/db";
 import { payment } from "@/db/schema";
 import { getSession } from "@/lib/server";
-import { getAllPricePlans } from "@/payment";
+import { getAllPricePlans } from "@/lib/price-plan";
 import { PaymentTypes } from "@/payment/types";
 import { and, eq } from "drizzle-orm";
 import { createSafeActionClient } from 'next-safe-action';

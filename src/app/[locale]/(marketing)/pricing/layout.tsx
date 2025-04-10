@@ -1,7 +1,7 @@
 import { HeaderSection } from '@/components/layout/header-section';
 import { constructMetadata } from '@/lib/metadata';
+import { getAllPricePlans } from '@/lib/price-plan';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
-import { getAllPricePlans } from '@/payment';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
