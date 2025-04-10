@@ -30,7 +30,7 @@ export function PricingTable({
   const t = useTranslations('PricingPage');
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
 
-  // Get plans either from props or from the config
+  // Get price plans with translations
   const paymentConfig = getPricePlans();
   const plans = Object.values(paymentConfig.plans);
   

@@ -345,13 +345,13 @@ export class StripeProvider implements PaymentProvider {
    * @param stripeSubscription Stripe subscription
    */
   private async onCreateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`Create payment record for Stripe subscription ${stripeSubscription.id}`);
+    console.log(`>> Create payment record for Stripe subscription ${stripeSubscription.id}`);
     const customerId = stripeSubscription.customer as string;
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
     if (!priceId) {
-      console.warn(`No priceId found for subscription ${stripeSubscription.id}`);
+      console.warn(`<< No priceId found for subscription ${stripeSubscription.id}`);
       return;
     }
 
@@ -360,7 +360,7 @@ export class StripeProvider implements PaymentProvider {
     if (!userId) {
       const foundUserId = await this.findUserIdByCustomerId(customerId);
       if (!foundUserId) {
-        console.warn(`No user found for customer ${customerId}, skipping payment record creation`);
+        console.warn(`<< No user found for customer ${customerId}, skipping payment record creation`);
         return;
       }
       userId = foundUserId;
@@ -374,7 +374,7 @@ export class StripeProvider implements PaymentProvider {
     if (!planId) {
       const foundPlan = findPlanByPriceId(priceId);
       if (!foundPlan) {
-        console.warn(`No plan found for price ${priceId}, skipping payment record creation`);
+        console.warn(`<< No plan found for price ${priceId}, skipping payment record creation`);
         return;
       }
       planId = foundPlan.id;
@@ -412,9 +412,9 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(`<< Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
     } else {
-      console.warn(`No payment record created for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`<< No payment record created for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
@@ -423,12 +423,12 @@ export class StripeProvider implements PaymentProvider {
    * @param stripeSubscription Stripe subscription
    */
   private async onUpdateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`Update payment record for Stripe subscription ${stripeSubscription.id}`);
+    console.log(`>> Update payment record for Stripe subscription ${stripeSubscription.id}`);
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
     if (!priceId) {
-      console.warn(`No priceId found for subscription ${stripeSubscription.id}`);
+      console.warn(`<< No priceId found for subscription ${stripeSubscription.id}`);
       return;
     }
 
@@ -467,6 +467,7 @@ export class StripeProvider implements PaymentProvider {
     if (shouldUpdatePlanId && planId) {
       updateFields.planId = planId;
     }
+    console.log('updateFields', updateFields);
 
     const result = await db
       .update(payment)
@@ -475,9 +476,9 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(`<< Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
     } else {
-      console.warn(`No payment record found for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`<< No payment record found for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
@@ -486,6 +487,7 @@ export class StripeProvider implements PaymentProvider {
    * @param stripeSubscription Stripe subscription
    */
   private async onDeleteSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
+    console.log(`>> Mark payment record for Stripe subscription ${stripeSubscription.id} as canceled`);
     const result = await db
       .update(payment)
       .set({
@@ -496,9 +498,9 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`Marked payment record for subscription ${stripeSubscription.id} as canceled`);
+      console.log(`<< Marked payment record for subscription ${stripeSubscription.id} as canceled`);
     } else {
-      console.warn(`No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(`<< No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`);
     }
   }
 
@@ -508,12 +510,12 @@ export class StripeProvider implements PaymentProvider {
    */
   private async onOnetimePayment(session: Stripe.Checkout.Session): Promise<void> {
     const customerId = session.customer as string;
-    console.log(`Handle onetime payment for customer ${customerId}`);
+    console.log(`>> Handle onetime payment for customer ${customerId}`);
 
     // get userId from session metadata, we add it in the createCheckout session
     const userId = session.metadata?.userId;
     if (!userId) {
-      console.warn(`No userId found for checkout session ${session.id}`);
+      console.warn(`<< No userId found for checkout session ${session.id}`);
       return;
     }
 
@@ -521,14 +523,14 @@ export class StripeProvider implements PaymentProvider {
     // const priceId = session.line_items?.data[0]?.price?.id;
     const priceId = session.metadata?.priceId;
     if (!priceId) {
-      console.warn(`No priceId found for checkout session ${session.id}`);
+      console.warn(`<< No priceId found for checkout session ${session.id}`);
       return;
     }
 
     // get planId from session metadata, we add it in the createCheckout session
     const planId = session.metadata?.planId;
     if (!planId) {
-      console.warn(`No planId found for checkout session ${session.id}`);
+      console.warn(`<< No planId found for checkout session ${session.id}`);
       return;
     }
 
@@ -551,10 +553,10 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length === 0) {
-      console.warn(`Failed to create one-time payment record for user ${userId}`);
+      console.warn(`<< Failed to create one-time payment record for user ${userId}`);
       return;
     } else {
-      console.log(`Created one-time payment record for user ${userId}, plan: ${planId}`);
+      console.log(`<< Created one-time payment record for user ${userId}, plan: ${planId}`);
     }
   }
 
@@ -585,7 +587,7 @@ export class StripeProvider implements PaymentProvider {
       active: 'active',
       canceled: 'canceled',
       incomplete: 'incomplete',
-      incomplete_expired: 'failed',
+      incomplete_expired: 'incomplete_expired',
       past_due: 'past_due',
       trialing: 'trialing',
       unpaid: 'unpaid',

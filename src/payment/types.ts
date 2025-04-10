@@ -24,16 +24,17 @@ export enum PaymentTypes {
  * Status of a payment or subscription
  */
 export type PaymentStatus =
-  | 'active'     // Subscription is active
-  | 'canceled'   // Subscription has been canceled
-  | 'incomplete' // Payment not completed
-  | 'past_due'   // Payment is past due
-  | 'paused'     // Subscription is paused
-  | 'trialing'   // In trial period
-  | 'unpaid'     // Payment failed
-  | 'completed'  // One-time payment completed
-  | 'processing' // Payment is processing
-  | 'failed';    // Payment failed
+  | 'active'             // Subscription is active
+  | 'canceled'           // Subscription has been canceled
+  | 'incomplete'         // Payment not completed
+  | 'incomplete_expired' // Payment not completed and expired
+  | 'past_due'           // Payment is past due
+  | 'paused'             // Subscription is paused
+  | 'trialing'           // In trial period
+  | 'unpaid'             // Payment failed
+  | 'completed'          // One-time payment completed
+  | 'processing'         // Payment is processing
+  | 'failed';            // Payment failed
 
 /**
  * Price definition for a plan
@@ -61,9 +62,9 @@ export interface Price {
  */
 export interface PricePlan {
   id: string;                        // Unique identifier for the plan
-  name?: string;                      // Display name of the plan
-  description?: string;               // Description of the plan features
-  features?: string[];                // List of features included in this plan
+  name?: string;                     // Display name of the plan
+  description?: string;              // Description of the plan features
+  features?: string[];               // List of features included in this plan
   prices: Price[];                   // Available prices for this plan
   isFree: boolean;                   // Whether this is a free plan
   isLifetime: boolean;               // Whether this is a lifetime plan

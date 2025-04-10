@@ -60,13 +60,11 @@ export const getActiveSubscriptionAction = actionClient
 
         // If found, use it
         if (activeSubscription) {
+          console.log('find active subscription for userId:', session.user.id);
           subscriptionData = activeSubscription;
-        } else if (subscriptions.length > 0) {
-          // Otherwise, use the most recent subscription 
-          // first in the list, as they have been sorted by date
-          subscriptionData = subscriptions[0];
+        } else {
+          console.log('no active subscription found for userId:', session.user.id);
         }
-        console.log('find subscription for userId:', session.user.id);
       } else {
         console.log('no subscriptions found for userId:', session.user.id);
       }

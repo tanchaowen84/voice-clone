@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getPricePlans } from '@/config/payment-config';
 import { usePayment } from '@/hooks/use-payment';
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
@@ -21,9 +22,15 @@ export default function BillingCard() {
     isLoading: isLoadingPayment,
     error: loadPaymentError,
     subscription,
-    currentPlan,
+    currentPlan: currentPlanFromStore,
     refetch
   } = usePayment();
+  // Get price plans with translations
+  const paymentConfig = getPricePlans();
+  const plans = Object.values(paymentConfig.plans);
+  // Convert current plan from store to a plan with translations
+  const currentPlan = plans.find(plan => plan.id === currentPlanFromStore?.id);
+
   const isFreePlan = currentPlan?.isFree || false;
   const isLifetimeMember = currentPlan?.isLifetime || false;
   console.log('billing card, currentPlan', currentPlan);
@@ -116,13 +123,15 @@ export default function BillingCard() {
             <div className="text-3xl font-medium">
               {currentPlan?.name}
             </div>
-            <Badge variant='outline'>
-              {subscription?.status === 'active'
-                ? t('status.active')
-                : subscription?.status === 'trialing'
+            {subscription && (
+              <Badge variant='outline'>
+                {subscription?.status === 'trialing'
                   ? t('status.trial')
-                  : ''}
-            </Badge>
+                  : subscription?.status === 'active'
+                    ? t('status.active')
+                    : ''}
+              </Badge>
+            )}
           </div>
 
           {/* Free plan message */}
@@ -163,38 +172,38 @@ export default function BillingCard() {
           )}
         </CardContent>
         <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
-            {/* user is on free plan, show upgrade plan button */}
-            {isFreePlan && (
-              <Button
-                variant="default"
-                className="cursor-pointer"
-                asChild
-              >
-                <LocaleLink href="/pricing">
-                  {t('upgradePlan')}
-                </LocaleLink>
-              </Button>
-            )}
+          {/* user is on free plan, show upgrade plan button */}
+          {isFreePlan && (
+            <Button
+              variant="default"
+              className="cursor-pointer"
+              asChild
+            >
+              <LocaleLink href="/pricing">
+                {t('upgradePlan')}
+              </LocaleLink>
+            </Button>
+          )}
 
-            {/* user is lifetime member, show manage billing button */}
-            {isLifetimeMember && currentUser && (
-              <CustomerPortalButton
-                userId={currentUser.id}
-                className=""
-              >
-                {t('manageBilling')}
-              </CustomerPortalButton>
-            )}
+          {/* user is lifetime member, show manage billing button */}
+          {isLifetimeMember && currentUser && (
+            <CustomerPortalButton
+              userId={currentUser.id}
+              className=""
+            >
+              {t('manageBilling')}
+            </CustomerPortalButton>
+          )}
 
-            {/* user has subscription, show manage subscription button */}
-            {subscription && currentUser && (
-              <CustomerPortalButton
-                userId={currentUser.id}
-                className=""
-              >
-                {t('manageSubscription')}
-              </CustomerPortalButton>
-            )}
+          {/* user has subscription, show manage subscription button */}
+          {subscription && currentUser && (
+            <CustomerPortalButton
+              userId={currentUser.id}
+              className=""
+            >
+              {t('manageSubscription')}
+            </CustomerPortalButton>
+          )}
         </CardFooter>
       </Card>
     </div>

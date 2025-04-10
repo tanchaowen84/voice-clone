@@ -7,7 +7,9 @@ import { websiteConfig } from './website';
 /**
  * Get price plans with translations for client components
  * 
- * NOTICE: This function should only be used in client components
+ * NOTICE: This function should only be used in client components.
+ * If you need to get the price plans in server components, use getAllPricePlans instead.
+ * Use this function when showing the pricing table or the billing card to the user.
  *
  * @returns The price plans with translated content
  */
