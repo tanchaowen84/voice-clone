@@ -1,6 +1,5 @@
 import { HeaderSection } from '@/components/layout/header-section';
 import { constructMetadata } from '@/lib/metadata';
-import { getAllPricePlans } from '@/lib/price-plan';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
@@ -27,10 +26,6 @@ export default async function PricingPageLayout({
   children: React.ReactNode;
 }) {
   const t = await getTranslations('PricingPage');
-
-  // Get all plans as an array
-  const plans = getAllPricePlans();
-
   return (
     <div className="mb-16">
       <div className="mt-8 w-full flex flex-col items-center justify-center gap-8">

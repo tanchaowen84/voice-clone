@@ -1,7 +1,7 @@
 'use server';
 
 import { getSession } from "@/lib/server";
-import { getPlanById } from "@/lib/price-plan";
+import { findPlanByPlanId } from "@/lib/price-plan";
 import { getBaseUrlWithLocale } from "@/lib/urls/urls";
 import { createCheckout } from "@/payment";
 import { CreateCheckoutParams } from "@/payment/types";
@@ -53,7 +53,7 @@ export const createCheckoutAction = actionClient
       const locale = await getLocale();
 
       // Check if plan exists
-      const plan = getPlanById(planId);
+      const plan = findPlanByPlanId(planId);
       if (!plan) {
         return {
           success: false,

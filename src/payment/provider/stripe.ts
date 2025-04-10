@@ -1,6 +1,6 @@
 import db from '@/db';
 import { payment, user } from '@/db/schema';
-import { findPlanByPriceId, findPriceInPlan, getPlanById } from '@/lib/price-plan';
+import { findPlanByPriceId, findPriceInPlan, findPlanByPlanId } from '@/lib/price-plan';
 import { randomUUID } from 'crypto';
 import { desc, eq } from 'drizzle-orm';
 import { Stripe } from 'stripe';
@@ -140,7 +140,7 @@ export class StripeProvider implements PaymentProvider {
 
     try {
       // Get plan and price
-      const plan = getPlanById(planId);
+      const plan = findPlanByPlanId(planId);
       if (!plan) {
         throw new Error(`Plan with ID ${planId} not found`);
       }
@@ -433,6 +433,7 @@ export class StripeProvider implements PaymentProvider {
     }
 
     // we can not trust the planId from metadata when updating subscription, so get it from config
+    // why? because user may update subscription in Stripe Customer Portal, and the planId is not in metadata
     let planId;
     let shouldUpdatePlanId = false;
     const foundPlan = findPlanByPriceId(priceId);

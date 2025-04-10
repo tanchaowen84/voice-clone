@@ -55,9 +55,8 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
     // Fetch subscription data
     set({ isLoading: true, error: null });
 
-    // Get all price plans using the server-side function that doesn't have translations
+    // Get all price plans
     let plans: PricePlan[] = getAllPricePlans();
-
     const freePlan = plans.find(plan => plan.isFree);
     const lifetimePlan = plans.find(plan => plan.isLifetime);
 
