@@ -1,5 +1,5 @@
 {
-  "id": "4e932ffc-faf7-4223-b04c-382bf773e626",
+  "id": "7ecbd97a-94eb-4a46-996e-dbff727fc0c7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -117,12 +117,6 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
-          "notNull": true
-        },
-        "plan_id": {
-          "name": "plan_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true
         },
         "price_id": {

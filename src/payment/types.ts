@@ -96,7 +96,6 @@ export interface Subscription {
   id: string;
   customerId: string;
   status: PaymentStatus;
-  planId: string;
   priceId: string;
   type: PaymentType;
   interval?: PlanInterval;

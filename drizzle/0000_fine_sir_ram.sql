@@ -16,7 +16,6 @@ CREATE TABLE "account" (
 --> statement-breakpoint
 CREATE TABLE "payment" (
 	"id" text PRIMARY KEY NOT NULL,
-	"plan_id" text NOT NULL,
 	"price_id" text NOT NULL,
 	"type" text NOT NULL,
 	"interval" text,

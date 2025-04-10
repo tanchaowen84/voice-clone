@@ -102,7 +102,8 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
 
         // Set subscription state
         if (activeSubscription) {
-          const plan = plans.find(p => p.id === activeSubscription.planId) || null;
+          const plan = plans.find(p => p.prices.find(price =>
+            price.priceId === activeSubscription.priceId)) || null;
           console.log('subscription found, setting plan for user', user.id, plan?.id);
           set({
             currentPlan: plan,

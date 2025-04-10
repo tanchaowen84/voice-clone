@@ -1,5 +1,5 @@
 import db from '@/db';
-import { payment, user } from '@/db/schema';
+import { payment, session, user } from '@/db/schema';
 import { findPlanByPriceId, findPriceInPlan, findPlanByPlanId } from '@/lib/price-plan';
 import { randomUUID } from 'crypto';
 import { desc, eq } from 'drizzle-orm';
@@ -145,11 +145,6 @@ export class StripeProvider implements PaymentProvider {
         throw new Error(`Plan with ID ${planId} not found`);
       }
 
-      // Free plan doesn't need a checkout session
-      if (plan.isFree) {
-        throw new Error('Cannot create checkout session for free plan');
-      }
-
       // Find price in plan
       const price = findPriceInPlan(planId, priceId);
       if (!price) {
@@ -270,9 +265,8 @@ export class StripeProvider implements PaymentProvider {
       return subscriptions.map(subscription => ({
         id: subscription.subscriptionId || '',
         customerId: subscription.customerId,
-        status: subscription.status as PaymentStatus,
-        planId: subscription.planId,
         priceId: subscription.priceId,
+        status: subscription.status as PaymentStatus,
         type: subscription.type as PaymentTypes,
         interval: subscription.interval as PlanInterval,
         currentPeriodStart: subscription.periodStart || undefined,
@@ -355,38 +349,16 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // get userId from metadata or find it by customerId from database
-    let userId = stripeSubscription.metadata.userId;
+    // get userId from metadata, we add it in the createCheckout session
+    const userId = stripeSubscription.metadata.userId;
     if (!userId) {
-      const foundUserId = await this.findUserIdByCustomerId(customerId);
-      if (!foundUserId) {
-        console.warn(`<< No user found for customer ${customerId}, skipping payment record creation`);
-        return;
-      }
-      userId = foundUserId;
-      console.log(`Found userId ${userId} for customer ${customerId} from database`);
-    } else {
-      console.log(`Using userId ${userId} from subscription metadata`);
+      console.warn(`<< No userId found for subscription ${stripeSubscription.id}`);
+      return;
     }
 
-    // get planId from metadata or find it by priceId from payment config
-    let planId = stripeSubscription.metadata.planId;
-    if (!planId) {
-      const foundPlan = findPlanByPriceId(priceId);
-      if (!foundPlan) {
-        console.warn(`<< No plan found for price ${priceId}, skipping payment record creation`);
-        return;
-      }
-      planId = foundPlan.id;
-      console.log(`Found planId ${planId} for price ${priceId} from config`);
-    } else {
-      console.log(`Using planId ${planId} from subscription metadata`);
-    }
-
-    // prepare create fields
+    // create fields
     const createFields: any = {
       id: randomUUID(),
-      planId: planId,
       priceId: priceId,
       type: PaymentTypes.SUBSCRIPTION,
       userId: userId,
@@ -432,21 +404,7 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // we can not trust the planId from metadata when updating subscription, so get it from config
-    // why? because user may update subscription in Stripe Customer Portal, and the planId is not in metadata
-    let planId;
-    let shouldUpdatePlanId = false;
-    const foundPlan = findPlanByPriceId(priceId);
-    if (!foundPlan) {
-      shouldUpdatePlanId = false;
-      console.warn(`No plan found for price ${priceId}, did you update the plans and prices in payment config?`);
-    } else {
-      planId = foundPlan.id;
-      shouldUpdatePlanId = true;
-      console.log(`Found planId ${planId} for price ${priceId} from config`);
-    }
-
-    // prepare update fields
+    // update fields
     const updateFields: any = {
       priceId: priceId,
       interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
@@ -462,12 +420,6 @@ export class StripeProvider implements PaymentProvider {
         new Date(stripeSubscription.trial_end * 1000) : undefined,
       updatedAt: new Date()
     };
-
-    // Only include planId if it should be updated
-    if (shouldUpdatePlanId && planId) {
-      updateFields.planId = planId;
-    }
-    console.log('updateFields', updateFields);
 
     const result = await db
       .update(payment)
@@ -527,20 +479,12 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // get planId from session metadata, we add it in the createCheckout session
-    const planId = session.metadata?.planId;
-    if (!planId) {
-      console.warn(`<< No planId found for checkout session ${session.id}`);
-      return;
-    }
-
     // Create a one-time payment record
     const now = new Date();
     const result = await db
       .insert(payment)
       .values({
         id: randomUUID(),
-        planId: planId,
         priceId: priceId,
         type: PaymentTypes.ONE_TIME,
         userId: userId,
@@ -556,7 +500,7 @@ export class StripeProvider implements PaymentProvider {
       console.warn(`<< Failed to create one-time payment record for user ${userId}`);
       return;
     } else {
-      console.log(`<< Created one-time payment record for user ${userId}, plan: ${planId}`);
+      console.log(`<< Created one-time payment record for user ${userId}, price: ${priceId}`);
     }
   }
 

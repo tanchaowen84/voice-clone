@@ -3,7 +3,7 @@
 import db from "@/db";
 import { payment } from "@/db/schema";
 import { getSession } from "@/lib/server";
-import { getAllPricePlans } from "@/lib/price-plan";
+import { getAllPricePlans, findPlanByPriceId } from "@/lib/price-plan";
 import { PaymentTypes } from "@/payment/types";
 import { and, eq } from "drizzle-orm";
 import { createSafeActionClient } from 'next-safe-action';
@@ -66,7 +66,7 @@ export const getLifetimeStatusAction = actionClient
 
       // Query the database for one-time payments with lifetime plans
       const result = await db
-        .select({ id: payment.id, planId: payment.planId, type: payment.type })
+        .select({ id: payment.id, priceId: payment.priceId, type: payment.type })
         .from(payment)
         .where(
           and(
@@ -77,9 +77,10 @@ export const getLifetimeStatusAction = actionClient
         );
 
       // Check if any payment has a lifetime plan
-      const hasLifetimePayment = result.some(paymentRecord =>
-        lifetimePlanIds.includes(paymentRecord.planId)
-      );
+      const hasLifetimePayment = result.some(paymentRecord => {
+        const plan = findPlanByPriceId(paymentRecord.priceId);
+        return plan && lifetimePlanIds.includes(plan.id);
+      });
 
       return {
         success: true,

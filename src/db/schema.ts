@@ -54,7 +54,6 @@ export const verification = pgTable("verification", {
 
 export const payment = pgTable("payment", {
 	id: text("id").primaryKey(),
-	planId: text('plan_id').notNull(),
 	priceId: text('price_id').notNull(),
 	type: text('type').notNull(),
 	interval: text('interval'),
