@@ -6,7 +6,7 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
-import { Check, CheckCircleIcon } from 'lucide-react';
+import { Check, CheckCircleIcon, XCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useLocalePathname } from '@/i18n/navigation';
 import { LoginWrapper } from '../auth/login-wrapper';
@@ -186,6 +186,16 @@ export function PricingCard({
             <li key={i} className="flex items-center gap-2">
               <CheckCircleIcon className="size-4 text-green-500 dark:text-green-400" />
               <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* show limits of this plan */}
+        <ul className="list-outside space-y-4 text-sm">
+          {plan.limits?.map((limit, i) => (
+            <li key={i} className="flex items-center gap-2">
+              <XCircleIcon className="size-4 text-gray-500 dark:text-gray-400" />
+              <span>{limit}</span>
             </li>
           ))}
         </ul>

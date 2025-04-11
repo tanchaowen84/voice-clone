@@ -27,6 +27,11 @@ export function getPricePlans(): PaymentConfig {
       t('free.features.support'),
       t('free.features.storage')
     ];
+    paymentConfig.plans.free.limits = [
+      t('free.limits.domains'),
+      t('free.limits.brands'),
+      t('free.limits.updates')
+    ];
   }
 
   if (paymentConfig.plans.pro) {
@@ -38,7 +43,10 @@ export function getPricePlans(): PaymentConfig {
       t('pro.features.support'),
       t('pro.features.storage'),
       t('pro.features.domains'),
-      t('pro.features.collaboration')
+    ];
+    paymentConfig.plans.pro.limits = [
+      t('pro.limits.brands'),
+      t('pro.limits.updates')
     ];
   }
 
@@ -53,6 +61,8 @@ export function getPricePlans(): PaymentConfig {
       t('lifetime.features.integrations'),
       t('lifetime.features.branding'),
       t('lifetime.features.updates')
+    ];
+    paymentConfig.plans.lifetime.limits = [
     ];
   }
 

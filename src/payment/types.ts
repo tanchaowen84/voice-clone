@@ -65,6 +65,7 @@ export interface PricePlan {
   name?: string;                     // Display name of the plan
   description?: string;              // Description of the plan features
   features?: string[];               // List of features included in this plan
+  limits?: string[];                 // List of limits for this plan
   prices: Price[];                   // Available prices for this plan
   isFree: boolean;                   // Whether this is a free plan
   isLifetime: boolean;               // Whether this is a lifetime plan

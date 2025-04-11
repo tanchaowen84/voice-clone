@@ -65,6 +65,51 @@
       "checkoutFailed": "Failed to open checkout page"
     }
   },
+  "PricePlans": {
+    "free": {
+      "name": "Free",
+      "description": "Basic features for personal use",
+      "features": {
+        "projects": "Up to 3 projects",
+        "storage": "1 GB storage",
+        "analytics": "Basic analytics",
+        "support": "Community support"
+      },
+      "limits": {
+        "domains": "Custom domains",
+        "brands": "Custom brands",
+        "updates": "Lifetime updates"
+      }
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Advanced features for professionals",
+      "features": {
+        "projects": "Unlimited projects",
+        "storage": "10 GB storage",
+        "analytics": "Advanced analytics",
+        "support": "Priority support",
+        "domains": "Custom domains"
+      },
+      "limits": {
+        "brands": "Custom brands",
+        "updates": "Lifetime updates"
+      }
+    },
+    "lifetime": {
+      "name": "Lifetime",
+      "description": "Premium features with one-time payment",
+      "features": {
+        "proFeatures": "All Pro features",
+        "storage": "100 GB storage",
+        "support": "Dedicated support",
+        "security": "Enterprise-grade security",
+        "integrations": "Advanced integrations",
+        "branding": "Custom branding",
+        "updates": "Lifetime updates"
+      }
+    }
+  },
   "NotFoundPage": {
     "title": "404",
     "message": "Sorry, the page you are looking for does not exist.",
@@ -510,43 +555,6 @@
       "title": "Upgrade",
       "description": "Upgrade to Pro to access all features",
       "button": "Upgrade"
-    }
-  },
-  "PricePlans": {
-    "free": {
-      "name": "Free",
-      "description": "Basic features for personal use",
-      "features": {
-        "projects": "Up to 3 projects",
-        "storage": "1 GB storage",
-        "analytics": "Basic analytics",
-        "support": "Community support"
-      }
-    },
-    "pro": {
-      "name": "Pro",
-      "description": "Advanced features for professionals",
-      "features": {
-        "projects": "Unlimited projects",
-        "storage": "10 GB storage",
-        "analytics": "Advanced analytics",
-        "support": "Priority support",
-        "domains": "Custom domains",
-        "collaboration": "Team collaboration"
-      }
-    },
-    "lifetime": {
-      "name": "Lifetime",
-      "description": "Premium features with one-time payment",
-      "features": {
-        "proFeatures": "All Pro features",
-        "storage": "100 GB storage",
-        "support": "Dedicated support",
-        "security": "Enterprise-grade security",
-        "integrations": "Advanced integrations",
-        "branding": "Custom branding",
-        "updates": "Lifetime updates"
-      }
     }
   },
   "Mail": {
