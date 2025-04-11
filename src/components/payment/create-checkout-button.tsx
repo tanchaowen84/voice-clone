@@ -51,9 +51,8 @@ export function CheckoutButton({
         metadata,
       });
 
-      // Redirect to checkout
+      // Redirect to checkout page
       if (result && result.data?.success && result.data.data?.url) {
-        // redirect to checkout page
         window.location.href = result.data.data?.url;
       } else {
         console.error('Create checkout session error, result:', result);

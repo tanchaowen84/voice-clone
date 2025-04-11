@@ -1,30 +1,72 @@
 import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import { NextRequest, NextResponse } from 'next/server';
+import { LOCALES, routing } from './i18n/routing';
+import { getSession } from './lib/server';
+import { DEFAULT_LOGIN_REDIRECT, protectedRoutes, routesNotAllowedByLoggedInUsers } from './routes';
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing);
 
-// TODO: add middleware rules for protected routes
+export default async function middleware(req: NextRequest) {
+  const { nextUrl } = req;
+  console.log('>> middleware start, pathname', nextUrl.pathname);
+
+  const session = await getSession();
+  const isLoggedIn = !!session;
+  // console.log('middleware, isLoggedIn', isLoggedIn);
+
+  // Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
+  const pathnameWithoutLocale = getPathnameWithoutLocale(nextUrl.pathname, LOCALES);
+
+  // If the route can not be accessed by logged in users, redirect if the user is logged in
+  if (isLoggedIn) {
+    const isNotAllowedRoute = routesNotAllowedByLoggedInUsers.some(route => new RegExp(`^${route}$`).test(pathnameWithoutLocale));
+    if (isNotAllowedRoute) {
+      console.log('<< middleware end, not allowed route, already logged in, redirecting to dashboard');
+      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+  }
+
+  const isProtectedRoute = protectedRoutes.some(route => new RegExp(`^${route}$`).test(pathnameWithoutLocale));
+  // console.log('middleware, isProtectedRoute', isProtectedRoute);
+
+  // If the route is a protected route, redirect to login if user is not logged in
+  if (!isLoggedIn && isProtectedRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    console.log('<< middleware end, not logged in, redirecting to login, callbackUrl', callbackUrl);
+    return NextResponse.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+    );
+  }
+
+  // Apply intlMiddleware for all routes
+  console.log('<< middleware end, applying intlMiddleware');
+  return intlMiddleware(req);
+}
+
+/**
+ * Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
+ */
+function getPathnameWithoutLocale(pathname: string, locales: string[]): string {
+  const localePattern = new RegExp(`^/(${locales.join('|')})/`);
+  return pathname.replace(localePattern, '/');
+}
 
 /**
  * Next.js internationalized routing
+ * specify the routes the middleware applies to
  *
  * https://next-intl.dev/docs/routing#base-path
  */
 export const config = {
   // The `matcher` is relative to the `basePath`
-  matcher: [
-    // This entry handles the root of the base
-    // path and should always be included
-    '/',
-
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
-    '/(zh|en)/:path*',
-
-    // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/zh/pathnames`)
-    // Exclude API routes and other Next.js internal routes
-    // if not exclude api routes, auth routes will not work
+  matcher: [    
+    // Match all pathnames except for
+    // - … if they start with `/api`, `/_next` or `/_vercel`
+    // - … the ones containing a dot (e.g. `favicon.ico`)
     '/((?!api|_next|_vercel|.*\\..*).*)',
   ],
 };

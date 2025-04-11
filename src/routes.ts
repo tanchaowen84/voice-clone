@@ -6,10 +6,10 @@
 export enum Routes {
   Root = '/',
 
+  // pages
   FAQ = '/#faq',
   Features = '/#features',
   Pricing = '/pricing',
-
   Blog = '/blog',
   Docs = '/docs',
   About = '/about',
@@ -17,7 +17,6 @@ export enum Routes {
   Waitlist = '/waitlist',
   Changelog = '/changelog',
   Roadmap = 'https://mksaas.featurebase.app',
-
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
   TermsOfService = '/terms',
@@ -29,17 +28,18 @@ export enum Routes {
   ForgotPassword = '/auth/forgot-password',
   ResetPassword = '/auth/reset-password',
 
-  AIText = '/ai/text',
-  AIImage = '/ai/image',
-  AIVideo = '/ai/video',
-  AIAudio = '/ai/audio',
-
   // dashboard routes
   Dashboard = '/dashboard',
   SettingsProfile = '/settings/profile',
   SettingsBilling = '/settings/billing',
   SettingsSecurity = '/settings/security',
   SettingsNotifications = '/settings/notifications',
+
+  // AI routes
+  AIText = '/ai/text',
+  AIImage = '/ai/image',
+  AIVideo = '/ai/video',
+  AIAudio = '/ai/audio',
 
   // Block routes
   HeroBlocks = '/blocks/hero-section',
@@ -60,51 +60,23 @@ export enum Routes {
 }
 
 /**
- * An array of routes that are accessible to the public
- * These routes do not require authentication
- * @type {string[]}
+ * The routes that can not be accessed by logged in users
  */
-export const publicRoutes = [
-  '/',
-
-  // pages
-  '/blog(/.*)?',
-  '/blocks(/.*)?',
-  '/terms-of-service(/.*)?',
-  '/privacy-policy(/.*)?',
-  '/cookie-policy(/.*)?',
-  '/about(/.*)?',
-  '/contact(/.*)?',
-  '/waitlist(/.*)?',
-  '/changelog(/.*)?',
-
-  // unsubscribe newsletter
-  '/unsubscribe(/.*)?',
-
-  // stripe webhook
-  '/api/webhook',
-
-  // og images
-  '/api/og',
-];
-
-/**
- * The routes for the authentication pages
- */
-export const authRoutes = [
-  Routes.AuthError,
+export const routesNotAllowedByLoggedInUsers = [
   Routes.Login,
   Routes.Register,
-  Routes.ForgotPassword,
-  Routes.ResetPassword,
 ];
 
 /**
- * The prefix for API authentication routes
- * Routes that start with this prefix are used for API authentication purposes
- * @type {string}
+ * The routes that are protected and require authentication
  */
-export const apiAuthPrefix = '/api/auth';
+export const protectedRoutes = [
+  Routes.Dashboard,
+  Routes.SettingsProfile,
+  Routes.SettingsBilling,
+  Routes.SettingsSecurity,
+  Routes.SettingsNotifications,
+];
 
 /**
  * The default redirect path after logging in
