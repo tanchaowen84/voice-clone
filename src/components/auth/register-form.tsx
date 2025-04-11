@@ -18,7 +18,7 @@ import { authClient } from '@/lib/auth-client';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -34,8 +34,11 @@ export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
-  const callbackUrl = propCallbackUrl || paramCallbackUrl || DEFAULT_LOGIN_REDIRECT;
+  const locale = useLocale();
+  const defaultCallbackUrl = `/${locale}${DEFAULT_LOGIN_REDIRECT}`;
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   console.log('register form, callbackUrl', callbackUrl);
+  
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);

@@ -8,7 +8,7 @@ import { GitHubIcon } from '@/components/icons/github';
 import { GoogleIcon } from '@/components/icons/google';
 import { authClient } from '@/lib/auth-client';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { DividerWithText } from '@/components/auth/divider-with-text';
 
 interface SocialLoginButtonProps {
@@ -22,7 +22,10 @@ export const SocialLoginButton = ({ callbackUrl: propCallbackUrl }: SocialLoginB
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams.get('callbackUrl');
-  const callbackUrl = propCallbackUrl || paramCallbackUrl || DEFAULT_LOGIN_REDIRECT;
+  // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
+  const locale = useLocale();
+  const defaultCallbackUrl = `/${locale}${DEFAULT_LOGIN_REDIRECT}`;
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   const [isLoading, setIsLoading] = useState<'google' | 'github' | null>(null);
   console.log('social login button, callbackUrl', callbackUrl);
 
