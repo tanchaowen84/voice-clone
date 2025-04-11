@@ -1,7 +1,6 @@
 'use client';
 
 import { AuthCard } from '@/components/auth/auth-card';
-import { Icons } from '@/components/icons/icons';
 import { FormError } from '@/components/shared/form-error';
 import { FormSuccess } from '@/components/shared/form-success';
 import { Button } from '@/components/ui/button';
@@ -18,6 +17,7 @@ import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -119,7 +119,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
             className="w-full cursor-pointer"
           >
             {isPending && (
-              <Icons.spinner className="mr-2 size-4 animate-spin" />
+              <Loader2Icon className="mr-2 size-4 animate-spin" />
             )}
             <span>{t('send')}</span>
           </Button>

@@ -379,7 +379,8 @@ export class StripeProvider implements PaymentProvider {
       updatedAt: new Date()
     };
 
-    const result = await db.insert(payment)
+    const result = await db
+      .insert(payment)
       .values(createFields)
       .returning({ id: payment.id });
 

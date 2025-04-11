@@ -1,15 +1,15 @@
 'use client';
 
-import { Icons } from '@/components/icons/icons';
-import { Button } from '@/components/ui/button';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { DividerWithText } from '@/components/auth/divider-with-text';
 import { GitHubIcon } from '@/components/icons/github';
 import { GoogleIcon } from '@/components/icons/google';
+import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
+import { Loader2Icon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { DividerWithText } from '@/components/auth/divider-with-text';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 interface SocialLoginButtonProps {
   callbackUrl?: string;
@@ -88,7 +88,7 @@ export const SocialLoginButton = ({ callbackUrl: propCallbackUrl }: SocialLoginB
         disabled={isLoading === 'google'}
       >
         {isLoading === 'google' ? (
-          <Icons.spinner className="mr-2 size-4 animate-spin" />
+          <Loader2Icon className="mr-2 size-4 animate-spin" />
         ) : (
           <GoogleIcon className="size-4 mr-2" />
         )}
@@ -102,7 +102,7 @@ export const SocialLoginButton = ({ callbackUrl: propCallbackUrl }: SocialLoginB
         disabled={isLoading === 'github'}
       >
         {isLoading === 'github' ? (
-          <Icons.spinner className="mr-2 size-4 animate-spin" />
+          <Loader2Icon className="mr-2 size-4 animate-spin" />
         ) : (
           <GitHubIcon className="size-4 mr-2" />
         )}

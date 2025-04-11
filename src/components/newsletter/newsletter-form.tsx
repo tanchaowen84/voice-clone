@@ -2,7 +2,6 @@
 
 import { subscribeNewsletterAction } from '@/actions/subscribe-newsletter';
 import { FormError } from '@/components/shared/form-error';
-import { Icons } from '@/components/icons/icons';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -16,11 +15,11 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
-import { useTransition } from 'react';
+import { Loader2Icon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import { z } from 'zod';
 
 export function NewsletterForm() {
@@ -51,7 +50,7 @@ export function NewsletterForm() {
     startTransition(async () => {
       try {
         setError(undefined);
-        
+
         const result = await subscribeNewsletterAction({
           email: data.email,
         });
@@ -109,14 +108,14 @@ export function NewsletterForm() {
             disabled={isPending}
           >
             {isPending ? (
-              <Icons.spinner className="size-6 animate-spin" aria-hidden="true" />
+              <Loader2Icon className="size-6 animate-spin" aria-hidden="true" />
             ) : (
               <PaperPlaneIcon className="size-6" aria-hidden="true" />
             )}
             <span className="sr-only">{t('subscribe')}</span>
           </Button>
         </div>
-        
+
         {error && (
           <div className="w-full">
             <FormError message={error} />

@@ -1,7 +1,6 @@
 'use client';
 
 import { AuthCard } from '@/components/auth/auth-card';
-import { Icons } from '@/components/icons/icons';
 import { FormError } from '@/components/shared/form-error';
 import { FormSuccess } from '@/components/shared/form-success';
 import { Button } from '@/components/ui/button';
@@ -19,8 +18,8 @@ import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { useTranslations, useLocale } from 'next-intl';
+import { EyeIcon, EyeOffIcon, Loader2Icon } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -194,7 +193,7 @@ export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginForm
             className="w-full flex items-center justify-center gap-2 cursor-pointer"
           >
             {isPending && (
-              <Icons.spinner className="mr-2 size-4 animate-spin" />
+              <Loader2Icon className="mr-2 size-4 animate-spin" />
             )}
             <span>{t('signIn')}</span>
           </Button>

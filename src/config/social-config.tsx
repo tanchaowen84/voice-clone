@@ -6,10 +6,9 @@ import { GitHubIcon } from '@/components/icons/github';
 import { InstagramIcon } from '@/components/icons/instagram';
 import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
-import { YouTubeIcon } from '@/components/icons/youtube';
 import { XTwitterIcon } from '@/components/icons/x';
+import { YouTubeIcon } from '@/components/icons/youtube';
 import { MenuItem } from '@/types';
-import { MailIcon } from 'lucide-react';
 import { websiteConfig } from './website';
 
 /**
