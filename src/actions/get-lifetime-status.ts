@@ -72,7 +72,7 @@ export const getLifetimeStatusAction = actionClient
           and(
             eq(payment.userId, userId),
             eq(payment.type, PaymentTypes.ONE_TIME),
-            eq(payment.status, 'completed') // TODO: change to enum
+            eq(payment.status, 'completed')
           )
         );
 

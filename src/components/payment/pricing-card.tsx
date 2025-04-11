@@ -64,7 +64,7 @@ export function PricingCard({
   const currentUser = useCurrentUser();
   const currentPath = useLocalePathname();
   // console.log('pricing card, currentPath', currentPath);
-  
+
   // generate formatted price and price label
   let formattedPrice = '';
   let priceLabel = '';
@@ -112,17 +112,24 @@ export function PricingCard({
       )}
 
       <CardHeader>
-        <CardTitle className="font-medium">{plan.name}</CardTitle>
+        <CardTitle>
+          <h3 className="font-medium">{plan.name}</h3>
+        </CardTitle>
 
         {/* show price and price label */}
         <div className="flex items-baseline gap-2">
           <span className="my-4 block text-4xl font-semibold">
             {formattedPrice}
           </span>
-          {priceLabel && <span className="text-2xl">{priceLabel}</span>}
+          {priceLabel &&
+            <span className="text-2xl">
+              {priceLabel}
+            </span>}
         </div>
 
-        <CardDescription className="text-sm">{plan.description}</CardDescription>
+        <CardDescription>
+          <p className="text-sm">{plan.description}</p>
+        </CardDescription>
 
         {/* show action buttons based on plans */}
         {plan.isFree ? (

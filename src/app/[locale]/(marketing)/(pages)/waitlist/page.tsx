@@ -30,9 +30,9 @@ export default async function WaitlistPage() {
         <h1 className="text-center text-3xl font-bold tracking-tight">
           {t('title')}
         </h1>
-        <p className="text-center text-lg text-muted-foreground">
+        <h2 className="text-center text-lg text-muted-foreground">
           {t('subtitle')}
-        </p>
+        </h2>
       </div>
 
       {/* Form */}
