@@ -2,7 +2,6 @@
   "Metadata": {
     "name": "MkSaaS",
     "title": "MkSaaS - 最好的 AI SaaS 模板",
-    "tagline": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
     "description": "MkSaaS 是构建 AI SaaS 的最佳模板，使用 MkSaaS 可以在几天内轻松构建您的 AI SaaS，简单且毫不费力。"
   },
   "Common": {
@@ -34,6 +33,13 @@
   "HomePage": {
     "title": "MkSaaS",
     "description": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
+    "hero": {
+      "title": "使用 MkSaaS 轻松构建您的 AI SaaS",
+      "description": "MkSaaS 是构建 AI SaaS 的最佳模板，内置 AI、身份验证、全球支付、博客、文档、邮件订阅、SEO、多彩主题、丰富组件等。",
+      "introduction": "介绍 MkSaaS 模板",
+      "primary": "开始使用",
+      "secondary": "查看演示"
+    },
     "faqs": {
       "title": "常见问题",
       "description": "如果您有任何问题，请随时联系我们",
@@ -420,6 +426,7 @@
       }
     },
     "footer": {
+      "tagline": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
       "product": {
         "title": "产品",
         "items": {

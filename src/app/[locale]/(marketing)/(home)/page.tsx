@@ -1,4 +1,5 @@
-import FAQs from '@/components/blocks/faqs/faqs';
+import FaqSection from '@/components/blocks/faqs/faqs';
+import HeroSection from '@/components/blocks/hero/hero';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
@@ -7,7 +8,6 @@ import { getTranslations } from 'next-intl/server';
 import CallToAction from '../../preview/call-to-action/one/page';
 import ContentSection from '../../preview/content/one/page';
 import Features from '../../preview/features/one/page';
-import HeroSection from '../../preview/hero-section/one/page';
 import LogoCloud from '../../preview/logo-cloud/one/page';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
@@ -42,7 +42,7 @@ export default async function HomePage(props: HomePageProps) {
 
   return (
     <>
-      <div className="mt-8 flex flex-col">
+      <div className="flex flex-col">
         <div id="hero" className="">
           <HeroSection />
         </div>
@@ -64,7 +64,7 @@ export default async function HomePage(props: HomePageProps) {
         </div>
 
         <div id="faqs" className="">
-          <FAQs />
+          <FaqSection />
         </div>
 
         <div id="testimonials" className="">

@@ -16,7 +16,7 @@ type FAQItem = {
   answer: string;
 };
 
-export default function FAQs() {
+export default function FaqSection() {
   const locale = useLocale();
   const t = useTranslations('HomePage.faqs');
 

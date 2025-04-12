@@ -33,7 +33,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
 
               {/* tagline */}
               <p className="text-muted-foreground text-base py-2 md:pr-12">
-                {t('Metadata.tagline')}
+                {t('Marketing.footer.tagline')}
               </p>
 
               {/* social links */}

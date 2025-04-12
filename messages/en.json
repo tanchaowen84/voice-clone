@@ -2,7 +2,6 @@
   "Metadata": {
     "name": "MkSaaS",
     "title": "MkSaaS - The Best AI SaaS Boilerplate",
-    "tagline": "Make AI SaaS in days, simply and effortlessly",
     "description": "MkSaaS is the best AI SaaS boilerplate. Make AI SaaS in days, simply and effortlessly"
   },
   "Common": {
@@ -34,6 +33,13 @@
   "HomePage": {
     "title": "MkSaaS",
     "description": "Make AI SaaS in days, simply and effortlessly",
+    "hero": {
+      "title": "Make AI SaaS in days, simply and effortlessly",
+      "description": "The best AI SaaS boilerplate, packed with AI, Authentication, Payment, Blog, Documentation, Newsletter, SEO, Themes, Blocks, Dashboard and more.",
+      "introduction": "Introducing MkSaaS Boilerplate",
+      "primary": "Get Started",
+      "secondary": "See Demo"
+    },
     "faqs": {
       "title": "Frequently Asked Questions",
       "description": "Please feel free to contact us if you have any questions",
@@ -419,6 +425,7 @@
       }
     },
     "footer": {
+      "tagline": "Make AI SaaS in days, simply and effortlessly",
       "product": {
         "title": "Product",
         "items": {
