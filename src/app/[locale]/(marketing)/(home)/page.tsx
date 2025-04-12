@@ -1,21 +1,20 @@
 import FaqSection from '@/components/blocks/faqs/faqs';
 import Features2Section from '@/components/blocks/features/features2';
-import FeaturesSection from '@/components/blocks/features/features';
+import Features3Section from '@/components/blocks/features/features3';
+import Features4Section from '@/components/blocks/features/features4';
 import HeroSection from '@/components/blocks/hero/hero';
+import IntegrationSection from '@/components/blocks/integration/integration';
 import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
+import TestimonialsSection from '@/components/blocks/testimonials/testimonials';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import CallToAction from '../../preview/call-to-action/one/page';
-import ContentSection from '../../preview/content/one/page';
+import FeaturesSection from '@/components/blocks/features/features';
 import Pricing from '../../preview/pricing/three/page';
-import StatsSection from '../../preview/stats/one/page';
-import Testimonials from '../../preview/testimonials/one/page';
-import Features3Section from '@/components/blocks/features/features3';
-import IntegrationSection from '@/components/blocks/integration/integration';
-import Features4Section from '@/components/blocks/features/features4';
+import StatsSection from '@/components/blocks/stats/stats';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -47,55 +46,51 @@ export default async function HomePage(props: HomePageProps) {
   return (
     <>
       <div className="flex flex-col">
-        <div id="hero" className="">
+        <div id="hero">
           <HeroSection />
         </div>
 
-        <div id="logo-cloud" className="">
+        <div id="logo-cloud">
           <LogoCloud />
         </div>
 
-        <div id="integration" className="">
-          <IntegrationSection />
-        </div>
-
-        <div id="features" className="">
-          <FeaturesSection />
-        </div>
-
-        <div id="features2" className="">
-          <Features2Section />
-        </div>
-
-        <div id="features3" className="">
-          <Features3Section />
-        </div>
-
-        <div id="features4" className="">
-          <Features4Section />
-        </div>
-
-        <div id="content" className="">
-          <ContentSection />
-        </div>
-
-        <div id="pricing" className="">
-          <Pricing />
-        </div>
-
-        <div id="faqs" className="">
-          <FaqSection />
-        </div>
-
-        <div id="testimonials" className="">
-          <Testimonials />
-        </div>
-
-        <div id="stats" className="">
+        <div id="stats">
           <StatsSection />
         </div>
 
-        <div id="call-to-action" className="">
+        <div id="integration">
+          <IntegrationSection />
+        </div>
+
+        <div id="features2">
+          <Features2Section />
+        </div>
+
+        <div id="features">
+          <FeaturesSection />
+        </div>
+
+        <div id="features3">
+          <Features3Section />
+        </div>
+
+        <div id="features4">
+          <Features4Section />
+        </div>
+
+        <div id="pricing">
+          <Pricing />
+        </div>
+
+        <div id="faqs">
+          <FaqSection />
+        </div>
+
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
+
+        <div id="call-to-action">
           <CallToAction />
         </div>
       </div>

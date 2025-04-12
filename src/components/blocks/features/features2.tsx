@@ -59,62 +59,63 @@ export default function Features2Section() {
           </p>
         </div>
 
-        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:gap-20 lg:px-0">
-          <Accordion
-            type="single"
-            value={activeItem}
-            onValueChange={(value) => setActiveItem(value as ImageKey)}
-            className="w-full"
-          >
-            <AccordionItem value="item-1">
-              <AccordionTrigger>
-                <div className="flex items-center gap-2 text-base">
-                  <Database className="size-4" />
-                  {t('items.item-1.title')}
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                {t('items.item-1.description')}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>
-                <div className="flex items-center gap-2 text-base">
-                  <Fingerprint className="size-4" />
-                  {t('items.item-2.title')}
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                {t('items.item-2.description')}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
-                <div className="flex items-center gap-2 text-base">
-                  <IdCard className="size-4" />
-                  {t('items.item-3.title')}
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                {t('items.item-3.description')}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4">
-              <AccordionTrigger>
-                <div className="flex items-center gap-2 text-base">
-                  <ChartBarIncreasingIcon className="size-4" />
-                  {t('items.item-4.title')}
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                {t('items.item-4.description')}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:px-0">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+            <Accordion
+              type="single"
+              value={activeItem}
+              onValueChange={(value) => setActiveItem(value as ImageKey)}
+              className="w-full"
+            >
+              <AccordionItem value="item-1">
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2 text-base">
+                    <Database className="size-4" />
+                    {t('items.item-1.title')}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t('items.item-1.description')}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2 text-base">
+                    <Fingerprint className="size-4" />
+                    {t('items.item-2.title')}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t('items.item-2.description')}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2 text-base">
+                    <IdCard className="size-4" />
+                    {t('items.item-3.title')}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t('items.item-3.description')}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2 text-base">
+                    <ChartBarIncreasingIcon className="size-4" />
+                    {t('items.item-4.title')}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t('items.item-4.description')}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
 
-          <div className="bg-background relative flex overflow-hidden rounded-2xl border p-2">
-            {/* <div className="w-15 absolute inset-0 right-0 ml-auto border-l bg-[repeating-linear-gradient(-45deg,var(--color-border),var(--color-border)_1px,transparent_1px,transparent_8px)]"></div> */}
-            <div className="aspect-76/59 bg-background relative rounded-2xl">
+          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
+            <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${activeItem}-id`}
