@@ -1,23 +1,22 @@
+import CallToActionSection from '@/components/blocks/calltoaction/calltoaction';
 import FaqSection from '@/components/blocks/faqs/faqs';
+import FeaturesSection from '@/components/blocks/features/features';
 import Features2Section from '@/components/blocks/features/features2';
 import Features3Section from '@/components/blocks/features/features3';
 import Features4Section from '@/components/blocks/features/features4';
+import Features5Section from '@/components/blocks/features/features5';
 import HeroSection from '@/components/blocks/hero/hero';
 import IntegrationSection from '@/components/blocks/integration/integration';
+import Integration2Section from '@/components/blocks/integration/integration2';
 import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
+import PricingSection from '@/components/blocks/pricing/pricing';
+import StatsSection from '@/components/blocks/stats/stats';
 import TestimonialsSection from '@/components/blocks/testimonials/testimonials';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import FeaturesSection from '@/components/blocks/features/features';
-import Pricing from '../../preview/pricing/three/page';
-import StatsSection from '@/components/blocks/stats/stats';
-import CallToActionSection from '@/components/blocks/calltoaction/calltoaction';
-import Integration2Section from '@/components/blocks/integration/integration2';
-import Features5Section from '@/components/blocks/features/features5';
-import PricingSection from '@/components/blocks/pricing/pricing';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api

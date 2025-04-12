@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MkSaaS
 
-## Getting Started
+Make AI SaaS in days, simply and effortlessly.
 
-First, run the development server:
+Website: [mksaas.com](https://mksaas.com)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Explore the [online demo](https://demo.mksaas.com)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Read the [documentation](https://mksaas.com/docs): still working in progress
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Watch the [video tutorial](https://www.youtube.com/@MkSaaSHQ): still working in progress
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> If you have any questions, please [submit an issue](https://github.com/MkSaaSHQ/mksaas-template/issues/new), or you can contact me at [support@mksaas.com](mailto:support@mksaas.com).
 
-## Learn More
+> When submitting an issue, please use English as the main Language, so that everyone can read it.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Please check out the [LICENSE](LICENSE) file if you have any questions about what you can do with the code.
