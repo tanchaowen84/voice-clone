@@ -8,10 +8,10 @@ import { getTranslations } from 'next-intl/server';
 import CallToAction from '../../preview/call-to-action/one/page';
 import ContentSection from '../../preview/content/one/page';
 import Features from '../../preview/features/one/page';
-import LogoCloud from '../../preview/logo-cloud/one/page';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
 import Testimonials from '../../preview/testimonials/one/page';
+import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
