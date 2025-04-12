@@ -3,12 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import { useLocalePathname } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
-import { Check, CheckCircleIcon, XCircleIcon } from 'lucide-react';
+import { CheckCircleIcon, XCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useLocalePathname } from '@/i18n/navigation';
 import { LoginWrapper } from '../auth/login-wrapper';
 import { CheckoutButton } from './create-checkout-button';
 

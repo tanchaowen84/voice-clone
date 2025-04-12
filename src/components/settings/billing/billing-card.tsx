@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerPortalButton } from '@/components/payment/customer-portal-button';
+import { CustomerPortalButton } from '@/components/pricing/customer-portal-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

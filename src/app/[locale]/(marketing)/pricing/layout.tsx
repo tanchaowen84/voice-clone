@@ -1,5 +1,3 @@
-import FAQs from '@/components/blocks/faqs/faqs';
-import Container from '@/components/layout/container';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
@@ -41,11 +39,7 @@ export default async function PricingPageLayout({
         </div>
       </div>
 
-      <Container className="mt-8 px-4 flex flex-col gap-16">
-        {children}
-
-        <FAQs />
-      </Container>
+      {children}
     </div>
   );
 }

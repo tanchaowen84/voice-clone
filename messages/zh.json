@@ -36,8 +36,7 @@
     "description": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
     "faqs": {
       "title": "常见问题",
-      "description": "找不到您想问的问题？",
-      "contact": "请联系我们的客户支持团队",
+      "description": "如果您有任何问题，请随时联系我们",
       "items": {
         "item-1": {
           "question": "你们提供免费试用吗？",
@@ -54,6 +53,10 @@
         "item-4": {
           "question": "你们的退款政策是什么？",
           "answer": "是的，我们提供30天的退款保证。"
+        },
+        "item-5": {
+          "question": "找不到您想问的问题？",
+          "answer": "请联系我们的客户支持团队，邮箱地址：support@mksaas.com"
         }
       }
     }

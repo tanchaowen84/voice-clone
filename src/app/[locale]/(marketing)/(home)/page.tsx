@@ -1,3 +1,4 @@
+import FAQs from '@/components/blocks/faqs/faqs';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
@@ -5,7 +6,6 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import CallToAction from '../../preview/call-to-action/one/page';
 import ContentSection from '../../preview/content/one/page';
-import FAQs from '../../preview/faqs/one/page';
 import Features from '../../preview/features/one/page';
 import HeroSection from '../../preview/hero-section/one/page';
 import LogoCloud from '../../preview/logo-cloud/one/page';
