@@ -36,8 +36,8 @@
     "description": "Make AI SaaS in days, simply and effortlessly",
     "FAQ": {
       "title": "Frequently Asked Questions",
-      "description": "Can't find what you're looking for? Contact our ",
-      "contact": "customer support team",
+      "description": "Can't find what you're looking for?",
+      "contact": "Contact our customer support team",
       "items": {
         "item-1": {
           "question": "Do you offer a free trial?",

@@ -36,8 +36,8 @@
     "description": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
     "FAQ": {
       "title": "常见问题",
-      "description": "找不到您想问的问题？请联系我们的",
-      "contact": "客户支持团队",
+      "description": "找不到您想问的问题？",
+      "contact": "请联系我们的客户支持团队",
       "items": {
         "item-1": {
           "question": "你们提供免费试用吗？",

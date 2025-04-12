@@ -6,9 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getBaseUrlWithLocale, getUrlWithLocale } from '@/lib/urls/urls';
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 type FAQItem = {
@@ -19,7 +19,9 @@ type FAQItem = {
 };
 
 export default function FAQs() {
+  const locale = useLocale();
   const t = useTranslations('HomePage.FAQ');
+  
   const faqItems: FAQItem[] = [
     {
       id: 'item-1',
@@ -29,7 +31,7 @@ export default function FAQs() {
     },
     {
       id: 'item-2',
-      icon: 'receipt',
+      icon: 'wallet',
       question: t('items.item-2.question'),
       answer: t('items.item-2.answer'),
     },
@@ -48,7 +50,7 @@ export default function FAQs() {
   ];
 
   return (
-    <section className="py-20">
+    <section className="py-16">
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="flex flex-col gap-10 md:flex-row md:gap-16">
           <div className="md:w-1/3">
@@ -56,10 +58,12 @@ export default function FAQs() {
               <h2 className="mt-4 text-3xl font-bold">
                 {t('title')}
               </h2>
-              <p className="text-muted-foreground mt-4">
+              <p className="text-muted-foreground mt-4 text-sm">
                 {t('description')}
+              </p>
+              <p className="text-muted-foreground mt-2 text-sm">
                 <Link
-                  href={getBaseUrlWithLocale('/contact')}
+                  href={getUrlWithLocale('/contact', locale)}
                   className="text-primary font-medium hover:underline"
                 >
                   {t('contact')}
