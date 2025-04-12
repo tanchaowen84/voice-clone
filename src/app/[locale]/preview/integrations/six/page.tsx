@@ -1,4 +1,4 @@
-import { Gemini, Replit, GooglePaLM } from '@/components/blocks/logos';
+import { Gemini, Replit, GooglePaLM } from '@/components/nsui/logos';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';

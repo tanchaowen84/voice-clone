@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { HeroHeader } from '@/components/blocks/hero9-header';
+import { HeroHeader } from '@/components/nsui/hero9-header';
 import { InfiniteSlider } from '@/components/motion/infinite-slider';
 import { ProgressiveBlur } from '@/components/motion/progressive-blur';
 import { ChevronRight } from 'lucide-react';

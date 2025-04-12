@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { HeroHeader } from '@/components/blocks/hero8-header';
+import { HeroHeader } from '@/components/nsui/hero8-header';
 import { InfiniteSlider } from '@/components/motion/infinite-slider';
 import { ProgressiveBlur } from '@/components/motion/progressive-blur';
 

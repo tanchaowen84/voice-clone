@@ -1,5 +1,5 @@
-import BlockPreview from '@/components/blocks/block-preview';
-import { blocks, categories } from '@/components/blocks/blocks';
+import BlockPreview from '@/components/nsui/block-preview';
+import { blocks, categories } from '@/components/nsui/blocks';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';

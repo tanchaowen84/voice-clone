@@ -1,5 +1,5 @@
-import { categories } from '@/components/blocks/blocks';
-import BlocksNav from '@/components/blocks/blocks-nav';
+import { categories } from '@/components/nsui/blocks';
+import BlocksNav from '@/components/nsui/blocks-nav';
 import { PropsWithChildren } from 'react';
 
 /**

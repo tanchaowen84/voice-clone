@@ -5,7 +5,7 @@ import {
   MagicUI,
   VSCodium,
   MediaWiki,
-} from '@/components/blocks/logos';
+} from '@/components/nsui/logos';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 

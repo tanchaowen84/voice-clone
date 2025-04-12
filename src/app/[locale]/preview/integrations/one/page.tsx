@@ -10,7 +10,7 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/blocks/logos';
+} from '@/components/nsui/logos';
 
 export default function IntegrationsSection() {
   return (
