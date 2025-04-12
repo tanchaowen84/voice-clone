@@ -20,7 +20,7 @@ export default function FeaturesSection() {
           </p>
         </div>
 
-        <div className="relative mx-auto grid divide-x divide-y border *:p-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="relative mx-auto grid divide-x divide-y border *:p-8 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <ZapIcon className="size-4" />

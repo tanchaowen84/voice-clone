@@ -43,6 +43,37 @@
     "LogoCloud": {
       "title": "Your favorite companies are our partners"
     },
+    "integration": {
+      "title": "Integrate with your favorite tools",
+      "description": "Connect seamlessly with popular platforms and services to enhance your workflow.",
+      "learnMore": "Learn More",
+      "items": {
+        "item-1": {
+          "title": "Google Gemini",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        },
+        "item-2": {
+          "title": "Replit",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        },
+        "item-3": {
+          "title": "MagicUI",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        },
+        "item-4": {
+          "title": "VSCodium",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        },
+        "item-5": {
+          "title": "MediaWiki",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        },
+        "item-6": {
+          "title": "Google PaLM",
+          "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem."
+        }
+      }
+    },
     "features": {
       "title": "The features of your product",
       "description": "Write the description of your product here",
@@ -96,7 +127,7 @@
       }
     },
     "features3": {
-      "title": "The features of your product",
+      "title": "Product Features",
       "description": "Write the description of your product here, make it as detailed as possible",
       "feature-1": "Product Feature One",
       "feature-2": "Product Feature Two",

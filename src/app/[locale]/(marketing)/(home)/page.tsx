@@ -14,6 +14,8 @@ import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
 import Testimonials from '../../preview/testimonials/one/page';
 import Features3Section from '@/components/blocks/features/features3';
+import IntegrationSection from '@/components/blocks/integration/integration';
+import Features4Section from '@/components/blocks/features/features4';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -53,16 +55,24 @@ export default async function HomePage(props: HomePageProps) {
           <LogoCloud />
         </div>
 
-        <div id="features2" className="">
-          <FeaturesSection />
+        <div id="integration" className="">
+          <IntegrationSection />
         </div>
 
         <div id="features" className="">
+          <FeaturesSection />
+        </div>
+
+        <div id="features2" className="">
           <Features2Section />
         </div>
 
         <div id="features3" className="">
           <Features3Section />
+        </div>
+
+        <div id="features4" className="">
+          <Features4Section />
         </div>
 
         <div id="content" className="">
