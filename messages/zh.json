@@ -32,8 +32,31 @@
     "logoutFailed": "退出失败"
   },
   "HomePage": {
-    "title": "MkSaaS 示例",
-    "description": "这是一个使用 MkSaaS 构建网站的简单示例"
+    "title": "MkSaaS",
+    "description": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
+    "FAQ": {
+      "title": "常见问题",
+      "description": "找不到您想问的问题？请联系我们的",
+      "contact": "客户支持团队",
+      "items": {
+        "item-1": {
+          "question": "你们提供免费试用吗？",
+          "answer": "是的，我们提供7天的免费试用。"
+        },
+        "item-2": {
+          "question": "如何取消我的订阅？",
+          "answer": "您可以通过访问账单页面取消您的订阅。"
+        },
+        "item-3": {
+          "question": "我可以更改我的计划吗？",
+          "answer": "是的，您可以随时通过访问账单页面更改您的计划。"
+        },
+        "item-4": {
+          "question": "你们的退款政策是什么？",
+          "answer": "是的，我们提供30天的退款保证。"
+        }
+      }
+    }
   },
   "PricingPage": {
     "title": "价格",

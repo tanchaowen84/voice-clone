@@ -32,8 +32,31 @@
     "logoutFailed": "Failed to log out"
   },
   "HomePage": {
-    "title": "next-intl example",
-    "description": "This is a simple example of how to use next-intl to build a website"
+    "title": "MkSaaS",
+    "description": "Make AI SaaS in days, simply and effortlessly",
+    "FAQ": {
+      "title": "Frequently Asked Questions",
+      "description": "Can't find what you're looking for? Contact our ",
+      "contact": "customer support team",
+      "items": {
+        "item-1": {
+          "question": "Do you offer a free trial?",
+          "answer": "Yes, we offer a 7-day free trial."
+        },
+        "item-2": {
+          "question": "How do I cancel my subscription?",
+          "answer": "You can cancel your subscription by visiting the billing page."
+        },
+        "item-3": {
+          "question": "Can I change my plan?",
+          "answer": "Yes, you can change your plan at any time by visiting the billing page."
+        },
+        "item-4": {
+          "question": "What is the refund policy?",
+          "answer": "We offer a 30-day money-back guarantee if you are not happy with our product."
+        }
+      }
+    }
   },
   "PricingPage": {
     "title": "Pricing",
