@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
+import { getUrlWithLocaleInCallbackUrl } from '@/lib/urls/urls';
 import { cn } from '@/lib/utils';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,7 +39,7 @@ export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginForm
   const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
-  const defaultCallbackUrl = `/${locale}${DEFAULT_LOGIN_REDIRECT}`;
+  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(DEFAULT_LOGIN_REDIRECT, locale);
   const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   console.log('login form, callbackUrl', callbackUrl);
 

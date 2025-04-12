@@ -4,6 +4,7 @@ import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { websiteConfig } from '@/config/website';
 import { docsI18nConfig } from '@/lib/docs/i18n';
 import { source } from '@/lib/docs/source';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { I18nProvider, Translations } from 'fumadocs-ui/i18n';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
@@ -60,7 +61,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
     i18n: docsI18nConfig,
     githubUrl: websiteConfig.metadata.social.github ?? undefined,
     nav: {
-      url: '/docs',
+      url: getUrlWithLocale('/docs', locale),
       title: (
         <>
           <Logo className="size-6" />
@@ -71,15 +72,17 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
     links: [
       {
         text: t('homepage'),
-        url: '/',
+        url: getUrlWithLocale('/', locale),
         icon: <HomeIcon />,
         active: 'none',
+        external: false,
       },
       {
         text: t('blog'),
-        url: '/blog',
+        url: getUrlWithLocale('/blog', locale),
         icon: <BookIcon />,
         active: 'none',
+        external: false,
       },
       ...(websiteConfig.metadata.social.twitter
         ? [

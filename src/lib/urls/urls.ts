@@ -27,6 +27,13 @@ export function getBaseUrlWithLocale(locale?: Locale | null): string {
 }
 
 /**
+ * Get the URL of the application with the locale appended
+ */
+export function getUrlWithLocale(url: string, locale?: Locale | null): string {
+  return shouldAppendLocale(locale) ? `${baseUrl}/${locale}${url}` : `${baseUrl}${url}`;
+}
+
+/**
  * Adds locale to the callbackURL parameter in authentication URLs
  * 
  * Example:
