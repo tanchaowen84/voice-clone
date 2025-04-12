@@ -57,7 +57,7 @@ export function Navbar({ scroll }: NavBarProps) {
         scroll
           ? scrolled
             ? 'bg-background/80 backdrop-blur-md border-b supports-backdrop-filter:bg-background/60'
-            : 'bg-background'
+            : 'bg-transparent'
           : 'border-b bg-background'
       )}
     >

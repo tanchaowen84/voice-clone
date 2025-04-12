@@ -59,7 +59,7 @@ export default function Features2Section() {
           </p>
         </div>
 
-        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:px-0">
+        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 md:gap-12 lg:gap-24 lg:px-0">
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <Accordion
               type="single"

@@ -19,7 +19,7 @@ export default function BlogCard({ post }: BlogCardProps) {
 
   return (
     <LocaleLink href={`/blog/${slugParts.join('/')}`} className="block h-full">
-      <div className="group flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden h-full">
+      <div className="group flex flex-col border rounded-lg overflow-hidden h-full">
         {/* Image container - fixed aspect ratio */}
         <div className="group overflow-hidden relative aspect-16/9 w-full">
           {post.image && (
@@ -73,7 +73,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             {/* Post excerpt */}
             <div className="mt-2">
               {post.description && (
-                <p className="line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="line-clamp-2 text-sm text-muted-foreground">
                   {post.description}
                 </p>
               )}
@@ -81,7 +81,7 @@ export default function BlogCard({ post }: BlogCardProps) {
           </div>
 
           {/* Author and date */}
-          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between space-x-4 text-muted-foreground">
+          <div className="mt-4 pt-4 border-t flex items-center justify-between space-x-4 text-muted-foreground">
             <div className="flex items-center gap-2">
               <div className="relative h-8 w-8 shrink-0">
                 {post?.author?.avatar && (

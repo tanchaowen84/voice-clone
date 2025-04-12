@@ -59,7 +59,7 @@ export default function Features2Section() {
           </p>
         </div>
 
-        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:px-0">
+        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 md:gap-12 lg:gap-24 lg:px-0">
 
           <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
             <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
