@@ -18,17 +18,11 @@
     },
     "theme": {
       "label": "Toggle theme",
-      "default-theme": "Default Theme",
       "default": "Default",
       "blue": "Blue",
       "green": "Green",
       "amber": "Amber",
-      "neutral": "Neutral",
-      "scaled-theme": "Scaled Theme",
-      "blue-scaled": "Blue Scaled",
-      "default-scaled": "Default Scaled",
-      "mono-theme": "Mono Theme",
-      "mono-scaled": "Mono Scaled"
+      "neutral": "Neutral"
     },
     "copy": "Copy",
     "saving": "Saving...",

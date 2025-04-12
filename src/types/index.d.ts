@@ -17,11 +17,11 @@ export type WebsiteConfig = {
  * Website metadata
  */
 export interface WebsiteMetadata {
-  theme?: "default" | "blue" | "green" | "amber" | "neutral" | "default-scaled" | "blue-scaled" | "mono-scaled"; // The theme
-  ogImage?: string;                     // The image as Open Graph image
-  logoLight?: string;                   // The light logo image
-  logoDark?: string;                    // The dark logo image
-  social: SocialConfig;                 // The social media configuration
+  theme?: "default" | "blue" | "green" | "amber" | "neutral"; // The theme
+  ogImage?: string;                                           // The image as Open Graph image
+  logoLight?: string;                                         // The light logo image
+  logoDark?: string;                                          // The dark logo image
+  social: SocialConfig;                                       // The social media configuration
 }
 
 /**

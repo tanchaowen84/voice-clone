@@ -7,12 +7,11 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectSeparator,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
-import { useThemeConfig } from "./active-theme-provider";
 import { useTranslations } from "next-intl";
+import { useThemeConfig } from "./active-theme-provider";
 
 /**
  * 1. The component allows the user to select the theme of the website
@@ -48,24 +47,6 @@ export function ThemeSelector() {
     },
   ];
 
-  const SCALED_THEMES = [
-    {
-      name: t('default-scaled'),
-      value: "default-scaled",
-    },
-    {
-      name: t('blue-scaled'),
-      value: "blue-scaled",
-    },
-  ];
-
-  const MONO_THEMES = [
-    {
-      name: t('mono-scaled'),
-      value: "mono-scaled",
-    },
-  ];
-
   return (
     <div className="flex items-center gap-2">
       <Label htmlFor="theme-selector" className="sr-only">
@@ -81,29 +62,7 @@ export function ThemeSelector() {
         </SelectTrigger>
         <SelectContent align="end">
           <SelectGroup>
-            <SelectLabel>{t('default-theme')}</SelectLabel>
             {DEFAULT_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}
-                className="cursor-pointer"
-              >
-                {theme.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-          <SelectSeparator />
-          <SelectGroup>
-            <SelectLabel>{t('scaled-theme')}</SelectLabel>
-            {SCALED_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}
-                className="cursor-pointer"
-              >
-                {theme.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-          <SelectGroup>
-            <SelectLabel>{t('mono-theme')}</SelectLabel>
-            {MONO_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}
                 className="cursor-pointer"
               >

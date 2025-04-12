@@ -18,17 +18,11 @@
     },
     "theme": {
       "label": "切换主题",
-      "default-theme": "默认主题",
       "default": "默认",
       "blue": "蓝色",
       "green": "绿色",
       "amber": "橙色",
-      "neutral": "中性",
-      "scaled-theme": "缩放主题",
-      "default-scaled": "默认缩放",
-      "blue-scaled": "蓝色缩放",
-      "mono-theme": "等宽主题",
-      "mono-scaled": "等宽缩放"
+      "neutral": "中性"
     },
     "copy": "复制",
     "save": "保存",
