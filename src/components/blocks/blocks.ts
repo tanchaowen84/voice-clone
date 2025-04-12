@@ -14,6 +14,9 @@ export interface Block {
 //     return fs.readFileSync(fullPath, 'utf-8')
 // }
 
+/**
+ * https://github.com/Meschacirung/cnblocks/blob/main/data/blocks.ts
+ */
 export const blocks: Block[] = [
   {
     slug: 'hero-section',
@@ -183,6 +186,64 @@ export const blocks: Block[] = [
     preview: '/preview/features/twelve',
     // code: loadCode('app/preview/features/twelve/page.tsx'),
   },
+
+  {
+    slug: 'integrations',
+    title: 'one',
+    category: 'integrations',
+    preview: '/preview/integrations/one',
+    // code: loadCode('app/preview/integrations/one/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'two',
+    category: 'integrations',
+    preview: '/preview/integrations/two',
+    // code: loadCode('app/preview/integrations/two/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'three',
+    category: 'integrations',
+    preview: '/preview/integrations/three',
+    // code: loadCode('app/preview/integrations/three/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'four',
+    category: 'integrations',
+    preview: '/preview/integrations/four',
+    // code: loadCode('app/preview/integrations/four/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'five',
+    category: 'integrations',
+    preview: '/preview/integrations/five',
+    // code: loadCode('app/preview/integrations/five/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'six',
+    category: 'integrations',
+    preview: '/preview/integrations/six',
+    // code: loadCode('app/preview/integrations/six/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'seven',
+    category: 'integrations',
+    preview: '/preview/integrations/seven',
+    // code: loadCode('app/preview/integrations/seven/page.tsx'),
+  },
+  {
+    slug: 'integrations',
+    title: 'eight',
+    category: 'integrations',
+    preview: '/preview/integrations/eight',
+    // code: loadCode('app/preview/integrations/eight/page.tsx'),
+  },
+
   {
     slug: 'content',
     title: 'one',
@@ -318,6 +379,7 @@ export const blocks: Block[] = [
     // code: loadCode('app/preview/testimonials/six/page.tsx'),
   },
 
+
   {
     slug: 'call-to-action',
     title: 'one',
@@ -427,6 +489,27 @@ export const blocks: Block[] = [
     preview: '/preview/faqs/one',
     // code: loadCode('app/preview/faqs/one/page.tsx'),
   },
+  {
+    slug: 'faqs',
+    title: 'two',
+    category: 'faqs',
+    preview: '/preview/faqs/two',
+    // code: loadCode('app/preview/faqs/two/page.tsx'),
+  },
+  {
+    slug: 'faqs',
+    title: 'three',
+    category: 'faqs',
+    preview: '/preview/faqs/three',
+    // code: loadCode('app/preview/faqs/three/page.tsx'),
+  },
+  {
+    slug: 'faqs',
+    title: 'four',
+    category: 'faqs',
+    preview: '/preview/faqs/four',
+    // code: loadCode('app/preview/faqs/four/page.tsx'),
+  },
 
   {
     slug: 'login',
@@ -472,6 +555,20 @@ export const blocks: Block[] = [
     // code: loadCode('app/preview/sign-up/three/page.tsx'),
   },
   {
+    slug: 'forgot-password',
+    title: 'one',
+    category: 'forgot-password',
+    preview: '/preview/forgot-password/one',
+    // code: loadCode('app/preview/forgot-password/one/page.tsx'),
+  },
+  {
+    slug: 'forgot-password',
+    title: 'two',
+    category: 'forgot-password',
+    preview: '/preview/forgot-password/two',
+    // code: loadCode('app/preview/forgot-password/two/page.tsx'),
+  },
+  {
     slug: 'contact',
     title: 'one',
     category: 'contact',
@@ -484,7 +581,7 @@ export const blocks: Block[] = [
     category: 'contact',
     preview: '/preview/contact/two',
     // code: loadCode('app/preview/contact/two/page.tsx'),
-  },
+  }
 ];
 
 export const categories = [...new Set(blocks.map((b) => b.category))];
