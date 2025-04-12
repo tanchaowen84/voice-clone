@@ -9,7 +9,8 @@ import data from "./data.json";
 /**
  * Dashboard page
  * 
- * This is a demo page for the dashboard, no real data is used
+ * NOTICE: This is a demo page for the dashboard, no real data is used,
+ * we will show real data in the future
  */
 export default function DashboardPage() {
   const t = useTranslations();

@@ -437,6 +437,12 @@
     "dashboard": {
       "title": "仪表盘"
     },
+    "admin": {
+      "title": "系统管理",
+      "users": {
+        "title": "用户管理"
+      }
+    },
     "settings": {
       "title": "设置",
       "profile": {

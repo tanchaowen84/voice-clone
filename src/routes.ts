@@ -30,6 +30,7 @@ export enum Routes {
 
   // dashboard routes
   Dashboard = '/dashboard',
+  AdminUsers = '/admin/users',
   SettingsProfile = '/settings/profile',
   SettingsBilling = '/settings/billing',
   SettingsSecurity = '/settings/security',

@@ -436,6 +436,12 @@
     "dashboard": {
       "title": "Dashboard"
     },
+    "admin": {
+      "title": "Admin",
+      "users": {
+        "title": "Users"
+      }
+    },
     "settings": {
       "title": "Settings",
       "profile": {

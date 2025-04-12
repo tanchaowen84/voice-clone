@@ -42,6 +42,7 @@ export type WebsiteConfig = {
  * icon?: the icon to display
  * href?: the url to link to
  * external?: whether the link is external
+ * authorizeOnly?: the roles that are authorized to see the item
  */
 export type MenuItem = {
   title: string;
@@ -49,6 +50,7 @@ export type MenuItem = {
   icon?: ReactNode;
   href?: string;
   external?: boolean;
+  authorizeOnly?: string[];
 };
 
 /**
@@ -60,5 +62,6 @@ export type NestedMenuItem = {
   icon?: ReactNode;
   href?: string;
   external?: boolean;
+  authorizeOnly?: string[];
   items?: MenuItem[];
 };

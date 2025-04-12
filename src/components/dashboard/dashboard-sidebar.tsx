@@ -29,6 +29,12 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
   // console.log('sidebar currentUser:', currentUser);
+  const filteredSidebarLinks = sidebarLinks.filter((link) => {
+    if (link.authorizeOnly) {
+      return link.authorizeOnly.includes(currentUser?.role || '');
+    }
+    return true;
+  });
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -51,7 +57,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMain items={sidebarLinks} />
+        <SidebarMain items={filteredSidebarLinks} />
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-4">
