@@ -39,12 +39,15 @@ import { toast } from 'sonner';
 import { User } from 'better-auth';
 import { usePaymentStore } from '@/stores/payment-store';
 
-interface NavUserProps {
+interface SidebarUserProps {
   user: User;
   className?: string;
 }
 
-export function NavUser({ user, className }: NavUserProps) {
+/**
+ * User navigation for the dashboard sidebar
+ */
+export function SidebarUser({ user, className }: SidebarUserProps) {
   const { setTheme } = useTheme();
   const router = useLocaleRouter();
   const { isMobile } = useSidebar();

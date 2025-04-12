@@ -1,7 +1,7 @@
 'use client';
 
-import { NavMain } from '@/components/dashboard/nav-main';
-import { NavUser } from '@/components/dashboard/nav-user';
+import { SidebarMain } from '@/components/dashboard/sidebar-main';
+import { SidebarUser } from '@/components/dashboard/sidebar-user';
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,9 @@ import * as React from 'react';
 import { Logo } from '../layout/logo';
 import { UpgradeCard } from './upgrade-card';
 
+/**
+ * Dashboard sidebar
+ */
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
   const sidebarLinks = getSidebarConfig();
@@ -48,7 +51,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
       </SidebarHeader>
 
       <SidebarContent>
-        <NavMain items={sidebarLinks} />
+        <SidebarMain items={sidebarLinks} />
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-4">
@@ -59,7 +62,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
             <UpgradeCard />
 
             {/* show user profile if user is logged in */}
-            {currentUser && <NavUser user={currentUser} />}
+            {currentUser && <SidebarUser user={currentUser} />}
           </>
         )}
       </SidebarFooter>

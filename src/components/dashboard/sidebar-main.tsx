@@ -11,7 +11,10 @@ import {
 import { LocaleLink, useLocalePathname } from "@/i18n/navigation";
 import { NestedMenuItem } from "@/types";
 
-export function NavMain({ items, }: { items: NestedMenuItem[] }) {
+/**
+ * Main navigation for the dashboard sidebar
+ */
+export function SidebarMain({ items, }: { items: NestedMenuItem[] }) {
   const pathname = useLocalePathname();
 
   // Function to check if a path is active

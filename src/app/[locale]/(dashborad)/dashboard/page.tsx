@@ -6,6 +6,11 @@ import { useTranslations } from 'next-intl';
 
 import data from "./data.json";
 
+/**
+ * Dashboard page
+ * 
+ * This is a demo page for the dashboard, no real data is used
+ */
 export default function DashboardPage() {
   const t = useTranslations();
 
