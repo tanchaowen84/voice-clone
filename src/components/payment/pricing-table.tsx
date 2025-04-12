@@ -31,8 +31,8 @@ export function PricingTable({
   const [interval, setInterval] = useState<PlanInterval>(PlanIntervals.MONTH);
 
   // Get price plans with translations
-  const paymentConfig = getPricePlans();
-  const plans = Object.values(paymentConfig.plans);
+  const pricePlans = getPricePlans();
+  const plans = Object.values(pricePlans);
   
   // Current plan ID for comparison
   const currentPlanId = currentPlan?.id || null;

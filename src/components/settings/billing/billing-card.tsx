@@ -26,15 +26,15 @@ export default function BillingCard() {
     refetch
   } = usePayment();
   // Get price plans with translations
-  const paymentConfig = getPricePlans();
-  const plans = Object.values(paymentConfig.plans);
+  const pricePlans = getPricePlans();
+  const plans = Object.values(pricePlans);
   // Convert current plan from store to a plan with translations
   const currentPlan = plans.find(plan => plan.id === currentPlanFromStore?.id);
 
   const isFreePlan = currentPlan?.isFree || false;
   const isLifetimeMember = currentPlan?.isLifetime || false;
-  console.log('billing card, currentPlan', currentPlan);
-  console.log('billing card, subscription', subscription);
+  // console.log('billing card, currentPlan', currentPlan);
+  // console.log('billing card, subscription', subscription);
 
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();

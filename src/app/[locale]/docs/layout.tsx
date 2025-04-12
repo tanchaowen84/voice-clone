@@ -59,7 +59,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
   // Docs layout configurations
   const docsOptions: BaseLayoutProps = {
     i18n: docsI18nConfig,
-    githubUrl: websiteConfig.social.github ?? undefined,
+    githubUrl: websiteConfig.metadata.social.github ?? undefined,
     nav: {
       url: '/docs',
       title: (
@@ -82,13 +82,13 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
         icon: <BookIcon />,
         active: 'none',
       },
-      ...(websiteConfig.social.twitter
+      ...(websiteConfig.metadata.social.twitter
         ? [
           {
             type: "icon" as const,
             icon: <XTwitterIcon />,
             text: "X",
-            url: websiteConfig.social.twitter,
+            url: websiteConfig.metadata.social.twitter,
             secondary: true,
           }
         ]
