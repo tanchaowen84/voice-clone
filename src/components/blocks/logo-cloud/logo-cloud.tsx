@@ -1,12 +1,12 @@
 import { useTranslations } from "next-intl";
 
 export default function LogoCloudSection() {
-    const t = useTranslations('HomePage.LogoCloud');
+    const t = useTranslations('HomePage.logocloud');
     
     return (
       <section className="py-16">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-xl font-semibold">
+          <h2 className="text-center text-xl font-medium">
             {t('title')}
           </h2>
           <div className="mx-auto mt-20 flex max-w-4xl flex-wrap items-center justify-center gap-x-12 gap-y-8 sm:gap-x-16 sm:gap-y-12">

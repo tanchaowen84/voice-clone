@@ -40,7 +40,7 @@
       "primary": "Get Started",
       "secondary": "See Demo"
     },
-    "LogoCloud": {
+    "logocloud": {
       "title": "Your favorite companies are our partners"
     },
     "integration": {
@@ -74,37 +74,13 @@
         }
       }
     },
-    "features": {
-      "title": "The features of your product",
-      "description": "Write the description of your product here",
-      "items": {
-        "item-1": {
-          "title": "Product Feature One",
-          "description": "Please write the detailed description of feature one here"
-        },
-        "item-2": {
-          "title": "Product Feature Two",
-          "description": "Please write the detailed description of feature two here"
-        },
-        "item-3": {
-          "title": "Product Feature Three",
-          "description": "Please write the detailed description of feature three here"
-        },
-        "item-4": {
-          "title": "Product Feature Four",
-          "description": "Please write the detailed description of feature four here"
-        },
-        "item-5": {
-          "title": "Product Feature Five",
-          "description": "Please write the detailed description of feature five here"
-        },
-        "item-6": {
-          "title": "Product Feature Six",
-          "description": "Please write the detailed description of feature six here"
-        }
-      }
+    "integration2": {
+      "title": "Integrate with your favorite tools",
+      "description": "Connect seamlessly with popular platforms and services to enhance your workflow.",
+      "primaryButton": "Get Started",
+      "secondaryButton": "See Demo"
     },
-    "features2": {
+    "features": {
       "title": "The features of your product",
       "description": "Write the description of your product here",
       "items": {
@@ -133,6 +109,36 @@
       "feature-2": "Product Feature Two",
       "feature-3": "Product Feature Three",
       "feature-4": "Product Feature Four"
+    },
+    "features5": {
+      "title": "The features of your product",
+      "description": "Write the description of your product here",
+      "items": {
+        "item-1": {
+          "title": "Product Feature One",
+          "description": "Please write the detailed description of feature one here"
+        },
+        "item-2": {
+          "title": "Product Feature Two",
+          "description": "Please write the detailed description of feature two here"
+        },
+        "item-3": {
+          "title": "Product Feature Three",
+          "description": "Please write the detailed description of feature three here"
+        },
+        "item-4": {
+          "title": "Product Feature Four",
+          "description": "Please write the detailed description of feature four here"
+        },
+        "item-5": {
+          "title": "Product Feature Five",
+          "description": "Please write the detailed description of feature five here"
+        },
+        "item-6": {
+          "title": "Product Feature Six",
+          "description": "Please write the detailed description of feature six here"
+        }
+      }
     },
     "faqs": {
       "title": "Frequently Asked Questions",

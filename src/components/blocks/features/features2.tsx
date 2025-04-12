@@ -23,21 +23,21 @@ import { useTranslations } from 'next-intl';
  * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-12.json
  */
 export default function Features2Section() {
-  const t = useTranslations('HomePage.features2');
+  const t = useTranslations('HomePage.features');
   type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
   const [activeItem, setActiveItem] = useState<ImageKey>('item-1');
 
   const images = {
     'item-1': {
-      image: '/blocks/charts.png',
+      image: '/blocks/music.png',
       alt: 'Product Feature One',
     },
     'item-2': {
-      image: '/blocks/music.png',
+      image: '/blocks/mail2.png',
       alt: 'Product Feature Two',
     },
     'item-3': {
-      image: '/blocks/mail2.png',
+      image: '/blocks/charts.png',
       alt: 'Product Feature Three',
     },
     'item-4': {
@@ -60,6 +60,35 @@ export default function Features2Section() {
         </div>
 
         <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:px-0">
+
+          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
+            <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${activeItem}-id`}
+                  initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  className="size-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md"
+                >
+                  <Image
+                    src={images[activeItem].image}
+                    className="size-full object-cover object-left-top dark:mix-blend-lighten"
+                    alt={images[activeItem].alt}
+                    width={1207}
+                    height={929}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <BorderBeam
+              duration={6}
+              size={200}
+              className="from-transparent via-yellow-700 to-transparent dark:via-white/50"
+            />
+          </div>
+
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <Accordion
               type="single"
@@ -112,34 +141,6 @@ export default function Features2Section() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div>
-
-          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
-            <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${activeItem}-id`}
-                  initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  className="size-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md"
-                >
-                  <Image
-                    src={images[activeItem].image}
-                    className="size-full object-cover object-left-top dark:mix-blend-lighten"
-                    alt={images[activeItem].alt}
-                    width={1207}
-                    height={929}
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <BorderBeam
-              duration={6}
-              size={200}
-              className="from-transparent via-yellow-700 to-transparent dark:via-white/50"
-            />
           </div>
         </div>
       </div>

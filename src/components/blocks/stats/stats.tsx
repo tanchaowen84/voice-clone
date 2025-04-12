@@ -4,7 +4,7 @@ export default function StatsSection() {
   const t = useTranslations('HomePage.stats');
 
   return (
-    <section className="py-12 md:py-20 w-full bg-muted">
+    <section className="py-12 md:py-20 w-full bg-muted dark:bg-background">
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
           <h2 className="text-4xl font-medium lg:text-5xl">

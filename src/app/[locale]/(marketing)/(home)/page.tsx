@@ -15,6 +15,8 @@ import FeaturesSection from '@/components/blocks/features/features';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '@/components/blocks/stats/stats';
 import CallToAction from '@/components/blocks/calltoaction/calltoaction';
+import Integration2Section from '@/components/blocks/integration/integration2';
+import Features5Section from '@/components/blocks/features/features5';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -62,12 +64,12 @@ export default async function HomePage(props: HomePageProps) {
           <IntegrationSection />
         </div>
 
-        <div id="features2">
-          <Features2Section />
-        </div>
-
         <div id="features">
           <FeaturesSection />
+        </div>
+
+        <div id="features2">
+          <Features2Section />
         </div>
 
         <div id="features3">
@@ -76,6 +78,14 @@ export default async function HomePage(props: HomePageProps) {
 
         <div id="features4">
           <Features4Section />
+        </div>
+
+        <div id="features5">
+          <Features5Section />
+        </div>
+
+        <div id="integration2">
+          <Integration2Section />
         </div>
 
         <div id="pricing">
