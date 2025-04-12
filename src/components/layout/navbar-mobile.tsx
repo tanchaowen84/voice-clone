@@ -1,17 +1,17 @@
 'use client';
 
 import LocaleSelector from '@/components/layout/locale-selector';
-import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { Logo } from '@/components/layout/logo';
+import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { getNavbarConfig } from '@/config/navbar-config';
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { getNavbarLinks } from '@/config/navbar-config';
 import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { Portal } from '@radix-ui/react-portal';
@@ -26,9 +26,8 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import { UserButton } from './user-button';
-import { authClient } from '@/lib/auth-client';
 import { Skeleton } from '../ui/skeleton';
+import { UserButton } from './user-button';
 
 export function NavbarMobile({
   className,
@@ -137,7 +136,7 @@ interface MainMobileMenuProps {
 function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
   const t = useTranslations();
-  const menuLinks = getNavbarConfig();
+  const menuLinks = getNavbarLinks();
   const localePathname = useLocalePathname();
 
   return (

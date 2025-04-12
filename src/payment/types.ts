@@ -24,17 +24,17 @@ export enum PaymentTypes {
  * Status of a payment or subscription
  */
 export type PaymentStatus =
-  | 'active'             // Subscription is active
-  | 'canceled'           // Subscription has been canceled
-  | 'incomplete'         // Payment not completed
-  | 'incomplete_expired' // Payment not completed and expired
-  | 'past_due'           // Payment is past due
-  | 'paused'             // Subscription is paused
-  | 'trialing'           // In trial period
-  | 'unpaid'             // Payment failed
-  | 'completed'          // One-time payment completed
-  | 'processing'         // Payment is processing
-  | 'failed';            // Payment failed
+  | 'active'                         // Subscription is active
+  | 'canceled'                       // Subscription has been canceled
+  | 'incomplete'                     // Payment not completed
+  | 'incomplete_expired'             // Payment not completed and expired
+  | 'past_due'                       // Payment is past due
+  | 'paused'                         // Subscription is paused
+  | 'trialing'                       // In trial period
+  | 'unpaid'                         // Payment failed
+  | 'completed'                      // One-time payment completed
+  | 'processing'                     // Payment is processing
+  | 'failed';                        // Payment failed
 
 /**
  * Price definition for a plan
@@ -71,13 +71,6 @@ export interface PricePlan {
   isLifetime: boolean;               // Whether this is a lifetime plan
   recommended?: boolean;             // Whether to mark this plan as recommended in UI
   disabled?: boolean;                // Whether to disable this plan in UI
-}
-
-/**
- * Payment configuration
- */
-export interface PaymentConfig {
-  plans: Record<string, PricePlan>;  // Plans indexed by ID
 }
 
 /**

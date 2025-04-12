@@ -11,7 +11,7 @@ import { useTranslations } from 'next-intl';
  *
  * @returns The footer config with translated titles
  */
-export function getFooterConfig(): NestedMenuItem[] {
+export function getFooterLinks(): NestedMenuItem[] {
   const t = useTranslations('Marketing.footer');
 
   return [

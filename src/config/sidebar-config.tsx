@@ -2,15 +2,14 @@
 
 import { Routes } from '@/routes';
 import { NestedMenuItem } from '@/types';
-import { 
-  BellIcon, 
-  CircleUserRoundIcon, 
-  CreditCardIcon, 
-  LayoutDashboardIcon, 
-  LockKeyholeIcon, 
-  Settings2Icon, 
+import {
+  BellIcon,
+  CircleUserRoundIcon,
+  CreditCardIcon,
+  LayoutDashboardIcon,
+  LockKeyholeIcon,
+  Settings2Icon,
   SettingsIcon,
-  UsersIcon,
   UsersRoundIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -22,7 +21,7 @@ import { useTranslations } from 'next-intl';
  *
  * @returns The sidebar config with translated titles and descriptions
  */
-export function getSidebarConfig(): NestedMenuItem[] {
+export function getSidebarLinks(): NestedMenuItem[] {
   const t = useTranslations('Dashboard');
 
   return [

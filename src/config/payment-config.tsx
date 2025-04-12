@@ -1,8 +1,8 @@
 'use client';
 
-import { PaymentConfig } from '@/payment/types';
 import { useTranslations } from 'next-intl';
 import { websiteConfig } from './website';
+import { PaymentConfig } from '@/types';
 
 /**
  * Get price plans with translations for client components

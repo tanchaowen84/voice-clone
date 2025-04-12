@@ -1,40 +1,43 @@
-import {
-  PaymentTypes,
-  PlanIntervals
-} from '@/payment/types';
+import { PaymentTypes, PlanIntervals } from '@/payment/types';
 import { WebsiteConfig } from '@/types';
 
 /**
  * website config, without translations
  */
 export const websiteConfig: WebsiteConfig = {
-  theme: "default",
   metadata: {
-    image: '/og.png',
-  },
-  logo: {
-    light: '/logo.png',
-    dark: '/logo-dark.png',
-  },
-  mail: {
-    from: 'support@mksaas.com',
-    to: 'support@mksaas.com',
-  },
+    theme: "default",
+    ogImage: '/og.png',
+    logoLight: '/logo.png',
+    logoDark: '/logo-dark.png',
+    social: {
+      github: 'https://github.com/MkSaaSHQ',
+      twitter: 'https://x.com/mksaascom',
+      youtube: 'https://www.youtube.com/@MkSaaS',
+      blueSky: 'https://bsky.app/profile/mksaas.com',
+      linkedin: 'https://linkedin.com/company/mksaas',
+      facebook: 'https://facebook.com/mksaas',
+      instagram: 'https://instagram.com/mksaas',
+      tiktok: 'https://tiktok.com/@mksaas',
+    },
+  },  
   blog: {
     paginationSize: 6,
     relatedPostsSize: 3,
   },
-  social: {
-    github: 'https://github.com/MkSaaSHQ',
-    twitter: 'https://x.com/mksaascom',
-    youtube: 'https://www.youtube.com/@MkSaaS',
-    blueSky: 'https://bsky.app/profile/mksaas.com',
-    linkedin: 'https://linkedin.com/company/mksaas',
-    facebook: 'https://facebook.com/mksaas',
-    instagram: 'https://instagram.com/mksaas',
-    tiktok: 'https://tiktok.com/@mksaas',
+  mail: {
+    provider: 'resend',
+    from: 'support@mksaas.com',
+    to: 'support@mksaas.com',
+  },
+  newsletter: {
+    provider: 'resend',
+  },
+  storage: {
+    provider: 's3',
   },
   payment: {
+    provider: 'stripe',
     plans: {
       free: {
         id: "free",

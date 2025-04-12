@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
  *
  * @returns The avatar config with translated titles
  */
-export function getAvatarConfig(): MenuItem[] {
+export function getAvatarLinks(): MenuItem[] {
   const t = useTranslations('Marketing.avatar');
 
   return [

@@ -4,8 +4,8 @@ import Container from '@/components/layout/container';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { Logo } from '@/components/layout/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
-import { getFooterConfig } from '@/config/footer-config';
-import { getSocialConfig } from '@/config/social-config';
+import { getFooterLinks } from '@/config/footer-config';
+import { getSocialLinks } from '@/config/social-config';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
@@ -14,8 +14,8 @@ import { ThemeSelector } from './theme-selector';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations();
-  const footerLinks = getFooterConfig();
-  const socialLinks = getSocialConfig();
+  const footerLinks = getFooterLinks();
+  const socialLinks = getSocialLinks();
 
   return (
     <footer className={cn('border-t', className)}>

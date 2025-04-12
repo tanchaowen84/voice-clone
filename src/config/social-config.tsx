@@ -18,69 +18,69 @@ import { websiteConfig } from './website';
  *
  * @returns The social config
  */
-export function getSocialConfig(): MenuItem[] {
+export function getSocialLinks(): MenuItem[] {
   const socialLinks: MenuItem[] = [];
 
-  if (websiteConfig.social.github) {
+  if (websiteConfig.metadata.social.github) {
     socialLinks.push({
       title: 'GitHub',
-      href: websiteConfig.social.github,
+      href: websiteConfig.metadata.social.github,
       icon: <GitHubIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.twitter) {
+  if (websiteConfig.metadata.social.twitter) {
     socialLinks.push({
       title: 'Twitter',
-      href: websiteConfig.social.twitter,
+      href: websiteConfig.metadata.social.twitter,
       icon: <XTwitterIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.blueSky) {
+  if (websiteConfig.metadata.social.blueSky) {
     socialLinks.push({
       title: 'Bluesky',
-      href: websiteConfig.social.blueSky,
+      href: websiteConfig.metadata.social.blueSky,
       icon: <BlueskyIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.youtube) {
+  if (websiteConfig.metadata.social.youtube) {
     socialLinks.push({
       title: 'YouTube',
-      href: websiteConfig.social.youtube,
+      href: websiteConfig.metadata.social.youtube,
       icon: <YouTubeIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.linkedin) {
+  if (websiteConfig.metadata.social.linkedin) {
     socialLinks.push({
       title: 'LinkedIn',
-      href: websiteConfig.social.linkedin,
+      href: websiteConfig.metadata.social.linkedin,
       icon: <LinkedInIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.facebook) {
+  if (websiteConfig.metadata.social.facebook) {
     socialLinks.push({
       title: 'Facebook',
-      href: websiteConfig.social.facebook,
+      href: websiteConfig.metadata.social.facebook,
       icon: <FacebookIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.instagram) {
+  if (websiteConfig.metadata.social.instagram) {
     socialLinks.push({
       title: 'Instagram',
-      href: websiteConfig.social.instagram,
+      href: websiteConfig.metadata.social.instagram,
       icon: <InstagramIcon className="size-4 shrink-0" />,
     });
   }
 
-  if (websiteConfig.social.tiktok) {
+  if (websiteConfig.metadata.social.tiktok) {
     socialLinks.push({
       title: 'TikTok',
-      href: websiteConfig.social.tiktok,
+      href: websiteConfig.metadata.social.tiktok,
       icon: <TikTokIcon className="size-4 shrink-0" />,
     });
   }

@@ -39,7 +39,7 @@ import { useTranslations } from 'next-intl';
  *
  * @returns The navbar config with translated titles and descriptions
  */
-export function getNavbarConfig(): NestedMenuItem[] {
+export function getNavbarLinks(): NestedMenuItem[] {
   const t = useTranslations('Marketing.navbar');
 
   return [
