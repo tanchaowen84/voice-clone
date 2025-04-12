@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
  */
 export type WebsiteConfig = {
   metadata: WebsiteMetadata;
+  i18n: I18nConfig;
   blog: BlogConfig;
   mail: MailConfig;
   newsletter: NewsletterConfig;
@@ -35,6 +36,14 @@ export interface SocialConfig {
   facebook?: string;
   instagram?: string;
   tiktok?: string;
+}
+
+/**
+ * I18n configuration
+ */
+export interface I18nConfig {
+  defaultLocale: string;
+  locales: Record<string, { flag?: string; name: string }>;
 }
 
 /**

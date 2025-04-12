@@ -101,7 +101,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           </span>
 
           <div className="flex items-center gap-x-4">
-            <ThemeSelector />
+            {/* <ThemeSelector /> */}
             <ModeSwitcherHorizontal />
           </div>
         </Container>

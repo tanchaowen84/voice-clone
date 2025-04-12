@@ -1,12 +1,8 @@
 import { defineRouting } from 'next-intl/routing';
+import { websiteConfig } from '@/config/website';
 
-// TODO: add config for the locales
-export const LOCALE_LIST: Record<string, { flag: string; name: string }> = {
-  en: { flag: '🇺🇸', name: 'English' },
-  zh: { flag: '🇨🇳', name: '中文' },
-};
-export const DEFAULT_LOCALE = 'en';
-export const LOCALES = Object.keys(LOCALE_LIST);
+export const DEFAULT_LOCALE = websiteConfig.i18n.defaultLocale;
+export const LOCALES = Object.keys(websiteConfig.i18n.locales);
 
 // The name of the cookie that is used to determine the locale
 export const LOCALE_COOKIE_NAME = 'NEXT_LOCALE';

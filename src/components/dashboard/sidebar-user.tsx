@@ -18,10 +18,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { LOCALE_LIST, routing } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
 import { useLocaleStore } from '@/stores/locale-store';
+import { usePaymentStore } from '@/stores/payment-store';
+import { User } from 'better-auth';
 import {
   ChevronsUpDown,
   Languages,
@@ -34,10 +37,8 @@ import { Locale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
-import { UserAvatar } from '../layout/user-avatar';
 import { toast } from 'sonner';
-import { User } from 'better-auth';
-import { usePaymentStore } from '@/stores/payment-store';
+import { UserAvatar } from '../layout/user-avatar';
 
 interface SidebarUserProps {
   user: User;
@@ -183,11 +184,13 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
                       onClick={() => setLocale(localeOption)}
                       className="cursor-pointer"
                     >
-                      <span className="mr-2 text-md">
-                        {LOCALE_LIST[localeOption].flag}
-                      </span>
+                      {websiteConfig.i18n.locales[localeOption].flag && (
+                        <span className="mr-2 text-md">
+                          {websiteConfig.i18n.locales[localeOption].flag}
+                        </span>
+                      )}
                       <span className="text-sm">
-                        {LOCALE_LIST[localeOption].name}
+                        {websiteConfig.i18n.locales[localeOption].name}
                       </span>
                     </DropdownMenuItem>
                   ))}

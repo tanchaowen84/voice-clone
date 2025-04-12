@@ -1,12 +1,10 @@
 /**
  * The routes for the application
- * 
- * TODO: add config for the routes
  */
 export enum Routes {
   Root = '/',
 
-  // pages
+  // marketing pages
   FAQ = '/#faq',
   Features = '/#features',
   Pricing = '/pricing',
@@ -42,7 +40,7 @@ export enum Routes {
   AIVideo = '/ai/video',
   AIAudio = '/ai/audio',
 
-  // Block routes
+  // block routes
   HeroBlocks = '/blocks/hero-section',
   LogoBlocks = '/blocks/logo-cloud',
   FeaturesBlocks = '/blocks/features',
@@ -81,6 +79,5 @@ export const protectedRoutes = [
 
 /**
  * The default redirect path after logging in
- * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = Routes.Dashboard;

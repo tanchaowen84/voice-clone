@@ -1,8 +1,7 @@
 import { XTwitterIcon } from '@/components/icons/x';
-import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { Logo } from '@/components/layout/logo';
+import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { websiteConfig } from '@/config/website';
-import { LOCALE_LIST } from '@/i18n/routing';
 import { docsI18nConfig } from '@/lib/docs/i18n';
 import { source } from '@/lib/docs/source';
 import { I18nProvider, Translations } from 'fumadocs-ui/i18n';
@@ -17,7 +16,7 @@ import '@/styles/mdx.css';
 
 // available languages that will be displayed on UI
 // make sure `locale` is consistent with your i18n config
-const locales = Object.entries(LOCALE_LIST).map(([locale, data]) => ({
+const locales = Object.entries(websiteConfig.i18n.locales).map(([locale, data]) => ({
   name: data.name,
   locale,
 }));

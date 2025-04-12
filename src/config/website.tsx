@@ -14,13 +14,21 @@ export const websiteConfig: WebsiteConfig = {
       github: 'https://github.com/MkSaaSHQ',
       twitter: 'https://x.com/mksaascom',
       youtube: 'https://www.youtube.com/@MkSaaS',
-      blueSky: 'https://bsky.app/profile/mksaas.com',
-      linkedin: 'https://linkedin.com/company/mksaas',
-      facebook: 'https://facebook.com/mksaas',
-      instagram: 'https://instagram.com/mksaas',
-      tiktok: 'https://tiktok.com/@mksaas',
     },
-  },  
+  },
+  i18n: {
+    defaultLocale: 'en',
+    locales: {
+      "en": {
+        flag: '🇺🇸',
+        name: 'English',
+      },
+      "zh": {
+        flag: '🇨🇳',
+        name: '中文',
+      },
+    },
+  },
   blog: {
     paginationSize: 6,
     relatedPostsSize: 3,

@@ -7,8 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { LOCALE_LIST, routing } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Languages } from 'lucide-react';
 import { Locale, useLocale, useTranslations } from 'next-intl';
@@ -31,7 +31,7 @@ export default function LocaleSwitcher() {
   const { currentLocale, setCurrentLocale } = useLocaleStore();
   const [, startTransition] = useTransition();
   const t = useTranslations('Common');
-  
+
   useEffect(() => {
     setCurrentLocale(locale);
   }, [locale, setCurrentLocale]);
@@ -63,14 +63,16 @@ export default function LocaleSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {routing.locales.map((localeOption) => (
+        {Object.entries(websiteConfig.i18n.locales).map(([localeOption, data]) => (
           <DropdownMenuItem
             key={localeOption}
             onClick={() => setLocale(localeOption)}
             className="cursor-pointer"
           >
-            <span className="mr-2 text-md">{LOCALE_LIST[localeOption].flag}</span>
-            <span className="text-sm">{LOCALE_LIST[localeOption].name}</span>
+            {data.flag && (
+              <span className="mr-2 text-md">{data.flag}</span>
+            )}
+            <span className="text-sm">{data.name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

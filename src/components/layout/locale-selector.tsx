@@ -7,8 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { DEFAULT_LOCALE, LOCALE_LIST, routing } from '@/i18n/routing';
+import { DEFAULT_LOCALE } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Locale, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -59,27 +60,36 @@ export default function LocaleSelector() {
       <SelectTrigger className="w-fit cursor-pointer">
         <SelectValue
           placeholder={
-            <span className="text-lg">{LOCALE_LIST[DEFAULT_LOCALE].flag}</span>
+            <div className="flex items-center gap-2">
+              {websiteConfig.i18n.locales[DEFAULT_LOCALE].flag && (
+                <span className="text-lg">{websiteConfig.i18n.locales[DEFAULT_LOCALE].flag}</span>
+              )}
+              <span>{websiteConfig.i18n.locales[DEFAULT_LOCALE].name}</span>
+            </div>
           }
         >
           {currentLocale && (
             <div className="flex items-center gap-2">
-              <span className="text-lg">{LOCALE_LIST[currentLocale].flag}</span>
-              <span>{LOCALE_LIST[currentLocale].name}</span>
+              {websiteConfig.i18n.locales[currentLocale].flag && (
+                <span className="text-lg">{websiteConfig.i18n.locales[currentLocale].flag}</span>
+              )}
+              <span>{websiteConfig.i18n.locales[currentLocale].name}</span>
             </div>
           )}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {routing.locales.map((cur) => (
+        {Object.entries(websiteConfig.i18n.locales).map(([cur, data]) => (
           <SelectItem
             key={cur}
             value={cur}
             className="cursor-pointer flex items-center gap-2"
           >
             <div className="flex items-center gap-2">
-              <span className="text-md">{LOCALE_LIST[cur].flag}</span>
-              <span>{LOCALE_LIST[cur].name}</span>
+              {data.flag && (
+                <span className="text-md">{data.flag}</span>
+              )}
+              <span>{data.name}</span>
             </div>
           </SelectItem>
         ))}
