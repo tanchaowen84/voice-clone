@@ -128,7 +128,6 @@ export default async function DocPage({
               );
             },
             ...(await import('@/content/docs/components/tabs.client')),
-            ...(await import('@/content/docs/theme.client')),
           }}
           includeFumadocsComponents={true}
         />
