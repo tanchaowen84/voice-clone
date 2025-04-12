@@ -1,6 +1,6 @@
 import FaqSection from '@/components/blocks/faqs/faqs';
-import FeaturesSection from '@/components/blocks/features/features';
 import Features2Section from '@/components/blocks/features/features2';
+import FeaturesSection from '@/components/blocks/features/features';
 import HeroSection from '@/components/blocks/hero/hero';
 import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
 import { constructMetadata } from '@/lib/metadata';
@@ -13,6 +13,7 @@ import ContentSection from '../../preview/content/one/page';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
 import Testimonials from '../../preview/testimonials/one/page';
+import Features3Section from '@/components/blocks/features/features3';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -52,12 +53,16 @@ export default async function HomePage(props: HomePageProps) {
           <LogoCloud />
         </div>
 
-        <div id="features" className="">
+        <div id="features2" className="">
           <FeaturesSection />
         </div>
 
-        <div id="features2" className="">
+        <div id="features" className="">
           <Features2Section />
+        </div>
+
+        <div id="features3" className="">
+          <Features3Section />
         </div>
 
         <div id="content" className="">
