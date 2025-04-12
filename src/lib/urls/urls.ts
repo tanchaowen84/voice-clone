@@ -40,7 +40,7 @@ export function getBaseUrlWithLocale(locale?: Locale | null): string {
  * @param locale - The locale to add to the callbackURL
  * @returns The URL with locale added to callbackURL if necessary
  */
-export function getUrlWithLocale(url: string, locale: Locale): string {
+export function getUrlWithLocaleInCallbackUrl(url: string, locale: Locale): string {
   // If we shouldn't append locale, return original URL
   if (!shouldAppendLocale(locale)) {
     return url;

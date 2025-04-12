@@ -8,14 +8,12 @@ import {
 import path from "path";
 
 /**
- * Content Collections documentation
- * 1. https://www.content-collections.dev/docs/quickstart/next
- * 2. https://www.content-collections.dev/docs/configuration
- * 3. https://www.content-collections.dev/docs/transform#join-collections
- */
-
-/**
- * Use Content Collections for Fumadocs
+ * 1. Content Collections documentation
+ * https://www.content-collections.dev/docs/quickstart/next
+ * https://www.content-collections.dev/docs/configuration
+ * https://www.content-collections.dev/docs/transform#join-collections
+ * 
+ * 2. Use Content Collections for Fumadocs
  * https://fumadocs.vercel.app/docs/headless/content-collections
  */
 const docs = defineCollection({
@@ -39,37 +37,13 @@ const metas = defineCollection({
 });
 
 /**
- * Helper function to extract locale and base name from filename
- * Handles filename formats:
- * - name -> locale: DEFAULT_LOCALE, base: name
- * - name.zh -> locale: zh, base: name
- * 
- * @param fileName Filename without extension (already has .mdx removed)
- * @returns Object with locale and base name
- */
-function extractLocaleAndBase(fileName: string): { locale: string; base: string } {
-  // Split filename into parts
-  const parts = fileName.split('.');
-
-  if (parts.length === 1) {
-    // Simple filename without locale: xxx
-    return { locale: DEFAULT_LOCALE, base: parts[0] };
-  } else if (parts.length === 2 && LOCALES.includes(parts[1])) {
-    // Filename with locale: xxx.zh
-    return { locale: parts[1], base: parts[0] };
-  } else {
-    // Unexpected format, use first part as base and default locale
-    console.warn(`Unexpected filename format: ${fileName}`);
-    return { locale: DEFAULT_LOCALE, base: parts[0] };
-  }
-}
-
-/**
  * Blog Author collection
  * 
  * Authors are identified by their slug across all languages
  * New format: content/author/authorname.{locale}.mdx
  * Example: content/author/mksaas.mdx (default locale) and content/author/mksaas.zh.mdx (Chinese)
+ * 
+ * For author, slug is slugAsParams
  */
 export const authors = defineCollection({
   name: 'author',
@@ -103,6 +77,8 @@ export const authors = defineCollection({
  * Categories are identified by their slug across all languages
  * New format: content/category/categoryname.{locale}.mdx
  * Example: content/category/tutorial.mdx (default locale) and content/category/tutorial.zh.mdx (Chinese)
+ * 
+ * For category, slug is slugAsParams
  */
 export const categories = defineCollection({
   name: 'category',
@@ -134,6 +110,9 @@ export const categories = defineCollection({
  * Blog Post collection
  * 
  * New format: content/blog/post-slug.{locale}.mdx
+ * 
+ * slug: /blog/first-post, used in URL or sitemap
+ * slugAsParams: first-post, used in route params
  * 
  * 1. For a blog post at content/blog/first-post.mdx (default locale):
  * locale: en
@@ -185,14 +164,10 @@ export const posts = defineCollection({
       return category;
     }).filter(Boolean); // Remove null values
 
-    // Get the collection name (e.g., "blog")
-    const pathParts = data._meta.path.split(path.sep);
-    const collectionName = pathParts[pathParts.length - 2];
-
     // Create the slug and slugAsParams
-    const slug = `/${collectionName}/${base}`;
+    const slug = `/blog/${base}`;
     const slugAsParams = base;
-
+    
     // Calculate estimated reading time
     const wordCount = data.content.split(/\s+/).length;
     const wordsPerMinute = 200; // average reading speed: 200 words per minute
@@ -249,12 +224,8 @@ export const pages = defineCollection({
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`page processed: ${fileName}, base=${base}, locale=${locale}`);
 
-    // Get the collection name (e.g., "pages")
-    const pathParts = data._meta.path.split(path.sep);
-    const collectionName = pathParts[pathParts.length - 2];
-
     // Create the slug and slugAsParams
-    const slug = `/${collectionName}/${base}`;
+    const slug = `/pages/${base}`;
     const slugAsParams = base;
 
     return {
@@ -306,12 +277,8 @@ export const releases = defineCollection({
     const { locale, base } = extractLocaleAndBase(fileName);
     // console.log(`release processed: ${fileName}, base=${base}, locale=${locale}`);
 
-    // Get the collection name (e.g., "release")
-    const pathParts = data._meta.path.split(path.sep);
-    const collectionName = pathParts[pathParts.length - 2];
-
     // Create the slug and slugAsParams
-    const slug = `/${collectionName}/${base}`;
+    const slug = `/release/${base}`;
     const slugAsParams = base;
 
     return {
@@ -324,6 +291,32 @@ export const releases = defineCollection({
     };
   }
 });
+
+/**
+ * Helper function to extract locale and base name from filename
+ * Handles filename formats:
+ * - name -> locale: DEFAULT_LOCALE, base: name
+ * - name.zh -> locale: zh, base: name
+ * 
+ * @param fileName Filename without extension (already has .mdx removed)
+ * @returns Object with locale and base name
+ */
+function extractLocaleAndBase(fileName: string): { locale: string; base: string } {
+  // Split filename into parts
+  const parts = fileName.split('.');
+
+  if (parts.length === 1) {
+    // Simple filename without locale: xxx
+    return { locale: DEFAULT_LOCALE, base: parts[0] };
+  } else if (parts.length === 2 && LOCALES.includes(parts[1])) {
+    // Filename with locale: xxx.zh
+    return { locale: parts[1], base: parts[0] };
+  } else {
+    // Unexpected format, use first part as base and default locale
+    console.warn(`Unexpected filename format: ${fileName}`);
+    return { locale: DEFAULT_LOCALE, base: parts[0] };
+  }
+}
 
 export default defineConfig({
   collections: [docs, metas, authors, categories, posts, pages, releases]

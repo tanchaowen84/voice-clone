@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getBaseUrl } from './lib/urls/urls';
+import { getBaseUrl } from '../lib/urls/urls';
 
 export default function robots(): MetadataRoute.Robots {
   return {

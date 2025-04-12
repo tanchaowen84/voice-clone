@@ -1,15 +1,14 @@
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
+import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
-import { getUrlWithLocale } from './urls/urls';
-import { routing } from '@/i18n/routing';
-import { LOCALE_COOKIE_NAME } from '@/i18n/routing';
-import { Locale } from 'next-intl';
 import { parse as parseCookies } from 'cookie';
+import { Locale } from 'next-intl';
+import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
 
 /**
  * https://www.better-auth.com/docs/reference/options
@@ -50,7 +49,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#forget-password
     async sendResetPassword({ user, url }, request) {
       const locale = getLocaleFromRequest(request);
-      const localizedUrl = getUrlWithLocale(url, locale);
+      const localizedUrl = getUrlWithLocaleInCallbackUrl(url, locale);
 
       await sendEmail({
         to: user.email,
@@ -69,7 +68,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
     sendVerificationEmail: async ({ user, url, token }, request) => {
       const locale = getLocaleFromRequest(request);
-      const localizedUrl = getUrlWithLocale(url, locale);
+      const localizedUrl = getUrlWithLocaleInCallbackUrl(url, locale);
 
       await sendEmail({
         to: user.email,
