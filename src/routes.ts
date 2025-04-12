@@ -42,8 +42,9 @@ export enum Routes {
 
   // block routes
   HeroBlocks = '/blocks/hero-section',
-  LogoBlocks = '/blocks/logo-cloud',
+  LogoCloudBlocks = '/blocks/logo-cloud',
   FeaturesBlocks = '/blocks/features',
+  IntegrationsBlocks = '/blocks/integrations',
   ContentBlocks = '/blocks/content',
   StatsBlocks = '/blocks/stats',
   TeamBlocks = '/blocks/team',
@@ -54,7 +55,8 @@ export enum Routes {
   ComparatorBlocks = '/blocks/comparator',
   FAQBlocks = '/blocks/faqs',
   LoginBlocks = '/blocks/login',
-  SignupBlocks = '/blocks/signup',
+  SignupBlocks = '/blocks/sign-up',
+  ForgotPasswordBlocks = '/blocks/forgot-password',
   ContactBlocks = '/blocks/contact',
 }
 

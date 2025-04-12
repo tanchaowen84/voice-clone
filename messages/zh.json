@@ -362,14 +362,17 @@
       "blocks": {
         "title": "内置组件",
         "items": {
-          "hero": {
+          "hero-section": {
             "title": "Hero 组件"
           },
-          "logoCloud": {
+          "logo-cloud": {
             "title": "Logo Cloud 组件"
           },
           "features": {
             "title": "Features 组件"
+          },
+          "integrations": {
+            "title": "Integrations 组件"
           },
           "content": {
             "title": "Content 组件"
@@ -401,8 +404,11 @@
           "login": {
             "title": "Login 组件"
           },
-          "signup": {
+          "sign-up": {
             "title": "Signup 组件"
+          },
+          "forgot-password": {
+            "title": "Forgot Password 组件"
           },
           "contact": {
             "title": "Contact 组件"

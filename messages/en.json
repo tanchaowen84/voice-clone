@@ -361,11 +361,14 @@
       "blocks": {
         "title": "Blocks",
         "items": {
-          "hero": {
+          "hero-section": {
             "title": "Hero Blocks"
           },
-          "logo": {
+          "logo-cloud": {
             "title": "Logo Cloud Blocks"
+          },
+          "integrations": {
+            "title": "Integrations Blocks"
           },
           "features": {
             "title": "Features Blocks"
@@ -402,6 +405,9 @@
           },
           "signup": {
             "title": "Signup Blocks"
+          },
+          "forgot-password": {
+            "title": "Forgot Password Blocks"
           },
           "contact": {
             "title": "Contact Blocks"

@@ -15,12 +15,14 @@ import {
   FootprintsIcon,
   ImageIcon,
   ListChecksIcon,
+  LockKeyholeIcon,
   LogInIcon,
   MailIcon,
   MailboxIcon,
   NewspaperIcon,
   RocketIcon,
   ShieldCheckIcon,
+  SnowflakeIcon,
   SplitSquareVerticalIcon,
   SquareCodeIcon,
   SquareKanbanIcon,
@@ -161,21 +163,27 @@ export function getNavbarLinks(): NestedMenuItem[] {
       title: t('blocks.title'),
       items: [
         {
-          title: t('blocks.items.hero.title'),
+          title: t('blocks.items.hero-section.title'),
           icon: <FlameIcon className="size-4 shrink-0" />,
           href: Routes.HeroBlocks,
           external: false,
         },
         {
-          title: t('blocks.items.logo.title'),
+          title: t('blocks.items.logo-cloud.title'),
           icon: <SquareCodeIcon className="size-4 shrink-0" />,
-          href: Routes.LogoBlocks,
+          href: Routes.LogoCloudBlocks,
           external: false,
         },
         {
           title: t('blocks.items.features.title'),
           icon: <WandSparklesIcon className="size-4 shrink-0" />,
           href: Routes.FeaturesBlocks,
+          external: false,
+        },
+        {
+          title: t('blocks.items.integrations.title'),
+          icon: <SnowflakeIcon className="size-4 shrink-0" />,
+          href: Routes.IntegrationsBlocks,
           external: false,
         },
         {
@@ -242,6 +250,12 @@ export function getNavbarLinks(): NestedMenuItem[] {
           title: t('blocks.items.signup.title'),
           icon: <UserPlusIcon className="size-4 shrink-0" />,
           href: Routes.SignupBlocks,
+          external: false,
+        },
+        {
+          title: t('blocks.items.forgot-password.title'),
+          icon: <LockKeyholeIcon className="size-4 shrink-0" />,
+          href: Routes.ForgotPasswordBlocks,
           external: false,
         },
         {
