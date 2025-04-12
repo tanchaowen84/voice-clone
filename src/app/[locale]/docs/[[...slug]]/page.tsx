@@ -127,7 +127,6 @@ export default async function DocPage({
                 </HoverCard>
               );
             },
-            ...(await import('@/content/docs/components/tabs.client')),
           }}
           includeFumadocsComponents={true}
         />
