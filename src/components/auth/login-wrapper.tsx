@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { Routes } from '@/routes';
 import { useSearchParams } from 'next/navigation';
@@ -31,11 +30,10 @@ export const LoginWrapper = ({
   const pathname = useLocalePathname();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isTablet, isDesktop } = useMediaQuery();
 
   const handleLogin = () => {
     // append callbackUrl as a query parameter if provided
-    const loginPath = callbackUrl 
+    const loginPath = callbackUrl
       ? `${Routes.Login}?callbackUrl=${encodeURIComponent(callbackUrl)}`
       : `${Routes.Login}`;
     console.log('login wrapper, loginPath', loginPath);
@@ -47,9 +45,7 @@ export const LoginWrapper = ({
     setIsModalOpen(false);
   }, [pathname, searchParams]);
 
-  // 1. don't open the modal if the user is already in the auth pages
-  // 2. keep isTablet or isDesktop open, if user resizes the window
-  if (mode === 'modal' && (isTablet || isDesktop)) {
+  if (mode === 'modal') {
     return (
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
