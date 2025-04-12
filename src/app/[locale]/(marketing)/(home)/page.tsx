@@ -1,5 +1,8 @@
 import FaqSection from '@/components/blocks/faqs/faqs';
+import FeaturesSection from '@/components/blocks/features/features';
+import Features2Section from '@/components/blocks/features/features2';
 import HeroSection from '@/components/blocks/hero/hero';
+import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
@@ -7,11 +10,9 @@ import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import CallToAction from '../../preview/call-to-action/one/page';
 import ContentSection from '../../preview/content/one/page';
-import Features from '../../preview/features/one/page';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '../../preview/stats/one/page';
 import Testimonials from '../../preview/testimonials/one/page';
-import LogoCloud from '@/components/blocks/logo-cloud/logo-cloud';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -52,7 +53,11 @@ export default async function HomePage(props: HomePageProps) {
         </div>
 
         <div id="features" className="">
-          <Features />
+          <FeaturesSection />
+        </div>
+
+        <div id="features2" className="">
+          <Features2Section />
         </div>
 
         <div id="content" className="">
