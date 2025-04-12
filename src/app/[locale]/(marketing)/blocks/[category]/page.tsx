@@ -1,7 +1,7 @@
 import BlockPreview from '@/components/nsui/block-preview';
 import { blocks, categories } from '@/components/nsui/blocks';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -26,7 +26,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: category + ' | ' + t('title'),
     description: t('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/blocks/${category}`,
+    canonicalUrl: getUrlWithLocale("/blocks/${category}", locale),
   });
 }
 

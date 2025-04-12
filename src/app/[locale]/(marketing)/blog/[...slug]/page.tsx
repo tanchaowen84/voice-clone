@@ -7,7 +7,7 @@ import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts, Post } from 'content-collections';
 import { CalendarIcon, ClockIcon, FileTextIcon } from 'lucide-react';
@@ -99,7 +99,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: `${post.title} | ${t('title')}`,
     description: post.description,
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}${post.slug}`,
+    canonicalUrl: getUrlWithLocale(post.slug, locale),
   });
 }
 

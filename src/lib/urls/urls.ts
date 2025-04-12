@@ -20,13 +20,6 @@ export function shouldAppendLocale(locale?: Locale | null): boolean {
 }
 
 /**
- * Get the base URL of the application with the locale appended
- */
-export function getBaseUrlWithLocale(locale?: Locale | null): string {
-  return shouldAppendLocale(locale) ? `${baseUrl}/${locale}` : baseUrl;
-}
-
-/**
  * Get the URL of the application with the locale appended
  */
 export function getUrlWithLocale(url: string, locale?: Locale | null): string {

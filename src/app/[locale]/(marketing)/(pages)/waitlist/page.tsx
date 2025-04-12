@@ -1,6 +1,6 @@
 import { WaitlistFormCard } from '@/components/waitlist/waitlist-form-card';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -16,7 +16,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/waitlist`,
+    canonicalUrl: getUrlWithLocale("/waitlist", locale),
   });
 }
 

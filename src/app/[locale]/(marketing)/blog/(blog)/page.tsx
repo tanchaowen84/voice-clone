@@ -3,7 +3,7 @@ import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
 import { Metadata } from 'next';
@@ -21,7 +21,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/blog`,
+    canonicalUrl: getUrlWithLocale("/blog", locale),
   });
 }
 

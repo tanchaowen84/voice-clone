@@ -1,6 +1,6 @@
 import { ErrorCard } from '@/components/auth/error-card';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -17,7 +17,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: t('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/auth/error`,
+    canonicalUrl: getUrlWithLocale('/auth/error', locale),
   });
 }
 

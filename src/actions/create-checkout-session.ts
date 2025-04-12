@@ -2,7 +2,7 @@
 
 import { getSession } from "@/lib/server";
 import { findPlanByPlanId } from "@/lib/price-plan";
-import { getBaseUrlWithLocale } from "@/lib/urls/urls";
+import { getUrlWithLocale } from "@/lib/urls/urls";
 import { createCheckout } from "@/payment";
 import { CreateCheckoutParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
@@ -68,9 +68,8 @@ export const createCheckoutAction = actionClient
       };
 
       // Create the checkout session with localized URLs
-      const baseUrlWithLocale = getBaseUrlWithLocale(locale);
-      const successUrl = `${baseUrlWithLocale}/settings/billing?session_id={CHECKOUT_SESSION_ID}`;
-      const cancelUrl = `${baseUrlWithLocale}/pricing`;
+      const successUrl = getUrlWithLocale('/settings/billing?session_id={CHECKOUT_SESSION_ID}', locale);
+      const cancelUrl = getUrlWithLocale('/pricing', locale);
       const params: CreateCheckoutParams = {
         planId,
         priceId,

@@ -1,7 +1,7 @@
 import { ReleaseCard } from '@/components/release/release-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getReleases } from '@/lib/release/get-releases';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
 import { Locale } from 'next-intl';
@@ -22,7 +22,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/changelog`,
+    canonicalUrl: getUrlWithLocale("/changelog", locale),
   });
 }
 

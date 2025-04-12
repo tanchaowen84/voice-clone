@@ -1,6 +1,6 @@
 import FAQs from '@/components/blocks/faqs/faqs';
 import { constructMetadata } from '@/lib/metadata';
-import { getBaseUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -27,7 +27,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: t('title'),
     description: t('description'),
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}`,
+    canonicalUrl: getUrlWithLocale('/', locale),
   });
 }
 

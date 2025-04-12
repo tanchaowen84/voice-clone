@@ -3,7 +3,7 @@
 import db from "@/db";
 import { user } from "@/db/schema";
 import { getSession } from "@/lib/server";
-import { getBaseUrlWithLocale } from "@/lib/urls/urls";
+import { getUrlWithLocale } from "@/lib/urls/urls";
 import { createCustomerPortal } from "@/payment";
 import { CreatePortalParams } from "@/payment/types";
 import { eq } from "drizzle-orm";
@@ -67,8 +67,7 @@ export const createPortalAction = actionClient
       const locale = await getLocale();
 
       // Create the portal session with localized URL if no custom return URL is provided
-      const baseUrlWithLocale = getBaseUrlWithLocale(locale);
-      const returnUrlWithLocale = returnUrl || `${baseUrlWithLocale}/settings/billing`;
+      const returnUrlWithLocale = returnUrl || getUrlWithLocale('/settings/billing', locale);
       const params: CreatePortalParams = {
         customerId: customerResult[0].customerId,
         returnUrl: returnUrlWithLocale,
