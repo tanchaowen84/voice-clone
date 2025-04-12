@@ -1,0 +1,36 @@
+import { Button } from '@/components/ui/button';
+import { LocaleLink } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+
+export default function CallToAction() {
+  const t = useTranslations('HomePage.calltoaction');
+
+  return (
+    <section className="py-24 w-full bg-muted">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="text-center">
+          <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
+            {t('title')}
+          </h2>
+          <p className="mt-4">
+            {t('description')}
+          </p>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
+            <Button asChild size="lg">
+              <LocaleLink href="/">
+                <span>{t('primaryButton')}</span>
+              </LocaleLink>
+            </Button>
+
+            <Button asChild size="lg" variant="outline">
+              <LocaleLink href="/">
+                <span>{t('secondaryButton')}</span>
+              </LocaleLink>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -11,10 +11,10 @@ import { getUrlWithLocale } from '@/lib/urls/urls';
 import { Metadata } from 'next';
 import { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import CallToAction from '../../preview/call-to-action/one/page';
 import FeaturesSection from '@/components/blocks/features/features';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '@/components/blocks/stats/stats';
+import CallToAction from '@/components/blocks/calltoaction/calltoaction';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api

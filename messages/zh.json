@@ -186,7 +186,7 @@
           "name": "Anonymous author",
           "role": "产品经理",
           "image": "https://randomuser.me/api/portraits/men/8.jpg",
-          "quote": "我真的很新到 Tailwind 和我想自己做一些页面，我在网上搜索了很多英雄页面和区块。然而，大多数都没有给我一个清晰的想法，或者需要一些 HTML/CSS 编码背景来从原始文件中做一些更改，或者太贵了。我下载了其中一个 Tailus 模板，它非常容易理解，你可以在开始时修改代码/区块以完美地适应你的页面目的。"
+          "quote": "我不熟悉 Tailwind，我想自己做一些页面，我在网上搜索了很多英雄页面和区块。然而，大多数都没有给我一个清晰的想法，或者需要一些 HTML/CSS 编码背景来从原始文件中做一些更改，或者太贵了。我下载了其中一个 MkSaaS 模板，它非常容易理解，你可以在开始时修改代码/区块以完美地适应你的页面目的。"
         },
         "item-5": {
           "name": "Shekinah Tshiokufila",
@@ -228,7 +228,7 @@
           "name": "Eric Ampire",
           "role": "Google 开发者专家",
           "image": "https://randomuser.me/api/portraits/men/12.jpg",
-          "quote": "MkSaaS 模板是任何想要创建一个美丽且功能齐全的网站但没有网页设计经验的人的完美解决方案。这些模板易于使用，可定制，并且响应迅速，我们的支持团队随时为您提供帮助。我强烈推荐 MkSaaS 模板给任何想要创建网站的人。"
+          "quote": "MkSaaS 模板是任何想要创建一个美丽且功能齐全的网站但没有网页设计经验的人的完美解决方案。这些模板易于使用，可定制，并且响应迅速。我强烈推荐 MkSaaS 模板给任何想要创建网站的人。"
         },
         "item-12": {
           "name": "Roland Tubonge",
@@ -252,6 +252,12 @@
           "title": "使用 MkSaaS 启动的应用"
         }
       }
+    },
+    "calltoaction": {
+      "title": "开始构建",
+      "description": "MkSaaS 可让您在几天内轻松构建您的 AI SaaS",
+      "primaryButton": "开始使用",
+      "secondaryButton": "查看演示"
     }
   },
   "PricingPage": {

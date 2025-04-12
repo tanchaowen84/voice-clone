@@ -55,7 +55,7 @@ export default function FaqSection() {
 
   return (
     <section className="py-16">
-      <div className="mx-auto max-w-5xl px-4 md:px-6">
+      <div className="mx-auto max-w-4xl px-4 md:px-6">
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight">
             {t('title')}
@@ -65,7 +65,7 @@ export default function FaqSection() {
           </p>
         </div>
 
-        <div className="mx-auto max-w-5xl mt-12">
+        <div className="mx-auto max-w-4xl mt-12">
           <Accordion
             type="single"
             collapsible
