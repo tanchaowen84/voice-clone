@@ -140,6 +140,10 @@
         }
       }
     },
+    "pricing": {
+      "title": "Pricing",
+      "description": "Choose the plan that works best for you"
+    },
     "faqs": {
       "title": "Frequently Asked Questions",
       "description": "Please feel free to contact us if you have any questions",

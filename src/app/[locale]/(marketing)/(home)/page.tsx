@@ -14,9 +14,10 @@ import { getTranslations } from 'next-intl/server';
 import FeaturesSection from '@/components/blocks/features/features';
 import Pricing from '../../preview/pricing/three/page';
 import StatsSection from '@/components/blocks/stats/stats';
-import CallToAction from '@/components/blocks/calltoaction/calltoaction';
+import CallToActionSection from '@/components/blocks/calltoaction/calltoaction';
 import Integration2Section from '@/components/blocks/integration/integration2';
 import Features5Section from '@/components/blocks/features/features5';
+import PricingSection from '@/components/blocks/pricing/pricing';
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -89,7 +90,7 @@ export default async function HomePage(props: HomePageProps) {
         </div>
 
         <div id="pricing">
-          <Pricing />
+          <PricingSection />
         </div>
 
         <div id="faqs">
@@ -101,7 +102,7 @@ export default async function HomePage(props: HomePageProps) {
         </div>
 
         <div id="call-to-action">
-          <CallToAction />
+          <CallToActionSection />
         </div>
       </div>
     </>
