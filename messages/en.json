@@ -34,7 +34,7 @@
   "HomePage": {
     "title": "MkSaaS",
     "description": "Make AI SaaS in days, simply and effortlessly",
-    "FAQ": {
+    "faqs": {
       "title": "Frequently Asked Questions",
       "description": "Can't find what you're looking for?",
       "contact": "Contact our customer support team",

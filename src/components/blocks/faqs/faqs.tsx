@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { getBaseUrlWithLocale, getUrlWithLocale } from '@/lib/urls/urls';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -20,8 +20,8 @@ type FAQItem = {
 
 export default function FAQs() {
   const locale = useLocale();
-  const t = useTranslations('HomePage.FAQ');
-  
+  const t = useTranslations('HomePage.faqs');
+
   const faqItems: FAQItem[] = [
     {
       id: 'item-1',

@@ -1,4 +1,4 @@
-import FAQs from '@/components/landing/faq/FAQs';
+import FAQs from '@/components/blocks/faqs/faqs';
 import Container from '@/components/layout/container';
 import { constructMetadata } from '@/lib/metadata';
 import { getBaseUrlWithLocale } from '@/lib/urls/urls';
