@@ -16,7 +16,6 @@ export default async function BlogListLayout({
   const t = await getTranslations('BlogPage');
 
   // Filter categories by locale
-  // console.log("allCategories", allCategories);
   const categoryList = allCategories.filter(
     (category) => category.locale === locale
   );

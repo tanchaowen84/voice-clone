@@ -28,7 +28,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: page.title + ' | ' + t('title'),
     description: page.description,
-    canonicalUrl: `${getBaseUrlWithLocale(locale)}/terms-of-service`,
+    canonicalUrl: `${getBaseUrlWithLocale(locale)}/terms`,
   });
 }
 
