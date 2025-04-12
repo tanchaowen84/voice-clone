@@ -1,7 +1,7 @@
 'use client';
 
-import { ActiveThemeProvider } from '@/components/layout/active-theme';
-import { PaymentProvider } from '@/components/providers/payment-provider';
+import { ActiveThemeProvider } from '@/components/layout/active-theme-provider';
+import { PaymentProvider } from '@/components/layout/payment-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { ThemeProvider, useTheme } from 'next-themes';

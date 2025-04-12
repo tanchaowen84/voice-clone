@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useThemeConfig } from "./active-theme";
+import { useThemeConfig } from "./active-theme-provider";
 import { useTranslations } from "next-intl";
 
 /**
