@@ -50,6 +50,7 @@ export class ResendNewsletterProvider implements NewsletterProvider {
 
       // If the contact does not exist, create a new one
       if (!contact) {
+        console.log('Creating new contact', email);
         const createResult = await this.resend.contacts.create({
           email,
           audienceId: this.audienceId,
@@ -59,18 +60,25 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
+        } else {
+          console.log('Created new contact', email);
+          return true;
         }
       }
 
       // If the contact already exists, update it
       // NOTICE: we can not just create a new contact if this email already exists,
       // because Resend will response 201, but user is not subscribed
+      // NOTICE: we can not update it with email if the contact not found, it will return 404,
+      // statusCode: 404, name: not_found, message: Contact not found
       const updateResult = await this.resend.contacts.update({
         email,
         audienceId: this.audienceId,
         unsubscribed: false,
       });
 
+      // NOTICE: we can not request too many times, because of the rate limit of Resend
+      // statusCode: 429, name: rate_limit_exceeded, message: Too many requests, you can only make 2 requests per second.
       if (updateResult.error) {
         console.error('Error updating contact', updateResult.error);
         return false;
