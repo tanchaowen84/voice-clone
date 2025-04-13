@@ -12,6 +12,7 @@ import { authClient } from '@/lib/auth-client';
 import { formatDate, formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
 import { PlanIntervals } from '@/payment/types';
+import { Routes } from '@/routes';
 import { RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -25,6 +26,37 @@ export default function BillingCard() {
     currentPlan: currentPlanFromStore,
     refetch
   } = usePayment();
+
+  // currentPlanFromStore maybe null, so we need to check if it is null
+  if (!currentPlanFromStore) {
+    return (
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
+          <CardHeader>
+            <CardTitle>{t('currentPlan.title')}</CardTitle>
+            <CardDescription>{t('currentPlan.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm text-muted-foreground">
+              {t('currentPlan.noPlan')}
+            </div>
+          </CardContent>
+          <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+            <Button
+              variant="default"
+              className="cursor-pointer"
+              asChild
+            >
+              <LocaleLink href={Routes.Pricing}>
+                {t('upgradePlan')}
+              </LocaleLink>
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
   // Get price plans with translations
   const pricePlans = getPricePlans();
   const plans = Object.values(pricePlans);
@@ -179,7 +211,7 @@ export default function BillingCard() {
               className="cursor-pointer"
               asChild
             >
-              <LocaleLink href="/pricing">
+              <LocaleLink href={Routes.Pricing}>
                 {t('upgradePlan')}
               </LocaleLink>
             </Button>

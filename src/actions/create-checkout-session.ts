@@ -8,6 +8,7 @@ import { CreateCheckoutParams } from "@/payment/types";
 import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
+import { Routes } from "@/routes";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -69,7 +70,7 @@ export const createCheckoutAction = actionClient
 
       // Create the checkout session with localized URLs
       const successUrl = getUrlWithLocale('/settings/billing?session_id={CHECKOUT_SESSION_ID}', locale);
-      const cancelUrl = getUrlWithLocale('/pricing', locale);
+      const cancelUrl = getUrlWithLocale(Routes.Pricing, locale);
       const params: CreateCheckoutParams = {
         planId,
         priceId,

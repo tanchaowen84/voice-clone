@@ -482,7 +482,8 @@
         },
         "currentPlan": {
           "title": "当前方案",
-          "description": "您当前的方案详情"
+          "description": "您当前的方案详情",
+          "noPlan": "您没有激活的方案"
         },
         "CustomerPortalButton": {
           "loading": "加载中...",
@@ -495,6 +496,7 @@
         "lifetimeMessage": "您拥有所有高级功能的终身使用权限",
         "manageSubscription": "管理订阅和账单",
         "manageBilling": "管理账单",
+        "upgradePlan": "升级方案",
         "retry": "重试",
         "errorMessage": "获取数据失败"
       },

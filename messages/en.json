@@ -481,7 +481,8 @@
         },
         "currentPlan": {
           "title": "Current Plan",
-          "description": "Your current plan details"
+          "description": "Your current plan details",
+          "noPlan": "You have no active plan"
         },
         "CustomerPortalButton": {
           "loading": "Loading...",
