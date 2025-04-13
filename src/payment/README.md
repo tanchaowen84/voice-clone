@@ -7,9 +7,7 @@ This module provides a flexible payment integration with Stripe, supporting both
 - `/payment/types.ts` - Type definitions for the payment module
 - `/payment/index.ts` - Main payment interface and global provider instance
 - `/payment/provider/stripe.ts` - Stripe payment provider implementation
-- `/payment/config/payment-config.ts` - Payment plans configuration
-- `/actions/create-checkout-session.ts` - Server actions for creating checkout session
-- `/actions/create-customer-portal-session.ts` - Server actions for creating portal session
+- `/actions/payment.ts` - Server actions for payment operations
 - `/app/api/webhooks/stripe/route.ts` - API route for Stripe webhook events
 - `/app/[locale]/(marketing)/payment/success/page.tsx` - Success page for completed checkout
 - `/app/[locale]/(marketing)/payment/cancel/page.tsx` - Cancel page for abandoned checkout
@@ -28,42 +26,69 @@ The following environment variables are required:
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
+# Public Stripe Variables (used in client components)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+
 # Stripe Price IDs
-STRIPE_PRICE_PRO_MONTHLY=price_...
-STRIPE_PRICE_PRO_YEARLY=price_...
-STRIPE_PRICE_LIFETIME=price_...
+NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY=price_...
+NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY=price_...
+NEXT_PUBLIC_STRIPE_PRICE_LIFETIME=price_...
 ```
 
 ## Payment Plans
 
-Payment plans are defined in `/payment/config/payment-config.ts`. Each plan can have multiple pricing options (monthly, yearly, one-time) with the following structure:
+Payment plans are defined in `src/config/website.tsx`. Each plan can have multiple pricing options (monthly, yearly, one-time) with the following structure:
 
 ```typescript
-{
-  id: "pro",
-  name: "Pro Plan",
-  description: "For professional users",
-  isFree: false,
-  recommended: true,
-  features: ["Feature 1", "Feature 2"],
-  prices: [
-    {
-      productId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
-      type: "SUBSCRIPTION",
-      interval: "month",
-      amount: 2900,
-      currency: "USD",
-      trialPeriodDays: 7
-    },
-    {
-      productId: process.env.STRIPE_PRICE_PRO_YEARLY!,
-      type: "SUBSCRIPTION",
-      interval: "year",
-      amount: 24900,
-      currency: "USD",
-      trialPeriodDays: 7
+// In src/config/website.tsx
+export const websiteConfig = {
+  // ...other config
+  payment: {
+    provider: 'stripe',
+    plans: {
+      free: {
+        id: "free",
+        prices: [],
+        isFree: true,
+        isLifetime: false,
+      },
+      pro: {
+        id: "pro",
+        prices: [
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
+            amount: 990,
+            currency: "USD",
+            interval: PlanIntervals.MONTH,
+          },
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
+            amount: 9900,
+            currency: "USD",
+            interval: PlanIntervals.YEAR,
+          },
+        ],
+        isFree: false,
+        isLifetime: false,
+        recommended: true,
+      },
+      lifetime: {
+        id: "lifetime",
+        prices: [
+          {
+            type: PaymentTypes.ONE_TIME,
+            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
+            amount: 19900,
+            currency: "USD",
+          },
+        ],
+        isFree: false,
+        isLifetime: true,
+      }
     }
-  ]
+  }
 }
 ```
 
@@ -100,7 +125,7 @@ Creates a Stripe checkout session and redirects the user:
 ```tsx
 <CheckoutButton
   planId="pro"
-  priceId={process.env.STRIPE_PRICE_PRO_MONTHLY!}
+  priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!}
   email="user@example.com"
   metadata={{ userId: "user_123" }}
   variant="default"
@@ -166,7 +191,7 @@ The webhook handler processes events like:
 - `payment_intent.succeeded`
 - `payment_intent.payment_failed`
 
-The webhook functionality is implemented in the `defaultWebhookHandler` method of the Stripe provider.
+The webhook functionality is implemented in the `handleWebhookEvent` method of the payment module.
 
 ## Integration Steps
 

@@ -8,7 +8,8 @@ The email system is designed with the following components:
 
 - **Provider Interface**: A common interface for email providers in `types.ts`
 - **Email Templates**: React-based email templates for different purposes in the `templates` directory
-- **Configuration**: Configuration for email defaults and settings
+- **Email Components**: Reusable email components in the `components` directory
+- **Configuration**: Configuration for email defaults and settings in `src/config/website.tsx`
 
 ## Usage
 
@@ -123,10 +124,26 @@ export interface EmailTemplates {
 
 ## Configuration
 
-The email system configuration is defined in `config/mail-config.ts`. It includes settings like:
+The email system configuration is defined in `src/config/website.tsx`. It includes settings like:
 
 - Default "from" email address
-- Default locale for emails
+- Mail provider selection
+- Default "to" email address for contact forms
+
+Example configuration:
+
+```typescript
+// In src/config/website.tsx
+export const websiteConfig = {
+  // ...other config
+  mail: {
+    provider: 'resend',
+    from: 'support@example.com',
+    to: 'contact@example.com',
+  },
+  // ...other config
+}
+```
 
 ## Providers
 

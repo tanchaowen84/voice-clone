@@ -12,7 +12,7 @@ This module provides a unified interface for storing and retrieving files using 
 ## Basic Usage
 
 ```typescript
-import { uploadFile, deleteFile, getPresignedUploadUrl } from '@/src/storage';
+import { uploadFile, deleteFile, getPresignedUploadUrl } from '@/storage';
 
 // Upload a file
 const { url, key } = await uploadFile(
@@ -40,7 +40,7 @@ For client-side uploads, use the `uploadFileFromBrowser` function:
 ```typescript
 'use client';
 
-import { uploadFileFromBrowser } from '@/src/storage';
+import { uploadFileFromBrowser } from '@/storage';
 
 // In your component
 async function handleFileUpload(event) {
@@ -59,7 +59,22 @@ async function handleFileUpload(event) {
 
 ## Configuration
 
-The storage module is configured using environment variables:
+The storage module is configured in two ways:
+
+1. In `src/config/website.tsx`:
+
+```typescript
+// In src/config/website.tsx
+export const websiteConfig = {
+  // ...other config
+  storage: {
+    provider: 's3',
+  },
+  // ...other config
+}
+```
+
+2. Using environment variables:
 
 ```
 # Required
@@ -79,7 +94,7 @@ STORAGE_FORCE_PATH_STYLE=true
 If you need more control, you can interact with the storage provider directly:
 
 ```typescript
-import { getStorageProvider } from '@/src/storage';
+import { getStorageProvider } from '@/storage';
 
 const provider = getStorageProvider();
 
@@ -97,20 +112,22 @@ const result = await provider.uploadFile({
 You can create and use your own storage provider implementation:
 
 ```typescript
-import { StorageProvider, UploadFileParams, UploadFileResult } from '@/src/storage';
+import { StorageProvider, UploadFileParams, UploadFileResult } from '@/storage/types';
 
 class CustomStorageProvider implements StorageProvider {
   // Implement the required methods
   async uploadFile(params: UploadFileParams): Promise<UploadFileResult> {
     // Your implementation
+    return { url: 'https://example.com/file.jpg', key: 'file.jpg' };
   }
 
   async deleteFile(key: string): Promise<void> {
     // Your implementation
   }
 
-  async getPresignedUploadUrl(params: PresignedUploadUrlParams): Promise<UploadFileResult> {
+  async getPresignedUploadUrl(params: PresignedUploadUrlParams): Promise<PresignedUploadUrlResult> {
     // Your implementation
+    return { url: 'https://example.com/upload', key: 'file.jpg' };
   }
 
   getProviderName(): string {

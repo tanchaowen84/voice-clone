@@ -7,8 +7,8 @@ This module provides functionality for managing newsletter subscriptions using v
 The newsletter system is designed with the following components:
 
 - **Provider Interface**: A common interface for newsletter providers in `types.ts`
-- **Providers**: Implementations for different newsletter service providers
-- **Configuration**: Configuration for newsletter defaults and settings
+- **Providers**: Implementations for different newsletter service providers in the `provider` directory
+- **Configuration**: Configuration for newsletter defaults and settings in `src/config/website.tsx`
 
 ## Features
 
@@ -35,7 +35,22 @@ const subscribed = await isSubscribed('user@example.com');
 
 ## Configuration
 
-The newsletter module is configured using environment variables:
+The newsletter module is configured in two ways:
+
+1. In `src/config/website.tsx`:
+
+```typescript
+// In src/config/website.tsx
+export const websiteConfig = {
+  // ...other config
+  newsletter: {
+    provider: 'resend',
+  },
+  // ...other config
+}
+```
+
+2. Using environment variables:
 
 ```
 # Required for Resend provider
@@ -43,7 +58,7 @@ RESEND_API_KEY=your-resend-api-key
 RESEND_AUDIENCE_ID=your-audience-id
 ```
 
-Or you can configure it programmatically:
+You can also configure it programmatically:
 
 ```typescript
 import { initializeNewsletterProvider } from '@/newsletter';
@@ -72,20 +87,20 @@ const result = await provider.subscribe({ email: 'user@example.com' });
 You can create and use your own newsletter provider implementation:
 
 ```typescript
-import { NewsletterProvider, SubscribeNewsletterProps } from '@/newsletter';
+import { NewsletterProvider, SubscribeNewsletterParams } from '@/newsletter/types';
 
 class CustomNewsletterProvider implements NewsletterProvider {
-  async subscribe(params: SubscribeNewsletterProps): Promise<boolean> {
+  async subscribe(params: SubscribeNewsletterParams): Promise<boolean> {
     // Your implementation
     return true;
   }
 
-  async unsubscribe(params: UnsubscribeNewsletterProps): Promise<boolean> {
+  async unsubscribe(params: SubscribeNewsletterParams): Promise<boolean> {
     // Your implementation
     return true;
   }
 
-  async checkSubscribeStatus(params: CheckSubscribeStatusProps): Promise<boolean> {
+  async checkSubscribeStatus(params: SubscribeNewsletterParams): Promise<boolean> {
     // Your implementation
     return true;
   }
