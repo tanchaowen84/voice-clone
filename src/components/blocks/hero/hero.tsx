@@ -46,44 +46,6 @@ export default function HeroSection() {
 
         <section>
           <div className="relative pt-12">
-            {/* background image */}
-            {/* <AnimatedGroup
-              variants={{
-                container: {
-                  visible: {
-                    transition: {
-                      delayChildren: 1,
-                    },
-                  },
-                },
-                item: {
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      type: 'spring',
-                      bounce: 0.3,
-                      duration: 2,
-                    },
-                  },
-                },
-              }}
-              className="absolute inset-0 -z-20"
-            >
-              <Image
-                src="/blocks/night-background.webp"
-                alt="background"
-                className="absolute inset-x-0 top-56 -z-20 hidden lg:top-32 dark:block"
-                width="3276"
-                height="4095"
-              />
-            </AnimatedGroup> */}
-
-            {/* <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div> */}
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 {/* introduction */}
