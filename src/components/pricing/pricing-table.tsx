@@ -33,7 +33,7 @@ export function PricingTable({
   // Get price plans with translations
   const pricePlans = getPricePlans();
   const plans = Object.values(pricePlans);
-  
+
   // Current plan ID for comparison
   const currentPlanId = currentPlan?.id || null;
 
@@ -94,40 +94,52 @@ export function PricingTable({
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Render free plans (always visible) */}
-        {freePlans.map((plan) => (
-          <PricingCard
-            key={plan.id}
-            plan={plan}
-            metadata={metadata}
-            isCurrentPlan={currentPlanId === plan.id}
-          />
-        ))}
+      {/* Calculate total number of visible plans */}
+      {(() => {
+        const totalVisiblePlans = freePlans.length + subscriptionPlans.length + oneTimePlans.length;
+        return (
+          <div className={cn(
+            "grid gap-6",
+            // Universal solution that handles any number of cards
+            totalVisiblePlans === 1 && "grid-cols-1 max-w-md mx-auto w-full",
+            totalVisiblePlans === 2 && "grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto w-full",
+            totalVisiblePlans >= 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          )}>
+            {/* Render free plans (always visible) */}
+            {freePlans.map((plan) => (
+              <PricingCard
+                key={plan.id}
+                plan={plan}
+                metadata={metadata}
+                isCurrentPlan={currentPlanId === plan.id}
+              />
+            ))}
 
-        {/* Render subscription plans with the selected interval */}
-        {subscriptionPlans.map((plan) => (
-          <PricingCard
-            key={plan.id}
-            plan={plan}
-            interval={interval}
-            paymentType={PaymentTypes.SUBSCRIPTION}
-            metadata={metadata}
-            isCurrentPlan={currentPlanId === plan.id}
-          />
-        ))}
+            {/* Render subscription plans with the selected interval */}
+            {subscriptionPlans.map((plan) => (
+              <PricingCard
+                key={plan.id}
+                plan={plan}
+                interval={interval}
+                paymentType={PaymentTypes.SUBSCRIPTION}
+                metadata={metadata}
+                isCurrentPlan={currentPlanId === plan.id}
+              />
+            ))}
 
-        {/* Render one-time plans (always visible) */}
-        {oneTimePlans.map((plan) => (
-          <PricingCard
-            key={plan.id}
-            plan={plan}
-            paymentType={PaymentTypes.ONE_TIME}
-            metadata={metadata}
-            isCurrentPlan={currentPlanId === plan.id}
-          />
-        ))}
-      </div>
+            {/* Render one-time plans (always visible) */}
+            {oneTimePlans.map((plan) => (
+              <PricingCard
+                key={plan.id}
+                plan={plan}
+                paymentType={PaymentTypes.ONE_TIME}
+                metadata={metadata}
+                isCurrentPlan={currentPlanId === plan.id}
+              />
+            ))}
+          </div>
+        );
+      })()}
     </div>
   );
 } 
