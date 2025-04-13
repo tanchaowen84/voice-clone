@@ -6,9 +6,11 @@ import { sendEmail } from '@/mail';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
+import { subscribe } from '@/newsletter';
 import { parse as parseCookies } from 'cookie';
 import { Locale } from 'next-intl';
 import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
+import { websiteConfig } from '@/config/website';
 
 /**
  * https://www.better-auth.com/docs/reference/options
@@ -107,6 +109,28 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/concepts/users-accounts#delete-user
     deleteUser: {
       enabled: true,
+    },
+  },
+  databaseHooks: {
+    // https://www.better-auth.com/docs/concepts/database#database-hooks
+    user: {
+      create: {
+        after: async (user) => {
+          // Auto subscribe user to newsletter after sign up if enabled in website config
+          if (user.email && websiteConfig.newsletter.autoSubscribeAfterSignUp) {
+            try {
+              const subscribed = await subscribe(user.email);
+              if (!subscribed) {
+                console.error(`Failed to subscribe user ${user.email} to newsletter`);
+              } else {
+                console.log(`User ${user.email} subscribed to newsletter`);
+              }
+            } catch (error) {
+              console.error('Newsletter subscription error:', error);
+            }
+          }
+        },
+      },
     },
   },
   plugins: [

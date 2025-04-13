@@ -40,6 +40,7 @@ export const websiteConfig: WebsiteConfig = {
   },
   newsletter: {
     provider: 'resend',
+    autoSubscribeAfterSignUp: false,
   },
   storage: {
     provider: 's3',
