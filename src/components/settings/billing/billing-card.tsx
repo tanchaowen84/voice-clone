@@ -27,51 +27,18 @@ export default function BillingCard() {
     refetch
   } = usePayment();
 
-  // currentPlanFromStore maybe null, so we need to check if it is null
-  if (!currentPlanFromStore) {
-    return (
-      <div className="grid gap-8 md:grid-cols-2">
-        <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
-          <CardHeader>
-            <CardTitle>{t('currentPlan.title')}</CardTitle>
-            <CardDescription>{t('currentPlan.description')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-sm text-muted-foreground">
-              {t('currentPlan.noPlan')}
-            </div>
-          </CardContent>
-          <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
-            <Button
-              variant="default"
-              className="cursor-pointer"
-              asChild
-            >
-              <LocaleLink href={Routes.Pricing}>
-                {t('upgradePlan')}
-              </LocaleLink>
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    );
-  }
-
-  // Get price plans with translations
-  const pricePlans = getPricePlans();
-  const plans = Object.values(pricePlans);
-  // Convert current plan from store to a plan with translations
-  const currentPlan = plans.find(plan => plan.id === currentPlanFromStore?.id);
-
-  const isFreePlan = currentPlan?.isFree || false;
-  const isLifetimeMember = currentPlan?.isLifetime || false;
-  // console.log('billing card, currentPlan', currentPlan);
-  // console.log('billing card, subscription', subscription);
-
   // Get user session for customer ID
   const { data: session, isPending: isLoadingSession } = authClient.useSession();
   const currentUser = session?.user;
-  // console.log('billing card, currentUser', currentUser);
+
+  // Get price plans with translations - must be called here to maintain hook order
+  const pricePlans = getPricePlans();
+  const plans = Object.values(pricePlans);
+  
+  // Convert current plan from store to a plan with translations
+  const currentPlan = currentPlanFromStore ? plans.find(plan => plan.id === currentPlanFromStore?.id) : null;
+  const isFreePlan = currentPlan?.isFree || false;
+  const isLifetimeMember = currentPlan?.isLifetime || false;
 
   // Get subscription price details
   const currentPrice = subscription && currentPlan?.prices.find(
@@ -137,6 +104,40 @@ export default function BillingCard() {
       </div>
     );
   }
+
+  // currentPlanFromStore maybe null, so we need to check if it is null
+  if (!currentPlanFromStore) {
+    return (
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
+          <CardHeader>
+            <CardTitle>{t('currentPlan.title')}</CardTitle>
+            <CardDescription>{t('currentPlan.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm text-muted-foreground">
+              {t('currentPlan.noPlan')}
+            </div>
+          </CardContent>
+          <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+            <Button
+              variant="default"
+              className="cursor-pointer"
+              asChild
+            >
+              <LocaleLink href={Routes.Pricing}>
+                {t('upgradePlan')}
+              </LocaleLink>
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
+  // console.log('billing card, currentPlan', currentPlan);
+  // console.log('billing card, subscription', subscription);
+  // console.log('billing card, currentUser', currentUser);
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
