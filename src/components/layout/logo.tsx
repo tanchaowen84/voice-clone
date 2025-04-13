@@ -4,12 +4,22 @@ import { websiteConfig } from '@/config/website';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export function Logo({ className }: { className?: string }) {
-  const theme = useTheme();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const logoLight = websiteConfig.metadata.logoLight ?? '/logo.png';
   const logoDark = websiteConfig.metadata.logoDark ?? logoLight;
-  const logo = theme.theme === 'dark' ? logoDark : logoLight;
+  
+  // During server-side rendering and initial client render, always use logoLight
+  // This prevents hydration mismatch
+  const logo = mounted && theme === 'dark' ? logoDark : logoLight;
+
+  // Only show theme-dependent UI after hydration to prevent mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Image
