@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: MkSaaS Community Support
+    url: https://github.com/MkSaaSHQ/mksaas-template/discussions
+    about: Please ask and answer questions here.
+  - name: MkSaaS Bug Report
+    url: https://github.com/MkSaaSHQ/mksaas-template/issues
+    about: Please report bug here.
