@@ -25,15 +25,15 @@ export function getPricePlans(): Record<string, PricePlan> {
       name: t('free.name'),
       description: t('free.description'),
       features: [
-        t('free.features.projects'),
-        t('free.features.analytics'),
-        t('free.features.support'),
-        t('free.features.storage')
+        t('free.features.feature-1'),
+        t('free.features.feature-2'),
+        t('free.features.feature-3'),
+        t('free.features.feature-4')
       ],
       limits: [
-        t('free.limits.domains'),
-        t('free.limits.brands'),
-        t('free.limits.updates')
+        t('free.limits.limit-1'),
+        t('free.limits.limit-2'),
+        t('free.limits.limit-3')
       ]
     };
   }
@@ -44,15 +44,15 @@ export function getPricePlans(): Record<string, PricePlan> {
       name: t('pro.name'),
       description: t('pro.description'),
       features: [
-        t('pro.features.projects'),
-        t('pro.features.analytics'),
-        t('pro.features.support'),
-        t('pro.features.storage'),
-        t('pro.features.domains'),
+        t('pro.features.feature-1'),
+        t('pro.features.feature-2'),
+        t('pro.features.feature-3'),
+        t('pro.features.feature-4'),
+        t('pro.features.feature-5'),
       ],
       limits: [
-        t('pro.limits.brands'),
-        t('pro.limits.updates')
+        t('pro.limits.limit-1'),
+        t('pro.limits.limit-2')
       ]
     };
   }
@@ -63,13 +63,13 @@ export function getPricePlans(): Record<string, PricePlan> {
       name: t('lifetime.name'),
       description: t('lifetime.description'),
       features: [
-        t('lifetime.features.proFeatures'),
-        t('lifetime.features.security'),
-        t('lifetime.features.support'),
-        t('lifetime.features.storage'),
-        t('lifetime.features.integrations'),
-        t('lifetime.features.branding'),
-        t('lifetime.features.updates')
+        t('lifetime.features.feature-1'),
+        t('lifetime.features.feature-2'),
+        t('lifetime.features.feature-3'),
+        t('lifetime.features.feature-4'),
+        t('lifetime.features.feature-5'),
+        t('lifetime.features.feature-6'),
+        t('lifetime.features.feature-7')
       ],
       limits: []
     };

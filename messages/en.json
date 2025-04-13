@@ -59,43 +59,43 @@
       "name": "Free",
       "description": "Basic features for personal use",
       "features": {
-        "projects": "Up to 3 projects",
-        "storage": "1 GB storage",
-        "analytics": "Basic analytics",
-        "support": "Community support"
+        "feature-1": "Up to 3 projects",
+        "feature-2": "1 GB storage",
+        "feature-3": "Basic analytics",
+        "feature-4": "Community support"
       },
       "limits": {
-        "domains": "Custom domains",
-        "brands": "Custom brands",
-        "updates": "Lifetime updates"
+        "limit-1": "Custom domains",
+        "limit-2": "Custom brands",
+        "limit-3": "Lifetime updates"
       }
     },
     "pro": {
       "name": "Pro",
       "description": "Advanced features for professionals",
       "features": {
-        "projects": "Unlimited projects",
-        "storage": "10 GB storage",
-        "analytics": "Advanced analytics",
-        "support": "Priority support",
-        "domains": "Custom domains"
+        "feature-1": "Unlimited projects",
+        "feature-2": "10 GB storage",
+        "feature-3": "Advanced analytics",
+        "feature-4": "Priority support",
+        "feature-5": "Custom domains"
       },
       "limits": {
-        "brands": "Custom brands",
-        "updates": "Lifetime updates"
+        "limit-1": "Custom brands",
+        "limit-2": "Lifetime updates"
       }
     },
     "lifetime": {
       "name": "Lifetime",
       "description": "Premium features with one-time payment",
       "features": {
-        "proFeatures": "All Pro features",
-        "storage": "100 GB storage",
-        "support": "Dedicated support",
-        "security": "Enterprise-grade security",
-        "integrations": "Advanced integrations",
-        "branding": "Custom branding",
-        "updates": "Lifetime updates"
+        "feature-1": "All Pro features",
+        "feature-2": "100 GB storage",
+        "feature-3": "Dedicated support",
+        "feature-4": "Enterprise-grade security",
+        "feature-5": "Advanced integrations",
+        "feature-6": "Custom branding",
+        "feature-7": "Lifetime updates"
       }
     }
   },
