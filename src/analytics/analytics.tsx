@@ -3,6 +3,7 @@ import { UmamiAnalytics } from "./umami-analytics";
 import { PlausibleAnalytics } from "./plausible-analytics";
 import DataFastAnalytics from "./data-fast-analytics";
 import OpenPanelAnalytics from "./open-panel-analytics";
+import { SelineAnalytics } from "./seline-analytics";
 
 /**
  * Analytics Components all in one
@@ -31,6 +32,9 @@ export function Analytics() {
 
       {/* openpanel analytics */}
       <OpenPanelAnalytics />
+
+      {/* seline analytics */}
+      <SelineAnalytics />
     </>
   );
 }
