@@ -42,12 +42,14 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         return false;
       }
 
+      // console.log('subscribe list result:', listResult);
       // Check if the contact with the given email exists in the list
       let contact = null;
-      if (listResult.data && Array.isArray(listResult.data)) {
-        contact = listResult.data.find(c => c.email === email);
+      if (listResult.data?.data && Array.isArray(listResult.data.data)) {
+        contact = listResult.data.data.find(c => c.email === email);
       }
 
+      // console.log('subscribe params:', { email, contact });
       // If the contact does not exist, create a new one
       if (!contact) {
         console.log('Creating new contact', email);
@@ -57,6 +59,7 @@ export class ResendNewsletterProvider implements NewsletterProvider {
           unsubscribed: false,
         });
 
+        // console.log('subscribe create result:', createResult);
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
@@ -76,6 +79,7 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         audienceId: this.audienceId,
         unsubscribed: false,
       });
+      // console.log('subscribe update result:', updateResult);
 
       // NOTICE: we can not request too many times, because of the rate limit of Resend
       // statusCode: 429, name: rate_limit_exceeded, message: Too many requests, you can only make 2 requests per second.
@@ -99,12 +103,14 @@ export class ResendNewsletterProvider implements NewsletterProvider {
    */
   async unsubscribe({ email }: UnsubscribeNewsletterParams): Promise<boolean> {
     try {
+      // console.log('Unsubscribing newsletter', email);
       const result = await this.resend.contacts.update({
         email,
         audienceId: this.audienceId,
         unsubscribed: true,
       });
 
+      // console.log('Unsubscribe result:', result);
       if (result.error) {
         console.error('Error unsubscribing newsletter', result.error);
         return false;
@@ -133,13 +139,15 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         return false;
       }
 
+      // console.log('check newsletter params:', { email, listResult });
       // Check if the contact with the given email exists in the list
-      if (listResult.data && Array.isArray(listResult.data)) {
-        return listResult.data.some(contact =>
+      if (listResult.data?.data && Array.isArray(listResult.data.data)) {
+        return listResult.data.data.some(contact =>
           contact.email === email && contact.unsubscribed === false
         );
       }
 
+      // console.log('check newsletter status:', { email, subscribed: false });
       return false;
     } catch (error) {
       console.error('Error checking subscription status:', error);
