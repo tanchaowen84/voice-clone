@@ -5,7 +5,9 @@ import Script from "next/script";
 /**
  * Seline Analytics
  * 
- * https://app.seline.com
+ * https://seline.com
+ * https://seline.com/docs/install-seline
+ * https://seline.com/docs/stripe
  */
 export function SelineAnalytics() {
   if (process.env.NODE_ENV !== "production") {
