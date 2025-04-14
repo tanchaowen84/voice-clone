@@ -7,7 +7,7 @@ export function NewsletterCard() {
   const t = useTranslations('Newsletter');
 
   return (
-    <div className="w-full px-4 py-8 md:p-16 bg-muted rounded-lg">
+    <div className="w-full px-4 py-8 md:p-16 rounded-lg bg-muted/50">
       <div className="flex flex-col items-center justify-center gap-8">
         {/* Header */}
         <div className="space-y-4">
