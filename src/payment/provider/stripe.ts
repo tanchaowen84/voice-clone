@@ -36,9 +36,10 @@ export class StripeProvider implements PaymentProvider {
   /**
    * Create a customer in Stripe if not exists
    * @param email Customer email
+   * @param name Optional customer name
    * @returns Stripe customer ID
    */
-  private async createOrGetCustomer(email: string): Promise<string> {
+  private async createOrGetCustomer(email: string, name?: string): Promise<string> {
     try {
       // Search for existing customer
       const customers = await this.stripe.customers.list({
@@ -62,7 +63,10 @@ export class StripeProvider implements PaymentProvider {
       }
 
       // Create new customer
-      const customer = await this.stripe.customers.create({ email });
+      const customer = await this.stripe.customers.create({ 
+        email,
+        name: name || undefined
+      });
 
       // Update user record in database with the new customer ID
       await this.updateUserWithCustomerId(customer.id, email);
@@ -151,8 +155,11 @@ export class StripeProvider implements PaymentProvider {
         throw new Error(`Price ID ${priceId} not found in plan ${planId}`);
       }
 
+      // Get userName from metadata if available
+      const userName = metadata?.userName;
+
       // Create or get customer
-      const customerId = await this.createOrGetCustomer(customerEmail);
+      const customerId = await this.createOrGetCustomer(customerEmail, userName);
 
       // Add planId and priceId to metadata, so we can get it in the webhook event
       const customMetadata = {

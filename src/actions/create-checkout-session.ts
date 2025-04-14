@@ -66,6 +66,7 @@ export const createCheckoutAction = actionClient
       const customMetadata = {
         ...metadata,
         userId: session.user.id,
+        userName: session.user.name,
       };
 
       // Create the checkout session with localized URLs
