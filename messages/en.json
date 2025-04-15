@@ -66,7 +66,7 @@
       },
       "limits": {
         "limit-1": "Custom domains",
-        "limit-2": "Custom brands",
+        "limit-2": "Custom branding",
         "limit-3": "Lifetime updates"
       }
     },
@@ -81,7 +81,7 @@
         "feature-5": "Custom domains"
       },
       "limits": {
-        "limit-1": "Custom brands",
+        "limit-1": "Custom branding",
         "limit-2": "Lifetime updates"
       }
     },
