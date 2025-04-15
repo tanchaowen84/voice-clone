@@ -1,6 +1,8 @@
 'use server';
 
+import { sendEmail } from '@/mail';
 import { subscribe } from '@/newsletter';
+import { getLocale } from 'next-intl/server';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
@@ -27,6 +29,17 @@ export const subscribeNewsletterAction = actionClient
           error: 'Failed to subscribe to the newsletter',
         };
       }
+
+      // Send a welcome email to the user
+      const locale = await getLocale();
+      await sendEmail({
+        to: email,
+        template: 'subscribeNewsletter',
+        context: {
+          email,
+        },
+        locale,
+      });
 
       return {
         success: true,

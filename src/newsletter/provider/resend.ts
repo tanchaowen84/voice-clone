@@ -1,3 +1,4 @@
+import { sendEmail } from '@/mail';
 import { CheckSubscribeStatusParams, NewsletterProvider, SubscribeNewsletterParams, UnsubscribeNewsletterParams } from '@/newsletter/types';
 import { Resend } from 'resend';
 
