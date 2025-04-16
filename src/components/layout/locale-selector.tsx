@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { DEFAULT_LOCALE } from '@/i18n/routing';
+import { DEFAULT_LOCALE, LOCALES } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Locale, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -26,6 +26,11 @@ import { useEffect, useTransition } from 'react';
  * https://next-intl.dev/docs/routing/navigation#userouter
  */
 export default function LocaleSelector() {
+  // Return null if there's only one locale available
+  if (LOCALES.length <= 1) {
+    return null;
+  }
+
   const router = useLocaleRouter();
   const pathname = useLocalePathname();
   const params = useParams();

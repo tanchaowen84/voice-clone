@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/sidebar';
 import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { routing } from '@/i18n/routing';
+import { LOCALES, routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
 import { useLocaleStore } from '@/stores/locale-store';
 import { usePaymentStore } from '@/stores/payment-store';
@@ -171,32 +171,36 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
               </DropdownMenuSub>
             </DropdownMenuGroup>
 
-            <DropdownMenuGroup>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="cursor-pointer">
-                  <Languages className="mr-2 size-4" />
-                  <span>{t('Common.language')}</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  {routing.locales.map((localeOption) => (
-                    <DropdownMenuItem
-                      key={localeOption}
-                      onClick={() => setLocale(localeOption)}
-                      className="cursor-pointer"
-                    >
-                      {websiteConfig.i18n.locales[localeOption].flag && (
-                        <span className="mr-2 text-md">
-                          {websiteConfig.i18n.locales[localeOption].flag}
-                        </span>
-                      )}
-                      <span className="text-sm">
-                        {websiteConfig.i18n.locales[localeOption].name}
-                      </span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            </DropdownMenuGroup>
+
+            {
+              LOCALES.length > 1 && (
+                <DropdownMenuGroup>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="cursor-pointer">
+                      <Languages className="mr-2 size-4" />
+                      <span>{t('Common.language')}</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      {routing.locales.map((localeOption) => (
+                        <DropdownMenuItem
+                          key={localeOption}
+                          onClick={() => setLocale(localeOption)}
+                          className="cursor-pointer"
+                        >
+                          {websiteConfig.i18n.locales[localeOption].flag && (
+                            <span className="mr-2 text-md">
+                              {websiteConfig.i18n.locales[localeOption].flag}
+                            </span>
+                          )}
+                          <span className="text-sm">
+                            {websiteConfig.i18n.locales[localeOption].name}
+                          </span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                </DropdownMenuGroup>
+              )}
 
             <DropdownMenuSeparator />
 
