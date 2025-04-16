@@ -21,7 +21,7 @@ import { websiteConfig } from './website';
 export function getSocialLinks(): MenuItem[] {
   const socialLinks: MenuItem[] = [];
 
-  if (websiteConfig.metadata.social.github) {
+  if (websiteConfig.metadata.social?.github) {
     socialLinks.push({
       title: 'GitHub',
       href: websiteConfig.metadata.social.github,
@@ -29,7 +29,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.twitter) {
+  if (websiteConfig.metadata.social?.twitter) {
     socialLinks.push({
       title: 'Twitter',
       href: websiteConfig.metadata.social.twitter,
@@ -37,7 +37,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.blueSky) {
+  if (websiteConfig.metadata.social?.blueSky) {
     socialLinks.push({
       title: 'Bluesky',
       href: websiteConfig.metadata.social.blueSky,
@@ -45,7 +45,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.youtube) {
+  if (websiteConfig.metadata.social?.youtube) {
     socialLinks.push({
       title: 'YouTube',
       href: websiteConfig.metadata.social.youtube,
@@ -53,7 +53,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.linkedin) {
+  if (websiteConfig.metadata.social?.linkedin) {
     socialLinks.push({
       title: 'LinkedIn',
       href: websiteConfig.metadata.social.linkedin,
@@ -61,7 +61,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.facebook) {
+  if (websiteConfig.metadata.social?.facebook) {
     socialLinks.push({
       title: 'Facebook',
       href: websiteConfig.metadata.social.facebook,
@@ -69,7 +69,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.instagram) {
+  if (websiteConfig.metadata.social?.instagram) {
     socialLinks.push({
       title: 'Instagram',
       href: websiteConfig.metadata.social.instagram,
@@ -77,7 +77,7 @@ export function getSocialLinks(): MenuItem[] {
     });
   }
 
-  if (websiteConfig.metadata.social.tiktok) {
+  if (websiteConfig.metadata.social?.tiktok) {
     socialLinks.push({
       title: 'TikTok',
       href: websiteConfig.metadata.social.tiktok,
