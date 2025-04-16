@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
  * website config, without translations
  */
 export type WebsiteConfig = {
-  metadata: WebsiteMetadata;
+  metadata: MetadataConfig;
   i18n: I18nConfig;
   blog: BlogConfig;
   mail: MailConfig;
@@ -16,7 +16,7 @@ export type WebsiteConfig = {
 /**
  * Website metadata
  */
-export interface WebsiteMetadata {
+export interface MetadataConfig {
   theme?: "default" | "blue" | "green" | "amber" | "neutral"; // The theme
   ogImage?: string;                                           // The image as Open Graph image
   logoLight?: string;                                         // The light logo image
