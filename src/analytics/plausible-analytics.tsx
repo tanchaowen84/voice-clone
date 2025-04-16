@@ -17,12 +17,17 @@ export function PlausibleAnalytics() {
     return null;
   }
 
+  const script = process.env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT as string;
+  if (!script) {
+    return null;
+  }
+
   return (
     <Script
       defer
       type="text/javascript"
       data-domain={domain}
-      src="https://plausible.io/js/script.js"
+      src={script}
     />
   );
 }

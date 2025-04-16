@@ -17,12 +17,17 @@ export function UmamiAnalytics() {
     return null;
   }
 
+  const script = process.env.NEXT_PUBLIC_UMAMI_SCRIPT as string;
+  if (!script) {
+    return null;
+  }
+
   return (
     <Script
       async
       type="text/javascript"
       data-website-id={websiteId}
-      src="https://cloud.umami.is/script.js"
+      src={script}
     />
   );
 }
