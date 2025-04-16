@@ -9,8 +9,8 @@ import { useEffect, useState } from 'react';
 export function Logo({ className }: { className?: string }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const logoLight = websiteConfig.metadata.logoLight ?? '/logo.png';
-  const logoDark = websiteConfig.metadata.logoDark ?? logoLight;
+  const logoLight = websiteConfig.metadata.images?.logoLight ?? '/logo.png';
+  const logoDark = websiteConfig.metadata.images?.logoDark ?? logoLight;
   
   // During server-side rendering and initial client render, always use logoLight
   // This prevents hydration mismatch

@@ -73,6 +73,9 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
     });
   }
 
+  const showModeSwitch = websiteConfig.metadata.mode?.enableSwitch ?? false;
+  const showLocaleSwitch = LOCALES.length > 1;
+
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -137,11 +140,17 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
               </div>
             </DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
+            {
+              (showModeSwitch || showLocaleSwitch) && (
+                <DropdownMenuSeparator />
+              )
+            }
 
-            <DropdownMenuGroup>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="cursor-pointer">
+            {
+              showModeSwitch && (
+                <DropdownMenuGroup>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="cursor-pointer">
                   <LaptopIcon className="mr-2 size-4" />
                   <span>{t('Common.mode.label')}</span>
                 </DropdownMenuSubTrigger>
@@ -167,13 +176,14 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
                     <LaptopIcon className="mr-2 size-4" />
                     <span>{t('Common.mode.system')}</span>
                   </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            </DropdownMenuGroup>
-
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                </DropdownMenuGroup>
+              )
+            }
 
             {
-              LOCALES.length > 1 && (
+              showLocaleSwitch && (
                 <DropdownMenuGroup>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger className="cursor-pointer">

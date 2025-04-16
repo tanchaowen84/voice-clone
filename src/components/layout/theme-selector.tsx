@@ -6,10 +6,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { websiteConfig } from "@/config/website";
 import { useTranslations } from "next-intl";
 import { useThemeConfig } from "./active-theme-provider";
 
@@ -21,6 +21,10 @@ import { useThemeConfig } from "./active-theme-provider";
  * https://github.com/TheOrcDev/orcish-dashboard/blob/main/components/theme-selector.tsx
  */
 export function ThemeSelector() {
+  if (!websiteConfig.metadata.theme?.enableSwitch) {
+    return null;
+  }
+
   const { activeTheme, setActiveTheme } = useThemeConfig();
   const t = useTranslations('Common.theme');
 

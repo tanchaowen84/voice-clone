@@ -6,10 +6,19 @@ import { WebsiteConfig } from '@/types';
  */
 export const websiteConfig: WebsiteConfig = {
   metadata: {
-    theme: "default",
-    ogImage: '/og.png',
-    logoLight: '/logo.png',
-    logoDark: '/logo-dark.png',
+    theme: {
+      defaultTheme: "default",
+      enableSwitch: true,
+    },
+    mode: {
+      defaultMode: "system",
+      enableSwitch: true,
+    },
+    images: {
+      ogImage: '/og.png',
+      logoLight: '/logo.png',
+      logoDark: '/logo-dark.png',
+    },
     social: {
       github: 'https://github.com/MkSaaSHQ',
       twitter: 'https://x.com/mksaascom',

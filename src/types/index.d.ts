@@ -17,11 +17,26 @@ export type WebsiteConfig = {
  * Website metadata
  */
 export interface MetadataConfig {
-  theme?: "default" | "blue" | "green" | "amber" | "neutral"; // The theme
+  mode?: ModeConfig;
+  theme?: ThemeConfig;
+  images?: ImagesConfig;
+  social?: SocialConfig;
+}
+
+export interface ModeConfig {
+  defaultMode?: "light" | "dark" | "system";                  // The default mode of the website
+  enableSwitch?: boolean;                                     // Whether to enable the mode switch
+}
+
+export interface ThemeConfig {
+  defaultTheme?: "default" | "blue" | "green" | "amber" | "neutral"; // The default theme of the website
+  enableSwitch?: boolean;                                     // Whether to enable the theme switch
+}
+
+export interface ImagesConfig {
   ogImage?: string;                                           // The image as Open Graph image
   logoLight?: string;                                         // The light logo image
   logoDark?: string;                                          // The dark logo image
-  social: SocialConfig;                                       // The social media configuration
 }
 
 /**

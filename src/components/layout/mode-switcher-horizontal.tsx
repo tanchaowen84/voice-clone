@@ -1,16 +1,21 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { websiteConfig } from '@/config/website';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 /**
  * Mode switcher component, used in the footer
  */
 export function ModeSwitcherHorizontal() {
+  if (!websiteConfig.metadata.mode?.enableSwitch) {
+    return null;
+  }
+
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('Common.mode');

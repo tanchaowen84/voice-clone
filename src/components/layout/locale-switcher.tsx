@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
-import { LOCALES } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Languages } from 'lucide-react';
 import { Locale, useLocale, useTranslations } from 'next-intl';
@@ -26,7 +25,8 @@ import { useEffect, useTransition } from 'react';
  */
 export default function LocaleSwitcher() {
   // Return null if there's only one locale available
-  if (LOCALES.length <= 1) {
+  const showLocaleSwitch = Object.keys(websiteConfig.i18n.locales).length > 1;
+  if (!showLocaleSwitch) {
     return null;
   }
 

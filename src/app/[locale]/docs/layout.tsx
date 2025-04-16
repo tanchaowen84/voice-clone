@@ -57,9 +57,10 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
   };
 
   // Docs layout configurations
+  const showLocaleSwitch = Object.keys(websiteConfig.i18n.locales).length > 1;
   const docsOptions: BaseLayoutProps = {
-    i18n: docsI18nConfig,
-    githubUrl: websiteConfig.metadata.social.github ?? undefined,
+    i18n: showLocaleSwitch ? docsI18nConfig : undefined,
+    githubUrl: websiteConfig.metadata.social?.github ?? undefined,
     nav: {
       url: getUrlWithLocale('/docs', locale),
       title: (
@@ -84,7 +85,7 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
         active: 'none',
         external: false,
       },
-      ...(websiteConfig.metadata.social.twitter
+      ...(websiteConfig.metadata.social?.twitter
         ? [
           {
             type: "icon" as const,
