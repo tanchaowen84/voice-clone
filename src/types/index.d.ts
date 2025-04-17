@@ -45,6 +45,7 @@ export interface ImagesConfig {
 export interface SocialConfig {
   twitter?: string;
   github?: string;
+  discord?: string;
   blueSky?: string;
   youtube?: string;
   linkedin?: string;

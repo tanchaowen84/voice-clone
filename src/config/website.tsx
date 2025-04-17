@@ -22,6 +22,7 @@ export const websiteConfig: WebsiteConfig = {
     social: {
       github: 'https://github.com/MkSaaSHQ',
       twitter: 'https://x.com/mksaascom',
+      discord: 'https://discord.gg/yVwpEtTT',
       youtube: 'https://www.youtube.com/@MkSaaS',
     },
   },

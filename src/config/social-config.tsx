@@ -10,6 +10,7 @@ import { XTwitterIcon } from '@/components/icons/x';
 import { YouTubeIcon } from '@/components/icons/youtube';
 import { MenuItem } from '@/types';
 import { websiteConfig } from './website';
+import { DiscordIcon } from '@/components/icons/discord';
 
 /**
  * Get social config
@@ -42,6 +43,14 @@ export function getSocialLinks(): MenuItem[] {
       title: 'Bluesky',
       href: websiteConfig.metadata.social.blueSky,
       icon: <BlueskyIcon className="size-4 shrink-0" />,
+    });
+  }
+
+  if (websiteConfig.metadata.social?.discord) {
+    socialLinks.push({
+      title: 'Discord',
+      href: websiteConfig.metadata.social.discord,
+      icon: <DiscordIcon className="size-4 shrink-0" />,
     });
   }
 
