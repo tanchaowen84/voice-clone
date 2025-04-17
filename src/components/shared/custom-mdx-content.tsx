@@ -8,8 +8,8 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
-import Image from 'next/image';
 import { ComponentProps, FC } from 'react';
+import * as LucideIcons from 'lucide-react';
 
 interface CustomMDXContentProps {
   code: string;
@@ -29,6 +29,7 @@ export async function CustomMDXContent({
   // Start with default components
   const baseComponents: Record<string, any> = {
     ...defaultMdxComponents,
+    ...LucideIcons,
     ...((await import('lucide-react')) as unknown as MDXComponents),
     ...customComponents,
   };
