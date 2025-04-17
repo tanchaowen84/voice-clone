@@ -78,13 +78,6 @@ export default async function DocsRootLayout({ children, params }: DocsLayoutPro
         active: 'none',
         external: false,
       },
-      {
-        text: t('blog'),
-        url: getUrlWithLocale('/blog', locale),
-        icon: <BookIcon />,
-        active: 'none',
-        external: false,
-      },
       ...(websiteConfig.metadata.social?.twitter
         ? [
           {
