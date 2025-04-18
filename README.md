@@ -6,7 +6,7 @@ MkSaaS is a complete Next.js boilerplate for building AI SaaS websites. Make mon
 
 ## Author
 
-This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [Mkdirs](https://mkdirs.com), [IndieHub](https://indiehub.best) and other websites.
+This project is created by [Fox](https://x.com/indie_maker_fox), the founder of MkSaaS LLC and the creator of [Mkdirs](https://mkdirs.com), [IndieHub](https://indiehub.best) and some other websites.
 
 ## Documentation
 
@@ -18,9 +18,10 @@ If you found anything that could be improved, please let me know.
 
 - website: [mksaas.com](https://mksaas.com)
 - demo: [demo.mksaas.com](https://demo.mksaas.com)
-- documentation: [mksaas.com/docs](https://mksaas.com/docs) work in progress
-- video: [www.youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ)  work in progress
-- roadmap: [issues/17](https://github.com/MkSaaSHQ/mksaas-template/issues/17) work in progress
+- discord: [https://discord.gg/yVwpEtTT](https://discord.gg/yVwpEtTT)
+- documentation (WIP): [mksaas.com/docs](https://mksaas.com/docs)
+- video (WIP): [www.youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
+- roadmap (WIP): [issues/17](https://github.com/MkSaaSHQ/mksaas-template/issues/17)
 
 ## Notice
 
@@ -28,7 +29,9 @@ If you found anything that could be improved, please let me know.
 
 > If you have any feature requests or questions or ideas to share, please [submit it in the discussions](https://github.com/MkSaaSHQ/mksaas-template/discussions).
 
-> When submitting any content to the repository issues or discussions, please use **English** as the main Language, so that everyone can read it, thank you for your supports.
+> If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
+
+> When submitting any content to the  issues or discussions of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
 
 ## License
 
