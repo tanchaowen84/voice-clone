@@ -1,9 +1,9 @@
-import BlockPreview from '@/components/nsui/block-preview';
-import { blocks, categories } from '@/components/nsui/blocks';
+import BlockPreview from '@/components/tailark/block-preview';
+import { blocks, categories } from '@/components/tailark/blocks';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -26,7 +26,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: category + ' | ' + t('title'),
     description: t('description'),
-    canonicalUrl: getUrlWithLocale("/blocks/${category}", locale),
+    canonicalUrl: getUrlWithLocale('/blocks/${category}', locale),
   });
 }
 

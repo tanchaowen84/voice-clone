@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { StorageError } from '@/storage/types';
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,10 +68,7 @@ export async function POST(request: NextRequest) {
     console.error('Error getting file URL:', error);
 
     if (error instanceof StorageError) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json(
@@ -79,4 +76,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

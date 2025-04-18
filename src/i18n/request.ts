@@ -16,7 +16,7 @@ import { routing } from './routing';
  */
 export default getRequestConfig(async ({ requestLocale }) => {
   // This typically corresponds to the `[locale]` segment
-  let requested = await requestLocale;
+  const requested = await requestLocale;
 
   // Ensure that the incoming `locale` is valid
   // https://next-intl.dev/blog/next-intl-4-0?s#strictly-typed-locale

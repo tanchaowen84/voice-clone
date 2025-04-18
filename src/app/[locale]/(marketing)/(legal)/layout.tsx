@@ -1,5 +1,5 @@
 import Container from '@/components/layout/container';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import '@/styles/mdx.css';
 

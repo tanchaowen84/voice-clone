@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
@@ -16,7 +16,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useLocaleRouter } from '@/i18n/navigation';
@@ -36,12 +36,12 @@ interface UpdatePasswordCardProps {
 
 /**
  * Update user password
- * 
+ *
  * This component allows users to update their password.
- * 
+ *
  * NOTE: This should only be used for users with credential providers (email/password login).
  * For conditional rendering based on provider type, use ConditionalUpdatePasswordCard instead.
- * 
+ *
  * @see ConditionalUpdatePasswordCard
  * @see https://www.better-auth.com/docs/authentication/email-password#update-password
  */
@@ -56,12 +56,8 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
 
   // Create a schema for password validation
   const formSchema = z.object({
-    currentPassword: z
-      .string()
-      .min(1, { message: t('currentRequired') }),
-    newPassword: z
-      .string()
-      .min(8, { message: t('newMinLength') }),
+    currentPassword: z.string().min(1, { message: t('currentRequired') }),
+    newPassword: z.string().min(8, { message: t('newMinLength') }),
   });
 
   // Initialize the form
@@ -111,30 +107,33 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(t('fail'));
         },
-      });
+      }
+    );
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
+    <Card
+      className={cn(
+        'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col',
+        className
+      )}
+    >
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">
-          {t('title')}
-        </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col flex-1"
+        >
           <CardContent className="space-y-4 flex-1">
             <FormField
               control={form.control}
               name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('currentPassword')}
-                  </FormLabel>
+                  <FormLabel>{t('currentPassword')}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -147,7 +146,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         variant="ghost"
                         size="sm"
                         className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                        onClick={() =>
+                          setShowCurrentPassword(!showCurrentPassword)
+                        }
                       >
                         {showCurrentPassword ? (
                           <EyeOffIcon className="h-4 w-4" />
@@ -155,7 +156,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                           <EyeIcon className="h-4 w-4" />
                         )}
                         <span className="sr-only">
-                          {showCurrentPassword ? t('hidePassword') : t('showPassword')}
+                          {showCurrentPassword
+                            ? t('hidePassword')
+                            : t('showPassword')}
                         </span>
                       </Button>
                     </div>
@@ -190,7 +193,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                           <EyeIcon className="size-4" />
                         )}
                         <span className="sr-only">
-                          {showNewPassword ? t('hidePassword') : t('showPassword')}
+                          {showNewPassword
+                            ? t('hidePassword')
+                            : t('showPassword')}
                         </span>
                       </Button>
                     </div>
@@ -202,11 +207,13 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <p className="text-sm text-muted-foreground">
-              {t('hint')}
-            </p>
+            <p className="text-sm text-muted-foreground">{t('hint')}</p>
 
-            <Button type="submit" disabled={isSaving} className="cursor-pointer">
+            <Button
+              type="submit"
+              disabled={isSaving}
+              className="cursor-pointer"
+            >
               {isSaving ? t('saving') : t('save')}
             </Button>
           </CardFooter>

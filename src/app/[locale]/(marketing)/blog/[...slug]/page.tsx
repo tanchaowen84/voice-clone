@@ -6,17 +6,17 @@ import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { getTableOfContents } from '@/lib/blog/toc';
+import { formatDate } from '@/lib/formatter';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
-import { allPosts, Post } from 'content-collections';
+import { type Post, allPosts } from 'content-collections';
 import { CalendarIcon, ClockIcon, FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { formatDate } from '@/lib/formatter';
 
 import '@/styles/mdx.css';
 
@@ -85,7 +85,7 @@ export async function generateMetadata({
 
   const post = await getBlogPostFromParams({
     params: Promise.resolve({ slug, locale }),
-    searchParams: Promise.resolve({})
+    searchParams: Promise.resolve({}),
   });
   if (!post) {
     console.warn(
@@ -194,9 +194,7 @@ export default async function BlogPostPage(props: NextPageProps) {
                     />
                   )}
                 </div>
-                <span className="line-clamp-1">
-                  {post.author?.name}
-                </span>
+                <span className="line-clamp-1">{post.author?.name}</span>
               </div>
             </div>
 

@@ -4,7 +4,7 @@ import { getReleases } from '@/lib/release/get-releases';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -15,14 +15,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const {locale} = await params;
-  const t = await getTranslations({locale, namespace: 'Metadata'});
-  const pt = await getTranslations({locale, namespace: 'ChangelogPage'});
-  
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const pt = await getTranslations({ locale, namespace: 'ChangelogPage' });
+
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: getUrlWithLocale("/changelog", locale),
+    canonicalUrl: getUrlWithLocale('/changelog', locale),
   });
 }
 

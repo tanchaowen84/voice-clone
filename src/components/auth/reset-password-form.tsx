@@ -117,7 +117,7 @@ export const ResetPasswordForm = () => {
                         {...field}
                         disabled={isPending}
                         placeholder="******"
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         className="pr-10"
                       />
                       <Button
@@ -152,9 +152,7 @@ export const ResetPasswordForm = () => {
             type="submit"
             className="w-full cursor-pointer"
           >
-            {isPending && (
-              <Loader2Icon className="mr-2 size-4 animate-spin" />
-            )}
+            {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
             <span>{t('reset')}</span>
           </Button>
         </form>

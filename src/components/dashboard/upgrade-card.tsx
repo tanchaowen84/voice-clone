@@ -1,18 +1,18 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import { usePayment } from '@/hooks/use-payment';
-import { LocaleLink } from "@/i18n/navigation";
-import { Routes } from "@/routes";
-import { SparklesIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { LocaleLink } from '@/i18n/navigation';
+import { Routes } from '@/routes';
+import { SparklesIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function UpgradeCard() {
   const t = useTranslations('Dashboard.upgrade');
@@ -32,20 +32,13 @@ export function UpgradeCard() {
           <SparklesIcon className="size-4" />
           {t('title')}
         </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Button
-          className="cursor-pointer w-full shadow-none"
-          size="sm"
-        >
-          <LocaleLink href={Routes.SettingsBilling}>
-            {t('button')}
-          </LocaleLink>
+        <Button className="cursor-pointer w-full shadow-none" size="sm">
+          <LocaleLink href={Routes.SettingsBilling}>{t('button')}</LocaleLink>
         </Button>
       </CardContent>
     </Card>
-  )
+  );
 }

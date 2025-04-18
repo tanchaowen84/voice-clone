@@ -5,12 +5,12 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/nsui/logos';
+} from '@/components/tailark/logos';
 import { Logo } from '@/components/layout/logo';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { InfiniteSlider } from '@/components/motion/infinite-slider';
+import { InfiniteSlider } from '@/components/tailark/motion/infinite-slider';
 
 export default function IntegrationsSection() {
   return (

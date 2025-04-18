@@ -1,5 +1,10 @@
 import { sendEmail } from '@/mail';
-import { CheckSubscribeStatusParams, NewsletterProvider, SubscribeNewsletterParams, UnsubscribeNewsletterParams } from '@/newsletter/types';
+import type {
+  CheckSubscribeStatusParams,
+  NewsletterProvider,
+  SubscribeNewsletterParams,
+  UnsubscribeNewsletterParams,
+} from '@/newsletter/types';
 import { Resend } from 'resend';
 
 /**
@@ -37,7 +42,9 @@ export class ResendNewsletterProvider implements NewsletterProvider {
   async subscribe({ email }: SubscribeNewsletterParams): Promise<boolean> {
     try {
       // First, list all contacts to find the one with the matching email
-      const listResult = await this.resend.contacts.list({ audienceId: this.audienceId });
+      const listResult = await this.resend.contacts.list({
+        audienceId: this.audienceId,
+      });
       if (listResult.error) {
         console.error('Error listing contacts:', listResult.error);
         return false;
@@ -47,7 +54,7 @@ export class ResendNewsletterProvider implements NewsletterProvider {
       // Check if the contact with the given email exists in the list
       let contact = null;
       if (listResult.data?.data && Array.isArray(listResult.data.data)) {
-        contact = listResult.data.data.find(c => c.email === email);
+        contact = listResult.data.data.find((c) => c.email === email);
       }
 
       // console.log('subscribe params:', { email, contact });
@@ -64,10 +71,9 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
-        } else {
-          console.log('Created new contact', email);
-          return true;
         }
+        console.log('Created new contact', email);
+        return true;
       }
 
       // If the contact already exists, update it
@@ -130,10 +136,14 @@ export class ResendNewsletterProvider implements NewsletterProvider {
    * @param email The email address to check
    * @returns True if the user is subscribed, false otherwise
    */
-  async checkSubscribeStatus({ email }: CheckSubscribeStatusParams): Promise<boolean> {
+  async checkSubscribeStatus({
+    email,
+  }: CheckSubscribeStatusParams): Promise<boolean> {
     try {
       // First, list all contacts to find the one with the matching email
-      const listResult = await this.resend.contacts.list({ audienceId: this.audienceId });
+      const listResult = await this.resend.contacts.list({
+        audienceId: this.audienceId,
+      });
 
       if (listResult.error) {
         console.error('Error listing contacts:', listResult.error);
@@ -143,8 +153,8 @@ export class ResendNewsletterProvider implements NewsletterProvider {
       // console.log('check newsletter params:', { email, listResult });
       // Check if the contact with the given email exists in the list
       if (listResult.data?.data && Array.isArray(listResult.data.data)) {
-        return listResult.data.data.some(contact =>
-          contact.email === email && contact.unsubscribed === false
+        return listResult.data.data.some(
+          (contact) => contact.email === email && contact.unsubscribed === false
         );
       }
 

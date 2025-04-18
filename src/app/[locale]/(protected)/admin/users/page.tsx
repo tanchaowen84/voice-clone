@@ -4,11 +4,11 @@ import { DataTable } from '@/components/dashboard/data-table';
 import { SectionCards } from '@/components/dashboard/section-cards';
 import { useTranslations } from 'next-intl';
 
-import data from "./data.json";
+import data from './data.json';
 
 /**
  * Admin users page
- * 
+ *
  * NOTICE: This is a demo page for the admin, no real data is used,
  * we will show real data in the future
  */

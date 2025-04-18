@@ -3,7 +3,14 @@
 import { CustomerPortalButton } from '@/components/pricing/customer-portal-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getPricePlans } from '@/config/payment-config';
 import { usePayment } from '@/hooks/use-payment';
@@ -24,26 +31,31 @@ export default function BillingCard() {
     error: loadPaymentError,
     subscription,
     currentPlan: currentPlanFromStore,
-    refetch
+    refetch,
   } = usePayment();
 
   // Get user session for customer ID
-  const { data: session, isPending: isLoadingSession } = authClient.useSession();
+  const { data: session, isPending: isLoadingSession } =
+    authClient.useSession();
   const currentUser = session?.user;
 
   // Get price plans with translations - must be called here to maintain hook order
   const pricePlans = getPricePlans();
   const plans = Object.values(pricePlans);
-  
+
   // Convert current plan from store to a plan with translations
-  const currentPlan = currentPlanFromStore ? plans.find(plan => plan.id === currentPlanFromStore?.id) : null;
+  const currentPlan = currentPlanFromStore
+    ? plans.find((plan) => plan.id === currentPlanFromStore?.id)
+    : null;
   const isFreePlan = currentPlan?.isFree || false;
   const isLifetimeMember = currentPlan?.isLifetime || false;
 
   // Get subscription price details
-  const currentPrice = subscription && currentPlan?.prices.find(
-    price => price.priceId === subscription?.priceId
-  );
+  const currentPrice =
+    subscription &&
+    currentPlan?.prices.find(
+      (price) => price.priceId === subscription?.priceId
+    );
 
   // Format next billing date if subscription is active
   const nextBillingDate = subscription?.currentPeriodEnd
@@ -109,7 +121,11 @@ export default function BillingCard() {
   if (!currentPlanFromStore) {
     return (
       <div className="grid gap-8 md:grid-cols-2">
-        <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
+        <Card
+          className={cn(
+            'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col'
+          )}
+        >
           <CardHeader>
             <CardTitle>{t('currentPlan.title')}</CardTitle>
             <CardDescription>{t('currentPlan.description')}</CardDescription>
@@ -120,14 +136,8 @@ export default function BillingCard() {
             </div>
           </CardContent>
           <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
-            <Button
-              variant="default"
-              className="cursor-pointer"
-              asChild
-            >
-              <LocaleLink href={Routes.Pricing}>
-                {t('upgradePlan')}
-              </LocaleLink>
+            <Button variant="default" className="cursor-pointer" asChild>
+              <LocaleLink href={Routes.Pricing}>{t('upgradePlan')}</LocaleLink>
             </Button>
           </CardFooter>
         </Card>
@@ -141,23 +151,23 @@ export default function BillingCard() {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col")}>
+      <Card
+        className={cn(
+          'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col'
+        )}
+      >
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
             {t('currentPlan.title')}
           </CardTitle>
-          <CardDescription>
-            {t('currentPlan.description')}
-          </CardDescription>
+          <CardDescription>{t('currentPlan.description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 flex-1">
           {/* Plan name and status */}
           <div className="flex items-center justify-between">
-            <div className="text-3xl font-medium">
-              {currentPlan?.name}
-            </div>
+            <div className="text-3xl font-medium">{currentPlan?.name}</div>
             {subscription && (
-              <Badge variant='outline'>
+              <Badge variant="outline">
                 {subscription?.status === 'trialing'
                   ? t('status.trial')
                   : subscription?.status === 'active'
@@ -185,55 +195,48 @@ export default function BillingCard() {
           {subscription && currentPrice && (
             <div className="text-sm text-muted-foreground space-y-2">
               <div>
-                {t('price')} {formatPrice(currentPrice.amount, currentPrice.currency)} / {currentPrice.interval === PlanIntervals.MONTH ?
-                  t('interval.month') :
-                  currentPrice.interval === PlanIntervals.YEAR ?
-                    t('interval.year') :
-                    t('interval.oneTime')}
+                {t('price')}{' '}
+                {formatPrice(currentPrice.amount, currentPrice.currency)} /{' '}
+                {currentPrice.interval === PlanIntervals.MONTH
+                  ? t('interval.month')
+                  : currentPrice.interval === PlanIntervals.YEAR
+                    ? t('interval.year')
+                    : t('interval.oneTime')}
               </div>
 
               {nextBillingDate && (
-                <div>{t('nextBillingDate')} {nextBillingDate}</div>
-              )}
-
-              {subscription.status === 'trialing' && subscription.currentPeriodEnd && (
-                <div className="text-amber-500">
-                  {t('trialEnds')} {formatDate(subscription.currentPeriodEnd)}
+                <div>
+                  {t('nextBillingDate')} {nextBillingDate}
                 </div>
               )}
+
+              {subscription.status === 'trialing' &&
+                subscription.currentPeriodEnd && (
+                  <div className="text-amber-500">
+                    {t('trialEnds')} {formatDate(subscription.currentPeriodEnd)}
+                  </div>
+                )}
             </div>
           )}
         </CardContent>
         <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
           {/* user is on free plan, show upgrade plan button */}
           {isFreePlan && (
-            <Button
-              variant="default"
-              className="cursor-pointer"
-              asChild
-            >
-              <LocaleLink href={Routes.Pricing}>
-                {t('upgradePlan')}
-              </LocaleLink>
+            <Button variant="default" className="cursor-pointer" asChild>
+              <LocaleLink href={Routes.Pricing}>{t('upgradePlan')}</LocaleLink>
             </Button>
           )}
 
           {/* user is lifetime member, show manage billing button */}
           {isLifetimeMember && currentUser && (
-            <CustomerPortalButton
-              userId={currentUser.id}
-              className=""
-            >
+            <CustomerPortalButton userId={currentUser.id} className="">
               {t('manageBilling')}
             </CustomerPortalButton>
           )}
 
           {/* user has subscription, show manage subscription button */}
           {subscription && currentUser && (
-            <CustomerPortalButton
-              userId={currentUser.id}
-              className=""
-            >
+            <CustomerPortalButton userId={currentUser.id} className="">
               {t('manageSubscription')}
             </CustomerPortalButton>
           )}

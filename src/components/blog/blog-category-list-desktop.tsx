@@ -1,11 +1,11 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { cn } from '@/lib/utils';
-import { Category } from 'content-collections';
 import { LocaleLink } from '@/i18n/navigation';
-import { useParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import type { Category } from 'content-collections';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 
 export type BlogCategoryListDesktopProps = {
   categoryList: Category[];
@@ -52,7 +52,10 @@ export function BlogCategoryListDesktop({
             )}
             aria-label={`Toggle blog category of ${category.name}`}
           >
-            <LocaleLink href={`/blog/category/${category.slug}`} className="px-4">
+            <LocaleLink
+              href={`/blog/category/${category.slug}`}
+              className="px-4"
+            >
               <h2>{category.name}</h2>
             </LocaleLink>
           </ToggleGroupItem>

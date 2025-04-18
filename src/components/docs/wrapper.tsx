@@ -7,7 +7,7 @@ export function Wrapper(props: HTMLAttributes<HTMLDivElement>) {
       {...props}
       className={cn(
         'rounded-lg bg-black/20 p-4 border prose-no-margin',
-        props.className,
+        props.className
       )}
     >
       {props.children}

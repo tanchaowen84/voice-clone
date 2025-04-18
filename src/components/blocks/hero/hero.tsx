@@ -1,5 +1,5 @@
-import { AnimatedGroup } from '@/components/motion/animated-group';
-import { TextEffect } from '@/components/motion/text-effect';
+import { AnimatedGroup } from '@/components/tailark/motion/animated-group';
+import { TextEffect } from '@/components/tailark/motion/text-effect';
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { ArrowRight } from 'lucide-react';
@@ -119,9 +119,7 @@ export default function HeroSection() {
                       className="rounded-xl px-5 text-base"
                     >
                       <LocaleLink href={linkPrimary}>
-                        <span className="text-nowrap">
-                          {t('primary')}
-                        </span>
+                        <span className="text-nowrap">{t('primary')}</span>
                       </LocaleLink>
                     </Button>
                   </div>
@@ -133,9 +131,7 @@ export default function HeroSection() {
                     className="h-10.5 rounded-xl px-5"
                   >
                     <LocaleLink href={linkSecondary}>
-                      <span className="text-nowrap">
-                        {t('secondary')}
-                      </span>
+                      <span className="text-nowrap">{t('secondary')}</span>
                     </LocaleLink>
                   </Button>
                 </AnimatedGroup>

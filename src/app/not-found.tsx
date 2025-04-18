@@ -15,7 +15,7 @@ export default function GlobalNotFound() {
   return (
     <html lang="en">
       <body>
-        <Error statusCode={404} />;
+        <Error statusCode={404} />
       </body>
     </html>
   );

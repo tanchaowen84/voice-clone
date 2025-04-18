@@ -1,5 +1,5 @@
 import { allPages } from 'content-collections';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 
 /**
  * Gets a page from the content collection

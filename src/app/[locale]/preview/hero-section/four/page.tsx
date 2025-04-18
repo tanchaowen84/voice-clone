@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { HeroHeader } from '@/components/nsui/hero8-header';
-import { InfiniteSlider } from '@/components/motion/infinite-slider';
-import { ProgressiveBlur } from '@/components/motion/progressive-blur';
+import { HeroHeader } from '@/components/tailark/hero8-header';
+import { InfiniteSlider } from '@/components/tailark/motion/infinite-slider';
+import { ProgressiveBlur } from '@/components/tailark/motion/progressive-blur';
 
 export default function HeroSection() {
   return (

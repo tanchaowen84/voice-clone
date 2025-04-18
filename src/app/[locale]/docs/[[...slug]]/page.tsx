@@ -1,31 +1,38 @@
 import * as Preview from '@/components/docs';
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
-import { HoverCard, HoverCardContent, HoverCardTrigger, } from '@/components/ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import { LOCALES } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
 import Link from 'fumadocs-core/link';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+} from 'fumadocs-ui/page';
 import type { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
   const locales = LOCALES;
   const slugParams = source.generateParams();
-  const params = locales.flatMap(locale =>
-    slugParams.map(param => ({
+  const params = locales.flatMap((locale) =>
+    slugParams.map((param) => ({
       locale,
-      slug: param.slug
+      slug: param.slug,
     }))
   );
 
   return params;
 }
 
-export async function generateMetadata({
-  params,
-}: DocPageProps) {
+export async function generateMetadata({ params }: DocPageProps) {
   const { slug, locale } = await params;
   const language = locale as string;
   const page = source.getPage(slug, language);
@@ -54,19 +61,17 @@ export const revalidate = false;
 interface DocPageProps {
   params: Promise<{
     slug?: string[];
-    locale: Locale
+    locale: Locale;
   }>;
 }
 
 /**
  * Doc Page
- * 
+ *
  * ref:
  * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/app/docs/%5B...slug%5D/page.tsx
  */
-export default async function DocPage({
-  params,
-}: DocPageProps) {
+export default async function DocPage({ params }: DocPageProps) {
   const { slug, locale } = await params;
   const language = locale as string;
   const page = source.getPage(slug, language);
@@ -79,18 +84,15 @@ export default async function DocPage({
   const preview = page.data.preview;
 
   return (
-    <DocsPage toc={page.data.toc}
+    <DocsPage
+      toc={page.data.toc}
       full={page.data.full}
       tableOfContent={{
-        style: "clerk",
+        style: 'clerk',
       }}
     >
-      <DocsTitle>
-        {page.data.title}
-      </DocsTitle>
-      <DocsDescription>
-        {page.data.description}
-      </DocsDescription>
+      <DocsTitle>{page.data.title}</DocsTitle>
+      <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
         {/* Preview Rendered Component */}
         {preview ? <PreviewRenderer preview={preview} /> : null}
@@ -99,7 +101,7 @@ export default async function DocPage({
         <CustomMDXContent
           code={page.data.body}
           customComponents={{
-            a: ({ href, ...props }: { href?: string;[key: string]: any }) => {
+            a: ({ href, ...props }: { href?: string; [key: string]: any }) => {
               const found = source.getPageByHref(href ?? '', {
                 dir: page.file.dirname,
               });

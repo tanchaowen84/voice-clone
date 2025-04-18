@@ -12,7 +12,7 @@ import { getAvatarLinks } from '@/config/avatar-config';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { usePaymentStore } from '@/stores/payment-store';
-import { User } from 'better-auth';
+import type { User } from 'better-auth';
 import { LogOutIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -44,7 +44,7 @@ export function UserButton({ user }: UserButtonProps) {
         },
       },
     });
-  }
+  };
 
   // Desktop View, use DropdownMenu
   return (
@@ -59,9 +59,7 @@ export function UserButton({ user }: UserButtonProps) {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">
-              {user.name}
-            </p>
+            <p className="font-medium">{user.name}</p>
             <p className="w-[200px] truncate text-sm text-muted-foreground">
               {user.email}
             </p>

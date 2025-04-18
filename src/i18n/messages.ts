@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
+import type { Locale, Messages } from 'next-intl';
 import { routing } from './routing';
-import { Locale, Messages } from 'next-intl';
 
 // assume that the default messages are in the en.json file
 // if you want to use a different default locale, you can change to other {locale}.json file

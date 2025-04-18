@@ -27,8 +27,6 @@ export const LoginWrapper = ({
   callbackUrl,
 }: LoginWrapperProps) => {
   const router = useLocaleRouter();
-  const pathname = useLocalePathname();
-  const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogin = () => {
@@ -39,11 +37,6 @@ export const LoginWrapper = ({
     console.log('login wrapper, loginPath', loginPath);
     router.push(loginPath);
   };
-
-  // Close the modal on route change
-  useEffect(() => {
-    setIsModalOpen(false);
-  }, [pathname, searchParams]);
 
   if (mode === 'modal') {
     return (

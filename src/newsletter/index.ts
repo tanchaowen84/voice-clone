@@ -1,6 +1,6 @@
 import { websiteConfig } from '@/config/website';
 import { ResendNewsletterProvider } from './provider/resend';
-import { NewsletterProvider } from './types';
+import type { NewsletterProvider } from './types';
 
 /**
  * Global newsletter provider instance
@@ -27,7 +27,9 @@ export const initializeNewsletterProvider = (): NewsletterProvider => {
     if (websiteConfig.newsletter.provider === 'resend') {
       newsletterProvider = new ResendNewsletterProvider();
     } else {
-      throw new Error(`Unsupported newsletter provider: ${websiteConfig.newsletter.provider}`);
+      throw new Error(
+        `Unsupported newsletter provider: ${websiteConfig.newsletter.provider}`
+      );
     }
   }
 

@@ -11,15 +11,15 @@ import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { useLocaleStore } from '@/stores/locale-store';
 import { Languages } from 'lucide-react';
-import { Locale, useLocale, useTranslations } from 'next-intl';
+import { type Locale, useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 
 /**
  * LocaleSwitcher component
- * 
+ *
  * Allows users to switch between available locales using a dropdown menu.
- * 
+ *
  * Based on next-intl's useLocaleRouter and useLocalePathname for locale navigation.
  * https://next-intl.dev/docs/routing/navigation#userouter
  */
@@ -54,7 +54,7 @@ export default function LocaleSwitcher() {
         { locale: nextLocale }
       );
     });
-  }
+  };
 
   return (
     <DropdownMenu>
@@ -69,18 +69,18 @@ export default function LocaleSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {Object.entries(websiteConfig.i18n.locales).map(([localeOption, data]) => (
-          <DropdownMenuItem
-            key={localeOption}
-            onClick={() => setLocale(localeOption)}
-            className="cursor-pointer"
-          >
-            {data.flag && (
-              <span className="mr-2 text-md">{data.flag}</span>
-            )}
-            <span className="text-sm">{data.name}</span>
-          </DropdownMenuItem>
-        ))}
+        {Object.entries(websiteConfig.i18n.locales).map(
+          ([localeOption, data]) => (
+            <DropdownMenuItem
+              key={localeOption}
+              onClick={() => setLocale(localeOption)}
+              className="cursor-pointer"
+            >
+              {data.flag && <span className="mr-2 text-md">{data.flag}</span>}
+              <span className="text-sm">{data.name}</span>
+            </DropdownMenuItem>
+          )
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { Routes } from '@/routes';
-import { NestedMenuItem } from '@/types';
+import type { NestedMenuItem } from '@/types';
 import {
   BellIcon,
   CircleUserRoundIcon,
@@ -10,7 +10,7 @@ import {
   LockKeyholeIcon,
   Settings2Icon,
   SettingsIcon,
-  UsersRoundIcon
+  UsersRoundIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -41,7 +41,7 @@ export function getSidebarLinks(): NestedMenuItem[] {
           icon: <UsersRoundIcon className="size-4 shrink-0" />,
           href: Routes.AdminUsers,
           external: false,
-        }
+        },
       ],
     },
     {
@@ -71,7 +71,7 @@ export function getSidebarLinks(): NestedMenuItem[] {
           icon: <BellIcon className="size-4 shrink-0" />,
           href: Routes.SettingsNotifications,
           external: false,
-        }
+        },
       ],
     },
   ];

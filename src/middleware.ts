@@ -1,8 +1,12 @@
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { LOCALES, routing } from './i18n/routing';
 import { getSession } from './lib/server';
-import { DEFAULT_LOGIN_REDIRECT, protectedRoutes, routesNotAllowedByLoggedInUsers } from './routes';
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  protectedRoutes,
+  routesNotAllowedByLoggedInUsers,
+} from './routes';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -15,18 +19,27 @@ export default async function middleware(req: NextRequest) {
   // console.log('middleware, isLoggedIn', isLoggedIn);
 
   // Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
-  const pathnameWithoutLocale = getPathnameWithoutLocale(nextUrl.pathname, LOCALES);
+  const pathnameWithoutLocale = getPathnameWithoutLocale(
+    nextUrl.pathname,
+    LOCALES
+  );
 
   // If the route can not be accessed by logged in users, redirect if the user is logged in
   if (isLoggedIn) {
-    const isNotAllowedRoute = routesNotAllowedByLoggedInUsers.some(route => new RegExp(`^${route}$`).test(pathnameWithoutLocale));
+    const isNotAllowedRoute = routesNotAllowedByLoggedInUsers.some((route) =>
+      new RegExp(`^${route}$`).test(pathnameWithoutLocale)
+    );
     if (isNotAllowedRoute) {
-      console.log('<< middleware end, not allowed route, already logged in, redirecting to dashboard');
+      console.log(
+        '<< middleware end, not allowed route, already logged in, redirecting to dashboard'
+      );
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
   }
 
-  const isProtectedRoute = protectedRoutes.some(route => new RegExp(`^${route}$`).test(pathnameWithoutLocale));
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    new RegExp(`^${route}$`).test(pathnameWithoutLocale)
+  );
   // console.log('middleware, isProtectedRoute', isProtectedRoute);
 
   // If the route is a protected route, redirect to login if user is not logged in
@@ -36,9 +49,12 @@ export default async function middleware(req: NextRequest) {
       callbackUrl += nextUrl.search;
     }
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    console.log('<< middleware end, not logged in, redirecting to login, callbackUrl', callbackUrl);
+    console.log(
+      '<< middleware end, not logged in, redirecting to login, callbackUrl',
+      callbackUrl
+    );
     return NextResponse.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
 
@@ -63,7 +79,7 @@ function getPathnameWithoutLocale(pathname: string, locales: string[]): string {
  */
 export const config = {
   // The `matcher` is relative to the `basePath`
-  matcher: [    
+  matcher: [
     // Match all pathnames except for
     // - … if they start with `/api`, `/_next` or `/_vercel`
     // - … the ones containing a dot (e.g. `favicon.ico`)

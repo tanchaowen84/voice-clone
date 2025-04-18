@@ -1,9 +1,9 @@
-import GoogleAnalytics from "./google-analytics";
-import { UmamiAnalytics } from "./umami-analytics";
-import { PlausibleAnalytics } from "./plausible-analytics";
-import DataFastAnalytics from "./data-fast-analytics";
-import OpenPanelAnalytics from "./open-panel-analytics";
-import { SelineAnalytics } from "./seline-analytics";
+import DataFastAnalytics from './data-fast-analytics';
+import GoogleAnalytics from './google-analytics';
+import OpenPanelAnalytics from './open-panel-analytics';
+import { PlausibleAnalytics } from './plausible-analytics';
+import { SelineAnalytics } from './seline-analytics';
+import { UmamiAnalytics } from './umami-analytics';
 
 /**
  * Analytics Components all in one
@@ -12,7 +12,7 @@ import { SelineAnalytics } from "./seline-analytics";
  * 2. only work if the environment variable for the analytics is set
  */
 export function Analytics() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     return null;
   }
 

@@ -1,11 +1,11 @@
 import { BlogCategoryFilter } from '@/components/blog/blog-category-filter';
 import Container from '@/components/layout/container';
-import { NextPageProps } from '@/types/next-page-props';
+import type { NextPageProps } from '@/types/next-page-props';
 import { allCategories } from 'content-collections';
 import { getTranslations } from 'next-intl/server';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
-interface BlogListLayoutProps extends PropsWithChildren, NextPageProps { }
+interface BlogListLayoutProps extends PropsWithChildren, NextPageProps {}
 
 export default async function BlogListLayout({
   children,

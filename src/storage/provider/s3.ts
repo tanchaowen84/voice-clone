@@ -1,21 +1,25 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { storageConfig } from '../config/storage-config';
 import {
   ConfigurationError,
-  PresignedUploadUrlParams,
-  StorageConfig,
+  type PresignedUploadUrlParams,
+  type StorageConfig,
   StorageError,
-  StorageProvider,
+  type StorageProvider,
   UploadError,
-  UploadFileParams,
-  UploadFileResult
+  type UploadFileParams,
+  type UploadFileResult,
 } from '../types';
 
 /**
  * Amazon S3 storage provider implementation
- * 
+ *
  * This provider works with Amazon S3 and compatible services like Cloudflare R2
  * https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
  * https://www.npmjs.com/package/@aws-sdk/client-s3
@@ -44,7 +48,8 @@ export class S3Provider implements StorageProvider {
       return this.s3Client;
     }
 
-    const { region, endpoint, accessKeyId, secretAccessKey, forcePathStyle } = this.config;
+    const { region, endpoint, accessKeyId, secretAccessKey, forcePathStyle } =
+      this.config;
 
     if (!region) {
       throw new ConfigurationError('Storage region is not configured');
@@ -136,7 +141,10 @@ export class S3Provider implements StorageProvider {
         throw error;
       }
 
-      const message = error instanceof Error ? error.message : 'Unknown error occurred during file upload';
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unknown error occurred during file upload';
       console.error('uploadFile, error', message);
       throw new UploadError(message);
     }
@@ -159,12 +167,17 @@ export class S3Provider implements StorageProvider {
         Key: key,
       };
 
-      await s3.send(new PutObjectCommand({
-        ...command,
-        Body: '',
-      }));
+      await s3.send(
+        new PutObjectCommand({
+          ...command,
+          Body: '',
+        })
+      );
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error occurred during file deletion';
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unknown error occurred during file deletion';
       console.error('deleteFile, error', message);
       throw new StorageError(message);
     }
@@ -173,7 +186,9 @@ export class S3Provider implements StorageProvider {
   /**
    * Generate a pre-signed URL for direct browser uploads
    */
-  public async getPresignedUploadUrl(params: PresignedUploadUrlParams): Promise<UploadFileResult> {
+  public async getPresignedUploadUrl(
+    params: PresignedUploadUrlParams
+  ): Promise<UploadFileResult> {
     try {
       const { filename, contentType, folder, expiresIn = 3600 } = params;
       const s3 = this.getS3Client();
@@ -195,7 +210,10 @@ export class S3Provider implements StorageProvider {
       const url = await getSignedUrl(s3, command, { expiresIn });
       return { url, key };
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error occurred while generating presigned URL';
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unknown error occurred while generating presigned URL';
       console.error('getPresignedUploadUrl, error', message);
       throw new StorageError(message);
     }

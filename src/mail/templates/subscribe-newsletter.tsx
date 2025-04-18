@@ -5,17 +5,21 @@ import type { BaseEmailProps } from '@/mail/types';
 import { Heading, Text } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
-interface SubscribeNewsletterProps extends BaseEmailProps {
-}
+interface SubscribeNewsletterProps extends BaseEmailProps {}
 
-export function SubscribeNewsletter({ locale, messages }: SubscribeNewsletterProps) {
-  const t = createTranslator({ locale, messages, namespace: 'Mail.subscribeNewsletter' });
+export function SubscribeNewsletter({
+  locale,
+  messages,
+}: SubscribeNewsletterProps) {
+  const t = createTranslator({
+    locale,
+    messages,
+    namespace: 'Mail.subscribeNewsletter',
+  });
 
   return (
     <EmailLayout locale={locale} messages={messages}>
-      <Heading className="text-xl">
-        {t('subject')}
-      </Heading>
+      <Heading className="text-xl">{t('subject')}</Heading>
       <Text>{t('body')}</Text>
     </EmailLayout>
   );

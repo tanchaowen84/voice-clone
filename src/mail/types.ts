@@ -1,8 +1,8 @@
-import { Locale, Messages } from 'next-intl';
-import { VerifyEmail } from './templates/verify-email';
+import type { Locale, Messages } from 'next-intl';
+import { ContactMessage } from './templates/contact-message';
 import { ForgotPassword } from './templates/forgot-password';
 import { SubscribeNewsletter } from './templates/subscribe-newsletter';
-import { ContactMessage } from './templates/contact-message';
+import { VerifyEmail } from './templates/verify-email';
 
 /**
  * list all the email templates here

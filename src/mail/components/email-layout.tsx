@@ -1,4 +1,4 @@
-import { BaseEmailProps } from '@/mail/types';
+import type { BaseEmailProps } from '@/mail/types';
 import {
   Container,
   Font,
@@ -7,7 +7,7 @@ import {
   Html,
   Section,
   Tailwind,
-  Text
+  Text,
 } from '@react-email/components';
 import { createTranslator } from 'use-intl/core';
 
@@ -20,7 +20,11 @@ interface EmailLayoutProps extends BaseEmailProps {
  *
  * https://react.email/docs/components/tailwind
  */
-export default function EmailLayout({ locale, messages, children }: EmailLayoutProps) {
+export default function EmailLayout({
+  locale,
+  messages,
+  children,
+}: EmailLayoutProps) {
   const t = createTranslator({
     locale,
     messages,

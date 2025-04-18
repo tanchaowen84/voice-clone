@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Script from "next/script";
+import Script from 'next/script';
 
 /**
  * Umami Analytics
@@ -8,7 +8,7 @@ import Script from "next/script";
  * https://umami.is
  */
 export function UmamiAnalytics() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     return null;
   }
 

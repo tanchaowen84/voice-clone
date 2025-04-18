@@ -1,5 +1,5 @@
-import { defineRouting } from 'next-intl/routing';
 import { websiteConfig } from '@/config/website';
+import { defineRouting } from 'next-intl/routing';
 
 export const DEFAULT_LOCALE = websiteConfig.i18n.defaultLocale;
 export const LOCALES = Object.keys(websiteConfig.i18n.locales);

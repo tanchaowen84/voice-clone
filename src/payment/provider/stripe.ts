@@ -1,16 +1,31 @@
+import { randomUUID } from 'crypto';
 import db from '@/db';
 import { payment, session, user } from '@/db/schema';
-import { findPlanByPriceId, findPriceInPlan, findPlanByPlanId } from '@/lib/price-plan';
-import { randomUUID } from 'crypto';
+import {
+  findPlanByPlanId,
+  findPlanByPriceId,
+  findPriceInPlan,
+} from '@/lib/price-plan';
 import { desc, eq } from 'drizzle-orm';
 import { Stripe } from 'stripe';
-import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, getSubscriptionsParams, PaymentProvider, PaymentStatus, PaymentTypes, PlanInterval, PlanIntervals, PortalResult, Subscription } from '../types';
+import {
+  type CheckoutResult,
+  type CreateCheckoutParams,
+  type CreatePortalParams,
+  type PaymentProvider,
+  type PaymentStatus,
+  PaymentTypes,
+  type PlanInterval,
+  PlanIntervals,
+  type PortalResult,
+  type Subscription,
+  type getSubscriptionsParams,
+} from '../types';
 
 /**
  * Stripe payment provider implementation
  */
 export class StripeProvider implements PaymentProvider {
-
   private stripe: Stripe;
   private webhookSecret: string;
 
@@ -39,7 +54,10 @@ export class StripeProvider implements PaymentProvider {
    * @param name Optional customer name
    * @returns Stripe customer ID
    */
-  private async createOrGetCustomer(email: string, name?: string): Promise<string> {
+  private async createOrGetCustomer(
+    email: string,
+    name?: string
+  ): Promise<string> {
     try {
       // Search for existing customer
       const customers = await this.stripe.customers.list({
@@ -56,16 +74,18 @@ export class StripeProvider implements PaymentProvider {
         // user does not exist, update user with customer id
         // in case you deleted user in database, but forgot to delete customer in Stripe
         if (!userId) {
-          console.log(`User ${email} does not exist, update with customer id ${customerId}`);
+          console.log(
+            `User ${email} does not exist, update with customer id ${customerId}`
+          );
           await this.updateUserWithCustomerId(customerId, email);
         }
         return customerId;
       }
 
       // Create new customer
-      const customer = await this.stripe.customers.create({ 
+      const customer = await this.stripe.customers.create({
         email,
-        name: name || undefined
+        name: name || undefined,
       });
 
       // Update user record in database with the new customer ID
@@ -84,14 +104,17 @@ export class StripeProvider implements PaymentProvider {
    * @param email Customer email
    * @returns Promise that resolves when the update is complete
    */
-  private async updateUserWithCustomerId(customerId: string, email: string): Promise<void> {
+  private async updateUserWithCustomerId(
+    customerId: string,
+    email: string
+  ): Promise<void> {
     try {
       // Update user record with customer ID if email matches
       const result = await db
         .update(user)
         .set({
           customerId: customerId,
-          updatedAt: new Date()
+          updatedAt: new Date(),
         })
         .where(eq(user.email, email))
         .returning({ id: user.id });
@@ -112,7 +135,9 @@ export class StripeProvider implements PaymentProvider {
    * @param customerId Stripe customer ID
    * @returns User ID or undefined if not found
    */
-  private async findUserIdByCustomerId(customerId: string): Promise<string | undefined> {
+  private async findUserIdByCustomerId(
+    customerId: string
+  ): Promise<string | undefined> {
     try {
       // Query the user table for a matching customerId
       const result = await db
@@ -123,9 +148,8 @@ export class StripeProvider implements PaymentProvider {
 
       if (result.length > 0) {
         return result[0].id;
-      } else {
-        console.warn(`No user found with customerId ${customerId}`);
       }
+      console.warn(`No user found with customerId ${customerId}`);
 
       return undefined;
     } catch (error) {
@@ -139,8 +163,18 @@ export class StripeProvider implements PaymentProvider {
    * @param params Parameters for creating the checkout session
    * @returns Checkout result
    */
-  public async createCheckout(params: CreateCheckoutParams): Promise<CheckoutResult> {
-    const { planId, priceId, customerEmail, successUrl, cancelUrl, metadata, locale } = params;
+  public async createCheckout(
+    params: CreateCheckoutParams
+  ): Promise<CheckoutResult> {
+    const {
+      planId,
+      priceId,
+      customerEmail,
+      successUrl,
+      cancelUrl,
+      metadata,
+      locale,
+    } = params;
 
     try {
       // Get plan and price
@@ -159,7 +193,10 @@ export class StripeProvider implements PaymentProvider {
       const userName = metadata?.userName;
 
       // Create or get customer
-      const customerId = await this.createOrGetCustomer(customerEmail, userName);
+      const customerId = await this.createOrGetCustomer(
+        customerEmail,
+        userName
+      );
 
       // Add planId and priceId to metadata, so we can get it in the webhook event
       const customMetadata = {
@@ -169,15 +206,18 @@ export class StripeProvider implements PaymentProvider {
       };
 
       // Set up the line items
-      const lineItems = [{
-        price: priceId,
-        quantity: 1,
-      }];
+      const lineItems = [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ];
 
       // Create checkout session parameters
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         line_items: lineItems,
-        mode: price.type === PaymentTypes.SUBSCRIPTION ? 'subscription' : 'payment',
+        mode:
+          price.type === PaymentTypes.SUBSCRIPTION ? 'subscription' : 'payment',
         success_url: successUrl ?? '',
         cancel_url: cancelUrl ?? '',
         metadata: customMetadata,
@@ -188,7 +228,9 @@ export class StripeProvider implements PaymentProvider {
 
       // Add locale if provided
       if (locale) {
-        checkoutParams.locale = this.mapLocaleToStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
+        checkoutParams.locale = this.mapLocaleToStripeLocale(
+          locale
+        ) as Stripe.Checkout.SessionCreateParams.Locale;
       }
 
       // Add payment intent data for one-time payments
@@ -211,12 +253,14 @@ export class StripeProvider implements PaymentProvider {
 
         // Add trial period if applicable
         if (price.trialPeriodDays && price.trialPeriodDays > 0) {
-          checkoutParams.subscription_data.trial_period_days = price.trialPeriodDays;
+          checkoutParams.subscription_data.trial_period_days =
+            price.trialPeriodDays;
         }
       }
 
       // Create the checkout session
-      const session = await this.stripe.checkout.sessions.create(checkoutParams);
+      const session =
+        await this.stripe.checkout.sessions.create(checkoutParams);
 
       return {
         url: session.url!,
@@ -233,14 +277,20 @@ export class StripeProvider implements PaymentProvider {
    * @param params Parameters for creating the portal
    * @returns Portal result
    */
-  public async createCustomerPortal(params: CreatePortalParams): Promise<PortalResult> {
+  public async createCustomerPortal(
+    params: CreatePortalParams
+  ): Promise<PortalResult> {
     const { customerId, returnUrl, locale } = params;
 
     try {
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
         return_url: returnUrl ?? '',
-        locale: locale ? this.mapLocaleToStripeLocale(locale) as Stripe.BillingPortal.SessionCreateParams.Locale : undefined,
+        locale: locale
+          ? (this.mapLocaleToStripeLocale(
+              locale
+            ) as Stripe.BillingPortal.SessionCreateParams.Locale)
+          : undefined,
       });
 
       return {
@@ -257,7 +307,9 @@ export class StripeProvider implements PaymentProvider {
    * @param params Parameters for getting subscriptions
    * @returns Array of subscription objects
    */
-  public async getSubscriptions(params: getSubscriptionsParams): Promise<Subscription[]> {
+  public async getSubscriptions(
+    params: getSubscriptionsParams
+  ): Promise<Subscription[]> {
     const { userId } = params;
 
     try {
@@ -269,7 +321,7 @@ export class StripeProvider implements PaymentProvider {
         .orderBy(desc(payment.createdAt)); // Sort by creation date, newest first
 
       // Map database records to our subscription model
-      return subscriptions.map(subscription => ({
+      return subscriptions.map((subscription) => ({
         id: subscription.subscriptionId || '',
         customerId: subscription.customerId,
         priceId: subscription.priceId,
@@ -294,7 +346,10 @@ export class StripeProvider implements PaymentProvider {
    * @param payload Raw webhook payload
    * @param signature Webhook signature
    */
-  public async handleWebhookEvent(payload: string, signature: string): Promise<void> {
+  public async handleWebhookEvent(
+    payload: string,
+    signature: string
+  ): Promise<void> {
     try {
       // Verify the event signature if webhook secret is available
       const event = this.stripe.webhooks.constructEvent(
@@ -345,21 +400,29 @@ export class StripeProvider implements PaymentProvider {
    * Create payment record
    * @param stripeSubscription Stripe subscription
    */
-  private async onCreateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`>> Create payment record for Stripe subscription ${stripeSubscription.id}`);
+  private async onCreateSubscription(
+    stripeSubscription: Stripe.Subscription
+  ): Promise<void> {
+    console.log(
+      `>> Create payment record for Stripe subscription ${stripeSubscription.id}`
+    );
     const customerId = stripeSubscription.customer as string;
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
     if (!priceId) {
-      console.warn(`<< No priceId found for subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No priceId found for subscription ${stripeSubscription.id}`
+      );
       return;
     }
 
     // get userId from metadata, we add it in the createCheckout session
     const userId = stripeSubscription.metadata.userId;
     if (!userId) {
-      console.warn(`<< No userId found for subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No userId found for subscription ${stripeSubscription.id}`
+      );
       return;
     }
 
@@ -372,18 +435,24 @@ export class StripeProvider implements PaymentProvider {
       customerId: customerId,
       subscriptionId: stripeSubscription.id,
       interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
-      status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
-      periodStart: stripeSubscription.current_period_start ?
-        new Date(stripeSubscription.current_period_start * 1000) : null,
-      periodEnd: stripeSubscription.current_period_end ?
-        new Date(stripeSubscription.current_period_end * 1000) : null,
+      status: this.mapSubscriptionStatusToPaymentStatus(
+        stripeSubscription.status
+      ),
+      periodStart: stripeSubscription.current_period_start
+        ? new Date(stripeSubscription.current_period_start * 1000)
+        : null,
+      periodEnd: stripeSubscription.current_period_end
+        ? new Date(stripeSubscription.current_period_end * 1000)
+        : null,
       cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-      trialStart: stripeSubscription.trial_start ?
-        new Date(stripeSubscription.trial_start * 1000) : null,
-      trialEnd: stripeSubscription.trial_end ?
-        new Date(stripeSubscription.trial_end * 1000) : null,
+      trialStart: stripeSubscription.trial_start
+        ? new Date(stripeSubscription.trial_start * 1000)
+        : null,
+      trialEnd: stripeSubscription.trial_end
+        ? new Date(stripeSubscription.trial_end * 1000)
+        : null,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     const result = await db
@@ -392,9 +461,13 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`<< Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(
+        `<< Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`
+      );
     } else {
-      console.warn(`<< No payment record created for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No payment record created for Stripe subscription ${stripeSubscription.id}`
+      );
     }
   }
 
@@ -402,13 +475,19 @@ export class StripeProvider implements PaymentProvider {
    * Update payment record
    * @param stripeSubscription Stripe subscription
    */
-  private async onUpdateSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`>> Update payment record for Stripe subscription ${stripeSubscription.id}`);
+  private async onUpdateSubscription(
+    stripeSubscription: Stripe.Subscription
+  ): Promise<void> {
+    console.log(
+      `>> Update payment record for Stripe subscription ${stripeSubscription.id}`
+    );
 
     // get priceId from subscription items (this is always available)
     const priceId = stripeSubscription.items.data[0]?.price.id;
     if (!priceId) {
-      console.warn(`<< No priceId found for subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No priceId found for subscription ${stripeSubscription.id}`
+      );
       return;
     }
 
@@ -416,17 +495,23 @@ export class StripeProvider implements PaymentProvider {
     const updateFields: any = {
       priceId: priceId,
       interval: this.mapStripeIntervalToPlanInterval(stripeSubscription),
-      status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
-      periodStart: stripeSubscription.current_period_start ?
-        new Date(stripeSubscription.current_period_start * 1000) : undefined,
-      periodEnd: stripeSubscription.current_period_end ?
-        new Date(stripeSubscription.current_period_end * 1000) : undefined,
+      status: this.mapSubscriptionStatusToPaymentStatus(
+        stripeSubscription.status
+      ),
+      periodStart: stripeSubscription.current_period_start
+        ? new Date(stripeSubscription.current_period_start * 1000)
+        : undefined,
+      periodEnd: stripeSubscription.current_period_end
+        ? new Date(stripeSubscription.current_period_end * 1000)
+        : undefined,
       cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
-      trialStart: stripeSubscription.trial_start ?
-        new Date(stripeSubscription.trial_start * 1000) : undefined,
-      trialEnd: stripeSubscription.trial_end ?
-        new Date(stripeSubscription.trial_end * 1000) : undefined,
-      updatedAt: new Date()
+      trialStart: stripeSubscription.trial_start
+        ? new Date(stripeSubscription.trial_start * 1000)
+        : undefined,
+      trialEnd: stripeSubscription.trial_end
+        ? new Date(stripeSubscription.trial_end * 1000)
+        : undefined,
+      updatedAt: new Date(),
     };
 
     const result = await db
@@ -436,9 +521,13 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`<< Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+      console.log(
+        `<< Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`
+      );
     } else {
-      console.warn(`<< No payment record found for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No payment record found for Stripe subscription ${stripeSubscription.id}`
+      );
     }
   }
 
@@ -446,21 +535,31 @@ export class StripeProvider implements PaymentProvider {
    * Update payment record, set status to canceled
    * @param stripeSubscription Stripe subscription
    */
-  private async onDeleteSubscription(stripeSubscription: Stripe.Subscription): Promise<void> {
-    console.log(`>> Mark payment record for Stripe subscription ${stripeSubscription.id} as canceled`);
+  private async onDeleteSubscription(
+    stripeSubscription: Stripe.Subscription
+  ): Promise<void> {
+    console.log(
+      `>> Mark payment record for Stripe subscription ${stripeSubscription.id} as canceled`
+    );
     const result = await db
       .update(payment)
       .set({
-        status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
-        updatedAt: new Date()
+        status: this.mapSubscriptionStatusToPaymentStatus(
+          stripeSubscription.status
+        ),
+        updatedAt: new Date(),
       })
       .where(eq(payment.subscriptionId, stripeSubscription.id))
       .returning({ id: payment.id });
 
     if (result.length > 0) {
-      console.log(`<< Marked payment record for subscription ${stripeSubscription.id} as canceled`);
+      console.log(
+        `<< Marked payment record for subscription ${stripeSubscription.id} as canceled`
+      );
     } else {
-      console.warn(`<< No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`);
+      console.warn(
+        `<< No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`
+      );
     }
   }
 
@@ -468,7 +567,9 @@ export class StripeProvider implements PaymentProvider {
    * Handle one-time payment
    * @param session Stripe checkout session
    */
-  private async onOnetimePayment(session: Stripe.Checkout.Session): Promise<void> {
+  private async onOnetimePayment(
+    session: Stripe.Checkout.Session
+  ): Promise<void> {
     const customerId = session.customer as string;
     console.log(`>> Handle onetime payment for customer ${customerId}`);
 
@@ -505,11 +606,14 @@ export class StripeProvider implements PaymentProvider {
       .returning({ id: payment.id });
 
     if (result.length === 0) {
-      console.warn(`<< Failed to create one-time payment record for user ${userId}`);
+      console.warn(
+        `<< Failed to create one-time payment record for user ${userId}`
+      );
       return;
-    } else {
-      console.log(`<< Created one-time payment record for user ${userId}, price: ${priceId}`);
     }
+    console.log(
+      `<< Created one-time payment record for user ${userId}, price: ${priceId}`
+    );
   }
 
   /**
@@ -517,7 +621,9 @@ export class StripeProvider implements PaymentProvider {
    * @param subscription Stripe subscription
    * @returns PlanInterval
    */
-  private mapStripeIntervalToPlanInterval(subscription: Stripe.Subscription): PlanInterval {
+  private mapStripeIntervalToPlanInterval(
+    subscription: Stripe.Subscription
+  ): PlanInterval {
     switch (subscription.items.data[0]?.plan.interval) {
       case 'month':
         return PlanIntervals.MONTH;
@@ -534,7 +640,9 @@ export class StripeProvider implements PaymentProvider {
    * @param status Stripe subscription status
    * @returns PaymentStatus
    */
-  private mapSubscriptionStatusToPaymentStatus(status: Stripe.Subscription.Status): PaymentStatus {
+  private mapSubscriptionStatusToPaymentStatus(
+    status: Stripe.Subscription.Status
+  ): PaymentStatus {
     const statusMap: Record<string, PaymentStatus> = {
       active: 'active',
       canceled: 'canceled',
@@ -555,13 +663,43 @@ export class StripeProvider implements PaymentProvider {
    * @returns Stripe locale string
    */
   private mapLocaleToStripeLocale(locale: string): string {
-    // Stripe supported locales as of 2023: 
+    // Stripe supported locales as of 2023:
     // https://stripe.com/docs/js/appendix/supported_locales
     const stripeLocales = [
-      'bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fil',
-      'fr', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'ms',
-      'mt', 'nb', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv',
-      'th', 'tr', 'vi', 'zh'
+      'bg',
+      'cs',
+      'da',
+      'de',
+      'el',
+      'en',
+      'es',
+      'et',
+      'fi',
+      'fil',
+      'fr',
+      'hr',
+      'hu',
+      'id',
+      'it',
+      'ja',
+      'ko',
+      'lt',
+      'lv',
+      'ms',
+      'mt',
+      'nb',
+      'nl',
+      'pl',
+      'pt',
+      'ro',
+      'ru',
+      'sk',
+      'sl',
+      'sv',
+      'th',
+      'tr',
+      'vi',
+      'zh',
     ];
 
     // First check if the exact locale is supported

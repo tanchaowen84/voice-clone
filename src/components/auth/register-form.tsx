@@ -29,13 +29,18 @@ interface RegisterFormProps {
   callbackUrl?: string;
 }
 
-export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps) => {
+export const RegisterForm = ({
+  callbackUrl: propCallbackUrl,
+}: RegisterFormProps) => {
   const t = useTranslations('AuthPage.register');
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
-  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(DEFAULT_LOGIN_REDIRECT, locale);
+  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(
+    DEFAULT_LOGIN_REDIRECT,
+    locale
+  );
   const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   console.log('register form, callbackUrl', callbackUrl);
 
@@ -159,7 +164,7 @@ export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps
                         {...field}
                         disabled={isPending}
                         placeholder="******"
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         className="pr-10"
                       />
                       <Button
@@ -194,9 +199,7 @@ export const RegisterForm = ({ callbackUrl: propCallbackUrl }: RegisterFormProps
             type="submit"
             className="cursor-pointer w-full flex items-center justify-center gap-2"
           >
-            {isPending && (
-              <Loader2Icon className="mr-2 size-4 animate-spin" />
-            )}
+            {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
             <span>{t('signUp')}</span>
           </Button>
         </form>

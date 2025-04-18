@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import { LocaleLink } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 interface FilterItemMobileProps {
   title: string;

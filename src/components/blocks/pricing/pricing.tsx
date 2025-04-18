@@ -1,5 +1,5 @@
-import { PricingTable } from "@/components/pricing/pricing-table";
-import { useTranslations } from "next-intl";
+import { PricingTable } from '@/components/pricing/pricing-table';
+import { useTranslations } from 'next-intl';
 
 export default function PricingSection() {
   const t = useTranslations('HomePage.pricing');
@@ -11,11 +11,9 @@ export default function PricingSection() {
           <h2 className="text-balance text-4xl lg:text-5xl font-semibold">
             {t('title')}
           </h2>
-          <p className="mt-4">
-            {t('description')}
-          </p>
+          <p className="mt-4">{t('description')}</p>
         </div>
-        
+
         <PricingTable />
       </div>
     </section>
