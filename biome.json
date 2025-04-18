@@ -13,9 +13,12 @@
       "node_modules/**",
       "dist/**",
       "build/**",
-      "src/components/ui/*.tsx",
-      "src/components/magicui/*.tsx",
+      "drizzle/**",
       "tailwind.config.ts",
+      "src/components/ui/*.tsx",
+      "src/components/nsui/*.tsx",
+      "src/components/magicui/*.tsx",
+      "src/app/[[]locale]/preview/**",
       "src/db/schema.ts"
     ]
   },
@@ -51,9 +54,12 @@
       "node_modules/**",
       "dist/**",
       "build/**",
-      "src/components/ui/*.tsx",
-      "src/components/magicui/*.tsx",
+      "drizzle/**",
       "tailwind.config.ts",
+      "src/components/ui/*.tsx",
+      "src/components/nsui/*.tsx",
+      "src/components/magicui/*.tsx",
+      "src/app/[[]locale]/preview/**",
       "src/db/schema.ts"
     ]
   },
