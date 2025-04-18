@@ -56,7 +56,8 @@
       "style": {
         "useTemplate": "off",
         "noNonNullAssertion": "off",
-        "useShorthandArrayType": "off"
+        "useShorthandArrayType": "off",
+        "useNodejsImportProtocol": "off"
       },
       "a11y": {
         "useValidAnchor": "off",

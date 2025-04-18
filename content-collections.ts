@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path from 'path';
 import { DEFAULT_LOCALE, LOCALES } from '@/i18n/routing';
 import { defineCollection, defineConfig } from '@content-collections/core';
 import {

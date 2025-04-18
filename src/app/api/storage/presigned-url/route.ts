@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'crypto';
 import { getPresignedUploadUrl } from '@/storage';
 import { StorageError } from '@/storage/types';
 import { type NextRequest, NextResponse } from 'next/server';
