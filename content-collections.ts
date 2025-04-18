@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { DEFAULT_LOCALE, LOCALES } from '@/i18n/routing';
 import { defineCollection, defineConfig } from '@content-collections/core';
 import {
@@ -313,14 +313,14 @@ function extractLocaleAndBase(fileName: string): {
   if (parts.length === 1) {
     // Simple filename without locale: xxx
     return { locale: DEFAULT_LOCALE, base: parts[0] };
-  } else if (parts.length === 2 && LOCALES.includes(parts[1])) {
+  }
+  if (parts.length === 2 && LOCALES.includes(parts[1])) {
     // Filename with locale: xxx.zh
     return { locale: parts[1], base: parts[0] };
-  } else {
-    // Unexpected format, use first part as base and default locale
-    console.warn(`Unexpected filename format: ${fileName}`);
-    return { locale: DEFAULT_LOCALE, base: parts[0] };
   }
+  // Unexpected format, use first part as base and default locale
+  console.warn(`Unexpected filename format: ${fileName}`);
+  return { locale: DEFAULT_LOCALE, base: parts[0] };
 }
 
 export default defineConfig({

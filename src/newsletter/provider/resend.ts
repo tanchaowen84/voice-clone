@@ -71,10 +71,9 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
-        } else {
-          console.log('Created new contact', email);
-          return true;
         }
+        console.log('Created new contact', email);
+        return true;
       }
 
       // If the contact already exists, update it

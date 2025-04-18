@@ -54,7 +54,7 @@ export function CustomerPortalButton({
       });
 
       // Redirect to customer portal
-      if (result && result.data?.success && result.data.data?.url) {
+      if (result?.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
       } else {
         console.error('Create customer portal error, result:', result);

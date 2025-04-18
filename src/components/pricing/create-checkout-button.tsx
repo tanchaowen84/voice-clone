@@ -59,7 +59,7 @@ export function CheckoutButton({
       });
 
       // Redirect to checkout page
-      if (result && result.data?.success && result.data.data?.url) {
+      if (result?.data?.success && result.data.data?.url) {
         window.location.href = result.data.data?.url;
       } else {
         console.error('Create checkout session error, result:', result);

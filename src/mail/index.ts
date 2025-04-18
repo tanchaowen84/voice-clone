@@ -60,11 +60,10 @@ export async function sendEmail(
     // This is a template email
     const result = await provider.sendTemplate(params);
     return result.success;
-  } else {
-    // This is a raw email
-    const result = await provider.sendRawEmail(params);
-    return result.success;
   }
+  // This is a raw email
+  const result = await provider.sendRawEmail(params);
+  return result.success;
 }
 
 /**

@@ -127,7 +127,7 @@ export default function TestimonialsSection() {
                           width="120"
                           height="120"
                         />
-                        <AvatarFallback></AvatarFallback>
+                        <AvatarFallback />
                       </Avatar>
 
                       <div>

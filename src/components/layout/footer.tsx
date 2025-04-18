@@ -39,21 +39,20 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {/* social links */}
               <div className="flex items-center gap-4 py-2">
                 <div className="flex items-center gap-2">
-                  {socialLinks &&
-                    socialLinks.map((link) => (
-                      <a
-                        key={link.title}
-                        href={link.href || '#'}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={link.title}
-                        className="border border-border inline-flex h-8 w-8 items-center 
+                  {socialLinks?.map((link) => (
+                    <a
+                      key={link.title}
+                      href={link.href || '#'}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={link.title}
+                      className="border border-border inline-flex h-8 w-8 items-center 
                           justify-center rounded-full hover:bg-accent hover:text-accent-foreground"
-                      >
-                        <span className="sr-only">{link.title}</span>
-                        {link.icon ? link.icon : null}
-                      </a>
-                    ))}
+                    >
+                      <span className="sr-only">{link.title}</span>
+                      {link.icon ? link.icon : null}
+                    </a>
+                  ))}
                 </div>
               </div>
 
@@ -63,33 +62,32 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           </div>
 
           {/* footer links */}
-          {footerLinks &&
-            footerLinks.map((section) => (
-              <div
-                key={section.title}
-                className="col-span-1 md:col-span-1 items-start"
-              >
-                <span className="text-sm font-semibold uppercase">
-                  {section.title}
-                </span>
-                <ul className="mt-4 list-inside space-y-3">
-                  {section.items?.map(
-                    (item) =>
-                      item.href && (
-                        <li key={item.title}>
-                          <LocaleLink
-                            href={item.href || '#'}
-                            target={item.external ? '_blank' : undefined}
-                            className="text-sm text-muted-foreground hover:text-primary"
-                          >
-                            {item.title}
-                          </LocaleLink>
-                        </li>
-                      )
-                  )}
-                </ul>
-              </div>
-            ))}
+          {footerLinks?.map((section) => (
+            <div
+              key={section.title}
+              className="col-span-1 md:col-span-1 items-start"
+            >
+              <span className="text-sm font-semibold uppercase">
+                {section.title}
+              </span>
+              <ul className="mt-4 list-inside space-y-3">
+                {section.items?.map(
+                  (item) =>
+                    item.href && (
+                      <li key={item.title}>
+                        <LocaleLink
+                          href={item.href || '#'}
+                          target={item.external ? '_blank' : undefined}
+                          className="text-sm text-muted-foreground hover:text-primary"
+                        >
+                          {item.title}
+                        </LocaleLink>
+                      </li>
+                    )
+                )}
+              </ul>
+            </div>
+          ))}
         </div>
       </Container>
 

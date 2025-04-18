@@ -71,7 +71,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
             email: currentUser.email,
           });
 
-          if (statusResult && statusResult.data?.success) {
+          if (statusResult?.data?.success) {
             const isCurrentlySubscribed = statusResult.data.subscribed;
             setIsSubscriptionChecked(isCurrentlySubscribed);
             form.setValue('subscribed', isCurrentlySubscribed);
@@ -122,7 +122,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
           email: currentUser.email,
         });
 
-        if (subscribeResult && subscribeResult.data?.success) {
+        if (subscribeResult?.data?.success) {
           toast.success(t('newsletter.subscribeSuccess'));
           setIsSubscriptionChecked(true);
           form.setValue('subscribed', true);
@@ -140,7 +140,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
           email: currentUser.email,
         });
 
-        if (unsubscribeResult && unsubscribeResult.data?.success) {
+        if (unsubscribeResult?.data?.success) {
           toast.success(t('newsletter.unsubscribeSuccess'));
           setIsSubscriptionChecked(false);
           form.setValue('subscribed', false);

@@ -132,56 +132,55 @@ export const uploadFileFromBrowser = async (
       return await response.json();
     }
     // For larger files, use pre-signed URL
-    else {
-      // First, get a pre-signed URL
-      const presignedUrlResponse = await fetch(API_STORAGE_PRESIGNED_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filename: file.name,
-          contentType: file.type,
-          folder: folder || '',
-        }),
-      });
 
-      if (!presignedUrlResponse.ok) {
-        const error = await presignedUrlResponse.json();
-        throw new Error(error.message || 'Failed to get pre-signed URL');
-      }
+    // First, get a pre-signed URL
+    const presignedUrlResponse = await fetch(API_STORAGE_PRESIGNED_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename: file.name,
+        contentType: file.type,
+        folder: folder || '',
+      }),
+    });
 
-      const { url, key } = await presignedUrlResponse.json();
-
-      // Then upload directly to the storage provider
-      const uploadResponse = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': file.type,
-        },
-        body: file,
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error('Failed to upload file using pre-signed URL');
-      }
-
-      // Get the public URL
-      const fileUrlResponse = await fetch(API_STORAGE_FILE_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ key }),
-      });
-
-      if (!fileUrlResponse.ok) {
-        const error = await fileUrlResponse.json();
-        throw new Error(error.message || 'Failed to get file URL');
-      }
-
-      return await fileUrlResponse.json();
+    if (!presignedUrlResponse.ok) {
+      const error = await presignedUrlResponse.json();
+      throw new Error(error.message || 'Failed to get pre-signed URL');
     }
+
+    const { url, key } = await presignedUrlResponse.json();
+
+    // Then upload directly to the storage provider
+    const uploadResponse = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error('Failed to upload file using pre-signed URL');
+    }
+
+    // Get the public URL
+    const fileUrlResponse = await fetch(API_STORAGE_FILE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ key }),
+    });
+
+    if (!fileUrlResponse.ok) {
+      const error = await fileUrlResponse.json();
+      throw new Error(error.message || 'Failed to get file URL');
+    }
+
+    return await fileUrlResponse.json();
   } catch (error) {
     const message =
       error instanceof Error

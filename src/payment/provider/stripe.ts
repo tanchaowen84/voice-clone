@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 import db from '@/db';
 import { payment, session, user } from '@/db/schema';
 import {
@@ -148,9 +148,8 @@ export class StripeProvider implements PaymentProvider {
 
       if (result.length > 0) {
         return result[0].id;
-      } else {
-        console.warn(`No user found with customerId ${customerId}`);
       }
+      console.warn(`No user found with customerId ${customerId}`);
 
       return undefined;
     } catch (error) {
@@ -611,11 +610,10 @@ export class StripeProvider implements PaymentProvider {
         `<< Failed to create one-time payment record for user ${userId}`
       );
       return;
-    } else {
-      console.log(
-        `<< Created one-time payment record for user ${userId}, price: ${priceId}`
-      );
     }
+    console.log(
+      `<< Created one-time payment record for user ${userId}, price: ${priceId}`
+    );
   }
 
   /**

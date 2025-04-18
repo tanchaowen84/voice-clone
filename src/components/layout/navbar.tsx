@@ -78,136 +78,132 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex-1 flex items-center justify-center space-x-2">
             <NavigationMenu className="relative">
               <NavigationMenuList className="flex items-center">
-                {menuLinks &&
-                  menuLinks.map((item, index) =>
-                    item.items ? (
-                      <NavigationMenuItem key={index} className="relative">
-                        <NavigationMenuTrigger
-                          data-active={
-                            item.items.some((subItem) =>
-                              subItem.href
-                                ? localePathname.startsWith(subItem.href)
-                                : false
-                            )
-                              ? 'true'
-                              : undefined
-                          }
-                          className={customNavigationMenuTriggerStyle}
-                        >
-                          {item.title}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                            {item.items &&
-                              item.items.map((subItem, subIndex) => {
-                                const isSubItemActive =
-                                  subItem.href &&
-                                  localePathname.startsWith(subItem.href);
-                                return (
-                                  <li key={subIndex}>
-                                    <NavigationMenuLink asChild>
-                                      <LocaleLink
-                                        href={subItem.href || '#'}
-                                        target={
-                                          subItem.external
-                                            ? '_blank'
-                                            : undefined
-                                        }
-                                        rel={
-                                          subItem.external
-                                            ? 'noopener noreferrer'
-                                            : undefined
-                                        }
+                {menuLinks?.map((item, index) =>
+                  item.items ? (
+                    <NavigationMenuItem key={index} className="relative">
+                      <NavigationMenuTrigger
+                        data-active={
+                          item.items.some((subItem) =>
+                            subItem.href
+                              ? localePathname.startsWith(subItem.href)
+                              : false
+                          )
+                            ? 'true'
+                            : undefined
+                        }
+                        className={customNavigationMenuTriggerStyle}
+                      >
+                        {item.title}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                          {item.items?.map((subItem, subIndex) => {
+                            const isSubItemActive =
+                              subItem.href &&
+                              localePathname.startsWith(subItem.href);
+                            return (
+                              <li key={subIndex}>
+                                <NavigationMenuLink asChild>
+                                  <LocaleLink
+                                    href={subItem.href || '#'}
+                                    target={
+                                      subItem.external ? '_blank' : undefined
+                                    }
+                                    rel={
+                                      subItem.external
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                    }
+                                    className={cn(
+                                      'group flex select-none flex-row items-center gap-4 rounded-md',
+                                      'p-2 leading-none no-underline outline-hidden transition-colors',
+                                      'hover:bg-accent hover:text-accent-foreground',
+                                      'focus:bg-accent focus:text-accent-foreground',
+                                      isSubItemActive &&
+                                        'bg-accent text-accent-foreground'
+                                    )}
+                                  >
+                                    <div
+                                      className={cn(
+                                        'flex size-8 shrink-0 items-center justify-center transition-colors',
+                                        'bg-transparent text-muted-foreground',
+                                        'group-hover:bg-transparent group-hover:text-foreground',
+                                        'group-focus:bg-transparent group-focus:text-foreground',
+                                        isSubItemActive &&
+                                          'bg-transparent text-foreground'
+                                      )}
+                                    >
+                                      {subItem.icon ? subItem.icon : null}
+                                    </div>
+                                    <div className="flex-1">
+                                      <div
                                         className={cn(
-                                          'group flex select-none flex-row items-center gap-4 rounded-md',
-                                          'p-2 leading-none no-underline outline-hidden transition-colors',
-                                          'hover:bg-accent hover:text-accent-foreground',
-                                          'focus:bg-accent focus:text-accent-foreground',
+                                          'text-sm font-medium text-muted-foreground',
+                                          'group-hover:bg-transparent group-hover:text-foreground',
+                                          'group-focus:bg-transparent group-focus:text-foreground',
                                           isSubItemActive &&
-                                            'bg-accent text-accent-foreground'
+                                            'bg-transparent text-foreground'
                                         )}
                                       >
+                                        {subItem.title}
+                                      </div>
+                                      {subItem.description && (
                                         <div
                                           className={cn(
-                                            'flex size-8 shrink-0 items-center justify-center transition-colors',
-                                            'bg-transparent text-muted-foreground',
-                                            'group-hover:bg-transparent group-hover:text-foreground',
-                                            'group-focus:bg-transparent group-focus:text-foreground',
+                                            'text-sm text-muted-foreground',
+                                            'group-hover:bg-transparent group-hover:text-foreground/80',
+                                            'group-focus:bg-transparent group-focus:text-foreground/80',
                                             isSubItemActive &&
-                                              'bg-transparent text-foreground'
+                                              'bg-transparent text-foreground/80'
                                           )}
                                         >
-                                          {subItem.icon ? subItem.icon : null}
+                                          {subItem.description}
                                         </div>
-                                        <div className="flex-1">
-                                          <div
-                                            className={cn(
-                                              'text-sm font-medium text-muted-foreground',
-                                              'group-hover:bg-transparent group-hover:text-foreground',
-                                              'group-focus:bg-transparent group-focus:text-foreground',
-                                              isSubItemActive &&
-                                                'bg-transparent text-foreground'
-                                            )}
-                                          >
-                                            {subItem.title}
-                                          </div>
-                                          {subItem.description && (
-                                            <div
-                                              className={cn(
-                                                'text-sm text-muted-foreground',
-                                                'group-hover:bg-transparent group-hover:text-foreground/80',
-                                                'group-focus:bg-transparent group-focus:text-foreground/80',
-                                                isSubItemActive &&
-                                                  'bg-transparent text-foreground/80'
-                                              )}
-                                            >
-                                              {subItem.description}
-                                            </div>
-                                          )}
-                                        </div>
-                                        {subItem.external && (
-                                          <ArrowUpRightIcon
-                                            className={cn(
-                                              'size-4 shrink-0 text-muted-foreground',
-                                              'group-hover:bg-transparent group-hover:text-foreground',
-                                              'group-focus:bg-transparent group-focus:text-foreground',
-                                              isSubItemActive &&
-                                                'bg-transparent text-foreground'
-                                            )}
-                                          />
+                                      )}
+                                    </div>
+                                    {subItem.external && (
+                                      <ArrowUpRightIcon
+                                        className={cn(
+                                          'size-4 shrink-0 text-muted-foreground',
+                                          'group-hover:bg-transparent group-hover:text-foreground',
+                                          'group-focus:bg-transparent group-focus:text-foreground',
+                                          isSubItemActive &&
+                                            'bg-transparent text-foreground'
                                         )}
-                                      </LocaleLink>
-                                    </NavigationMenuLink>
-                                  </li>
-                                );
-                              })}
-                          </ul>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
-                    ) : (
-                      <NavigationMenuItem key={index}>
-                        <NavigationMenuLink
-                          asChild
-                          active={
-                            item.href
-                              ? localePathname.startsWith(item.href)
-                              : false
+                                      />
+                                    )}
+                                  </LocaleLink>
+                                </NavigationMenuLink>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  ) : (
+                    <NavigationMenuItem key={index}>
+                      <NavigationMenuLink
+                        asChild
+                        active={
+                          item.href
+                            ? localePathname.startsWith(item.href)
+                            : false
+                        }
+                        className={customNavigationMenuTriggerStyle}
+                      >
+                        <LocaleLink
+                          href={item.href || '#'}
+                          target={item.external ? '_blank' : undefined}
+                          rel={
+                            item.external ? 'noopener noreferrer' : undefined
                           }
-                          className={customNavigationMenuTriggerStyle}
                         >
-                          <LocaleLink
-                            href={item.href || '#'}
-                            target={item.external ? '_blank' : undefined}
-                            rel={
-                              item.external ? 'noopener noreferrer' : undefined
-                            }
-                          >
-                            {item.title}
-                          </LocaleLink>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )
-                  )}
+                          {item.title}
+                        </LocaleLink>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
+                )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>

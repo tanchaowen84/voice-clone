@@ -69,7 +69,7 @@ export function ContactFormCard() {
         // Submit form data using the contact server action
         const result = await sendMessageAction(values);
 
-        if (result && result.data?.success) {
+        if (result?.data?.success) {
           toast.success(t('success'));
           form.reset();
         } else {
