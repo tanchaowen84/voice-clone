@@ -9,6 +9,8 @@
     "ignoreUnknown": true,
     "ignore": [
       ".next/**",
+      ".cursor/**",
+      ".vscode/**",
       ".content-collections/**",
       "node_modules/**",
       "dist/**",
@@ -19,7 +21,8 @@
       "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
       "src/app/[[]locale]/preview/**",
-      "src/db/schema.ts"
+      "src/db/schema.ts",
+      "public/sw.js"
     ]
   },
   "formatter": {
@@ -50,6 +53,8 @@
     },
     "ignore": [
       ".next/**",
+      ".cursor/**",
+      ".vscode/**",
       ".content-collections/**",
       "node_modules/**",
       "dist/**",
@@ -60,7 +65,8 @@
       "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
       "src/app/[[]locale]/preview/**",
-      "src/db/schema.ts"
+      "src/db/schema.ts",
+      "public/sw.js"
     ]
   },
   "javascript": {
