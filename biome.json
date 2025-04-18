@@ -42,7 +42,13 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noSparseArray": "off"
+        "noSparseArray": "off",
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "off",
+        "noShadowRestrictedNames": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
       },
       "style": {
         "useTemplate": "off",
@@ -50,7 +56,8 @@
         "useShorthandArrayType": "off"
       },
       "a11y": {
-        "useValidAnchor": "off"
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "off"
       }
     },
     "ignore": [

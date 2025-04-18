@@ -12,13 +12,13 @@ import LocaleSwitcher from '../layout/locale-switcher';
 import { ModeSwitcher } from '../layout/mode-switcher';
 import { ThemeSelector } from '../layout/theme-selector';
 
-interface BreadcrumbItem {
+interface DashboardBreadcrumbItem {
   label: string;
   isCurrentPage?: boolean;
 }
 
 interface DashboardHeaderProps {
-  breadcrumbs: BreadcrumbItem[];
+  breadcrumbs: DashboardBreadcrumbItem[];
   actions?: ReactNode;
 }
 
