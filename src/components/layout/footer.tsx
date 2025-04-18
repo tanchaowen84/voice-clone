@@ -1,15 +1,15 @@
 'use client';
 
 import Container from '@/components/layout/container';
-import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import { Logo } from '@/components/layout/logo';
+import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
 import BuiltWithButton from '@/components/shared/built-with-button';
 import { getFooterLinks } from '@/config/footer-config';
 import { getSocialLinks } from '@/config/social-config';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import type React from 'react';
 import { ThemeSelector } from './theme-selector';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {

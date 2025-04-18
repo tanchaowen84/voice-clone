@@ -1,10 +1,10 @@
 import { handleWebhookEvent } from '@/payment';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 /**
  * Stripe webhook handler
  * This endpoint receives webhook events from Stripe and processes them
- * 
+ *
  * @param req The incoming request
  * @returns NextResponse
  */

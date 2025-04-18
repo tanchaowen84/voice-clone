@@ -1,6 +1,11 @@
 import { websiteConfig } from '@/config/website';
-import { MailProvider, SendEmailResult, SendRawEmailParams, SendTemplateParams } from '@/mail/types';
 import { getTemplate } from '@/mail';
+import type {
+  MailProvider,
+  SendEmailResult,
+  SendRawEmailParams,
+  SendTemplateParams,
+} from '@/mail/types';
 import { Resend } from 'resend';
 
 /**
@@ -17,9 +22,11 @@ export class ResendProvider implements MailProvider {
     if (!process.env.RESEND_API_KEY) {
       throw new Error('RESEND_API_KEY environment variable is not set.');
     }
-    
+
     if (!websiteConfig.mail.from) {
-      throw new Error('Default from email address is not set in websiteConfig.');
+      throw new Error(
+        'Default from email address is not set in websiteConfig.'
+      );
     }
 
     const apiKey = process.env.RESEND_API_KEY;
@@ -40,7 +47,9 @@ export class ResendProvider implements MailProvider {
    * @param params Parameters for sending a templated email
    * @returns Send result
    */
-  public async sendTemplate(params: SendTemplateParams): Promise<SendEmailResult> {
+  public async sendTemplate(
+    params: SendTemplateParams
+  ): Promise<SendEmailResult> {
     const { to, template, context, locale } = params;
 
     try {
@@ -72,11 +81,18 @@ export class ResendProvider implements MailProvider {
    * @param params Parameters for sending a raw email
    * @returns Send result
    */
-  public async sendRawEmail(params: SendRawEmailParams): Promise<SendEmailResult> {
+  public async sendRawEmail(
+    params: SendRawEmailParams
+  ): Promise<SendEmailResult> {
     const { to, subject, html, text } = params;
 
     if (!this.from || !to || !subject || !html) {
-      console.warn('Missing required fields for email send', { from: this.from, to, subject, html });
+      console.warn('Missing required fields for email send', {
+        from: this.from,
+        to,
+        subject,
+        html,
+      });
       return {
         success: false,
         error: 'Missing required fields',

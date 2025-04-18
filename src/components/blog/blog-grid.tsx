@@ -1,6 +1,6 @@
 import BlogCard, { BlogCardSkeleton } from '@/components/blog/blog-card';
 import { websiteConfig } from '@/config/website';
-import { Post } from 'content-collections';
+import type { Post } from 'content-collections';
 
 interface BlogGridProps {
   posts: Post[];

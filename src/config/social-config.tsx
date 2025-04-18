@@ -1,6 +1,7 @@
 'use client';
 
 import { BlueskyIcon } from '@/components/icons/bluesky';
+import { DiscordIcon } from '@/components/icons/discord';
 import { FacebookIcon } from '@/components/icons/facebook';
 import { GitHubIcon } from '@/components/icons/github';
 import { InstagramIcon } from '@/components/icons/instagram';
@@ -8,13 +9,12 @@ import { LinkedInIcon } from '@/components/icons/linkedin';
 import { TikTokIcon } from '@/components/icons/tiktok';
 import { XTwitterIcon } from '@/components/icons/x';
 import { YouTubeIcon } from '@/components/icons/youtube';
-import { MenuItem } from '@/types';
+import type { MenuItem } from '@/types';
 import { websiteConfig } from './website';
-import { DiscordIcon } from '@/components/icons/discord';
 
 /**
  * Get social config
- * 
+ *
  * NOTICE: used in client components only
  *
  * @returns The social config

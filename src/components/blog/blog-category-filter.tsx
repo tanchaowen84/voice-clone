@@ -1,5 +1,5 @@
 import Container from '@/components/layout/container';
-import { Category } from 'content-collections';
+import type { Category } from 'content-collections';
 import { BlogCategoryListDesktop } from './blog-category-list-desktop';
 import { BlogCategoryListMobile } from './blog-category-list-mobile';
 

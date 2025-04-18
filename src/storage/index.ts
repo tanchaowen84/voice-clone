@@ -1,7 +1,7 @@
 import { websiteConfig } from '@/config/website';
 import { storageConfig } from './config/storage-config';
 import { S3Provider } from './provider/s3';
-import { StorageConfig, StorageProvider, UploadFileResult } from './types';
+import type { StorageConfig, StorageProvider, UploadFileResult } from './types';
 
 const API_STORAGE_UPLOAD = '/api/storage/upload';
 const API_STORAGE_PRESIGNED_URL = '/api/storage/presigned-url';
@@ -38,7 +38,9 @@ export const initializeStorageProvider = (): StorageProvider => {
     if (websiteConfig.storage.provider === 's3') {
       storageProvider = new S3Provider();
     } else {
-      throw new Error(`Unsupported storage provider: ${websiteConfig.storage.provider}`);
+      throw new Error(
+        `Unsupported storage provider: ${websiteConfig.storage.provider}`
+      );
     }
   }
   return storageProvider;
@@ -46,7 +48,7 @@ export const initializeStorageProvider = (): StorageProvider => {
 
 /**
  * Uploads a file to the configured storage provider
- * 
+ *
  * @param file - The file to upload (Buffer or Blob)
  * @param filename - Original filename with extension
  * @param contentType - MIME type of the file
@@ -65,7 +67,7 @@ export const uploadFile = async (
 
 /**
  * Deletes a file from the storage provider
- * 
+ *
  * @param key - The storage key of the file to delete
  * @returns Promise that resolves when the file is deleted
  */
@@ -76,7 +78,7 @@ export const deleteFile = async (key: string): Promise<void> => {
 
 /**
  * Generates a pre-signed URL for direct browser uploads
- * 
+ *
  * @param filename - Filename with extension
  * @param contentType - MIME type of the file
  * @param folder - Optional folder path to store the file in
@@ -87,16 +89,21 @@ export const getPresignedUploadUrl = async (
   filename: string,
   contentType: string,
   folder?: string,
-  expiresIn: number = 3600
+  expiresIn = 3600
 ): Promise<UploadFileResult> => {
   const provider = getStorageProvider();
-  return provider.getPresignedUploadUrl({ filename, contentType, folder, expiresIn });
+  return provider.getPresignedUploadUrl({
+    filename,
+    contentType,
+    folder,
+    expiresIn,
+  });
 };
 
 /**
  * Uploads a file from the browser to the storage provider
  * This function is meant to be used in client components
- * 
+ *
  * @param file - The file object from an input element
  * @param folder - Optional folder path to store the file in
  * @returns Promise with the URL of the uploaded file
@@ -176,7 +183,10 @@ export const uploadFileFromBrowser = async (
       return await fileUrlResponse.json();
     }
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error occurred during file upload';
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Unknown error occurred during file upload';
     throw new Error(message);
   }
 };

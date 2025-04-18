@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getPresignedUploadUrl } from '@/storage';
 import { randomUUID } from 'crypto';
+import { getPresignedUploadUrl } from '@/storage';
 import { StorageError } from '@/storage/types';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,10 +47,7 @@ export async function POST(request: NextRequest) {
     console.error('Error generating pre-signed URL:', error);
 
     if (error instanceof StorageError) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json(
@@ -58,4 +55,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
@@ -17,7 +17,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: getUrlWithLocale("/ai/audio", locale),
+    canonicalUrl: getUrlWithLocale('/ai/audio', locale),
   });
 }
 
@@ -44,9 +44,7 @@ export default async function AIAudioPage() {
               </Avatar>
 
               <div>
-                <h1 className="text-4xl text-foreground">
-                {t('content')}
-                </h1>
+                <h1 className="text-4xl text-foreground">{t('content')}</h1>
               </div>
             </div>
           </div>

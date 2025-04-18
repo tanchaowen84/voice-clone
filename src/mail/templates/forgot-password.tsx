@@ -11,16 +11,23 @@ interface ForgotPasswordProps extends BaseEmailProps {
   name: string;
 }
 
-export function ForgotPassword({ url, name, locale, messages, }: ForgotPasswordProps) {
-  const t = createTranslator({ locale, messages, namespace: 'Mail.forgotPassword' });
-  
+export function ForgotPassword({
+  url,
+  name,
+  locale,
+  messages,
+}: ForgotPasswordProps) {
+  const t = createTranslator({
+    locale,
+    messages,
+    namespace: 'Mail.forgotPassword',
+  });
+
   return (
     <EmailLayout locale={locale} messages={messages}>
       <Text>{t('title', { name })}</Text>
       <Text>{t('body')}</Text>
-      <EmailButton href={url}>
-        {t('resetPassword')}
-      </EmailButton>
+      <EmailButton href={url}>{t('resetPassword')}</EmailButton>
     </EmailLayout>
   );
 }

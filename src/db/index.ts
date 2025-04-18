@@ -6,7 +6,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
  *
  * Using the browser-compatible Neon HTTP driver for better compatibility with Next.js
  * This avoids the Node.js-specific modules that cause build issues
- * 
+ *
  * With the neon-http and neon-websockets drivers, you can access a Neon database from serverless environments over HTTP or WebSockets instead of TCP.
  * Querying over HTTP is faster for single, non-interactive transactions.
  */

@@ -20,7 +20,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   MenuIcon,
-  XIcon
+  XIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -76,9 +76,7 @@ export function NavbarMobile({
         {/* navbar left shows logo */}
         <LocaleLink href={Routes.Root} className="flex items-center gap-2">
           <Logo />
-          <span className="text-xl font-semibold">
-            {t('Metadata.name')}
-          </span>
+          <span className="text-xl font-semibold">{t('Metadata.name')}</span>
         </LocaleLink>
 
         {/* navbar right shows menu icon and user button */}
@@ -86,9 +84,9 @@ export function NavbarMobile({
           {/* show user button if user is logged in */}
           {isPending ? (
             <Skeleton className="size-8 border rounded-full" />
-          ) : (
-            currentUser ? <UserButtonMobile user={currentUser} /> : null
-          )}
+          ) : currentUser ? (
+            <UserButtonMobile user={currentUser} />
+          ) : null}
 
           <Button
             variant="ghost"
@@ -184,9 +182,9 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
               const isActive = item.href
                 ? localePathname.startsWith(item.href)
                 : item.items?.some(
-                  (subItem) =>
-                    subItem.href && localePathname.startsWith(subItem.href)
-                );
+                    (subItem) =>
+                      subItem.href && localePathname.startsWith(subItem.href)
+                  );
 
               return (
                 <li key={item.title} className="py-1">
@@ -210,7 +208,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                             'hover:bg-transparent hover:text-foreground',
                             'focus:bg-transparent focus:text-foreground',
                             isActive &&
-                            'font-semibold bg-transparent text-foreground'
+                              'font-semibold bg-transparent text-foreground'
                           )}
                         >
                           <span className="text-base">{item.title}</span>
@@ -247,7 +245,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                     'hover:bg-transparent hover:text-foreground',
                                     'focus:bg-transparent focus:text-foreground',
                                     isSubItemActive &&
-                                    'font-semibold bg-transparent text-foreground'
+                                      'font-semibold bg-transparent text-foreground'
                                   )}
                                   onClick={onLinkClicked}
                                 >
@@ -258,7 +256,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                       'group-hover:bg-transparent group-hover:text-foreground',
                                       'group-focus:bg-transparent group-focus:text-foreground',
                                       isSubItemActive &&
-                                      'bg-transparent text-foreground'
+                                        'bg-transparent text-foreground'
                                     )}
                                   >
                                     {subItem.icon ? subItem.icon : null}
@@ -270,7 +268,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                         'group-hover:bg-transparent group-hover:text-foreground',
                                         'group-focus:bg-transparent group-focus:text-foreground',
                                         isSubItemActive &&
-                                        'font-semibold bg-transparent text-foreground'
+                                          'font-semibold bg-transparent text-foreground'
                                       )}
                                     >
                                       {subItem.title}
@@ -297,7 +295,7 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                         'group-hover:bg-transparent group-hover:text-foreground',
                                         'group-focus:bg-transparent group-focus:text-foreground',
                                         isSubItemActive &&
-                                        'bg-transparent text-foreground'
+                                          'bg-transparent text-foreground'
                                       )}
                                     />
                                   )}
@@ -319,7 +317,8 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                         'bg-transparent text-muted-foreground',
                         'hover:bg-transparent hover:text-foreground',
                         'focus:bg-transparent focus:text-foreground',
-                        isActive && 'font-semibold bg-transparent text-foreground'
+                        isActive &&
+                          'font-semibold bg-transparent text-foreground'
                       )}
                       onClick={onLinkClicked}
                     >

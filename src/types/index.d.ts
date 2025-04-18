@@ -24,12 +24,12 @@ export interface MetadataConfig {
 }
 
 export interface ModeConfig {
-  defaultMode?: "light" | "dark" | "system";                  // The default mode of the website
+  defaultMode?: 'light' | 'dark' | 'system';                  // The default mode of the website
   enableSwitch?: boolean;                                     // Whether to enable the mode switch
 }
 
 export interface ThemeConfig {
-  defaultTheme?: "default" | "blue" | "green" | "amber" | "neutral"; // The default theme of the website
+  defaultTheme?: 'default' | 'blue' | 'green' | 'amber' | 'neutral'; // The default theme of the website
   enableSwitch?: boolean;                                     // Whether to enable the theme switch
 }
 

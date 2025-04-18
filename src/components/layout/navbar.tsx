@@ -124,7 +124,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                           'hover:bg-accent hover:text-accent-foreground',
                                           'focus:bg-accent focus:text-accent-foreground',
                                           isSubItemActive &&
-                                          'bg-accent text-accent-foreground'
+                                            'bg-accent text-accent-foreground'
                                         )}
                                       >
                                         <div
@@ -134,7 +134,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                             'group-hover:bg-transparent group-hover:text-foreground',
                                             'group-focus:bg-transparent group-focus:text-foreground',
                                             isSubItemActive &&
-                                            'bg-transparent text-foreground'
+                                              'bg-transparent text-foreground'
                                           )}
                                         >
                                           {subItem.icon ? subItem.icon : null}
@@ -146,7 +146,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                               'group-hover:bg-transparent group-hover:text-foreground',
                                               'group-focus:bg-transparent group-focus:text-foreground',
                                               isSubItemActive &&
-                                              'bg-transparent text-foreground'
+                                                'bg-transparent text-foreground'
                                             )}
                                           >
                                             {subItem.title}
@@ -158,7 +158,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                                 'group-hover:bg-transparent group-hover:text-foreground/80',
                                                 'group-focus:bg-transparent group-focus:text-foreground/80',
                                                 isSubItemActive &&
-                                                'bg-transparent text-foreground/80'
+                                                  'bg-transparent text-foreground/80'
                                               )}
                                             >
                                               {subItem.description}
@@ -172,7 +172,7 @@ export function Navbar({ scroll }: NavBarProps) {
                                               'group-hover:bg-transparent group-hover:text-foreground',
                                               'group-focus:bg-transparent group-focus:text-foreground',
                                               isSubItemActive &&
-                                              'bg-transparent text-foreground'
+                                                'bg-transparent text-foreground'
                                             )}
                                           />
                                         )}
@@ -216,24 +216,26 @@ export function Navbar({ scroll }: NavBarProps) {
           <div className="flex items-center gap-x-4">
             {isPending ? (
               <Skeleton className="size-8 border rounded-full" />
+            ) : currentUser ? (
+              <UserButton user={currentUser} />
             ) : (
-              currentUser ? (
-                <UserButton user={currentUser} />
-              ) : (
-                <div className="flex items-center gap-x-4">
-                  <LoginWrapper mode="modal" asChild>
-                    <Button variant="outline" size="sm" className="cursor-pointer">
-                      {t('Common.login')}
-                    </Button>
-                  </LoginWrapper>
-
-                  <Button asChild size="sm" variant="default">
-                    <LocaleLink href={Routes.Register}>
-                      {t('Common.signUp')}
-                    </LocaleLink>
+              <div className="flex items-center gap-x-4">
+                <LoginWrapper mode="modal" asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="cursor-pointer"
+                  >
+                    {t('Common.login')}
                   </Button>
-                </div>
-              )
+                </LoginWrapper>
+
+                <Button asChild size="sm" variant="default">
+                  <LocaleLink href={Routes.Register}>
+                    {t('Common.signUp')}
+                  </LocaleLink>
+                </Button>
+              </div>
             )}
 
             <ModeSwitcher />

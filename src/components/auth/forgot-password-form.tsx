@@ -118,9 +118,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
             type="submit"
             className="w-full cursor-pointer"
           >
-            {isPending && (
-              <Loader2Icon className="mr-2 size-4 animate-spin" />
-            )}
+            {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
             <span>{t('send')}</span>
           </Button>
         </form>

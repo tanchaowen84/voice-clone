@@ -2,12 +2,18 @@
 
 import { ResetPasswordCard } from '@/components/settings/security/reset-password-card';
 import { UpdatePasswordCard } from '@/components/settings/security/update-password-card';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
 
 /**
  * PasswordCardWrapper renders either:
@@ -74,14 +80,14 @@ export function PasswordCardWrapper() {
 function PasswordSkeletonCard() {
   const t = useTranslations('Dashboard.settings.security.updatePassword');
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col")}>
+    <Card
+      className={cn(
+        'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-6 flex flex-col'
+      )}
+    >
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">
-          {t('title')}
-        </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col space-y-3 flex-1">
         <Skeleton className="h-5 w-1/2" />

@@ -7,9 +7,9 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
-import type { MDXComponents } from 'mdx/types';
-import { ComponentProps, FC } from 'react';
 import * as LucideIcons from 'lucide-react';
+import type { MDXComponents } from 'mdx/types';
+import type { ComponentProps, FC } from 'react';
 
 interface CustomMDXContentProps {
   code: string;
@@ -51,17 +51,17 @@ export async function CustomMDXContent({
         if (!props.src) {
           return null;
         }
-        
+
         return (
-          <ImageZoom 
-            src={props.src} 
-            alt={props.alt || "image"}
+          <ImageZoom
+            src={props.src}
+            alt={props.alt || 'image'}
             width={1400}
             height={787}
-            style={{ 
+            style={{
               width: '100%',
               height: 'auto',
-              objectFit: 'contain' 
+              objectFit: 'contain',
             }}
             priority
           />
@@ -71,9 +71,6 @@ export async function CustomMDXContent({
   }
 
   return (
-    <MDXContent
-      code={code}
-      components={baseComponents as MDXComponents}
-    />
+    <MDXContent code={code} components={baseComponents as MDXComponents} />
   );
-} 
+}

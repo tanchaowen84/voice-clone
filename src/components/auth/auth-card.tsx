@@ -35,9 +35,7 @@ export const AuthCard = ({
         </LocaleLink>
         <CardDescription>{headerLabel}</CardDescription>
       </CardHeader>
-      <CardContent>
-        {children}
-      </CardContent>
+      <CardContent>{children}</CardContent>
       <CardFooter>
         <BottomLink label={bottomButtonLabel} href={bottomButtonHref} />
       </CardFooter>

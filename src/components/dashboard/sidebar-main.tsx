@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   SidebarGroup,
@@ -7,14 +7,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { LocaleLink, useLocalePathname } from "@/i18n/navigation";
-import { NestedMenuItem } from "@/types";
+} from '@/components/ui/sidebar';
+import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import type { NestedMenuItem } from '@/types';
 
 /**
  * Main navigation for the dashboard sidebar
  */
-export function SidebarMain({ items, }: { items: NestedMenuItem[] }) {
+export function SidebarMain({ items }: { items: NestedMenuItem[] }) {
   const pathname = useLocalePathname();
 
   // Function to check if a path is active
@@ -34,7 +34,10 @@ export function SidebarMain({ items, }: { items: NestedMenuItem[] }) {
               <SidebarMenu>
                 {item.items.map((subItem) => (
                   <SidebarMenuItem key={subItem.title}>
-                    <SidebarMenuButton asChild isActive={isActive(subItem.href)}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive(subItem.href)}
+                    >
                       <LocaleLink href={subItem.href || ''}>
                         {subItem.icon ? subItem.icon : null}
                         <span className="truncate font-medium text-sm">
@@ -68,5 +71,5 @@ export function SidebarMain({ items, }: { items: NestedMenuItem[] }) {
         )
       )}
     </>
-  )
+  );
 }

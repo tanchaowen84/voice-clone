@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { uploadFile } from '@/storage';
 import { StorageError } from '@/storage/types';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,10 +9,7 @@ export async function POST(request: NextRequest) {
     const folder = formData.get('folder') as string | null;
 
     if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
     // Validate file size (max 10MB)
@@ -49,10 +46,7 @@ export async function POST(request: NextRequest) {
     console.error('Error uploading file:', error);
 
     if (error instanceof StorageError) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json(
@@ -69,4 +63,4 @@ export const config = {
       sizeLimit: '10mb',
     },
   },
-}; 
+};

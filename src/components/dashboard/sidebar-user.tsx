@@ -24,16 +24,16 @@ import { LOCALES, routing } from '@/i18n/routing';
 import { authClient } from '@/lib/auth-client';
 import { useLocaleStore } from '@/stores/locale-store';
 import { usePaymentStore } from '@/stores/payment-store';
-import { User } from 'better-auth';
+import type { User } from 'better-auth';
 import {
   ChevronsUpDown,
   Languages,
   LaptopIcon,
   LogOut,
   MoonIcon,
-  SunIcon
+  SunIcon,
 } from 'lucide-react';
-import { Locale, useTranslations } from 'next-intl';
+import { type Locale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useTransition } from 'react';
@@ -71,7 +71,7 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
         { locale: nextLocale }
       );
     });
-  }
+  };
 
   const showModeSwitch = websiteConfig.metadata.mode?.enableSwitch ?? false;
   const showLocaleSwitch = LOCALES.length > 1;
@@ -110,12 +110,8 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
               />
 
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
-                  {user.name}
-                </span>
-                <span className="truncate text-xs">
-                  {user.email}
-                </span>
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -140,77 +136,70 @@ export function SidebarUser({ user, className }: SidebarUserProps) {
               </div>
             </DropdownMenuLabel>
 
-            {
-              (showModeSwitch || showLocaleSwitch) && (
-                <DropdownMenuSeparator />
-              )
-            }
+            {(showModeSwitch || showLocaleSwitch) && <DropdownMenuSeparator />}
 
-            {
-              showModeSwitch && (
-                <DropdownMenuGroup>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="cursor-pointer">
-                  <LaptopIcon className="mr-2 size-4" />
-                  <span>{t('Common.mode.label')}</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    onClick={() => setTheme('light')}
-                  >
-                    <SunIcon className="mr-2 size-4" />
-                    <span>{t('Common.mode.light')}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    onClick={() => setTheme('dark')}
-                  >
-                    <MoonIcon className="mr-2 size-4" />
-                    <span>{t('Common.mode.dark')}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    onClick={() => setTheme('system')}
-                  >
+            {showModeSwitch && (
+              <DropdownMenuGroup>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="cursor-pointer">
                     <LaptopIcon className="mr-2 size-4" />
-                    <span>{t('Common.mode.system')}</span>
-                  </DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
-                </DropdownMenuGroup>
-              )
-            }
+                    <span>{t('Common.mode.label')}</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => setTheme('light')}
+                    >
+                      <SunIcon className="mr-2 size-4" />
+                      <span>{t('Common.mode.light')}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => setTheme('dark')}
+                    >
+                      <MoonIcon className="mr-2 size-4" />
+                      <span>{t('Common.mode.dark')}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => setTheme('system')}
+                    >
+                      <LaptopIcon className="mr-2 size-4" />
+                      <span>{t('Common.mode.system')}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuGroup>
+            )}
 
-            {
-              showLocaleSwitch && (
-                <DropdownMenuGroup>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="cursor-pointer">
-                      <Languages className="mr-2 size-4" />
-                      <span>{t('Common.language')}</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuSubContent>
-                      {routing.locales.map((localeOption) => (
-                        <DropdownMenuItem
-                          key={localeOption}
-                          onClick={() => setLocale(localeOption)}
-                          className="cursor-pointer"
-                        >
-                          {websiteConfig.i18n.locales[localeOption].flag && (
-                            <span className="mr-2 text-md">
-                              {websiteConfig.i18n.locales[localeOption].flag}
-                            </span>
-                          )}
-                          <span className="text-sm">
-                            {websiteConfig.i18n.locales[localeOption].name}
+            {showLocaleSwitch && (
+              <DropdownMenuGroup>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="cursor-pointer">
+                    <Languages className="mr-2 size-4" />
+                    <span>{t('Common.language')}</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    {routing.locales.map((localeOption) => (
+                      <DropdownMenuItem
+                        key={localeOption}
+                        onClick={() => setLocale(localeOption)}
+                        className="cursor-pointer"
+                      >
+                        {websiteConfig.i18n.locales[localeOption].flag && (
+                          <span className="mr-2 text-md">
+                            {websiteConfig.i18n.locales[localeOption].flag}
                           </span>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
-                </DropdownMenuGroup>
-              )}
+                        )}
+                        <span className="text-sm">
+                          {websiteConfig.i18n.locales[localeOption].name}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuGroup>
+            )}
 
             <DropdownMenuSeparator />
 

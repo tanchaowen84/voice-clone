@@ -1,8 +1,8 @@
 import { getActiveSubscriptionAction } from '@/actions/get-active-subscription';
 import { getLifetimeStatusAction } from '@/actions/get-lifetime-status';
-import { Session } from '@/lib/auth';
+import type { Session } from '@/lib/auth';
 import { getAllPricePlans } from '@/lib/price-plan';
-import { PricePlan, Subscription } from '@/payment/types';
+import type { PricePlan, Subscription } from '@/payment/types';
 import { create } from 'zustand';
 
 /**
@@ -13,7 +13,7 @@ export interface PaymentState {
   currentPlan: PricePlan | null;
   // Active subscription
   subscription: Subscription | null;
-  // Loading state 
+  // Loading state
   isLoading: boolean;
   // Error state
   error: string | null;
@@ -47,7 +47,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       set({
         currentPlan: null,
         subscription: null,
-        error: null
+        error: null,
       });
       return;
     }
@@ -56,9 +56,9 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
     set({ isLoading: true, error: null });
 
     // Get all price plans
-    let plans: PricePlan[] = getAllPricePlans();
-    const freePlan = plans.find(plan => plan.isFree);
-    const lifetimePlan = plans.find(plan => plan.isLifetime);
+    const plans: PricePlan[] = getAllPricePlans();
+    const freePlan = plans.find((plan) => plan.isFree);
+    const lifetimePlan = plans.find((plan) => plan.isLifetime);
 
     // Check if user is a lifetime member directly from the database
     let isLifetimeMember = false;
@@ -89,7 +89,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
         currentPlan: lifetimePlan || null,
         subscription: null,
         isLoading: false,
-        error: null
+        error: null,
       });
       return;
     }
@@ -102,36 +102,52 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
 
         // Set subscription state
         if (activeSubscription) {
-          const plan = plans.find(p => p.prices.find(price =>
-            price.priceId === activeSubscription.priceId)) || null;
-          console.log('subscription found, setting plan for user', user.id, plan?.id);
+          const plan =
+            plans.find((p) =>
+              p.prices.find(
+                (price) => price.priceId === activeSubscription.priceId
+              )
+            ) || null;
+          console.log(
+            'subscription found, setting plan for user',
+            user.id,
+            plan?.id
+          );
           set({
             currentPlan: plan,
             subscription: activeSubscription,
             isLoading: false,
-            error: null
+            error: null,
           });
-        } else { // No subscription found - set to free plan
-          console.log('no subscription found, setting free plan for user', user.id);
+        } else {
+          // No subscription found - set to free plan
+          console.log(
+            'no subscription found, setting free plan for user',
+            user.id
+          );
           set({
             currentPlan: freePlan || null,
             subscription: null,
             isLoading: false,
-            error: null
+            error: null,
           });
         }
-      } else { // Failed to fetch subscription
-        console.error('fetch subscription for user failed', result?.data?.error);
+      } else {
+        // Failed to fetch subscription
+        console.error(
+          'fetch subscription for user failed',
+          result?.data?.error
+        );
         set({
           error: result?.data?.error || 'Failed to fetch payment data',
-          isLoading: false
+          isLoading: false,
         });
       }
     } catch (error) {
       console.error('fetch payment data error:', error);
       set({
         error: 'Failed to fetch payment data',
-        isLoading: false
+        isLoading: false,
       });
     } finally {
       set({ isLoading: false });
@@ -146,7 +162,7 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
       currentPlan: null,
       subscription: null,
       isLoading: false,
-      error: null
+      error: null,
     });
-  }
-})); 
+  },
+}));

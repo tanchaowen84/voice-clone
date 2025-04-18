@@ -8,14 +8,14 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
@@ -72,7 +72,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Don't update if the name hasn't changed
     if (values.name === session?.user?.name) {
-      console.log("No changes to save");
+      console.log('No changes to save');
       return;
     }
 
@@ -103,21 +103,28 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(t('name.fail'));
         },
-      });
+      }
+    );
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col", className)}>
+    <Card
+      className={cn(
+        'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col',
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           {t('name.title')}
         </CardTitle>
-        <CardDescription>
-          {t('name.description')}
-        </CardDescription>
+        <CardDescription>{t('name.description')}</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col flex-1"
+        >
           <CardContent className="space-y-4 flex-1">
             <FormField
               control={form.control}
@@ -125,10 +132,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      placeholder={t('name.placeholder')}
-                      {...field}
-                    />
+                    <Input placeholder={t('name.placeholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,11 +141,13 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <p className="text-sm text-muted-foreground">
-              {t('name.hint')}
-            </p>
+            <p className="text-sm text-muted-foreground">{t('name.hint')}</p>
 
-            <Button type="submit" disabled={isSaving} className="cursor-pointer">
+            <Button
+              type="submit"
+              disabled={isSaving}
+              className="cursor-pointer"
+            >
               {isSaving ? t('name.saving') : t('name.save')}
             </Button>
           </CardFooter>
@@ -149,4 +155,4 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
       </Form>
     </Card>
   );
-} 
+}

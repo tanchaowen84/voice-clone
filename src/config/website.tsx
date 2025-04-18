@@ -1,5 +1,5 @@
 import { PaymentTypes, PlanIntervals } from '@/payment/types';
-import { WebsiteConfig } from '@/types';
+import type { WebsiteConfig } from '@/types';
 
 /**
  * website config, without translations
@@ -7,11 +7,11 @@ import { WebsiteConfig } from '@/types';
 export const websiteConfig: WebsiteConfig = {
   metadata: {
     theme: {
-      defaultTheme: "default",
+      defaultTheme: 'default',
       enableSwitch: true,
     },
     mode: {
-      defaultMode: "system",
+      defaultMode: 'system',
       enableSwitch: true,
     },
     images: {
@@ -29,11 +29,11 @@ export const websiteConfig: WebsiteConfig = {
   i18n: {
     defaultLocale: 'en',
     locales: {
-      "en": {
+      en: {
         flag: '🇺🇸',
         name: 'English',
       },
-      "zh": {
+      zh: {
         flag: '🇨🇳',
         name: '中文',
       },
@@ -59,26 +59,26 @@ export const websiteConfig: WebsiteConfig = {
     provider: 'stripe',
     plans: {
       free: {
-        id: "free",
+        id: 'free',
         prices: [],
         isFree: true,
         isLifetime: false,
       },
       pro: {
-        id: "pro",
+        id: 'pro',
         prices: [
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
             amount: 990,
-            currency: "USD",
+            currency: 'USD',
             interval: PlanIntervals.MONTH,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
             amount: 9900,
-            currency: "USD",
+            currency: 'USD',
             interval: PlanIntervals.YEAR,
           },
         ],
@@ -87,18 +87,18 @@ export const websiteConfig: WebsiteConfig = {
         recommended: true,
       },
       lifetime: {
-        id: "lifetime",
+        id: 'lifetime',
         prices: [
           {
             type: PaymentTypes.ONE_TIME,
             priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
             amount: 19900,
-            currency: "USD",
+            currency: 'USD',
           },
         ],
         isFree: false,
         isLifetime: true,
-      }
-    }
-  }
+      },
+    },
+  },
 };

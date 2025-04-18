@@ -1,6 +1,6 @@
 import { categories } from '@/components/nsui/blocks';
 import BlocksNav from '@/components/nsui/blocks-nav';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * The locale inconsistency issue has been fixed in the BlocksNav component
@@ -10,9 +10,7 @@ export default function BlockCategoryLayout({ children }: PropsWithChildren) {
     <>
       <BlocksNav categories={categories} />
 
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
     </>
   );
 }

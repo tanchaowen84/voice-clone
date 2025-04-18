@@ -9,7 +9,7 @@ interface UserAvatarProps extends AvatarProps {
 
 /**
  * User avatar component, used in navbar and sidebar
- * 
+ *
  * @param name - The name of the user
  * @param image - The image of the user
  * @param props - The props of the avatar
@@ -18,11 +18,7 @@ interface UserAvatarProps extends AvatarProps {
 export function UserAvatar({ name, image, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>
-      <AvatarImage
-        alt={name}
-        title={name}
-        src={image ?? undefined}
-      />
+      <AvatarImage alt={name} title={name} src={image ?? undefined} />
       <AvatarFallback>
         <span className="sr-only">{name}</span>
         <User2Icon className="size-4" />

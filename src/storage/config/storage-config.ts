@@ -1,8 +1,8 @@
-import { StorageConfig } from '../types';
+import type { StorageConfig } from '../types';
 
 /**
  * Default storage configuration
- * 
+ *
  * This configuration is loaded from environment variables
  */
 export const storageConfig: StorageConfig = {

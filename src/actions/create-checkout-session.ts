@@ -1,14 +1,14 @@
 'use server';
 
-import { getSession } from "@/lib/server";
-import { findPlanByPlanId } from "@/lib/price-plan";
-import { getUrlWithLocale } from "@/lib/urls/urls";
-import { createCheckout } from "@/payment";
-import { CreateCheckoutParams } from "@/payment/types";
-import { getLocale } from "next-intl/server";
+import { findPlanByPlanId } from '@/lib/price-plan';
+import { getSession } from '@/lib/server';
+import { getUrlWithLocale } from '@/lib/urls/urls';
+import { createCheckout } from '@/payment';
+import type { CreateCheckoutParams } from '@/payment/types';
+import { Routes } from '@/routes';
+import { getLocale } from 'next-intl/server';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
-import { Routes } from "@/routes";
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -33,7 +33,9 @@ export const createCheckoutAction = actionClient
     // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
-      console.warn(`unauthorized request to create checkout session for user ${userId}`);
+      console.warn(
+        `unauthorized request to create checkout session for user ${userId}`
+      );
       return {
         success: false,
         error: 'Unauthorized',
@@ -42,7 +44,9 @@ export const createCheckoutAction = actionClient
 
     // Only allow users to create their own checkout session
     if (session.user.id !== userId) {
-      console.warn(`current user ${session.user.id} is not authorized to create checkout session for user ${userId}`);
+      console.warn(
+        `current user ${session.user.id} is not authorized to create checkout session for user ${userId}`
+      );
       return {
         success: false,
         error: 'Not authorized to do this action',
@@ -70,7 +74,10 @@ export const createCheckoutAction = actionClient
       };
 
       // Create the checkout session with localized URLs
-      const successUrl = getUrlWithLocale('/settings/billing?session_id={CHECKOUT_SESSION_ID}', locale);
+      const successUrl = getUrlWithLocale(
+        '/settings/billing?session_id={CHECKOUT_SESSION_ID}',
+        locale
+      );
       const cancelUrl = getUrlWithLocale(Routes.Pricing, locale);
       const params: CreateCheckoutParams = {
         planId,
@@ -89,7 +96,7 @@ export const createCheckoutAction = actionClient
         data: result,
       };
     } catch (error) {
-      console.error("create checkout session error:", error);
+      console.error('create checkout session error:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Something went wrong',

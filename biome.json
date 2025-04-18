@@ -66,6 +66,8 @@
       "src/components/magicui/*.tsx",
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
+      "src/payment/types.ts",
+      "src/types/index.d.ts",
       "public/sw.js"
     ]
   },

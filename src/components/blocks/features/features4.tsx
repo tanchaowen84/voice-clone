@@ -1,10 +1,15 @@
-import { ActivityIcon, DraftingCompassIcon, MailIcon, ZapIcon } from 'lucide-react';
+import {
+  ActivityIcon,
+  DraftingCompassIcon,
+  MailIcon,
+  ZapIcon,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 /**
  * Features4Section is Features3Section with a different layout
- * 
+ *
  * https://nsui.irung.me/features
  * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-5.json
  */
@@ -36,12 +41,8 @@ export default function Features4Section() {
 
           <div className="lg:col-span-2">
             <div className="md:pr-6 lg:pr-0">
-              <h2 className="text-4xl font-semibold">
-                {t('title')}
-              </h2>
-              <p className="mt-6">
-                {t('description')}
-              </p>
+              <h2 className="text-4xl font-semibold">{t('title')}</h2>
+              <p className="mt-6">{t('description')}</p>
             </div>
 
             <ul className="mt-8 divide-y border-y *:flex *:items-center *:gap-3 *:py-3">

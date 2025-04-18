@@ -1,10 +1,10 @@
 import { ContactFormCard } from '@/components/contact/contact-form-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
- 
+
 export async function generateMetadata({
   params,
 }: {
@@ -17,7 +17,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: getUrlWithLocale("/contact", locale),
+    canonicalUrl: getUrlWithLocale('/contact', locale),
   });
 }
 

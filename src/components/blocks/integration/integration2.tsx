@@ -59,9 +59,7 @@ export default function Integration2Section() {
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
                 {t('title')}
               </h2>
-              <p className="text-muted-foreground">
-                {t('description')}
-              </p>
+              <p className="text-muted-foreground">{t('description')}</p>
 
               <div className="mt-12 flex flex-wrap justify-start gap-4">
                 <Button asChild size="lg">

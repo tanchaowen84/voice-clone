@@ -24,7 +24,7 @@ export const unsubscribeNewsletterAction = actionClient
         error: 'Unauthorized',
       };
     }
-    
+
     try {
       const unsubscribed = await unsubscribe(email);
 

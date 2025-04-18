@@ -4,7 +4,7 @@ import { getPage } from '@/lib/page/get-page';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { NextPageProps } from '@/types/next-page-props';
 import type { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -13,7 +13,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const {locale} = await params;
+  const { locale } = await params;
   const page = await getPage('cookie-policy', locale);
 
   if (!page) {
@@ -23,12 +23,12 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return constructMetadata({
     title: page.title + ' | ' + t('title'),
     description: page.description,
-    canonicalUrl: getUrlWithLocale("/cookie", locale),
+    canonicalUrl: getUrlWithLocale('/cookie', locale),
   });
 }
 

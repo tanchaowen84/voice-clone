@@ -5,9 +5,7 @@ interface ProfileLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function ProfileLayout({
-  children,
-}: ProfileLayoutProps) {
+export default async function ProfileLayout({ children }: ProfileLayoutProps) {
   const t = await getTranslations('Dashboard.settings');
 
   const breadcrumbs = [

@@ -1,8 +1,8 @@
 import { ErrorCard } from '@/components/auth/error-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
@@ -10,10 +10,10 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata | undefined> {
-  const {locale} = await params;
-  const t = await getTranslations({locale, namespace: 'Metadata'});
-  const pt = await getTranslations({locale, namespace: 'AuthPage.error'});
-  
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const pt = await getTranslations({ locale, namespace: 'AuthPage.error' });
+
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: t('description'),

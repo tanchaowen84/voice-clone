@@ -1,5 +1,6 @@
 'use client';
 
+import { BorderBeam } from '@/components/magicui/border-beam';
 import {
   Accordion,
   AccordionContent,
@@ -12,11 +13,10 @@ import {
   Fingerprint,
   IdCard,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { BorderBeam } from '@/components/magicui/border-beam';
-import { useTranslations } from 'next-intl';
 
 /**
  * https://nsui.irung.me/features
@@ -54,13 +54,10 @@ export default function Features2Section() {
           <h2 className="text-balance text-4xl lg:text-5xl font-semibold">
             {t('title')}
           </h2>
-          <p>
-            {t('description')}
-          </p>
+          <p>{t('description')}</p>
         </div>
 
         <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 md:gap-12 lg:gap-24 lg:px-0">
-
           <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
             <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
               <AnimatePresence mode="wait">

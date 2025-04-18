@@ -1,5 +1,5 @@
 import Container from '@/components/layout/container';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 export default function PageLayout({ children }: PropsWithChildren) {
   return (

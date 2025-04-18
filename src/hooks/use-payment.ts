@@ -1,22 +1,17 @@
-import { useEffect } from 'react';
-import { usePaymentStore } from '@/stores/payment-store';
 import { authClient } from '@/lib/auth-client';
+import { usePaymentStore } from '@/stores/payment-store';
+import { useEffect } from 'react';
 
 /**
  * Hook for accessing and managing payment state
- * 
+ *
  * This hook provides access to the payment state and methods to manage it.
  * It also automatically fetches payment information when the user changes.
  */
 export function usePayment() {
-  const { 
-    currentPlan,
-    subscription, 
-    isLoading, 
-    error,
-    fetchPayment 
-  } = usePaymentStore();
-  
+  const { currentPlan, subscription, isLoading, error, fetchPayment } =
+    usePaymentStore();
+
   const { data: session } = authClient.useSession();
 
   useEffect(() => {
@@ -39,6 +34,6 @@ export function usePayment() {
         console.log('refetching payment info for user', currentUser.id);
         fetchPayment(currentUser);
       }
-    }
+    },
   };
-} 
+}

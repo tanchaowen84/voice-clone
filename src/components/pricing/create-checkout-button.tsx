@@ -12,7 +12,14 @@ interface CheckoutButtonProps {
   planId: string;
   priceId: string;
   metadata?: Record<string, string>;
-  variant?: 'default' | 'outline' | 'destructive' | 'secondary' | 'ghost' | 'link' | null;
+  variant?:
+    | 'default'
+    | 'outline'
+    | 'destructive'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+    | null;
   size?: 'default' | 'sm' | 'lg' | 'icon' | null;
   className?: string;
   children?: React.ReactNode;
@@ -20,10 +27,10 @@ interface CheckoutButtonProps {
 
 /**
  * Checkout Button
- * 
+ *
  * This client component creates a Stripe checkout session and redirects to it
  * It's used to initiate the checkout process for a specific plan and price.
- * 
+ *
  * NOTICE: Login is required when using this button.
  */
 export function CheckoutButton({
@@ -84,4 +91,4 @@ export function CheckoutButton({
       )}
     </Button>
   );
-} 
+}

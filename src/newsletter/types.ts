@@ -10,11 +10,17 @@ export interface CheckSubscribeStatusParams {
   email: string;
 }
 
-export type SubscribeNewsletterHandler = (params: SubscribeNewsletterParams) => Promise<boolean>;
+export type SubscribeNewsletterHandler = (
+  params: SubscribeNewsletterParams
+) => Promise<boolean>;
 
-export type UnsubscribeNewsletterHandler = (params: UnsubscribeNewsletterParams) => Promise<boolean>;
+export type UnsubscribeNewsletterHandler = (
+  params: UnsubscribeNewsletterParams
+) => Promise<boolean>;
 
-export type CheckSubscribeStatusHandler = (params: CheckSubscribeStatusParams) => Promise<boolean>;
+export type CheckSubscribeStatusHandler = (
+  params: CheckSubscribeStatusParams
+) => Promise<boolean>;
 
 /**
  * Newsletter provider, currently only Resend is supported

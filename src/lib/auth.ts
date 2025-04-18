@@ -1,16 +1,16 @@
+import { websiteConfig } from '@/config/website';
 import db from '@/db/index';
 import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
+import { subscribe } from '@/newsletter';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
-import { subscribe } from '@/newsletter';
 import { parse as parseCookies } from 'cookie';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
-import { websiteConfig } from '@/config/website';
 
 /**
  * https://www.better-auth.com/docs/reference/options
@@ -121,7 +121,9 @@ export const auth = betterAuth({
             try {
               const subscribed = await subscribe(user.email);
               if (!subscribed) {
-                console.error(`Failed to subscribe user ${user.email} to newsletter`);
+                console.error(
+                  `Failed to subscribe user ${user.email} to newsletter`
+                );
               } else {
                 console.log(`User ${user.email} subscribed to newsletter`);
               }
@@ -149,7 +151,6 @@ export const auth = betterAuth({
 
 // https://www.better-auth.com/docs/concepts/typescript#additional-fields
 export type Session = typeof auth.$Infer.Session;
-
 
 /**
  * Gets the locale from a request by parsing the cookies

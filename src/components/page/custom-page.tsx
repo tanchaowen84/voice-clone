@@ -38,7 +38,10 @@ export function CustomPage({
       <Card className="mb-8">
         <CardContent>
           <div className="max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-            <CustomMDXContent code={content} includeFumadocsComponents={false} />
+            <CustomMDXContent
+              code={content}
+              includeFumadocsComponents={false}
+            />
           </div>
         </CardContent>
       </Card>

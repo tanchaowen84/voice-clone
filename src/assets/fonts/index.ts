@@ -1,4 +1,9 @@
-import { Bricolage_Grotesque, Noto_Sans, Noto_Sans_Mono, Noto_Serif } from 'next/font/google';
+import {
+  Bricolage_Grotesque,
+  Noto_Sans,
+  Noto_Sans_Mono,
+  Noto_Serif,
+} from 'next/font/google';
 
 /**
  * This file shows how to customize the font by using local font or google font

@@ -9,21 +9,23 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { getSidebarLinks } from '@/config/sidebar-config';
-import { authClient } from '@/lib/auth-client';
 import { LocaleLink } from '@/i18n/navigation';
+import { authClient } from '@/lib/auth-client';
 import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
-import * as React from 'react';
+import type * as React from 'react';
 import { Logo } from '../layout/logo';
 import { UpgradeCard } from './upgrade-card';
 
 /**
  * Dashboard sidebar
  */
-export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function DashboardSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
   const sidebarLinks = getSidebarLinks();
   const { data: session, isPending } = authClient.useSession();

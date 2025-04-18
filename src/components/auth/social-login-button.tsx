@@ -19,13 +19,18 @@ interface SocialLoginButtonProps {
 /**
  * social login buttons
  */
-export const SocialLoginButton = ({ callbackUrl: propCallbackUrl }: SocialLoginButtonProps) => {
+export const SocialLoginButton = ({
+  callbackUrl: propCallbackUrl,
+}: SocialLoginButtonProps) => {
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
-  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(DEFAULT_LOGIN_REDIRECT, locale);
+  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(
+    DEFAULT_LOGIN_REDIRECT,
+    locale
+  );
   const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   const [isLoading, setIsLoading] = useState<'google' | 'github' | null>(null);
   console.log('social login button, callbackUrl', callbackUrl);

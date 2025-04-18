@@ -7,7 +7,7 @@ export enum Routes {
   // marketing pages
   FAQ = '/#faq',
   Features = '/#features',
-  Pricing = '/pricing',    // change to /#pricing if you want to use the pricing section in homepage
+  Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
   Blog = '/blog',
   Docs = '/docs',
   About = '/about',
@@ -63,10 +63,7 @@ export enum Routes {
 /**
  * The routes that can not be accessed by logged in users
  */
-export const routesNotAllowedByLoggedInUsers = [
-  Routes.Login,
-  Routes.Register,
-];
+export const routesNotAllowedByLoggedInUsers = [Routes.Login, Routes.Register];
 
 /**
  * The routes that are protected and require authentication

@@ -7,7 +7,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
+  AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,7 +16,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
@@ -27,7 +27,7 @@ import { toast } from 'sonner';
 
 /**
  * Delete user account
- * 
+ *
  * This component allows users to permanently delete their account.
  * It includes a confirmation dialog to prevent accidental deletions.
  */
@@ -65,8 +65,8 @@ export function DeleteAccountCard() {
         },
         onError: (ctx) => {
           console.error('delete account error:', ctx.error);
-          // { "message": "Session expired. Re-authenticate to perform this action.", 
-          // "code": "SESSION_EXPIRED_REAUTHENTICATE_TO_PERFORM_THIS_ACTION", 
+          // { "message": "Session expired. Re-authenticate to perform this action.",
+          // "code": "SESSION_EXPIRED_REAUTHENTICATE_TO_PERFORM_THIS_ACTION",
           // "status": 400, "statusText": "BAD_REQUEST" }
           // set freshAge to 0 to disable session refreshness check for user deletion
           setError(`${ctx.error.status}: ${ctx.error.message}`);
@@ -77,19 +77,19 @@ export function DeleteAccountCard() {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col")}>
+    <Card
+      className={cn(
+        'w-full max-w-lg md:max-w-xl border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col'
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-bold text-destructive">
           {t('title')}
         </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
-        <p className="text-sm text-muted-foreground">
-          {t('warning')}
-        </p>
+        <p className="text-sm text-muted-foreground">{t('warning')}</p>
 
         {error && (
           <div className="mt-4">
@@ -139,4 +139,4 @@ export function DeleteAccountCard() {
       </AlertDialog>
     </Card>
   );
-} 
+}

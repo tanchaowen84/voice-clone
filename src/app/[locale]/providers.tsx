@@ -6,13 +6,13 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { websiteConfig } from '@/config/website';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { ThemeProvider, useTheme } from 'next-themes';
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 /**
  * Providers
- * 
+ *
  * This component is used to wrap the app in the providers.
- * 
+ *
  * - ThemeProvider: Provides the theme to the app.
  * - ActiveThemeProvider: Provides the active theme to the app.
  * - RootProvider: Provides the root provider for Fumadocs UI.
@@ -21,8 +21,8 @@ import { PropsWithChildren } from 'react';
  */
 export function Providers({ children }: PropsWithChildren) {
   const theme = useTheme();
-  const defaultMode = websiteConfig.metadata.mode?.defaultMode ?? "system";
-  
+  const defaultMode = websiteConfig.metadata.mode?.defaultMode ?? 'system';
+
   return (
     <ThemeProvider
       attribute="class"
@@ -33,9 +33,7 @@ export function Providers({ children }: PropsWithChildren) {
       <ActiveThemeProvider>
         <RootProvider theme={theme}>
           <TooltipProvider>
-            <PaymentProvider>
-              {children}
-            </PaymentProvider>
+            <PaymentProvider>{children}</PaymentProvider>
           </TooltipProvider>
         </RootProvider>
       </ActiveThemeProvider>

@@ -119,9 +119,7 @@ export default function HeroSection() {
                       className="rounded-xl px-5 text-base"
                     >
                       <LocaleLink href={linkPrimary}>
-                        <span className="text-nowrap">
-                          {t('primary')}
-                        </span>
+                        <span className="text-nowrap">{t('primary')}</span>
                       </LocaleLink>
                     </Button>
                   </div>
@@ -133,9 +131,7 @@ export default function HeroSection() {
                     className="h-10.5 rounded-xl px-5"
                   >
                     <LocaleLink href={linkSecondary}>
-                      <span className="text-nowrap">
-                        {t('secondary')}
-                      </span>
+                      <span className="text-nowrap">{t('secondary')}</span>
                     </LocaleLink>
                   </Button>
                 </AnimatedGroup>
