@@ -32,14 +32,20 @@ export interface LoginFormProps {
   callbackUrl?: string;
 }
 
-export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginFormProps) => {
+export const LoginForm = ({
+  className,
+  callbackUrl: propCallbackUrl,
+}: LoginFormProps) => {
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const urlError = searchParams.get('error');
   const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
-  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(DEFAULT_LOGIN_REDIRECT, locale);
+  const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(
+    DEFAULT_LOGIN_REDIRECT,
+    locale
+  );
   const callbackUrl = propCallbackUrl || paramCallbackUrl || defaultCallbackUrl;
   console.log('login form, callbackUrl', callbackUrl);
 
@@ -158,7 +164,7 @@ export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginForm
                         {...field}
                         disabled={isPending}
                         placeholder="******"
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         className="pr-10"
                       />
                       <Button
@@ -193,9 +199,7 @@ export const LoginForm = ({ className, callbackUrl: propCallbackUrl }: LoginForm
             type="submit"
             className="w-full flex items-center justify-center gap-2 cursor-pointer"
           >
-            {isPending && (
-              <Loader2Icon className="mr-2 size-4 animate-spin" />
-            )}
+            {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
             <span>{t('signIn')}</span>
           </Button>
         </form>

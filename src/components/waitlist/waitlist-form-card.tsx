@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { subscribeNewsletterAction } from '@/actions/subscribe-newsletter';
 import { FormError } from '@/components/shared/form-error';
@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
@@ -17,12 +17,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useTransition, useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -38,9 +38,7 @@ export function WaitlistFormCard() {
 
   // Create a schema for waitlist form validation
   const formSchema = z.object({
-    email: z
-      .string()
-      .email({ message: t('emailValidation') }),
+    email: z.string().email({ message: t('emailValidation') }),
   });
 
   // Initialize the form
@@ -80,12 +78,8 @@ export function WaitlistFormCard() {
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">
-          {t('title')}
-        </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -97,11 +91,7 @@ export function WaitlistFormCard() {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder={t('email')}
-                      {...field}
-                    />
+                    <Input type="email" placeholder={t('email')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,7 +101,11 @@ export function WaitlistFormCard() {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <Button type="submit" disabled={isPending} className='cursor-pointer'>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="cursor-pointer"
+            >
               {isPending ? t('subscribing') : t('subscribe')}
             </Button>
           </CardFooter>
@@ -119,4 +113,4 @@ export function WaitlistFormCard() {
       </Form>
     </Card>
   );
-} 
+}

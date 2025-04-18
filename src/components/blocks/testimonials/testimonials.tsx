@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
       role: t('items.item-12.role'),
       image: t('items.item-12.image'),
       quote: t('items.item-12.quote'),
-    }
+    },
   ];
 
   const testimonialChunks = chunkArray(
@@ -111,9 +111,7 @@ export default function TestimonialsSection() {
             <h2 className="text-title text-4xl lg:text-5xl font-semibold">
               {t('title')}
             </h2>
-            <p className="text-body mt-6">
-              {t('description')}
-            </p>
+            <p className="text-body mt-6">{t('description')}</p>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
             {testimonialChunks.map((chunk, chunkIndex) => (
@@ -129,7 +127,7 @@ export default function TestimonialsSection() {
                           width="120"
                           height="120"
                         />
-                        <AvatarFallback></AvatarFallback>
+                        <AvatarFallback />
                       </Avatar>
 
                       <div>

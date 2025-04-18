@@ -5,7 +5,7 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/nsui/logos';
+} from '@/components/tailark/logos';
 import { Logo } from '@/components/layout/logo';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';

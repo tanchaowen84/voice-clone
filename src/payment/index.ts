@@ -1,6 +1,14 @@
-import { websiteConfig } from "@/config/website";
-import { StripeProvider } from "./provider/stripe";
-import { CheckoutResult, CreateCheckoutParams, CreatePortalParams, PaymentProvider, PortalResult, Subscription, getSubscriptionsParams } from "./types";
+import { websiteConfig } from '@/config/website';
+import { StripeProvider } from './provider/stripe';
+import type {
+  CheckoutResult,
+  CreateCheckoutParams,
+  CreatePortalParams,
+  PaymentProvider,
+  PortalResult,
+  Subscription,
+  getSubscriptionsParams,
+} from './types';
 
 /**
  * Global payment provider instance
@@ -28,7 +36,9 @@ export const initializePaymentProvider = (): PaymentProvider => {
     if (websiteConfig.payment.provider === 'stripe') {
       paymentProvider = new StripeProvider();
     } else {
-      throw new Error(`Unsupported payment provider: ${websiteConfig.payment.provider}`);
+      throw new Error(
+        `Unsupported payment provider: ${websiteConfig.payment.provider}`
+      );
     }
   }
   return paymentProvider;

@@ -1,13 +1,13 @@
 'use server';
 
-import db from "@/db";
-import { payment } from "@/db/schema";
-import { getSession } from "@/lib/server";
-import { getAllPricePlans, findPlanByPriceId } from "@/lib/price-plan";
-import { PaymentTypes } from "@/payment/types";
-import { and, eq } from "drizzle-orm";
+import db from '@/db';
+import { payment } from '@/db/schema';
+import { findPlanByPriceId, getAllPricePlans } from '@/lib/price-plan';
+import { getSession } from '@/lib/server';
+import { PaymentTypes } from '@/payment/types';
+import { and, eq } from 'drizzle-orm';
 import { createSafeActionClient } from 'next-safe-action';
-import { z } from "zod";
+import { z } from 'zod';
 
 // Create a safe action client
 const actionClient = createSafeActionClient();
@@ -19,8 +19,8 @@ const schema = z.object({
 
 /**
  * Get user lifetime membership status directly from the database
- * 
- * NOTICE: If you first add lifetime plan and then delete it, 
+ *
+ * NOTICE: If you first add lifetime plan and then delete it,
  * the user with lifetime plan should be considered as a lifetime member as well,
  * in order to do this, you have to update the logic to check the lifetime status,
  * for example, just check the planId is `lifetime` or not.
@@ -33,7 +33,9 @@ export const getLifetimeStatusAction = actionClient
     // Get the current user session for authorization
     const session = await getSession();
     if (!session) {
-      console.warn(`unauthorized request to get lifetime status for user ${userId}`);
+      console.warn(
+        `unauthorized request to get lifetime status for user ${userId}`
+      );
       return {
         success: false,
         error: 'Unauthorized',
@@ -42,7 +44,9 @@ export const getLifetimeStatusAction = actionClient
 
     // Only allow users to check their own status unless they're admins
     if (session.user.id !== userId && session.user.role !== 'admin') {
-      console.warn(`current user ${session.user.id} is not authorized to get lifetime status for user ${userId}`);
+      console.warn(
+        `current user ${session.user.id} is not authorized to get lifetime status for user ${userId}`
+      );
       return {
         success: false,
         error: 'Not authorized to do this action',
@@ -53,8 +57,8 @@ export const getLifetimeStatusAction = actionClient
       // Get lifetime plans
       const plans = getAllPricePlans();
       const lifetimePlanIds = plans
-        .filter(plan => plan.isLifetime)
-        .map(plan => plan.id);
+        .filter((plan) => plan.isLifetime)
+        .map((plan) => plan.id);
 
       // Check if there are any lifetime plans defined in the system
       if (lifetimePlanIds.length === 0) {
@@ -66,7 +70,11 @@ export const getLifetimeStatusAction = actionClient
 
       // Query the database for one-time payments with lifetime plans
       const result = await db
-        .select({ id: payment.id, priceId: payment.priceId, type: payment.type })
+        .select({
+          id: payment.id,
+          priceId: payment.priceId,
+          type: payment.type,
+        })
         .from(payment)
         .where(
           and(
@@ -77,7 +85,7 @@ export const getLifetimeStatusAction = actionClient
         );
 
       // Check if any payment has a lifetime plan
-      const hasLifetimePayment = result.some(paymentRecord => {
+      const hasLifetimePayment = result.some((paymentRecord) => {
         const plan = findPlanByPriceId(paymentRecord.priceId);
         return plan && lifetimePlanIds.includes(plan.id);
       });
@@ -87,10 +95,10 @@ export const getLifetimeStatusAction = actionClient
         isLifetimeMember: hasLifetimePayment,
       };
     } catch (error) {
-      console.error("get user lifetime status error:", error);
+      console.error('get user lifetime status error:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Something went wrong',
       };
     }
-  }); 
+  });

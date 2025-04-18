@@ -1,14 +1,14 @@
+import { docsI18nConfig } from '@/lib/docs/i18n';
 import { source } from '@/lib/docs/source';
 import { createTokenizer } from '@orama/tokenizers/mandarin';
 import { createI18nSearchAPI } from 'fumadocs-core/search/server';
-import { docsI18nConfig } from '@/lib/docs/i18n';
 
 /**
  * Fumadocs i18n search configuration
- * 
+ *
  * 1. For internationalization, use createI18nSearchAPI:
  * https://fumadocs.vercel.app/docs/headless/search/orama#internationalization
- * 
+ *
  * 2. For special languages like Chinese, configure custom tokenizers:
  * https://fumadocs.vercel.app/docs/headless/search/orama#special-languages
  * https://docs.orama.com/open-source/supported-languages/using-chinese-with-orama
@@ -26,7 +26,7 @@ const searchAPI = createI18nSearchAPI('advanced', {
       id: page.url,
       url: page.url,
       locale: language,
-    })),
+    }))
   ),
 
   // Configure special language tokenizers and search options
@@ -73,7 +73,10 @@ export const GET = async (request: Request) => {
       console.log('search, referer pathname:', refererUrl.pathname);
       const refererPathParts = refererUrl.pathname.split('/').filter(Boolean);
       console.log('search, referer path parts:', refererPathParts);
-      if (refererPathParts.length > 0 && docsI18nConfig.languages.includes(refererPathParts[0])) {
+      if (
+        refererPathParts.length > 0 &&
+        docsI18nConfig.languages.includes(refererPathParts[0])
+      ) {
         locale = refererPathParts[0];
         console.log(`search, detected locale from referer: ${locale}`);
       }

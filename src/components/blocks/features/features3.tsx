@@ -1,4 +1,9 @@
-import { ActivityIcon, DraftingCompassIcon, MailIcon, ZapIcon } from 'lucide-react';
+import {
+  ActivityIcon,
+  DraftingCompassIcon,
+  MailIcon,
+  ZapIcon,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -15,12 +20,8 @@ export default function Features3Section() {
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-12 lg:grid-cols-5 lg:gap-24">
           <div className="lg:col-span-2">
             <div className="md:pr-6 lg:pr-0">
-              <h2 className="text-4xl font-semibold">
-                {t('title')}
-              </h2>
-              <p className="mt-6">
-                {t('description')}
-              </p>
+              <h2 className="text-4xl font-semibold">{t('title')}</h2>
+              <p className="mt-6">{t('description')}</p>
             </div>
 
             <ul className="mt-8 divide-y border-y *:flex *:items-center *:gap-3 *:py-3">

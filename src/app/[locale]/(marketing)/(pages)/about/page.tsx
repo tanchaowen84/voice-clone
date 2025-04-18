@@ -4,8 +4,8 @@ import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import { MailIcon } from 'lucide-react';
-import { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
@@ -20,7 +20,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: pt('title') + ' | ' + t('title'),
     description: pt('description'),
-    canonicalUrl: getUrlWithLocale("/about", locale),
+    canonicalUrl: getUrlWithLocale('/about', locale),
   });
 }
 
@@ -49,9 +49,7 @@ export default async function AboutPage() {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-4xl text-foreground">
-                  {t('authorName')}
-                </h1>
+                <h1 className="text-4xl text-foreground">{t('authorName')}</h1>
                 <p className="text-base text-muted-foreground mt-2">
                   {t('authorBio')}
                 </p>
@@ -67,7 +65,9 @@ export default async function AboutPage() {
               <div className="flex items-center gap-4">
                 <Button className="rounded-lg cursor-pointer">
                   <MailIcon className="mr-1 size-4" />
-                  <a href={`mailto:${websiteConfig.mail.from}`}>{t('talkWithMe')}</a>
+                  <a href={`mailto:${websiteConfig.mail.from}`}>
+                    {t('talkWithMe')}
+                  </a>
                 </Button>
               </div>
             </div>

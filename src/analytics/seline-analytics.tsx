@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Script from "next/script";
+import Script from 'next/script';
 
 /**
  * Seline Analytics
- * 
+ *
  * https://seline.com
  * https://seline.com/docs/install-seline
  * https://seline.com/docs/stripe
  */
 export function SelineAnalytics() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     return null;
   }
 

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Script from "next/script";
+import Script from 'next/script';
 
 /**
  * Plausible Analytics
@@ -8,7 +8,7 @@ import Script from "next/script";
  * https://plausible.io
  */
 export function PlausibleAnalytics() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     return null;
   }
 
@@ -23,11 +23,6 @@ export function PlausibleAnalytics() {
   }
 
   return (
-    <Script
-      defer
-      type="text/javascript"
-      data-domain={domain}
-      src={script}
-    />
+    <Script defer type="text/javascript" data-domain={domain} src={script} />
   );
 }

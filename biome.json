@@ -18,10 +18,12 @@
       "drizzle/**",
       "tailwind.config.ts",
       "src/components/ui/*.tsx",
-      "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
+      "src/payment/types.ts",
+      "src/types/index.d.ts",
       "public/sw.js"
     ]
   },
@@ -40,15 +42,27 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noSparseArray": "off"
+        "noSparseArray": "off",
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "off",
+        "noShadowRestrictedNames": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
       },
       "style": {
         "useTemplate": "off",
         "noNonNullAssertion": "off",
-        "useShorthandArrayType": "off"
+        "useShorthandArrayType": "off",
+        "useNodejsImportProtocol": "off"
       },
       "a11y": {
-        "useValidAnchor": "off"
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off"
       }
     },
     "ignore": [
@@ -62,10 +76,12 @@
       "drizzle/**",
       "tailwind.config.ts",
       "src/components/ui/*.tsx",
-      "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
+      "src/payment/types.ts",
+      "src/types/index.d.ts",
       "public/sw.js"
     ]
   },

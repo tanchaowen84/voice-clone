@@ -1,15 +1,20 @@
-import { fontBricolageGrotesque, fontNotoSans, fontNotoSansMono, fontNotoSerif } from '@/assets/fonts';
+import {
+  fontBricolageGrotesque,
+  fontNotoSans,
+  fontNotoSansMono,
+  fontNotoSerif,
+} from '@/assets/fonts';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
-import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
+import { type Locale, NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Providers } from './providers';
 
 import '@/styles/globals.css';
-import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 import { Analytics } from '@/analytics/analytics';
+import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 
 interface LocaleLayoutProps {
   children: ReactNode;

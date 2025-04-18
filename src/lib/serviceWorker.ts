@@ -8,10 +8,10 @@ export function registerServiceWorker() {
     window.addEventListener('load', () => {
       navigator.serviceWorker
         .register('/sw.js')
-        .then(registration => {
+        .then((registration) => {
           console.log('SW registered: ', registration);
         })
-        .catch(registrationError => {
+        .catch((registrationError) => {
           console.log('SW registration failed: ', registrationError);
         });
     });
@@ -25,7 +25,11 @@ type SWMessage = {
 };
 
 export function sendMessageToSW(message: SWMessage) {
-  if (typeof window !== 'undefined' && 'serviceWorker' in navigator && navigator.serviceWorker.controller) {
+  if (
+    typeof window !== 'undefined' &&
+    'serviceWorker' in navigator &&
+    navigator.serviceWorker.controller
+  ) {
     navigator.serviceWorker.controller.postMessage(message);
   }
 }
@@ -34,14 +38,14 @@ export function sendMessageToSW(message: SWMessage) {
 export function clearIframeCache(url?: string) {
   sendMessageToSW({
     type: 'CLEAR_IFRAME_CACHE',
-    url
+    url,
   });
 }
 
 // Update the service worker
 export function updateServiceWorker() {
   if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
+    navigator.serviceWorker.ready.then((registration) => {
       registration.update();
     });
   }
@@ -61,4 +65,4 @@ export async function isUrlCached(url: string): Promise<boolean> {
     console.error('Error checking cache:', error);
     return false;
   }
-} 
+}

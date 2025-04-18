@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { HTMLMotionProps, motion } from 'motion/react';
+import { type HTMLMotionProps, motion } from 'motion/react';
 
 export const GRADIENT_ANGLES = {
   top: 0,
@@ -48,7 +48,7 @@ export function ProgressiveBlur({
         return (
           <motion.div
             key={index}
-            className='pointer-events-none absolute inset-0 rounded-[inherit]'
+            className="pointer-events-none absolute inset-0 rounded-[inherit]"
             style={{
               maskImage: gradient,
               WebkitMaskImage: gradient,

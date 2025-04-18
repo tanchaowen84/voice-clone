@@ -1,4 +1,4 @@
-import { DevToolbar } from '@/components/nsui/toolbar';
+import { DevToolbar } from '@/components/tailark/toolbar';
 
 export const dynamic = 'force-static';
 export const revalidate = 3600; // Cache for 1 hour

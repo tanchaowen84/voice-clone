@@ -11,8 +11,18 @@ interface ContactMessageProps extends BaseEmailProps {
   message: string;
 }
 
-export function ContactMessage({ name, email, message, locale, messages }: ContactMessageProps) {
-  const t = createTranslator({ locale, messages, namespace: 'Mail.contactMessage' });
+export function ContactMessage({
+  name,
+  email,
+  message,
+  locale,
+  messages,
+}: ContactMessageProps) {
+  const t = createTranslator({
+    locale,
+    messages,
+    namespace: 'Mail.contactMessage',
+  });
 
   return (
     <EmailLayout locale={locale} messages={messages}>

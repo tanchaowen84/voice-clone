@@ -1,5 +1,6 @@
 'use client';
 
+import { BorderBeam } from '@/components/magicui/border-beam';
 import {
   Accordion,
   AccordionContent,
@@ -12,11 +13,10 @@ import {
   Fingerprint,
   IdCard,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { BorderBeam } from '@/components/magicui/border-beam';
-import { useTranslations } from 'next-intl';
 
 /**
  * https://nsui.irung.me/features
@@ -48,15 +48,13 @@ export default function Features2Section() {
 
   return (
     <section className="py-16">
-      <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
+      <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]" />
       <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
           <h2 className="text-balance text-4xl lg:text-5xl font-semibold">
             {t('title')}
           </h2>
-          <p>
-            {t('description')}
-          </p>
+          <p>{t('description')}</p>
         </div>
 
         <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 md:gap-12 lg:gap-24 lg:px-0">

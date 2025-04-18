@@ -11,7 +11,7 @@ export function Logo({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   const logoLight = websiteConfig.metadata.images?.logoLight ?? '/logo.png';
   const logoDark = websiteConfig.metadata.images?.logoDark ?? logoLight;
-  
+
   // During server-side rendering and initial client render, always use logoLight
   // This prevents hydration mismatch
   const logo = mounted && theme === 'dark' ? logoDark : logoLight;

@@ -1,12 +1,12 @@
 'use client';
 
 import { Routes } from '@/routes';
-import { NestedMenuItem } from '@/types';
+import type { NestedMenuItem } from '@/types';
 import { useTranslations } from 'next-intl';
 
 /**
  * Get footer config with translations
- * 
+ *
  * NOTICE: used in client components only
  *
  * @returns The footer config with translated titles

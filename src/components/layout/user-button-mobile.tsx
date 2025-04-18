@@ -14,7 +14,7 @@ import { getAvatarLinks } from '@/config/avatar-config';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { usePaymentStore } from '@/stores/payment-store';
-import { User } from 'better-auth';
+import type { User } from 'better-auth';
 import { LogOutIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -77,9 +77,7 @@ export function UserButtonMobile({ user }: UserButtonProps) {
               className="size-8 border cursor-pointer"
             />
             <div className="flex flex-col">
-              <p className="font-medium">
-                {user.name}
-              </p>
+              <p className="font-medium">{user.name}</p>
               <p className="w-[200px] truncate text-muted-foreground">
                 {user.email}
               </p>
@@ -87,22 +85,21 @@ export function UserButtonMobile({ user }: UserButtonProps) {
           </div>
 
           <ul className="mb-14 mt-1 w-full text-muted-foreground">
-            {avatarLinks &&
-              avatarLinks.map((item) => (
-                <li
-                  key={item.title}
-                  className="rounded-lg text-foreground hover:bg-muted"
+            {avatarLinks?.map((item) => (
+              <li
+                key={item.title}
+                className="rounded-lg text-foreground hover:bg-muted"
+              >
+                <LocaleLink
+                  href={item.href || '#'}
+                  onClick={closeDrawer}
+                  className="flex w-full items-center gap-3 px-2.5 py-2"
                 >
-                  <LocaleLink
-                    href={item.href || '#'}
-                    onClick={closeDrawer}
-                    className="flex w-full items-center gap-3 px-2.5 py-2"
-                  >
-                    {item.icon ? item.icon : null}
-                    <p className="text-sm">{item.title}</p>
-                  </LocaleLink>
-                </li>
-              ))}
+                  {item.icon ? item.icon : null}
+                  <p className="text-sm">{item.title}</p>
+                </LocaleLink>
+              </li>
+            ))}
 
             <li
               key="logout"

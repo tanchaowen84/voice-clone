@@ -1,10 +1,16 @@
+import { websiteConfig } from '@/config/website';
 import { getMessagesForLocale } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import { render } from '@react-email/render';
-import { Locale, Messages } from 'next-intl';
+import type { Locale, Messages } from 'next-intl';
 import { ResendProvider } from './provider/resend';
-import { EmailTemplate, EmailTemplates, MailProvider, SendRawEmailParams, SendTemplateParams } from './types';
-import { websiteConfig } from '@/config/website';
+import {
+  type EmailTemplate,
+  EmailTemplates,
+  type MailProvider,
+  type SendRawEmailParams,
+  type SendTemplateParams,
+} from './types';
 /**
  * Global mail provider instance
  */
@@ -31,7 +37,9 @@ export const initializeMailProvider = (): MailProvider => {
     if (websiteConfig.mail.provider === 'resend') {
       mailProvider = new ResendProvider();
     } else {
-      throw new Error(`Unsupported mail provider: ${websiteConfig.mail.provider}`);
+      throw new Error(
+        `Unsupported mail provider: ${websiteConfig.mail.provider}`
+      );
     }
   }
   return mailProvider;
@@ -39,7 +47,7 @@ export const initializeMailProvider = (): MailProvider => {
 
 /**
  * Send email using the configured mail provider
- * 
+ *
  * @param params Email parameters
  * @returns Success status
  */
@@ -52,11 +60,10 @@ export async function sendEmail(
     // This is a template email
     const result = await provider.sendTemplate(params);
     return result.success;
-  } else {
-    // This is a raw email
-    const result = await provider.sendRawEmail(params);
-    return result.success;
   }
+  // This is a raw email
+  const result = await provider.sendRawEmail(params);
+  return result.success;
 }
 
 /**

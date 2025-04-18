@@ -1,7 +1,7 @@
 'use client';
 
 import { Routes } from '@/routes';
-import { NestedMenuItem } from '@/types';
+import type { NestedMenuItem } from '@/types';
 import {
   AudioLinesIcon,
   BuildingIcon,
@@ -30,13 +30,13 @@ import {
   ThumbsUpIcon,
   UserPlusIcon,
   UsersIcon,
-  WandSparklesIcon
+  WandSparklesIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 /**
  * Get navbar config with translations
- * 
+ *
  * NOTICE: used in client components only
  *
  * @returns The navbar config with translated titles and descriptions

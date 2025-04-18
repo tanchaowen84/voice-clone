@@ -379,7 +379,6 @@ export const blocks: Block[] = [
     // code: loadCode('app/preview/testimonials/six/page.tsx'),
   },
 
-
   {
     slug: 'call-to-action',
     title: 'one',
@@ -581,7 +580,7 @@ export const blocks: Block[] = [
     category: 'contact',
     preview: '/preview/contact/two',
     // code: loadCode('app/preview/contact/two/page.tsx'),
-  }
+  },
 ];
 
 export const categories = [...new Set(blocks.map((b) => b.category))];

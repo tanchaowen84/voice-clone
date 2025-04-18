@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -171,7 +171,6 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
-
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -211,7 +210,7 @@ body {
  * 2. we suggest always using the default theme for better user experience,
  * and then override the .theme-default to customize the theme
  */
-.theme-default{
+.theme-default {
   /* default theme */
 }
 

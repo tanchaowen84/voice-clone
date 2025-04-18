@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { sendMessageAction } from '@/actions/send-message';
 import { FormError } from '@/components/shared/form-error';
@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
@@ -17,13 +17,13 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useTransition, useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -39,13 +39,8 @@ export function ContactFormCard() {
 
   // Create a schema for contact form validation
   const formSchema = z.object({
-    name: z
-      .string()
-      .min(3, t('nameMinLength'))
-      .max(30, t('nameMaxLength')),
-    email: z
-      .string()
-      .email(t('emailValidation')),
+    name: z.string().min(3, t('nameMinLength')).max(30, t('nameMaxLength')),
+    email: z.string().email(t('emailValidation')),
     message: z
       .string()
       .min(10, t('messageMinLength'))
@@ -70,11 +65,11 @@ export function ContactFormCard() {
     startTransition(async () => {
       try {
         setError('');
-        
+
         // Submit form data using the contact server action
         const result = await sendMessageAction(values);
-        
-        if (result && result.data?.success) {
+
+        if (result?.data?.success) {
           toast.success(t('success'));
           form.reset();
         } else {
@@ -93,12 +88,8 @@ export function ContactFormCard() {
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">
-          {t('title')}
-        </CardTitle>
-        <CardDescription>
-          {t('description')}
-        </CardDescription>
+        <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
@@ -110,10 +101,7 @@ export function ContactFormCard() {
                 <FormItem>
                   <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder={t('name')}
-                      {...field}
-                    />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,11 +115,7 @@ export function ContactFormCard() {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder={t('email')}
-                      {...field}
-                    />
+                    <Input type="email" placeholder={t('email')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,11 +129,7 @@ export function ContactFormCard() {
                 <FormItem>
                   <FormLabel>{t('message')}</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder={t('message')}
-                      rows={3}
-                      {...field}
-                    />
+                    <Textarea placeholder={t('message')} rows={3} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,8 +139,8 @@ export function ContactFormCard() {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isPending}
               className="cursor-pointer"
             >
@@ -171,4 +151,4 @@ export function ContactFormCard() {
       </Form>
     </Card>
   );
-} 
+}

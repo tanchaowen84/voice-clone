@@ -1,8 +1,8 @@
 import { websiteConfig } from '@/config/website';
+import { defaultMessages } from '@/i18n/messages';
 import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/urls';
-import { defaultMessages } from '@/i18n/messages';
 
 /**
  * Construct the metadata object for the current page (in docs/guides)

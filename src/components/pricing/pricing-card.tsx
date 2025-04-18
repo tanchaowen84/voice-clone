@@ -1,12 +1,25 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useLocalePathname } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
-import { PaymentType, PaymentTypes, PlanInterval, PlanIntervals, Price, PricePlan } from '@/payment/types';
+import {
+  type PaymentType,
+  PaymentTypes,
+  type PlanInterval,
+  PlanIntervals,
+  type Price,
+  type PricePlan,
+} from '@/payment/types';
 import { CheckCircleIcon, XCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { LoginWrapper } from '../auth/login-wrapper';
@@ -33,22 +46,25 @@ function getPriceForPlan(
   interval?: PlanInterval,
   paymentType?: PaymentType
 ): Price | undefined {
-  if (plan.isFree) { // Free plan has no price
+  if (plan.isFree) {
+    // Free plan has no price
     return undefined;
   }
 
   // non-free plans must have a price
-  return plan.prices.find(price => {
+  return plan.prices.find((price) => {
     if (paymentType === PaymentTypes.ONE_TIME) {
       return price.type === PaymentTypes.ONE_TIME;
     }
-    return price.type === PaymentTypes.SUBSCRIPTION && price.interval === interval;
+    return (
+      price.type === PaymentTypes.SUBSCRIPTION && price.interval === interval
+    );
   });
 }
 
 /**
  * Pricing Card Component
- * 
+ *
  * Displays a single pricing plan with features and action button
  */
 export function PricingCard({
@@ -70,7 +86,8 @@ export function PricingCard({
   let priceLabel = '';
   if (plan.isFree) {
     formattedPrice = t('freePrice');
-  } else if (price && price.amount > 0) { // price is available
+  } else if (price && price.amount > 0) {
+    // price is available
     formattedPrice = formatPrice(price.amount, price.currency);
     if (interval === PlanIntervals.MONTH) {
       priceLabel = t('perMonth');
@@ -89,24 +106,29 @@ export function PricingCard({
   return (
     <Card
       className={cn(
-        "flex flex-col h-full",
-        plan.recommended && "relative",
-        isCurrentPlan && "border-blue-500 shadow-lg shadow-blue-100 dark:shadow-blue-900/20",
+        'flex flex-col h-full',
+        plan.recommended && 'relative',
+        isCurrentPlan &&
+          'border-blue-500 shadow-lg shadow-blue-100 dark:shadow-blue-900/20',
         className
       )}
     >
       {/* show popular badge if plan is recommended */}
       {plan.recommended && (
-        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
-        bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200  border-purple-200 dark:border-purple-800 shadow-sm">
+        <span
+          className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
+        bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200  border-purple-200 dark:border-purple-800 shadow-sm"
+        >
           {t('popular')}
         </span>
       )}
 
       {/* show current plan badge if plan is current plan */}
       {isCurrentPlan && (
-        <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
-        bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-800 shadow-sm">
+        <span
+          className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium border
+        bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-800 shadow-sm"
+        >
           {t('currentPlan')}
         </span>
       )}
@@ -121,10 +143,7 @@ export function PricingCard({
           <span className="my-4 block text-4xl font-semibold">
             {formattedPrice}
           </span>
-          {priceLabel &&
-            <span className="text-2xl">
-              {priceLabel}
-            </span>}
+          {priceLabel && <span className="text-2xl">{priceLabel}</span>}
         </div>
 
         <CardDescription>
@@ -145,8 +164,11 @@ export function PricingCard({
             </LoginWrapper>
           )
         ) : isCurrentPlan ? (
-          <Button disabled className="mt-4 w-full bg-blue-100 dark:bg-blue-800 
-          text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700">
+          <Button
+            disabled
+            className="mt-4 w-full bg-blue-100 dark:bg-blue-800 
+          text-blue-700 dark:text-blue-100 hover:bg-blue-100 dark:hover:bg-blue-800 border border-blue-200 dark:border-blue-700"
+          >
             {t('yourCurrentPlan')}
           </Button>
         ) : isPaidPlan ? (
@@ -180,8 +202,10 @@ export function PricingCard({
         {/* show trial period if it exists */}
         {hasTrialPeriod && (
           <div className="my-4">
-            <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
-            bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
+            <span
+              className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
+            bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm"
+            >
               {t('daysTrial', { days: price.trialPeriodDays as number })}
             </span>
           </div>
@@ -209,4 +233,4 @@ export function PricingCard({
       </CardContent>
     </Card>
   );
-} 
+}

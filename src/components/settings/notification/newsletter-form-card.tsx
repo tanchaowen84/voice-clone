@@ -10,7 +10,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
@@ -36,7 +36,7 @@ interface NewsletterFormCardProps {
 
 /**
  * Newsletter subscription form card
- * 
+ *
  * Allows users to toggle their newsletter subscription status
  */
 export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
@@ -67,9 +67,11 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
         try {
           setIsLoading(true);
           // Check if the user is already subscribed using server action
-          const statusResult = await checkNewsletterStatusAction({ email: currentUser.email });
+          const statusResult = await checkNewsletterStatusAction({
+            email: currentUser.email,
+          });
 
-          if (statusResult && statusResult.data?.success) {
+          if (statusResult?.data?.success) {
             const isCurrentlySubscribed = statusResult.data.subscribed;
             setIsSubscriptionChecked(isCurrentlySubscribed);
             form.setValue('subscribed', isCurrentlySubscribed);
@@ -116,14 +118,17 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
     try {
       if (value) {
         // Subscribe to newsletter using server action
-        const subscribeResult = await subscribeNewsletterAction({ email: currentUser.email });
+        const subscribeResult = await subscribeNewsletterAction({
+          email: currentUser.email,
+        });
 
-        if (subscribeResult && subscribeResult.data?.success) {
+        if (subscribeResult?.data?.success) {
           toast.success(t('newsletter.subscribeSuccess'));
           setIsSubscriptionChecked(true);
           form.setValue('subscribed', true);
         } else {
-          const errorMessage = subscribeResult?.data?.error || t('newsletter.subscribeFail');
+          const errorMessage =
+            subscribeResult?.data?.error || t('newsletter.subscribeFail');
           toast.error(errorMessage);
           setError(errorMessage);
           // Reset checkbox if subscription failed
@@ -131,14 +136,17 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
         }
       } else {
         // Unsubscribe from newsletter using server action
-        const unsubscribeResult = await unsubscribeNewsletterAction({ email: currentUser.email });
+        const unsubscribeResult = await unsubscribeNewsletterAction({
+          email: currentUser.email,
+        });
 
-        if (unsubscribeResult && unsubscribeResult.data?.success) {
+        if (unsubscribeResult?.data?.success) {
           toast.success(t('newsletter.unsubscribeSuccess'));
           setIsSubscriptionChecked(false);
           form.setValue('subscribed', false);
         } else {
-          const errorMessage = unsubscribeResult?.data?.error || t('newsletter.unsubscribeFail');
+          const errorMessage =
+            unsubscribeResult?.data?.error || t('newsletter.unsubscribeFail');
           toast.error(errorMessage);
           setError(errorMessage);
           // Reset checkbox if unsubscription failed
@@ -157,14 +165,17 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   };
 
   return (
-    <Card className={cn("w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0", className)}>
+    <Card
+      className={cn(
+        'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0',
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           {t('newsletter.title')}
         </CardTitle>
-        <CardDescription>
-          {t('newsletter.description')}
-        </CardDescription>
+        <CardDescription>{t('newsletter.description')}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form>
@@ -210,4 +221,4 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
       </Form>
     </Card>
   );
-} 
+}

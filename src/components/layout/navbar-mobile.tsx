@@ -20,7 +20,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   MenuIcon,
-  XIcon
+  XIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -76,9 +76,7 @@ export function NavbarMobile({
         {/* navbar left shows logo */}
         <LocaleLink href={Routes.Root} className="flex items-center gap-2">
           <Logo />
-          <span className="text-xl font-semibold">
-            {t('Metadata.name')}
-          </span>
+          <span className="text-xl font-semibold">{t('Metadata.name')}</span>
         </LocaleLink>
 
         {/* navbar right shows menu icon and user button */}
@@ -86,9 +84,9 @@ export function NavbarMobile({
           {/* show user button if user is logged in */}
           {isPending ? (
             <Skeleton className="size-8 border rounded-full" />
-          ) : (
-            currentUser ? <UserButtonMobile user={currentUser} /> : null
-          )}
+          ) : currentUser ? (
+            <UserButtonMobile user={currentUser} />
+          ) : null}
 
           <Button
             variant="ghost"
@@ -179,104 +177,101 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
 
         {/* main menu */}
         <ul className="w-full px-4">
-          {menuLinks &&
-            menuLinks.map((item) => {
-              const isActive = item.href
-                ? localePathname.startsWith(item.href)
-                : item.items?.some(
+          {menuLinks?.map((item) => {
+            const isActive = item.href
+              ? localePathname.startsWith(item.href)
+              : item.items?.some(
                   (subItem) =>
                     subItem.href && localePathname.startsWith(subItem.href)
                 );
 
-              return (
-                <li key={item.title} className="py-1">
-                  {item.items ? (
-                    <Collapsible
-                      open={expanded[item.title.toLowerCase()]}
-                      onOpenChange={(isOpen) =>
-                        setExpanded((prev) => ({
-                          ...prev,
-                          [item.title.toLowerCase()]: isOpen,
-                        }))
-                      }
-                    >
-                      <CollapsibleTrigger asChild>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          className={cn(
-                            'flex w-full !pl-2 items-center justify-between text-left',
-                            'bg-transparent text-muted-foreground cursor-pointer',
-                            'hover:bg-transparent hover:text-foreground',
-                            'focus:bg-transparent focus:text-foreground',
-                            isActive &&
+            return (
+              <li key={item.title} className="py-1">
+                {item.items ? (
+                  <Collapsible
+                    open={expanded[item.title.toLowerCase()]}
+                    onOpenChange={(isOpen) =>
+                      setExpanded((prev) => ({
+                        ...prev,
+                        [item.title.toLowerCase()]: isOpen,
+                      }))
+                    }
+                  >
+                    <CollapsibleTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className={cn(
+                          'flex w-full !pl-2 items-center justify-between text-left',
+                          'bg-transparent text-muted-foreground cursor-pointer',
+                          'hover:bg-transparent hover:text-foreground',
+                          'focus:bg-transparent focus:text-foreground',
+                          isActive &&
                             'font-semibold bg-transparent text-foreground'
-                          )}
-                        >
-                          <span className="text-base">{item.title}</span>
-                          {expanded[item.title.toLowerCase()] ? (
-                            <ChevronDownIcon className="size-4" />
-                          ) : (
-                            <ChevronRightIcon className="size-4" />
-                          )}
-                        </Button>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="pl-2">
-                        <ul className="mt-2 space-y-2 pl-0">
-                          {item.items.map((subItem) => {
-                            const isSubItemActive =
-                              subItem.href &&
-                              localePathname.startsWith(subItem.href);
+                        )}
+                      >
+                        <span className="text-base">{item.title}</span>
+                        {expanded[item.title.toLowerCase()] ? (
+                          <ChevronDownIcon className="size-4" />
+                        ) : (
+                          <ChevronRightIcon className="size-4" />
+                        )}
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pl-2">
+                      <ul className="mt-2 space-y-2 pl-0">
+                        {item.items.map((subItem) => {
+                          const isSubItemActive =
+                            subItem.href &&
+                            localePathname.startsWith(subItem.href);
 
-                            return (
-                              <li key={subItem.title}>
-                                <LocaleLink
-                                  href={subItem.href || '#'}
-                                  target={
-                                    subItem.external ? '_blank' : undefined
-                                  }
-                                  rel={
-                                    subItem.external
-                                      ? 'noopener noreferrer'
-                                      : undefined
-                                  }
-                                  className={cn(
-                                    buttonVariants({ variant: 'ghost' }),
-                                    'group h-auto w-full justify-start gap-4 p-1 !pl-0 !pr-3',
-                                    'bg-transparent text-muted-foreground cursor-pointer',
-                                    'hover:bg-transparent hover:text-foreground',
-                                    'focus:bg-transparent focus:text-foreground',
-                                    isSubItemActive &&
+                          return (
+                            <li key={subItem.title}>
+                              <LocaleLink
+                                href={subItem.href || '#'}
+                                target={subItem.external ? '_blank' : undefined}
+                                rel={
+                                  subItem.external
+                                    ? 'noopener noreferrer'
+                                    : undefined
+                                }
+                                className={cn(
+                                  buttonVariants({ variant: 'ghost' }),
+                                  'group h-auto w-full justify-start gap-4 p-1 !pl-0 !pr-3',
+                                  'bg-transparent text-muted-foreground cursor-pointer',
+                                  'hover:bg-transparent hover:text-foreground',
+                                  'focus:bg-transparent focus:text-foreground',
+                                  isSubItemActive &&
                                     'font-semibold bg-transparent text-foreground'
+                                )}
+                                onClick={onLinkClicked}
+                              >
+                                <div
+                                  className={cn(
+                                    'flex size-8 shrink-0 items-center justify-center transition-colors ml-0',
+                                    'bg-transparent text-muted-foreground',
+                                    'group-hover:bg-transparent group-hover:text-foreground',
+                                    'group-focus:bg-transparent group-focus:text-foreground',
+                                    isSubItemActive &&
+                                      'bg-transparent text-foreground'
                                   )}
-                                  onClick={onLinkClicked}
                                 >
-                                  <div
+                                  {subItem.icon ? subItem.icon : null}
+                                </div>
+                                <div className="flex-1">
+                                  <span
                                     className={cn(
-                                      'flex size-8 shrink-0 items-center justify-center transition-colors ml-0',
-                                      'bg-transparent text-muted-foreground',
+                                      'text-sm text-muted-foreground',
                                       'group-hover:bg-transparent group-hover:text-foreground',
                                       'group-focus:bg-transparent group-focus:text-foreground',
                                       isSubItemActive &&
-                                      'bg-transparent text-foreground'
+                                        'font-semibold bg-transparent text-foreground'
                                     )}
                                   >
-                                    {subItem.icon ? subItem.icon : null}
-                                  </div>
-                                  <div className="flex-1">
-                                    <span
-                                      className={cn(
-                                        'text-sm text-muted-foreground',
-                                        'group-hover:bg-transparent group-hover:text-foreground',
-                                        'group-focus:bg-transparent group-focus:text-foreground',
-                                        isSubItemActive &&
-                                        'font-semibold bg-transparent text-foreground'
-                                      )}
-                                    >
-                                      {subItem.title}
-                                    </span>
-                                    {/* hide description for now */}
-                                    {/* {subItem.description && (
+                                    {subItem.title}
+                                  </span>
+                                  {/* hide description for now */}
+                                  {/* {subItem.description && (
                                       <p
                                         className={cn(
                                           'text-xs text-muted-foreground',
@@ -289,48 +284,48 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
                                         {subItem.description}
                                       </p>
                                     )} */}
-                                  </div>
-                                  {subItem.external && (
-                                    <ArrowUpRightIcon
-                                      className={cn(
-                                        'size-4 shrink-0 text-muted-foreground items-center',
-                                        'group-hover:bg-transparent group-hover:text-foreground',
-                                        'group-focus:bg-transparent group-focus:text-foreground',
-                                        isSubItemActive &&
+                                </div>
+                                {subItem.external && (
+                                  <ArrowUpRightIcon
+                                    className={cn(
+                                      'size-4 shrink-0 text-muted-foreground items-center',
+                                      'group-hover:bg-transparent group-hover:text-foreground',
+                                      'group-focus:bg-transparent group-focus:text-foreground',
+                                      isSubItemActive &&
                                         'bg-transparent text-foreground'
-                                      )}
-                                    />
-                                  )}
-                                </LocaleLink>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </CollapsibleContent>
-                    </Collapsible>
-                  ) : (
-                    <LocaleLink
-                      href={item.href || '#'}
-                      target={item.external ? '_blank' : undefined}
-                      rel={item.external ? 'noopener noreferrer' : undefined}
-                      className={cn(
-                        buttonVariants({ variant: 'ghost' }),
-                        'w-full !pl-2 justify-start cursor-pointer group',
-                        'bg-transparent text-muted-foreground',
-                        'hover:bg-transparent hover:text-foreground',
-                        'focus:bg-transparent focus:text-foreground',
-                        isActive && 'font-semibold bg-transparent text-foreground'
-                      )}
-                      onClick={onLinkClicked}
-                    >
-                      <div className="flex items-center w-full pl-0">
-                        <span className="text-base">{item.title}</span>
-                      </div>
-                    </LocaleLink>
-                  )}
-                </li>
-              );
-            })}
+                                    )}
+                                  />
+                                )}
+                              </LocaleLink>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ) : (
+                  <LocaleLink
+                    href={item.href || '#'}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
+                    className={cn(
+                      buttonVariants({ variant: 'ghost' }),
+                      'w-full !pl-2 justify-start cursor-pointer group',
+                      'bg-transparent text-muted-foreground',
+                      'hover:bg-transparent hover:text-foreground',
+                      'focus:bg-transparent focus:text-foreground',
+                      isActive && 'font-semibold bg-transparent text-foreground'
+                    )}
+                    onClick={onLinkClicked}
+                  >
+                    <div className="flex items-center w-full pl-0">
+                      <span className="text-base">{item.title}</span>
+                    </div>
+                  </LocaleLink>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* bottom buttons */}

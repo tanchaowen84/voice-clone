@@ -5,9 +5,7 @@ interface BillingLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function BillingLayout({
-  children,
-}: BillingLayoutProps) {
+export default async function BillingLayout({ children }: BillingLayoutProps) {
   const t = await getTranslations('Dashboard.settings');
 
   const breadcrumbs = [

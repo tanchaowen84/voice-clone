@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { Label } from "@/components/ui/label";
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
-import { websiteConfig } from "@/config/website";
-import { useTranslations } from "next-intl";
-import { useThemeConfig } from "./active-theme-provider";
+  SelectValue,
+} from '@/components/ui/select';
+import { websiteConfig } from '@/config/website';
+import { useTranslations } from 'next-intl';
+import { useThemeConfig } from './active-theme-provider';
 
 /**
  * 1. The component allows the user to select the theme of the website
@@ -31,23 +31,23 @@ export function ThemeSelector() {
   const DEFAULT_THEMES = [
     {
       name: t('default'),
-      value: "default",
+      value: 'default',
     },
     {
       name: t('neutral'),
-      value: "neutral",
+      value: 'neutral',
     },
     {
       name: t('blue'),
-      value: "blue",
+      value: 'blue',
     },
     {
       name: t('green'),
-      value: "green",
+      value: 'green',
     },
     {
       name: t('amber'),
-      value: "amber",
+      value: 'amber',
     },
   ];
 
@@ -67,7 +67,9 @@ export function ThemeSelector() {
         <SelectContent align="end">
           <SelectGroup>
             {DEFAULT_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}
+              <SelectItem
+                key={theme.name}
+                value={theme.value}
                 className="cursor-pointer"
               >
                 {theme.name}

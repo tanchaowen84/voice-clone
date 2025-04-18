@@ -5,13 +5,13 @@ import {
   MediaWiki,
   Replit,
   VSCodium,
-} from '@/components/nsui/logos';
+} from '@/components/tailark/logos';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { LocaleLink } from '@/i18n/navigation';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import * as React from 'react';
+import type * as React from 'react';
 
 export default function IntegrationSection() {
   const t = useTranslations('HomePage.integration');
@@ -24,9 +24,7 @@ export default function IntegrationSection() {
             <h2 className="text-balance text-3xl font-semibold md:text-4xl">
               {t('title')}
             </h2>
-            <p className="text-muted-foreground mt-6">
-              {t('description')}
-            </p>
+            <p className="text-muted-foreground mt-6">{t('description')}</p>
           </div>
 
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

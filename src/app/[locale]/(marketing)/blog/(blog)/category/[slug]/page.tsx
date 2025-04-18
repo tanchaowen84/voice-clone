@@ -4,10 +4,10 @@ import CustomPagination from '@/components/shared/pagination';
 import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { NextPageProps } from '@/types/next-page-props';
+import type { NextPageProps } from '@/types/next-page-props';
 import { allCategories, allPosts } from 'content-collections';
 import type { Metadata } from 'next';
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
@@ -29,12 +29,12 @@ export async function generateMetadata({
     return {};
   }
 
-  const t = await getTranslations({locale, namespace: 'Metadata'});
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return constructMetadata({
     title: `${category.name} | ${t('title')}`,
     description: category.description,
-    canonicalUrl: getUrlWithLocale("/blog/category/${slug}", locale),
+    canonicalUrl: getUrlWithLocale('/blog/category/${slug}', locale),
   });
 }
 

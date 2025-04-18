@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { TextEffect } from '@/components/motion/text-effect';
-import { AnimatedGroup } from '@/components/motion/animated-group';
-import { HeroHeader } from '@/components/nsui/hero5-header';
+import { TextEffect } from '@/components/tailark/motion/text-effect';
+import { AnimatedGroup } from '@/components/tailark/motion/animated-group';
+import { HeroHeader } from '@/components/tailark/hero5-header';
 
 const transitionVariants = {
   item: {

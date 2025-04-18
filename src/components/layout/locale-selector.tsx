@@ -11,7 +11,7 @@ import { websiteConfig } from '@/config/website';
 import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { DEFAULT_LOCALE } from '@/i18n/routing';
 import { useLocaleStore } from '@/stores/locale-store';
-import { Locale, useLocale } from 'next-intl';
+import { type Locale, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 
@@ -55,7 +55,7 @@ export default function LocaleSelector() {
         { locale: nextLocale }
       );
     });
-  }
+  };
 
   return (
     <Select
@@ -68,7 +68,9 @@ export default function LocaleSelector() {
           placeholder={
             <div className="flex items-center gap-2">
               {websiteConfig.i18n.locales[DEFAULT_LOCALE].flag && (
-                <span className="text-lg">{websiteConfig.i18n.locales[DEFAULT_LOCALE].flag}</span>
+                <span className="text-lg">
+                  {websiteConfig.i18n.locales[DEFAULT_LOCALE].flag}
+                </span>
               )}
               <span>{websiteConfig.i18n.locales[DEFAULT_LOCALE].name}</span>
             </div>
@@ -77,7 +79,9 @@ export default function LocaleSelector() {
           {currentLocale && (
             <div className="flex items-center gap-2">
               {websiteConfig.i18n.locales[currentLocale].flag && (
-                <span className="text-lg">{websiteConfig.i18n.locales[currentLocale].flag}</span>
+                <span className="text-lg">
+                  {websiteConfig.i18n.locales[currentLocale].flag}
+                </span>
               )}
               <span>{websiteConfig.i18n.locales[currentLocale].name}</span>
             </div>
@@ -92,9 +96,7 @@ export default function LocaleSelector() {
             className="cursor-pointer flex items-center gap-2"
           >
             <div className="flex items-center gap-2">
-              {data.flag && (
-                <span className="text-md">{data.flag}</span>
-              )}
+              {data.flag && <span className="text-md">{data.flag}</span>}
               <span>{data.name}</span>
             </div>
           </SelectItem>

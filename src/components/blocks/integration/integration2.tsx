@@ -6,7 +6,7 @@ import {
   MediaWiki,
   Replit,
   VSCodium,
-} from '@/components/nsui/logos';
+} from '@/components/tailark/logos';
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
@@ -21,7 +21,7 @@ export default function Integration2Section() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid items-center sm:grid-cols-2">
             <div className="dark:bg-muted/50 relative mx-auto w-fit">
-              <div className="bg-radial to-muted dark:to-background absolute inset-0 z-10 from-transparent to-75%"></div>
+              <div className="bg-radial to-muted dark:to-background absolute inset-0 z-10 from-transparent to-75%" />
               <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
                 <IntegrationCard>
                   <Gemini />
@@ -59,9 +59,7 @@ export default function Integration2Section() {
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
                 {t('title')}
               </h2>
-              <p className="text-muted-foreground">
-                {t('description')}
-              </p>
+              <p className="text-muted-foreground">{t('description')}</p>
 
               <div className="mt-12 flex flex-wrap justify-start gap-4">
                 <Button asChild size="lg">

@@ -1,9 +1,6 @@
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
-import {
-  SidebarInset,
-  SidebarProvider
-} from '@/components/ui/sidebar';
-import { PropsWithChildren } from 'react';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import type { PropsWithChildren } from 'react';
 
 /**
  * inspired by dashboard-01
@@ -14,16 +11,14 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
+          '--sidebar-width': 'calc(var(--spacing) * 72)',
+          '--header-height': 'calc(var(--spacing) * 12)',
         } as React.CSSProperties
       }
     >
       <DashboardSidebar variant="inset" />
 
-      <SidebarInset>
-        {children}
-      </SidebarInset>
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   );
 }

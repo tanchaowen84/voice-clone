@@ -1,4 +1,4 @@
-import { Locale } from 'next-intl';
+import type { Locale } from 'next-intl';
 import { create } from 'zustand';
 
 interface LocaleState {

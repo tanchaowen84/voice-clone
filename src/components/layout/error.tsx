@@ -40,9 +40,7 @@ export default function Error({ reset }: { reset: () => void }) {
             });
           }}
         >
-          {isPending && (
-            <Loader2Icon className="mr-2 size-4 animate-spin" />
-          )}
+          {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
           {t('tryAgain')}
         </Button>
 

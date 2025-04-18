@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Script from "next/script";
+import Script from 'next/script';
 
 /**
  * DataFast Analytics
@@ -8,7 +8,7 @@ import Script from "next/script";
  * https://datafa.st
  */
 export default function DataFastAnalytics() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     return null;
   }
 

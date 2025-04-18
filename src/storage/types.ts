@@ -80,10 +80,12 @@ export interface StorageProvider {
   /**
    * Generate a pre-signed URL for client-side uploads
    */
-  getPresignedUploadUrl(params: PresignedUploadUrlParams): Promise<UploadFileResult>;
+  getPresignedUploadUrl(
+    params: PresignedUploadUrlParams
+  ): Promise<UploadFileResult>;
 
   /**
    * Get the provider's name
    */
   getProviderName(): string;
-} 
+}
