@@ -1,4 +1,3 @@
-import { sendEmail } from '@/mail';
 import type {
   CheckSubscribeStatusParams,
   NewsletterProvider,
@@ -140,6 +139,9 @@ export class ResendNewsletterProvider implements NewsletterProvider {
     email,
   }: CheckSubscribeStatusParams): Promise<boolean> {
     try {
+      // TODO: use get method to check if the contact exists with email,
+      // the new Resend API is not ready yet, so we use the old way to check
+
       // First, list all contacts to find the one with the matching email
       const listResult = await this.resend.contacts.list({
         audienceId: this.audienceId,
