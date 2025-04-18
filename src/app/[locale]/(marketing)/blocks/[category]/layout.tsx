@@ -1,5 +1,5 @@
-import { categories } from '@/components/nsui/blocks';
-import BlocksNav from '@/components/nsui/blocks-nav';
+import { categories } from '@/components/tailark/blocks';
+import BlocksNav from '@/components/tailark/blocks-nav';
 import type { PropsWithChildren } from 'react';
 
 /**

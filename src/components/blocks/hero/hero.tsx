@@ -1,5 +1,5 @@
-import { AnimatedGroup } from '@/components/motion/animated-group';
-import { TextEffect } from '@/components/motion/text-effect';
+import { AnimatedGroup } from '@/components/tailark/motion/animated-group';
+import { TextEffect } from '@/components/tailark/motion/text-effect';
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { ArrowRight } from 'lucide-react';

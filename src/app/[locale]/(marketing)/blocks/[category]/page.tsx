@@ -1,5 +1,5 @@
-import BlockPreview from '@/components/nsui/block-preview';
-import { blocks, categories } from '@/components/nsui/blocks';
+import BlockPreview from '@/components/tailark/block-preview';
+import { blocks, categories } from '@/components/tailark/blocks';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';

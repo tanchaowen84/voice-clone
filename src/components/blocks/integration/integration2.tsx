@@ -6,7 +6,7 @@ import {
   MediaWiki,
   Replit,
   VSCodium,
-} from '@/components/nsui/logos';
+} from '@/components/tailark/logos';
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';

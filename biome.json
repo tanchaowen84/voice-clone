@@ -18,8 +18,8 @@
       "drizzle/**",
       "tailwind.config.ts",
       "src/components/ui/*.tsx",
-      "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
       "src/payment/types.ts",
@@ -50,6 +50,9 @@
       "complexity": {
         "noForEach": "off"
       },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
       "style": {
         "useTemplate": "off",
         "noNonNullAssertion": "off",
@@ -57,7 +60,8 @@
       },
       "a11y": {
         "useValidAnchor": "off",
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off"
       }
     },
     "ignore": [
@@ -71,8 +75,8 @@
       "drizzle/**",
       "tailwind.config.ts",
       "src/components/ui/*.tsx",
-      "src/components/nsui/*.tsx",
       "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
       "src/payment/types.ts",
