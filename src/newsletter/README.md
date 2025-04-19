@@ -2,13 +2,25 @@
 
 This module provides functionality for managing newsletter subscriptions using various email service providers. Currently, it supports [Resend](https://resend.com) for handling newsletter subscriptions.
 
-## Structure
+## Overview
 
-The newsletter system is designed with the following components:
+The newsletter system is designed to be:
 
-- **Provider Interface**: A common interface for newsletter providers in `types.ts`
-- **Providers**: Implementations for different newsletter service providers in the `provider` directory
-- **Configuration**: Configuration for newsletter defaults and settings in `src/config/website.tsx`
+- **Modular**: Easy to extend with new providers
+- **Flexible**: Simple API for subscription management
+- **Type-safe**: Full TypeScript support
+- **Provider-agnostic**: Common interface for different newsletter services
+
+## Directory Structure
+
+```
+src/newsletter/
+├── provider/       # Newsletter provider implementations
+│   └── resend.ts   # Resend.com provider implementation
+├── index.ts        # Main API and utility functions
+├── types.ts        # TypeScript types and interfaces
+└── README.md       # This documentation
+```
 
 ## Features
 
@@ -17,6 +29,32 @@ The newsletter system is designed with the following components:
 - Check subscription status
 - Provider-agnostic interface for easy integration with different newsletter services
 - Automatic configuration using environment variables
+
+## Configuration
+
+The newsletter module is configured in two ways:
+
+1. In `src/config/website.tsx`:
+
+```typescript
+// In src/config/website.tsx
+export const websiteConfig = {
+  // ...other config
+  newsletter: {
+    provider: 'resend', // Newsletter provider to use
+    autoSubscribeAfterSignUp: false, // Whether to automatically subscribe users after sign up
+  },
+  // ...other config
+}
+```
+
+2. Using environment variables:
+
+```
+# Required for Resend provider
+RESEND_API_KEY=your-resend-api-key
+RESEND_AUDIENCE_ID=your-audience-id
+```
 
 ## Basic Usage
 
@@ -33,86 +71,93 @@ const success = await unsubscribe('user@example.com');
 const subscribed = await isSubscribed('user@example.com');
 ```
 
-## Configuration
+## Using with Email Templates
 
-The newsletter module is configured in two ways:
-
-1. In `src/config/website.tsx`:
+You can combine the newsletter functionality with the email system to send confirmation emails:
 
 ```typescript
-// In src/config/website.tsx
-export const websiteConfig = {
-  // ...other config
-  newsletter: {
-    provider: 'resend',
-  },
-  // ...other config
+import { subscribe } from '@/newsletter';
+import { sendEmail } from '@/mail';
+
+export async function subscribeWithConfirmation(email: string) {
+  // Subscribe the user
+  const success = await subscribe(email);
+  
+  if (success) {
+    // Send a confirmation email
+    await sendEmail({
+      to: email,
+      template: 'subscribeNewsletter',
+      context: {
+        name: email.split('@')[0], // Simple name extraction
+        unsubscribeUrl: `https://example.com/unsubscribe?email=${encodeURIComponent(email)}`,
+      },
+    });
+  }
+  
+  return success;
 }
 ```
+## Customization
 
-2. Using environment variables:
-
-```
-# Required for Resend provider
-RESEND_API_KEY=your-resend-api-key
-RESEND_AUDIENCE_ID=your-audience-id
-```
-
-You can also configure it programmatically:
-
-```typescript
-import { initializeNewsletterProvider } from '@/newsletter';
-
-// Configure with Resend
-initializeNewsletterProvider();
-```
-
-## Advanced Usage
-
-### Using the Newsletter Provider Directly
-
-If you need more control, you can interact with the newsletter provider directly:
-
-```typescript
-import { getNewsletterProvider } from '@/newsletter';
-
-const provider = getNewsletterProvider();
-
-// Use provider methods directly
-const result = await provider.subscribe({ email: 'user@example.com' });
-```
-
-### Using a Custom Provider Implementation
+### Creating a Custom Provider
 
 You can create and use your own newsletter provider implementation:
 
 ```typescript
-import { NewsletterProvider, SubscribeNewsletterParams } from '@/newsletter/types';
+import { 
+  NewsletterProvider, 
+  SubscribeNewsletterParams,
+  UnsubscribeNewsletterParams,
+  CheckSubscribeStatusParams 
+} from '@/newsletter/types';
 
-class CustomNewsletterProvider implements NewsletterProvider {
-  async subscribe(params: SubscribeNewsletterParams): Promise<boolean> {
-    // Your implementation
-    return true;
+export class CustomNewsletterProvider implements NewsletterProvider {
+  constructor() {
+    // Initialize your provider
   }
 
-  async unsubscribe(params: SubscribeNewsletterParams): Promise<boolean> {
-    // Your implementation
-    return true;
-  }
-
-  async checkSubscribeStatus(params: SubscribeNewsletterParams): Promise<boolean> {
-    // Your implementation
-    return true;
-  }
-  
-  getProviderName(): string {
+  public getProviderName(): string {
     return 'CustomProvider';
   }
-}
 
-// Use your custom provider directly
-const customProvider = new CustomNewsletterProvider();
-const result = await customProvider.subscribe({ email: 'user@example.com' });
+  async subscribe({ email }: SubscribeNewsletterParams): Promise<boolean> {
+    // Implementation for subscribing a user
+    return true;
+  }
+
+  async unsubscribe({ email }: UnsubscribeNewsletterParams): Promise<boolean> {
+    // Implementation for unsubscribing a user
+    return true;
+  }
+
+  async checkSubscribeStatus({ email }: CheckSubscribeStatusParams): Promise<boolean> {
+    // Implementation for checking subscription status
+    return true;
+  }
+}
+```
+
+Then update the provider selection logic in `index.ts`:
+
+```typescript
+import { CustomNewsletterProvider } from './provider/custom-provider';
+
+export const initializeNewsletterProvider = (): NewsletterProvider => {
+  if (!newsletterProvider) {
+    if (websiteConfig.newsletter.provider === 'resend') {
+      newsletterProvider = new ResendNewsletterProvider();
+    } else if (websiteConfig.newsletter.provider === 'custom') {
+      newsletterProvider = new CustomNewsletterProvider();
+    } else {
+      throw new Error(
+        `Unsupported newsletter provider: ${websiteConfig.newsletter.provider}`
+      );
+    }
+  }
+
+  return newsletterProvider;
+};
 ```
 
 ## API Reference
@@ -126,7 +171,7 @@ const result = await customProvider.subscribe({ email: 'user@example.com' });
 ### Provider Management
 
 - `getNewsletterProvider()`: Get the configured newsletter provider instance
-- `initializeNewsletterProvider()`: Initialize the newsletter provider
+- `initializeNewsletterProvider()`: Initialize the newsletter provider based on configuration
 
 ### Provider Interface
 
@@ -142,3 +187,12 @@ The `NewsletterProvider` interface defines the following methods:
 - `SubscribeNewsletterParams`: Parameters for subscribing a user
 - `UnsubscribeNewsletterParams`: Parameters for unsubscribing a user
 - `CheckSubscribeStatusParams`: Parameters for checking subscription status
+
+## Best Practices
+
+1. **Validate Email Addresses**: Always validate email addresses before subscribing users
+2. **Handle Errors Gracefully**: Provide user-friendly error messages when subscription fails
+3. **Confirmation Emails**: Send confirmation emails when users subscribe
+4. **Unsubscribe Link**: Always include an unsubscribe link in your newsletter emails
+5. **Rate Limiting**: Implement rate limiting on your subscription endpoints to prevent abuse
+6. **Privacy Policy**: Make sure your website has a privacy policy explaining how you use subscriber data

@@ -32,8 +32,6 @@ src/mail/
 
 ## Usage
 
-### Basic Usage
-
 ```typescript
 import { sendEmail } from '@/mail';
 
@@ -142,7 +140,7 @@ export const websiteConfig = {
 
 [Resend](https://resend.com/) is the default email provider. It requires an API key set as `RESEND_API_KEY` in your environment variables.
 
-### Adding a New Provider
+### Creating a New Provider
 
 To add a new email provider:
 
@@ -188,19 +186,3 @@ export const initializeMailProvider = (): MailProvider => {
   return mailProvider;
 };
 ```
-
-## Local Development
-
-To preview email templates locally:
-
-```bash
-npm run email
-# or
-pnpm run email
-# or
-yarn email
-# or
-bun run email
-```
-
-This will start a local server to preview your email templates. 
