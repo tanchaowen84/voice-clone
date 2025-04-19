@@ -2,14 +2,33 @@
 
 This module provides email functionality for the application. It supports sending emails using templates or raw content through different email providers.
 
-## Structure
+## Overview
 
-The email system is designed with the following components:
+The email system is designed to be:
 
-- **Provider Interface**: A common interface for email providers in `types.ts`
-- **Email Templates**: React-based email templates for different purposes in the `templates` directory
-- **Email Components**: Reusable email components in the `components` directory
-- **Configuration**: Configuration for email defaults and settings in `src/config/website.tsx`
+- **Modular**: Easy to extend with new providers
+- **Flexible**: Support for templates and raw emails
+- **Type-safe**: Full TypeScript support
+- **Internationalizable**: Multi-language email support
+
+## Directory Structure
+
+```
+src/mail/
+├── components/     # Reusable email components
+│   ├── email-button.tsx
+│   └── email-layout.tsx
+├── provider/       # Email provider implementations
+│   └── resend.ts   # Resend.com provider implementation
+├── templates/      # React-based email templates
+│   ├── contact-message.tsx
+│   ├── forgot-password.tsx
+│   ├── subscribe-newsletter.tsx
+│   └── verify-email.tsx
+├── index.ts        # Main API and utility functions
+├── types.ts        # TypeScript types and interfaces
+└── README.md       # This documentation
+```
 
 ## Usage
 
@@ -38,48 +57,16 @@ await sendEmail({
 });
 ```
 
-### Using the Mail Provider Directly
-
-```typescript
-import { getMailProvider } from '@/mail';
-
-// Get the provider
-const provider = getMailProvider();
-
-// Send template email
-const result = await provider.sendTemplate({
-  to: 'user@example.com',
-  template: 'welcomeEmail',
-  context: {
-    name: 'John Doe',
-  },
-});
-
-// Check result
-if (result.success) {
-  console.log('Email sent successfully!', result.messageId);
-} else {
-  console.error('Failed to send email:', result.error);
-}
-
-// Send raw email
-await provider.sendRawEmail({
-  to: 'user@example.com',
-  subject: 'Raw email example',
-  html: '<p>This is a raw email</p>',
-});
-```
-
 ## Email Templates
 
 Email templates are React components stored in the `templates` directory. Each template has specific props and is rendered to HTML/text when sent.
 
 ### Available Templates
 
-- `verifyEmail`: For email verification
-- `forgotPassword`: For password reset
-- `subscribeNewsletter`: For newsletter subscription
-- `contactMessage`: For contact form messages
+- `verifyEmail`: For email verification during user registration or email changes
+- `forgotPassword`: For password reset requests
+- `subscribeNewsletter`: For newsletter subscription confirmations
+- `contactMessage`: For contact form submissions
 
 ### Creating a New Template
 
@@ -91,24 +78,28 @@ Email templates are React components stored in the `templates` directory. Each t
 Example:
 
 ```tsx
-// templates/my-new-email.tsx
+// templates/my-custom-email.tsx
 import { BaseEmailProps } from '@/mail/types';
-import { Body, Container, Head, Html, Text } from '@react-email/components';
+import { EmailLayout } from '../components/email-layout';
+import { EmailButton } from '../components/email-button';
 
-interface MyNewEmailProps extends BaseEmailProps {
+interface MyCustomEmailProps extends BaseEmailProps {
   username: string;
+  actionUrl: string;
 }
 
-export function MyNewEmail({ username, messages, locale }: MyNewEmailProps) {
+export function MyCustomEmail({ 
+  username, 
+  actionUrl, 
+  messages, 
+  locale 
+}: MyCustomEmailProps) {
   return (
-    <Html lang={locale}>
-      <Head />
-      <Body>
-        <Container>
-          <Text>Hello {username}!</Text>
-        </Container>
-      </Body>
-    </Html>
+    <EmailLayout>
+      <p>Hello {username}!</p>
+      <p>Thanks for joining our platform. Click the button below to get started.</p>
+      <EmailButton href={actionUrl}>Get Started</EmailButton>
+    </EmailLayout>
   );
 }
 ```
@@ -118,28 +109,28 @@ Then update the `types.ts` file to include your new template:
 ```typescript
 export interface EmailTemplates {
   // ... existing templates
-  myNewEmail: React.ComponentType<MyNewEmailProps>;
+  myCustomEmail: React.ComponentType<MyCustomEmailProps>;
 }
 ```
 
+## Email Components
+
+The email system includes reusable components in the `components` directory:
+
+- `EmailLayout`: Base wrapper component that provides consistent layout and styling
+- `EmailButton`: Styled button component for call-to-action links
+
 ## Configuration
 
-The email system configuration is defined in `src/config/website.tsx`. It includes settings like:
-
-- Default "from" email address
-- Mail provider selection
-- Default "to" email address for contact forms
-
-Example configuration:
+The email system configuration is defined in `src/config/website.tsx`:
 
 ```typescript
 // In src/config/website.tsx
 export const websiteConfig = {
   // ...other config
   mail: {
-    provider: 'resend',
-    from: 'support@example.com',
-    to: 'contact@example.com',
+    provider: 'resend', // Email provider to use
+    contact: 'contact@example.com', // Default recipient for contact forms
   },
   // ...other config
 }
@@ -171,11 +162,11 @@ export class MyProvider implements MailProvider {
   }
 
   public async sendTemplate(params: SendTemplateParams): Promise<SendEmailResult> {
-    // Implementation
+    // Implementation for template emails
   }
 
   public async sendRawEmail(params: SendRawEmailParams): Promise<SendEmailResult> {
-    // Implementation
+    // Implementation for raw emails
   }
 
   public getProviderName(): string {
@@ -196,4 +187,20 @@ export const initializeMailProvider = (): MailProvider => {
   }
   return mailProvider;
 };
-``` 
+```
+
+## Local Development
+
+To preview email templates locally:
+
+```bash
+npm run email
+# or
+pnpm run email
+# or
+yarn email
+# or
+bun run email
+```
+
+This will start a local server to preview your email templates. 
