@@ -116,12 +116,6 @@ export type MenuItem = {
 /**
  * nested menu item, used for navbar links, sidebar links, footer links
  */
-export type NestedMenuItem = {
-  title: string;
-  description?: string;
-  icon?: ReactNode;
-  href?: string;
-  external?: boolean;
-  authorizeOnly?: string[];
+export type NestedMenuItem = MenuItem & {
   items?: MenuItem[];                // The items to display in the nested menu
 };
