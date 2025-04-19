@@ -7,6 +7,8 @@ import {
 } from '@/components/ui/hover-card';
 import { LOCALES } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
+import { constructMetadata } from '@/lib/metadata';
+import { getUrlWithLocale } from '@/lib/urls/urls';
 import Link from 'fumadocs-core/link';
 import {
   DocsBody,
@@ -16,6 +18,7 @@ import {
 } from 'fumadocs-ui/page';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
@@ -41,10 +44,13 @@ export async function generateMetadata({ params }: DocPageProps) {
     notFound();
   }
 
-  return {
-    title: page.data.title,
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+
+  return constructMetadata({
+    title: `${page.data.title} | ${t('title')}`,
     description: page.data.description,
-  } satisfies Metadata;
+    canonicalUrl: getUrlWithLocale(`/docs/${page.slugs.join('/')}`, locale),
+  });
 }
 
 function PreviewRenderer({ preview }: { preview: string }): ReactNode {
