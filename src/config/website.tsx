@@ -45,8 +45,7 @@ export const websiteConfig: WebsiteConfig = {
   },
   mail: {
     provider: 'resend',
-    from: 'support@mksaas.com',
-    to: 'support@mksaas.com',
+    contact: 'support@mksaas.com',
   },
   newsletter: {
     provider: 'resend',

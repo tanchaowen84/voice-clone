@@ -75,8 +75,7 @@ export interface BlogConfig {
  */
 export interface MailConfig {
   provider: 'resend';                // The email provider, only resend is supported for now
-  from?: string;                     // Sender email address
-  to?: string;                       // Recipient email address
+  contact?: string;                  // Sender email address, as well as recipient email address
 }
 
 /**
