@@ -1,7 +1,7 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { getPricePlans } from '@/config/payment-config';
+import { getPricePlans } from '@/config/price-config';
 import { cn } from '@/lib/utils';
 import {
   PaymentTypes,
