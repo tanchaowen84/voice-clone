@@ -56,6 +56,8 @@ export const websiteConfig: WebsiteConfig = {
   },
   payment: {
     provider: 'stripe',
+  },
+  price: {
     plans: {
       free: {
         id: 'free',

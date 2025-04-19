@@ -11,6 +11,7 @@ export type WebsiteConfig = {
   newsletter: NewsletterConfig;
   storage: StorageConfig;
   payment: PaymentConfig;
+  price: PriceConfig;
 };
 
 /**
@@ -98,6 +99,12 @@ export interface StorageConfig {
  */
 export interface PaymentConfig {
   provider: 'stripe';                // The payment provider, only stripe is supported for now
+}
+
+/**
+ * Price configuration
+ */
+export interface PriceConfig {
   plans: Record<string, PricePlan>;  // Plans indexed by ID
 }
 

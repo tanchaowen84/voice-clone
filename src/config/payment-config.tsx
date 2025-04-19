@@ -15,13 +15,13 @@ import { websiteConfig } from './website';
  */
 export function getPricePlans(): Record<string, PricePlan> {
   const t = useTranslations('PricePlans');
-  const paymentConfig = websiteConfig.payment;
+  const priceConfig = websiteConfig.price;
   const plans: Record<string, PricePlan> = {};
 
   // Add translated content to each plan
-  if (paymentConfig.plans.free) {
+  if (priceConfig.plans.free) {
     plans.free = {
-      ...paymentConfig.plans.free,
+      ...priceConfig.plans.free,
       name: t('free.name'),
       description: t('free.description'),
       features: [
@@ -38,9 +38,9 @@ export function getPricePlans(): Record<string, PricePlan> {
     };
   }
 
-  if (paymentConfig.plans.pro) {
+  if (priceConfig.plans.pro) {
     plans.pro = {
-      ...paymentConfig.plans.pro,
+      ...priceConfig.plans.pro,
       name: t('pro.name'),
       description: t('pro.description'),
       features: [
@@ -54,9 +54,9 @@ export function getPricePlans(): Record<string, PricePlan> {
     };
   }
 
-  if (paymentConfig.plans.lifetime) {
+  if (priceConfig.plans.lifetime) {
     plans.lifetime = {
-      ...paymentConfig.plans.lifetime,
+      ...priceConfig.plans.lifetime,
       name: t('lifetime.name'),
       description: t('lifetime.description'),
       features: [

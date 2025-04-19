@@ -1,6 +1,5 @@
 import { websiteConfig } from '@/config/website';
 import { defaultMessages } from '@/i18n/messages';
-import { routing } from '@/i18n/routing';
 import type { Metadata } from 'next';
 import { getBaseUrl } from './urls/urls';
 
@@ -13,14 +12,12 @@ export function constructMetadata({
   canonicalUrl,
   image,
   noIndex = false,
-  locale = routing.defaultLocale,
 }: {
   title?: string;
   description?: string;
   canonicalUrl?: string;
   image?: string;
   noIndex?: boolean;
-  locale?: string;
 } = {}): Metadata {
   title = title || defaultMessages.Metadata.name;
   description = description || defaultMessages.Metadata.description;

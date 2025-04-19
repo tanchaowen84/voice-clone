@@ -7,7 +7,7 @@ import type { Price, PricePlan } from '@/payment/types';
  * @returns Array of price plans
  */
 export const getAllPricePlans = (): PricePlan[] => {
-  return Object.values(websiteConfig.payment.plans);
+  return Object.values(websiteConfig.price.plans);
 };
 
 /**
