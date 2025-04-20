@@ -6,13 +6,16 @@ import {
 } from 'next/font/google';
 
 /**
- * This file shows how to customize the font by using local font or google font
+ * 1. Fonts Documentation
+ * https://mksaas.com/docs/fonts
+ *
+ * 2. This file shows how to customize the font by using local font or google font
  *
  * [1] use local font
  *
- * 1. Get font file from https://gwfh.mranftl.com/fonts
- * 2. Add font file to the assets/fonts folder
- * 3. Add font variable to the font object
+ * - Get font file from https://gwfh.mranftl.com/fonts
+ * - Add font file to the assets/fonts folder
+ * - Add font variable to the font object
  */
 // https://gwfh.mranftl.com/fonts/bricolage-grotesque?subsets=latin
 // export const fontBricolageGrotesque = localFont({
@@ -23,10 +26,10 @@ import {
 /**
  * [2] use google font
  *
- * 1. You can browser fonts at Google Fonts
+ * - You can browser fonts at Google Fonts
  * https://fonts.google.com
  *
- * 2. CSS and font files are downloaded at build time and self-hosted with the rest of your static assets.
+ * - CSS and font files are downloaded at build time and self-hosted with the rest of your static assets.
  * https://nextjs.org/docs/app/building-your-application/optimizing/fonts#google-fonts
  */
 // https://fonts.google.com/noto/specimen/Noto+Sans

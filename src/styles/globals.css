@@ -4,7 +4,15 @@
 @custom-variant dark (&:is(.dark *));
 
 /* 
- * How to Add a Theme Selector to Your Next.js App
+ * 1. Themes Documentation
+ * https://mksaas.com/docs/themes
+
+ * 2. Theme Generator
+ * https://ui.shadcn.com/themes
+ * https://tweakcn.com/
+ * https://ui.pub/x/theme-gen
+ * 
+ * 3. How to Add a Theme Selector to Your Next.js App
  * https://ouassim.tech/notes/how-to-add-a-theme-selector-to-your-nextjs-app/
  */
 @theme inline {
@@ -61,47 +69,50 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
   @keyframes shiny-text {
+
     0%,
     90%,
     100% {
       background-position: calc(-100% - var(--shiny-width)) 0;
     }
+
     30%,
     60% {
       background-position: calc(100% + var(--shiny-width)) 0;
     }
   }
+
   @keyframes rainbow {
     0% {
       background-position: 0%;
     }
+
     100% {
       background-position: 200%;
     }
   }
+
   @keyframes accordion-down {
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
   }
 }
 
-/* shadcn ui base colors for different themes */
-/* https://tweakcn.com/ */
-/* https://ui.shadcn.com/docs/theming#base-colors */
-/* https://ui.pub/x/theme-gen */
-/* https://spectr.irung.me/ */
 :root {
   --radius: 0.5rem;
   --background: oklch(1 0 0);
@@ -180,6 +191,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -193,6 +205,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
