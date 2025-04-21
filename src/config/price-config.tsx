@@ -11,6 +11,9 @@ import { websiteConfig } from './website';
  * If you need to get the price plans in server components, use getAllPricePlans instead.
  * Use this function when showing the pricing table or the billing card to the user.
  *
+ * docs:
+ * https://mksaas.com/docs/config/price
+ *
  * @returns The price plans with translated content
  */
 export function getPricePlans(): Record<string, PricePlan> {

@@ -6,7 +6,7 @@ MkSaaS is a complete Next.js boilerplate for building AI SaaS websites. Make mon
 
 ## Author
 
-This project is created by [Fox](https://x.com/indie_maker_fox), the founder of MkSaaS LLC and the creator of [Mkdirs](https://mkdirs.com), [IndieHub](https://indiehub.best) and some other websites.
+This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [MkSaaS](https://mksaas.com) and [Mkdirs](https://mkdirs.com).
 
 ## Documentation
 
@@ -19,7 +19,7 @@ If you found anything that could be improved, please let me know.
 - website: [mksaas.com](https://mksaas.com)
 - demo: [demo.mksaas.com](https://demo.mksaas.com)
 - discord: [https://discord.gg/yVwpEtTT](https://discord.gg/yVwpEtTT)
-- documentation (WIP): [mksaas.com/docs](https://mksaas.com/docs)
+- documentation: [mksaas.com/docs](https://mksaas.com/docs)
 - video (WIP): [www.youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
 - roadmap (WIP): [issues/17](https://github.com/MkSaaSHQ/mksaas-template/issues/17)
 

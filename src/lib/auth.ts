@@ -13,6 +13,10 @@ import type { Locale } from 'next-intl';
 import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
 
 /**
+ * Better Auth configuration
+ *
+ * docs:
+ * https://mksaas.com/docs/auth
  * https://www.better-auth.com/docs/reference/options
  */
 export const auth = betterAuth({

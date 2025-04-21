@@ -11,6 +11,7 @@ import {
   type SendRawEmailParams,
   type SendTemplateParams,
 } from './types';
+
 /**
  * Global mail provider instance
  */

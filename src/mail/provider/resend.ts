@@ -10,6 +10,9 @@ import { Resend } from 'resend';
 
 /**
  * Resend mail provider implementation
+ *
+ * docs:
+ * https://mksaas.com/docs/email
  */
 export class ResendProvider implements MailProvider {
   private resend: Resend;

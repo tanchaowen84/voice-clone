@@ -20,6 +20,9 @@ import {
 /**
  * Amazon S3 storage provider implementation
  *
+ * docs:
+ * https://mksaas.com/docs/storage
+ *
  * This provider works with Amazon S3 and compatible services like Cloudflare R2
  * https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
  * https://www.npmjs.com/package/@aws-sdk/client-s3

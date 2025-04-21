@@ -24,6 +24,9 @@ import {
 
 /**
  * Stripe payment provider implementation
+ *
+ * docs:
+ * https://mksaas.com/docs/payment
  */
 export class StripeProvider implements PaymentProvider {
   private stripe: Stripe;
