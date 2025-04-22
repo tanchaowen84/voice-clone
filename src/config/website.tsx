@@ -30,8 +30,8 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   analytics: {
-    enableVercelAnalytics: true,
-    enableSpeedInsights: true,
+    enableVercelAnalytics: false,
+    enableSpeedInsights: false,
   },
   i18n: {
     defaultLocale: 'en',
