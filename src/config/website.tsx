@@ -29,6 +29,10 @@ export const websiteConfig: WebsiteConfig = {
       youtube: 'https://www.youtube.com/@MkSaaS',
     },
   },
+  analytics: {
+    enableVercelAnalytics: true,
+    enableSpeedInsights: true,
+  },
   i18n: {
     defaultLocale: 'en',
     locales: {

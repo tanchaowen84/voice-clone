@@ -1,3 +1,4 @@
+import { websiteConfig } from '@/config/website';
 import DataFastAnalytics from './data-fast-analytics';
 import GoogleAnalytics from './google-analytics';
 import OpenPanelAnalytics from './open-panel-analytics';
@@ -43,11 +44,15 @@ export function Analytics() {
 
       {/* vercel analytics */}
       {/* https://vercel.com/docs/analytics/quickstart */}
-      <VercelAnalytics />
+      {websiteConfig.analytics.enableVercelAnalytics && (
+        <VercelAnalytics />
+      )}
 
       {/* speed insights */}
       {/* https://vercel.com/docs/speed-insights/quickstart */}
-      <SpeedInsights />
+      {websiteConfig.analytics.enableSpeedInsights && (
+        <SpeedInsights />
+      )}
     </>
   );
 }

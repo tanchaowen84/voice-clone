@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
  */
 export type WebsiteConfig = {
   metadata: MetadataConfig;
+  analytics: AnalyticsConfig;
   i18n: I18nConfig;
   blog: BlogConfig;
   mail: MailConfig;
@@ -56,11 +57,19 @@ export interface SocialConfig {
 }
 
 /**
+ * Analytics configuration
+ */
+export interface AnalyticsConfig {
+  enableVercelAnalytics?: boolean;    // Whether to enable vercel analytics
+  enableSpeedInsights?: boolean;      // Whether to enable speed insights
+}
+
+/**
  * I18n configuration
  */
 export interface I18nConfig {
-  defaultLocale: string;
-  locales: Record<string, { flag?: string; name: string }>;
+  defaultLocale: string;              // The default locale of the website
+  locales: Record<string, { flag?: string; name: string }>; // The locales of the website
 }
 
 /**
