@@ -34,8 +34,8 @@ export const websiteConfig: WebsiteConfig = {
     enableSpeedInsights: false,
   },
   auth: {
-    disableGoogleLogin: true,
-    disableGithubLogin: true,
+    disableGoogleLogin: false,
+    disableGithubLogin: false,
   },
   i18n: {
     defaultLocale: 'en',
