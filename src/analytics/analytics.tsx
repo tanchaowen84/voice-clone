@@ -4,6 +4,7 @@ import OpenPanelAnalytics from './open-panel-analytics';
 import { PlausibleAnalytics } from './plausible-analytics';
 import { SelineAnalytics } from './seline-analytics';
 import { UmamiAnalytics } from './umami-analytics';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
 /**
  * Analytics Components all in one
@@ -38,6 +39,9 @@ export function Analytics() {
 
       {/* seline analytics */}
       <SelineAnalytics />
+
+      {/* vercel analytics */}
+      <VercelAnalytics />
     </>
   );
 }
