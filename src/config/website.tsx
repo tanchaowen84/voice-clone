@@ -33,6 +33,10 @@ export const websiteConfig: WebsiteConfig = {
     enableVercelAnalytics: false,
     enableSpeedInsights: false,
   },
+  auth: {
+    disableGoogleLogin: true,
+    disableGithubLogin: true,
+  },
   i18n: {
     defaultLocale: 'en',
     locales: {

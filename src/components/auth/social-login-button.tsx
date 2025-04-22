@@ -4,6 +4,7 @@ import { DividerWithText } from '@/components/auth/divider-with-text';
 import { GitHubIcon } from '@/components/icons/github';
 import { GoogleIcon } from '@/components/icons/google';
 import { Button } from '@/components/ui/button';
+import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
 import { getUrlWithLocaleInCallbackUrl } from '@/lib/urls/urls';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
@@ -22,6 +23,10 @@ interface SocialLoginButtonProps {
 export const SocialLoginButton = ({
   callbackUrl: propCallbackUrl,
 }: SocialLoginButtonProps) => {
+  if (websiteConfig.auth.disableGoogleLogin && websiteConfig.auth.disableGithubLogin) {
+    return null;
+  }
+
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams.get('callbackUrl');
@@ -86,34 +91,38 @@ export const SocialLoginButton = ({
   return (
     <div className="w-full flex flex-col gap-4">
       <DividerWithText text={t('or')} />
-      <Button
-        size="lg"
-        className="w-full cursor-pointer"
-        variant="outline"
-        onClick={() => onClick('google')}
-        disabled={isLoading === 'google'}
+      {!websiteConfig.auth.disableGoogleLogin && (
+        <Button
+          size="lg"
+          className="w-full cursor-pointer"
+          variant="outline"
+          onClick={() => onClick('google')}
+          disabled={isLoading === 'google'}
       >
         {isLoading === 'google' ? (
           <Loader2Icon className="mr-2 size-4 animate-spin" />
         ) : (
           <GoogleIcon className="size-4 mr-2" />
         )}
-        <span>{t('signInWithGoogle')}</span>
-      </Button>
-      <Button
-        size="lg"
-        className="w-full cursor-pointer"
-        variant="outline"
-        onClick={() => onClick('github')}
-        disabled={isLoading === 'github'}
+          <span>{t('signInWithGoogle')}</span>
+        </Button>
+      )}
+      {!websiteConfig.auth.disableGithubLogin && (
+        <Button
+          size="lg"
+          className="w-full cursor-pointer"
+          variant="outline"
+          onClick={() => onClick('github')}
+          disabled={isLoading === 'github'}
       >
         {isLoading === 'github' ? (
           <Loader2Icon className="mr-2 size-4 animate-spin" />
         ) : (
           <GitHubIcon className="size-4 mr-2" />
         )}
-        <span>{t('signInWithGitHub')}</span>
-      </Button>
+          <span>{t('signInWithGitHub')}</span>
+        </Button>
+      )}
     </div>
   );
 };
