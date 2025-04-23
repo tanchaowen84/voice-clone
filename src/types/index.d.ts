@@ -66,8 +66,8 @@ export interface AnalyticsConfig {
 }
 
 export interface AuthConfig {
-  disableGoogleLogin?: boolean;       // Whether to disable google login
-  disableGithubLogin?: boolean;       // Whether to disable github login
+  enableGoogleLogin?: boolean;       // Whether to enable google login
+  enableGithubLogin?: boolean;       // Whether to enable github login
 }
 
 /**

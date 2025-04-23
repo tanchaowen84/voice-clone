@@ -23,7 +23,10 @@ interface SocialLoginButtonProps {
 export const SocialLoginButton = ({
   callbackUrl: propCallbackUrl,
 }: SocialLoginButtonProps) => {
-  if (websiteConfig.auth.disableGoogleLogin && websiteConfig.auth.disableGithubLogin) {
+  if (
+    !websiteConfig.auth.enableGoogleLogin &&
+    !websiteConfig.auth.enableGithubLogin
+  ) {
     return null;
   }
 
@@ -91,35 +94,35 @@ export const SocialLoginButton = ({
   return (
     <div className="w-full flex flex-col gap-4">
       <DividerWithText text={t('or')} />
-      {!websiteConfig.auth.disableGoogleLogin && (
+      {websiteConfig.auth.enableGoogleLogin && (
         <Button
           size="lg"
           className="w-full cursor-pointer"
           variant="outline"
           onClick={() => onClick('google')}
           disabled={isLoading === 'google'}
-      >
-        {isLoading === 'google' ? (
-          <Loader2Icon className="mr-2 size-4 animate-spin" />
-        ) : (
-          <GoogleIcon className="size-4 mr-2" />
-        )}
+        >
+          {isLoading === 'google' ? (
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+          ) : (
+            <GoogleIcon className="size-4 mr-2" />
+          )}
           <span>{t('signInWithGoogle')}</span>
         </Button>
       )}
-      {!websiteConfig.auth.disableGithubLogin && (
+      {websiteConfig.auth.enableGithubLogin && (
         <Button
           size="lg"
           className="w-full cursor-pointer"
           variant="outline"
           onClick={() => onClick('github')}
           disabled={isLoading === 'github'}
-      >
-        {isLoading === 'github' ? (
-          <Loader2Icon className="mr-2 size-4 animate-spin" />
-        ) : (
-          <GitHubIcon className="size-4 mr-2" />
-        )}
+        >
+          {isLoading === 'github' ? (
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+          ) : (
+            <GitHubIcon className="size-4 mr-2" />
+          )}
           <span>{t('signInWithGitHub')}</span>
         </Button>
       )}
