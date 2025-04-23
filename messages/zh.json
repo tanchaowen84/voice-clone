@@ -402,6 +402,7 @@
         "title": "资源",
         "items": {
           "blog": "博客",
+          "docs": "文档",
           "changelog": "更新日志",
           "roadmap": "路线图"
         }

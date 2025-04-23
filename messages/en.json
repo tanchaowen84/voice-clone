@@ -401,6 +401,7 @@
         "title": "Resources",
         "items": {
           "blog": "Blog",
+          "docs": "Documentation",
           "changelog": "Changelog",
           "roadmap": "Roadmap"
         }
