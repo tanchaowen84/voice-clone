@@ -62,13 +62,13 @@ export default async function AboutPage() {
                 {t('introduction')}
               </p>
 
-              {websiteConfig.mail.contact && (
+              {websiteConfig.mail.supportEmail && (
                 <div className="flex items-center gap-4">
                   <Button className="rounded-lg cursor-pointer">
                     <MailIcon className="mr-1 size-4" />
-                    <a href={`mailto:${websiteConfig.mail.contact}`}>
-                    {t('talkWithMe')}
-                  </a>
+                    <a href={`mailto:${websiteConfig.mail.supportEmail}`}>
+                      {t('talkWithMe')}
+                    </a>
                   </Button>
                 </div>
               )}

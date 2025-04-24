@@ -99,7 +99,8 @@ export interface BlogConfig {
  */
 export interface MailConfig {
   provider: 'resend';                // The email provider, only resend is supported for now
-  contact?: string;                  // Sender email address, as well as recipient email address
+  fromEmail?: string;                // The email address to send from
+  supportEmail?: string;             // The email address to send support emails to
 }
 
 /**

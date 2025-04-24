@@ -34,7 +34,7 @@ export const sendMessageAction = actionClient
     try {
       const { name, email, message } = parsedInput;
 
-      if (!websiteConfig.mail.contact) {
+      if (!websiteConfig.mail.supportEmail) {
         console.error('The mail receiver is not set');
         throw new Error('The mail receiver is not set');
       }
@@ -43,7 +43,7 @@ export const sendMessageAction = actionClient
 
       // Send message as an email to admin
       const result = await sendEmail({
-        to: websiteConfig.mail.contact,
+        to: websiteConfig.mail.supportEmail,
         template: 'contactMessage',
         context: {
           name,

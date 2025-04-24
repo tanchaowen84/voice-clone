@@ -89,7 +89,7 @@ export default function HeroSection() {
                   speedSegment={0.3}
                   delay={0.5}
                   as="p"
-                  className="mx-auto mt-8 max-w-2xl text-balance text-lg"
+                  className="mx-auto mt-8 max-w-4xl text-balance text-lg text-muted-foreground"
                 >
                   {t('description')}
                 </TextEffect>
