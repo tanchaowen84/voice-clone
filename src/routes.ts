@@ -1,3 +1,5 @@
+import { websiteConfig } from './config/website';
+
 /**
  * The routes for the application
  */
@@ -79,4 +81,4 @@ export const protectedRoutes = [
 /**
  * The default redirect path after logging in
  */
-export const DEFAULT_LOGIN_REDIRECT = Routes.Dashboard;
+export const DEFAULT_LOGIN_REDIRECT = websiteConfig.routes.defaultLoginRedirect;

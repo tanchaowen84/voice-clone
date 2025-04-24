@@ -1,4 +1,5 @@
 import { PaymentTypes, PlanIntervals } from '@/payment/types';
+import { Routes } from '@/routes';
 import type { WebsiteConfig } from '@/types';
 
 /**
@@ -28,6 +29,9 @@ export const websiteConfig: WebsiteConfig = {
       discord: 'https://discord.gg/yVwpEtTT',
       youtube: 'https://www.youtube.com/@MkSaaS',
     },
+  },
+  routes: {
+    defaultLoginRedirect: Routes.Dashboard,
   },
   analytics: {
     enableVercelAnalytics: false,

@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
  */
 export type WebsiteConfig = {
   metadata: MetadataConfig;
+  routes: RoutesConfig;
   analytics: AnalyticsConfig;
   auth: AuthConfig;
   i18n: I18nConfig;
@@ -55,6 +56,13 @@ export interface SocialConfig {
   facebook?: string;
   instagram?: string;
   tiktok?: string;
+}
+
+/**
+ * Routes configuration
+ */
+export interface RoutesConfig {
+  defaultLoginRedirect?: string;      // The default login redirect route
 }
 
 /**
