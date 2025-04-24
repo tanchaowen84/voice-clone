@@ -1,5 +1,4 @@
 import { PaymentTypes, PlanIntervals } from '@/payment/types';
-import { Routes } from '@/routes';
 import type { WebsiteConfig } from '@/types';
 
 /**
@@ -31,7 +30,7 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   routes: {
-    defaultLoginRedirect: Routes.Dashboard,
+    defaultLoginRedirect: '/dashboard',
   },
   analytics: {
     enableVercelAnalytics: false,
