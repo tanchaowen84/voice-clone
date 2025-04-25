@@ -8,9 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { Routes } from '@/routes';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface LoginWrapperProps {
@@ -27,7 +26,12 @@ export const LoginWrapper = ({
   callbackUrl,
 }: LoginWrapperProps) => {
   const router = useLocaleRouter();
+  const [mounted, setMounted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogin = () => {
     // append callbackUrl as a query parameter if provided
@@ -37,6 +41,12 @@ export const LoginWrapper = ({
     console.log('login wrapper, loginPath', loginPath);
     router.push(loginPath);
   };
+
+  // this is to prevent the login wrapper from being rendered on the server side
+  // and causing a hydration error
+  if (!mounted) {
+    return null;
+  }
 
   if (mode === 'modal') {
     return (
