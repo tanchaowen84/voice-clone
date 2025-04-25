@@ -7,6 +7,7 @@ import { ModeSwitcher } from '@/components/layout/mode-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/layout/user-button';
 import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,6 +25,8 @@ import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { Skeleton } from '../ui/skeleton';
 import LocaleSwitcher from './locale-switcher';
 
@@ -45,10 +48,14 @@ export function Navbar({ scroll }: NavBarProps) {
   const scrolled = useScroll(50);
   const menuLinks = getNavbarLinks();
   const localePathname = useLocalePathname();
+  const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
-
   // console.log(`Navbar, user:`, user);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section
@@ -210,7 +217,7 @@ export function Navbar({ scroll }: NavBarProps) {
 
           {/* navbar right show sign in or user */}
           <div className="flex items-center gap-x-4">
-            {isPending ? (
+            {!mounted || isPending ? (
               <Skeleton className="size-8 border rounded-full" />
             ) : currentUser ? (
               <UserButton user={currentUser} />
@@ -226,11 +233,17 @@ export function Navbar({ scroll }: NavBarProps) {
                   </Button>
                 </LoginWrapper>
 
-                <Button asChild size="sm" variant="default">
-                  <LocaleLink href={Routes.Register}>
-                    {t('Common.signUp')}
-                  </LocaleLink>
-                </Button>
+                <LocaleLink
+                  href={Routes.Register}
+                  className={cn(
+                    buttonVariants({
+                      variant: 'default',
+                      size: 'sm',
+                    })
+                  )}
+                >
+                  {t('Common.signUp')}
+                </LocaleLink>
               </div>
             )}
 
