@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { Skeleton } from '../ui/skeleton';
 import { UserButtonMobile } from './user-button-mobile';
@@ -36,8 +36,13 @@ export function NavbarMobile({
   const t = useTranslations();
   const [open, setOpen] = React.useState<boolean>(false);
   const localePathname = useLocalePathname();
+  const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleRouteChangeStart = () => {
@@ -66,6 +71,10 @@ export function NavbarMobile({
   const handleToggleMobileMenu = (): void => {
     setOpen((open) => !open);
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
