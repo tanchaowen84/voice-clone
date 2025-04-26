@@ -1,5 +1,6 @@
 import { AnimatedListDemo } from '@/components/magicui/example/animated-list-example';
 import { BentoDemo } from '@/components/magicui/example/bento-grid-example';
+import { DotPatternDemo } from '@/components/magicui/example/dot-pattern-example';
 import { HeroVideoDialogDemoTopInBottomOut } from '@/components/magicui/example/hero-video-dialog-example';
 import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-example';
 
@@ -15,6 +16,7 @@ export default async function MagicuiPage() {
       <BentoDemo />
       <MarqueeDemoVertical />
       <AnimatedListDemo />
+      <DotPatternDemo />
     </div>
   );
 }
