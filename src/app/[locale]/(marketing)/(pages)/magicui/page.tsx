@@ -4,6 +4,7 @@ import { AnimatedListDemo } from '@/components/magicui/example/animated-list-exa
 import { AnimatedShinyTextDemo } from '@/components/magicui/example/animated-shiny-text-example';
 import { AnimatedSubscribeButtonDemo } from '@/components/magicui/example/animated-subscribe-button-example';
 import { BentoDemo } from '@/components/magicui/example/bento-grid-example';
+import { BlurFadeDemo } from '@/components/magicui/example/blur-fade-example';
 import { DotPatternDemo } from '@/components/magicui/example/dot-pattern-example';
 import { GridPatternDemo } from '@/components/magicui/example/grid-pattern-example';
 import { HeroVideoDialogDemoTopInBottomOut } from '@/components/magicui/example/hero-video-dialog-example';
@@ -68,6 +69,7 @@ export default async function MagicuiPage() {
           <WordRotateDemo />
         </div>
       </div>
+      <BlurFadeDemo />
       <DotPatternDemo />
       <GridPatternDemo />
       <AnimatedGridPatternDemo />
