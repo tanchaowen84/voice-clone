@@ -73,6 +73,7 @@
     infinite;
   --animate-pulse: pulse var(--duration) ease-out infinite;
   --animate-meteor: meteor 5s linear infinite;
+  --animate-gradient: gradient 8s linear infinite;
 
   @keyframes shiny-text {
     0%,
@@ -162,6 +163,12 @@
     100% {
       transform: rotate(var(--angle)) translateX(-500px);
       opacity: 0;
+    }
+  }
+
+  @keyframes gradient {
+    to {
+      background-position: var(--bg-size, 300%) 0;
     }
   }
 }
