@@ -18,7 +18,7 @@ If you found anything that could be improved, please let me know.
 
 - website: [mksaas.com](https://mksaas.com)
 - demo: [demo.mksaas.com](https://demo.mksaas.com)
-- discord: [https://discord.gg/yVwpEtTT](https://discord.gg/yVwpEtTT)
+- discord: [discord.gg/mtjx6W6mNY](https://discord.gg/mtjx6W6mNY)
 - documentation: [mksaas.com/docs](https://mksaas.com/docs)
 - video (WIP): [www.youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
 - roadmap (WIP): [issues/17](https://github.com/MkSaaSHQ/mksaas-template/issues/17)

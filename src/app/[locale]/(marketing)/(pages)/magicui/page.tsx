@@ -1,3 +1,4 @@
+import { HeroVideoDialogDemoTopInBottomOut } from '@/components/magicui/example/hero-video-dialog-example';
 import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-example';
 
 /**
@@ -8,6 +9,7 @@ import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-exampl
 export default async function MagicuiPage() {
   return (
     <div className="mx-auto space-y-8">
+      <HeroVideoDialogDemoTopInBottomOut />
       <MarqueeDemoVertical />
     </div>
   );
