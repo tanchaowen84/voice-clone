@@ -3,6 +3,7 @@ import { AnimatedGridPatternDemo } from '@/components/magicui/example/animated-g
 import { AnimatedListDemo } from '@/components/magicui/example/animated-list-example';
 import { AnimatedShinyTextDemo } from '@/components/magicui/example/animated-shiny-text-example';
 import { AnimatedSubscribeButtonDemo } from '@/components/magicui/example/animated-subscribe-button-example';
+import { AvatarCirclesDemo } from '@/components/magicui/example/avatar-circles-example';
 import { BentoDemo } from '@/components/magicui/example/bento-grid-example';
 import { BlurFadeDemo } from '@/components/magicui/example/blur-fade-example';
 import { DotPatternDemo } from '@/components/magicui/example/dot-pattern-example';
@@ -18,6 +19,7 @@ import { RainbowButtonDemo } from '@/components/magicui/example/rainbow-button-e
 import { RippleDemo } from '@/components/magicui/example/ripple-example';
 import { ShimmerButtonDemo } from '@/components/magicui/example/shimmer-button-example';
 import { ShinyButtonDemo } from '@/components/magicui/example/shiny-button-example';
+import { TweetImages } from '@/components/magicui/example/twitter-card-example';
 import { WordRotateDemo } from '@/components/magicui/example/word-rotate-example';
 
 /**
@@ -29,12 +31,14 @@ export default async function MagicuiPage() {
   return (
     <div className="mx-auto space-y-8">
       <RippleDemo />
-      <BentoDemo />
       <div className="grid md:grid-cols-2 gap-4">
         <MarqueeDemoVertical />
         <AnimatedListDemo />
       </div>
       <div className="grid md:grid-cols-4 gap-8">
+        <div className="flex items-center justify-center">
+          <AvatarCirclesDemo />
+        </div>
         <div className="flex items-center justify-center">
           <AnimatedGradientTextDemo />
         </div>
@@ -69,7 +73,9 @@ export default async function MagicuiPage() {
           <WordRotateDemo />
         </div>
       </div>
+      <TweetImages />
       <BlurFadeDemo />
+      <BentoDemo />
       <DotPatternDemo />
       <GridPatternDemo />
       <AnimatedGridPatternDemo />

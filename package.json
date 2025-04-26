@@ -102,6 +102,7 @@
     "react-hook-form": "^7.54.2",
     "react-remove-scroll": "^2.6.3",
     "react-resizable-panels": "^2.1.7",
+    "react-tweet": "^3.2.2",
     "react-use-measure": "^2.1.7",
     "recharts": "^2.15.1",
     "rehype-autolink-headings": "^7.1.0",
