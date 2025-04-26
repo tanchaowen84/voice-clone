@@ -334,6 +334,9 @@
       "blocks": {
         "title": "内置组件",
         "items": {
+          "magicui": {
+            "title": "MagicUI 组件"
+          },
           "hero-section": {
             "title": "Hero 组件"
           },

@@ -43,6 +43,7 @@ export enum Routes {
   AIAudio = '/ai/audio',
 
   // block routes
+  MagicuiBlocks = '/magicui',
   HeroBlocks = '/blocks/hero-section',
   LogoCloudBlocks = '/blocks/logo-cloud',
   FeaturesBlocks = '/blocks/features',

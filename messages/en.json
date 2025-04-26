@@ -333,6 +333,9 @@
       "blocks": {
         "title": "Blocks",
         "items": {
+          "magicui": {
+            "title": "MagicUI Blocks"
+          },
           "hero-section": {
             "title": "Hero Blocks"
           },
