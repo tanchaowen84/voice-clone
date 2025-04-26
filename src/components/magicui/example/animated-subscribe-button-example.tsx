@@ -1,21 +1,17 @@
-import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button"
+import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
 
-export default function AnimatedSubscribeButtonExample() {
+export function AnimatedSubscribeButtonDemo() {
   return (
-    <div className="flex min-h-[400px] w-full flex-col items-center justify-center gap-10 bg-black/95 p-10">
-      <AnimatedSubscribeButton 
-        className="bg-blue-500 px-8 py-4 text-xl font-bold text-white"
-        onClick={() => alert("Subscribed!")}
-      >
-        Subscribe Now
-      </AnimatedSubscribeButton>
-      
-      <AnimatedSubscribeButton 
-        className="bg-purple-500 px-8 py-4 text-xl font-bold text-white"
-        onClick={() => alert("Joined!")}
-      >
-        Join Us
-      </AnimatedSubscribeButton>
-    </div>
-  )
-} 
+    <AnimatedSubscribeButton className="w-36">
+      <span className="group inline-flex items-center">
+        Follow
+        <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+      </span>
+      <span className="group inline-flex items-center">
+        <CheckIcon className="mr-2 size-4" />
+        Subscribed
+      </span>
+    </AnimatedSubscribeButton>
+  );
+}

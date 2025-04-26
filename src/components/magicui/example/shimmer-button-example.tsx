@@ -1,19 +1,11 @@
-import { ShimmerButton } from "@/components/magicui/shimmer-button"
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
 
-export default function ShimmerButtonExample() {
+export function ShimmerButtonDemo() {
   return (
-    <div className="flex min-h-[400px] w-full flex-col items-center justify-center gap-10 bg-black/95 p-10">
-      <ShimmerButton className="px-8 py-4 text-xl font-bold">
+    <ShimmerButton className="shadow-2xl">
+      <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
         Shimmer Button
-      </ShimmerButton>
-      
-      <ShimmerButton 
-        className="px-8 py-4 text-xl font-bold"
-        shimmerColor="rgba(255, 255, 255, 0.2)"
-        shimmerSize="lg"
-      >
-        Custom Shimmer
-      </ShimmerButton>
-    </div>
-  )
-} 
+      </span>
+    </ShimmerButton>
+  );
+}
