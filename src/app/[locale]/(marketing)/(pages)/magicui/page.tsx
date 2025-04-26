@@ -1,8 +1,10 @@
+import { AnimatedGridPatternDemo } from '@/components/magicui/example/animated-grid-pattern-example';
 import { AnimatedListDemo } from '@/components/magicui/example/animated-list-example';
 import { BentoDemo } from '@/components/magicui/example/bento-grid-example';
 import { DotPatternDemo } from '@/components/magicui/example/dot-pattern-example';
 import { GridPatternDemo } from '@/components/magicui/example/grid-pattern-example';
 import { HeroVideoDialogDemoTopInBottomOut } from '@/components/magicui/example/hero-video-dialog-example';
+import { InteractiveGridPatternDemo } from '@/components/magicui/example/interactive-grid-pattern-example';
 import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-example';
 import { RippleDemo } from '@/components/magicui/example/ripple-example';
 
@@ -16,6 +18,8 @@ export default async function MagicuiPage() {
     <div className="mx-auto space-y-8">
       <DotPatternDemo />
       <GridPatternDemo />
+      <AnimatedGridPatternDemo />
+      <InteractiveGridPatternDemo />
       <RippleDemo />
       <BentoDemo />
       <div className="grid md:grid-cols-2 gap-4">
