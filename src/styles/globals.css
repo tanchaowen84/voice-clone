@@ -69,6 +69,9 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-ripple: ripple var(--duration, 2s) ease calc(var(--i, 0) * .2s)
+    infinite;
+  --animate-pulse: pulse var(--duration) ease-out infinite;
 
   @keyframes shiny-text {
     0%,
@@ -76,7 +79,6 @@
     100% {
       background-position: calc(-100% - var(--shiny-width)) 0;
     }
-
     30%,
     60% {
       background-position: calc(100% + var(--shiny-width)) 0;
@@ -87,7 +89,6 @@
     0% {
       background-position: 0%;
     }
-
     100% {
       background-position: 200%;
     }
@@ -97,7 +98,6 @@
     from {
       height: 0;
     }
-
     to {
       height: var(--radix-accordion-content-height);
     }
@@ -107,7 +107,6 @@
     from {
       height: var(--radix-accordion-content-height);
     }
-
     to {
       height: 0;
     }
@@ -131,13 +130,26 @@
     }
   }
 
-  --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite
-;
   @keyframes ripple {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);}
-  50% {
-    transform: translate(-50%, -50%) scale(0.9);}}}
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 var(--pulse-color);
+    }
+    50% {
+      box-shadow: 0 0 0 8px var(--pulse-color);
+    }
+  }
+}
 
 :root {
   --radius: 0.5rem;
