@@ -1,6 +1,7 @@
 import { AnimatedListDemo } from '@/components/magicui/example/animated-list-example';
 import { BentoDemo } from '@/components/magicui/example/bento-grid-example';
 import { DotPatternDemo } from '@/components/magicui/example/dot-pattern-example';
+import { GridPatternDemo } from '@/components/magicui/example/grid-pattern-example';
 import { HeroVideoDialogDemoTopInBottomOut } from '@/components/magicui/example/hero-video-dialog-example';
 import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-example';
 
@@ -12,11 +13,12 @@ import { MarqueeDemoVertical } from '@/components/magicui/example/marquee-exampl
 export default async function MagicuiPage() {
   return (
     <div className="mx-auto space-y-8">
-      <HeroVideoDialogDemoTopInBottomOut />
+      <DotPatternDemo />
+      <GridPatternDemo />
       <BentoDemo />
       <MarqueeDemoVertical />
       <AnimatedListDemo />
-      <DotPatternDemo />
+      <HeroVideoDialogDemoTopInBottomOut />
     </div>
   );
 }
