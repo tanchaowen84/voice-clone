@@ -4,7 +4,7 @@ import type { I18nConfig } from 'fumadocs-core/i18n';
 /**
  * Internationalization configuration for FumaDocs
  *
- * https://fumadocs.vercel.app/docs/ui/internationalization
+ * https://fumadocs.dev/docs/ui/internationalization
  */
 export const docsI18nConfig: I18nConfig = {
   defaultLanguage: DEFAULT_LOCALE,

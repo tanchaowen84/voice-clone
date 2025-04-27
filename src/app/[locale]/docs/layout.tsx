@@ -31,14 +31,14 @@ interface DocsLayoutProps {
 
 /**
  * 1. Configure navigation
- * https://fumadocs.vercel.app/docs/ui/navigation/links
- * https://fumadocs.vercel.app/docs/ui/navigation/sidebar
+ * https://fumadocs.dev/docs/ui/navigation/links
+ * https://fumadocs.dev/docs/ui/navigation/sidebar
  *
  * ref:
  * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/app/layout.config.tsx
  *
  * 2. Organizing Pages
- * https://fumadocs.vercel.app/docs/ui/page-conventions
+ * https://fumadocs.dev/docs/ui/page-conventions
  *
  * ref:
  * https://github.com/fuma-nama/fumadocs/blob/dev/apps/docs/content/docs/ui/meta.json

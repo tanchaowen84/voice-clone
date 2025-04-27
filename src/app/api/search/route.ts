@@ -7,10 +7,10 @@ import { createI18nSearchAPI } from 'fumadocs-core/search/server';
  * Fumadocs i18n search configuration
  *
  * 1. For internationalization, use createI18nSearchAPI:
- * https://fumadocs.vercel.app/docs/headless/search/orama#internationalization
+ * https://fumadocs.dev/docs/headless/search/orama#internationalization
  *
  * 2. For special languages like Chinese, configure custom tokenizers:
- * https://fumadocs.vercel.app/docs/headless/search/orama#special-languages
+ * https://fumadocs.dev/docs/headless/search/orama#special-languages
  * https://docs.orama.com/open-source/supported-languages/using-chinese-with-orama
  */
 const searchAPI = createI18nSearchAPI('advanced', {

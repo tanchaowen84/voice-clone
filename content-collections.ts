@@ -14,7 +14,7 @@ import {
  * https://www.content-collections.dev/docs/transform#join-collections
  *
  * 2. Use Content Collections for Fumadocs
- * https://fumadocs.vercel.app/docs/headless/content-collections
+ * https://fumadocs.dev/docs/headless/content-collections
  */
 const docs = defineCollection({
   name: 'docs',
