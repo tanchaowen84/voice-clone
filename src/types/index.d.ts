@@ -51,6 +51,7 @@ export interface SocialConfig {
   github?: string;
   discord?: string;
   blueSky?: string;
+  mastodon?: string;
   youtube?: string;
   linkedin?: string;
   facebook?: string;
