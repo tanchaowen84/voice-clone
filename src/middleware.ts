@@ -1,7 +1,9 @@
 import createMiddleware from 'next-intl/middleware';
+import { headers } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
+import wretch from 'wretch';
 import { LOCALES, routing } from './i18n/routing';
-import { getSession } from './lib/server';
+import type { auth } from './lib/auth';
 import {
   DEFAULT_LOGIN_REDIRECT,
   protectedRoutes,
@@ -14,7 +16,13 @@ export default async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   console.log('>> middleware start, pathname', nextUrl.pathname);
 
-  const session = await getSession();
+  // do not use getSession() here, it will cause error related to edge runtime
+  // const session = await getSession();
+  const session = await wretch(`${nextUrl.origin}/api/auth/get-session`)
+    // .headers({ cookie: headers.get('cookie') || '' })
+    .headers(await headers())
+    .get()
+    .json<typeof auth.$Infer.Session>();
   const isLoggedIn = !!session;
   // console.log('middleware, isLoggedIn', isLoggedIn);
 
@@ -81,8 +89,8 @@ export const config = {
   // The `matcher` is relative to the `basePath`
   matcher: [
     // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
+    // - if they start with `/api`, `/_next` or `/_vercel`
+    // - if they contain a dot (e.g. `favicon.ico`)
     '/((?!api|_next|_vercel|.*\\..*).*)',
   ],
 };
