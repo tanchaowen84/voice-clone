@@ -1,7 +1,8 @@
+import { betterFetch } from '@better-fetch/fetch';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 import { LOCALES, routing } from './i18n/routing';
-import { getSession } from './lib/server';
+import type { Session } from './lib/auth-types';
 import {
   DEFAULT_LOGIN_REDIRECT,
   protectedRoutes,
@@ -10,11 +11,31 @@ import {
 
 const intlMiddleware = createMiddleware(routing);
 
+/**
+ * 1. Next.js middleware
+ * https://nextjs.org/docs/app/building-your-application/routing/middleware
+ *
+ * 2. Better Auth middleware
+ * https://www.better-auth.com/docs/integrations/next#middleware
+ *
+ * In Next.js middleware, it's recommended to only check for the existence of a session cookie
+ * to handle redirection. To avoid blocking requests by making API or database calls.
+ */
 export default async function middleware(req: NextRequest) {
-  const { nextUrl } = req;
+  const { nextUrl, headers } = req;
   console.log('>> middleware start, pathname', nextUrl.pathname);
 
-  const session = await getSession();
+  // do not use getSession() here, it will cause error related to edge runtime
+  // const session = await getSession();
+  const { data: session } = await betterFetch<Session>(
+    '/api/auth/get-session',
+    {
+      baseURL: req.nextUrl.origin,
+      headers: {
+        cookie: req.headers.get('cookie') || '', // Forward the cookies from the request
+      },
+    }
+  );
   const isLoggedIn = !!session;
   // console.log('middleware, isLoggedIn', isLoggedIn);
 
@@ -81,8 +102,8 @@ export const config = {
   // The `matcher` is relative to the `basePath`
   matcher: [
     // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
+    // - if they start with `/api`, `/_next` or `/_vercel`
+    // - if they contain a dot (e.g. `favicon.ico`)
     '/((?!api|_next|_vercel|.*\\..*).*)',
   ],
 };
