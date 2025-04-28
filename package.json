@@ -29,6 +29,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fumadocs/content-collections": "^1.1.8",
     "@hookform/resolvers": "^4.1.0",
+    "@neondatabase/serverless": "^0.10.4",
     "@next/third-parties": "^15.3.0",
     "@openpanel/nextjs": "^1.0.7",
     "@orama/orama": "^3.1.4",
@@ -95,7 +96,6 @@
     "next-plausible": "^3.12.4",
     "next-safe-action": "^7.10.4",
     "next-themes": "^0.4.4",
-    "postgres": "^3.4.5",
     "react": "^19.0.0",
     "react-day-picker": "9.6.3",
     "react-dom": "^19.0.0",
@@ -123,7 +123,6 @@
     "use-intl": "^3.26.5",
     "use-media": "^1.5.0",
     "vaul": "^1.1.2",
-    "wretch": "^2.11.0",
     "zod": "^3.24.2",
     "zustand": "^5.0.3"
   },

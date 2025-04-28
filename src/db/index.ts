@@ -1,37 +1,22 @@
-/**
- * Connect to PostgreSQL Database (Supabase/Neon/Local PostgreSQL)
- * https://orm.drizzle.team/docs/tutorials/drizzle-with-supabase
- */
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-const client = postgres(process.env.DATABASE_URL!);
-const db = drizzle(client);
+import { drizzle } from 'drizzle-orm/neon-http';
 
 /**
- * Connect to Neon Database
- * https://orm.drizzle.team/docs/tutorials/drizzle-with-neon
- */
-// import { drizzle } from 'drizzle-orm/neon-http';
-// const db = drizzle(process.env.DATABASE_URL!);
-
-/**
- * Database connection with Drizzle
+ * https://orm.drizzle.team/docs/get-started/neon-new
  * https://orm.drizzle.team/docs/connect-overview
  *
- * Drizzle <> PostgreSQL
- * https://orm.drizzle.team/docs/get-started-postgresql
+ * Using the browser-compatible Neon HTTP driver for better compatibility with Next.js
+ * This avoids the Node.js-specific modules that cause build issues
  *
- * Get Started with Drizzle and Neon
- * https://orm.drizzle.team/docs/get-started/neon-new
- *
- * Drizzle with Neon Postgres
- * https://orm.drizzle.team/docs/tutorials/drizzle-with-neon
- *
- * Drizzle <> Neon Postgres
- * https://orm.drizzle.team/docs/connect-neon
- *
- * Drizzle with Supabase Database
- * https://orm.drizzle.team/docs/tutorials/drizzle-with-supabase
+ * With the neon-http and neon-websockets drivers, you can access a Neon database from serverless environments over HTTP or WebSockets instead of TCP.
+ * Querying over HTTP is faster for single, non-interactive transactions.
  */
+
+// If you need to provide your existing drivers:
+// import { neon } from '@neondatabase/serverless';
+// const sql = neon(process.env.DATABASE_URL!);
+// const db = drizzle({ client: sql });
+
+// https://orm.drizzle.team/docs/connect-neon
+const db = drizzle(process.env.DATABASE_URL!);
 
 export default db;
