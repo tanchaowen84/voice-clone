@@ -17,6 +17,7 @@ import { authClient } from '@/lib/auth-client';
 import { Routes } from '@/routes';
 import { useTranslations } from 'next-intl';
 import type * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Logo } from '../layout/logo';
 import { UpgradeCard } from './upgrade-card';
 
@@ -27,16 +28,22 @@ export function DashboardSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const t = useTranslations();
-  const sidebarLinks = getSidebarLinks();
+  const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
   // console.log('sidebar currentUser:', currentUser);
+
+  const sidebarLinks = getSidebarLinks();
   const filteredSidebarLinks = sidebarLinks.filter((link) => {
     if (link.authorizeOnly) {
       return link.authorizeOnly.includes(currentUser?.role || '');
     }
     return true;
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -64,7 +71,7 @@ export function DashboardSidebar({
 
       <SidebarFooter className="flex flex-col gap-4">
         {/* Only show UI components when not in loading state */}
-        {!isPending && (
+        {!isPending && mounted && (
           <>
             {/* show upgrade card if user is not a member */}
             {currentUser && <UpgradeCard />}
