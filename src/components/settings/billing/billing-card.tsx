@@ -219,7 +219,7 @@ export default function BillingCard() {
             </div>
           )}
         </CardContent>
-        <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+        <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-background rounded-none">
           {/* user is on free plan, show upgrade plan button */}
           {isFreePlan && (
             <Button variant="default" className="cursor-pointer" asChild>

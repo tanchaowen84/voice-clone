@@ -206,7 +206,7 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
             />
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
+          <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-background rounded-none">
             <p className="text-sm text-muted-foreground">{t('hint')}</p>
 
             <Button

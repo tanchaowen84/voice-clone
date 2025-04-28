@@ -97,7 +97,7 @@ export function DeleteAccountCard() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+      <CardFooter className="mt-2 px-6 py-4 flex justify-end items-center bg-background rounded-none">
         <Button
           variant="destructive"
           onClick={() => setShowConfirmation(true)}

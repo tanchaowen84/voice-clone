@@ -212,7 +212,7 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
             />
             <FormError message={error} />
           </CardContent>
-          <CardFooter className="mt-6 px-6 py-4 bg-muted rounded-none">
+          <CardFooter className="mt-6 px-6 py-4 bg-background rounded-none">
             <p className="text-sm text-muted-foreground">
               {t('newsletter.hint')}
             </p>

@@ -162,7 +162,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
 
         <FormError message={error} />
       </CardContent>
-      <CardFooter className="mt-auto px-6 py-4 flex justify-between items-center bg-muted rounded-none">
+      <CardFooter className="mt-auto px-6 py-4 flex justify-between items-center bg-background rounded-none">
         <p className="text-sm text-muted-foreground">
           {t('avatar.recommendation')}
         </p>

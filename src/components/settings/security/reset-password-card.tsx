@@ -66,7 +66,7 @@ export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
       <CardContent className="space-y-4 flex-1">
         <p className="text-sm text-muted-foreground">{t('info')}</p>
       </CardContent>
-      <CardFooter className="mt-auto px-6 py-4 flex justify-end items-center bg-muted rounded-none">
+      <CardFooter className="mt-auto px-6 py-4 flex justify-end items-center bg-background rounded-none">
         <Button onClick={handleSetupPassword} className="cursor-pointer">
           {t('button')}
         </Button>
