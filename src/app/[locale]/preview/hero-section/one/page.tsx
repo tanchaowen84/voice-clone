@@ -30,7 +30,7 @@ const transitionVariants = {
 export default function HeroSection() {
   return (
     <>
-      {/* <HeroHeader /> */}
+      <HeroHeader />
       <main className="overflow-hidden">
         <div
           aria-hidden
@@ -41,8 +41,7 @@ export default function HeroSection() {
           <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
         </div>
         <section>
-          {/* pt-24 md:pt-36 */}
-          <div className="relative pt-12 md:pt-12">
+          <div className="relative pt-24 md:pt-36">
             <AnimatedGroup
               variants={{
                 container: {
@@ -71,7 +70,7 @@ export default function HeroSection() {
               className="absolute inset-0 -z-20"
             >
               <Image
-                src="/blocks/night-background.webp"
+                src="https://res.cloudinary.com/dg4jhba5c/image/upload/v1741605538/night-background_ni3vqb.jpg"
                 alt="background"
                 className="absolute inset-x-0 top-56 -z-20 hidden lg:top-32 dark:block"
                 width="3276"
@@ -205,8 +204,7 @@ export default function HeroSection() {
             </AnimatedGroup>
           </div>
         </section>
-        
-        {/* <section className="bg-background pb-16 pt-16 md:pb-32">
+        <section className="bg-background pb-16 pt-16 md:pb-32">
           <div className="group relative m-auto max-w-5xl px-6">
             <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
               <Link
@@ -295,8 +293,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </section> */}
-
+        </section>
       </main>
     </>
   );

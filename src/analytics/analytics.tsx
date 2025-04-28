@@ -44,15 +44,11 @@ export function Analytics() {
 
       {/* vercel analytics */}
       {/* https://vercel.com/docs/analytics/quickstart */}
-      {websiteConfig.analytics.enableVercelAnalytics && (
-        <VercelAnalytics />
-      )}
+      {websiteConfig.analytics.enableVercelAnalytics && <VercelAnalytics />}
 
       {/* speed insights */}
       {/* https://vercel.com/docs/speed-insights/quickstart */}
-      {websiteConfig.analytics.enableSpeedInsights && (
-        <SpeedInsights />
-      )}
+      {websiteConfig.analytics.enableSpeedInsights && <SpeedInsights />}
     </>
   );
 }

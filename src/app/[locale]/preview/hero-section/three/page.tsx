@@ -124,7 +124,7 @@ export default function HeroSection() {
                   <div className="bg-linear-to-b to-background from-background absolute inset-0 via-transparent"></div>
                   <div className="bg-linear-to-l to-background from-background absolute inset-0 via-transparent"></div>
                   <Image
-                    src="/blocks/phone-background.webp"
+                    src="https://res.cloudinary.com/dg4jhba5c/image/upload/v1741605545/phone-backgroudn_xqgg5g.jpg"
                     alt="Phone Background"
                     width="6240"
                     height="4160"
