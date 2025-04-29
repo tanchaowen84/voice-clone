@@ -112,7 +112,7 @@
     "remark": "^15.0.1",
     "remark-code-import": "^1.2.0",
     "remark-gfm": "^4.0.1",
-    "resend": "^4.3.0",
+    "resend": "^4.4.1",
     "shiki": "^2.4.2",
     "sonner": "^2.0.0",
     "stripe": "^17.6.0",

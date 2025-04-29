@@ -43,25 +43,14 @@ export class ResendNewsletterProvider implements NewsletterProvider {
    */
   async subscribe({ email }: SubscribeNewsletterParams): Promise<boolean> {
     try {
-      // First, list all contacts to find the one with the matching email
-      const listResult = await this.resend.contacts.list({
+      // Check if the contact exists
+      const getResult = await this.resend.contacts.get({
+        email,
         audienceId: this.audienceId,
       });
-      if (listResult.error) {
-        console.error('Error listing contacts:', listResult.error);
-        return false;
-      }
 
-      // console.log('subscribe list result:', listResult);
-      // Check if the contact with the given email exists in the list
-      let contact = null;
-      if (listResult.data?.data && Array.isArray(listResult.data.data)) {
-        contact = listResult.data.data.find((c) => c.email === email);
-      }
-
-      // console.log('subscribe params:', { email, contact });
-      // If the contact does not exist, create a new one
-      if (!contact) {
+      // If contact doesn't exist, create a new one
+      if (getResult.error) {
         console.log('Creating new contact', email);
         const createResult = await this.resend.contacts.create({
           email,
@@ -69,7 +58,6 @@ export class ResendNewsletterProvider implements NewsletterProvider {
           unsubscribed: false,
         });
 
-        // console.log('subscribe create result:', createResult);
         if (createResult.error) {
           console.error('Error creating contact', createResult.error);
           return false;
@@ -78,20 +66,13 @@ export class ResendNewsletterProvider implements NewsletterProvider {
         return true;
       }
 
-      // If the contact already exists, update it
-      // NOTICE: we can not just create a new contact if this email already exists,
-      // because Resend will response 201, but user is not subscribed
-      // NOTICE: we can not update it with email if the contact not found, it will return 404,
-      // statusCode: 404, name: not_found, message: Contact not found
+      // If the contact exists, update it
       const updateResult = await this.resend.contacts.update({
         email,
         audienceId: this.audienceId,
         unsubscribed: false,
       });
-      // console.log('subscribe update result:', updateResult);
 
-      // NOTICE: we can not request too many times, because of the rate limit of Resend
-      // statusCode: 429, name: rate_limit_exceeded, message: Too many requests, you can only make 2 requests per second.
       if (updateResult.error) {
         console.error('Error updating contact', updateResult.error);
         return false;
@@ -142,31 +123,21 @@ export class ResendNewsletterProvider implements NewsletterProvider {
     email,
   }: CheckSubscribeStatusParams): Promise<boolean> {
     try {
-      // TODO: use get method to check if the contact exists with email,
-      // the new Resend API is not ready yet, so we use the old way to check
-
-      // First, list all contacts to find the one with the matching email
-      const listResult = await this.resend.contacts.list({
+      const result = await this.resend.contacts.get({
+        email,
         audienceId: this.audienceId,
       });
 
-      if (listResult.error) {
-        console.error('Error listing contacts:', listResult.error);
+      if (result.error) {
+        console.error('Error getting contact:', result.error);
         return false;
       }
 
-      // console.log('check newsletter params:', { email, listResult });
-      // Check if the contact with the given email exists in the list
-      if (listResult.data?.data && Array.isArray(listResult.data.data)) {
-        return listResult.data.data.some(
-          (contact) => contact.email === email && contact.unsubscribed === false
-        );
-      }
-
-      // console.log('check newsletter status:', { email, subscribed: false });
-      return false;
+      const status = !result.data?.unsubscribed;
+      console.log('Check subscribe status:', { email, status });
+      return status;
     } catch (error) {
-      console.error('Error checking subscription status:', error);
+      console.error('Error checking subscribe status:', error);
       return false;
     }
   }
