@@ -14,6 +14,8 @@
  *
  * default theme: Clean Slate
  * https://tweakcn.com/editor/theme
+ * 
+ * NOTICE: when you change the theme, you need to check the fonts and keep the animation variables
  *
  * 3. How to Add a Theme Selector to Your Next.js App
  * https://ouassim.tech/notes/how-to-add-a-theme-selector-to-your-nextjs-app/
@@ -52,10 +54,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-noto-sans);
-  --font-mono: var(--font-noto-sans-mono);
-  --font-serif: var(--font-noto-serif);
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -69,6 +67,12 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  /* fonts */
+  --font-sans: var(--font-noto-sans);
+  --font-mono: var(--font-noto-sans-mono);
+  --font-serif: var(--font-noto-serif);
+  --font-bricolage-grotesque: var(--font-bricolage-grotesque);
 
   /* animate */
   --animate-shiny-text: shiny-text 8s infinite;
