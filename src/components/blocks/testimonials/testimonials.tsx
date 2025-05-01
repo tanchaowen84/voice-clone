@@ -1,3 +1,4 @@
+import { HeaderSection } from '@/components/layout/header-section';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
@@ -104,51 +105,50 @@ export default function TestimonialsSection() {
   );
 
   return (
-    <section>
-      <div className="py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center">
-            <h2 className="text-title text-4xl lg:text-5xl font-semibold">
-              {t('title')}
-            </h2>
-            <p className="text-body mt-6">{t('description')}</p>
-          </div>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
-            {testimonialChunks.map((chunk, chunkIndex) => (
-              <div key={chunkIndex} className="space-y-3">
-                {chunk.map(({ name, role, quote, image }, index) => (
-                  <Card key={index} className="shadow-none">
-                    <CardContent className="grid grid-cols-[auto_1fr] gap-3 pt-4">
-                      <Avatar className="size-9 border-2 border-gray-200">
-                        <AvatarImage
-                          alt={name}
-                          src={image}
-                          loading="lazy"
-                          width="120"
-                          height="120"
-                        />
-                        <AvatarFallback />
-                      </Avatar>
+    <section id="testimonials" className="px-4 py-16">
+      <div className="mx-auto max-w-6xl">
+        <HeaderSection
+          title={t('title')}
+          titleAs="h2"
+          subtitle={t('subtitle')}
+          subtitleAs="p"
+        />
 
-                      <div>
-                        <h3 className="font-medium">{name}</h3>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
+          {testimonialChunks.map((chunk, chunkIndex) => (
+            <div key={chunkIndex} className="space-y-3">
+              {chunk.map(({ name, role, quote, image }, index) => (
+                <Card key={index} className="shadow-none">
+                  <CardContent className="grid grid-cols-[auto_1fr] gap-3 pt-4">
+                    <Avatar className="size-9 border-2 border-gray-200">
+                      <AvatarImage
+                        alt={name}
+                        src={image}
+                        loading="lazy"
+                        width="120"
+                        height="120"
+                      />
+                      <AvatarFallback />
+                    </Avatar>
 
-                        <span className="text-muted-foreground block text-sm tracking-wide">
-                          {role}
-                        </span>
+                    <div>
+                      <h3 className="font-medium">{name}</h3>
 
-                        <blockquote className="mt-3">
-                          <p className="text-gray-700 dark:text-gray-300">
-                            {quote}
-                          </p>
-                        </blockquote>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ))}
-          </div>
+                      <span className="text-muted-foreground block text-sm tracking-wide">
+                        {role}
+                      </span>
+
+                      <blockquote className="mt-3">
+                        <p className="text-gray-700 dark:text-gray-300">
+                          {quote}
+                        </p>
+                      </blockquote>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

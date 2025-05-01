@@ -6,13 +6,13 @@ export default function CallToActionSection() {
   const t = useTranslations('HomePage.calltoaction');
 
   return (
-    <section className="py-24 w-full bg-muted">
+    <section id="call-to-action" className="px-4 py-16 bg-background">
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
             {t('title')}
           </h2>
-          <p className="mt-4">{t('description')}</p>
+          <p className="mt-4 text-muted-foreground">{t('description')}</p>
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Button asChild size="lg">

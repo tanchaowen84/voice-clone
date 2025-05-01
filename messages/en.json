@@ -712,8 +712,8 @@
       "description": "Choose the plan that works best for you"
     },
     "faqs": {
-      "title": "Frequently Asked Questions",
-      "description": "Please feel free to contact us if you have any questions",
+      "title": "FAQ",
+      "subtitle": "Frequently Asked Questions",
       "items": {
         "item-1": {
           "question": "Do you offer a free trial?",
@@ -739,7 +739,7 @@
     },
     "testimonials": {
       "title": "Testimonials",
-      "description": "What our customers say about us",
+      "subtitle": "What our customers are saying",
       "items": {
         "item-1": {
           "name": "Jonathan Yombo",

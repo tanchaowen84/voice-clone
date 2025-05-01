@@ -714,7 +714,7 @@
     },
     "faqs": {
       "title": "常见问题",
-      "description": "如果您有任何问题，请随时联系我们",
+      "subtitle": "如果您有任何问题，请随时联系我们",
       "items": {
         "item-1": {
           "question": "你们提供免费试用吗？",
@@ -740,7 +740,7 @@
     },
     "testimonials": {
       "title": "客户评价",
-      "description": "我们的客户对我们的评价",
+      "subtitle": "我们的客户对我们的评价",
       "items": {
         "item-1": {
           "name": "Jonathan Yombo",

@@ -1,5 +1,6 @@
 'use client';
 
+import { HeaderSection } from '@/components/layout/header-section';
 import {
   Accordion,
   AccordionContent,
@@ -54,22 +55,20 @@ export default function FaqSection() {
   ];
 
   return (
-    <section className="py-16">
-      <div className="mx-auto max-w-4xl px-4 md:px-6">
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-balance text-3xl font-bold tracking-tight">
-            {t('title')}
-          </h2>
-          <p className="text-muted-foreground mt-4 text-balance text-lg">
-            {t('description')}
-          </p>
-        </div>
+    <section id="faqs" className="px-4 py-16">
+      <div className="mx-auto max-w-4xl">
+        <HeaderSection
+          title={t('title')}
+          titleAs="h2"
+          subtitle={t('subtitle')}
+          subtitleAs="p"
+        />
 
         <div className="mx-auto max-w-4xl mt-12">
           <Accordion
             type="single"
             collapsible
-            className="bg-card ring-muted w-full rounded-2xl border px-8 py-3 shadow-sm ring-4 dark:ring-0"
+            className="ring-muted w-full rounded-2xl border px-8 py-3 shadow-sm ring-4 dark:ring-0"
           >
             {faqItems.map((item) => (
               <AccordionItem
