@@ -812,7 +812,8 @@
       }
     },
     "stats": {
-      "title": "MkSaaS 相关的数字",
+      "title": "统计",
+      "subtitle": "MkSaaS 相关的数字",
       "description": "MkSaaS 可让您在几天内轻松构建您的 AI SaaS",
       "items": {
         "item-1": {

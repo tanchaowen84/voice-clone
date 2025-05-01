@@ -811,7 +811,8 @@
       }
     },
     "stats": {
-      "title": "MkSaaS in numbers",
+      "title": "Stats",
+      "subtitle": "MkSaaS in numbers",
       "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly",
       "items": {
         "item-1": {

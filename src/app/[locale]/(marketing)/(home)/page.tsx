@@ -48,61 +48,33 @@ export default async function HomePage(props: HomePageProps) {
   return (
     <>
       <div className="flex flex-col">
-        <div id="hero">
-          <HeroSection />
-        </div>
+        <HeroSection />
 
-        <div id="logo-cloud">
-          <LogoCloud />
-        </div>
+        <LogoCloud />
 
-        <div id="stats">
-          <StatsSection />
-        </div>
+        <StatsSection />
 
-        <div id="integration">
-          <IntegrationSection />
-        </div>
+        <IntegrationSection />
 
-        <div id="features">
-          <FeaturesSection />
-        </div>
+        <FeaturesSection />
 
-        <div id="features2">
-          <Features2Section />
-        </div>
+        <Features2Section />
 
-        <div id="features3">
-          <Features3Section />
-        </div>
+        <Features3Section />
 
-        <div id="features4">
-          <Features4Section />
-        </div>
+        <Features4Section />
 
-        <div id="features5">
-          <Features5Section />
-        </div>
+        <Features5Section />
 
-        <div id="integration2">
-          <Integration2Section />
-        </div>
+        <Integration2Section />
 
-        <div id="pricing">
-          <PricingSection />
-        </div>
+        <PricingSection />
 
-        <div id="faqs">
-          <FaqSection />
-        </div>
+        <FaqSection />
 
-        <div id="testimonials">
-          <TestimonialsSection />
-        </div>
+        <TestimonialsSection />
 
-        <div id="call-to-action">
-          <CallToActionSection />
-        </div>
+        <CallToActionSection />
       </div>
     </>
   );
