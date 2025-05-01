@@ -20,8 +20,8 @@ If you found anything that could be improved, please let me know.
 - demo: [demo.mksaas.com](https://demo.mksaas.com)
 - discord: [discord.gg/mtjx6W6mNY](https://discord.gg/mtjx6W6mNY)
 - documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- video (WIP): [www.youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
-- roadmap (WIP): [issues/17](https://github.com/MkSaaSHQ/mksaas-template/issues/17)
+- roadmap: [mksaas project](https://github.com/orgs/MkSaaSHQ/projects/1)
+- video (WIP): [youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
 
 ## Notice
 

@@ -16,7 +16,7 @@ export enum Routes {
   Contact = '/contact',
   Waitlist = '/waitlist',
   Changelog = '/changelog',
-  Roadmap = 'https://mksaas.featurebase.app',
+  Roadmap = 'https://github.com/orgs/MkSaaSHQ/projects/1',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
   TermsOfService = '/terms',
