@@ -153,9 +153,6 @@ export const auth = betterAuth({
   },
 });
 
-// https://www.better-auth.com/docs/concepts/typescript#additional-fields
-export type Session = typeof auth.$Infer.Session;
-
 /**
  * Gets the locale from a request by parsing the cookies
  * If no locale is found in the cookies, returns the default locale

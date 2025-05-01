@@ -1,6 +1,6 @@
 import { getActiveSubscriptionAction } from '@/actions/get-active-subscription';
 import { getLifetimeStatusAction } from '@/actions/get-lifetime-status';
-import type { Session } from '@/lib/auth';
+import type { Session } from '@/lib/auth-types';
 import { getAllPricePlans } from '@/lib/price-plan';
 import type { PricePlan, Subscription } from '@/payment/types';
 import { create } from 'zustand';
