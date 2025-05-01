@@ -1,3 +1,4 @@
+import { Ripple } from '@/components/magicui/ripple';
 import { AnimatedGroup } from '@/components/tailark/motion/animated-group';
 import { TextEffect } from '@/components/tailark/motion/text-effect';
 import { Button } from '@/components/ui/button';
@@ -34,7 +35,8 @@ export default function HeroSection() {
 
   return (
     <>
-      <main className="overflow-hidden">
+      <main id="hero" className="overflow-hidden">
+        {/* background, light shadows on top of the hero section */}
         <div
           aria-hidden
           className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
@@ -47,6 +49,8 @@ export default function HeroSection() {
         <section>
           <div className="relative pt-12">
             <div className="mx-auto max-w-7xl px-6">
+              <Ripple />
+
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 {/* introduction */}
                 <AnimatedGroup variants={transitionVariants}>
@@ -74,6 +78,7 @@ export default function HeroSection() {
 
                 {/* title */}
                 <TextEffect
+                  per="line"
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="h1"
