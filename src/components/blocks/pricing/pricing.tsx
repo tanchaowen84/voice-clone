@@ -1,3 +1,4 @@
+import { HeaderSection } from '@/components/layout/header-section';
 import { PricingTable } from '@/components/pricing/pricing-table';
 import { useTranslations } from 'next-intl';
 
@@ -5,14 +6,15 @@ export default function PricingSection() {
   const t = useTranslations('HomePage.pricing');
 
   return (
-    <section className="py-16">
+    <section id="pricing" className="px-4 py-16">
       <div className="mx-auto max-w-6xl px-6 space-y-16">
-        <div className="text-center">
-          <h2 className="text-balance text-4xl lg:text-5xl font-semibold">
-            {t('title')}
-          </h2>
-          <p className="mt-4">{t('description')}</p>
-        </div>
+        <HeaderSection
+          subtitle={t('subtitle')}
+          subtitleAs="h2"
+          subtitleClassName="text-4xl font-bold"
+          description={t('description')}
+          descriptionAs="p"
+        />
 
         <PricingTable />
       </div>

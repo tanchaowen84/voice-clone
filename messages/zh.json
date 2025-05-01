@@ -709,6 +709,7 @@
     },
     "pricing": {
       "title": "价格",
+      "subtitle": "价格",
       "description": "选择最适合您的付费计划"
     },
     "faqs": {

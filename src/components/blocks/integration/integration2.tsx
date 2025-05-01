@@ -17,7 +17,7 @@ export default function Integration2Section() {
 
   return (
     <section>
-      <div className="bg-muted dark:bg-background py-24">
+      <div className="bg-background py-24">
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid items-center sm:grid-cols-2">
             <div className="dark:bg-muted/50 relative mx-auto w-fit">
