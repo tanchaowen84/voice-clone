@@ -607,7 +607,8 @@
       "title": "您最爱公司都是我们的合作伙伴"
     },
     "integration": {
-      "title": "与您最喜欢的工具集成",
+      "title": "集成",
+      "subtitle": "与您最喜欢的工具集成",
       "description": "无缝连接流行的平台和服务，以增强您的工作流程。",
       "learnMore": "了解更多",
       "items": {

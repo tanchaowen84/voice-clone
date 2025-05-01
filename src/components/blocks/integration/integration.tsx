@@ -1,3 +1,4 @@
+import { HeaderSection } from '@/components/layout/header-section';
 import {
   Gemini,
   GooglePaLM,
@@ -17,59 +18,58 @@ export default function IntegrationSection() {
   const t = useTranslations('HomePage.integration');
 
   return (
-    <section>
-      <div className="py-16">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="text-center">
-            <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-              {t('title')}
-            </h2>
-            <p className="text-muted-foreground mt-6">{t('description')}</p>
-          </div>
+    <section id="integration" className="px-4 py-16">
+      <div className="mx-auto max-w-5xl">
+        <HeaderSection
+          title={t('title')}
+          subtitle={t('subtitle')}
+          description={t('description')}
+          subtitleAs="h2"
+          descriptionAs="p"
+        />
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <IntegrationCard
-              title={t('items.item-1.title')}
-              description={t('items.item-1.description')}
-            >
-              <Gemini />
-            </IntegrationCard>
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <IntegrationCard
+            title={t('items.item-1.title')}
+            description={t('items.item-1.description')}
+          >
+            <Gemini />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title={t('items.item-2.title')}
-              description={t('items.item-2.description')}
-            >
-              <Replit />
-            </IntegrationCard>
+          <IntegrationCard
+            title={t('items.item-2.title')}
+            description={t('items.item-2.description')}
+          >
+            <Replit />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title={t('items.item-3.title')}
-              description={t('items.item-3.description')}
-            >
-              <MagicUI />
-            </IntegrationCard>
+          <IntegrationCard
+            title={t('items.item-3.title')}
+            description={t('items.item-3.description')}
+          >
+            <MagicUI />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title={t('items.item-4.title')}
-              description={t('items.item-4.description')}
-            >
-              <VSCodium />
-            </IntegrationCard>
+          <IntegrationCard
+            title={t('items.item-4.title')}
+            description={t('items.item-4.description')}
+          >
+            <VSCodium />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title={t('items.item-5.title')}
-              description={t('items.item-5.description')}
-            >
-              <MediaWiki />
-            </IntegrationCard>
+          <IntegrationCard
+            title={t('items.item-5.title')}
+            description={t('items.item-5.description')}
+          >
+            <MediaWiki />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title={t('items.item-6.title')}
-              description={t('items.item-6.description')}
-            >
-              <GooglePaLM />
-            </IntegrationCard>
-          </div>
+          <IntegrationCard
+            title={t('items.item-6.title')}
+            description={t('items.item-6.description')}
+          >
+            <GooglePaLM />
+          </IntegrationCard>
         </div>
       </div>
     </section>
@@ -104,7 +104,7 @@ const IntegrationCard = ({
         <div className="flex gap-3 border-t border-dashed pt-6">
           <Button
             asChild
-            variant="secondary"
+            variant="outline"
             size="sm"
             className="gap-1 pr-2 shadow-none"
           >

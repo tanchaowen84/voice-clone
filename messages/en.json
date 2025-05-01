@@ -606,7 +606,8 @@
       "title": "Your favorite companies are our partners"
     },
     "integration": {
-      "title": "Integrate with your favorite tools",
+      "title": "Integrations",
+      "subtitle": "Integrate with your favorite tools",
       "description": "Connect seamlessly with popular platforms and services to enhance your workflow.",
       "learnMore": "Learn More",
       "items": {
