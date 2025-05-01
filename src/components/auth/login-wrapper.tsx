@@ -56,7 +56,7 @@ export const LoginWrapper = ({
           <DialogHeader className="hidden">
             <DialogTitle />
           </DialogHeader>
-          <LoginForm callbackUrl={callbackUrl} />
+          <LoginForm callbackUrl={callbackUrl} className="border-none" />
         </DialogContent>
       </Dialog>
     );

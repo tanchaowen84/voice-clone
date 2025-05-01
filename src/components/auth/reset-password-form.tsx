@@ -100,7 +100,6 @@ export const ResetPasswordForm = () => {
       headerLabel={t('title')}
       bottomButtonLabel={t('backToLogin')}
       bottomButtonHref={`${Routes.Login}`}
-      className="border-none"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

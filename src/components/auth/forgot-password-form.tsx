@@ -86,7 +86,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
       headerLabel={t('title')}
       bottomButtonLabel={t('backToLogin')}
       bottomButtonHref={`${Routes.Login}`}
-      className={cn('border-none', className)}
+      className={cn('', className)}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

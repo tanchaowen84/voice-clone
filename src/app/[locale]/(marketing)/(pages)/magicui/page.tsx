@@ -19,7 +19,7 @@ import { RainbowButtonDemo } from '@/components/magicui/example/rainbow-button-e
 import { RippleDemo } from '@/components/magicui/example/ripple-example';
 import { ShimmerButtonDemo } from '@/components/magicui/example/shimmer-button-example';
 import { ShinyButtonDemo } from '@/components/magicui/example/shiny-button-example';
-import { TweetImages } from '@/components/magicui/example/twitter-card-example';
+import { TweetCardDemo } from '@/components/magicui/example/twitter-card-example';
 import { WordRotateDemo } from '@/components/magicui/example/word-rotate-example';
 
 /**
@@ -73,7 +73,7 @@ export default async function MagicuiPage() {
           <WordRotateDemo />
         </div>
       </div>
-      <TweetImages />
+      <TweetCardDemo id="1678577280489234432" />
       <BlurFadeDemo />
       <BentoDemo />
       <DotPatternDemo />

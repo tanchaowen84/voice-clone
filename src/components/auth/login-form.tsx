@@ -114,7 +114,7 @@ export const LoginForm = ({
       headerLabel={t('welcomeBack')}
       bottomButtonLabel={t('signUpHint')}
       bottomButtonHref={`${Routes.Register}`}
-      className={cn('border-none', className)}
+      className={cn('', className)}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
