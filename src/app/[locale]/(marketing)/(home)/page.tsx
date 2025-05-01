@@ -58,11 +58,7 @@ export default async function HomePage(props: HomePageProps) {
 
         <FeaturesSection />
 
-        <Features2Section />
-
         <Features3Section />
-
-        <Features4Section />
 
         <Features5Section />
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { HeaderSection } from '@/components/layout/header-section';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import {
   Accordion,
@@ -29,36 +30,47 @@ export default function Features2Section() {
 
   const images = {
     'item-1': {
-      image: '/blocks/charts.png',
+      image: '/blocks/charts-light.png',
+      darkImage: '/blocks/charts.png',
       alt: 'Product Feature One',
     },
     'item-2': {
-      image: '/blocks/music.png',
+      image: '/blocks/music-light.png',
+      darkImage: '/blocks/music.png',
       alt: 'Product Feature Two',
     },
     'item-3': {
-      image: '/blocks/mail2.png',
+      image: '/blocks/mail2-light.png',
+      darkImage: '/blocks/mail2.png',
       alt: 'Product Feature Three',
     },
     'item-4': {
-      image: '/blocks/payments.png',
+      image: '/blocks/payments-light.png',
+      darkImage: '/blocks/payments.png',
       alt: 'Product Feature Four',
     },
   };
 
   return (
-    <section className="py-16">
+    <section id="features" className="px-4 py-16">
       <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]" />
-      <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
-        <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
-          <h2 className="text-balance text-4xl lg:text-5xl font-semibold">
-            {t('title')}
-          </h2>
-          <p>{t('description')}</p>
-        </div>
+      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
+        <HeaderSection
+          title={t('title')}
+          subtitle={t('subtitle')}
+          subtitleAs="h2"
+          description={t('description')}
+          descriptionAs="p"
+        />
 
-        <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:grid-cols-12 md:gap-12 lg:gap-24 lg:px-0">
-          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+        <div className="grid gap-12 sm:px-12 lg:grid-cols-12 lg:gap-24 lg:px-0">
+          <div className="lg:col-span-5 flex flex-col gap-8">
+            <div className="lg:pr-0 text-left">
+              <h3 className="text-3xl font-semibold lg:text-4xl text-gradient_indigo-purple leading-normal py-1">
+                {t('title')}
+              </h3>
+              <p className="mt-4 text-muted-foreground">{t('description')}</p>
+            </div>
             <Accordion
               type="single"
               value={activeItem}
@@ -72,7 +84,7 @@ export default function Features2Section() {
                     {t('items.item-1.title')}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-muted-foreground">
                   {t('items.item-1.description')}
                 </AccordionContent>
               </AccordionItem>
@@ -83,7 +95,7 @@ export default function Features2Section() {
                     {t('items.item-2.title')}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-muted-foreground">
                   {t('items.item-2.description')}
                 </AccordionContent>
               </AccordionItem>
@@ -94,7 +106,7 @@ export default function Features2Section() {
                     {t('items.item-3.title')}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-muted-foreground">
                   {t('items.item-3.description')}
                 </AccordionContent>
               </AccordionItem>
@@ -105,14 +117,14 @@ export default function Features2Section() {
                     {t('items.item-4.title')}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-muted-foreground">
                   {t('items.item-4.description')}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
 
-          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 md:h-auto lg:col-span-7">
+          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2 lg:h-auto lg:col-span-7">
             <div className="aspect-76/59 bg-background relative w-full rounded-2xl">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -125,7 +137,14 @@ export default function Features2Section() {
                 >
                   <Image
                     src={images[activeItem].image}
-                    className="size-full object-cover object-left-top dark:mix-blend-lighten"
+                    className="size-full object-cover object-left-top dark:hidden"
+                    alt={images[activeItem].alt}
+                    width={1207}
+                    height={929}
+                  />
+                  <Image
+                    src={images[activeItem].darkImage}
+                    className="size-full object-cover object-left-top dark:block hidden"
                     alt={images[activeItem].alt}
                     width={1207}
                     height={929}
@@ -136,7 +155,7 @@ export default function Features2Section() {
             <BorderBeam
               duration={6}
               size={200}
-              className="from-transparent via-yellow-700 to-transparent dark:via-white/50"
+              className="from-transparent via-violet-700 to-transparent dark:via-white/50"
             />
           </div>
         </div>

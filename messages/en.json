@@ -644,7 +644,8 @@
       "secondaryButton": "See Demo"
     },
     "features": {
-      "title": "The features of your product",
+      "title": "Features",
+      "subtitle": "The features of your product",
       "description": "Write the description of your product here",
       "items": {
         "item-1": {
