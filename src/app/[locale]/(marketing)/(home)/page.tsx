@@ -3,8 +3,6 @@ import FaqSection from '@/components/blocks/faqs/faqs';
 import FeaturesSection from '@/components/blocks/features/features';
 import Features2Section from '@/components/blocks/features/features2';
 import Features3Section from '@/components/blocks/features/features3';
-import Features4Section from '@/components/blocks/features/features4';
-import Features5Section from '@/components/blocks/features/features5';
 import HeroSection from '@/components/blocks/hero/hero';
 import IntegrationSection from '@/components/blocks/integration/integration';
 import Integration2Section from '@/components/blocks/integration/integration2';
@@ -58,9 +56,9 @@ export default async function HomePage(props: HomePageProps) {
 
         <FeaturesSection />
 
-        <Features3Section />
+        <Features2Section />
 
-        <Features5Section />
+        <Features3Section />
 
         <Integration2Section />
 

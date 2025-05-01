@@ -666,16 +666,18 @@
         }
       }
     },
-    "features3": {
-      "title": "Product Features",
-      "description": "Write the description of your product here, make it as detailed as possible",
+    "features2": {
+      "title": "Features2",
+      "subtitle": "The features of your product",
+      "description": "Write the description of your product here",
       "feature-1": "Product Feature One",
       "feature-2": "Product Feature Two",
       "feature-3": "Product Feature Three",
       "feature-4": "Product Feature Four"
     },
-    "features5": {
-      "title": "The features of your product",
+    "features3": {
+      "title": "Features3",
+      "subtitle": "The features of your product",
       "description": "Write the description of your product here",
       "items": {
         "item-1": {

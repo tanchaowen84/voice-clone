@@ -23,7 +23,7 @@ import { useState } from 'react';
  * https://nsui.irung.me/features
  * pnpm dlx shadcn@canary add https://nsui.irung.me/r/features-12.json
  */
-export default function Features2Section() {
+export default function FeaturesSection() {
   const t = useTranslations('HomePage.features');
   type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
   const [activeItem, setActiveItem] = useState<ImageKey>('item-1');
