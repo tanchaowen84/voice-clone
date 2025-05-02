@@ -1,9 +1,11 @@
+import { BlurFadeDemo } from '@/components/magicui/example/blur-fade-example';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { MailIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { MailIcon, TwitterIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -62,20 +64,39 @@ export default async function AboutPage() {
                 {t('introduction')}
               </p>
 
-              {websiteConfig.mail.supportEmail && (
-                <div className="flex items-center gap-4">
-                  <Button className="rounded-lg cursor-pointer">
-                    <MailIcon className="mr-1 size-4" />
-                    <a href={`mailto:${websiteConfig.mail.supportEmail}`}>
-                      {t('talkWithMe')}
-                    </a>
-                  </Button>
-                </div>
-              )}
+              <div className="flex items-center gap-4">
+                {websiteConfig.metadata.social?.twitter && (
+                  <a
+                    href={websiteConfig.metadata.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      buttonVariants({ variant: 'outline' }),
+                      'rounded-lg cursor-pointer'
+                    )}
+                  >
+                    <TwitterIcon className="mr-1 size-4" />
+                    {t('followMe')}
+                  </a>
+                )}
+                {websiteConfig.mail.supportEmail && (
+                  <div className="flex items-center gap-4">
+                    <Button className="rounded-lg cursor-pointer">
+                      <MailIcon className="mr-1 size-4" />
+                      <a href={`mailto:${websiteConfig.mail.supportEmail}`}>
+                        {t('talkWithMe')}
+                      </a>
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* image section */}
+      <BlurFadeDemo />
     </div>
   );
 }

@@ -116,7 +116,8 @@
     "authorName": "MkSaaS",
     "authorBio": "AI SaaS Boilerplate",
     "introduction": "👋 Hi there! This is MkSaaS, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better. If you have any questions, welcome to contact me.",
-    "talkWithMe": "Talk with me"
+    "talkWithMe": "Talk with me",
+    "followMe": "Follow me on X"
   },
   "ChangelogPage": {
     "title": "Changelog",

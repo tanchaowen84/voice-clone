@@ -117,7 +117,8 @@
     "authorName": "MkSaaS",
     "authorBio": "最好的 AI SaaS 模板",
     "introduction": "👋 你好，这里是 MkSaaS，一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
-    "talkWithMe": "联系我"
+    "talkWithMe": "联系我",
+    "followMe": "关注我"
   },
   "ChangelogPage": {
     "title": "更新日志",
