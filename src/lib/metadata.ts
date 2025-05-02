@@ -19,7 +19,7 @@ export function constructMetadata({
   image?: string;
   noIndex?: boolean;
 } = {}): Metadata {
-  title = title || defaultMessages.Metadata.name;
+  title = title || defaultMessages.Metadata.title;
   description = description || defaultMessages.Metadata.description;
   image = image || websiteConfig.metadata.images?.ogImage;
   const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
