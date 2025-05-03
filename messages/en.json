@@ -160,7 +160,8 @@
     }
   },
   "Newsletter": {
-    "title": "Join the community",
+    "title": "Newsletter",
+    "subtitle": "Join the community",
     "description": "Subscribe to our newsletter for the latest news and updates",
     "form": {
       "email": "Email",

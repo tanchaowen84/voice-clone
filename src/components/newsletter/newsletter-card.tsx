@@ -2,22 +2,21 @@
 
 import { NewsletterForm } from '@/components/newsletter/newsletter-form';
 import { useTranslations } from 'next-intl';
+import { HeaderSection } from '../layout/header-section';
 
 export function NewsletterCard() {
   const t = useTranslations('Newsletter');
 
   return (
-    <div className="w-full px-4 py-8 md:p-16 rounded-lg bg-muted/50">
+    <div className="w-full p-16 rounded-lg bg-muted/50">
       <div className="flex flex-col items-center justify-center gap-8">
         {/* Header */}
-        <div className="space-y-4">
-          <h3 className="text-center text-3xl font-bold tracking-tight">
-            {t('title')}
-          </h3>
-          <p className="text-center text-lg text-muted-foreground">
-            {t('description')}
-          </p>
-        </div>
+        <HeaderSection
+          title={t('title')}
+          subtitle={t('subtitle')}
+          description={t('description')}
+          className="text-center"
+        />
 
         <NewsletterForm />
       </div>

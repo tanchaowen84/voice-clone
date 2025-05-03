@@ -161,7 +161,8 @@
     }
   },
   "Newsletter": {
-    "title": "加入我们的社区",
+    "title": "邮件列表",
+    "subtitle": "加入我们的社区",
     "description": "订阅邮件列表，及时获取最新消息和更新",
     "form": {
       "email": "邮箱",
