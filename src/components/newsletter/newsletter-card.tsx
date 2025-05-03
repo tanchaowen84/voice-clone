@@ -15,7 +15,6 @@ export function NewsletterCard() {
           title={t('title')}
           subtitle={t('subtitle')}
           description={t('description')}
-          className="text-center"
         />
 
         <NewsletterForm />
