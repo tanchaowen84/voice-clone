@@ -1,3 +1,4 @@
+import Container from '@/components/layout/container';
 import { WaitlistFormCard } from '@/components/waitlist/waitlist-form-card';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
@@ -24,19 +25,21 @@ export default async function WaitlistPage() {
   const t = await getTranslations('WaitlistPage');
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 pb-16">
-      {/* Header */}
-      <div className="space-y-4">
-        <h1 className="text-center text-3xl font-bold tracking-tight">
-          {t('title')}
-        </h1>
-        <h2 className="text-center text-lg text-muted-foreground">
-          {t('subtitle')}
-        </h2>
-      </div>
+    <Container className="py-16 px-4">
+      <div className="mx-auto max-w-4xl space-y-8 pb-16">
+        {/* Header */}
+        <div className="space-y-4">
+          <h1 className="text-center text-3xl font-bold tracking-tight">
+            {t('title')}
+          </h1>
+          <h2 className="text-center text-lg text-muted-foreground">
+            {t('subtitle')}
+          </h2>
+        </div>
 
-      {/* Form */}
-      <WaitlistFormCard />
-    </div>
+        {/* Form */}
+        <WaitlistFormCard />
+      </div>
+    </Container>
   );
 }

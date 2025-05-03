@@ -9,6 +9,7 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import '@/styles/mdx.css';
+import Container from '@/components/layout/container';
 
 export async function generateMetadata({
   params,
@@ -42,30 +43,32 @@ export default async function ChangelogPage(props: NextPageProps) {
   const t = await getTranslations('ChangelogPage');
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="space-y-4">
-        <h1 className="text-center text-3xl font-bold tracking-tight">
-          {t('title')}
-        </h1>
-        <p className="text-center text-lg text-muted-foreground">
-          {t('subtitle')}
-        </p>
-      </div>
+    <Container className="py-16 px-4">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="space-y-4">
+          <h1 className="text-center text-3xl font-bold tracking-tight">
+            {t('title')}
+          </h1>
+          <p className="text-center text-lg text-muted-foreground">
+            {t('subtitle')}
+          </p>
+        </div>
 
-      {/* Releases */}
-      <div className="mt-8">
-        {releases.map((release) => (
-          <ReleaseCard
-            key={release.slug}
-            title={release.title}
-            description={release.description}
-            date={release.date}
-            version={release.version}
-            content={release.body}
-          />
-        ))}
+        {/* Releases */}
+        <div className="mt-8">
+          {releases.map((release) => (
+            <ReleaseCard
+              key={release.slug}
+              title={release.title}
+              description={release.description}
+              date={release.date}
+              version={release.version}
+              content={release.body}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </Container>
   );
 }

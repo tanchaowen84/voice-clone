@@ -1,4 +1,5 @@
 import { ContactFormCard } from '@/components/contact/contact-form-card';
+import Container from '@/components/layout/container';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -28,19 +29,21 @@ export default async function ContactPage() {
   const t = await getTranslations('ContactPage');
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 pb-16">
-      {/* Header */}
-      <div className="space-y-4">
-        <h1 className="text-center text-3xl font-bold tracking-tight">
-          {t('title')}
-        </h1>
-        <p className="text-center text-lg text-muted-foreground">
-          {t('subtitle')}
-        </p>
-      </div>
+    <Container className="py-16 px-4">
+      <div className="mx-auto max-w-4xl space-y-8 pb-16">
+        {/* Header */}
+        <div className="space-y-4">
+          <h1 className="text-center text-3xl font-bold tracking-tight">
+            {t('title')}
+          </h1>
+          <p className="text-center text-lg text-muted-foreground">
+            {t('subtitle')}
+          </p>
+        </div>
 
-      {/* Form */}
-      <ContactFormCard />
-    </div>
+        {/* Form */}
+        <ContactFormCard />
+      </div>
+    </Container>
   );
 }
