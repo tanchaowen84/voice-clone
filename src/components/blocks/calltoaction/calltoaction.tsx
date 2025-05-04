@@ -6,7 +6,7 @@ export default function CallToActionSection() {
   const t = useTranslations('HomePage.calltoaction');
 
   return (
-    <section id="call-to-action" className="px-4 py-16 bg-background">
+    <section id="call-to-action" className="px-4 py-24 bg-background">
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
