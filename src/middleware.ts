@@ -1,8 +1,7 @@
-import { betterFetch } from '@better-fetch/fetch';
+import { getSessionCookie } from 'better-auth/cookies';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 import { LOCALES, routing } from './i18n/routing';
-import type { Session } from './lib/auth-types';
 import {
   DEFAULT_LOGIN_REDIRECT,
   protectedRoutes,
@@ -21,22 +20,13 @@ const intlMiddleware = createMiddleware(routing);
  * In Next.js middleware, it's recommended to only check for the existence of a session cookie
  * to handle redirection. To avoid blocking requests by making API or database calls.
  */
-export default async function middleware(req: NextRequest) {
-  const { nextUrl, headers } = req;
+export default async function middleware(request: NextRequest) {
+  const { nextUrl } = request;
   console.log('>> middleware start, pathname', nextUrl.pathname);
 
-  // do not use getSession() here, it will cause error related to edge runtime
-  // const session = await getSession();
-  const { data: session } = await betterFetch<Session>(
-    '/api/auth/get-session',
-    {
-      baseURL: req.nextUrl.origin,
-      headers: {
-        cookie: req.headers.get('cookie') || '', // Forward the cookies from the request
-      },
-    }
-  );
-  const isLoggedIn = !!session;
+  const sessionCookie = getSessionCookie(request);
+  // console.log('middleware, sessionCookie', sessionCookie);
+  const isLoggedIn = !!sessionCookie;
   // console.log('middleware, isLoggedIn', isLoggedIn);
 
   // Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
@@ -81,7 +71,7 @@ export default async function middleware(req: NextRequest) {
 
   // Apply intlMiddleware for all routes
   console.log('<< middleware end, applying intlMiddleware');
-  return intlMiddleware(req);
+  return intlMiddleware(request);
 }
 
 /**
