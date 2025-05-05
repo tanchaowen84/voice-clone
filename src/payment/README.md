@@ -7,7 +7,10 @@ This module provides a flexible payment integration with Stripe, supporting both
 - `/payment/types.ts` - Type definitions for the payment module
 - `/payment/index.ts` - Main payment interface and global provider instance
 - `/payment/provider/stripe.ts` - Stripe payment provider implementation
-- `/actions/payment.ts` - Server actions for payment operations
+- `/actions/create-checkout-session.ts` - Server action for creating checkout sessions
+- `/actions/create-customer-portal-session.ts` - Server action for creating customer portal sessions
+- `/actions/get-lifetime-statue.ts` - Server action for checking user lifetime membership status 
+- `/actions/get-active-subscription.ts` - Server action for getting active subscription data
 - `/app/api/webhooks/stripe/route.ts` - API route for Stripe webhook events
 - `/app/[locale]/(marketing)/payment/success/page.tsx` - Success page for completed checkout
 - `/app/[locale]/(marketing)/payment/cancel/page.tsx` - Cancel page for abandoned checkout
@@ -126,7 +129,6 @@ Creates a Stripe checkout session and redirects the user:
 <CheckoutButton
   planId="pro"
   priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!}
-  email="user@example.com"
   metadata={{ userId: "user_123" }}
   variant="default"
   size="default"
