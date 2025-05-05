@@ -2,13 +2,13 @@
  * Send a message to Discord when a user makes a purchase
  * @param sessionId The Stripe checkout session ID
  * @param customerId The Stripe customer ID
- * @param githubUsername The GitHub username of the customer
+ * @param userName The username of the customer
  * @param amount The purchase amount in the currency's main unit (e.g., dollars, not cents)
  */
 export async function sendMessageToDiscord(
   sessionId: string,
   customerId: string,
-  githubUsername: string,
+  userName: string,
   amount: number
 ): Promise<void> {
   try {
@@ -32,8 +32,8 @@ export async function sendMessageToDiscord(
           color: 0x4caf50, // Green color
           fields: [
             {
-              name: 'GitHub Username',
-              value: githubUsername,
+              name: 'Username',
+              value: userName,
               inline: true,
             },
             {
@@ -69,13 +69,13 @@ export async function sendMessageToDiscord(
     if (!response.ok) {
       // throw new Error(`Discord webhook request failed with status ${response.status}`);
       console.error(
-        `<< Failed to send Discord notification for GitHub user ${githubUsername}:`,
+        `<< Failed to send Discord notification for user ${userName}:`,
         response
       );
     }
 
     console.log(
-      `<< Successfully sent Discord notification for GitHub user ${githubUsername}`
+      `<< Successfully sent Discord notification for user ${userName}`
     );
   } catch (error) {
     console.error('<< Failed to send Discord notification:', error);
