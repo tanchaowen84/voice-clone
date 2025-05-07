@@ -21,7 +21,16 @@ If you found anything that could be improved, please let me know.
 - discord: [discord.gg/mtjx6W6mNY](https://discord.gg/mtjx6W6mNY)
 - documentation: [mksaas.com/docs](https://mksaas.com/docs)
 - roadmap: [mksaas project](https://github.com/orgs/MkSaaSHQ/projects/1)
-- video (WIP): [youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ) 
+- video (WIP): [youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ)
+
+## Repositories
+
+By default, you should have access to all four repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
+
+- [mksaas-template](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com (ready)
+- [mksaas-app](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app (WIP)
+- [mksaas-blog](https://github.com/MkSaaSHQ/mksaas-blog): https://javayhu.com (ready)
+- [mksaas-haitang](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app (WIP)
 
 ## Notice
 
