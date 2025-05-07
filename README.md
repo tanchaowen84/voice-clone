@@ -27,10 +27,10 @@ If you found anything that could be improved, please let me know.
 
 By default, you should have access to all four repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
 
-- [mksaas-template](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com (ready)
-- [mksaas-app](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app (WIP)
-- [mksaas-blog](https://github.com/MkSaaSHQ/mksaas-blog): https://javayhu.com (ready)
-- [mksaas-haitang](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app (WIP)
+- [MkSaaSHQ/mksaas-template](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com (ready)
+- [MkSaaSHQ/mksaas-blog](https://github.com/MkSaaSHQ/mksaas-blog): https://javayhu.com (ready)
+- [MkSaaSHQ/mksaas-app](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app (WIP)
+- [MkSaaSHQ/mksaas-haitang](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app (WIP)
 
 ## Notice
 
