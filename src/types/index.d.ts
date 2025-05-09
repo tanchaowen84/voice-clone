@@ -57,6 +57,7 @@ export interface SocialConfig {
   facebook?: string;
   instagram?: string;
   tiktok?: string;
+  telegram?: string;
 }
 
 /**
