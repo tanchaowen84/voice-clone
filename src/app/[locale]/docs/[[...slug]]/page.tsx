@@ -136,7 +136,6 @@ export default async function DocPage({ params }: DocPageProps) {
               );
             },
           }}
-          includeFumadocsComponents={true}
         />
       </DocsBody>
     </DocsPage>

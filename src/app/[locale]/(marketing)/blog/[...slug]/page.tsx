@@ -166,10 +166,7 @@ export default async function BlogPostPage(props: NextPageProps) {
           {/* in order to make the mdx.css work, we need to add the className prose to the div */}
           {/* https://github.com/tailwindlabs/tailwindcss-typography */}
           <div className="mt-8 max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-            <CustomMDXContent
-              code={post.body}
-              includeFumadocsComponents={true}
-            />
+            <CustomMDXContent code={post.body} />
           </div>
 
           <div className="flex items-center justify-start my-16">

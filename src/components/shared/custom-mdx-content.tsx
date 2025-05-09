@@ -16,7 +16,6 @@ import type { ComponentProps, FC } from 'react';
 interface CustomMDXContentProps {
   code: string;
   customComponents?: Record<string, any>;
-  includeFumadocsComponents?: boolean;
 }
 
 /**
@@ -26,7 +25,6 @@ interface CustomMDXContentProps {
 export async function CustomMDXContent({
   code,
   customComponents = {},
-  includeFumadocsComponents = true,
 }: CustomMDXContentProps) {
   // Start with default components
   const baseComponents: Record<string, any> = {
@@ -34,27 +32,21 @@ export async function CustomMDXContent({
     ...LucideIcons,
     ...((await import('lucide-react')) as unknown as MDXComponents),
     YoutubeVideo,
+    Tabs,
+    Tab,
+    TypeTable,
+    Accordion,
+    Accordions,
+    Steps,
+    Step,
+    Wrapper,
+    File,
+    Folder,
+    Files,
+    blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
+    img: ImageWrapper,
     ...customComponents,
   };
-
-  // Add Fumadocs UI components if requested
-  if (includeFumadocsComponents) {
-    Object.assign(baseComponents, {
-      Tabs,
-      Tab,
-      TypeTable,
-      Accordion,
-      Accordions,
-      Steps,
-      Step,
-      Wrapper,
-      File,
-      Folder,
-      Files,
-      blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
-      img: ImageWrapper,
-    });
-  }
 
   return (
     <MDXContent code={code} components={baseComponents as MDXComponents} />
