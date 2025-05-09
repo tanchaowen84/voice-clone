@@ -1,6 +1,7 @@
 ---
 description: Best practices for using Drizzle ORM with database
-globs: **/*.{ts}
+globs: *.tsx,*.ts
+alwaysApply: false
 ---
 
 - Use Drizzle's type-safe query builder for better code completion and safety.

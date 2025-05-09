@@ -1,6 +1,7 @@
 ---
 description: Best practices for schema validation with Zod
-globs: **/*.{ts,tsx}
+globs: *.tsx,*.ts
+alwaysApply: false
 ---
 
 - Define clear and reusable schemas for data validation

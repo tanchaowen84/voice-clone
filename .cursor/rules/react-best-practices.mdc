@@ -1,6 +1,6 @@
 ---
 description: Best practices for React component development
-globs: **/*.{ts,tsx,js,jsx}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

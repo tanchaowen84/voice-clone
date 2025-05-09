@@ -1,6 +1,6 @@
 ---
 description: Best practices for form handling with React Hook Form
-globs: **/*.{ts,tsx}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

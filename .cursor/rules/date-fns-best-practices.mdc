@@ -1,6 +1,6 @@
 ---
 description: Best practices for date and time manipulation with date-fns
-globs: **/*.{ts,tsx,js,jsx}
+globs: *.ts,*.tsx
 alwaysApply: false
 ---
 

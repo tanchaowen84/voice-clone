@@ -1,6 +1,6 @@
 ---
 description: Best practices for using Vercel AI SDK
-globs: **/*.{ts,tsx}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

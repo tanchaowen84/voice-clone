@@ -1,6 +1,6 @@
 ---
 description: Best practices for state management with Zustand
-globs: **/*.{ts,tsx}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

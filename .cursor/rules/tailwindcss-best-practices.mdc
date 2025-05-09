@@ -1,6 +1,6 @@
 ---
 description: Best practices for styling with Tailwind CSS
-globs: **/*.{ts,tsx,css}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

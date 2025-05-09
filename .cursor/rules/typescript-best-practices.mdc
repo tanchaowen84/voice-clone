@@ -1,6 +1,6 @@
 ---
 description: TypeScript coding standards and type safety guidelines
-globs: **/*.{ts,tsx}
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 

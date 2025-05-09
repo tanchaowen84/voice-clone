@@ -1,0 +1,36 @@
+---
+description:
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+# Project Structure Guide
+
+## Core Directories
+- `src/app/`: Next.js app router pages and layouts
+- `src/components/`: Reusable React components
+- `src/lib/`: Utility functions and shared code
+- `src/db/`: Database schema and migrations using Drizzle ORM
+- `src/stores/`: Zustand state management
+- `src/actions/`: Server actions and API routes
+- `src/hooks/`: Custom React hooks
+- `src/types/`: TypeScript type definitions
+- `src/i18n/`: Internationalization setup
+- `src/mail/`: Email templates and mail functionality
+- `src/payment/`: Payment integration
+- `src/analytics/`: Analytics and tracking
+- `src/storage/`: File storage integration
+
+## Configuration Files
+- `next.config.ts`: Next.js configuration
+- `drizzle.config.ts`: Database configuration
+- `biome.json`: Code formatting and linting rules
+- `tsconfig.json`: TypeScript configuration
+- `components.json`: UI components configuration
+
+## Content Management
+- `content/`: MDX content files
+- `content-collections.ts`: Content collection configuration
+
+## Environment
+- `env.example`: Environment variables template
+- `global.d.ts`: Global TypeScript declarations
