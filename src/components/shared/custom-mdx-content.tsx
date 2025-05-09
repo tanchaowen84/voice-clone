@@ -1,4 +1,5 @@
 import { Wrapper } from '@/components/docs/wrapper';
+import { YoutubeVideo } from '@/components/docs/youtube-video';
 import { MDXContent } from '@content-collections/mdx/react';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Callout } from 'fumadocs-ui/components/callout';
@@ -32,6 +33,7 @@ export async function CustomMDXContent({
     ...defaultMdxComponents,
     ...LucideIcons,
     ...((await import('lucide-react')) as unknown as MDXComponents),
+    YoutubeVideo,
     ...customComponents,
   };
 
