@@ -142,7 +142,13 @@ export const auth = betterAuth({
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
     // support user management, ban/unban user, manage user roles, etc.
-    admin(),
+    admin({
+      // https://www.better-auth.com/docs/plugins/admin#default-ban-reason
+      defaultBanReason: 'Spamming',
+      defaultBanExpiresIn: undefined,
+      bannedUserMessage:
+        'You have been banned from this application. Please contact support if you believe this is an error.',
+    }),
   ],
   onAPIError: {
     // https://www.better-auth.com/docs/reference/options#onapierror

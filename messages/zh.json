@@ -441,7 +441,27 @@
     "admin": {
       "title": "系统管理",
       "users": {
-        "title": "用户管理"
+        "title": "用户管理",
+        "email": {
+          "verified": "已验证",
+          "unverified": "未验证"
+        },
+        "banned": "已封禁",
+        "joined": "加入时间",
+        "ban": {
+          "reason": "封禁原因",
+          "reasonPlaceholder": "请输入封禁该用户的原因",
+          "expires": "封禁到期时间",
+          "button": "封禁用户",
+          "success": "用户已被封禁",
+          "error": "封禁用户失败"
+        },
+        "unban": {
+          "button": "解除封禁",
+          "success": "用户已被解除封禁",
+          "error": "解除封禁失败"
+        },
+        "close": "关闭"
       }
     },
     "settings": {

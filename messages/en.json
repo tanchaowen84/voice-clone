@@ -440,7 +440,27 @@
     "admin": {
       "title": "Admin",
       "users": {
-        "title": "Users"
+        "title": "Users",
+        "email": {
+          "verified": "Verified",
+          "unverified": "Unverified"
+        },
+        "banned": "Banned",
+        "joined": "Joined",
+        "ban": {
+          "reason": "Ban Reason",
+          "reasonPlaceholder": "Enter the reason for banning this user",
+          "expires": "Ban Expires",
+          "button": "Ban User",
+          "success": "User has been banned",
+          "error": "Failed to ban user"
+        },
+        "unban": {
+          "button": "Unban User",
+          "success": "User has been unbanned",
+          "error": "Failed to unban user"
+        },
+        "close": "Close"
       }
     },
     "settings": {

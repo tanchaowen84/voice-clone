@@ -1,6 +1,8 @@
 'use client';
 
-import { UserAvatar } from '@/components/layout/user-avatar';
+import { banUserAction } from '@/actions/ban-user';
+import { unbanUserAction } from '@/actions/unban-user';
+import { UserDetailViewer } from '@/components/admin/user-detail-viewer';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -107,14 +109,39 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2 pl-3">
-          <UserAvatar
-            name={user.name}
-            image={user.image}
-            className="size-8 border"
-          />
-          <span>{user.name}</span>
-        </div>
+        <UserDetailViewer
+          user={user}
+          onBan={async (userId, reason, expiresAt) => {
+            const result = await banUserAction({ userId, reason, expiresAt });
+            if (!result) {
+              throw new Error('Failed to ban user');
+            }
+            if (result.validationErrors) {
+              throw new Error(
+                Object.values(result.validationErrors).join(', ')
+              );
+            }
+            if (result.serverError) {
+              throw new Error(result.serverError);
+            }
+            return result;
+          }}
+          onUnban={async (userId) => {
+            const result = await unbanUserAction({ userId });
+            if (!result) {
+              throw new Error('Failed to unban user');
+            }
+            if (result.validationErrors) {
+              throw new Error(
+                Object.values(result.validationErrors).join(', ')
+              );
+            }
+            if (result.serverError) {
+              throw new Error(result.serverError);
+            }
+            return result;
+          }}
+        />
       );
     },
   },
