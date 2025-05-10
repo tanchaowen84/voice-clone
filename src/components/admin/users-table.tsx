@@ -54,6 +54,7 @@ import {
   UserRoundXIcon,
 } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
 
@@ -152,7 +153,17 @@ const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row }) => {
       const user = row.original;
-      return <div className="flex items-center gap-2 pl-3">{user.email}</div>;
+      return (
+        <div
+          className="flex items-center gap-2 pl-3 hover:underline hover:underline-offset-4 cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(user.email);
+            toast.success('Email copied to clipboard');
+          }}
+        >
+          {user.email}
+        </div>
+      );
     },
   },
   {
@@ -208,7 +219,7 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2 pl-3">
+        <div className="flex items-center gap-2">
           {user.customerId ? (
             <a
               href={`https://dashboard.stripe.com/customers/${user.customerId}`}
@@ -248,9 +259,7 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2 pl-3">
-          {user.banReason || '-'}
-        </div>
+        <div className="flex items-center gap-2">{user.banReason || '-'}</div>
       );
     },
   },
@@ -260,7 +269,7 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2 pl-3">
+        <div className="flex items-center gap-2">
           {user.banExpires ? formatDate(user.banExpires) : '-'}
         </div>
       );

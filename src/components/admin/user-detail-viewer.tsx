@@ -141,14 +141,19 @@ export function UserDetailViewer({
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit px-0 text-left">
+        <Button
+          variant="link"
+          className="cursor-pointer text-foreground w-fit px-0 text-left"
+        >
           <div className="flex items-center gap-2 pl-3">
             <UserAvatar
               name={user.name}
               image={user.image}
               className="size-8 border"
             />
-            <span>{user.name}</span>
+            <span className="hover:underline hover:underline-offset-4">
+              {user.name}
+            </span>
           </div>
         </Button>
       </DrawerTrigger>
