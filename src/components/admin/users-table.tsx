@@ -50,7 +50,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import { Label } from '../ui/label';
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -153,37 +153,60 @@ const columns: ColumnDef<User>[] = [
 
 interface UsersTableProps {
   data: User[];
+  total: number;
+  pageIndex: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  onSearch: (search: string) => void;
+  search: string;
+  loading?: boolean;
 }
 
 /**
  * https://ui.shadcn.com/docs/components/data-table
  */
-export function UsersTable({ data }: UsersTableProps) {
+export function UsersTable({
+  data,
+  total,
+  pageIndex,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  onSearch,
+  search,
+  loading,
+}: UsersTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [globalFilter, setGlobalFilter] = useState('');
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   const table = useReactTable({
     data,
     columns,
+    pageCount: Math.ceil(total / pageSize),
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      globalFilter,
-      pagination,
+      pagination: { pageIndex, pageSize },
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    onGlobalFilterChange: setGlobalFilter,
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      const next =
+        typeof updater === 'function'
+          ? updater({ pageIndex, pageSize })
+          : updater;
+      if (next.pageIndex !== pageIndex) onPageChange(next.pageIndex);
+      if (next.pageSize !== pageSize) onPageSizeChange(next.pageSize);
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    manualPagination: true,
   });
 
   return (
@@ -191,8 +214,11 @@ export function UsersTable({ data }: UsersTableProps) {
       <div className="flex items-center justify-between px-4 lg:px-6 gap-4">
         <Input
           placeholder="Search users..."
-          value={globalFilter ?? ''}
-          onChange={(event) => setGlobalFilter(event.target.value)}
+          value={search}
+          onChange={(event) => {
+            onSearch(event.target.value);
+            onPageChange(0);
+          }}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -247,7 +273,16 @@ export function UsersTable({ data }: UsersTableProps) {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
+              {loading ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              ) : table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
@@ -286,9 +321,10 @@ export function UsersTable({ data }: UsersTableProps) {
                 Rows per page
               </Label>
               <Select
-                value={`${table.getState().pagination.pageSize}`}
+                value={`${pageSize}`}
                 onValueChange={(value) => {
-                  table.setPageSize(Number(value));
+                  onPageSizeChange(Number(value));
+                  onPageChange(0);
                 }}
               >
                 <SelectTrigger
@@ -296,9 +332,7 @@ export function UsersTable({ data }: UsersTableProps) {
                   className="w-20 cursor-pointer"
                   id="rows-per-page"
                 >
-                  <SelectValue
-                    placeholder={table.getState().pagination.pageSize}
-                  />
+                  <SelectValue placeholder={pageSize} />
                 </SelectTrigger>
                 <SelectContent side="top">
                   {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -310,15 +344,14 @@ export function UsersTable({ data }: UsersTableProps) {
               </Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of{' '}
-              {table.getPageCount()}
+              Page {pageIndex + 1} of {Math.max(1, Math.ceil(total / pageSize))}
             </div>
             <div className="ml-auto flex items-center gap-2 lg:ml-0">
               <Button
                 variant="outline"
                 className="cursor-pointer hidden h-8 w-8 p-0 lg:flex"
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
+                onClick={() => onPageChange(0)}
+                disabled={pageIndex === 0}
               >
                 <span className="sr-only">Go to first page</span>
                 <IconChevronsLeft />
@@ -327,8 +360,8 @@ export function UsersTable({ data }: UsersTableProps) {
                 variant="outline"
                 className="cursor-pointer size-8"
                 size="icon"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
+                onClick={() => onPageChange(pageIndex - 1)}
+                disabled={pageIndex === 0}
               >
                 <span className="sr-only">Go to previous page</span>
                 <IconChevronLeft />
@@ -337,8 +370,8 @@ export function UsersTable({ data }: UsersTableProps) {
                 variant="outline"
                 className="cursor-pointer size-8"
                 size="icon"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
+                onClick={() => onPageChange(pageIndex + 1)}
+                disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
                 <span className="sr-only">Go to next page</span>
                 <IconChevronRight />
@@ -347,8 +380,10 @@ export function UsersTable({ data }: UsersTableProps) {
                 variant="outline"
                 className="cursor-pointer hidden size-8 lg:flex"
                 size="icon"
-                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                disabled={!table.getCanNextPage()}
+                onClick={() =>
+                  onPageChange(Math.max(0, Math.ceil(total / pageSize) - 1))
+                }
+                disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
                 <span className="sr-only">Go to last page</span>
                 <IconChevronsRight />
