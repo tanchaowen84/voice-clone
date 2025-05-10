@@ -185,7 +185,18 @@ const columns: ColumnDef<User>[] = [
       const user = row.original;
       return (
         <div className="flex items-center gap-2 pl-3">
-          {user.customerId || '-'}
+          {user.customerId ? (
+            <a
+              href={`https://dashboard.stripe.com/customers/${user.customerId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline hover:underline-offset-4"
+            >
+              {user.customerId}
+            </a>
+          ) : (
+            '-'
+          )}
         </div>
       );
     },
