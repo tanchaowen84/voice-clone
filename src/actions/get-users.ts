@@ -2,7 +2,7 @@
 
 import db from '@/db';
 import { user } from '@/db/schema';
-import { ilike, or, sql } from 'drizzle-orm';
+import { asc, desc, ilike, or, sql } from 'drizzle-orm';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
@@ -14,6 +14,15 @@ const getUsersSchema = z.object({
   pageIndex: z.number().min(0).default(0),
   pageSize: z.number().min(1).max(100).default(10),
   search: z.string().optional().default(''),
+  sorting: z
+    .array(
+      z.object({
+        id: z.string(),
+        desc: z.boolean(),
+      })
+    )
+    .optional()
+    .default([]),
 });
 
 // Create a safe action for getting users
@@ -21,7 +30,7 @@ export const getUsersAction = actionClient
   .schema(getUsersSchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { pageIndex, pageSize, search } = parsedInput;
+      const { pageIndex, pageSize, search, sorting } = parsedInput;
 
       const where = search
         ? or(ilike(user.name, `%${search}%`), ilike(user.email, `%${search}%`))
@@ -29,12 +38,29 @@ export const getUsersAction = actionClient
 
       const offset = pageIndex * pageSize;
 
+      // Get the sort configuration
+      const sortConfig = sorting[0];
+
       const [items, [{ count }]] = await Promise.all([
         db
           .select()
           .from(user)
           .where(where)
-          .orderBy(user.createdAt)
+          .orderBy(
+            sortConfig?.id === 'name'
+              ? sortConfig.desc
+                ? desc(user.name)
+                : asc(user.name)
+              : sortConfig?.id === 'email'
+                ? sortConfig.desc
+                  ? desc(user.email)
+                  : asc(user.email)
+                : sortConfig?.id === 'createdAt'
+                  ? sortConfig.desc
+                    ? desc(user.createdAt)
+                    : asc(user.createdAt)
+                  : user.createdAt
+          )
           .limit(pageSize)
           .offset(offset),
         db.select({ count: sql`count(*)` }).from(user).where(where),

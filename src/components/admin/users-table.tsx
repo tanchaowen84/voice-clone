@@ -25,7 +25,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatter';
 import {
+  IconArrowDown,
+  IconArrowUp,
+  IconArrowsSort,
   IconChevronDown,
   IconChevronLeft,
   IconChevronRight,
@@ -46,9 +50,37 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { format } from 'date-fns';
 import { useState } from 'react';
 import { Label } from '../ui/label';
+
+interface DataTableColumnHeaderProps<TData, TValue>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  column: any;
+  title: string;
+}
+
+function DataTableColumnHeader<TData, TValue>({
+  column,
+  title,
+  className,
+}: DataTableColumnHeaderProps<TData, TValue>) {
+  if (!column.getCanSort()) {
+    return <div className={className}>{title}</div>;
+  }
+
+  return (
+    <div className={className}>
+      <Button
+        variant="ghost"
+        className="cursor-pointer flex items-center gap-2"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        {title}
+        <IconArrowsSort className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+}
 
 export interface User {
   id: string;
@@ -67,11 +99,13 @@ export interface User {
 const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pl-3">
           <UserAvatar
             name={user.name}
             image={user.image}
@@ -84,7 +118,13 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'email',
-    header: 'Email',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
+    cell: ({ row }) => {
+      const user = row.original;
+      return <div className="flex items-center gap-2 pl-3">{user.email}</div>;
+    },
   },
   {
     accessorKey: 'emailVerified',
@@ -97,8 +137,17 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: 'Created At',
-    cell: ({ row }) => format(new Date(row.original.createdAt), 'PP'),
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex items-center gap-2 pl-3">
+          {formatDate(user.createdAt)}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'customerId',
@@ -117,9 +166,7 @@ const columns: ColumnDef<User>[] = [
     accessorKey: 'banExpires',
     header: 'Ban Expires',
     cell: ({ row }) =>
-      row.original.banExpires
-        ? format(new Date(row.original.banExpires), 'PP')
-        : '-',
+      row.original.banExpires ? formatDate(row.original.banExpires) : '-',
   },
   {
     id: 'actions',
@@ -156,11 +203,12 @@ interface UsersTableProps {
   total: number;
   pageIndex: number;
   pageSize: number;
+  search: string;
+  loading?: boolean;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
   onSearch: (search: string) => void;
-  search: string;
-  loading?: boolean;
+  onSortingChange?: (sorting: SortingState) => void;
 }
 
 /**
@@ -171,11 +219,12 @@ export function UsersTable({
   total,
   pageIndex,
   pageSize,
+  search,
+  loading,
   onPageChange,
   onPageSizeChange,
   onSearch,
-  search,
-  loading,
+  onSortingChange,
 }: UsersTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -191,7 +240,11 @@ export function UsersTable({
       columnVisibility,
       pagination: { pageIndex, pageSize },
     },
-    onSortingChange: setSorting,
+    onSortingChange: (updater) => {
+      const next = typeof updater === 'function' ? updater(sorting) : updater;
+      setSorting(next);
+      onSortingChange?.(next);
+    },
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onPaginationChange: (updater) => {
@@ -207,6 +260,7 @@ export function UsersTable({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
+    manualSorting: true,
   });
 
   return (
@@ -224,9 +278,8 @@ export function UsersTable({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer">
-              <IconLayoutColumns />
-              <span className="hidden lg:inline">Customize Columns</span>
-              <span className="lg:hidden">Columns</span>
+              {/* <IconLayoutColumns /> */}
+              <span className="inline">Columns</span>
               <IconChevronDown />
             </Button>
           </DropdownMenuTrigger>
@@ -238,7 +291,7 @@ export function UsersTable({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className="capitalize cursor-pointer"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
