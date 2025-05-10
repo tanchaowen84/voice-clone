@@ -35,8 +35,11 @@ import {
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
+  IconCircleCheckFilled,
+  IconCircleDashed,
   IconDotsVertical,
   IconLayoutColumns,
+  IconLoader,
 } from '@tabler/icons-react';
 import {
   type ColumnDef,
@@ -50,7 +53,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { CircleCheckBigIcon } from 'lucide-react';
 import { useState } from 'react';
+import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
 
 interface DataTableColumnHeaderProps<TData, TValue>
@@ -129,11 +134,35 @@ const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'emailVerified',
     header: 'EmailVerified',
-    cell: ({ row }) => (row.original.emailVerified ? 'Yes' : 'No'),
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Badge variant="outline" className="text-muted-foreground px-1.5">
+          {user.emailVerified ? (
+            <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+          ) : (
+            <IconCircleDashed className="stroke-red-500 dark:stroke-red-400" />
+          )}
+          {user.emailVerified ? 'Yes' : 'No'}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: 'role',
     header: 'Role',
+    cell: ({ row }) => {
+      const user = row.original;
+      const role = user.role || 'user';
+      return (
+        <Badge
+          variant={role === 'admin' ? 'default' : 'outline'}
+          className="px-1.5"
+        >
+          {role}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: 'createdAt',
@@ -152,21 +181,55 @@ const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'customerId',
     header: 'Customer ID',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex items-center gap-2 pl-3">
+          {user.customerId || '-'}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'banned',
     header: 'Status',
-    cell: ({ row }) => (row.original.banned ? 'Banned' : 'Active'),
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Badge variant="outline" className="text-muted-foreground px-1.5">
+          {user.banned ? (
+            <IconCircleDashed className="stroke-red-500 dark:stroke-red-400" />
+          ) : (
+            <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+          )}
+          {user.banned ? 'Banned' : 'Active'}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: 'banReason',
     header: 'Ban Reason',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex items-center gap-2 pl-3">
+          {user.banReason || '-'}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'banExpires',
     header: 'Ban Expires',
-    cell: ({ row }) =>
-      row.original.banExpires ? formatDate(row.original.banExpires) : '-',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex items-center gap-2 pl-3">
+          {user.banExpires ? formatDate(user.banExpires) : '-'}
+        </div>
+      );
+    },
   },
   {
     id: 'actions',
