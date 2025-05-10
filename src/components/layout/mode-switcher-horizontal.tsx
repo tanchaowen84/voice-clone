@@ -27,7 +27,7 @@ export function ModeSwitcherHorizontal() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center gap-2 rounded-full border bg-background p-1">
+      <div className="flex items-center gap-2 rounded-full border p-1">
         <div className="size-6 px-0 rounded-full" />
         <div className="size-6 px-0 rounded-full" />
         <div className="size-6 px-0 rounded-full" />
@@ -36,7 +36,7 @@ export function ModeSwitcherHorizontal() {
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-full border bg-background p-1">
+    <div className="flex items-center gap-2 rounded-full border p-1">
       <Button
         variant="ghost"
         size="icon"
