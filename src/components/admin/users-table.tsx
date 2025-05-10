@@ -27,21 +27,6 @@ import {
 } from '@/components/ui/table';
 import { formatDate } from '@/lib/formatter';
 import {
-  IconArrowDown,
-  IconArrowUp,
-  IconArrowsSort,
-  IconChevronDown,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight,
-  IconCircleCheckFilled,
-  IconCircleDashed,
-  IconDotsVertical,
-  IconLayoutColumns,
-  IconLoader,
-} from '@tabler/icons-react';
-import {
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
@@ -53,7 +38,19 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { CircleCheckBigIcon } from 'lucide-react';
+import {
+  ArrowUpDownIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  MailCheckIcon,
+  MailQuestionIcon,
+  MoreVerticalIcon,
+  UserRoundCheckIcon,
+  UserRoundXIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
@@ -81,7 +78,7 @@ function DataTableColumnHeader<TData, TValue>({
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         {title}
-        <IconArrowsSort className="h-4 w-4" />
+        <ArrowUpDownIcon className="h-4 w-4" />
       </Button>
     </div>
   );
@@ -139,9 +136,9 @@ const columns: ColumnDef<User>[] = [
       return (
         <Badge variant="outline" className="text-muted-foreground px-1.5">
           {user.emailVerified ? (
-            <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+            <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
           ) : (
-            <IconCircleDashed className="stroke-red-500 dark:stroke-red-400" />
+            <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
           )}
           {user.emailVerified ? 'Yes' : 'No'}
         </Badge>
@@ -209,9 +206,9 @@ const columns: ColumnDef<User>[] = [
       return (
         <Badge variant="outline" className="text-muted-foreground px-1.5">
           {user.banned ? (
-            <IconCircleDashed className="stroke-red-500 dark:stroke-red-400" />
+            <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
           ) : (
-            <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+            <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
           )}
           {user.banned ? 'Banned' : 'Active'}
         </Badge>
@@ -252,18 +249,22 @@ const columns: ColumnDef<User>[] = [
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
+              className="cursor-pointer data-[state=open]:bg-muted text-muted-foreground flex size-8"
               size="icon"
             >
-              <IconDotsVertical />
+              <MoreVerticalIcon />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-32">
             {user.banned ? (
-              <DropdownMenuItem>Unban User</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Unban User
+              </DropdownMenuItem>
             ) : (
-              <DropdownMenuItem>Ban User</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Ban User
+              </DropdownMenuItem>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -354,7 +355,7 @@ export function UsersTable({
             <Button variant="outline" size="sm" className="cursor-pointer">
               {/* <IconLayoutColumns /> */}
               <span className="inline">Columns</span>
-              <IconChevronDown />
+              <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
@@ -481,7 +482,7 @@ export function UsersTable({
                 disabled={pageIndex === 0}
               >
                 <span className="sr-only">Go to first page</span>
-                <IconChevronsLeft />
+                <ChevronsLeftIcon />
               </Button>
               <Button
                 variant="outline"
@@ -491,7 +492,7 @@ export function UsersTable({
                 disabled={pageIndex === 0}
               >
                 <span className="sr-only">Go to previous page</span>
-                <IconChevronLeft />
+                <ChevronLeftIcon />
               </Button>
               <Button
                 variant="outline"
@@ -501,7 +502,7 @@ export function UsersTable({
                 disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
                 <span className="sr-only">Go to next page</span>
-                <IconChevronRight />
+                <ChevronRightIcon />
               </Button>
               <Button
                 variant="outline"
@@ -513,7 +514,7 @@ export function UsersTable({
                 disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
                 <span className="sr-only">Go to last page</span>
-                <IconChevronsRight />
+                <ChevronsRightIcon />
               </Button>
             </div>
           </div>
