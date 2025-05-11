@@ -27,6 +27,9 @@ import { useTranslations } from 'next-intl';
 export function getSidebarLinks(): NestedMenuItem[] {
   const t = useTranslations('Dashboard');
 
+  // if is demo website, allow user to access admin and user pages, but data is fake
+  const isDemo = process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true';
+
   return [
     {
       title: t('dashboard.title'),
@@ -37,7 +40,7 @@ export function getSidebarLinks(): NestedMenuItem[] {
     {
       title: t('admin.title'),
       icon: <SettingsIcon className="size-4 shrink-0" />,
-      authorizeOnly: ['admin'],
+      authorizeOnly: isDemo ? ['admin', 'user'] : ['admin'],
       items: [
         {
           title: t('admin.users.title'),
