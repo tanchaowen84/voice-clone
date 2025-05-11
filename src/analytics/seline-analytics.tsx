@@ -6,6 +6,7 @@ import Script from 'next/script';
  * Seline Analytics
  *
  * https://seline.com
+ * https://mksaas.com/docs/analytics#seline
  * https://seline.com/docs/install-seline
  * https://seline.com/docs/stripe
  */

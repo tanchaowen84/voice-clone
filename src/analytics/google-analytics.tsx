@@ -6,6 +6,7 @@ import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/goog
  * Google Analytics
  *
  * https://analytics.google.com
+ * https://mksaas.com/docs/analytics#google
  * https://nextjs.org/docs/app/building-your-application/optimizing/third-party-libraries#google-analytics
  */
 export default function GoogleAnalytics() {
