@@ -51,6 +51,9 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
   const triggerRefresh = useUsersStore((state) => state.triggerRefresh);
 
+  // show fake data in demo website
+  const isDemo = process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true';
+
   const handleBan = async () => {
     if (!banReason) {
       setError(t('ban.error'));
@@ -131,7 +134,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               className="size-8 border"
             />
             <span className="hover:underline hover:underline-offset-4">
-              {user.name}
+              {isDemo ? 'MkSaaS User' : user.name}
             </span>
           </div>
         </Button>
@@ -145,8 +148,10 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               className="size-12 border"
             />
             <div>
-              <DrawerTitle>{user.name}</DrawerTitle>
-              <DrawerDescription>{user.email}</DrawerDescription>
+              <DrawerTitle>{isDemo ? 'MkSaaS User' : user.name}</DrawerTitle>
+              <DrawerDescription>
+                {isDemo ? 'example@mksaas.com' : user.email}
+              </DrawerDescription>
             </div>
           </div>
         </DrawerHeader>
@@ -158,7 +163,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
                 variant={user.role === 'admin' ? 'default' : 'outline'}
                 className="px-1.5"
               >
-                {t(user.role === 'admin' ? 'admin' : 'user')}
+                {user.role === 'admin' ? t('admin') : t('user')}
               </Badge>
               {/* email verified */}
               <Badge variant="outline" className="px-1.5 hover:bg-accent">
@@ -201,10 +206,10 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
           {/* ban or unban user */}
           {user.banned ? (
             <div className="grid gap-4">
-              <div className="text-muted-foreground">
+              <div className="">
                 {t('ban.reason')}: {user.banReason}
               </div>
-              <div className="text-muted-foreground">
+              <div className="">
                 {t('ban.expires')}:{' '}
                 {(user.banExpires && formatDate(user.banExpires)) ||
                   t('ban.never')}
@@ -212,7 +217,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               <Button
                 variant="destructive"
                 onClick={handleUnban}
-                disabled={isLoading}
+                disabled={isLoading || isDemo}
                 className="mt-4 cursor-pointer"
               >
                 {isLoading && (
@@ -271,7 +276,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               <Button
                 type="submit"
                 variant="destructive"
-                disabled={isLoading || !banReason}
+                disabled={isLoading || !banReason || isDemo}
                 className="mt-4 cursor-pointer"
               >
                 {isLoading && (

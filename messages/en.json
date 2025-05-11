@@ -441,6 +441,7 @@
       "title": "Admin",
       "users": {
         "title": "Users",
+        "fakeData": "Note: Faked data for demonstration, some features are disabled",
         "error": "Failed to get users",
         "search": "Search users...",
         "columns": {

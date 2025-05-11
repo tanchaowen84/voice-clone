@@ -119,6 +119,9 @@ export function UsersTable({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
+  // show fake data in demo website
+  const isDemo = process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true';
+
   // Map column IDs to translation keys
   const columnIdToTranslationKey = {
     name: 'columns.name' as const,
@@ -165,7 +168,7 @@ export function UsersTable({
               ) : (
                 <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
               )}
-              {user.email}
+              {isDemo ? 'example@mksaas.com' : user.email}
             </Badge>
           </div>
         );
@@ -185,7 +188,7 @@ export function UsersTable({
               variant={role === 'admin' ? 'default' : 'outline'}
               className="px-1.5"
             >
-              {t(role === 'admin' ? 'admin' : 'user')}
+              {role === 'admin' ? t('admin') : t('user')}
             </Badge>
           </div>
         );
@@ -224,7 +227,7 @@ export function UsersTable({
                 rel="noopener noreferrer"
                 className="hover:underline hover:underline-offset-4"
               >
-                {user.customerId}
+                {!isDemo ? user.customerId : 'cus_abcdef123456'}
               </a>
             ) : (
               '-'
@@ -323,15 +326,20 @@ export function UsersTable({
   return (
     <div className="w-full flex-col justify-start gap-6 space-y-4">
       <div className="flex items-center justify-between px-4 lg:px-6 gap-4">
-        <Input
-          placeholder={t('search')}
-          value={search}
-          onChange={(event) => {
-            onSearch(event.target.value);
-            onPageChange(0);
-          }}
-          className="max-w-sm"
-        />
+        <div className="flex flex-1 items-center gap-4">
+          <Input
+            placeholder={t('search')}
+            value={search}
+            onChange={(event) => {
+              onSearch(event.target.value);
+              onPageChange(0);
+            }}
+            className="max-w-sm"
+          />
+          {isDemo && (
+            <span className="text-sm text-primary">{t('fakeData')}</span>
+          )}
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer">
