@@ -185,17 +185,21 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'role',
-    header: 'Role',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Role" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       const role = user.role || 'user';
       return (
-        <Badge
-          variant={role === 'admin' ? 'default' : 'outline'}
-          className="px-1.5"
-        >
-          {role}
-        </Badge>
+        <div className="flex items-center gap-2 pl-3">
+          <Badge
+            variant={role === 'admin' ? 'default' : 'outline'}
+            className="px-1.5"
+          >
+            {role}
+          </Badge>
+        </div>
       );
     },
   },
@@ -238,18 +242,22 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'banned',
-    header: 'Status',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {user.banned ? (
-            <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
-          ) : (
-            <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-          )}
-          {user.banned ? 'Banned' : 'Active'}
-        </Badge>
+        <div className="flex items-center gap-2 pl-3">
+          <Badge variant="outline" className="text-muted-foreground px-1.5">
+            {user.banned ? (
+              <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
+            ) : (
+              <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+            )}
+            {user.banned ? 'Banned' : 'Active'}
+          </Badge>
+        </div>
       );
     },
   },
