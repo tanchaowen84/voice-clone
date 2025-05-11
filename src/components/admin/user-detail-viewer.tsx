@@ -158,13 +158,10 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
                 variant={user.role === 'admin' ? 'default' : 'outline'}
                 className="px-1.5"
               >
-                {user.role || 'user'}
+                {t(user.role === 'admin' ? 'admin' : 'user')}
               </Badge>
               {/* email verified */}
-              <Badge
-                variant="outline"
-                className="text-muted-foreground px-1.5 hover:bg-accent"
-              >
+              <Badge variant="outline" className="px-1.5 hover:bg-accent">
                 {user.emailVerified ? (
                   <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
                 ) : (
@@ -177,10 +174,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
 
               {/* user banned */}
               <div className="flex items-center gap-2">
-                <Badge
-                  variant="outline"
-                  className="text-muted-foreground px-1.5 hover:bg-accent"
-                >
+                <Badge variant="outline" className="px-1.5 hover:bg-accent">
                   {user.banned ? (
                     <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
                   ) : (

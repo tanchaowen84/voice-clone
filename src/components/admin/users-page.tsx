@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export function UsersPageClient() {
-  const t = useTranslations();
+  const t = useTranslations('Dashboard.admin.users');
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState('');
@@ -35,14 +35,14 @@ export function UsersPageClient() {
           setData(result.data.data?.items || []);
           setTotal(result.data.data?.total || 0);
         } else {
-          const errorMessage = result?.data?.error || 'Failed to fetch users';
+          const errorMessage = result?.data?.error || t('error');
           toast.error(errorMessage);
           setData([]);
           setTotal(0);
         }
       } catch (error) {
         console.error('Failed to fetch users:', error);
-        toast.error('An unexpected error occurred while fetching users');
+        toast.error(t('error'));
         setData([]);
         setTotal(0);
       } finally {

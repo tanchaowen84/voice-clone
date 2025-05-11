@@ -51,6 +51,7 @@ import {
   UserRoundCheckIcon,
   UserRoundXIcon,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
@@ -85,155 +86,6 @@ function DataTableColumnHeader<TData, TValue>({
   );
 }
 
-const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: 'name',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return <UserDetailViewer user={user} />;
-    },
-  },
-  {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          <Badge
-            variant="outline"
-            className="text-sm px-1.5 cursor-pointer hover:bg-accent"
-            onClick={() => {
-              navigator.clipboard.writeText(user.email);
-              toast.success('Email copied to clipboard');
-            }}
-          >
-            {user.emailVerified ? (
-              <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-            ) : (
-              <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
-            )}
-            {user.email}
-          </Badge>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'role',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      const role = user.role || 'user';
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          <Badge
-            variant={role === 'admin' ? 'default' : 'outline'}
-            className="px-1.5"
-          >
-            {role}
-          </Badge>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'createdAt',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created At" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          {formatDate(user.createdAt)}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'customerId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Customer ID" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          {user.customerId ? (
-            <a
-              href={getStripeDashboardCustomerUrl(user.customerId)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline hover:underline-offset-4"
-            >
-              {user.customerId}
-            </a>
-          ) : (
-            '-'
-          )}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'banned',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          <Badge variant="outline" className="px-1.5 hover:bg-accent">
-            {user.banned ? (
-              <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
-            ) : (
-              <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-            )}
-            {user.banned ? 'Banned' : 'Active'}
-          </Badge>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'banReason',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Ban Reason" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          {user.banReason || '-'}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'banExpires',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Ban Expires" />
-    ),
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <div className="flex items-center gap-2 pl-3">
-          {user.banExpires ? formatDate(user.banExpires) : '-'}
-        </div>
-      );
-    },
-  },
-];
-
 interface UsersTableProps {
   data: User[];
   total: number;
@@ -262,9 +114,178 @@ export function UsersTable({
   onPageSizeChange,
   onSortingChange,
 }: UsersTableProps) {
+  const t = useTranslations('Dashboard.admin.users');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  // Map column IDs to translation keys
+  const columnIdToTranslationKey = {
+    name: 'columns.name' as const,
+    email: 'columns.email' as const,
+    role: 'columns.role' as const,
+    createdAt: 'columns.createdAt' as const,
+    customerId: 'columns.customerId' as const,
+    banned: 'columns.status' as const,
+    banReason: 'columns.banReason' as const,
+    banExpires: 'columns.banExpires' as const,
+  } as const;
+
+  // Table columns definition
+  const columns: ColumnDef<User>[] = [
+    {
+      accessorKey: 'name',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.name')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return <UserDetailViewer user={user} />;
+      },
+    },
+    {
+      accessorKey: 'email',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.email')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <Badge
+              variant="outline"
+              className="text-sm px-1.5 cursor-pointer hover:bg-accent"
+              onClick={() => {
+                navigator.clipboard.writeText(user.email);
+                toast.success(t('emailCopied'));
+              }}
+            >
+              {user.emailVerified ? (
+                <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+              ) : (
+                <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
+              )}
+              {user.email}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'role',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.role')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        const role = user.role || 'user';
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <Badge
+              variant={role === 'admin' ? 'default' : 'outline'}
+              className="px-1.5"
+            >
+              {t(role === 'admin' ? 'admin' : 'user')}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'createdAt',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.createdAt')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            {formatDate(user.createdAt)}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'customerId',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t('columns.customerId')}
+        />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            {user.customerId ? (
+              <a
+                href={getStripeDashboardCustomerUrl(user.customerId)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline hover:underline-offset-4"
+              >
+                {user.customerId}
+              </a>
+            ) : (
+              '-'
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'banned',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.status')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            <Badge variant="outline" className="px-1.5 hover:bg-accent">
+              {user.banned ? (
+                <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
+              ) : (
+                <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+              )}
+              {user.banned ? t('banned') : t('active')}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'banReason',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('columns.banReason')} />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            {user.banReason || '-'}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'banExpires',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t('columns.banExpires')}
+        />
+      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex items-center gap-2 pl-3">
+            {user.banExpires ? formatDate(user.banExpires) : '-'}
+          </div>
+        );
+      },
+    },
+  ];
 
   const table = useReactTable({
     data,
@@ -303,7 +324,7 @@ export function UsersTable({
     <div className="w-full flex-col justify-start gap-6 space-y-4">
       <div className="flex items-center justify-between px-4 lg:px-6 gap-4">
         <Input
-          placeholder="Search users..."
+          placeholder={t('search')}
           value={search}
           onChange={(event) => {
             onSearch(event.target.value);
@@ -315,7 +336,7 @@ export function UsersTable({
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer">
               {/* <IconLayoutColumns /> */}
-              <span className="inline">Columns</span>
+              <span className="inline">{t('columns.columns')}</span>
               <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
@@ -333,7 +354,11 @@ export function UsersTable({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {t(
+                      columnIdToTranslationKey[
+                        column.id as keyof typeof columnIdToTranslationKey
+                      ] || 'columns.columns'
+                    )}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -368,7 +393,7 @@ export function UsersTable({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Loading...
+                    {t('loading')}
                   </TableCell>
                 </TableRow>
               ) : table.getRowModel().rows?.length ? (
@@ -393,7 +418,7 @@ export function UsersTable({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {t('noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -407,7 +432,7 @@ export function UsersTable({
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
+                {t('rowsPerPage')}
               </Label>
               <Select
                 value={`${pageSize}`}
@@ -433,7 +458,8 @@ export function UsersTable({
               </Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {pageIndex + 1} of {Math.max(1, Math.ceil(total / pageSize))}
+              {t('page')} {pageIndex + 1} {' / '}
+              {Math.max(1, Math.ceil(total / pageSize))}
             </div>
             <div className="ml-auto flex items-center gap-2 lg:ml-0">
               <Button
@@ -442,7 +468,7 @@ export function UsersTable({
                 onClick={() => onPageChange(0)}
                 disabled={pageIndex === 0}
               >
-                <span className="sr-only">Go to first page</span>
+                <span className="sr-only">{t('firstPage')}</span>
                 <ChevronsLeftIcon />
               </Button>
               <Button
@@ -452,7 +478,7 @@ export function UsersTable({
                 onClick={() => onPageChange(pageIndex - 1)}
                 disabled={pageIndex === 0}
               >
-                <span className="sr-only">Go to previous page</span>
+                <span className="sr-only">{t('previousPage')}</span>
                 <ChevronLeftIcon />
               </Button>
               <Button
@@ -462,7 +488,7 @@ export function UsersTable({
                 onClick={() => onPageChange(pageIndex + 1)}
                 disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
-                <span className="sr-only">Go to next page</span>
+                <span className="sr-only">{t('nextPage')}</span>
                 <ChevronRightIcon />
               </Button>
               <Button
@@ -474,7 +500,7 @@ export function UsersTable({
                 }
                 disabled={pageIndex + 1 >= Math.ceil(total / pageSize)}
               >
-                <span className="sr-only">Go to last page</span>
+                <span className="sr-only">{t('lastPage')}</span>
                 <ChevronsRightIcon />
               </Button>
             </div>
