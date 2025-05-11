@@ -1,9 +1,3 @@
-import { format } from 'date-fns';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { z } from 'zod';
-
 import { UserAvatar } from '@/components/layout/user-avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -22,8 +16,18 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Loader2Icon, MailCheckIcon, MailQuestionIcon } from 'lucide-react';
+import { formatDate } from '@/lib/formatter';
+import {
+  Loader2Icon,
+  MailCheckIcon,
+  MailQuestionIcon,
+  UserRoundCheckIcon,
+  UserRoundXIcon,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { SafeActionResult } from 'next-safe-action';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export interface User {
   id: string;
@@ -33,6 +37,7 @@ export interface User {
   image: string | null;
   role: string | null;
   createdAt: Date;
+  updatedAt: Date;
   customerId: string | null;
   banned: boolean | null;
   banReason: string | null;
@@ -166,7 +171,15 @@ export function UserDetailViewer({
               className="size-12 border"
             />
             <div>
-              <DrawerTitle>{user.name}</DrawerTitle>
+              <DrawerTitle className="flex items-center gap-2">
+                {user.name}
+                <Badge
+                  variant={user.role === 'admin' ? 'default' : 'outline'}
+                  className="px-1.5"
+                >
+                  {user.role || 'user'}
+                </Badge>
+              </DrawerTitle>
               <DrawerDescription>{user.email}</DrawerDescription>
             </div>
           </div>
@@ -174,7 +187,11 @@ export function UserDetailViewer({
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           <div className="grid gap-4">
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-muted-foreground px-1.5">
+              {/* email verified */}
+              <Badge
+                variant="outline"
+                className="text-muted-foreground px-1.5 hover:bg-accent"
+              >
                 {user.emailVerified ? (
                   <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
                 ) : (
@@ -184,24 +201,37 @@ export function UserDetailViewer({
                   ? t('email.verified')
                   : t('email.unverified')}
               </Badge>
-              <Badge
-                variant={user.role === 'admin' ? 'default' : 'outline'}
-                className="px-1.5"
-              >
-                {user.role || 'user'}
-              </Badge>
-              {user.banned && (
-                <Badge variant="destructive" className="px-1.5">
-                  {t('banned')}
+
+              {/* user banned */}
+              <div className="flex items-center gap-2">
+                <Badge
+                  variant="outline"
+                  className="text-muted-foreground px-1.5 hover:bg-accent"
+                >
+                  {user.banned ? (
+                    <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
+                  ) : (
+                    <UserRoundCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+                  )}
+                  {user.banned ? t('banned') : t('active')}
                 </Badge>
-              )}
+              </div>
+            </div>
+
+            {/* information */}
+            <div className="text-muted-foreground">
+              {t('joined')}: {formatDate(user.createdAt)}
             </div>
             <div className="text-muted-foreground">
-              {t('joined')}: {format(user.createdAt, 'PPP')}
+              {t('updated')}: {formatDate(user.updatedAt)}
             </div>
           </div>
           <Separator />
+
+          {/* error */}
           {error && <div className="text-sm text-destructive">{error}</div>}
+
+          {/* ban or unban user */}
           {user.banned ? (
             <div className="grid gap-4">
               <div className="text-muted-foreground">
@@ -209,13 +239,14 @@ export function UserDetailViewer({
               </div>
               {user.banExpires && (
                 <div className="text-muted-foreground">
-                  {t('ban.expires')}: {format(user.banExpires, 'PPP')}
+                  {t('ban.expires')}: {formatDate(user.banExpires)}
                 </div>
               )}
               <Button
                 variant="destructive"
                 onClick={handleUnban}
                 disabled={isLoading}
+                className="mt-4"
               >
                 {isLoading && (
                   <Loader2Icon className="mr-2 size-4 animate-spin" />
@@ -254,6 +285,7 @@ export function UserDetailViewer({
                 type="submit"
                 variant="destructive"
                 disabled={isLoading || !banReason}
+                className="mt-4"
               >
                 {isLoading && (
                   <Loader2Icon className="mr-2 size-4 animate-spin" />

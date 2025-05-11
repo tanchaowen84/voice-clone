@@ -442,11 +442,13 @@
       "users": {
         "title": "Users",
         "email": {
-          "verified": "Verified",
-          "unverified": "Unverified"
+          "verified": "Email Verified",
+          "unverified": "Email Unverified"
         },
         "banned": "Banned",
+        "active": "Active",
         "joined": "Joined",
+        "updated": "Updated",
         "ban": {
           "reason": "Ban Reason",
           "reasonPlaceholder": "Enter the reason for banning this user",

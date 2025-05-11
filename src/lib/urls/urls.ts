@@ -78,3 +78,15 @@ export function getUrlWithLocaleInCallbackUrl(
     return url;
   }
 }
+
+/**
+ * Get the Stripe dashboard customer URL
+ * @param customerId - The Stripe customer ID
+ * @returns The Stripe dashboard customer URL
+ */
+export function getStripeDashboardCustomerUrl(customerId: string): string {
+  if (process.env.NODE_ENV === 'development') {
+    return `https://dashboard.stripe.com/test/customers/${customerId}`;
+  }
+  return `https://dashboard.stripe.com/customers/${customerId}`;
+}

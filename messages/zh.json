@@ -443,11 +443,13 @@
       "users": {
         "title": "用户管理",
         "email": {
-          "verified": "已验证",
-          "unverified": "未验证"
+          "verified": "邮箱已验证",
+          "unverified": "邮箱未验证"
         },
-        "banned": "已封禁",
+        "banned": "账号被封禁",
+        "active": "账号正常",
         "joined": "加入时间",
+        "updated": "更新时间",
         "ban": {
           "reason": "封禁原因",
           "reasonPlaceholder": "请输入封禁该用户的原因",

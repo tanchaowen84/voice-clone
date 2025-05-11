@@ -28,6 +28,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatDate } from '@/lib/formatter';
+import { getStripeDashboardCustomerUrl } from '@/lib/urls/urls';
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -95,6 +96,7 @@ export interface User {
   image: string | null;
   role: string | null;
   createdAt: Date;
+  updatedAt: Date;
   customerId: string | null;
   banned: boolean | null;
   banReason: string | null;
@@ -219,7 +221,7 @@ const columns: ColumnDef<User>[] = [
         <div className="flex items-center gap-2 pl-3">
           {user.customerId ? (
             <a
-              href={`https://dashboard.stripe.com/customers/${user.customerId}`}
+              href={getStripeDashboardCustomerUrl(user.customerId)}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline hover:underline-offset-4"
