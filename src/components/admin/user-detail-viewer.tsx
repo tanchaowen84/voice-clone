@@ -17,6 +17,7 @@ import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { authClient } from '@/lib/auth-client';
+import type { User } from '@/lib/auth-types';
 import { formatDate } from '@/lib/formatter';
 import {
   Loader2Icon,
@@ -28,7 +29,6 @@ import {
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import type { User } from './users-table';
 
 interface UserDetailViewerProps {
   user: User;
@@ -133,15 +133,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               className="size-12 border"
             />
             <div>
-              <DrawerTitle className="flex items-center gap-2">
-                {user.name}
-                <Badge
-                  variant={user.role === 'admin' ? 'default' : 'outline'}
-                  className="px-1.5"
-                >
-                  {user.role || 'user'}
-                </Badge>
-              </DrawerTitle>
+              <DrawerTitle>{user.name}</DrawerTitle>
               <DrawerDescription>{user.email}</DrawerDescription>
             </div>
           </div>
@@ -149,6 +141,13 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           <div className="grid gap-4">
             <div className="flex items-center gap-2">
+              {/* role */}
+              <Badge
+                variant={user.role === 'admin' ? 'default' : 'outline'}
+                className="px-1.5"
+              >
+                {user.role || 'user'}
+              </Badge>
               {/* email verified */}
               <Badge
                 variant="outline"

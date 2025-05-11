@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import type { User } from '@/lib/auth-types';
 import { formatDate } from '@/lib/formatter';
 import { getStripeDashboardCustomerUrl } from '@/lib/urls/urls';
 import {
@@ -82,21 +83,6 @@ function DataTableColumnHeader<TData, TValue>({
       </Button>
     </div>
   );
-}
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image: string | null;
-  role: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  customerId: string | null;
-  banned: boolean | null;
-  banReason: string | null;
-  banExpires: Date | null;
 }
 
 const columns: ColumnDef<User>[] = [
