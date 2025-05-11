@@ -1,14 +1,11 @@
 'use client';
 
-import { banUserAction } from '@/actions/ban-user';
-import { unbanUserAction } from '@/actions/unban-user';
 import { UserDetailViewer } from '@/components/admin/user-detail-viewer';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -50,7 +47,6 @@ import {
   ChevronsRightIcon,
   MailCheckIcon,
   MailQuestionIcon,
-  MoreVerticalIcon,
   UserRoundCheckIcon,
   UserRoundXIcon,
 } from 'lucide-react';
@@ -111,41 +107,7 @@ const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row }) => {
       const user = row.original;
-      return (
-        <UserDetailViewer
-          user={user}
-          onBan={async (userId, reason, expiresAt) => {
-            const result = await banUserAction({ userId, reason, expiresAt });
-            if (!result) {
-              throw new Error('Failed to ban user');
-            }
-            if (result.validationErrors) {
-              throw new Error(
-                Object.values(result.validationErrors).join(', ')
-              );
-            }
-            if (result.serverError) {
-              throw new Error(result.serverError);
-            }
-            return result;
-          }}
-          onUnban={async (userId) => {
-            const result = await unbanUserAction({ userId });
-            if (!result) {
-              throw new Error('Failed to unban user');
-            }
-            if (result.validationErrors) {
-              throw new Error(
-                Object.values(result.validationErrors).join(', ')
-              );
-            }
-            if (result.serverError) {
-              throw new Error(result.serverError);
-            }
-            return result;
-          }}
-        />
-      );
+      return <UserDetailViewer user={user} />;
     },
   },
   {
@@ -281,38 +243,6 @@ const columns: ColumnDef<User>[] = [
         <div className="flex items-center gap-2 pl-3">
           {user.banExpires ? formatDate(user.banExpires) : '-'}
         </div>
-      );
-    },
-  },
-  {
-    id: 'actions',
-    header: 'Actions',
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="cursor-pointer data-[state=open]:bg-muted text-muted-foreground flex size-8"
-              size="icon"
-            >
-              <MoreVerticalIcon />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-32">
-            {user.banned ? (
-              <DropdownMenuItem className="cursor-pointer">
-                Unban User
-              </DropdownMenuItem>
-            ) : (
-              <DropdownMenuItem className="cursor-pointer">
-                Ban User
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
       );
     },
   },

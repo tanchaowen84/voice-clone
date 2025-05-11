@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { authClient } from '@/lib/auth-client';
 import { formatDate } from '@/lib/formatter';
 import {
   Loader2Icon,
@@ -25,46 +26,19 @@ import {
   UserRoundXIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { SafeActionResult } from 'next-safe-action';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image: string | null;
-  role: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  customerId: string | null;
-  banned: boolean | null;
-  banReason: string | null;
-  banExpires: Date | null;
-}
+import type { User } from './users-table';
 
 interface UserDetailViewerProps {
   user: User;
-  onBan: (
-    userId: string,
-    reason: string,
-    expiresAt: Date | null
-  ) => Promise<SafeActionResult<string, any, any, any, any>>;
-  onUnban: (
-    userId: string
-  ) => Promise<SafeActionResult<string, any, any, any, any>>;
 }
 
-export function UserDetailViewer({
-  user,
-  onBan,
-  onUnban,
-}: UserDetailViewerProps) {
+export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const t = useTranslations('Dashboard.admin.users');
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>();
   const [banReason, setBanReason] = useState('');
   const [banExpiresAt, setBanExpiresAt] = useState<string>('');
 
@@ -74,70 +48,58 @@ export function UserDetailViewer({
       return;
     }
 
+    if (!user.id) {
+      setError('User ID is required');
+      return;
+    }
+
     setIsLoading(true);
     setError('');
 
     try {
       const expiresAt = banExpiresAt ? new Date(banExpiresAt) : null;
-      const result = await onBan(user.id, banReason, expiresAt);
+      await authClient.admin.banUser({
+        userId: user.id,
+        banReason,
+        banExpiresIn: expiresAt
+          ? Math.floor((expiresAt.getTime() - Date.now()) / 1000)
+          : undefined,
+      });
 
-      if (
-        result?.data &&
-        typeof result.data === 'object' &&
-        'success' in result.data &&
-        result.data.success
-      ) {
-        toast.success(t('ban.success'));
-        // Reset form
-        setBanReason('');
-        setBanExpiresAt('');
-      } else {
-        const errorMessage =
-          result?.data &&
-          typeof result.data === 'object' &&
-          'error' in result.data
-            ? String(result.data.error)
-            : t('ban.error');
-        toast.error(errorMessage);
-        setError(errorMessage);
-      }
-    } catch (error) {
-      console.error('ban user error:', error);
-      setError(t('ban.error'));
-      toast.error(t('ban.error'));
+      toast.success(t('ban.success'));
+      // Reset form
+      setBanReason('');
+      setBanExpiresAt('');
+    } catch (err) {
+      const error = err as Error;
+      console.error('Failed to ban user:', error);
+      setError(error.message || t('ban.error'));
+      toast.error(error.message || t('ban.error'));
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleUnban = async () => {
+    if (!user.id) {
+      setError('User ID is required');
+      return;
+    }
+
     setIsLoading(true);
     setError('');
 
     try {
-      const result = await onUnban(user.id);
+      await authClient.admin.unbanUser({
+        userId: user.id,
+      });
 
-      if (
-        result?.data &&
-        typeof result.data === 'object' &&
-        'success' in result.data &&
-        result.data.success
-      ) {
-        toast.success(t('unban.success'));
-      } else {
-        const errorMessage =
-          result?.data &&
-          typeof result.data === 'object' &&
-          'error' in result.data
-            ? String(result.data.error)
-            : t('unban.error');
-        toast.error(errorMessage);
-        setError(errorMessage);
-      }
-    } catch (error) {
-      console.error('unban user error:', error);
-      setError(t('unban.error'));
-      toast.error(t('unban.error'));
+      toast.success(t('unban.success'));
+    } catch (err) {
+      const error = err as Error;
+      console.error('Failed to unban user:', error);
+      setError(error.message || t('unban.error'));
+      toast.error(error.message || t('unban.error'));
     } finally {
       setIsLoading(false);
     }
@@ -246,7 +208,7 @@ export function UserDetailViewer({
                 variant="destructive"
                 onClick={handleUnban}
                 disabled={isLoading}
-                className="mt-4"
+                className="mt-4 cursor-pointer"
               >
                 {isLoading && (
                   <Loader2Icon className="mr-2 size-4 animate-spin" />
@@ -285,7 +247,7 @@ export function UserDetailViewer({
                 type="submit"
                 variant="destructive"
                 disabled={isLoading || !banReason}
-                className="mt-4"
+                className="mt-4 cursor-pointer"
               >
                 {isLoading && (
                   <Loader2Icon className="mr-2 size-4 animate-spin" />
