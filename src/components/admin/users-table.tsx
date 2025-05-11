@@ -241,9 +241,9 @@ interface UsersTableProps {
   pageSize: number;
   search: string;
   loading?: boolean;
+  onSearch: (search: string) => void;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
-  onSearch: (search: string) => void;
   onSortingChange?: (sorting: SortingState) => void;
 }
 
@@ -257,9 +257,9 @@ export function UsersTable({
   pageSize,
   search,
   loading,
+  onSearch,
   onPageChange,
   onPageSizeChange,
-  onSearch,
   onSortingChange,
 }: UsersTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);

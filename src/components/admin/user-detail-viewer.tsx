@@ -1,6 +1,7 @@
 import { UserAvatar } from '@/components/layout/user-avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Drawer,
   DrawerClose,
@@ -11,15 +12,21 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { authClient } from '@/lib/auth-client';
 import type { User } from '@/lib/auth-types';
 import { formatDate } from '@/lib/formatter';
+import { cn } from '@/lib/utils';
 import {
+  CalendarIcon,
   Loader2Icon,
   MailCheckIcon,
   MailQuestionIcon,
@@ -40,7 +47,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [banReason, setBanReason] = useState('');
-  const [banExpiresAt, setBanExpiresAt] = useState<string>('');
+  const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
 
   const handleBan = async () => {
     if (!banReason) {
@@ -57,19 +64,18 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
     setError('');
 
     try {
-      const expiresAt = banExpiresAt ? new Date(banExpiresAt) : null;
       await authClient.admin.banUser({
         userId: user.id,
         banReason,
-        banExpiresIn: expiresAt
-          ? Math.floor((expiresAt.getTime() - Date.now()) / 1000)
+        banExpiresIn: banExpiresAt
+          ? Math.floor((banExpiresAt.getTime() - Date.now()) / 1000)
           : undefined,
       });
 
       toast.success(t('ban.success'));
       // Reset form
       setBanReason('');
-      setBanExpiresAt('');
+      setBanExpiresAt(undefined);
     } catch (err) {
       const error = err as Error;
       console.error('Failed to ban user:', error);
@@ -234,13 +240,33 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="ban-expires">{t('ban.expires')}</Label>
-                <Input
-                  id="ban-expires"
-                  type="datetime-local"
-                  value={banExpiresAt}
-                  onChange={(e) => setBanExpiresAt(e.target.value)}
-                />
+                <Label>{t('ban.expires')}</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        'justify-start text-left font-normal cursor-pointer',
+                        !banExpiresAt && 'text-muted-foreground'
+                      )}
+                    >
+                      <CalendarIcon />
+                      {banExpiresAt ? (
+                        formatDate(banExpiresAt)
+                      ) : (
+                        <span>{t('ban.selectDate')}</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={banExpiresAt}
+                      onSelect={setBanExpiresAt}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <Button
                 type="submit"

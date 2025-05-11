@@ -454,6 +454,7 @@
           "reason": "封禁原因",
           "reasonPlaceholder": "请输入封禁该用户的原因",
           "expires": "封禁到期时间",
+          "selectDate": "选择日期",
           "button": "封禁用户",
           "success": "用户已被封禁",
           "error": "封禁用户失败"

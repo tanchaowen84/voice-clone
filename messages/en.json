@@ -453,6 +453,7 @@
           "reason": "Ban Reason",
           "reasonPlaceholder": "Enter the reason for banning this user",
           "expires": "Ban Expires",
+          "selectDate": "Select Date",
           "button": "Ban User",
           "success": "User has been banned",
           "error": "Failed to ban user"

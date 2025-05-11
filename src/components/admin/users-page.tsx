@@ -1,8 +1,8 @@
 'use client';
 
 import { getUsersAction } from '@/actions/get-users';
-import type { User } from '@/components/admin/users-table';
 import { UsersTable } from '@/components/admin/users-table';
+import type { User } from '@/lib/auth-types';
 import type { SortingState } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -60,9 +60,9 @@ export function UsersPageClient() {
         pageSize={pageSize}
         search={search}
         loading={loading}
+        onSearch={setSearch}
         onPageChange={setPageIndex}
         onPageSizeChange={setPageSize}
-        onSearch={setSearch}
         onSortingChange={setSorting}
       />
     </>
