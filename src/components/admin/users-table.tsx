@@ -154,31 +154,20 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div
-          className="flex items-center gap-2 pl-3 hover:underline hover:underline-offset-4 cursor-pointer"
+        <Badge
+          variant="outline"
+          className="flex items-center justify-center gap-2 text-sm px-1.5 ml-3 cursor-pointer hover:bg-accent"
           onClick={() => {
             navigator.clipboard.writeText(user.email);
             toast.success('Email copied to clipboard');
           }}
         >
-          {user.email}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'emailVerified',
-    header: 'EmailVerified',
-    cell: ({ row }) => {
-      const user = row.original;
-      return (
-        <Badge variant="outline" className="text-muted-foreground px-1.5">
           {user.emailVerified ? (
             <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
           ) : (
             <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
           )}
-          {user.emailVerified ? 'Yes' : 'No'}
+          {user.email}
         </Badge>
       );
     },
@@ -249,7 +238,10 @@ const columns: ColumnDef<User>[] = [
       const user = row.original;
       return (
         <div className="flex items-center gap-2 pl-3">
-          <Badge variant="outline" className="text-muted-foreground px-1.5">
+          <Badge
+            variant="outline"
+            className="text-muted-foreground px-1.5 hover:bg-accent"
+          >
             {user.banned ? (
               <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
             ) : (
