@@ -154,21 +154,23 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <Badge
-          variant="outline"
-          className="flex items-center justify-center gap-2 text-sm px-1.5 ml-3 cursor-pointer hover:bg-accent"
-          onClick={() => {
-            navigator.clipboard.writeText(user.email);
-            toast.success('Email copied to clipboard');
-          }}
-        >
-          {user.emailVerified ? (
-            <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
-          ) : (
-            <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
-          )}
-          {user.email}
-        </Badge>
+        <div className="flex items-center gap-2 pl-3">
+          <Badge
+            variant="outline"
+            className="text-sm px-1.5 cursor-pointer hover:bg-accent"
+            onClick={() => {
+              navigator.clipboard.writeText(user.email);
+              toast.success('Email copied to clipboard');
+            }}
+          >
+            {user.emailVerified ? (
+              <MailCheckIcon className="stroke-green-500 dark:stroke-green-400" />
+            ) : (
+              <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
+            )}
+            {user.email}
+          </Badge>
+        </div>
       );
     },
   },
@@ -208,11 +210,13 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'customerId',
-    header: 'Customer ID',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Customer ID" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pl-3">
           {user.customerId ? (
             <a
               href={`https://dashboard.stripe.com/customers/${user.customerId}`}
@@ -238,10 +242,7 @@ const columns: ColumnDef<User>[] = [
       const user = row.original;
       return (
         <div className="flex items-center gap-2 pl-3">
-          <Badge
-            variant="outline"
-            className="text-muted-foreground px-1.5 hover:bg-accent"
-          >
+          <Badge variant="outline" className="px-1.5 hover:bg-accent">
             {user.banned ? (
               <UserRoundXIcon className="stroke-red-500 dark:stroke-red-400" />
             ) : (
@@ -255,21 +256,27 @@ const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'banReason',
-    header: 'Ban Reason',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Ban Reason" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2">{user.banReason || '-'}</div>
+        <div className="flex items-center gap-2 pl-3">
+          {user.banReason || '-'}
+        </div>
       );
     },
   },
   {
     accessorKey: 'banExpires',
-    header: 'Ban Expires',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Ban Expires" />
+    ),
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pl-3">
           {user.banExpires ? formatDate(user.banExpires) : '-'}
         </div>
       );

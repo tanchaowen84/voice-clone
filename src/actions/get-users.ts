@@ -67,7 +67,19 @@ export const getUsersAction = actionClient
                       ? sortConfig.desc
                         ? desc(user.banned)
                         : asc(user.banned)
-                      : user.createdAt
+                      : sortConfig?.id === 'customerId'
+                        ? sortConfig.desc
+                          ? desc(user.customerId)
+                          : asc(user.customerId)
+                        : sortConfig?.id === 'banReason'
+                          ? sortConfig.desc
+                            ? desc(user.banReason)
+                            : asc(user.banReason)
+                          : sortConfig?.id === 'banExpires'
+                            ? sortConfig.desc
+                              ? desc(user.banExpires)
+                              : asc(user.banExpires)
+                            : user.createdAt
           )
           .limit(pageSize)
           .offset(offset),
