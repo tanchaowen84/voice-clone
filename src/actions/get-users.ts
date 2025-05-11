@@ -25,6 +25,18 @@ const getUsersSchema = z.object({
     .default([]),
 });
 
+// Define sort field mapping
+const sortFieldMap = {
+  name: user.name,
+  email: user.email,
+  createdAt: user.createdAt,
+  role: user.role,
+  banned: user.banned,
+  customerId: user.customerId,
+  banReason: user.banReason,
+  banExpires: user.banExpires,
+} as const;
+
 // Create a safe action for getting users
 export const getUsersAction = actionClient
   .schema(getUsersSchema)
@@ -40,47 +52,17 @@ export const getUsersAction = actionClient
 
       // Get the sort configuration
       const sortConfig = sorting[0];
+      const sortField = sortConfig?.id
+        ? sortFieldMap[sortConfig.id as keyof typeof sortFieldMap]
+        : user.createdAt;
+      const sortDirection = sortConfig?.desc ? desc : asc;
 
       const [items, [{ count }]] = await Promise.all([
         db
           .select()
           .from(user)
           .where(where)
-          .orderBy(
-            sortConfig?.id === 'name'
-              ? sortConfig.desc
-                ? desc(user.name)
-                : asc(user.name)
-              : sortConfig?.id === 'email'
-                ? sortConfig.desc
-                  ? desc(user.email)
-                  : asc(user.email)
-                : sortConfig?.id === 'createdAt'
-                  ? sortConfig.desc
-                    ? desc(user.createdAt)
-                    : asc(user.createdAt)
-                  : sortConfig?.id === 'role'
-                    ? sortConfig.desc
-                      ? desc(user.role)
-                      : asc(user.role)
-                    : sortConfig?.id === 'banned'
-                      ? sortConfig.desc
-                        ? desc(user.banned)
-                        : asc(user.banned)
-                      : sortConfig?.id === 'customerId'
-                        ? sortConfig.desc
-                          ? desc(user.customerId)
-                          : asc(user.customerId)
-                        : sortConfig?.id === 'banReason'
-                          ? sortConfig.desc
-                            ? desc(user.banReason)
-                            : asc(user.banReason)
-                          : sortConfig?.id === 'banExpires'
-                            ? sortConfig.desc
-                              ? desc(user.banExpires)
-                              : asc(user.banExpires)
-                            : user.createdAt
-          )
+          .orderBy(sortDirection(sortField))
           .limit(pageSize)
           .offset(offset),
         db.select({ count: sql`count(*)` }).from(user).where(where),
