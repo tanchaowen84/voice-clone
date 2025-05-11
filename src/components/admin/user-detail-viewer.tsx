@@ -25,6 +25,7 @@ import { authClient } from '@/lib/auth-client';
 import type { User } from '@/lib/auth-types';
 import { formatDate } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
+import { useUsersStore } from '@/stores/users-store';
 import {
   CalendarIcon,
   Loader2Icon,
@@ -48,6 +49,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const [error, setError] = useState<string | undefined>();
   const [banReason, setBanReason] = useState('');
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
+  const triggerRefresh = useUsersStore((state) => state.triggerRefresh);
 
   const handleBan = async () => {
     if (!banReason) {
@@ -76,6 +78,8 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
       // Reset form
       setBanReason('');
       setBanExpiresAt(undefined);
+      // Trigger refresh
+      triggerRefresh();
     } catch (err) {
       const error = err as Error;
       console.error('Failed to ban user:', error);
@@ -101,6 +105,8 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
       });
 
       toast.success(t('unban.success'));
+      // Trigger refresh
+      triggerRefresh();
     } catch (err) {
       const error = err as Error;
       console.error('Failed to unban user:', error);

@@ -3,6 +3,7 @@
 import { getUsersAction } from '@/actions/get-users';
 import { UsersTable } from '@/components/admin/users-table';
 import type { User } from '@/lib/auth-types';
+import { useUsersStore } from '@/stores/users-store';
 import type { SortingState } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ export function UsersPageClient() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const refreshTrigger = useUsersStore((state) => state.refreshTrigger);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -49,7 +51,7 @@ export function UsersPageClient() {
     };
 
     fetchUsers();
-  }, [pageIndex, pageSize, search, sorting]);
+  }, [pageIndex, pageSize, search, sorting, refreshTrigger]);
 
   return (
     <>
