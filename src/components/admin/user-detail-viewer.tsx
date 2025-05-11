@@ -47,7 +47,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
-  const [banReason, setBanReason] = useState('');
+  const [banReason, setBanReason] = useState(t('ban.defaultReason'));
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
   const triggerRefresh = useUsersStore((state) => state.triggerRefresh);
 
@@ -210,11 +210,11 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               <div className="text-muted-foreground">
                 {t('ban.reason')}: {user.banReason}
               </div>
-              {user.banExpires && (
-                <div className="text-muted-foreground">
-                  {t('ban.expires')}: {formatDate(user.banExpires)}
-                </div>
-              )}
+              <div className="text-muted-foreground">
+                {t('ban.expires')}:{' '}
+                {(user.banExpires && formatDate(user.banExpires)) ||
+                  t('ban.never')}
+              </div>
               <Button
                 variant="destructive"
                 onClick={handleUnban}

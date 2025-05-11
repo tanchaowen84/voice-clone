@@ -452,6 +452,8 @@
         "ban": {
           "reason": "Ban Reason",
           "reasonPlaceholder": "Enter the reason for banning this user",
+          "defaultReason": "Spamming",
+          "never": "Never",
           "expires": "Ban Expires",
           "selectDate": "Select Date",
           "button": "Ban User",

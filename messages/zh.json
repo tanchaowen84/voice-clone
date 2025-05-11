@@ -453,6 +453,8 @@
         "ban": {
           "reason": "封禁原因",
           "reasonPlaceholder": "请输入封禁该用户的原因",
+          "defaultReason": "垃圾信息",
+          "never": "永不解禁",
           "expires": "封禁到期时间",
           "selectDate": "选择日期",
           "button": "封禁用户",

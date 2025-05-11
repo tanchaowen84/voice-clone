@@ -148,7 +148,7 @@ export const auth = betterAuth({
     // support user management, ban/unban user, manage user roles, etc.
     admin({
       // https://www.better-auth.com/docs/plugins/admin#default-ban-reason
-      defaultBanReason: 'Spamming',
+      // defaultBanReason: 'Spamming',
       defaultBanExpiresIn: undefined,
       bannedUserMessage:
         'You have been banned from this application. Please contact support if you believe this is an error.',
