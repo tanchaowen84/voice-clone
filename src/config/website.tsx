@@ -18,8 +18,8 @@ export const websiteConfig: WebsiteConfig = {
       enableSwitch: true,
     },
     images: {
-      ogImage: '/og.png',
-      logoLight: '/logo.png',
+      ogImage: '/og.png?v=20250513',
+      logoLight: '/logo.png?',
       logoDark: '/logo-dark.png',
     },
     social: {
