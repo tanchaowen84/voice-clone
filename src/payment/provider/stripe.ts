@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import db from '@/db';
 import { payment, session, user } from '@/db/schema';
+import { sendMessageToDiscord } from '@/lib/discord';
 import {
   findPlanByPlanId,
   findPlanByPriceId,
@@ -617,6 +618,10 @@ export class StripeProvider implements PaymentProvider {
     console.log(
       `<< Created one-time payment record for user ${userId}, price: ${priceId}`
     );
+
+    // Send message to Discord channel
+    const amount = session.amount_total ? session.amount_total / 100 : 0;
+    await sendMessageToDiscord(session.id, customerId, userId, amount);
   }
 
   /**
