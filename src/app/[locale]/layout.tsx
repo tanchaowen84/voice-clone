@@ -15,7 +15,7 @@ import { Providers } from './providers';
 import '@/styles/globals.css';
 import { Analytics } from '@/analytics/analytics';
 import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
-
+import DiscordWidget from '@/components/shared/discord-widget';
 interface LocaleLayoutProps {
   children: ReactNode;
   params: Promise<{ locale: Locale }>;
@@ -56,6 +56,7 @@ export default async function LocaleLayout({
             {children}
 
             <Toaster richColors position="top-right" offset={64} />
+            <DiscordWidget />
             <TailwindIndicator />
             <Analytics />
           </Providers>
