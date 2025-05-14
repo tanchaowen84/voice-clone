@@ -57,7 +57,7 @@ export const getUsersAction = actionClient
         : user.createdAt;
       const sortDirection = sortConfig?.desc ? desc : asc;
 
-      const [items, [{ count }]] = await Promise.all([
+      let [items, [{ count }]] = await Promise.all([
         db
           .select()
           .from(user)
@@ -67,6 +67,16 @@ export const getUsersAction = actionClient
           .offset(offset),
         db.select({ count: sql`count(*)` }).from(user).where(where),
       ]);
+
+      // hide user data in demo website
+      if (process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true') {
+        items = items.map((item) => ({
+          ...item,
+          name: 'Demo User',
+          email: 'example@mksaas.com',
+          customerId: 'cus_abcdef123456',
+        }));
+      }
 
       return {
         success: true,

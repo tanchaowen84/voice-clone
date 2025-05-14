@@ -134,7 +134,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               className="size-8 border"
             />
             <span className="hover:underline hover:underline-offset-4">
-              {isDemo ? 'MkSaaS User' : user.name}
+              {user.name}
             </span>
           </div>
         </Button>
@@ -148,10 +148,8 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               className="size-12 border"
             />
             <div>
-              <DrawerTitle>{isDemo ? 'MkSaaS User' : user.name}</DrawerTitle>
-              <DrawerDescription>
-                {isDemo ? 'example@mksaas.com' : user.email}
-              </DrawerDescription>
+              <DrawerTitle>{user.name}</DrawerTitle>
+              <DrawerDescription>{user.email}</DrawerDescription>
             </div>
           </div>
         </DrawerHeader>

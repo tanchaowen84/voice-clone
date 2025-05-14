@@ -168,7 +168,7 @@ export function UsersTable({
               ) : (
                 <MailQuestionIcon className="stroke-red-500 dark:stroke-red-400" />
               )}
-              {isDemo ? 'example@mksaas.com' : user.email}
+              {user.email}
             </Badge>
           </div>
         );
@@ -227,7 +227,7 @@ export function UsersTable({
                 rel="noopener noreferrer"
                 className="hover:underline hover:underline-offset-4"
               >
-                {!isDemo ? user.customerId : 'cus_abcdef123456'}
+                {user.customerId}
               </a>
             ) : (
               '-'
