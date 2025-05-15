@@ -6,7 +6,7 @@ MkSaaS is a complete Next.js boilerplate for building AI SaaS websites. Make mon
 
 ## Author
 
-This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [MkSaaS](https://mksaas.com) and [Mkdirs](https://mkdirs.com).
+This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [MkSaaS](https://mksaas.com) and [Mkdirs](https://mkdirs.com). The official X account for [MkSaaS](https://mksaas.com) is [@mksaascom](https://x.com/mksaascom), you can follow this account for the updates about MkSaaS.
 
 ## Documentation
 
@@ -16,12 +16,12 @@ If you found anything that could be improved, please let me know.
 
 ## Links
 
-- website: [mksaas.com](https://mksaas.com)
-- demo: [demo.mksaas.com](https://demo.mksaas.com)
-- discord: [discord.gg/mtjx6W6mNY](https://discord.gg/mtjx6W6mNY)
-- documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- roadmap: [mksaas project](https://github.com/orgs/MkSaaSHQ/projects/1)
-- video (WIP): [youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ)
+- 🔥 website: [mksaas.com](https://mksaas.com)
+- 🌐 demo: [demo.mksaas.com](https://demo.mksaas.com)
+- 👨‍💻 discord: [discord.gg/r8Pty2qcGv](https://discord.gg/r8Pty2qcGv)
+- 📚 documentation: [mksaas.com/docs](https://mksaas.com/docs)
+- 🗓️ roadmap: [mksaas project](https://github.com/orgs/MkSaaSHQ/projects/1)
+- 📹 video (WIP): [youtube.com/@MkSaaSHQ](https://www.youtube.com/@MkSaaSHQ)
 
 ## Repositories
 
