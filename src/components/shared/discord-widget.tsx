@@ -1,15 +1,14 @@
 'use client';
 
 import { DiscordIcon } from '@/components/icons/discord';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import WidgetBot from '@widgetbot/react-embed';
 import { useEffect, useRef, useState } from 'react';
 
-const WIDGET_WIDTH = 800;
-const WIDGET_HEIGHT = 600;
-const ICON_SIZE = 48;
-
 /**
  * Discord Widget, shows the channels and messages in the discord server
+ *
+ * https://docs.widgetbot.io/embed/react-embed/
  */
 export default function DiscordWidget() {
   const serverId = process.env.NEXT_PUBLIC_DISCORD_WIDGET_SERVER_ID as string;
@@ -20,6 +19,17 @@ export default function DiscordWidget() {
 
   const [open, setOpen] = useState(false);
   const widgetRef = useRef<HTMLDivElement>(null);
+  const { device, width: windowWidth, height: windowHeight } = useMediaQuery();
+
+  let widgetWidth = 800;
+  let widgetHeight = 600;
+  if (device === 'mobile') {
+    widgetWidth = windowWidth ? Math.floor(windowWidth * 0.9) : 320;
+    widgetHeight = windowHeight ? Math.floor(windowHeight * 0.8) : 400;
+  } else if (device === 'tablet' || device === 'sm') {
+    widgetWidth = windowWidth ? Math.floor(windowWidth * 0.9) : 600;
+    widgetHeight = windowHeight ? Math.floor(windowHeight * 0.8) : 480;
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -40,7 +50,7 @@ export default function DiscordWidget() {
           aria-label="Open Discord Widget"
           className="fixed bottom-[84px] right-10 z-50 cursor-pointer flex items-center justify-center rounded-full bg-[#5865F2] shadow-lg
             hover:scale-110 transition-transform duration-150"
-          style={{ width: ICON_SIZE, height: ICON_SIZE }}
+          style={{ width: 48, height: 48 }}
           onClick={() => setOpen(true)}
           type="button"
         >
@@ -53,14 +63,14 @@ export default function DiscordWidget() {
         <div
           ref={widgetRef}
           className="fixed bottom-[84px] right-10 z-50 flex flex-col items-end"
-          style={{ width: WIDGET_WIDTH, height: WIDGET_HEIGHT }}
+          style={{ width: widgetWidth, height: widgetHeight }}
         >
           <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
             <WidgetBot
               server={serverId}
               channel={channelId}
-              width={WIDGET_WIDTH}
-              height={WIDGET_HEIGHT}
+              width={widgetWidth}
+              height={widgetHeight}
             />
           </div>
         </div>
