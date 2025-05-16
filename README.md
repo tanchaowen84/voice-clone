@@ -19,7 +19,7 @@ If you found anything that could be improved, please let me know.
 - 🔥 website: [mksaas.com](https://mksaas.com)
 - 🌐 demo: [demo.mksaas.com](https://demo.mksaas.com)
 - 📚 documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- 🗓️ roadmap: [mksaas project](https://github.com/orgs/MkSaaSHQ/projects/1)
+- 🗓️ roadmap: [mksaas project](https://mksaas.link/roadmap)
 - 👨‍💻 discord: [mksaas.link/discord](https://mksaas.link/discord)
 - 📹 video (WIP): [mksaas.link/youtube](https://mksaas.link/youtube)
 
