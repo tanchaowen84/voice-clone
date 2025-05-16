@@ -24,10 +24,12 @@ export const websiteConfig: WebsiteConfig = {
     },
     social: {
       github: 'https://github.com/MkSaaSHQ',
-      twitter: 'https://x.com/mksaascom',
-      blueSky: 'https://bsky.app/profile/mksaas.com',
-      discord: 'https://discord.gg/yVwpEtTT',
-      youtube: 'https://www.youtube.com/@MkSaaS',
+      twitter: 'https://mksaas.link/twitter',
+      blueSky: 'https://mksaas.link/bsky',
+      discord: 'https://mksaas.link/discord',
+      mastodon: 'https://mksaas.link/mastodon',
+      linkedin: 'https://mksaas.link/linkedin',
+      youtube: 'https://mksaas.link/youtube',
     },
   },
   routes: {
