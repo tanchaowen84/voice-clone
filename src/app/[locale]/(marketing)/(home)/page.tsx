@@ -32,7 +32,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: t('title'),
     description: t('description'),
-    canonicalUrl: getUrlWithLocale('/', locale),
+    canonicalUrl: getUrlWithLocale('', locale),
   });
 }
 
