@@ -37,7 +37,7 @@ export function constructMetadata({
       url: canonicalUrl,
       title,
       description,
-      siteName: title,
+      siteName: defaultMessages.Metadata.name,
       images: [ogImageUrl.toString()],
     },
     twitter: {
