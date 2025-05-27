@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
  */
 export type WebsiteConfig = {
   metadata: MetadataConfig;
+  features: FeaturesConfig;
   routes: RoutesConfig;
   analytics: AnalyticsConfig;
   auth: AuthConfig;
@@ -58,6 +59,13 @@ export interface SocialConfig {
   instagram?: string;
   tiktok?: string;
   telegram?: string;
+}
+
+/**
+ * Website features
+ */
+export interface FeaturesConfig {
+  enableDiscordWidget?: boolean;      // Whether to enable the discord widget
 }
 
 /**

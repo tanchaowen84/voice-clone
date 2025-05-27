@@ -12,6 +12,7 @@ import StatsSection from '@/components/blocks/stats/stats';
 import TestimonialsSection from '@/components/blocks/testimonials/testimonials';
 import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 import DiscordWidget from '@/components/shared/discord-widget';
+import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -74,7 +75,7 @@ export default async function HomePage(props: HomePageProps) {
 
         <NewsletterCard />
 
-        <DiscordWidget />
+        {websiteConfig.features.enableDiscordWidget && <DiscordWidget />}
       </div>
     </>
   );
