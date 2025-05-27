@@ -66,6 +66,7 @@ export interface SocialConfig {
  */
 export interface FeaturesConfig {
   enableDiscordWidget?: boolean;      // Whether to enable the discord widget
+  enableUpgradeCard?: boolean;        // Whether to enable the upgrade card in the sidebar
 }
 
 /**
