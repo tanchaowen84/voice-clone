@@ -1,5 +1,3 @@
-export const dynamic = 'force-static';
-
 import AllPostsButton from '@/components/blog/all-posts-button';
 import BlogGrid from '@/components/blog/blog-grid';
 import { BlogToc } from '@/components/blog/blog-toc';
@@ -71,15 +69,16 @@ async function getRelatedPosts(post: Post) {
   return relatedPosts;
 }
 
-export function generateStaticParams() {
-  return LOCALES.map((locale) => {
-    const posts = allPosts.filter((post) => post.locale === locale);
-    return posts.map((post) => ({
-      locale,
-      slug: post.slugAsParams,
-    }));
-  });
-}
+// remove generateStaticParams for now, because blog post page is not static
+// export function generateStaticParams() {
+//   return LOCALES.map((locale) => {
+//     const posts = allPosts.filter((post) => post.locale === locale);
+//     return posts.map((post) => ({
+//       locale,
+//       slug: post.slugAsParams,
+//     }));
+//   });
+// }
 
 export async function generateMetadata({
   params,
