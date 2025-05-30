@@ -2,39 +2,70 @@ import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { websiteConfig } from '@/config/website';
+import { LOCALES } from '@/i18n/routing';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import type { NextPageProps } from '@/types/next-page-props';
 import { allPosts } from 'content-collections';
-import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}): Promise<Metadata | undefined> {
-  const { locale } = await params;
+// Generate all static params for SSG (locale + pagination)
+export function generateStaticParams() {
+  const publishedPosts = allPosts.filter((post) => post.published);
+  const paginationSize = websiteConfig.blog.paginationSize;
+  const params: { locale: string; page?: string }[] = [];
+  for (const locale of LOCALES) {
+    const localePosts = publishedPosts.filter((post) => post.locale === locale);
+    if (localePosts.length <= 0) {
+      continue;
+    }
+    const totalCount = localePosts.length;
+    const totalPages = Math.max(1, Math.ceil(totalCount / paginationSize));
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+      if (pageNumber === 1) {
+        params.push({ locale });
+      } else {
+        params.push({ locale, page: String(pageNumber) });
+      }
+    }
+  }
+  console.log('BlogPage, generateStaticParams', params);
+  return params;
+}
+
+// Generate metadata for each static page (locale + page)
+export async function generateMetadata({ params }: BlogPageProps) {
+  const { locale, page } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const pt = await getTranslations({ locale, namespace: 'BlogPage' });
+
+  // Build canonical URL with pagination
+  let canonicalPath = '/blog';
+  if (page && page !== '1') {
+    canonicalPath += `?page=${page}`;
+  }
+  console.log(
+    `locale: ${locale}, page: ${page}, canonicalPath: ${canonicalPath}`
+  );
+
   return constructMetadata({
-    title: pt('title') + ' | ' + t('title'),
+    title: `${pt('title')} | ${t('title')}`,
     description: pt('description'),
-    canonicalUrl: getUrlWithLocale('/blog', locale),
+    canonicalUrl: getUrlWithLocale(canonicalPath, locale),
   });
 }
 
-export default async function BlogPage({
-  params,
-  searchParams,
-}: NextPageProps) {
-  const paginationSize = websiteConfig.blog.paginationSize;
-  const resolvedParams = await params;
-  const { locale } = resolvedParams;
-  const resolvedSearchParams = await searchParams;
-  const { page } = (resolvedSearchParams as { [key: string]: string }) || {};
+interface BlogPageProps {
+  params: Promise<{
+    locale: Locale;
+    page?: string;
+  }>;
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { locale, page } = await params;
   const currentPage = page ? Number(page) : 1;
+  const paginationSize = websiteConfig.blog.paginationSize;
   const startIndex = (currentPage - 1) * paginationSize;
   const endIndex = startIndex + paginationSize;
 

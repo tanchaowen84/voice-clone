@@ -2,21 +2,49 @@ import BlogGrid from '@/components/blog/blog-grid';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { websiteConfig } from '@/config/website';
+import { LOCALES } from '@/i18n/routing';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import type { NextPageProps } from '@/types/next-page-props';
 import { allCategories, allPosts } from 'content-collections';
-import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string; locale: Locale }>;
-}): Promise<Metadata | undefined> {
-  const { slug, locale } = await params;
+// Generate all static params for SSG (locale + category + pagination)
+export function generateStaticParams() {
+  const categories = allCategories;
+  const publishedPosts = allPosts.filter((post) => post.published);
+  const paginationSize = websiteConfig.blog.paginationSize;
+  const params: { locale: string; slug: string; page?: string }[] = [];
+  for (const locale of LOCALES) {
+    const localeCategories = categories.filter((cat) => cat.locale === locale);
+    for (const category of localeCategories) {
+      const filteredPosts = publishedPosts.filter(
+        (post) =>
+          post.locale === locale &&
+          post.categories.some((cat) => cat && cat.slug === category.slug)
+      );
+      const totalCount = filteredPosts.length;
+      const totalPages = Math.max(1, Math.ceil(totalCount / paginationSize));
+      for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+        if (pageNumber === 1) {
+          params.push({ locale, slug: category.slug });
+        } else {
+          params.push({
+            locale,
+            slug: category.slug,
+            page: String(pageNumber),
+          });
+        }
+      }
+    }
+  }
+  console.log('BlogCategoryPage, generateStaticParams', params);
+  return params;
+}
 
+// Generate metadata for each static category page (locale + slug + page)
+export async function generateMetadata({ params }: BlogCategoryPageProps) {
+  const { locale, slug, page } = await params;
   // Find category with matching slug and locale
   const category = allCategories.find(
     (category) => category.slug === slug && category.locale === locale
@@ -28,26 +56,38 @@ export async function generateMetadata({
     );
     return {};
   }
-
   const t = await getTranslations({ locale, namespace: 'Metadata' });
+
+  // Build canonical URL with pagination
+  let canonicalPath = `/blog/category/${slug}`;
+  if (page && page !== '1') {
+    canonicalPath += `?page=${page}`;
+  }
+  console.log(
+    `locale: ${locale}, slug: ${slug}, page: ${page}, canonicalPath: ${canonicalPath}`
+  );
 
   return constructMetadata({
     title: `${category.name} | ${t('title')}`,
     description: category.description,
-    canonicalUrl: getUrlWithLocale(`/blog/category/${slug}`, locale),
+    canonicalUrl: getUrlWithLocale(canonicalPath, locale),
   });
+}
+
+interface BlogCategoryPageProps {
+  params: Promise<{
+    slug: string;
+    locale: Locale;
+    page?: string;
+  }>;
 }
 
 export default async function BlogCategoryPage({
   params,
-  searchParams,
-}: NextPageProps) {
-  const paginationSize = websiteConfig.blog.paginationSize;
-  const resolvedParams = await params;
-  const { slug, locale } = resolvedParams;
-  const resolvedSearchParams = await searchParams;
-  const { page } = (resolvedSearchParams as { [key: string]: string }) || {};
+}: BlogCategoryPageProps) {
+  const { slug, locale, page } = await params;
   const currentPage = page ? Number(page) : 1;
+  const paginationSize = websiteConfig.blog.paginationSize;
   const startIndex = (currentPage - 1) * paginationSize;
   const endIndex = startIndex + paginationSize;
 
@@ -92,7 +132,7 @@ export default async function BlogCategoryPage({
 
           <div className="mt-8 flex items-center justify-center">
             <CustomPagination
-              routePreix={`/${locale}/blog/category/${resolvedParams.slug}`}
+              routePreix={`/${locale}/blog/category/${slug}`}
               totalPages={totalPages}
             />
           </div>

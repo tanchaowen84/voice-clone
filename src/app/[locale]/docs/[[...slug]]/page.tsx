@@ -16,16 +16,14 @@ import {
   DocsPage,
   DocsTitle,
 } from 'fumadocs-ui/page';
-import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
-  const locales = LOCALES;
   const slugParams = source.generateParams();
-  const params = locales.flatMap((locale) =>
+  const params = LOCALES.flatMap((locale) =>
     slugParams.map((param) => ({
       locale,
       slug: param.slug,
