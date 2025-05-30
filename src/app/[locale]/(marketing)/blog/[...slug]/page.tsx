@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import AllPostsButton from '@/components/blog/all-posts-button';
 import BlogGrid from '@/components/blog/blog-grid';
 import { BlogToc } from '@/components/blog/blog-toc';
@@ -113,6 +115,8 @@ export default async function BlogPostPage(props: NextPageProps) {
   const publishDate = post.date;
   const date = formatDate(new Date(publishDate));
   const toc = await getTableOfContents(post.content);
+
+  // getTranslations may cause error DYNAMIC_SERVER_USAGE, so we set dynamic to force-static
   const t = await getTranslations('BlogPage');
 
   // get related posts
