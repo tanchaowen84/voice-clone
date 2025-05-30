@@ -1,9 +1,12 @@
+import { Analytics } from '@/analytics/analytics';
 import {
   fontBricolageGrotesque,
   fontNotoSans,
   fontNotoSansMono,
   fontNotoSerif,
 } from '@/assets/fonts';
+import { AffonsoScript } from '@/components/affiliate/affonso';
+import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { type Locale, NextIntlClientProvider, hasLocale } from 'next-intl';
@@ -13,8 +16,6 @@ import { Toaster } from 'sonner';
 import { Providers } from './providers';
 
 import '@/styles/globals.css';
-import { Analytics } from '@/analytics/analytics';
-import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -41,6 +42,9 @@ export default async function LocaleLayout({
 
   return (
     <html suppressHydrationWarning lang={locale}>
+      <head>
+        <AffonsoScript />
+      </head>
       <body
         suppressHydrationWarning
         className={cn(
