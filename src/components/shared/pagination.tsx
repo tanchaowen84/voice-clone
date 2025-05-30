@@ -9,8 +9,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { useLocaleRouter } from '@/i18n/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
+
+function getCurrentPageFromPath(pathname: string): number {
+  const match = pathname.match(/\/page\/(\d+)$/);
+  if (match?.[1]) {
+    return Number(match[1]);
+  }
+  return 1;
+}
 
 type CustomPaginationProps = {
   totalPages: number;
@@ -22,13 +29,18 @@ export default function CustomPagination({
   routePreix,
 }: CustomPaginationProps) {
   const router = useLocaleRouter();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const pathname = useLocalePathname();
+  const currentPage = getCurrentPageFromPath(pathname);
 
   const handlePageChange = (page: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
-    router.push(`${routePreix}?${params.toString()}`);
+    const pageNum = Number(page);
+    if (pageNum === 1) {
+      // Go to /blog or /blog/category/[slug] for page 1
+      router.push(routePreix);
+    } else {
+      // Go to /blog/page/x or /blog/category/[slug]/page/x
+      router.push(`${routePreix}/page/${pageNum}`);
+    }
   };
 
   const allPages = generatePagination(currentPage, totalPages);
@@ -122,3 +134,8 @@ const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+function normalizePath(path: string) {
+  // Remove duplicated locale prefix, e.g. /zh/zh/blog => /zh/blog
+  return path.replace(/^(\/\w{2,3})(?:\1)+/, '$1');
+}

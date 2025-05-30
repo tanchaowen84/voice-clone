@@ -7,11 +7,11 @@ import { NewsletterCard } from '@/components/newsletter/newsletter-card';
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
+import { LOCALES } from '@/i18n/routing';
 import { getTableOfContents } from '@/lib/blog/toc';
 import { formatDate } from '@/lib/formatter';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import type { NextPageProps } from '@/types/next-page-props';
 import { type Post, allPosts } from 'content-collections';
 import { CalendarIcon, ClockIcon, FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -24,7 +24,8 @@ import '@/styles/mdx.css';
 
 /**
  * Gets the blog post from the params
- * @param props - The props of the page
+ * @param slug - The slug of the blog post
+ * @param locale - The locale of the blog post
  * @returns The blog post
  *
  * How it works:
@@ -33,16 +34,8 @@ import '@/styles/mdx.css';
  * slug becomes "first-post" after join('/')
  * Matches post where slugAsParams === "first-post" AND locale === params.locale
  */
-async function getBlogPostFromParams(props: NextPageProps) {
-  const params = await props.params;
-  if (!params) {
-    return null;
-  }
-
-  const locale = params.locale as string;
-  const slug =
-    (Array.isArray(params.slug) ? params.slug?.join('/') : params.slug) || '';
-
+async function getBlogPostFromParams(locale: Locale, slug: string) {
+  // console.log('getBlogPostFromParams', locale, slug);
   // Find post with matching slug and locale
   const post = allPosts.find(
     (post) =>
@@ -78,22 +71,23 @@ async function getRelatedPosts(post: Post) {
   return relatedPosts;
 }
 
+export function generateStaticParams() {
+  return LOCALES.map((locale) => {
+    const posts = allPosts.filter((post) => post.locale === locale);
+    return posts.map((post) => ({
+      locale,
+      slug: post.slugAsParams,
+    }));
+  });
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string; locale: Locale }>;
-}): Promise<Metadata | undefined> {
-  const { slug, locale } = await params;
-
-  const post = await getBlogPostFromParams({
-    params: Promise.resolve({ slug, locale }),
-    searchParams: Promise.resolve({}),
-  });
+}: BlogPostPageProps): Promise<Metadata | undefined> {
+  const { locale, slug } = await params;
+  const post = await getBlogPostFromParams(locale, slug.join('/'));
   if (!post) {
-    console.warn(
-      `generateMetadata, post not found for slug: ${slug}, locale: ${locale}`
-    );
-    return {};
+    notFound();
   }
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
@@ -106,8 +100,16 @@ export async function generateMetadata({
   });
 }
 
-export default async function BlogPostPage(props: NextPageProps) {
-  const post = await getBlogPostFromParams(props);
+interface BlogPostPageProps {
+  params: Promise<{
+    locale: Locale;
+    slug: string[];
+  }>;
+}
+
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const { locale, slug } = await props.params;
+  const post = await getBlogPostFromParams(locale, slug.join('/'));
   if (!post) {
     notFound();
   }

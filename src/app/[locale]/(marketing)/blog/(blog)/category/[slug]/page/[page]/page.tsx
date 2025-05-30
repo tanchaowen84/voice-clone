@@ -1,38 +1,48 @@
 import BlogGridWithPagination from '@/components/blog/blog-grid-with-pagination';
+import { websiteConfig } from '@/config/website';
 import { LOCALES } from '@/i18n/routing';
 import { getPaginatedBlogPosts } from '@/lib/blog/data';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { allCategories } from 'content-collections';
+import { allCategories, allPosts } from 'content-collections';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-// Generate all static params for SSG (locale + category)
+// Generate all static params for SSG (locale + category + pagination)
 export function generateStaticParams() {
-  const params: { locale: string; slug: string }[] = [];
+  const params: { locale: string; slug: string; page: string }[] = [];
   for (const locale of LOCALES) {
     const localeCategories = allCategories.filter(
       (category) => category.locale === locale
     );
     for (const category of localeCategories) {
-      params.push({ locale, slug: category.slug });
+      const totalPages = Math.ceil(
+        allPosts.filter(
+          (post) =>
+            post.locale === locale &&
+            post.categories.some((cat) => cat && cat.slug !== category.slug)
+        ).length / websiteConfig.blog.paginationSize
+      );
+      for (let page = 2; page <= totalPages; page++) {
+        params.push({ locale, slug: category.slug, page: String(page) });
+      }
     }
   }
   return params;
 }
 
-// Generate metadata for each static category page (locale + category)
+// Generate metadata for each static category page (locale + category + pagination)
 export async function generateMetadata({ params }: BlogCategoryPageProps) {
-  const { locale, slug } = await params;
+  const { locale, slug, page } = await params;
   const category = allCategories.find(
-    (category) => category.locale === locale && category.slug === slug
+    (category) => category.slug === slug && category.locale === locale
   );
   if (!category) {
     notFound();
   }
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-  const canonicalPath = `/blog/category/${slug}`;
+  const canonicalPath = `/blog/category/${slug}/page/${page}`;
   return constructMetadata({
     title: `${category.name} | ${t('title')}`,
     description: category.description,
@@ -44,20 +54,21 @@ interface BlogCategoryPageProps {
   params: Promise<{
     locale: Locale;
     slug: string;
+    page: number;
   }>;
 }
 
 export default async function BlogCategoryPage({
   params,
 }: BlogCategoryPageProps) {
-  const { locale, slug } = await params;
+  const { locale, slug, page } = await params;
+  const currentPage = page;
   const category = allCategories.find(
-    (category) => category.locale === locale && category.slug === slug
+    (category) => category.slug === slug && category.locale === locale
   );
   if (!category) {
     notFound();
   }
-  const currentPage = 1;
   const { paginatedPosts, totalPages } = getPaginatedBlogPosts({
     locale,
     page: currentPage,
