@@ -1,6 +1,7 @@
 'use client';
 
 import { DiscordIcon } from '@/components/icons/discord';
+import { websiteConfig } from '@/config/website';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import WidgetBot from '@widgetbot/react-embed';
 import { useEffect, useRef, useState } from 'react';
@@ -11,6 +12,10 @@ import { useEffect, useRef, useState } from 'react';
  * https://docs.widgetbot.io/embed/react-embed/
  */
 export default function DiscordWidget() {
+  if (!websiteConfig.features.enableDiscordWidget) {
+    return null;
+  }
+
   const serverId = process.env.NEXT_PUBLIC_DISCORD_WIDGET_SERVER_ID as string;
   const channelId = process.env.NEXT_PUBLIC_DISCORD_WIDGET_CHANNEL_ID as string;
   if (!serverId || !channelId) {

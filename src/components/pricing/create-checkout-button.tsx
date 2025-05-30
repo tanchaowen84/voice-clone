@@ -2,6 +2,7 @@
 
 import { createCheckoutAction } from '@/actions/create-checkout-session';
 import { Button } from '@/components/ui/button';
+import { websiteConfig } from '@/config/website';
 import { Loader2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -50,12 +51,35 @@ export function CheckoutButton({
     try {
       setIsLoading(true);
 
+      const mergedMetadata = metadata ? { ...metadata } : {};
+
+      // add affonso_referral to metadata if enabled affonso affiliate
+      if (websiteConfig.features.enableAffonsoAffiliate) {
+        const affonsoReferral =
+          typeof document !== 'undefined'
+            ? (() => {
+                const match = document.cookie.match(
+                  /(?:^|; )affonso_referral=([^;]*)/
+                );
+                return match ? decodeURIComponent(match[1]) : null;
+              })()
+            : null;
+        if (affonsoReferral) {
+          console.log(
+            'create checkout button, affonsoReferral:',
+            affonsoReferral
+          );
+          mergedMetadata.affonso_referral = affonsoReferral;
+        }
+      }
+
       // Create checkout session using server action
       const result = await createCheckoutAction({
         userId,
         planId,
         priceId,
-        metadata,
+        metadata:
+          Object.keys(mergedMetadata).length > 0 ? mergedMetadata : undefined,
       });
 
       // Redirect to checkout page
