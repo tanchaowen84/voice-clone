@@ -75,7 +75,7 @@ export default async function HomePage(props: HomePageProps) {
 
         <NewsletterCard />
 
-        {websiteConfig.features.enableDiscordWidget && <DiscordWidget />}
+        <DiscordWidget />
       </div>
     </>
   );
