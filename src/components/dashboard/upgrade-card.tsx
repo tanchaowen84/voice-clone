@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { websiteConfig } from '@/config/website';
 import { usePayment } from '@/hooks/use-payment';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
@@ -16,6 +17,10 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 export function UpgradeCard() {
+  if (!websiteConfig.features.enableUpgradeCard) {
+    return null;
+  }
+
   const t = useTranslations('Dashboard.upgrade');
   const [mounted, setMounted] = useState(false);
   const { isLoading, currentPlan, subscription } = usePayment();

@@ -13,7 +13,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { getSidebarLinks } from '@/config/sidebar-config';
-import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { Routes } from '@/routes';
@@ -77,9 +76,7 @@ export function DashboardSidebar({
         {!isPending && mounted && (
           <>
             {/* show upgrade card if user is not a member, and sidebar is not collapsed */}
-            {currentUser &&
-              state !== 'collapsed' &&
-              websiteConfig.features.enableUpgradeCard && <UpgradeCard />}
+            {currentUser && state !== 'collapsed' && <UpgradeCard />}
 
             {/* show user profile if user is logged in */}
             {currentUser && <SidebarUser user={currentUser} />}

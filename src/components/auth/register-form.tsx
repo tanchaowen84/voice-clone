@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
 import { getUrlWithLocaleInCallbackUrl } from '@/lib/urls/urls';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
@@ -97,6 +98,13 @@ export const RegisterForm = ({
           // sign up success, user information stored in ctx.data
           // console.log("register, success:", ctx.data);
           setSuccess(t('checkEmail'));
+
+          // add affonso affiliate
+          // https://affonso.io/app/affiliate-program/connect
+          if (websiteConfig.features.enableAffonsoAffiliate) {
+            console.log('register, affonso affiliate:', values.email);
+            window.Affonso.signup(values.email);
+          }
         },
         onError: (ctx) => {
           // sign up fail, display the error message
