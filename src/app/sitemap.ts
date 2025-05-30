@@ -1,3 +1,4 @@
+import { websiteConfig } from '@/config/website';
 import { getLocalePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { source } from '@/lib/docs/source';
@@ -60,15 +61,73 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   );
 
-  // add posts
-  sitemapList.push(
-    ...allPosts.flatMap((post: { slugAsParams: string }) =>
-      routing.locales.map((locale) => ({
-        url: getUrl(`/blog/${post.slugAsParams}`, locale),
+  // add paginated blog list pages
+  routing.locales.forEach((locale) => {
+    const posts = allPosts.filter(
+      (post) => post.locale === locale && post.published
+    );
+    const totalPages = Math.max(
+      1,
+      Math.ceil(posts.length / websiteConfig.blog.paginationSize)
+    );
+    // /blog/page/[page] (from 2)
+    for (let page = 2; page <= totalPages; page++) {
+      sitemapList.push({
+        url: getUrl(`/blog/page/${page}`, locale),
         lastModified: new Date(),
         priority: 0.8,
         changeFrequency: 'weekly' as const,
-      }))
+      });
+    }
+  });
+
+  // add paginated category pages
+  routing.locales.forEach((locale) => {
+    const localeCategories = allCategories.filter(
+      (category) => category.locale === locale
+    );
+    localeCategories.forEach((category) => {
+      // posts in this category and locale
+      const postsInCategory = allPosts.filter(
+        (post) =>
+          post.locale === locale &&
+          post.published &&
+          post.categories.some((cat) => cat && cat.slug === category.slug)
+      );
+      const totalPages = Math.max(
+        1,
+        Math.ceil(postsInCategory.length / websiteConfig.blog.paginationSize)
+      );
+      // /blog/category/[slug] (first page)
+      sitemapList.push({
+        url: getUrl(`/blog/category/${category.slug}`, locale),
+        lastModified: new Date(),
+        priority: 0.8,
+        changeFrequency: 'weekly' as const,
+      });
+      // /blog/category/[slug]/page/[page] (from 2)
+      for (let page = 2; page <= totalPages; page++) {
+        sitemapList.push({
+          url: getUrl(`/blog/category/${category.slug}/page/${page}`, locale),
+          lastModified: new Date(),
+          priority: 0.8,
+          changeFrequency: 'weekly' as const,
+        });
+      }
+    });
+  });
+
+  // add posts (single post pages)
+  sitemapList.push(
+    ...allPosts.flatMap((post: { slugAsParams: string; locale: string }) =>
+      routing.locales
+        .filter((locale) => post.locale === locale)
+        .map((locale) => ({
+          url: getUrl(`/blog/${post.slugAsParams}`, locale),
+          lastModified: new Date(),
+          priority: 0.8,
+          changeFrequency: 'weekly' as const,
+        }))
     )
   );
 
