@@ -21,7 +21,7 @@ export function generateStaticParams() {
         allPosts.filter(
           (post) =>
             post.locale === locale &&
-            post.categories.some((cat) => cat && cat.slug !== category.slug)
+            post.categories.some((cat) => cat && cat.slug === category.slug)
         ).length / websiteConfig.blog.paginationSize
       );
       for (let page = 2; page <= totalPages; page++) {
@@ -54,7 +54,7 @@ interface BlogCategoryPageProps {
   params: Promise<{
     locale: Locale;
     slug: string;
-    page: number;
+    page: string;
   }>;
 }
 
@@ -62,7 +62,7 @@ export default async function BlogCategoryPage({
   params,
 }: BlogCategoryPageProps) {
   const { locale, slug, page } = await params;
-  const currentPage = page;
+  const currentPage = Number(page);
   const category = allCategories.find(
     (category) => category.slug === slug && category.locale === locale
   );

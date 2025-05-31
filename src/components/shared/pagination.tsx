@@ -21,12 +21,12 @@ function getCurrentPageFromPath(pathname: string): number {
 
 type CustomPaginationProps = {
   totalPages: number;
-  routePreix: string;
+  routePrefix: string;
 };
 
 export default function CustomPagination({
   totalPages,
-  routePreix,
+  routePrefix,
 }: CustomPaginationProps) {
   const router = useLocaleRouter();
   const pathname = useLocalePathname();
@@ -36,10 +36,10 @@ export default function CustomPagination({
     const pageNum = Number(page);
     if (pageNum === 1) {
       // Go to /blog or /blog/category/[slug] for page 1
-      router.push(routePreix);
+      router.push(routePrefix);
     } else {
       // Go to /blog/page/x or /blog/category/[slug]/page/x
-      router.push(`${routePreix}/page/${pageNum}`);
+      router.push(`${routePrefix}/page/${pageNum}`);
     }
   };
 
@@ -134,8 +134,3 @@ const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
-
-function normalizePath(path: string) {
-  // Remove duplicated locale prefix, e.g. /zh/zh/blog => /zh/blog
-  return path.replace(/^(\/\w{2,3})(?:\1)+/, '$1');
-}
