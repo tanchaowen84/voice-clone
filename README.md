@@ -19,7 +19,7 @@ If you found anything that could be improved, please let me know.
 - 🔥 website: [mksaas.com](https://mksaas.com)
 - 🌐 demo: [demo.mksaas.com](https://demo.mksaas.com)
 - 📚 documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- 🗓️ roadmap: [mksaas project](https://mksaas.link/roadmap)
+- 🗓️ roadmap: [mksaas roadmap](https://mksaas.link/roadmap)
 - 👨‍💻 discord: [mksaas.link/discord](https://mksaas.link/discord)
 - 📹 video (WIP): [mksaas.link/youtube](https://mksaas.link/youtube)
 
@@ -27,10 +27,10 @@ If you found anything that could be improved, please let me know.
 
 By default, you should have access to all four repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
 
-- [MkSaaSHQ/mksaas-template](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com (ready)
-- [MkSaaSHQ/mksaas-blog](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me (ready)
-- [MkSaaSHQ/mksaas-app](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app (WIP)
-- [MkSaaSHQ/mksaas-haitang](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app (WIP)
+- [MkSaaSHQ/mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
+- [MkSaaSHQ/mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
+- [MkSaaSHQ/mksaas-app (WIP)](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app
+- [MkSaaSHQ/mksaas-haitang (WIP)](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app
 
 ## Notice
 
