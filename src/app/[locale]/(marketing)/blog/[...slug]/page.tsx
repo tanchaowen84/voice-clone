@@ -69,16 +69,15 @@ async function getRelatedPosts(post: Post) {
   return relatedPosts;
 }
 
-// remove generateStaticParams for now, because blog post page is not static
-// export function generateStaticParams() {
-//   return LOCALES.map((locale) => {
-//     const posts = allPosts.filter((post) => post.locale === locale);
-//     return posts.map((post) => ({
-//       locale,
-//       slug: post.slugAsParams,
-//     }));
-//   });
-// }
+export function generateStaticParams() {
+  return LOCALES.flatMap((locale) => {
+    const posts = allPosts.filter((post) => post.locale === locale);
+    return posts.map((post) => ({
+      locale,
+      slug: [post.slugAsParams],
+    }));
+  });
+}
 
 export async function generateMetadata({
   params,
