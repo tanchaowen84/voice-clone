@@ -8,7 +8,7 @@ import Script from 'next/script';
  *
  * https://affonso.com
  */
-export function AffonsoScript() {
+export default function AffonsoScript() {
   if (process.env.NODE_ENV !== 'production') {
     return null;
   }

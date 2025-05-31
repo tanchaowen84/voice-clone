@@ -36,6 +36,7 @@ export const websiteConfig: WebsiteConfig = {
     enableDiscordWidget: true,
     enableUpgradeCard: true,
     enableAffonsoAffiliate: false,
+    enablePromotekitAffiliate: false,
   },
   routes: {
     defaultLoginRedirect: '/dashboard',

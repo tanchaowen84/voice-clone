@@ -53,6 +53,21 @@ export function CheckoutButton({
 
       const mergedMetadata = metadata ? { ...metadata } : {};
 
+      // add promotekit_referral to metadata if enabled promotekit affiliate
+      if (websiteConfig.features.enablePromotekitAffiliate) {
+        const promotekitReferral =
+          typeof window !== 'undefined'
+            ? (window as any).promotekit_referral
+            : undefined;
+        if (promotekitReferral) {
+          console.log(
+            'create checkout button, promotekitReferral:',
+            promotekitReferral
+          );
+          mergedMetadata.promotekit_referral = promotekitReferral;
+        }
+      }
+
       // add affonso_referral to metadata if enabled affonso affiliate
       if (websiteConfig.features.enableAffonsoAffiliate) {
         const affonsoReferral =

@@ -68,6 +68,7 @@ export interface FeaturesConfig {
   enableDiscordWidget?: boolean;      // Whether to enable the discord widget
   enableUpgradeCard?: boolean;        // Whether to enable the upgrade card in the sidebar
   enableAffonsoAffiliate?: boolean;   // Whether to enable affonso affiliate
+  enablePromotekitAffiliate?: boolean;   // Whether to enable promotekit affiliate
 }
 
 /**
