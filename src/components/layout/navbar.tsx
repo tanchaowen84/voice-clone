@@ -193,7 +193,9 @@ export function Navbar({ scroll }: NavBarProps) {
                         asChild
                         active={
                           item.href
-                            ? localePathname.startsWith(item.href)
+                            ? item.href === '/'
+                              ? localePathname === '/'
+                              : localePathname.startsWith(item.href)
                             : false
                         }
                         className={customNavigationMenuTriggerStyle}

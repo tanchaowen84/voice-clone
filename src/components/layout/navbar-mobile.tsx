@@ -103,7 +103,7 @@ export function NavbarMobile({
             aria-expanded={open}
             aria-label="Toggle Mobile Menu"
             onClick={handleToggleMobileMenu}
-            className="size-8 flex aspect-square h-fit select-none items-center 
+            className="size-8 flex aspect-square h-fit select-none items-center
               justify-center rounded-md border cursor-pointer"
           >
             {open ? (
@@ -118,7 +118,7 @@ export function NavbarMobile({
       {/* mobile menu */}
       {open && (
         <Portal asChild>
-          {/* if we don't add RemoveScroll component, the underlying 
+          {/* if we don't add RemoveScroll component, the underlying
             page will scroll when we scroll the mobile menu */}
           <RemoveScroll allowPinchZoom enabled>
             {/* Only render MainMobileMenu when not in loading state */}
@@ -188,10 +188,15 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
         <ul className="w-full px-4">
           {menuLinks?.map((item) => {
             const isActive = item.href
-              ? localePathname.startsWith(item.href)
+              ? item.href === '/'
+                ? localePathname === '/'
+                : localePathname.startsWith(item.href)
               : item.items?.some(
                   (subItem) =>
-                    subItem.href && localePathname.startsWith(subItem.href)
+                    subItem.href &&
+                    (subItem.href === '/'
+                      ? localePathname === '/'
+                      : localePathname.startsWith(subItem.href))
                 );
 
             return (
