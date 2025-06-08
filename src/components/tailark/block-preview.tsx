@@ -219,11 +219,11 @@ export const BlockPreview: React.FC<BlockPreviewProps> = ({
                 <Separator orientation="vertical" className="!h-4" />{' '}
               </>
             )}
-            <Button asChild variant="ghost" size="sm" className="size-8">
+            {/* <Button asChild variant="ghost" size="sm" className="size-8">
               <Link href={preview} passHref target="_blank">
                 <Maximize className="size-4" />
               </Link>
-            </Button>
+            </Button> */}
             <Separator
               orientation="vertical"
               className="hidden !h-4 lg:block"
