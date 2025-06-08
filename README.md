@@ -27,16 +27,14 @@ If you found anything that could be improved, please let me know.
 
 By default, you should have access to all four repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
 
-- [MkSaaSHQ/mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
-- [MkSaaSHQ/mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
-- [MkSaaSHQ/mksaas-app (WIP)](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app
-- [MkSaaSHQ/mksaas-haitang (WIP)](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app
+- [mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
+- [mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
+- [mksaas-haitang (ready)](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app
+- [mksaas-app (WIP)](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app
 
 ## Notice
 
 > If you have any questions, please [submit an issue](https://github.com/MkSaaSHQ/mksaas-template/issues/new), or contact me at [support@mksaas.com](mailto:support@mksaas.com).
-
-> If you have any feature requests or questions or ideas to share, please [submit it in the discussions](https://github.com/MkSaaSHQ/mksaas-template/discussions).
 
 > If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
 
