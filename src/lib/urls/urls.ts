@@ -80,6 +80,21 @@ export function getUrlWithLocaleInCallbackUrl(
 }
 
 /**
+ * Get the URL of the image, if the image is a relative path, it will be prefixed with the base URL
+ * @param image - The image URL
+ * @returns The URL of the image
+ */
+export function getImageUrl(image: string): string {
+  if (image.startsWith('http://') || image.startsWith('https://')) {
+    return image;
+  }
+  if (image.startsWith('/')) {
+    return `${getBaseUrl()}${image}`;
+  }
+  return `${getBaseUrl()}/${image}`;
+}
+
+/**
  * Get the Stripe dashboard customer URL
  * @param customerId - The Stripe customer ID
  * @returns The Stripe dashboard customer URL

@@ -1,7 +1,7 @@
 import { websiteConfig } from '@/config/website';
 import { defaultMessages } from '@/i18n/messages';
 import type { Metadata } from 'next';
-import { getBaseUrl } from './urls/urls';
+import { getBaseUrl, getImageUrl } from './urls/urls';
 
 /**
  * Construct the metadata object for the current page (in docs/guides)
@@ -22,7 +22,7 @@ export function constructMetadata({
   title = title || defaultMessages.Metadata.title;
   description = description || defaultMessages.Metadata.description;
   image = image || websiteConfig.metadata.images?.ogImage;
-  const ogImageUrl = new URL(`${getBaseUrl()}${image}`);
+  const ogImageUrl = getImageUrl(image || '');
   return {
     title,
     description,
