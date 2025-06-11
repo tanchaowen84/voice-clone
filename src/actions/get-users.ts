@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/db';
+import { getDb } from '@/db';
 import { user } from '@/db/schema';
 import { asc, desc, ilike, or, sql } from 'drizzle-orm';
 import { createSafeActionClient } from 'next-safe-action';
@@ -57,6 +57,7 @@ export const getUsersAction = actionClient
         : user.createdAt;
       const sortDirection = sortConfig?.desc ? desc : asc;
 
+      const db = await getDb();
       let [items, [{ count }]] = await Promise.all([
         db
           .select()

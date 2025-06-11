@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/db';
+import { getDb } from '@/db';
 import { payment } from '@/db/schema';
 import { findPlanByPriceId, getAllPricePlans } from '@/lib/price-plan';
 import { getSession } from '@/lib/server';
@@ -69,6 +69,7 @@ export const getLifetimeStatusAction = actionClient
       }
 
       // Query the database for one-time payments with lifetime plans
+      const db = await getDb();
       const result = await db
         .select({
           id: payment.id,

@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/db';
+import { getDb } from '@/db';
 import { user } from '@/db/schema';
 import { getSession } from '@/lib/server';
 import { getUrlWithLocale } from '@/lib/urls/urls';
@@ -56,6 +56,7 @@ export const createPortalAction = actionClient
 
     try {
       // Get the user's customer ID from the database
+      const db = await getDb();
       const customerResult = await db
         .select({ customerId: user.customerId })
         .from(user)
