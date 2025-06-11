@@ -6,7 +6,11 @@ import { type NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { filename, contentType, folder } = body;
+    const { filename, contentType, folder } = body as {
+      filename: string;
+      contentType: string;
+      folder: string;
+    };
 
     if (!filename) {
       return NextResponse.json(

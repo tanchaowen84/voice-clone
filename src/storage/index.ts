@@ -125,7 +125,7 @@ export const uploadFileFromBrowser = async (
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        const error = (await response.json()) as { message: string };
         throw new Error(error.message || 'Failed to upload file');
       }
 
@@ -147,11 +147,14 @@ export const uploadFileFromBrowser = async (
     });
 
     if (!presignedUrlResponse.ok) {
-      const error = await presignedUrlResponse.json();
+      const error = (await presignedUrlResponse.json()) as { message: string };
       throw new Error(error.message || 'Failed to get pre-signed URL');
     }
 
-    const { url, key } = await presignedUrlResponse.json();
+    const { url, key } = (await presignedUrlResponse.json()) as {
+      url: string;
+      key: string;
+    };
 
     // Then upload directly to the storage provider
     const uploadResponse = await fetch(url, {
@@ -176,7 +179,7 @@ export const uploadFileFromBrowser = async (
     });
 
     if (!fileUrlResponse.ok) {
-      const error = await fileUrlResponse.json();
+      const error = (await fileUrlResponse.json()) as { message: string };
       throw new Error(error.message || 'Failed to get file URL');
     }
 
