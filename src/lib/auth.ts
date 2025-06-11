@@ -1,6 +1,5 @@
 import { websiteConfig } from '@/config/website';
 import db from '@/db/index';
-import { account, session, user, verification } from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
@@ -24,16 +23,6 @@ export const auth = betterAuth({
   appName: defaultMessages.Metadata.name,
   database: drizzleAdapter(db, {
     provider: 'pg', // or "mysql", "sqlite"
-    // The schema object that defines the tables and fields
-    // [BetterAuthError]: [# Drizzle Adapter]: The model "verification" was not found in the schema object.
-    // Please pass the schema directly to the adapter options.
-    // https://www.better-auth.com/docs/adapters/drizzle#additional-information
-    schema: {
-      user: user,
-      session: session,
-      account: account,
-      verification: verification,
-    },
   }),
   session: {
     // https://www.better-auth.com/docs/concepts/session-management#cookie-cache
