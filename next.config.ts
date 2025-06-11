@@ -41,6 +41,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'ik.imagekit.io',
       },
+      {
+        protocol: 'https',
+        hostname: 'html.tailus.io',
+      },
     ],
   },
 };
