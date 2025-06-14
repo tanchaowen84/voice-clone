@@ -8,11 +8,26 @@ export async function POST(request: Request) {
     // 1. 获取请求数据
     const body = await request.text();
     const headersList = headers();
-    const signature = (await headersList).get('creem-signature') || '';
+
+    // 获取签名头部
+    const signature =
+      (await headersList).get('creem-signature') ||
+      (await headersList).get('x-creem-signature') ||
+      (await headersList).get('signature') ||
+      (await headersList).get('x-signature') ||
+      '';
 
     // 2. 基础验证
     if (!signature) {
+      console.error('❌ Missing signature in headers');
       return new NextResponse('Missing signature', { status: 401 });
+    }
+
+    // 2.1. 检查空请求体
+    if (!body || body.trim().length === 0) {
+      console.warn('⚠️ Empty webhook body received, skipping processing');
+      console.warn('  This might be a test request or proxy issue');
+      return NextResponse.json({ received: true, skipped: 'empty_body' });
     }
 
     // 3. 委托给Provider处理

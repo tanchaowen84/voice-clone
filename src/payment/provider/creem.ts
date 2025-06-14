@@ -201,11 +201,62 @@ export class CreemProvider implements PaymentProvider {
     return `creem_checkout_${userId}_${timestamp}`;
   }
 
+  /**
+   * 创建Creem客户门户会话
+   *
+   * 智能适配方案：
+   * 1. 如果传入的customerId是Creem客户ID，直接使用
+   * 2. 如果传入的是Stripe客户ID或用户ID，查询对应的Creem客户ID
+   * 3. 保持与Stripe Provider接口的完全兼容性
+   */
   public async createCustomerPortal(
     params: CreatePortalParams
   ): Promise<PortalResult> {
-    // Implementation for creating a customer portal
-    throw new Error('createCustomerPortal not implemented yet');
+    const { customerId, returnUrl } = params;
+
+    try {
+      console.log(
+        `Creating Creem customer portal for customer ID: ${customerId}`
+      );
+
+      // 调用Creem API创建客户门户
+      // customerId现在已经是正确的creemCustomerId
+      const response = await fetch(`${this.apiUrl}/v1/customers/billing`, {
+        method: 'POST',
+        headers: {
+          'x-api-key': this.apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customer_id: customerId, // 现在这里直接是creemCustomerId
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Creem API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText,
+        });
+        throw new Error(
+          `Failed to create customer portal: ${response.status} - ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log('✅ Creem customer portal created successfully:', data);
+
+      // Creem API returns { "customer_portal_link": "https://..." }
+      return {
+        url: data.customer_portal_link,
+      };
+    } catch (error) {
+      console.error('Create Creem customer portal error:', error);
+      throw new Error(
+        `Failed to create customer portal: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 
   public async getSubscriptions(
@@ -311,6 +362,11 @@ export class CreemProvider implements PaymentProvider {
   private verifyWebhookSignature(payload: string, signature: string): void {
     if (!signature) {
       throw new Error('Missing webhook signature');
+    }
+
+    // 检查空载荷
+    if (!payload || payload.trim().length === 0) {
+      throw new Error('Empty webhook payload');
     }
 
     // Remove 'sha256=' prefix if present

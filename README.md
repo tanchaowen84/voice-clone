@@ -25,7 +25,7 @@ If you found anything that could be improved, please let me know.
 
 ## Repositories
 
-By default, you should have access to all four repositories. If you find that you’re unable to access any of them, please don’t hesitate to reach out to me, and I’ll assist you in resolving the issue.
+By default, you should have access to all four repositories. If you find that you're unable to access any of them, please don't hesitate to reach out to me, and I'll assist you in resolving the issue.
 
 - [mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
 - [mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
@@ -38,8 +38,38 @@ By default, you should have access to all four repositories. If you find that yo
 
 > If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
 
-> When submitting any content to the  issues or discussions of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
+> When submitting any content to the issues or discussions of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
 
 ## License
 
 For any details on the license, please refer to the [License](LICENSE) file.
+
+# Creem Payment Integration Updates
+
+## Recent Fixes (2025-06-14)
+
+### 1. Customer Portal Implementation
+- ✅ Fixed Creem customer portal API response parsing
+- ✅ Changed from `data.url` to `data.customer_portal_link` to match Creem API
+- ✅ Enhanced debugging for portal creation process
+
+### 2. Webhook Processing Improvements  
+- ✅ Added comprehensive webhook debugging
+- ✅ Enhanced signature verification with detailed logging
+- ✅ Added handling for empty webhook bodies (common with ngrok/proxy setups)
+- ✅ Improved error categorization and logging
+
+### 3. Technical Details
+- **Customer Portal**: Creem API returns `{"customer_portal_link": "https://..."}` format
+- **Webhook Signatures**: Using `creem-signature` header with HMAC-SHA256 verification
+- **Empty Body Handling**: Gracefully skip processing empty webhook requests (test/proxy requests)
+
+### 4. Known Issues Resolved
+- ❌ ~~Customer portal returning empty URL~~ → ✅ Fixed API response parsing
+- ❌ ~~Webhook signature verification failures~~ → ✅ Added empty body detection
+- ❌ ~~Frontend compatibility issues~~ → ✅ Maintained backward compatibility
+
+## Development Notes
+- All webhook events are properly logged with detailed debugging information
+- Signature verification includes comprehensive error reporting
+- Empty webhook bodies are handled gracefully to prevent false errors

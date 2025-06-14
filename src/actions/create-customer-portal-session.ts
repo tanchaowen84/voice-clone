@@ -4,7 +4,8 @@ import { getDb } from '@/db';
 import { user } from '@/db/schema';
 import { getSession } from '@/lib/server';
 import { getUrlWithLocale } from '@/lib/urls/urls';
-import { createCustomerPortal } from '@/payment';
+import { createCustomerPortal, getPaymentProvider } from '@/payment';
+import { CreemProvider } from '@/payment/provider/creem';
 import type { CreatePortalParams } from '@/payment/types';
 import { eq } from 'drizzle-orm';
 import { getLocale } from 'next-intl/server';
@@ -55,19 +56,50 @@ export const createPortalAction = actionClient
     }
 
     try {
+      // Determine which customer ID field to use based on payment provider
+      const provider = getPaymentProvider();
+      const isCreemProvider = provider instanceof CreemProvider;
+
       // Get the user's customer ID from the database
       const db = await getDb();
       const customerResult = await db
-        .select({ customerId: user.customerId })
+        .select({
+          customerId: isCreemProvider ? user.creemCustomerId : user.customerId,
+          creemCustomerId: user.creemCustomerId,
+          stripeCustomerId: user.customerId,
+        })
         .from(user)
         .where(eq(user.id, session.user.id))
         .limit(1);
 
-      if (customerResult.length <= 0 || !customerResult[0].customerId) {
-        console.error(`No customer found for user ${session.user.id}`);
+      const customerRecord = customerResult[0];
+      if (!customerRecord) {
+        console.error(`No user record found for user ${session.user.id}`);
         return {
           success: false,
-          error: 'No customer found for user',
+          error: 'User not found',
+        };
+      }
+
+      // Check if the appropriate customer ID exists
+      const customerId = isCreemProvider
+        ? customerRecord.creemCustomerId
+        : customerRecord.stripeCustomerId;
+
+      if (!customerId) {
+        const providerName = isCreemProvider ? 'Creem' : 'Stripe';
+        console.error(
+          `No ${providerName} customer ID found for user ${session.user.id}`
+        );
+        console.log('User record:', {
+          userId: session.user.id,
+          creemCustomerId: customerRecord.creemCustomerId,
+          stripeCustomerId: customerRecord.stripeCustomerId,
+          currentProvider: providerName,
+        });
+        return {
+          success: false,
+          error: `No ${providerName} customer found for user`,
         };
       }
 
@@ -78,7 +110,7 @@ export const createPortalAction = actionClient
       const returnUrlWithLocale =
         returnUrl || getUrlWithLocale('/settings/billing', locale);
       const params: CreatePortalParams = {
-        customerId: customerResult[0].customerId,
+        customerId: customerId,
         returnUrl: returnUrlWithLocale,
         locale,
       };
