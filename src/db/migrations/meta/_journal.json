@@ -8,6 +8,13 @@
       "when": 1744304844165,
       "tag": "0000_fine_sir_ram",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749884426688,
+      "tag": "0001_safe_aaron_stack",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -13,6 +13,11 @@ export const user = pgTable("user", {
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
+	// Creem related fields
+	creemCustomerId: text('creem_customer_id').unique(),
+	country: text('country'),
+	credits: integer('credits').default(0),
+	metadata: jsonb('metadata').default('{}'),
 });
 
 export const session = pgTable("session", {
@@ -68,4 +73,18 @@ export const payment = pgTable("payment", {
 	trialEnd: timestamp('trial_end'),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow(),
+	// Creem specific fields
+	canceledAt: timestamp('canceled_at'),
+	metadata: jsonb('metadata').default('{}'),
+});
+
+export const creditsHistory = pgTable("credits_history", {
+	id: text("id").primaryKey(),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	amount: integer('amount').notNull(),
+	type: text('type').notNull(), // 'add' | 'subtract'
+	description: text('description'),
+	creemOrderId: text('creem_order_id'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	metadata: jsonb('metadata').default('{}'),
 });
