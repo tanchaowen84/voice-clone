@@ -3,7 +3,7 @@
  * https://orm.drizzle.team/docs/tutorials/drizzle-with-supabase
  */
 import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+const postgres = require('postgres');
 import * as schema from './schema';
 
 let db: ReturnType<typeof drizzle> | null = null;
