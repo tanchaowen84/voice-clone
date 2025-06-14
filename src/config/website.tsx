@@ -79,7 +79,7 @@ export const websiteConfig: WebsiteConfig = {
     provider: 's3',
   },
   payment: {
-    provider: 'stripe',
+    provider: 'creem',
   },
   price: {
     plans: {
@@ -89,19 +89,57 @@ export const websiteConfig: WebsiteConfig = {
         isFree: true,
         isLifetime: false,
       },
+      // ========== Stripe Configuration (Commented Out) ==========
+      // pro: {
+      //   id: 'pro',
+      //   prices: [
+      //     {
+      //       type: PaymentTypes.SUBSCRIPTION,
+      //       priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
+      //       amount: 990,
+      //       currency: 'USD',
+      //       interval: PlanIntervals.MONTH,
+      //     },
+      //     {
+      //       type: PaymentTypes.SUBSCRIPTION,
+      //       priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
+      //       amount: 9900,
+      //       currency: 'USD',
+      //       interval: PlanIntervals.YEAR,
+      //     },
+      //   ],
+      //   isFree: false,
+      //   isLifetime: false,
+      //   recommended: true,
+      // },
+      // lifetime: {
+      //   id: 'lifetime',
+      //   prices: [
+      //     {
+      //       type: PaymentTypes.ONE_TIME,
+      //       priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
+      //       amount: 19900,
+      //       currency: 'USD',
+      //     },
+      //   ],
+      //   isFree: false,
+      //   isLifetime: true,
+      // },
+
+      // ========== Creem Configuration ==========
       pro: {
         id: 'pro',
         prices: [
           {
             type: PaymentTypes.SUBSCRIPTION,
-            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY!,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_MONTHLY!,
             amount: 990,
             currency: 'USD',
             interval: PlanIntervals.MONTH,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
-            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY!,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_YEARLY!,
             amount: 9900,
             currency: 'USD',
             interval: PlanIntervals.YEAR,
@@ -116,7 +154,7 @@ export const websiteConfig: WebsiteConfig = {
         prices: [
           {
             type: PaymentTypes.ONE_TIME,
-            priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LIFETIME!,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_LIFETIME!,
             amount: 19900,
             currency: 'USD',
           },
