@@ -169,6 +169,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     );
   }
 
+  // 条件性添加blocks页面
+  if (websiteConfig.features.enableBlocksPages) {
+    const { categories } = await import('@/components/tailark/blocks');
+    sitemapList.push(
+      ...categories.flatMap((category) =>
+        routing.locales.map((locale) => ({
+          url: getUrl(`/blocks/${category}`, locale),
+          lastModified: new Date(),
+          priority: 0.8,
+          changeFrequency: 'weekly' as const,
+        }))
+      )
+    );
+  }
+
   return sitemapList;
 }
 

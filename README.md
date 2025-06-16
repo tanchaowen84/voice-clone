@@ -52,27 +52,33 @@ For any details on the license, please refer to the [License](LICENSE) file.
 - ✅ Added `enableDocsPage` feature toggle in `src/config/website.tsx`
 - ✅ Added `enableAIPages` feature toggle in `src/config/website.tsx`
 - ✅ Added `enableMagicUIPage` feature toggle in `src/config/website.tsx`
+- ✅ Added `enableBlocksPages` feature toggle in `src/config/website.tsx`
 - ✅ Extended `FeaturesConfig` type definition in `src/types/index.d.ts`
 - ✅ Set docs page to disabled by default (`enableDocsPage: false`)
 - ✅ Set AI pages to disabled by default (`enableAIPages: false`)
 - ✅ Set MagicUI page to disabled by default (`enableMagicUIPage: false`)
+- ✅ Set blocks pages to disabled by default (`enableBlocksPages: false`)
 
 ### 2. Route-Level Control
 - ✅ Implemented `notFound()` check in `src/app/[locale]/docs/layout.tsx`
 - ✅ Implemented `notFound()` check in `src/app/[locale]/(marketing)/ai/layout.tsx`
 - ✅ Implemented `notFound()` check in `src/app/[locale]/(marketing)/(pages)/magicui/page.tsx`
+- ✅ Implemented `notFound()` check in `src/app/[locale]/(marketing)/blocks/[category]/layout.tsx`
 - ✅ Docs pages return standard 404 when feature is disabled
 - ✅ AI pages return standard 404 when feature is disabled
 - ✅ MagicUI page returns standard 404 when feature is disabled
+- ✅ Blocks pages return standard 404 when feature is disabled
 - ✅ SEO-friendly approach - pages truly "don't exist" when disabled
 
 ### 3. Navigation Control
 - ✅ Modified `src/config/navbar-config.tsx` for conditional docs link display
 - ✅ AI navigation links already commented out in navbar
 - ✅ MagicUI navigation links already commented out in navbar (in blocks menu)
+- ✅ Blocks navigation links already commented out in navbar
 - ✅ Modified `src/config/footer-config.tsx` for conditional docs link in footer
 - ✅ No AI links found in footer (confirmed clean)
 - ✅ No MagicUI links found in footer (confirmed clean)
+- ✅ No blocks links found in footer (confirmed clean)
 - ✅ Links only appear when respective features are enabled
 
 ### 4. SEO and Sitemap Control
@@ -80,6 +86,7 @@ For any details on the license, please refer to the [License](LICENSE) file.
 - ✅ Docs pages excluded from sitemap when feature is disabled
 - ✅ AI pages excluded from sitemap when feature is disabled
 - ✅ MagicUI page excluded from sitemap when feature is disabled
+- ✅ Blocks pages excluded from sitemap when feature is disabled
 - ✅ Search engines won't discover disabled pages
 
 ### 5. Technical Implementation
@@ -110,6 +117,13 @@ For any details on the license, please refer to the [License](LICENSE) file.
   - ✅ Code files preserved
   - ✅ Single showcase page with multiple UI components
 
+- 🔒 **Blocks Features**: DISABLED (`enableBlocksPages: false`)
+  - ❌ Navigation links hidden (already commented)
+  - ❌ Direct access to /blocks/* returns 404
+  - ❌ Excluded from sitemap
+  - ✅ Code files preserved
+  - ✅ Covers all blocks categories: hero-section, features, pricing, testimonials, etc.
+
 ### 7. Usage
 To enable docs feature:
 ```typescript
@@ -135,6 +149,14 @@ features: {
 }
 ```
 
+To enable blocks features:
+```typescript
+// src/config/website.tsx
+features: {
+  enableBlocksPages: true,   // Enable blocks functionality
+}
+```
+
 To disable features:
 ```typescript
 // src/config/website.tsx
@@ -142,6 +164,7 @@ features: {
   enableDocsPage: false, // Disable docs functionality
   enableAIPages: false,  // Disable AI functionality
   enableMagicUIPage: false,  // Disable MagicUI functionality
+  enableBlocksPages: false,  // Disable blocks functionality
 }
 ```
 
