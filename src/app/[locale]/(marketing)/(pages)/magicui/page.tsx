@@ -22,6 +22,8 @@ import { ShimmerButtonDemo } from '@/components/magicui/example/shimmer-button-e
 import { ShinyButtonDemo } from '@/components/magicui/example/shiny-button-example';
 import { TweetCardDemo } from '@/components/magicui/example/twitter-card-example';
 import { WordRotateDemo } from '@/components/magicui/example/word-rotate-example';
+import { websiteConfig } from '@/config/website';
+import { notFound } from 'next/navigation';
 
 /**
  * Magic UI Components Showcase Page
@@ -29,6 +31,11 @@ import { WordRotateDemo } from '@/components/magicui/example/word-rotate-example
  * https://magicui.design/docs/components
  */
 export default async function MagicuiPage() {
+  // 功能开关检查 - 如果MagicUI功能被禁用，返回404
+  if (!websiteConfig.features.enableMagicUIPage) {
+    notFound();
+  }
+
   return (
     <Container className="py-16 px-4">
       <div className="mx-auto space-y-8">

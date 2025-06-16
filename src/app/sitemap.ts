@@ -28,11 +28,21 @@ function getEnabledStaticRoutes(): string[] {
     '/auth/register',
   ];
 
-  // 条件性添加docs路由
+  // 条件性添加页面路由
   const conditionalRoutes: string[] = [];
 
   if (websiteConfig.features.enableDocsPage) {
     conditionalRoutes.push('/docs');
+  }
+
+  // 条件性添加AI页面路由
+  if (websiteConfig.features.enableAIPages) {
+    conditionalRoutes.push('/ai/text', '/ai/image', '/ai/video', '/ai/audio');
+  }
+
+  // 条件性添加MagicUI页面路由
+  if (websiteConfig.features.enableMagicUIPage) {
+    conditionalRoutes.push('/magicui');
   }
 
   return [...baseRoutes, ...conditionalRoutes];

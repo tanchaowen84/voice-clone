@@ -38,6 +38,8 @@ export const websiteConfig: WebsiteConfig = {
     enableAffonsoAffiliate: false,
     enablePromotekitAffiliate: false,
     enableDocsPage: false,
+    enableAIPages: false,
+    enableMagicUIPage: false,
   },
   routes: {
     defaultLoginRedirect: '/dashboard',
