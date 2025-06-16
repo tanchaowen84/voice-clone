@@ -11,6 +11,7 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { BookIcon, HomeIcon } from 'lucide-react';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import '@/styles/mdx.css';
@@ -47,6 +48,11 @@ export default async function DocsRootLayout({
   children,
   params,
 }: DocsLayoutProps) {
+  // 功能开关检查 - 如果docs功能被禁用，返回404
+  if (!websiteConfig.features.enableDocsPage) {
+    notFound();
+  }
+
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'DocsPage' });
 

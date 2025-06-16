@@ -10,23 +10,33 @@ import { getBaseUrl } from '../lib/urls/urls';
 type Href = Parameters<typeof getLocalePathname>[0]['href'];
 
 /**
- * static routes for sitemap, you may change the routes for your own
+ * 根据功能开关动态生成静态路由列表
  */
-const staticRoutes = [
-  '/',
-  '/pricing',
-  '/blog',
-  '/docs',
-  '/about',
-  '/contact',
-  '/waitlist',
-  '/changelog',
-  '/privacy',
-  '/terms',
-  '/cookie',
-  '/auth/login',
-  '/auth/register',
-];
+function getEnabledStaticRoutes(): string[] {
+  const baseRoutes = [
+    '/',
+    '/pricing',
+    '/blog',
+    '/about',
+    '/contact',
+    '/waitlist',
+    '/changelog',
+    '/privacy',
+    '/terms',
+    '/cookie',
+    '/auth/login',
+    '/auth/register',
+  ];
+
+  // 条件性添加docs路由
+  const conditionalRoutes: string[] = [];
+
+  if (websiteConfig.features.enableDocsPage) {
+    conditionalRoutes.push('/docs');
+  }
+
+  return [...baseRoutes, ...conditionalRoutes];
+}
 
 /**
  * Generate a sitemap for the website
@@ -36,6 +46,9 @@ const staticRoutes = [
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemapList: MetadataRoute.Sitemap = []; // final result
+
+  // 使用动态路由列表
+  const staticRoutes = getEnabledStaticRoutes();
 
   // add static routes
   sitemapList.push(
@@ -131,18 +144,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   );
 
-  // add docs
-  const docsParams = source.generateParams();
-  sitemapList.push(
-    ...docsParams.flatMap((param) =>
-      routing.locales.map((locale) => ({
-        url: getUrl(`/docs/${param.slug.join('/')}`, locale),
-        lastModified: new Date(),
-        priority: 0.8,
-        changeFrequency: 'weekly' as const,
-      }))
-    )
-  );
+  // 条件性添加docs页面
+  if (websiteConfig.features.enableDocsPage) {
+    const docsParams = source.generateParams();
+    sitemapList.push(
+      ...docsParams.flatMap((param) =>
+        routing.locales.map((locale) => ({
+          url: getUrl(`/docs/${param.slug.join('/')}`, locale),
+          lastModified: new Date(),
+          priority: 0.8,
+          changeFrequency: 'weekly' as const,
+        }))
+      )
+    );
+  }
 
   return sitemapList;
 }

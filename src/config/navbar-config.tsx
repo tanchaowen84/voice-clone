@@ -1,5 +1,6 @@
 'use client';
 
+import { websiteConfig } from '@/config/website';
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import {
@@ -48,7 +49,7 @@ import { useTranslations } from 'next-intl';
 export function getNavbarLinks(): NestedMenuItem[] {
   const t = useTranslations('Marketing.navbar');
 
-  return [
+  const links: NestedMenuItem[] = [
     {
       title: t('features.title'),
       href: Routes.Features,
@@ -64,11 +65,18 @@ export function getNavbarLinks(): NestedMenuItem[] {
       href: Routes.Blog,
       external: false,
     },
-    {
+  ];
+
+  // 条件性添加docs链接
+  if (websiteConfig.features.enableDocsPage) {
+    links.push({
       title: t('docs.title'),
       href: Routes.Docs,
       external: false,
-    },
+    });
+  }
+
+  links.push(
     // {
     //   title: t('ai.title'),
     //   items: [
@@ -162,7 +170,7 @@ export function getNavbarLinks(): NestedMenuItem[] {
           external: false,
         },
       ],
-    },
+    }
     // {
     //   title: t('blocks.title'),
     //   items: [
@@ -276,5 +284,7 @@ export function getNavbarLinks(): NestedMenuItem[] {
     //     },
     //   ],
     // },
-  ];
+  );
+
+  return links;
 }
