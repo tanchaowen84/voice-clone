@@ -22,7 +22,7 @@ export function constructMetadata({
   title = title || defaultMessages.Metadata.title;
   description = description || defaultMessages.Metadata.description;
   image = image || websiteConfig.metadata.images?.ogImage;
-  const ogImageUrl = getImageUrl(image || '');
+  const ogImageUrl = image ? getImageUrl(image) : getImageUrl('/og.png');
   return {
     title,
     description,

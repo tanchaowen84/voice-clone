@@ -1,8 +1,8 @@
 {
   "Metadata": {
-    "name": "MkSaaS Demo",
-    "title": "MkSaaS - The Best AI SaaS Boilerplate",
-    "description": "MkSaaS is the best AI SaaS boilerplate. Make AI SaaS in days, simply and effortlessly"
+    "name": "FlowChart AI",
+    "title": "FlowChart AI – Smart AI Tool to Create Beautiful Flowcharts",
+    "description": "Design professional flowcharts faster with FlowChart AI. Draw, edit, and collaborate in real time using powerful AI tools—no design experience required."
   },
   "Common": {
     "login": "Log in",
@@ -57,45 +57,79 @@
   "PricePlans": {
     "free": {
       "name": "Free",
-      "description": "Basic features for personal use",
+      "description": "Start exploring AI-powered flowchart generation — for free, forever.",
       "features": {
-        "feature-1": "Up to 3 projects",
-        "feature-2": "1 GB storage",
-        "feature-3": "Basic analytics",
-        "feature-4": "Community support"
+        "feature-1": "1 AI request per day",
+        "feature-2": "AI-assisted generation and editing",
+        "feature-3": "Unlimited diagram storage",
+        "feature-4": "Text and image input supported",
+        "feature-5": "Community support"
       },
       "limits": {
-        "limit-1": "Custom domains",
-        "limit-2": "Custom branding",
-        "limit-3": "Lifetime updates"
+        "limit-1": "1 AI request per day",
+        "limit-2": "No technical support",
+        "limit-3": "Standard processing speed"
+      }
+    },
+    "hobby": {
+      "name": "Hobby",
+      "description": "Great for individuals who need more AI requests and light technical assistance.",
+      "features": {
+        "feature-1": "500 AI requests per month",
+        "feature-2": "Full access to AI agent for generation and editing",
+        "feature-3": "Unlimited diagram storage",
+        "feature-4": "Text and image input supported",
+        "feature-5": "Email support (24–48h response, max 7 days)",
+        "feature-6": "All generated content belongs to the user"
+      },
+      "limits": {
+        "limit-1": "No priority support",
+        "limit-2": "Standard processing speed"
+      }
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Perfect for power users and professionals who want faster response and priority support.",
+      "features": {
+        "feature-1": "1000 AI requests per month",
+        "feature-2": "Priority AI processing",
+        "feature-3": "Unlimited diagram storage",
+        "feature-4": "Real-time AI-assisted editing",
+        "feature-5": "Email & technical support (under 24h, max 48h)",
+        "feature-6": "Text and image input supported",
+        "feature-7": "All generated content belongs to the user"
+      },
+      "limits": {
+        "limit-1": "For advanced or customized service needs, please contact our team directly",
+        "limit-2": "Does not include API access or enterprise features"
       }
     },
     "pro": {
       "name": "Pro",
-      "description": "Advanced features for professionals",
+      "description": "Advanced features for professional users and teams.",
       "features": {
-        "feature-1": "Unlimited projects",
-        "feature-2": "10 GB storage",
-        "feature-3": "Advanced analytics",
-        "feature-4": "Priority support",
-        "feature-5": "Custom domains"
+        "feature-1": "Unlimited AI requests",
+        "feature-2": "Priority processing and support",
+        "feature-3": "Advanced collaboration tools",
+        "feature-4": "Custom integrations",
+        "feature-5": "Enterprise-grade security"
       },
       "limits": {
-        "limit-1": "Custom branding",
-        "limit-2": "Lifetime updates"
+        "limit-1": "Advanced features require technical setup",
+        "limit-2": "Enterprise support available separately"
       }
     },
     "lifetime": {
       "name": "Lifetime",
-      "description": "Premium features with one-time payment",
+      "description": "One-time payment for lifetime access to all premium features.",
       "features": {
-        "feature-1": "All Pro features",
-        "feature-2": "100 GB storage",
-        "feature-3": "Dedicated support",
-        "feature-4": "Enterprise-grade security",
-        "feature-5": "Advanced integrations",
-        "feature-6": "Custom branding",
-        "feature-7": "Lifetime updates"
+        "feature-1": "Lifetime access to all features",
+        "feature-2": "Unlimited AI requests forever",
+        "feature-3": "Priority support for life",
+        "feature-4": "All future updates included",
+        "feature-5": "Advanced collaboration tools",
+        "feature-6": "Custom integrations",
+        "feature-7": "Enterprise-grade security"
       }
     }
   },
@@ -142,21 +176,6 @@
       "emailValidation": "Please enter a valid email address",
       "messageMinLength": "Message must be at least 10 characters",
       "messageMaxLength": "Message must not exceed 500 characters"
-    }
-  },
-  "WaitlistPage": {
-    "title": "Waitlist",
-    "description": "Join our waitlist for the launch of our product",
-    "subtitle": "Join our waitlist for the launch of our product",
-    "form": {
-      "title": "Join Our Waitlist",
-      "description": "We will notify you when we launch our product",
-      "email": "Email",
-      "subscribe": "Subscribe",
-      "subscribing": "Subscribing...",
-      "success": "Subscribed successfully",
-      "fail": "Failed to subscribe",
-      "emailValidation": "Please enter a valid email address"
     }
   },
   "Newsletter": {
@@ -273,6 +292,35 @@
       "docs": {
         "title": "Docs"
       },
+      "pages": {
+        "title": "Pages",
+        "items": {
+          "about": {
+            "title": "About",
+            "description": "Learn more about our company and mission"
+          },
+          "contact": {
+            "title": "Contact",
+            "description": "Get in touch with our team"
+          },
+          "changelog": {
+            "title": "Changelog",
+            "description": "See what's new in our latest updates"
+          },
+          "cookiePolicy": {
+            "title": "Cookie Policy",
+            "description": "Learn about our cookie usage and privacy"
+          },
+          "privacyPolicy": {
+            "title": "Privacy Policy",
+            "description": "Read our privacy policy and data protection"
+          },
+          "termsOfService": {
+            "title": "Terms of Service",
+            "description": "Review our terms and conditions"
+          }
+        }
+      },
       "ai": {
         "title": "AI Tools",
         "items": {
@@ -293,106 +341,10 @@
             "description": "Show how to use AI to generate wonderful audio"
           }
         }
-      },
-      "pages": {
-        "title": "Pages",
-        "items": {
-          "about": {
-            "title": "About",
-            "description": "Learn more about our company, mission, and values"
-          },
-          "contact": {
-            "title": "Contact",
-            "description": "Get in touch with our team for support or inquiries"
-          },
-          "waitlist": {
-            "title": "Waitlist",
-            "description": "Join our waitlist for latest news and updates"
-          },
-          "changelog": {
-            "title": "Changelog",
-            "description": "See the latest updates to our products"
-          },
-          "roadmap": {
-            "title": "Roadmap",
-            "description": "Explore our future plans and upcoming features"
-          },
-          "cookiePolicy": {
-            "title": "Cookie Policy",
-            "description": "How we use the cookies on our website"
-          },
-          "privacyPolicy": {
-            "title": "Privacy Policy",
-            "description": "How we protect and handle your data"
-          },
-          "termsOfService": {
-            "title": "Terms of Service",
-            "description": "The legal agreement between you and our company"
-          }
-        }
-      },
-      "blocks": {
-        "title": "Blocks",
-        "items": {
-          "magicui": {
-            "title": "MagicUI Blocks"
-          },
-          "hero-section": {
-            "title": "Hero Blocks"
-          },
-          "logo-cloud": {
-            "title": "Logo Cloud Blocks"
-          },
-          "integrations": {
-            "title": "Integrations Blocks"
-          },
-          "features": {
-            "title": "Features Blocks"
-          },
-          "content": {
-            "title": "Content Blocks"
-          },
-          "stats": {
-            "title": "Stats Blocks"
-          },
-          "team": {
-            "title": "Team Blocks"
-          },
-          "testimonials": {
-            "title": "Testimonials Blocks"
-          },
-          "callToAction": {
-            "title": "Call to Action Blocks"
-          },
-          "footer": {
-            "title": "Footer Blocks"
-          },
-          "pricing": {
-            "title": "Pricing Blocks"
-          },
-          "comparator": {
-            "title": "Comparator Blocks"
-          },
-          "faq": {
-            "title": "FAQ Blocks"
-          },
-          "login": {
-            "title": "Login Blocks"
-          },
-          "signup": {
-            "title": "Signup Blocks"
-          },
-          "forgot-password": {
-            "title": "Forgot Password Blocks"
-          },
-          "contact": {
-            "title": "Contact Blocks"
-          }
-        }
       }
     },
     "footer": {
-      "tagline": "Make AI SaaS in days, simply and effortlessly",
+      "tagline": "Create beautiful flowcharts with FlowChart AI - fast, intelligent, and effortless",
       "product": {
         "title": "Product",
         "items": {
@@ -406,16 +358,14 @@
         "items": {
           "blog": "Blog",
           "docs": "Documentation",
-          "changelog": "Changelog",
-          "roadmap": "Roadmap"
+          "changelog": "Changelog"
         }
       },
       "company": {
         "title": "Company",
         "items": {
           "about": "About",
-          "contact": "Contact",
-          "waitlist": "Waitlist"
+          "contact": "Contact"
         }
       },
       "legal": {
@@ -526,6 +476,7 @@
         "status": {
           "active": "Active",
           "trial": "Trial",
+          "canceled": "Canceled",
           "free": "Free",
           "lifetime": "Lifetime"
         },
@@ -546,6 +497,7 @@
         "price": "Price:",
         "nextBillingDate": "Next billing date:",
         "trialEnds": "Trial ends:",
+        "serviceEnds": "Service ends:",
         "freePlanMessage": "You are currently on the free plan with limited features",
         "lifetimeMessage": "You have lifetime access to all premium features",
         "manageSubscription": "Manage Subscription and Billing",
@@ -647,14 +599,140 @@
     "title": "MkSaaS",
     "description": "Make AI SaaS in days, simply and effortlessly",
     "hero": {
-      "title": "Make AI SaaS in days, simply and effortlessly",
-      "description": "The is a demo website built with MkSaaS, a Next.js SaaS boilerplate to help you build your AI SaaS faster and better.",
-      "introduction": "Introducing MkSaaS Boilerplate",
-      "primary": "Get Started",
+      "title": "Create Beautiful Flowcharts with FlowChart AI",
+      "description": "FlowChart AI helps you transform ideas into detailed, professional flowcharts instantly. Use natural language to design, edit, and collaborate on diagrams—no design skills required.",
+      "introduction": "Introducing FlowChart AI",
+      "primary": "Start Creating",
       "secondary": "See Demo"
     },
     "logocloud": {
       "title": "Your favorite companies are our partners"
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "subtitle": "Let AI Handle the Heavy Lifting",
+      "description": "FlowChart AI helps you map out complex processes, brainstorm ideas, and build professional diagrams—faster and easier than ever before.",
+      "tryNow": "Start with FlowChart AI",
+      "items": {
+        "item-1": {
+          "title": "Product Management",
+          "description": "Transform product ideas into actionable roadmaps. Create detailed user journey maps, feature prioritization matrices, and sprint planning workflows. AI helps you visualize complex product ecosystems and stakeholder relationships with precision."
+        },
+        "item-2": {
+          "title": "Software Development",
+          "description": "Architect robust systems with confidence. Design microservices architectures, API integration flows, database relationships, and deployment pipelines. Perfect for technical documentation and system design reviews."
+        },
+        "item-3": {
+          "title": "Business Analysis",
+          "description": "Unlock insights through visual process mapping. Create comprehensive business process flows, decision trees, risk assessment matrices, and operational optimization diagrams that drive strategic decisions."
+        },
+        "item-4": {
+          "title": "Education & Training",
+          "description": "Enhance learning through visual storytelling. Build interactive curriculum maps, concept relationship diagrams, assessment workflows, and training progression paths that engage students and improve comprehension."
+        },
+        "item-5": {
+          "title": "Startup Planning",
+          "description": "Turn startup vision into executable strategy. Visualize business model canvases, funding pipelines, go-to-market strategies, and operational workflows. Essential for pitch decks and investor presentations."
+        },
+        "item-6": {
+          "title": "Project Management",
+          "description": "Orchestrate complex projects with clarity. Design project timelines, resource allocation flows, risk mitigation processes, and team collaboration workflows. Keep stakeholders aligned and projects on track."
+        }
+      }
+    },
+    "demo": {
+      "title": "See FlowChart AI in Action",
+      "subtitle": "From Idea to Flowchart in Seconds",
+      "description": "Watch how FlowChart AI turns natural language prompts into precise, presentation-ready flowcharts — no design skills or manual effort needed.",
+      "tryItNow": "Use FlowChart AI Now",
+      "features": {
+        "feature-1": {
+          "title": "Natural Language Input",
+          "description": "Simply describe your process in Language you like — no shapes, templates, or special tools required"
+        },
+        "feature-2": {
+          "title": "AI-Powered Generation",
+          "description": "FlowChart AI Automatically generates clean, logical diagrams based on your input"
+        },
+        "feature-3": {
+          "title": "Instant Editing",
+          "description": "Customize and refine your diagram, Easily adjust elements, add details, and make it your own"
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "Start in 3 Easy Steps",
+      "subtitle": "No Experience Needed",
+      "description": "FlowChart AI makes creating flowcharts as simple as typing your thoughts. Whether you're a beginner or a pro, you can go from messy ideas to structured diagrams in minutes—without any design tools.",
+      "steps": {
+        "step-1": {
+          "title": "Just Type What You Need",
+          "description": "Start by describing your process, structure, or system in natural language. FlowChart AI understands what you mean—even if it's not perfectly written.",
+          "details": [
+            "Describe your workflow in plain English—FlowChart AI handles the diagram generation",
+            "FlowChart AI supports business logic, software systems, and educational use cases",
+            "AI-powered understanding of both concise and complex process descriptions"
+          ]
+        },
+        "step-2": {
+          "title": "FlowChart AI Builds Your Diagram",
+          "description": "FlowChart AI transforms your input into a clean, structured flowchart using intelligent shape detection and layout optimization.",
+          "details": [
+            "Automatically generates accurate diagrams with FlowChart AI’s layout engine",
+            "Optimized visual structure for readability and presentation",
+            "No need to manually draw—FlowChart AI does it all for you"
+          ]
+        },
+        "step-3": {
+          "title": "Edit, Manage & Save",
+          "description": "Make adjustments using FlowChart AI’s intuitive editor. Save diagrams to your personal workspace, manage your flowcharts, and return to refine or export when needed.",
+          "details": [
+            "Edit using FlowChart AI’s drag-and-drop canvas—fast and intuitive",
+            "Organize all your diagrams in a personal FlowChart AI workspace",
+            "Export in Excalidraw format; PNG, SVG, and PDF exports coming soon"
+          ]
+        }
+      },
+      "getStarted": "Using FlowChart AI Now"
+    },
+    "aiCapabilities": {
+      "title": "FlowChart AI Capabilities",
+      "subtitle": "Smarter Diagrams Powered by Advanced AI",
+      "description": "FlowChart AI uses state-of-the-art language models and layout engines to turn your ideas into perfect, presentation-ready flowcharts—fast, accurate, and effortless.",
+      "capability-1": "Natural Language Processing – FlowChart AI understands messy or vague input and translates it into structured diagrams",
+      "capability-2": "Smart Layout Engine – Automatically arranges elements logically and visually for maximum clarity",
+      "capability-3": "AI-Powered Edits – Update and expand existing flowcharts without starting over",
+      "capability-4": "Multi-language Input – Describe your flowcharts in any language you’re comfortable with",
+      "capability-5": "Context-Aware Suggestions – FlowChart AI intelligently recommends diagram elements and connections based on your intent"
+    },
+    "comparison": {
+      "title": "Why Choose FlowChart AI?",
+      "subtitle": "See the Difference",
+      "description": "Compare FlowChart AI with traditional flowchart tools and see why professionals choose us.",
+      "traditional": {
+        "title": "Traditional Tools",
+        "subtitle": "Time-consuming and complex",
+        "item-1": "Hours of manual drawing and positioning",
+        "item-2": "Steep learning curve for complex software",
+        "item-3": "Difficult collaboration and sharing",
+        "item-4": "Manual updates when changes are needed",
+        "item-5": "Limited template and shape libraries",
+        "item-6": "Version control and backup challenges",
+        "item-7": "Expensive licensing and subscription fees",
+        "item-8": "Platform-specific compatibility issues"
+      },
+      "flowchartAi": {
+        "title": "FlowChart AI",
+        "subtitle": "Fast, intelligent, and intuitive",
+        "item-1": "Generate flowcharts in seconds with AI",
+        "item-2": "Natural language input - no training needed",
+        "item-3": "Built-in collaboration and real-time sharing",
+        "item-4": "AI-assisted modifications and updates",
+        "item-5": "Unlimited templates and smart suggestions",
+        "item-6": "Automatic version history and cloud backup",
+        "item-7": "Affordable pricing with generous free tier",
+        "item-8": "Works seamlessly across all devices and browsers"
+      }
     },
     "integration": {
       "title": "Integrations",
@@ -696,24 +774,24 @@
     },
     "features": {
       "title": "Features",
-      "subtitle": "The features of your product",
-      "description": "Write the description of your product here",
+      "subtitle": "AI-Powered Flowchart Creation",
+      "description": "FlowChart AI offers a comprehensive set of features designed to make diagramming effortless, intelligent, and collaborative.",
       "items": {
         "item-1": {
-          "title": "Product Feature One",
-          "description": "Please write the detailed description of feature one here, make it as detailed as possible, make it more attractive to users"
+          "title": "Natural Language to Diagram",
+          "description": "Describe your process or idea in plain language, and let AI instantly turn it into a professional flowchart. No design skills or technical jargon required—just explain your workflow and see it visualized."
         },
         "item-2": {
-          "title": "Product Feature Two",
-          "description": "Please write the detailed description of feature two here, make it as detailed as possible, make it more attractive to users"
+          "title": "Personal Workspace & Diagram Library",
+          "description": "Keep all your diagrams organized in one place. Our platform provides a personal workspace where you can access, manage, and continue editing your saved diagrams with ease."
         },
         "item-3": {
-          "title": "Product Feature Three",
-          "description": "Please write the detailed description of feature three here, make it as detailed as possible, make it more attractive to users"
+          "title": "Intuitive Drag-and-Drop Editor",
+          "description": "Easily refine and customize your diagram with a user-friendly canvas. Move elements, adjust connections, and apply styles with simple drag-and-drop—no learning curve."
         },
         "item-4": {
-          "title": "Product Feature Four",
-          "description": "Please write the detailed description of feature four here, make it as detailed as possible, make it more attractive to users"
+          "title": "Export & Integrate Anywhere",
+          "description": "Export your diagrams in Excalidraw format for editing or backup. Support for PNG, SVG, and PDF exports is coming soon to broaden your sharing and presentation options."
         }
       }
     },
@@ -767,24 +845,40 @@
       "subtitle": "Frequently Asked Questions",
       "items": {
         "item-1": {
-          "question": "Do you offer a free trial?",
-          "answer": "Yes, we offer a 7-day free trial."
+          "question": "Is there a free version of FlowChart AI?",
+          "answer": "Yes. FlowChart AI is open-sourced under the MIT License and available on GitHub. You can self-host and modify it freely. We also offer a free tier — every registered user can generate one AI flowchart per day for free."
         },
         "item-2": {
-          "question": "How do I cancel my subscription?",
-          "answer": "You can cancel your subscription by visiting the billing page."
+          "question": "What formats can I export my diagrams to?",
+          "answer": "Currently, we support exporting flowcharts in Excalidraw format only. In future updates, we plan to add support for PDF, PNG, and SVG formats."
         },
         "item-3": {
-          "question": "Can I change my plan?",
-          "answer": "Yes, you can change your plan at any time by visiting the billing page."
+          "question": "Can I manage my flowcharts and access them later?",
+          "answer": "Yes. FlowChart AI provides a personal workspace where you can save, manage, and edit your flowcharts anytime, from anywhere."
         },
         "item-4": {
-          "question": "What is the refund policy?",
-          "answer": "We offer a 30-day money-back guarantee if you are not happy with our product."
+          "question": "What AI capabilities does FlowChart AI offer?",
+          "answer": "FlowChart AI allows users to describe their processes or workflows in natural language. The AI interprets the input, handles intelligent layout and diagram structure, and generates editable flowcharts accordingly."
         },
         "item-5": {
-          "question": "Can't find what you're looking for?",
-          "answer": "Please contact our customer support team at support@mksaas.com"
+          "question": "How can I upgrade or change my plan?",
+          "answer": "Yes. You can freely upgrade, downgrade, or cancel your plan through your account's billing settings."
+        },
+        "item-6": {
+          "question": "How complex of a flowchart can FlowChart AI generate?",
+          "answer": "There is no strict limit on the complexity of flowcharts. The actual capability depends on the content and structure of your input."
+        },
+        "item-7": {
+          "question": "How do I write effective prompts?",
+          "answer": "Use clear natural language and structured steps. You may optionally upload reference images to aid AI understanding. FlowChart AI will then convert your input into a structured diagram."
+        },
+        "item-8": {
+          "question": "Can teams collaborate on flowcharts?",
+          "answer": "Currently, FlowChart AI is built for individual use. Team collaboration and shared workspaces are part of our future roadmap."
+        },
+        "item-9": {
+          "question": "Can I generate diagrams from uploaded documents?",
+          "answer": "At the moment, FlowChart AI supports text and image inputs only. Support for document uploads including PDF, Markdown, and other formats is under active development."
         }
       }
     },
@@ -883,10 +977,10 @@
       }
     },
     "calltoaction": {
-      "title": "Start Building",
-      "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly",
-      "primaryButton": "Get Started",
-      "secondaryButton": "See Demo"
+      "title": "Ready to Create Amazing Flowcharts?",
+      "description": "Join thousands of users who are already creating professional diagrams with FlowChart AI",
+      "primaryButton": "Start Creating",
+      "secondaryButton": "Learn More"
     }
   },
   "AITextPage": {
@@ -908,5 +1002,10 @@
     "title": "AI Audio",
     "description": "MkSaaS lets you make AI SaaS in days, simply and effortlessly",
     "content": "Working in progress"
+  },
+  "CanvasPage": {
+    "title": "Canvas",
+    "description": "Create beautiful flowcharts with AI assistance - draw, edit, and collaborate on your diagrams",
+    "subtitle": "AI-Powered Flowchart Editor"
   }
 }

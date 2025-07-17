@@ -85,6 +85,9 @@ export function getUrlWithLocaleInCallbackUrl(
  * @returns The URL of the image
  */
 export function getImageUrl(image: string): string {
+  if (!image || image.trim() === '') {
+    return `${getBaseUrl()}/og.png`;
+  }
   if (image.startsWith('http://') || image.startsWith('https://')) {
     return image;
   }

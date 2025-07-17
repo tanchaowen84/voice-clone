@@ -31,8 +31,10 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | undefined>('');
   const { data: session, refetch } = authClient.useSession();
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [tempAvatarUrl, setTempAvatarUrl] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
+  const [tempAvatarUrl, setTempAvatarUrl] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (session?.user?.image) {
@@ -142,7 +144,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
         <div className="flex flex-col items-center sm:flex-row gap-4 sm:gap-8">
           {/* avatar */}
           <Avatar className="h-16 w-16 border">
-            <AvatarImage src={avatarUrl ?? ''} alt={user.name} />
+            <AvatarImage src={avatarUrl} alt={user.name} />
             <AvatarFallback>
               <User2Icon className="h-8 w-8 text-muted-foreground" />
             </AvatarFallback>

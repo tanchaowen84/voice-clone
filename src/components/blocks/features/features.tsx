@@ -30,23 +30,23 @@ export default function FeaturesSection() {
 
   const images = {
     'item-1': {
-      image: '/blocks/charts-light.png',
-      darkImage: '/blocks/charts.png',
+      image: 'https://cdn.flowchartai.org/static/blocks/feature1.png',
+      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature1.png',
       alt: 'Product Feature One',
     },
     'item-2': {
-      image: '/blocks/music-light.png',
-      darkImage: '/blocks/music.png',
+      image: 'https://cdn.flowchartai.org/static/blocks/feature2.png',
+      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature2.png',
       alt: 'Product Feature Two',
     },
     'item-3': {
-      image: '/blocks/mail2-light.png',
-      darkImage: '/blocks/mail2.png',
+      image: 'https://cdn.flowchartai.org/static/blocks/feature3.png',
+      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature3.png',
       alt: 'Product Feature Three',
     },
     'item-4': {
-      image: '/blocks/payments-light.png',
-      darkImage: '/blocks/payments.png',
+      image: 'https://cdn.flowchartai.org/static/blocks/feature4.png',
+      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature4.png',
       alt: 'Product Feature Four',
     },
   };
@@ -133,18 +133,18 @@ export default function FeaturesSection() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 6, scale: 0.98 }}
                   transition={{ duration: 0.2 }}
-                  className="size-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md"
+                  className="size-full overflow-hidden rounded-2xl border bg-white dark:bg-zinc-900 shadow-md flex items-center justify-center"
                 >
                   <Image
                     src={images[activeItem].image}
-                    className="size-full object-cover object-left-top dark:hidden"
+                    className="max-w-full max-h-full object-contain dark:hidden"
                     alt={images[activeItem].alt}
                     width={1207}
                     height={929}
                   />
                   <Image
                     src={images[activeItem].darkImage}
-                    className="size-full object-cover object-left-top dark:block hidden"
+                    className="max-w-full max-h-full object-contain dark:block hidden"
                     alt={images[activeItem].alt}
                     width={1207}
                     height={929}
