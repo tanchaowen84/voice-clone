@@ -19,8 +19,13 @@ import { useRef, useState } from 'react';
 
 interface Voice {
   id: string;
-  name: string;
+  displayName: string;
   gender: string;
+  locale?: string;
+  type?: string;
+  avatarImage?: string;
+  previewAudio?: string;
+  tags?: string[];
 }
 
 export default function HeroSection() {
@@ -79,7 +84,12 @@ export default function HeroSection() {
   const loadVoices = async () => {
     setIsLoadingVoices(true);
     try {
-      const response = await fetch('/api/voice-clone/voices');
+      const response = await fetch('/api/voice-clone/voices', {
+        cache: 'no-cache',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
       const result = await response.json();
 
       if (result.success) {
@@ -323,13 +333,13 @@ export default function HeroSection() {
                             onValueChange={setSelectedVoice}
                             required
                           >
-                            <SelectTrigger>
+                            <SelectTrigger className="w-full min-w-[200px]">
                               <SelectValue placeholder="Select a voice" />
                             </SelectTrigger>
                             <SelectContent>
                               {voices.map((voice) => (
                                 <SelectItem key={voice.id} value={voice.id}>
-                                  {voice.name} ({voice.gender})
+                                  {voice.displayName} ({voice.gender})
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -415,7 +425,9 @@ export default function HeroSection() {
                             className="flex items-center justify-between p-4 border rounded-lg"
                           >
                             <div>
-                              <h4 className="font-medium">{voice.name}</h4>
+                              <h4 className="font-medium">
+                                {voice.displayName}
+                              </h4>
                               <p className="text-sm text-muted-foreground">
                                 Gender: {voice.gender}
                               </p>
