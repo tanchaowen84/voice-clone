@@ -90,6 +90,18 @@ Body:
   "text": "Text to convert to speech",
   "voiceId": "voice_id_from_creation"
 }
+
+Response: Audio file (MP3/WAV format)
+```
+
+**Note**: The API uses Speechify's `client.tts.audio.speech()` method which returns:
+```json
+{
+  "audioData": "base64_encoded_audio_data",
+  "audioFormat": "wav",
+  "billableCharactersCount": 1000000,
+  "speechMarks": {}
+}
 ```
 
 ### List Voices

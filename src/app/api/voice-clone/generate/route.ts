@@ -22,26 +22,24 @@ export async function POST(request: NextRequest) {
       voiceId: voiceId,
     });
 
-    // Convert response to buffer if it's a stream
-    let audioBuffer: Buffer;
-    if (response instanceof Buffer) {
-      audioBuffer = response;
-    } else if (response instanceof ArrayBuffer) {
-      audioBuffer = Buffer.from(response);
-    } else {
-      // If it's a stream, convert to buffer
-      const chunks: Buffer[] = [];
-      for await (const chunk of response as any) {
-        chunks.push(chunk);
-      }
-      audioBuffer = Buffer.concat(chunks);
+    // Extract audio data from the response object
+    if (!response.audioData) {
+      throw new Error('No audio data received from Speechify API');
     }
+
+    // Convert base64 audio data to buffer
+    const audioBuffer = Buffer.from(response.audioData, 'base64');
+
+    // Determine content type based on audio format
+    const contentType =
+      response.audioFormat === 'wav' ? 'audio/wav' : 'audio/mpeg';
+    const fileExtension = response.audioFormat === 'wav' ? 'wav' : 'mp3';
 
     // Return the audio data
     return new NextResponse(audioBuffer, {
       headers: {
-        'Content-Type': 'audio/mpeg',
-        'Content-Disposition': 'attachment; filename="generated-speech.mp3"',
+        'Content-Type': contentType,
+        'Content-Disposition': `attachment; filename="generated-speech.${fileExtension}"`,
       },
     });
   } catch (error) {

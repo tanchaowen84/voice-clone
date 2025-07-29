@@ -1,6 +1,5 @@
 'use client';
 
-import { Ripple } from '@/components/magicui/ripple';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -14,7 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Download, Loader2, Play, Trash2, Upload } from 'lucide-react';
+import { Download, Loader2, Play, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 interface Voice {
@@ -137,35 +136,6 @@ export default function HeroSection() {
     }
   };
 
-  const handleDeleteVoice = async (voiceId: string) => {
-    if (!confirm('Are you sure you want to delete this voice?')) return;
-
-    try {
-      const response = await fetch('/api/voice-clone/voices', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ voiceId }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('Voice deleted successfully');
-        loadVoices();
-        if (selectedVoice === voiceId) {
-          setSelectedVoice('');
-        }
-      } else {
-        alert(result.error || 'Failed to delete voice');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to delete voice');
-    }
-  };
-
   return (
     <>
       <main id="hero" className="overflow-hidden">
@@ -182,8 +152,6 @@ export default function HeroSection() {
         <section>
           <div className="relative pt-12">
             <div className="mx-auto max-w-7xl px-6">
-              <Ripple />
-
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 {/* title */}
                 <h1 className="mt-8 text-balance text-5xl font-bricolage-grotesque lg:mt-16 xl:text-[5rem]">
@@ -410,42 +378,6 @@ export default function HeroSection() {
                     </CardContent>
                   </Card>
                 </div>
-
-                {/* Voice Management Section */}
-                {voices.length > 0 && (
-                  <Card className="mt-8">
-                    <CardHeader>
-                      <CardTitle>Manage Your Voices</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid gap-4">
-                        {voices.map((voice) => (
-                          <div
-                            key={voice.id}
-                            className="flex items-center justify-between p-4 border rounded-lg"
-                          >
-                            <div>
-                              <h4 className="font-medium">
-                                {voice.displayName}
-                              </h4>
-                              <p className="text-sm text-muted-foreground">
-                                Gender: {voice.gender}
-                              </p>
-                            </div>
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              onClick={() => handleDeleteVoice(voice.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
               </div>
             </div>
           </div>
