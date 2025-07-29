@@ -1,6 +1,6 @@
 # Voice Clone Feature Setup
 
-This document explains how to set up and use the voice cloning feature integrated into the homepage.
+This document explains how to set up and use the voice cloning feature integrated as the main Hero section of the homepage.
 
 ## Prerequisites
 
@@ -98,11 +98,12 @@ Body:
 
 ## Technical Implementation
 
-- **Frontend**: React component with form handling and audio playback
+- **Frontend**: Voice cloning functionality integrated directly into the Hero section (`src/components/blocks/hero/hero.tsx`)
 - **Backend**: Next.js API routes using Speechify SDK
 - **File Handling**: Multipart form data for audio uploads
 - **Audio Processing**: Stream handling for audio generation
 - **Error Handling**: Comprehensive error handling and user feedback
+- **UI Design**: Modern card-based layout with responsive design, replacing the original FlowChart AI interface
 
 ## Troubleshooting
 
