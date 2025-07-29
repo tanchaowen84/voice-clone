@@ -8,6 +8,7 @@ import HeroSection from '@/components/blocks/hero/hero';
 import { HowItWorksSection } from '@/components/blocks/how-it-works';
 import PricingSection from '@/components/blocks/pricing/pricing';
 import { UseCasesSection } from '@/components/blocks/use-cases';
+import { VoiceCloneSection } from '@/components/voice-clone/voice-clone-section';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -32,21 +33,15 @@ export async function generateMetadata({
   });
 }
 
-interface HomePageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default async function HomePage(props: HomePageProps) {
-  const params = await props.params;
-  const { locale } = params;
-  const t = await getTranslations('HomePage');
-
+export default async function HomePage() {
   return (
     <>
       <div className="flex flex-col">
         <HeroSection />
 
-        <DemoSection />
+        <VoiceCloneSection />
+
+        {/* <DemoSection />
 
         <UseCasesSection />
 
@@ -62,7 +57,7 @@ export default async function HomePage(props: HomePageProps) {
 
         <FaqSection />
 
-        <CallToActionSection />
+        <CallToActionSection /> */}
       </div>
     </>
   );
