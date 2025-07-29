@@ -20,6 +20,7 @@ SPEECHIFY_API_TOKEN="your_speechify_api_token_here"
 ### 1. Voice Clone Creation
 - Upload audio samples (any audio format supported)
 - Specify voice name and gender
+- Provide your full name and email address (required for consent)
 - Consent confirmation required
 - API endpoint: `POST /api/voice-clone/create`
 
@@ -39,8 +40,9 @@ SPEECHIFY_API_TOKEN="your_speechify_api_token_here"
 1. **Create a Voice Clone**:
    - Upload a clear audio sample (at least 30 seconds recommended)
    - Enter a name for your voice
+   - Provide your full name and email address
    - Select the gender
-   - Check the consent checkbox
+   - Check the consent checkbox (confirms voice ownership and consent to provide personal information)
    - Click "Create Voice Clone"
 
 2. **Generate Speech**:
@@ -64,8 +66,18 @@ Content-Type: multipart/form-data
 Fields:
 - audio: File (audio sample)
 - name: string (voice name)
+- fullName: string (user's full name)
+- email: string (user's email address)
 - gender: string ("male" | "female")
 - consent: string ("true")
+```
+
+**Note**: The API automatically formats the consent data as required by Speechify API:
+```json
+{
+  "fullName": "User's Full Name",
+  "email": "user@example.com"
+}
 ```
 
 ### Generate Speech

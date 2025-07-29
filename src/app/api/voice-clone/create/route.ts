@@ -12,21 +12,39 @@ export async function POST(request: NextRequest) {
     const audioFile = formData.get('audio') as File;
     const voiceName = formData.get('name') as string;
     const gender = formData.get('gender') as string;
-    const consent = formData.get('consent') as string;
+    const fullName = formData.get('fullName') as string;
+    const email = formData.get('email') as string;
+    const consentAgreed = formData.get('consent') as string;
 
-    if (!audioFile || !voiceName || !gender || !consent) {
+    if (
+      !audioFile ||
+      !voiceName ||
+      !gender ||
+      !fullName ||
+      !email ||
+      !consentAgreed
+    ) {
       return NextResponse.json(
-        { error: 'Missing required fields: audio, name, gender, consent' },
+        {
+          error:
+            'Missing required fields: audio, name, gender, fullName, email, consent',
+        },
         { status: 400 }
       );
     }
 
-    if (consent !== 'true') {
+    if (consentAgreed !== 'true') {
       return NextResponse.json(
         { error: 'Consent must be provided' },
         { status: 400 }
       );
     }
+
+    // Create consent JSON string as required by Speechify API
+    const consentData = JSON.stringify({
+      fullName: fullName,
+      email: email,
+    });
 
     // Convert File to ReadableStream for Speechify API
     const arrayBuffer = await audioFile.arrayBuffer();
@@ -38,7 +56,7 @@ export async function POST(request: NextRequest) {
       sample: stream,
       name: voiceName,
       gender: gender as 'male' | 'female',
-      consent: consent,
+      consent: consentData,
     });
 
     return NextResponse.json({

@@ -222,6 +222,27 @@ export default function HeroSection() {
                         </div>
 
                         <div>
+                          <Label htmlFor="full-name">Your Full Name</Label>
+                          <Input
+                            id="full-name"
+                            name="fullName"
+                            placeholder="Enter your full name"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <Label htmlFor="email">Your Email</Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            required
+                          />
+                        </div>
+
+                        <div>
                           <Label htmlFor="gender">Gender</Label>
                           <Select name="gender" required>
                             <SelectTrigger>
@@ -245,7 +266,8 @@ export default function HeroSection() {
                           />
                           <Label htmlFor="consent" className="text-sm">
                             I confirm that this voice belongs to me or someone I
-                            represent
+                            represent, and I consent to providing my personal
+                            information for voice cloning purposes
                           </Label>
                         </div>
 
