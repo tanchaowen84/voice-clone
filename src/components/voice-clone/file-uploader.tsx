@@ -137,7 +137,7 @@ export function FileUploader() {
                 ? 'bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 shadow-[inset_4px_4px_8px_#c084fc,inset_-4px_-4px_8px_#e879f9] dark:shadow-[inset_4px_4px_8px_#581c87,inset_-4px_-4px_8px_#7c3aed]'
                 : error
                   ? 'bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900 dark:to-red-800 shadow-[inset_4px_4px_8px_#f87171,inset_-4px_-4px_8px_#fca5a5] dark:shadow-[inset_4px_4px_8px_#7f1d1d,inset_-4px_-4px_8px_#dc2626]'
-                  : 'bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1e293b,inset_-8px_-8px_16px_#475569] hover:shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:hover:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]'
+                  : 'bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1e293b,inset_-8px_-8px_16px_#475569] hover:shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:hover:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]'
             }
           `}
           onDragOver={handleDragOver}
@@ -145,6 +145,9 @@ export function FileUploader() {
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
+          {/* Subtle gradient overlay for purple tint */}
+          <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
+
           <input
             ref={fileInputRef}
             type="file"

@@ -143,9 +143,12 @@ export function EnhancedVoiceRecorder() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 shadow-[8px_8px_16px_#d1d5db,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1e293b,-8px_-8px_16px_#475569]"
+            className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 shadow-[8px_8px_16px_#d1d5db,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1e293b,-8px_-8px_16px_#475569]"
           >
-            <div className="flex items-center justify-center gap-4 mb-4">
+            {/* Subtle gradient overlay for purple tint */}
+            <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
+
+            <div className="flex items-center justify-center gap-4 mb-4 relative z-10">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300">
                 Recording Complete
@@ -153,7 +156,7 @@ export function EnhancedVoiceRecorder() {
             </div>
 
             {audioPreviewUrl && (
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-4 relative z-10">
                 <button
                   type="button"
                   onClick={handlePlayPause}

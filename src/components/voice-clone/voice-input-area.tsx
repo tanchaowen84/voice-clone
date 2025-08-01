@@ -55,7 +55,10 @@ export function VoiceInputArea() {
     return (
       <div className="space-y-8">
         {/* Single Neumorphic Input Container with Embedded Elements */}
-        <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+        <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+          {/* Subtle gradient overlay for purple tint */}
+          <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
+
           <textarea
             id="speech-text-input"
             value={textInput}
@@ -113,9 +116,12 @@ export function VoiceInputArea() {
 
         {/* Success Result - Single Neumorphic Container */}
         {generatedAudioUrl && (
-          <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+            {/* Subtle gradient overlay for purple tint */}
+            <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
+
             {/* Audio Player */}
-            <div className="mb-6">
+            <div className="mb-6 relative z-10">
               <audio
                 controls
                 src={generatedAudioUrl}
@@ -132,7 +138,7 @@ export function VoiceInputArea() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-4 justify-center relative z-10">
               {/* Download Button */}
               <button
                 type="button"
