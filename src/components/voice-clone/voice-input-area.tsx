@@ -107,7 +107,7 @@ export function VoiceInputArea() {
             <CardContent className="p-6">
               <div className="text-center space-y-4">
                 <h3 className="text-xl font-bold text-green-800 dark:text-green-200">
-                  🎉 Speech Generated Successfully!
+                  Speech Generated Successfully!
                 </h3>
 
                 <audio
@@ -146,14 +146,7 @@ export function VoiceInputArea() {
     return (
       <div className="space-y-6">
         <Card className="border-2 shadow-xl bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              {inputMode === 'record'
-                ? '🎤 Record Your Voice'
-                : '📁 Upload Audio File'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             {inputMode === 'record' ? (
               // Recording Interface
               <VoiceRecorder />
@@ -168,7 +161,7 @@ export function VoiceInputArea() {
         <Card className="border-2 bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
           <CardContent className="p-6">
             <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
-              📝 Read this sample text aloud:
+              Read this sample text aloud:
             </h3>
             <p className="text-blue-700 dark:text-blue-300 leading-relaxed">
               "Hello everyone! I'm trying out this amazing voice cloning

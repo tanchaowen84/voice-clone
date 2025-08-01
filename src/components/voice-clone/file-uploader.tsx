@@ -154,12 +154,10 @@ export function FileUploader() {
 
           {!uploadedFile ? (
             <>
-              <div className="text-6xl mb-4">{isDragOver ? '📥' : '📁'}</div>
-              <h3 className="text-xl font-semibold mb-2">
-                {isDragOver ? 'Drop your audio file here' : 'Upload Audio File'}
-              </h3>
               <p className="text-muted-foreground mb-6">
-                Drag and drop an audio file or click to select
+                {isDragOver
+                  ? 'Drop your audio file here'
+                  : 'Drag and drop an audio file or click to select'}
               </p>
 
               <Button
@@ -259,25 +257,6 @@ export function FileUploader() {
             </div>
           </div>
         )}
-
-        {/* File Requirements */}
-        <div className="text-sm text-muted-foreground space-y-1">
-          <p>
-            <strong>Supported formats:</strong> MP3, WAV, M4A, OGG, AAC, FLAC,
-            WebM
-          </p>
-          <p>
-            <strong>Maximum file size:</strong> 50MB
-          </p>
-          <p>
-            <strong>Recommended:</strong> High-quality audio, minimum 30
-            seconds, clear speech
-          </p>
-          <p>
-            <strong>Best quality:</strong> WAV or FLAC format, 44.1kHz sample
-            rate
-          </p>
-        </div>
       </div>
     </div>
   );

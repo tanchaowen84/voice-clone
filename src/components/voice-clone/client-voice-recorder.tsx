@@ -1,8 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
-import { Mic, Pause, Square } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 
@@ -16,14 +14,8 @@ export function ClientVoiceRecorder() {
 
   // Voice recording setup
   const recorderControls = useVoiceVisualizer();
-  const {
-    recordedBlob,
-    recordingTime,
-    isRecordingInProgress,
-    startRecording,
-    stopRecording,
-    togglePauseResume,
-  } = recorderControls;
+  const { recordedBlob, recordingTime, isRecordingInProgress } =
+    recorderControls;
 
   // Update store when recording is complete
   useEffect(() => {
@@ -63,40 +55,6 @@ export function ClientVoiceRecorder() {
             barWidth={3}
             gap={1}
           />
-        </div>
-
-        {/* Recording Controls */}
-        <div className="flex justify-center gap-4">
-          {!isRecordingInProgress ? (
-            <Button
-              onClick={startRecording}
-              size="lg"
-              className="h-16 px-8 bg-red-600 hover:bg-red-700 text-white rounded-xl"
-            >
-              <Mic className="mr-2 h-6 w-6" />
-              Start Recording
-            </Button>
-          ) : (
-            <>
-              <Button
-                onClick={togglePauseResume}
-                size="lg"
-                variant="outline"
-                className="h-16 px-8 rounded-xl"
-              >
-                <Pause className="mr-2 h-6 w-6" />
-                Pause
-              </Button>
-              <Button
-                onClick={stopRecording}
-                size="lg"
-                className="h-16 px-8 bg-green-600 hover:bg-green-700 text-white rounded-xl"
-              >
-                <Square className="mr-2 h-6 w-6" />
-                Stop Recording
-              </Button>
-            </>
-          )}
         </div>
 
         {/* Recording Time */}

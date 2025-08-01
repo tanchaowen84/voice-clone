@@ -20,30 +20,32 @@ export function VoiceModeSwitch() {
           onClick={() => setInputMode('record')}
           className={`
             flex items-center gap-3 text-base font-medium h-12 px-6 rounded-lg transition-all duration-200
-            ${inputMode === 'record' 
-              ? 'bg-background shadow-lg text-foreground' 
-              : 'text-muted-foreground hover:text-foreground'
+            ${
+              inputMode === 'record'
+                ? 'bg-background shadow-lg text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }
           `}
         >
           <Mic className="h-5 w-5" />
-          🎤 Record
+          Record
         </Button>
-        
+
         <Button
           variant={inputMode === 'upload' ? 'default' : 'ghost'}
           size="lg"
           onClick={() => setInputMode('upload')}
           className={`
             flex items-center gap-3 text-base font-medium h-12 px-6 rounded-lg transition-all duration-200
-            ${inputMode === 'upload' 
-              ? 'bg-background shadow-lg text-foreground' 
-              : 'text-muted-foreground hover:text-foreground'
+            ${
+              inputMode === 'upload'
+                ? 'bg-background shadow-lg text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }
           `}
         >
           <Upload className="h-5 w-5" />
-          📁 Upload
+          Upload
         </Button>
       </div>
     </div>
