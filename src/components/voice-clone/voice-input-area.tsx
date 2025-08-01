@@ -145,32 +145,28 @@ export function VoiceInputArea() {
   if (currentStep === 'input') {
     return (
       <div className="space-y-6">
-        <Card className="border-2 shadow-xl bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm">
-          <CardContent className="pt-6">
-            {inputMode === 'record' ? (
-              // Recording Interface
-              <VoiceRecorder />
-            ) : (
-              // Upload Interface
-              <FileUploader />
-            )}
-          </CardContent>
-        </Card>
+        {inputMode === 'record' ? (
+          // Recording Interface
+          <VoiceRecorder />
+        ) : (
+          // Upload Interface
+          <FileUploader />
+        )}
 
-        {/* Sample text guidance */}
-        <Card className="border-2 bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
+        {/* Sample text guidance - only show in record mode */}
+        {inputMode === 'record' && (
+          <div className="text-center space-y-3">
+            <h3 className="font-semibold text-foreground mb-3">
               Read this sample text aloud:
             </h3>
-            <p className="text-blue-700 dark:text-blue-300 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               "Hello everyone! I'm trying out this amazing voice cloning
               technology. This sample will help create a high-quality voice
               model that captures my unique speaking style and tone. The more
               natural I sound, the better the results will be."
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        )}
       </div>
     );
   }
