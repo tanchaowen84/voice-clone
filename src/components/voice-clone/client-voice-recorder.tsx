@@ -3,7 +3,6 @@
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { useEffect, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
-import { GlowingMicButton } from './glowing-mic-button';
 
 /**
  * Client-side Voice Recorder Component
@@ -59,17 +58,6 @@ export function ClientVoiceRecorder() {
 
           {/* Subtle inner glow effect */}
           <div className="absolute inset-4 rounded-xl pointer-events-none opacity-30 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
-        </div>
-
-        {/* Glowing Microphone Button */}
-        <div className="flex justify-center">
-          <GlowingMicButton
-            isRecording={isRecordingInProgress}
-            isListening={false}
-            onStartRecording={recorderControls.startRecording}
-            onStopRecording={recorderControls.stopRecording}
-            disabled={false}
-          />
         </div>
 
         {/* Recording Time */}

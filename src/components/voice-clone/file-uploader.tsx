@@ -161,13 +161,15 @@ export function FileUploader() {
                   : 'Drag and drop an audio file or click to select'}
               </p>
 
-              <button
-                type="button"
-                className="h-16 px-8 rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 shadow-[4px_4px_8px_#d1d5db,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#1e293b,-4px_-4px_8px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200 text-foreground font-medium flex items-center gap-2"
-              >
-                <Upload className="h-6 w-6" />
-                Select Audio File
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  className="h-16 px-8 rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 shadow-[4px_4px_8px_#d1d5db,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#1e293b,-4px_-4px_8px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200 text-foreground font-medium flex items-center gap-2"
+                >
+                  <Upload className="h-6 w-6" />
+                  Select Audio File
+                </button>
+              </div>
             </>
           ) : (
             // File Preview
