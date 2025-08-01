@@ -1,3 +1,7 @@
+import {
+  convertWebMToWAV,
+  isAudioConversionSupported,
+} from '@/utils/audio-converter';
 import { create } from 'zustand';
 
 /**
@@ -125,10 +129,24 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       let audioData: File;
 
       if (state.recordedBlob) {
-        // Convert blob to file
-        audioData = new File([state.recordedBlob], 'recorded-voice.webm', {
-          type: state.recordedBlob.type || 'audio/webm',
-        });
+        // Check if audio conversion is supported
+        if (!isAudioConversionSupported()) {
+          throw new Error('Audio conversion not supported in this browser');
+        }
+
+        // Convert WebM blob to WAV format for better API compatibility
+        try {
+          const wavBlob = await convertWebMToWAV(state.recordedBlob);
+          audioData = new File([wavBlob], 'recorded-voice.wav', {
+            type: 'audio/wav',
+          });
+        } catch (conversionError) {
+          console.error('Audio conversion failed:', conversionError);
+          // Fallback: try with original blob but with corrected metadata
+          audioData = new File([state.recordedBlob], 'recorded-voice.webm', {
+            type: state.recordedBlob.type || 'audio/webm',
+          });
+        }
       } else if (state.audioFile) {
         audioData = state.audioFile;
       } else {
