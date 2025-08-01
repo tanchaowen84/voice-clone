@@ -278,6 +278,9 @@ importers:
       react-use-measure:
         specifier: ^2.1.7
         version: 2.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-voice-visualizer:
+        specifier: ^2.0.8
+        version: 2.0.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       recharts:
         specifier: ^2.15.1
         version: 2.15.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -5062,6 +5065,12 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
+
+  react-voice-visualizer@2.0.8:
+    resolution: {integrity: sha512-oA/IyNeh15+mERgm2n33IAqQaMGBEFN1n3gs2V/0LbLyscqsbhNo8JOFXh2I9neIqYJ4q27TEzXzbO00Xq/aXg==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
 
   react@19.0.0:
     resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
@@ -10884,6 +10893,11 @@ snapshots:
     dependencies:
       react: 19.0.0
     optionalDependencies:
+      react-dom: 19.0.0(react@19.0.0)
+
+  react-voice-visualizer@2.0.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
   react@19.0.0: {}
