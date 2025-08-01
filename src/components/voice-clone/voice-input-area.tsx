@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { VoiceRecorder } from './voice-recorder';
 
 /**
  * Voice Input Area Component
@@ -20,11 +21,22 @@ export function VoiceInputArea() {
     error,
     generateSpeech,
     reset,
+    setAudioFile,
   } = useVoiceCloneStore();
 
   const [textInput, setTextInput] = useState(
     'Transform your text into natural-sounding speech with AI voice cloning technology.'
   );
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle file upload
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setAudioFile(file);
+    }
+  };
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
@@ -44,7 +56,9 @@ export function VoiceInputArea() {
 
   const handleStartOver = () => {
     reset();
-    setTextInput('Transform your text into natural-sounding speech with AI voice cloning technology.');
+    setTextInput(
+      'Transform your text into natural-sounding speech with AI voice cloning technology.'
+    );
   };
 
   // Show text input interface when audio is ready
@@ -105,7 +119,7 @@ export function VoiceInputArea() {
                 <h3 className="text-xl font-bold text-green-800 dark:text-green-200">
                   🎉 Speech Generated Successfully!
                 </h3>
-                
+
                 <audio
                   controls
                   src={generatedAudioUrl}
@@ -124,12 +138,8 @@ export function VoiceInputArea() {
                     <Download className="h-5 w-5" />
                     Download Audio
                   </Button>
-                  
-                  <Button
-                    onClick={handleStartOver}
-                    variant="outline"
-                    size="lg"
-                  >
+
+                  <Button onClick={handleStartOver} variant="outline" size="lg">
                     Start Over
                   </Button>
                 </div>
@@ -148,31 +158,46 @@ export function VoiceInputArea() {
         <Card className="border-2 shadow-xl bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              {inputMode === 'record' ? '🎤 Record Your Voice' : '📁 Upload Audio File'}
+              {inputMode === 'record'
+                ? '🎤 Record Your Voice'
+                : '📁 Upload Audio File'}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">
-                {inputMode === 'record' ? '🎤' : '📁'}
-              </div>
-              <p className="text-lg text-muted-foreground mb-6">
-                {inputMode === 'record' 
-                  ? 'Click the record button below to start recording your voice'
-                  : 'Drag and drop an audio file or click to select'
-                }
-              </p>
-              
-              {/* Placeholder for recording/upload interface */}
-              <div className="bg-muted/30 border-2 border-dashed border-muted-foreground/30 rounded-xl p-8">
-                <p className="text-muted-foreground">
-                  {inputMode === 'record' 
-                    ? 'Recording interface will be implemented in the next stage'
-                    : 'Upload interface will be implemented in the next stage'
-                  }
+            {inputMode === 'record' ? (
+              // Recording Interface
+              <VoiceRecorder />
+            ) : (
+              // Upload Interface
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">📁</div>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Drag and drop an audio file or click to select
                 </p>
+
+                <div className="bg-muted/30 border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 hover:bg-muted/40 transition-colors">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="audio/*"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+                  <Button
+                    onClick={() => fileInputRef.current?.click()}
+                    size="lg"
+                    variant="outline"
+                    className="h-16 px-8 rounded-xl"
+                  >
+                    <Download className="mr-2 h-6 w-6" />
+                    Select Audio File
+                  </Button>
+                  <p className="text-sm text-muted-foreground mt-4">
+                    Supported formats: MP3, WAV, M4A, OGG
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
@@ -183,10 +208,10 @@ export function VoiceInputArea() {
               📝 Read this sample text aloud:
             </h3>
             <p className="text-blue-700 dark:text-blue-300 leading-relaxed">
-              "Hello everyone! I'm trying out this amazing voice cloning technology. 
-              This sample will help create a high-quality voice model that captures 
-              my unique speaking style and tone. The more natural I sound, the better 
-              the results will be."
+              "Hello everyone! I'm trying out this amazing voice cloning
+              technology. This sample will help create a high-quality voice
+              model that captures my unique speaking style and tone. The more
+              natural I sound, the better the results will be."
             </p>
           </CardContent>
         </Card>
