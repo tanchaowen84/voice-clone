@@ -1,4 +1,3 @@
-import { Readable } from 'stream';
 import { SpeechifyClient } from '@speechify/api';
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -46,14 +45,10 @@ export async function POST(request: NextRequest) {
       email: email,
     });
 
-    // Convert File to ReadableStream for Speechify API
-    const arrayBuffer = await audioFile.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const stream = Readable.from(buffer);
-
     // Create voice clone using Speechify API
+    // According to the API docs, sample should be a File object directly
     const response = await client.tts.voices.create({
-      sample: stream,
+      sample: audioFile,
       name: voiceName,
       gender: gender as 'male' | 'female',
       consent: consentData,
