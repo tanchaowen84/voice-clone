@@ -1,7 +1,7 @@
 'use client';
 
 import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
-import { VoiceModeSwitch } from '@/components/voice-clone/voice-mode-switch';
+import { NeumorphicModeSwitch } from '@/components/voice-clone/neumorphic-mode-switch';
 
 export default function HeroSection() {
   return (
@@ -38,7 +38,7 @@ export default function HeroSection() {
             <div className="mt-12 px-4">
               <div className="max-w-5xl mx-auto">
                 {/* Voice Mode Switch */}
-                <VoiceModeSwitch />
+                <NeumorphicModeSwitch />
 
                 {/* Dynamic Content Area */}
                 <VoiceInputArea />

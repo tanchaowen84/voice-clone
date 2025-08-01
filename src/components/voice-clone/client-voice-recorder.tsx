@@ -3,6 +3,7 @@
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { useEffect, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
+import { GlowingMicButton } from './glowing-mic-button';
 
 /**
  * Client-side Voice Recorder Component
@@ -41,9 +42,9 @@ export function ClientVoiceRecorder() {
 
   return (
     <div className="text-center py-8">
-      <div className="space-y-6">
-        {/* Voice Visualizer */}
-        <div className="bg-muted/20 border-2 border-dashed border-muted-foreground/30 rounded-xl p-8">
+      <div className="space-y-8">
+        {/* Voice Visualizer - Neumorphic Design */}
+        <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-8 shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1e293b,inset_-8px_-8px_16px_#475569]">
           <VoiceVisualizer
             controls={recorderControls}
             height={120}
@@ -54,6 +55,20 @@ export function ClientVoiceRecorder() {
             speed={2}
             barWidth={3}
             gap={1}
+          />
+
+          {/* Subtle inner glow effect */}
+          <div className="absolute inset-4 rounded-xl pointer-events-none opacity-30 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
+        </div>
+
+        {/* Glowing Microphone Button */}
+        <div className="flex justify-center">
+          <GlowingMicButton
+            isRecording={isRecordingInProgress}
+            isListening={false}
+            onStartRecording={recorderControls.startRecording}
+            onStopRecording={recorderControls.stopRecording}
+            disabled={false}
           />
         </div>
 

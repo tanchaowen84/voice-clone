@@ -128,16 +128,17 @@ export function FileUploader() {
   return (
     <div className="text-center py-12">
       <div className="space-y-6">
-        {/* Upload Area */}
+        {/* Upload Area - Neumorphic Design */}
         <div
           className={`
-            relative border-2 border-dashed rounded-xl p-8 transition-all duration-200 cursor-pointer
+            relative rounded-2xl p-8 transition-all duration-300 cursor-pointer
             ${
               isDragOver
-                ? 'border-purple-400 bg-purple-50 dark:bg-purple-950/20'
-                : 'border-muted-foreground/30 bg-muted/30 hover:bg-muted/40'
+                ? 'bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 shadow-[inset_4px_4px_8px_#c084fc,inset_-4px_-4px_8px_#e879f9] dark:shadow-[inset_4px_4px_8px_#581c87,inset_-4px_-4px_8px_#7c3aed]'
+                : error
+                  ? 'bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900 dark:to-red-800 shadow-[inset_4px_4px_8px_#f87171,inset_-4px_-4px_8px_#fca5a5] dark:shadow-[inset_4px_4px_8px_#7f1d1d,inset_-4px_-4px_8px_#dc2626]'
+                  : 'bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1e293b,inset_-8px_-8px_16px_#475569] hover:shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:hover:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]'
             }
-            ${error ? 'border-red-400 bg-red-50 dark:bg-red-950/20' : ''}
           `}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -160,14 +161,13 @@ export function FileUploader() {
                   : 'Drag and drop an audio file or click to select'}
               </p>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-16 px-8 rounded-xl"
+              <button
+                type="button"
+                className="h-16 px-8 rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 shadow-[4px_4px_8px_#d1d5db,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#1e293b,-4px_-4px_8px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200 text-foreground font-medium flex items-center gap-2"
               >
-                <Upload className="mr-2 h-6 w-6" />
+                <Upload className="h-6 w-6" />
                 Select Audio File
-              </Button>
+              </button>
             </>
           ) : (
             // File Preview
