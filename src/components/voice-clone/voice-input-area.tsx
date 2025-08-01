@@ -111,45 +111,35 @@ export function VoiceInputArea() {
           )}
         </div>
 
-        {/* Success Result - Neumorphic Design */}
+        {/* Success Result - Single Neumorphic Container */}
         {generatedAudioUrl && (
-          <div className="relative bg-gradient-to-br from-emerald-50 to-green-100 dark:from-emerald-950/30 dark:to-green-900/30 rounded-3xl p-8 shadow-[12px_12px_24px_#d1d5db,-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#1e293b,-12px_-12px_24px_#475569]">
-            {/* Success Header */}
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-300 mb-2">
-                🎉 Speech Generated Successfully!
-              </h3>
-              <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full mx-auto" />
-            </div>
-
-            {/* Neumorphic Audio Player Container */}
-            <div className="mb-8">
-              <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
-                <audio
-                  controls
-                  src={generatedAudioUrl}
-                  className="w-full max-w-md mx-auto [&::-webkit-media-controls-panel]:bg-transparent [&::-webkit-media-controls-play-button]:opacity-80 [&::-webkit-media-controls-timeline]:opacity-80"
-                >
-                  <track
-                    kind="captions"
-                    src=""
-                    srcLang="en"
-                    label="English captions"
-                  />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
+          <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+            {/* Audio Player */}
+            <div className="mb-6">
+              <audio
+                controls
+                src={generatedAudioUrl}
+                className="w-full max-w-md mx-auto [&::-webkit-media-controls-panel]:bg-transparent [&::-webkit-media-controls-play-button]:opacity-80 [&::-webkit-media-controls-timeline]:opacity-80"
+              >
+                <track
+                  kind="captions"
+                  src=""
+                  srcLang="en"
+                  label="English captions"
+                />
+                Your browser does not support the audio element.
+              </audio>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-6 justify-center">
+            <div className="flex gap-4 justify-center">
               {/* Download Button */}
               <button
                 type="button"
                 onClick={handleDownload}
-                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-300 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#1e293b,-6px_-6px_12px_#475569] hover:shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:hover:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] active:shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#1e293b,inset_-3px_-3px_6px_#475569] transition-all duration-200"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200"
               >
-                <Download className="h-5 w-5" />
+                <Download className="h-4 w-4" />
                 Download Audio
               </button>
 
@@ -157,14 +147,11 @@ export function VoiceInputArea() {
               <button
                 type="button"
                 onClick={handleStartOver}
-                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-300 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#1e293b,-6px_-6px_12px_#475569] hover:shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:hover:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] active:shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#1e293b,inset_-3px_-3px_6px_#475569] transition-all duration-200"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200"
               >
                 Start Over
               </button>
             </div>
-
-            {/* Subtle inner glow effect */}
-            <div className="absolute inset-6 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-emerald-500/10 to-green-500/10" />
           </div>
         )}
       </div>
