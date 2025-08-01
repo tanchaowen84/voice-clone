@@ -3,10 +3,11 @@
 import { cn } from '@/lib/utils';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { motion } from 'framer-motion';
-import { Mic, Pause, Play, Square } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
+import { PremiumMicButton } from './premium-mic-button';
 
 // Dynamically import SiriWave to avoid SSR issues
 const SiriWave = dynamic(() => import('react-siriwave'), { ssr: false });
@@ -101,70 +102,13 @@ export function EnhancedVoiceRecorder() {
                 />
               </div>
 
-              {/* Central Microphone Button */}
+              {/* Enhanced Central Microphone Button */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <motion.button
-                  onClick={
-                    isRecordingInProgress
-                      ? recorderControls.stopRecording
-                      : recorderControls.startRecording
-                  }
-                  className={cn(
-                    'relative z-10 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300',
-                    'bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800',
-                    'shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#1e293b,-6px_-6px_12px_#475569]',
-                    'hover:shadow-[4px_4px_8px_#d1d5db,-4px_-4px_8px_#ffffff] dark:hover:shadow-[4px_4px_8px_#1e293b,-4px_-4px_8px_#475569]',
-                    'active:shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#1e293b,inset_-3px_-3px_6px_#475569]'
-                  )}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{
-                    scale: isRecordingInProgress ? [1, 1.1, 1] : 1,
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: isRecordingInProgress
-                      ? Number.POSITIVE_INFINITY
-                      : 0,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  {/* Pulsing Ring for Recording */}
-                  {isRecordingInProgress && (
-                    <motion.div
-                      className="absolute inset-0 rounded-full border-2 border-red-400"
-                      animate={{
-                        scale: [1, 1.8, 2.2],
-                        opacity: [0.8, 0.3, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: 'easeOut',
-                      }}
-                    />
-                  )}
-
-                  {/* Icon */}
-                  <motion.div
-                    animate={{
-                      rotate: isRecordingInProgress ? [0, 5, -5, 0] : 0,
-                    }}
-                    transition={{
-                      duration: 0.5,
-                      repeat: isRecordingInProgress
-                        ? Number.POSITIVE_INFINITY
-                        : 0,
-                      ease: 'easeInOut',
-                    }}
-                  >
-                    {isRecordingInProgress ? (
-                      <Square className="w-5 h-5 fill-current text-red-500 dark:text-red-400" />
-                    ) : (
-                      <Mic className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                    )}
-                  </motion.div>
-                </motion.button>
+                <PremiumMicButton
+                  isRecording={isRecordingInProgress}
+                  onStartRecording={recorderControls.startRecording}
+                  onStopRecording={recorderControls.stopRecording}
+                />
               </div>
             </div>
 
@@ -186,7 +130,9 @@ export function EnhancedVoiceRecorder() {
               />
               <span className="text-lg font-mono text-slate-600 dark:text-slate-400">
                 {Math.floor(recordingTime / 60)}:
-                {(recordingTime % 60).toString().padStart(2, '0')}
+                {Math.floor(recordingTime % 60)
+                  .toString()
+                  .padStart(2, '0')}
               </span>
             </motion.div>
           )}
