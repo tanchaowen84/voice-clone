@@ -75,9 +75,9 @@ export function EnhancedVoiceRecorder() {
                 <SiriWave
                   theme="ios9"
                   color="#8b5cf6"
-                  amplitude={isRecordingInProgress ? 4 : 1.5}
-                  speed={isRecordingInProgress ? 0.2 : 0.05}
-                  frequency={isRecordingInProgress ? 8 : 4}
+                  amplitude={1.5}
+                  speed={0.05}
+                  frequency={4}
                   width={400}
                   height={120}
                   autostart={true}
@@ -91,9 +91,9 @@ export function EnhancedVoiceRecorder() {
                 <SiriWave
                   theme="ios9"
                   color="#a78bfa"
-                  amplitude={isRecordingInProgress ? 2.5 : 1}
-                  speed={isRecordingInProgress ? 0.15 : 0.03}
-                  frequency={isRecordingInProgress ? 6 : 3}
+                  amplitude={1}
+                  speed={0.03}
+                  frequency={3}
                   width={400}
                   height={120}
                   autostart={true}

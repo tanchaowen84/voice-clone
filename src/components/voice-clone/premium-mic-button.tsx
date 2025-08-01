@@ -182,28 +182,28 @@ export function PremiumMicButton({
       {isRecording && (
         <>
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-red-400/60"
+            className="absolute inset-0 rounded-full border-2 border-red-400/50"
             animate={{
-              scale: [1, 1.8, 2.2],
-              opacity: [0.8, 0.3, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: 'easeOut',
-            }}
-          />
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-red-400/40"
-            animate={{
-              scale: [1, 1.8, 2.2],
+              scale: [1, 1.5, 1.8],
               opacity: [0.6, 0.2, 0],
             }}
             transition={{
-              duration: 2,
+              duration: 3.5,
               repeat: Number.POSITIVE_INFINITY,
-              ease: 'easeOut',
-              delay: 0.5,
+              ease: 'easeInOut',
+            }}
+          />
+          <motion.div
+            className="absolute inset-0 rounded-full border-2 border-red-400/30"
+            animate={{
+              scale: [1, 1.5, 1.8],
+              opacity: [0.4, 0.15, 0],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: 'easeInOut',
+              delay: 1.75,
             }}
           />
         </>
