@@ -8,7 +8,7 @@ import {
   validateAudioFileWithMetadata,
 } from '@/utils/audio-validation';
 import { AlertCircle, Clock, FileAudio, Info, Upload, X } from 'lucide-react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * File Uploader Component
@@ -17,13 +17,28 @@ import { useCallback, useRef, useState } from 'react';
 export function FileUploader() {
   const { setAudioFile } = useVoiceCloneStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [error, setError] = useState<string>('');
   const [warnings, setWarnings] = useState<string[]>([]);
   const [isValidating, setIsValidating] = useState(false);
   const [audioDuration, setAudioDuration] = useState<number | null>(null);
+  const [audioPreviewUrl, setAudioPreviewUrl] = useState<string | null>(null);
+
+  // Create audio preview URL safely on client side
+  useEffect(() => {
+    if (uploadedFile && typeof window !== 'undefined') {
+      const url = URL.createObjectURL(uploadedFile);
+      setAudioPreviewUrl(url);
+
+      // Cleanup function to revoke the URL
+      return () => {
+        URL.revokeObjectURL(url);
+        setAudioPreviewUrl(null);
+      };
+    }
+    setAudioPreviewUrl(null);
+  }, [uploadedFile]);
 
   // Handle file selection
   const handleFileSelect = useCallback(
@@ -190,18 +205,20 @@ export function FileUploader() {
               </div>
 
               {/* Audio Preview */}
-              <audio
-                controls
-                src={URL.createObjectURL(uploadedFile)}
-                className="w-full max-w-md mx-auto"
-              >
-                <track
-                  kind="captions"
-                  src=""
-                  srcLang="en"
-                  label="English captions"
-                />
-              </audio>
+              {audioPreviewUrl && (
+                <audio
+                  controls
+                  src={audioPreviewUrl}
+                  className="w-full max-w-md mx-auto"
+                >
+                  <track
+                    kind="captions"
+                    src=""
+                    srcLang="en"
+                    label="English captions"
+                  />
+                </audio>
+              )}
             </div>
           )}
         </div>
