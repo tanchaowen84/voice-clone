@@ -272,6 +272,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.1.7
         version: 2.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-siriwave:
+        specifier: ^3.1.0
+        version: 3.1.0(react@19.0.0)
       react-tweet:
         specifier: ^3.2.2
         version: 3.2.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -5029,6 +5032,11 @@ packages:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
+  react-siriwave@3.1.0:
+    resolution: {integrity: sha512-oQhwJ6aWHdKja7kn5wjgnKkYBaa4B4aOZBUUyS5rXhlRDiNj7TKNVM+g76YsB+T0XoZNc3iQ7dpGyqL00k1eZg==}
+    peerDependencies:
+      react: '>=16'
+
   react-smooth@4.0.4:
     resolution: {integrity: sha512-gnGKTpYwqL0Iii09gHobNolvX4Kiq4PKx6eWBCYYix+8cdw+cGo3do906l1NBPKkSWx1DghC1dlWG9L2uGd61Q==}
     peerDependencies:
@@ -5272,6 +5280,9 @@ packages:
 
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
+
+  siriwave@2.4.0:
+    resolution: {integrity: sha512-J9X/URPuwXw800mJnnTnEIaDn2n9ZXWEX827oRdIGMwOtFi2FF5Xet2ifQhXFLx7/SYmEQ2UOxtUZP6bUkNqeQ==}
 
   socket.io-adapter@2.5.5:
     resolution: {integrity: sha512-eLDQas5dzPgOWCk9GuuJC2lBqItuhKI4uxGgo9aIV7MYbk2h9Q6uULEh8WBzThoI7l+qU9Ast9fVUmkqPP9wYg==}
@@ -10856,6 +10867,11 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
+  react-siriwave@3.1.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      siriwave: 2.4.0
+
   react-smooth@4.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       fast-equals: 5.2.2
@@ -11241,6 +11257,8 @@ snapshots:
     dependencies:
       is-arrayish: 0.3.2
     optional: true
+
+  siriwave@2.4.0: {}
 
   socket.io-adapter@2.5.5:
     dependencies:

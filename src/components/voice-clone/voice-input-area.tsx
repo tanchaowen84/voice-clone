@@ -3,8 +3,8 @@
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
 import { FileUploader } from './file-uploader';
-import { VoiceRecorder } from './voice-recorder';
 
 /**
  * Voice Input Area Component
@@ -163,8 +163,8 @@ export function VoiceInputArea() {
     return (
       <div className="space-y-6">
         {inputMode === 'record' ? (
-          // Recording Interface
-          <VoiceRecorder />
+          // Enhanced Recording Interface with Siri Wave
+          <EnhancedVoiceRecorder />
         ) : (
           // Upload Interface
           <FileUploader />
