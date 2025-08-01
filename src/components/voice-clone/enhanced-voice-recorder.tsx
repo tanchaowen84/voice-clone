@@ -65,20 +65,41 @@ export function EnhancedVoiceRecorder() {
         <div className="relative">
           {/* Siri Wave Background */}
           <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1e293b,inset_-8px_-8px_16px_#475569] overflow-hidden">
+            {/* Enhanced Wave Background for Better Contrast */}
+            <div className="absolute inset-4 rounded-2xl bg-gradient-to-br from-white/50 to-slate-100/50 dark:from-slate-900/50 dark:to-slate-800/50" />
             {/* Siri Wave Animation */}
             <div className="h-32 flex items-center justify-center relative">
-              <SiriWave
-                theme="ios9"
-                color="#8b5cf6"
-                amplitude={isRecordingInProgress ? 2 : 0.5}
-                speed={isRecordingInProgress ? 0.3 : 0.1}
-                frequency={isRecordingInProgress ? 6 : 2}
-                width={400}
-                height={120}
-                autostart={true}
-                pixelDepth={0.02}
-                lerpSpeed={0.01}
-              />
+              {/* Primary Wave */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <SiriWave
+                  theme="ios9"
+                  color="#8b5cf6"
+                  amplitude={isRecordingInProgress ? 4 : 1.5}
+                  speed={isRecordingInProgress ? 0.2 : 0.05}
+                  frequency={isRecordingInProgress ? 8 : 4}
+                  width={400}
+                  height={120}
+                  autostart={true}
+                  pixelDepth={0.005}
+                  lerpSpeed={0.05}
+                />
+              </div>
+
+              {/* Secondary Wave for Enhanced Effect */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-60">
+                <SiriWave
+                  theme="ios9"
+                  color="#a78bfa"
+                  amplitude={isRecordingInProgress ? 2.5 : 1}
+                  speed={isRecordingInProgress ? 0.15 : 0.03}
+                  frequency={isRecordingInProgress ? 6 : 3}
+                  width={400}
+                  height={120}
+                  autostart={true}
+                  pixelDepth={0.008}
+                  lerpSpeed={0.03}
+                />
+              </div>
 
               {/* Central Microphone Button */}
               <div className="absolute inset-0 flex items-center justify-center">
