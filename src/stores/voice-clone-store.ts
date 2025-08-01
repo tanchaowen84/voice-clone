@@ -61,9 +61,17 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
   /**
    * Set the input mode (record or upload)
+   * Resets all audio-related state when switching modes for better UX
    */
   setInputMode: (mode) => {
-    set({ inputMode: mode, error: null });
+    set({
+      inputMode: mode,
+      currentStep: 'input',
+      audioFile: null,
+      recordedBlob: null,
+      generatedAudioUrl: null,
+      error: null,
+    });
   },
 
   /**
