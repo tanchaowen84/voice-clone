@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { FileUploader } from './file-uploader';
 import { VoiceRecorder } from './voice-recorder';
 
 /**
@@ -21,22 +22,11 @@ export function VoiceInputArea() {
     error,
     generateSpeech,
     reset,
-    setAudioFile,
   } = useVoiceCloneStore();
 
   const [textInput, setTextInput] = useState(
     'Transform your text into natural-sounding speech with AI voice cloning technology.'
   );
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Handle file upload
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setAudioFile(file);
-    }
-  };
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
@@ -169,34 +159,7 @@ export function VoiceInputArea() {
               <VoiceRecorder />
             ) : (
               // Upload Interface
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">📁</div>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Drag and drop an audio file or click to select
-                </p>
-
-                <div className="bg-muted/30 border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 hover:bg-muted/40 transition-colors">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="audio/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    size="lg"
-                    variant="outline"
-                    className="h-16 px-8 rounded-xl"
-                  >
-                    <Download className="mr-2 h-6 w-6" />
-                    Select Audio File
-                  </Button>
-                  <p className="text-sm text-muted-foreground mt-4">
-                    Supported formats: MP3, WAV, M4A, OGG
-                  </p>
-                </div>
-              </div>
+              <FileUploader />
             )}
           </CardContent>
         </Card>
