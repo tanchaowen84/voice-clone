@@ -1,8 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
 import { useState } from 'react';
@@ -24,9 +21,7 @@ export function VoiceInputArea() {
     reset,
   } = useVoiceCloneStore();
 
-  const [textInput, setTextInput] = useState(
-    'Transform your text into natural-sounding speech with AI voice cloning technology.'
-  );
+  const [textInput, setTextInput] = useState('');
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
@@ -46,6 +41,10 @@ export function VoiceInputArea() {
 
   const handleStartOver = () => {
     reset();
+    setTextInput('');
+  };
+
+  const handleDemoText = () => {
     setTextInput(
       'Transform your text into natural-sounding speech with AI voice cloning technology.'
     );
@@ -54,88 +53,119 @@ export function VoiceInputArea() {
   // Show text input interface when audio is ready
   if (currentStep === 'generate') {
     return (
-      <div className="space-y-6">
-        <Card className="border-2 shadow-xl bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Generate Speech with Your Voice
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <label className="text-lg font-semibold mb-3 block">
-                Enter text to convert to speech:
-              </label>
-              <Textarea
-                value={textInput}
-                onChange={(e) => setTextInput(e.target.value)}
-                placeholder="Type your message here..."
-                className="min-h-32 text-lg border-2 rounded-xl resize-none"
-                maxLength={500}
-              />
-              <div className="text-sm text-muted-foreground mt-2 text-right">
-                {textInput.length}/500 characters
+      <div className="space-y-8">
+        {/* Single Neumorphic Input Container with Embedded Elements */}
+        <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
+          <textarea
+            id="speech-text-input"
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
+            placeholder="Type your message here..."
+            className="w-full min-h-40 p-4 pr-44 pb-12 text-lg bg-transparent border-none outline-none resize-none placeholder:text-slate-400/60 dark:placeholder:text-slate-500/60 text-slate-700 dark:text-slate-300 rounded-2xl"
+            maxLength={200}
+          />
+
+          {/* Embedded Demo Text Button */}
+          <button
+            type="button"
+            onClick={handleDemoText}
+            className="absolute left-3 bottom-3 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-300 bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]"
+          >
+            Demo Text
+          </button>
+
+          {/* Embedded Character Count */}
+          <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
+            {textInput.length}/200 characters
+          </div>
+
+          {/* Embedded Neumorphic Generate Button */}
+          <button
+            type="button"
+            onClick={handleGenerateSpeech}
+            disabled={isGenerating || !textInput.trim()}
+            className={`
+              absolute right-3 bottom-3 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300
+              ${
+                isGenerating || !textInput.trim()
+                  ? 'bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
+                  : 'bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
+              }
+            `}
+          >
+            {isGenerating ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="hidden sm:inline">Generating...</span>
               </div>
+            ) : (
+              'Generate'
+            )}
+          </button>
+
+          {/* Error Display - Only show when there's an error */}
+          {error && (
+            <div className="absolute left-3 top-3 text-xs text-red-600 dark:text-red-400 font-medium">
+              {error}
+            </div>
+          )}
+        </div>
+
+        {/* Success Result - Neumorphic Design */}
+        {generatedAudioUrl && (
+          <div className="relative bg-gradient-to-br from-emerald-50 to-green-100 dark:from-emerald-950/30 dark:to-green-900/30 rounded-3xl p-8 shadow-[12px_12px_24px_#d1d5db,-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#1e293b,-12px_-12px_24px_#475569]">
+            {/* Success Header */}
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                🎉 Speech Generated Successfully!
+              </h3>
+              <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full mx-auto" />
             </div>
 
-            {error && (
-              <div className="bg-red-50 dark:bg-red-950/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-4">
-                <p className="text-red-800 dark:text-red-200">{error}</p>
-              </div>
-            )}
-
-            <Button
-              onClick={handleGenerateSpeech}
-              disabled={isGenerating || !textInput.trim()}
-              size="lg"
-              className="w-full h-16 text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="mr-3 h-6 w-6 animate-spin" />
-                  Generating Speech...
-                </>
-              ) : (
-                'Generate Speech'
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {generatedAudioUrl && (
-          <Card className="border-2 shadow-xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="text-center space-y-4">
-                <h3 className="text-xl font-bold text-green-800 dark:text-green-200">
-                  Speech Generated Successfully!
-                </h3>
-
+            {/* Neumorphic Audio Player Container */}
+            <div className="mb-8">
+              <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
                 <audio
                   controls
                   src={generatedAudioUrl}
-                  className="w-full max-w-md mx-auto"
+                  className="w-full max-w-md mx-auto [&::-webkit-media-controls-panel]:bg-transparent [&::-webkit-media-controls-play-button]:opacity-80 [&::-webkit-media-controls-timeline]:opacity-80"
                 >
+                  <track
+                    kind="captions"
+                    src=""
+                    srcLang="en"
+                    label="English captions"
+                  />
                   Your browser does not support the audio element.
                 </audio>
-
-                <div className="flex gap-4 justify-center">
-                  <Button
-                    onClick={handleDownload}
-                    variant="outline"
-                    size="lg"
-                    className="flex items-center gap-2"
-                  >
-                    <Download className="h-5 w-5" />
-                    Download Audio
-                  </Button>
-
-                  <Button onClick={handleStartOver} variant="outline" size="lg">
-                    Start Over
-                  </Button>
-                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-6 justify-center">
+              {/* Download Button */}
+              <button
+                type="button"
+                onClick={handleDownload}
+                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-300 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#1e293b,-6px_-6px_12px_#475569] hover:shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:hover:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] active:shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#1e293b,inset_-3px_-3px_6px_#475569] transition-all duration-200"
+              >
+                <Download className="h-5 w-5" />
+                Download Audio
+              </button>
+
+              {/* Start Over Button */}
+              <button
+                type="button"
+                onClick={handleStartOver}
+                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-semibold bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-300 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#1e293b,-6px_-6px_12px_#475569] hover:shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:hover:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] active:shadow-[inset_3px_3px_6px_#d1d5db,inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#1e293b,inset_-3px_-3px_6px_#475569] transition-all duration-200"
+              >
+                Start Over
+              </button>
+            </div>
+
+            {/* Subtle inner glow effect */}
+            <div className="absolute inset-6 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-emerald-500/10 to-green-500/10" />
+          </div>
         )}
       </div>
     );
