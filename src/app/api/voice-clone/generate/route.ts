@@ -17,9 +17,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate speech using the cloned voice
+    // Note: SDK uses camelCase, not snake_case like REST API
     const response = await client.tts.audio.speech({
       input: text,
       voiceId: voiceId,
+      audioFormat: 'mp3', // Explicitly set format
     });
 
     // Extract audio data from the response object
@@ -27,20 +29,18 @@ export async function POST(request: NextRequest) {
       throw new Error('No audio data received from Speechify API');
     }
 
-    // Convert base64 audio data to buffer
-    const audioBuffer = Buffer.from(response.audioData, 'base64');
-
     // Determine content type based on audio format
     const contentType =
       response.audioFormat === 'wav' ? 'audio/wav' : 'audio/mpeg';
-    const fileExtension = response.audioFormat === 'wav' ? 'wav' : 'mp3';
 
-    // Return the audio data
-    return new NextResponse(audioBuffer, {
-      headers: {
-        'Content-Type': contentType,
-        'Content-Disposition': `attachment; filename="generated-speech.${fileExtension}"`,
-      },
+    // Create data URL for frontend consumption
+    const audioUrl = `data:${contentType};base64,${response.audioData}`;
+
+    // Return JSON response as expected by frontend
+    return NextResponse.json({
+      audioUrl: audioUrl,
+      audioFormat: response.audioFormat,
+      billableCharacters: response.billableCharactersCount || 0,
     });
   } catch (error) {
     console.error('Speech generation error:', error);

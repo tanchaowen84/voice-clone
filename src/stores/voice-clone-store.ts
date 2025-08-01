@@ -17,18 +17,18 @@ export interface VoiceCloneState {
   // Interface state
   inputMode: InputMode;
   currentStep: AppStep;
-  
+
   // Audio data
   audioFile: File | null;
   recordedBlob: Blob | null;
-  
+
   // Generation state
   isGenerating: boolean;
   generatedAudioUrl: string | null;
-  
+
   // Error handling
   error: string | null;
-  
+
   // Actions
   setInputMode: (mode: InputMode) => void;
   setCurrentStep: (step: AppStep) => void;
@@ -117,13 +117,13 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
    */
   generateSpeech: async (text: string) => {
     const state = get();
-    
+
     try {
       set({ isGenerating: true, error: null });
 
       // Get audio data (either from recorded blob or uploaded file)
       let audioData: File;
-      
+
       if (state.recordedBlob) {
         // Convert blob to file
         audioData = new File([state.recordedBlob], 'recorded-voice.webm', {
@@ -137,11 +137,12 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       // First, create voice clone
       const formData = new FormData();
-      formData.append('audioFile', audioData);
-      formData.append('voiceName', `Voice_${Date.now()}`);
+      formData.append('audio', audioData); // Fixed: audioFile → audio
+      formData.append('name', `Voice_${Date.now()}`); // Fixed: voiceName → name
       formData.append('gender', 'notSpecified');
       formData.append('fullName', 'Anonymous User');
       formData.append('email', 'user@example.com');
+      formData.append('consent', 'true'); // Added: required consent field
 
       const createResponse = await fetch('/api/voice-clone/create', {
         method: 'POST',
@@ -174,11 +175,11 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       const { audioUrl } = await generateResponse.json();
       set({ generatedAudioUrl: audioUrl });
-
     } catch (error) {
       console.error('Speech generation error:', error);
-      set({ 
-        error: error instanceof Error ? error.message : 'Failed to generate speech' 
+      set({
+        error:
+          error instanceof Error ? error.message : 'Failed to generate speech',
       });
     } finally {
       set({ isGenerating: false });

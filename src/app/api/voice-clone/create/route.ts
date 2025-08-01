@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     const response = await client.tts.voices.create({
       sample: audioFile,
       name: voiceName,
-      gender: gender as 'male' | 'female',
+      gender: gender as 'male' | 'female' | 'notSpecified',
       consent: consentData,
     });
 
