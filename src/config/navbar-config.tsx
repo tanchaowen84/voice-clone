@@ -1,6 +1,5 @@
 'use client';
 
-import { websiteConfig } from '@/config/website';
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import { CookieIcon, FileTextIcon, ShieldCheckIcon } from 'lucide-react';
@@ -36,15 +35,6 @@ export function getNavbarLinks(): NestedMenuItem[] {
       external: false,
     },
   ];
-
-  // 条件性添加docs链接
-  if (websiteConfig.features.enableDocsPage) {
-    links.push({
-      title: t('docs.title'),
-      href: Routes.Docs,
-      external: false,
-    });
-  }
 
   links.push(
     // {

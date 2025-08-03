@@ -11,8 +11,6 @@ export enum Routes {
   Features = '/#features',
   Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
   Blog = '/blog',
-  Docs = '/docs',
-  Waitlist = '/waitlist',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',

@@ -157,7 +157,7 @@
       "signInWithGitHub": "Sign In with GitHub",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
-      "or": "Or continue with",
+      "or": "Continue with",
       "emailRequired": "Please enter your email",
       "passwordRequired": "Please enter your password"
     },
@@ -219,18 +219,7 @@
     "allPosts": "All Posts",
     "morePosts": "More Posts"
   },
-  "DocsPage": {
-    "toc": "Table of Contents",
-    "search": "Search docs",
-    "lastUpdate": "Last updated on",
-    "searchNoResult": "No results",
-    "previousPage": "Previous",
-    "nextPage": "Next",
-    "chooseLanguage": "Select language",
-    "title": "MkSaaS Docs",
-    "homepage": "Homepage",
-    "blog": "Blog"
-  },
+
   "Marketing": {
     "navbar": {
       "features": {
@@ -241,9 +230,6 @@
       },
       "blog": {
         "title": "Blog"
-      },
-      "docs": {
-        "title": "Docs"
       },
       "pages": {
         "title": "Pages",
@@ -297,8 +283,7 @@
       "resources": {
         "title": "Resources",
         "items": {
-          "blog": "Blog",
-          "docs": "Documentation"
+          "blog": "Blog"
         }
       },
       "legal": {

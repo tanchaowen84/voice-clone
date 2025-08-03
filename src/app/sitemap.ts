@@ -1,7 +1,6 @@
 import { websiteConfig } from '@/config/website';
 import { getLocalePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { source } from '@/lib/docs/source';
 import { allCategories, allPosts } from 'content-collections';
 import type { MetadataRoute } from 'next';
 import type { Locale } from 'next-intl';
@@ -17,7 +16,6 @@ function getEnabledStaticRoutes(): string[] {
     '/',
     '/pricing',
     '/blog',
-    '/waitlist',
     '/privacy',
     '/terms',
     '/cookie',
@@ -27,10 +25,6 @@ function getEnabledStaticRoutes(): string[] {
 
   // 条件性添加页面路由
   const conditionalRoutes: string[] = [];
-
-  if (websiteConfig.features.enableDocsPage) {
-    conditionalRoutes.push('/docs');
-  }
 
   // 条件性添加MagicUI页面路由
   if (websiteConfig.features.enableMagicUIPage) {
@@ -146,40 +140,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   );
 
-  // 条件性添加docs页面
-  if (websiteConfig.features.enableDocsPage) {
-    const docsParams = source.generateParams();
-    sitemapList.push(
-      ...docsParams.flatMap((param) =>
-        routing.locales.map((locale) => ({
-          url: getUrl(`/docs/${param.slug.join('/')}`, locale),
-          lastModified: new Date(),
-          priority: 0.8,
-          changeFrequency: 'weekly' as const,
-        }))
-      )
-    );
-  }
-
   return sitemapList;
 }
 
 function getUrl(href: Href, locale: Locale) {
   const pathname = getLocalePathname({ locale, href });
   return getBaseUrl() + pathname;
-}
-
-/**
- * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#sitemap
- * https://github.com/amannn/next-intl/blob/main/examples/example-app-router/src/app/sitemap.ts
- */
-function getEntries(href: Href) {
-  return routing.locales.map((locale) => ({
-    url: getUrl(href, locale),
-    alternates: {
-      languages: Object.fromEntries(
-        routing.locales.map((cur) => [cur, getUrl(href, cur)])
-      ),
-    },
-  }));
 }

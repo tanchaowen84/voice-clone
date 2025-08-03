@@ -1,6 +1,5 @@
 'use client';
 
-import { websiteConfig } from '@/config/website';
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -47,15 +46,6 @@ export function getFooterLinks(): NestedMenuItem[] {
           href: Routes.Blog,
           external: false,
         },
-        ...(websiteConfig.features.enableDocsPage
-          ? [
-              {
-                title: t('resources.items.docs'),
-                href: Routes.Docs,
-                external: false,
-              },
-            ]
-          : []),
       ],
     },
 

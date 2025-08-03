@@ -33,7 +33,6 @@ export const websiteConfig: WebsiteConfig = {
     enableUpgradeCard: true,
     enableAffonsoAffiliate: false,
     enablePromotekitAffiliate: false,
-    enableDocsPage: false,
     enableAIPages: false,
     enableMagicUIPage: false,
   },
