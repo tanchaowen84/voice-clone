@@ -72,7 +72,6 @@ export interface FeaturesConfig {
   enableDocsPage?: boolean;           // Whether to enable the docs page
   enableAIPages?: boolean;            // Whether to enable the AI pages
   enableMagicUIPage?: boolean;        // Whether to enable the MagicUI showcase page
-  enableBlocksPages?: boolean;        // Whether to enable the blocks pages
 }
 
 /**

@@ -19,7 +19,7 @@
       "tailwind.config.ts",
       "src/components/ui/*.tsx",
       "src/components/magicui/*.tsx",
-      "src/components/tailark/*.tsx",
+
       "src/app/[[]locale]/preview/**",
       "src/db/schema.ts",
       "src/payment/types.ts",

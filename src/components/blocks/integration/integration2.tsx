@@ -1,12 +1,11 @@
 import { Logo } from '@/components/layout/logo';
-import {
-  Gemini,
-  GooglePaLM,
-  MagicUI,
-  MediaWiki,
-  Replit,
-  VSCodium,
-} from '@/components/tailark/logos';
+// Placeholder logos - replace with actual integration logos
+const Gemini = () => <div className="w-8 h-8 bg-blue-500 rounded" />;
+const GooglePaLM = () => <div className="w-8 h-8 bg-red-500 rounded" />;
+const MagicUI = () => <div className="w-8 h-8 bg-purple-500 rounded" />;
+const MediaWiki = () => <div className="w-8 h-8 bg-green-500 rounded" />;
+const Replit = () => <div className="w-8 h-8 bg-orange-500 rounded" />;
+const VSCodium = () => <div className="w-8 h-8 bg-blue-600 rounded" />;
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';

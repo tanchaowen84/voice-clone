@@ -36,7 +36,6 @@ export const websiteConfig: WebsiteConfig = {
     enableDocsPage: false,
     enableAIPages: false,
     enableMagicUIPage: false,
-    enableBlocksPages: false,
   },
   routes: {
     defaultLoginRedirect: '/dashboard',
