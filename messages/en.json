@@ -641,22 +641,22 @@
       }
     },
     "demo": {
-      "title": "See FlowChart AI in Action",
-      "subtitle": "From Idea to Flowchart in Seconds",
-      "description": "Watch how FlowChart AI turns natural language prompts into precise, presentation-ready flowcharts — no design skills or manual effort needed.",
-      "tryItNow": "Use FlowChart AI Now",
+      "title": "See Voice Clone in Action",
+      "subtitle": "From Voice to Clone in Seconds",
+      "description": "Watch how Voice Clone turns your voice sample into natural-sounding speech generation — no recording studio or professional equipment needed.",
+      "tryItNow": "Try Voice Clone Now",
       "features": {
         "feature-1": {
-          "title": "Natural Language Input",
-          "description": "Simply describe your process in Language you like — no shapes, templates, or special tools required"
+          "title": "Simple Voice Recording",
+          "description": "Simply record your voice sample or upload an audio file — no professional equipment or studio setup required"
         },
         "feature-2": {
-          "title": "AI-Powered Generation",
-          "description": "FlowChart AI Automatically generates clean, logical diagrams based on your input"
+          "title": "AI-Powered Voice Cloning",
+          "description": "Voice Clone automatically analyzes and creates your personalized voice model using advanced AI voice cloning technology"
         },
         "feature-3": {
-          "title": "Instant Editing",
-          "description": "Customize and refine your diagram, Easily adjust elements, add details, and make it your own"
+          "title": "Instant Text-to-Speech",
+          "description": "Generate natural speech from any text using your cloned voice. Perfect quality, instant results, unlimited possibilities"
         }
       }
     },
