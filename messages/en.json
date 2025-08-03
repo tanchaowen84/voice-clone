@@ -773,25 +773,25 @@
       "secondaryButton": "See Demo"
     },
     "features": {
-      "title": "Features",
-      "subtitle": "AI-Powered Flowchart Creation",
-      "description": "FlowChart AI offers a comprehensive set of features designed to make diagramming effortless, intelligent, and collaborative.",
+      "title": "Powerful Voice Cloning Features",
+      "subtitle": "AI-Powered Voice Clone Technology",
+      "description": "Voice Clone offers a comprehensive set of features designed to make voice cloning effortless, intelligent, and professional.",
       "items": {
         "item-1": {
-          "title": "Natural Language to Diagram",
-          "description": "Describe your process or idea in plain language, and let AI instantly turn it into a professional flowchart. No design skills or technical jargon required—just explain your workflow and see it visualized."
+          "title": "Instant Voice Cloning",
+          "description": "Upload your voice sample and let AI instantly clone voice with remarkable accuracy. No technical skills or lengthy training required—just record your voice and see it transformed into a personalized AI voice model."
         },
         "item-2": {
-          "title": "Personal Workspace & Diagram Library",
-          "description": "Keep all your diagrams organized in one place. Our platform provides a personal workspace where you can access, manage, and continue editing your saved diagrams with ease."
+          "title": "Personal Voice Library & Management",
+          "description": "Keep all your voice clones organized in one secure workspace. Our platform provides a personal voice library where you can access, manage, and generate speech from your saved voice models with ease."
         },
         "item-3": {
-          "title": "Intuitive Drag-and-Drop Editor",
-          "description": "Easily refine and customize your diagram with a user-friendly canvas. Move elements, adjust connections, and apply styles with simple drag-and-drop—no learning curve."
+          "title": "Intuitive Text-to-Speech Interface",
+          "description": "Easily generate natural speech from any text using your cloned voice. Type your content, select your voice model, and get high-quality audio output with simple clicks—no learning curve."
         },
         "item-4": {
-          "title": "Export & Integrate Anywhere",
-          "description": "Export your diagrams in Excalidraw format for editing or backup. Support for PNG, SVG, and PDF exports is coming soon to broaden your sharing and presentation options."
+          "title": "Export & Share Anywhere",
+          "description": "Export your generated speech in high-quality audio formats for any use case. Support for multiple audio formats ensures compatibility with your favorite platforms and applications."
         }
       }
     },
