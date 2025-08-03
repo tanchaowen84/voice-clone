@@ -33,12 +33,6 @@ export enum Routes {
   SettingsSecurity = '/settings/security',
   SettingsNotifications = '/settings/notifications',
 
-  // AI routes
-  AIText = '/ai/text',
-  AIImage = '/ai/image',
-  AIVideo = '/ai/video',
-  AIAudio = '/ai/audio',
-
   // block routes
   MagicuiBlocks = '/magicui',
   HeroBlocks = '/blocks/hero-section',

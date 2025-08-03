@@ -93,6 +93,9 @@ export interface AnalyticsConfig {
 export interface AuthConfig {
   enableGoogleLogin?: boolean;       // Whether to enable google login
   enableGithubLogin?: boolean;       // Whether to enable github login
+  enablePasswordLogin?: boolean;     // Whether to enable password login
+  enableEmailVerification?: boolean; // Whether to enable email verification
+  enableForgotPassword?: boolean;    // Whether to enable forgot password
 }
 
 /**

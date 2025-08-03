@@ -235,17 +235,15 @@ export function Navbar({ scroll }: NavBarProps) {
                   </Button>
                 </LoginWrapper>
 
-                <LocaleLink
-                  href={Routes.Register}
-                  className={cn(
-                    buttonVariants({
-                      variant: 'default',
-                      size: 'sm',
-                    })
-                  )}
-                >
-                  {t('Common.signUp')}
-                </LocaleLink>
+                <LoginWrapper mode="modal" asChild>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="cursor-pointer"
+                  >
+                    {t('Common.signUp')}
+                  </Button>
+                </LoginWrapper>
               </div>
             )}
 

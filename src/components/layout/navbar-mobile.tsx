@@ -1,5 +1,6 @@
 'use client';
 
+import { LoginWrapper } from '@/components/auth/login-wrapper';
 import LocaleSelector from '@/components/layout/locale-selector';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
@@ -155,32 +156,26 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
         {/* action buttons */}
         {userLoggedIn ? null : (
           <div className="w-full flex flex-col gap-4 px-4">
-            <LocaleLink
-              href={Routes.Login}
-              onClick={onLinkClicked}
-              className={cn(
-                buttonVariants({
-                  variant: 'outline',
-                  size: 'lg',
-                }),
-                'w-full'
-              )}
-            >
-              {t('Common.login')}
-            </LocaleLink>
-            <LocaleLink
-              href={Routes.Register}
-              className={cn(
-                buttonVariants({
-                  variant: 'default',
-                  size: 'lg',
-                }),
-                'w-full'
-              )}
-              onClick={onLinkClicked}
-            >
-              {t('Common.signUp')}
-            </LocaleLink>
+            <LoginWrapper mode="modal" asChild>
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full cursor-pointer"
+                onClick={onLinkClicked}
+              >
+                {t('Common.login')}
+              </Button>
+            </LoginWrapper>
+            <LoginWrapper mode="modal" asChild>
+              <Button
+                variant="default"
+                size="lg"
+                className="w-full cursor-pointer"
+                onClick={onLinkClicked}
+              >
+                {t('Common.signUp')}
+              </Button>
+            </LoginWrapper>
           </div>
         )}
 

@@ -32,11 +32,6 @@ function getEnabledStaticRoutes(): string[] {
     conditionalRoutes.push('/docs');
   }
 
-  // 条件性添加AI页面路由
-  if (websiteConfig.features.enableAIPages) {
-    conditionalRoutes.push('/ai/text', '/ai/image', '/ai/video', '/ai/audio');
-  }
-
   // 条件性添加MagicUI页面路由
   if (websiteConfig.features.enableMagicUIPage) {
     conditionalRoutes.push('/magicui');

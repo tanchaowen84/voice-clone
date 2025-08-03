@@ -1,4 +1,5 @@
 import { LoginForm } from '@/components/auth/login-form';
+import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
@@ -6,6 +7,7 @@ import { Routes } from '@/routes';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -24,6 +26,11 @@ export async function generateMetadata({
 }
 
 export default async function LoginPage() {
+  // If password login is disabled, redirect to home page
+  if (!websiteConfig.auth.enablePasswordLogin) {
+    redirect('/');
+  }
+
   const t = await getTranslations('AuthPage.common');
 
   return (

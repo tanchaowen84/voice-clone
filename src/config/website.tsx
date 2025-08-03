@@ -48,6 +48,9 @@ export const websiteConfig: WebsiteConfig = {
   auth: {
     enableGoogleLogin: true,
     enableGithubLogin: true,
+    enablePasswordLogin: false,
+    enableEmailVerification: false,
+    enableForgotPassword: false,
   },
   i18n: {
     defaultLocale: 'en',

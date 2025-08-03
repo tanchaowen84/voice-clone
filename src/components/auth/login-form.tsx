@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { getUrlWithLocaleInCallbackUrl } from '@/lib/urls/urls';
@@ -112,99 +113,113 @@ export const LoginForm = ({
   return (
     <AuthCard
       headerLabel={t('welcomeBack')}
-      bottomButtonLabel={t('signUpHint')}
-      bottomButtonHref={`${Routes.Register}`}
+      bottomButtonLabel={
+        websiteConfig.auth.enablePasswordLogin ? t('signUpHint') : undefined
+      }
+      bottomButtonHref={
+        websiteConfig.auth.enablePasswordLogin
+          ? `${Routes.Register}`
+          : undefined
+      }
       className={cn('', className)}
     >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('email')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="name@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex justify-between items-center">
-                    <FormLabel>{t('password')}</FormLabel>
-                    <Button
-                      size="sm"
-                      variant="link"
-                      asChild
-                      className="px-0 font-normal text-muted-foreground"
-                    >
-                      <LocaleLink
-                        href={`${Routes.ForgotPassword}`}
-                        className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
-                      >
-                        {t('forgotPassword')}
-                      </LocaleLink>
-                    </Button>
-                  </div>
-                  <FormControl>
-                    <div className="relative">
+      {websiteConfig.auth.enablePasswordLogin && (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('email')}</FormLabel>
+                    <FormControl>
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder="******"
-                        type={showPassword ? 'text' : 'password'}
-                        className="pr-10"
+                        placeholder="name@example.com"
+                        type="email"
                       />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={togglePasswordVisibility}
-                        disabled={isPending}
-                      >
-                        {showPassword ? (
-                          <EyeOffIcon className="size-4 text-muted-foreground" />
-                        ) : (
-                          <EyeIcon className="size-4 text-muted-foreground" />
-                        )}
-                        <span className="sr-only">
-                          {showPassword ? t('hidePassword') : t('showPassword')}
-                        </span>
-                      </Button>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex justify-between items-center">
+                      <FormLabel>{t('password')}</FormLabel>
+                      {websiteConfig.auth.enableForgotPassword && (
+                        <Button
+                          size="sm"
+                          variant="link"
+                          asChild
+                          className="px-0 font-normal text-muted-foreground"
+                        >
+                          <LocaleLink
+                            href={`${Routes.ForgotPassword}`}
+                            className="text-xs hover:underline hover:underline-offset-4 hover:text-primary"
+                          >
+                            {t('forgotPassword')}
+                          </LocaleLink>
+                        </Button>
+                      )}
                     </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          disabled={isPending}
+                          placeholder="******"
+                          type={showPassword ? 'text' : 'password'}
+                          className="pr-10"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                          onClick={togglePasswordVisibility}
+                          disabled={isPending}
+                        >
+                          {showPassword ? (
+                            <EyeOffIcon className="size-4 text-muted-foreground" />
+                          ) : (
+                            <EyeIcon className="size-4 text-muted-foreground" />
+                          )}
+                          <span className="sr-only">
+                            {showPassword
+                              ? t('hidePassword')
+                              : t('showPassword')}
+                          </span>
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormError message={error || urlError || undefined} />
+            <FormSuccess message={success} />
+            <Button
+              disabled={isPending}
+              size="lg"
+              type="submit"
+              className="w-full flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {isPending && (
+                <Loader2Icon className="mr-2 size-4 animate-spin" />
               )}
-            />
-          </div>
-          <FormError message={error || urlError || undefined} />
-          <FormSuccess message={success} />
-          <Button
-            disabled={isPending}
-            size="lg"
-            type="submit"
-            className="w-full flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {isPending && <Loader2Icon className="mr-2 size-4 animate-spin" />}
-            <span>{t('signIn')}</span>
-          </Button>
-        </form>
-      </Form>
-      <div className="mt-4">
+              <span>{t('signIn')}</span>
+            </Button>
+          </form>
+        </Form>
+      )}
+      <div className={websiteConfig.auth.enablePasswordLogin ? 'mt-4' : ''}>
         <SocialLoginButton callbackUrl={callbackUrl} />
       </div>
     </AuthCard>
