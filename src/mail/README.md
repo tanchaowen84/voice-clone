@@ -23,7 +23,6 @@ src/mail/
 ├── templates/      # React-based email templates
 │   ├── contact-message.tsx
 │   ├── forgot-password.tsx
-│   ├── subscribe-newsletter.tsx
 │   └── verify-email.tsx
 ├── index.ts        # Main API and utility functions
 ├── types.ts        # TypeScript types and interfaces
@@ -63,7 +62,6 @@ Email templates are React components stored in the `templates` directory. Each t
 
 - `verifyEmail`: For email verification during user registration or email changes
 - `forgotPassword`: For password reset requests
-- `subscribeNewsletter`: For newsletter subscription confirmations
 - `contactMessage`: For contact form submissions
 
 ### Creating a New Template

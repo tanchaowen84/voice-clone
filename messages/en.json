@@ -144,19 +144,6 @@
     "backToHome": "Back to home"
   },
 
-  "Newsletter": {
-    "title": "Newsletter",
-    "subtitle": "Join the community",
-    "description": "Subscribe to our newsletter for the latest news and updates",
-    "form": {
-      "email": "Email",
-      "subscribe": "Subscribe",
-      "subscribing": "Subscribing...",
-      "success": "Subscribed successfully",
-      "fail": "Failed to subscribe",
-      "emailValidation": "Please enter a valid email address"
-    }
-  },
   "AuthPage": {
     "login": {
       "title": "Login",
@@ -452,22 +439,7 @@
         "retry": "Retry",
         "errorMessage": "Failed to get data"
       },
-      "notification": {
-        "title": "Notification",
-        "description": "Manage your notification preferences",
-        "newsletter": {
-          "title": "Newsletter Subscription",
-          "description": "Manage your newsletter subscription preferences",
-          "label": "Subscribe to newsletter",
-          "hint": "You can change your subscription preferences at any time",
-          "emailRequired": "Email is required to subscribe to the newsletter",
-          "subscribeSuccess": "Successfully subscribed to the newsletter",
-          "subscribeFail": "Failed to subscribe to the newsletter",
-          "unsubscribeSuccess": "Successfully unsubscribed from the newsletter",
-          "unsubscribeFail": "Failed to unsubscribe from the newsletter",
-          "error": "An error occurred while updating your subscription"
-        }
-      },
+
       "security": {
         "title": "Security",
         "description": "Manage your security settings",
@@ -530,10 +502,7 @@
       "resetPassword": "Reset password",
       "subject": "Reset your password"
     },
-    "subscribeNewsletter": {
-      "body": "Thank you for subscribing to the newsletter. We will keep you updated with the latest news and updates.",
-      "subject": "Thanks for subscribing"
-    },
+
     "contactMessage": {
       "name": "Name: {name}",
       "email": "Email: {email}",

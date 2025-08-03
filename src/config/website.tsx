@@ -73,10 +73,7 @@ export const websiteConfig: WebsiteConfig = {
     fromEmail: 'MkSaaS <support@mksaas.com>',
     supportEmail: 'MkSaaS <support@mksaas.com>',
   },
-  newsletter: {
-    provider: 'resend',
-    autoSubscribeAfterSignUp: true,
-  },
+
   storage: {
     provider: 's3',
   },

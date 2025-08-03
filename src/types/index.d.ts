@@ -12,7 +12,7 @@ export type WebsiteConfig = {
   i18n: I18nConfig;
   blog: BlogConfig;
   mail: MailConfig;
-  newsletter: NewsletterConfig;
+
   storage: StorageConfig;
   payment: PaymentConfig;
   price: PriceConfig;
@@ -122,13 +122,7 @@ export interface MailConfig {
   supportEmail?: string;             // The email address to send support emails to
 }
 
-/**
- * Newsletter configuration
- */
-export interface NewsletterConfig {
-  provider: 'resend';                 // The newsletter provider, only resend is supported for now
-  autoSubscribeAfterSignUp?: boolean; // Whether to automatically subscribe users to the newsletter after sign up
-}
+
 
 /**
  * Storage configuration

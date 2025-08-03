@@ -1,9 +1,8 @@
-import { websiteConfig } from '@/config/website';
 import { getDb } from '@/db/index';
 import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
-import { subscribe } from '@/newsletter';
+
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
@@ -114,21 +113,8 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
-          // Auto subscribe user to newsletter after sign up if enabled in website config
-          if (user.email && websiteConfig.newsletter.autoSubscribeAfterSignUp) {
-            try {
-              const subscribed = await subscribe(user.email);
-              if (!subscribed) {
-                console.error(
-                  `Failed to subscribe user ${user.email} to newsletter`
-                );
-              } else {
-                console.log(`User ${user.email} subscribed to newsletter`);
-              }
-            } catch (error) {
-              console.error('Newsletter subscription error:', error);
-            }
-          }
+          // User created successfully
+          console.log(`User ${user.email} created successfully`);
         },
       },
     },

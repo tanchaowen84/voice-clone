@@ -31,7 +31,6 @@ export enum Routes {
   SettingsProfile = '/settings/profile',
   SettingsBilling = '/settings/billing',
   SettingsSecurity = '/settings/security',
-  SettingsNotifications = '/settings/notifications',
 }
 
 /**
@@ -48,7 +47,6 @@ export const protectedRoutes = [
   Routes.SettingsProfile,
   Routes.SettingsBilling,
   Routes.SettingsSecurity,
-  Routes.SettingsNotifications,
 ];
 
 /**

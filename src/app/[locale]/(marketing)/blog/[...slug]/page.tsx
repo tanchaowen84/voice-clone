@@ -1,7 +1,7 @@
 import AllPostsButton from '@/components/blog/all-posts-button';
 import BlogGrid from '@/components/blog/blog-grid';
 import { BlogToc } from '@/components/blog/blog-toc';
-import { NewsletterCard } from '@/components/newsletter/newsletter-card';
+
 import { CustomMDXContent } from '@/components/shared/custom-mdx-content';
 import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
@@ -246,11 +246,6 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
           <BlogGrid posts={relatedPosts} />
         </div>
       )}
-
-      {/* newsletter */}
-      <div className="flex items-center justify-start my-8">
-        <NewsletterCard />
-      </div>
     </div>
   );
 }
