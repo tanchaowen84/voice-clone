@@ -7,8 +7,15 @@ export default function AiCapabilitiesSection() {
   const t = useTranslations('HomePage.aiCapabilities');
 
   return (
-    <section id="ai-capabilities" className="px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20">
+    <section
+      id="ai-capabilities"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(0, 242, 254, 0.10) 0%, rgba(79, 172, 254, 0.13) 50%, rgba(0, 201, 255, 0.11) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20 relative z-10">
         <HeaderSection
           title={t('title')}
           subtitle={t('subtitle')}

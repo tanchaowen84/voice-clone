@@ -5,8 +5,15 @@ export default function ComparisonSection() {
   const t = useTranslations('HomePage.comparison');
 
   return (
-    <section id="comparison" className="px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-16">
+    <section
+      id="comparison"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(0, 201, 255, 0.11) 0%, rgba(146, 254, 157, 0.09) 50%, rgba(0, 242, 96, 0.13) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-16 relative z-10">
         <HeaderSection
           title={t('title')}
           subtitle={t('subtitle')}

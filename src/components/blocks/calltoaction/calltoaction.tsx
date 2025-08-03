@@ -6,8 +6,15 @@ export default function CallToActionSection() {
   const t = useTranslations('HomePage.calltoaction');
 
   return (
-    <section id="call-to-action" className="px-4 py-24 bg-background">
-      <div className="mx-auto max-w-5xl px-6">
+    <section
+      id="call-to-action"
+      className="px-4 py-24 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(2, 27, 121, 0.11) 0%, rgba(5, 117, 230, 0.09) 50%, rgba(247, 141, 167, 0.15) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-5xl px-6 relative z-10">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
             {t('title')}

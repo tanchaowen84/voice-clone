@@ -52,9 +52,15 @@ export default function FeaturesSection() {
   };
 
   return (
-    <section id="features" className="px-4 py-16">
-      <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]" />
-      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
+    <section
+      id="features"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(118, 75, 162, 0.14) 0%, rgba(102, 126, 234, 0.12) 50%, rgba(79, 172, 254, 0.15) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20 relative z-10 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <HeaderSection
           title={t('title')}
           subtitle={t('subtitle')}

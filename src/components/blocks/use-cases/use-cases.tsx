@@ -7,8 +7,15 @@ export default function UseCasesSection() {
   const t = useTranslations('HomePage.useCases');
 
   return (
-    <section id="use-cases" className="px-4 py-16">
-      <div className="mx-auto max-w-5xl">
+    <section
+      id="use-cases"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(183, 148, 246, 0.16) 0%, rgba(102, 126, 234, 0.14) 50%, rgba(118, 75, 162, 0.16) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-5xl relative z-10">
         <HeaderSection
           title={t('title')}
           subtitle={t('subtitle')}

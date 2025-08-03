@@ -79,8 +79,15 @@ export default function FaqSection() {
   ];
 
   return (
-    <section id="faqs" className="px-4 py-16">
-      <div className="mx-auto max-w-4xl">
+    <section
+      id="faqs"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(0, 242, 96, 0.09) 0%, rgba(5, 117, 230, 0.11) 50%, rgba(2, 27, 121, 0.13) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-4xl relative z-10">
         <HeaderSection
           title={t('title')}
           titleAs="h2"

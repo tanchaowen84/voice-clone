@@ -8,8 +8,15 @@ export default function DemoSection() {
   const t = useTranslations('HomePage.demo');
 
   return (
-    <section id="demo" className="px-4 py-16">
-      <div className="mx-auto max-w-6xl">
+    <section
+      id="demo"
+      className="px-4 py-16 relative"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(142, 209, 252, 0.18) 0%, rgba(159, 122, 234, 0.15) 50%, rgba(183, 148, 246, 0.18) 100%)',
+      }}
+    >
+      <div className="mx-auto max-w-6xl relative z-10">
         <HeaderSection
           title={t('title')}
           subtitle={t('subtitle')}
