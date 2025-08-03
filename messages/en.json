@@ -845,40 +845,40 @@
       "subtitle": "Frequently Asked Questions",
       "items": {
         "item-1": {
-          "question": "Is there a free version of FlowChart AI?",
-          "answer": "Yes. FlowChart AI is open-sourced under the MIT License and available on GitHub. You can self-host and modify it freely. We also offer a free tier — every registered user can generate one AI flowchart per day for free."
+          "question": "Is there a free version of Voice Clone?",
+          "answer": "Yes. Voice Clone offers a generous free tier — every registered user can clone voice and generate speech content daily for free. Perfect for trying out our voice cloning technology."
         },
         "item-2": {
-          "question": "What formats can I export my diagrams to?",
-          "answer": "Currently, we support exporting flowcharts in Excalidraw format only. In future updates, we plan to add support for PDF, PNG, and SVG formats."
+          "question": "What audio formats can I export my cloned voice to?",
+          "answer": "Currently, we support exporting voice clones in high-quality audio formats. In future updates, we plan to add support for additional formats including MP3, WAV, and FLAC."
         },
         "item-3": {
-          "question": "Can I manage my flowcharts and access them later?",
-          "answer": "Yes. FlowChart AI provides a personal workspace where you can save, manage, and edit your flowcharts anytime, from anywhere."
+          "question": "Can I manage my voice clones and access them later?",
+          "answer": "Yes. Voice Clone provides a personal voice library where you can save, manage, and use your voice models anytime, from anywhere."
         },
         "item-4": {
-          "question": "What AI capabilities does FlowChart AI offer?",
-          "answer": "FlowChart AI allows users to describe their processes or workflows in natural language. The AI interprets the input, handles intelligent layout and diagram structure, and generates editable flowcharts accordingly."
+          "question": "What AI capabilities does Voice Clone offer?",
+          "answer": "Voice Clone uses advanced neural networks to analyze your voice characteristics and create personalized AI voice models. The AI handles voice synthesis, natural speech generation, and maintains consistent voice quality across all content."
         },
         "item-5": {
           "question": "How can I upgrade or change my plan?",
           "answer": "Yes. You can freely upgrade, downgrade, or cancel your plan through your account's billing settings."
         },
         "item-6": {
-          "question": "How complex of a flowchart can FlowChart AI generate?",
-          "answer": "There is no strict limit on the complexity of flowcharts. The actual capability depends on the content and structure of your input."
+          "question": "How long of audio content can Voice Clone generate?",
+          "answer": "There is no strict limit on the length of generated speech. The actual capability depends on your plan and the complexity of your text input."
         },
         "item-7": {
-          "question": "How do I write effective prompts?",
-          "answer": "Use clear natural language and structured steps. You may optionally upload reference images to aid AI understanding. FlowChart AI will then convert your input into a structured diagram."
+          "question": "How do I create effective voice clones?",
+          "answer": "Upload clear, high-quality voice samples with good audio quality. Speak naturally and include varied expressions. Voice Clone's AI will analyze your voice characteristics and create an accurate voice model."
         },
         "item-8": {
-          "question": "Can teams collaborate on flowcharts?",
-          "answer": "Currently, FlowChart AI is built for individual use. Team collaboration and shared workspaces are part of our future roadmap."
+          "question": "Can teams share voice clones and collaborate?",
+          "answer": "Currently, Voice Clone is built for individual use with personal voice libraries. Team collaboration and shared voice workspaces are part of our future roadmap."
         },
         "item-9": {
-          "question": "Can I generate diagrams from uploaded documents?",
-          "answer": "At the moment, FlowChart AI supports text and image inputs only. Support for document uploads including PDF, Markdown, and other formats is under active development."
+          "question": "Can I clone voice from existing audio files?",
+          "answer": "Yes! Voice Clone supports uploading existing audio files for voice cloning. We support various audio formats and can extract voice characteristics from your uploaded recordings."
         }
       }
     },
@@ -977,9 +977,9 @@
       }
     },
     "calltoaction": {
-      "title": "Ready to Create Amazing Flowcharts?",
-      "description": "Join thousands of users who are already creating professional diagrams with FlowChart AI",
-      "primaryButton": "Start Creating",
+      "title": "Ready to Clone Your Voice with AI?",
+      "description": "Join thousands of users who are already creating amazing voice clones with Voice Clone AI technology",
+      "primaryButton": "Start Voice Cloning",
       "secondaryButton": "Learn More"
     }
   },
