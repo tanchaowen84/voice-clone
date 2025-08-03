@@ -51,7 +51,7 @@ export default async function HomePage() {
 
         <ComparisonSection />
 
-        <PricingSection />
+        {/* <PricingSection /> */}
 
         <FaqSection />
 

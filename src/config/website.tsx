@@ -23,13 +23,9 @@ export const websiteConfig: WebsiteConfig = {
       logoDark: '/logo-dark.png',
     },
     social: {
-      github: 'https://github.com/MkSaaSHQ',
-      twitter: 'https://mksaas.link/twitter',
-      blueSky: 'https://mksaas.link/bsky',
-      discord: 'https://mksaas.link/discord',
-      mastodon: 'https://mksaas.link/mastodon',
-      linkedin: 'https://mksaas.link/linkedin',
-      youtube: 'https://mksaas.link/youtube',
+      github: 'https://github.com/voiceclone',
+      twitter: 'https://twitter.com/voiceclone',
+      discord: 'https://discord.gg/voiceclone',
     },
   },
   features: {

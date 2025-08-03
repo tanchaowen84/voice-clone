@@ -71,56 +71,56 @@ export default function ComparisonSection() {
             </ul>
           </div>
 
-          {/* FlowChart AI */}
+          {/* Voice Clone */}
           <div className="lg:pl-0">
             <div className="mb-8">
               <h3 className="text-2xl font-semibold">
-                {t('flowchartAi.title')}
+                {t('voiceclone.title')}
               </h3>
               <p className="mt-4 text-muted-foreground">
-                {t('flowchartAi.subtitle')}
+                {t('voiceclone.subtitle')}
               </p>
             </div>
 
             <ul className="space-y-4">
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-1')}
+                  {t('voiceclone.item-1')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-2')}
+                  {t('voiceclone.item-2')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-3')}
+                  {t('voiceclone.item-3')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-4')}
+                  {t('voiceclone.item-4')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-5')}
+                  {t('voiceclone.item-5')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-6')}
+                  {t('voiceclone.item-6')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-7')}
+                  {t('voiceclone.item-7')}
                 </span>
               </li>
               <li className="pb-4 border-b border-dashed">
                 <span className="text-sm leading-relaxed">
-                  {t('flowchartAi.item-8')}
+                  {t('voiceclone.item-8')}
                 </span>
               </li>
             </ul>

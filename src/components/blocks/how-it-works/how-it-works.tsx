@@ -95,7 +95,7 @@ export default function HowItWorksSection() {
                 <Image
                   src="https://cdn.flowchartai.org/static/blocks/howitworks1.png"
                   className="h-full w-full object-cover object-center"
-                  alt="How FlowChart AI Works - Step by Step Process"
+                  alt="How Voice Clone Works - Step by Step Process"
                   width={800}
                   height={600}
                 />

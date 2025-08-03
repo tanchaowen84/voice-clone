@@ -127,7 +127,7 @@ Body:
 - **File Handling**: Multipart form data for audio uploads
 - **Audio Processing**: Stream handling for audio generation
 - **Error Handling**: Comprehensive error handling and user feedback
-- **UI Design**: Modern card-based layout with responsive design, replacing the original FlowChart AI interface
+- **UI Design**: Modern card-based layout with responsive design, replacing the original template interface
 
 ## Troubleshooting
 

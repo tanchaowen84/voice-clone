@@ -1,8 +1,8 @@
 {
   "Metadata": {
-    "name": "FlowChart AI",
-    "title": "FlowChart AI – Smart AI Tool to Create Beautiful Flowcharts",
-    "description": "Design professional flowcharts faster with FlowChart AI. Draw, edit, and collaborate in real time using powerful AI tools—no design experience required."
+    "name": "Voice Clone",
+    "title": "Voice Clone – AI Voice Cloning Technology Platform",
+    "description": "Clone voice with advanced AI technology. Transform text into natural speech using your own voice. Create personalized voice models in seconds—no technical skills required."
   },
   "Common": {
     "login": "Log in",
@@ -344,7 +344,7 @@
       }
     },
     "footer": {
-      "tagline": "Create beautiful flowcharts with FlowChart AI - fast, intelligent, and effortless",
+      "tagline": "Clone voice with Voice Clone AI - fast, intelligent, and effortless",
       "product": {
         "title": "Product",
         "items": {
@@ -596,8 +596,8 @@
     }
   },
   "HomePage": {
-    "title": "MkSaaS",
-    "description": "Make AI SaaS in days, simply and effortlessly",
+    "title": "Voice Clone",
+    "description": "Clone voice with AI technology, simply and effortlessly",
     "hero": {
       "title": "Clone Voice with Lightning-Fast AI Technology",
       "description": "Voice Clone helps you transform text into natural-sounding speech using your own voice. Clone voice in seconds with advanced AI voice cloning technology—no technical skills required.",
@@ -721,7 +721,7 @@
         "item-7": "Expensive studio time and equipment costs",
         "item-8": "Platform-specific audio format compatibility issues"
       },
-      "flowchartAi": {
+      "voiceclone": {
         "title": "Voice Clone",
         "subtitle": "Fast, intelligent, and intuitive",
         "item-1": "Generate voice clones in seconds with AI",
@@ -1005,7 +1005,7 @@
   },
   "CanvasPage": {
     "title": "Canvas",
-    "description": "Create beautiful flowcharts with AI assistance - draw, edit, and collaborate on your diagrams",
-    "subtitle": "AI-Powered Flowchart Editor"
+    "description": "Create beautiful voice clones with AI assistance - record, clone, and generate speech",
+    "subtitle": "AI-Powered Voice Clone Studio"
   }
 }
