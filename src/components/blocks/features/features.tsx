@@ -143,14 +143,14 @@ export default function FeaturesSection() {
                 >
                   <Image
                     src={images[activeItem].image}
-                    className="max-w-full max-h-full object-contain dark:hidden"
+                    className="w-full h-full object-cover dark:hidden"
                     alt={images[activeItem].alt}
                     width={1207}
                     height={929}
                   />
                   <Image
                     src={images[activeItem].darkImage}
-                    className="max-w-full max-h-full object-contain dark:block hidden"
+                    className="w-full h-full object-cover dark:block hidden"
                     alt={images[activeItem].alt}
                     width={1207}
                     height={929}
