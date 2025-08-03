@@ -1,9 +1,12 @@
 'use client';
 
-import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
 import { NeumorphicModeSwitch } from '@/components/voice-clone/neumorphic-mode-switch';
+import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
+import { useTranslations } from 'next-intl';
 
 export default function HeroSection() {
+  const t = useTranslations('HomePage.hero');
+
   return (
     <>
       <main id="hero" className="overflow-hidden">
@@ -23,13 +26,12 @@ export default function HeroSection() {
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 {/* title with gradient */}
                 <h1 className="mt-8 text-balance text-4xl font-bricolage-grotesque lg:text-5xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
-                  Lightning-Fast AI Voice Cloning
+                  {t('title')}
                 </h1>
 
                 {/* description */}
                 <p className="mx-auto mt-6 max-w-5xl text-balance text-xl text-foreground leading-relaxed">
-                  Transform text prompts into stunning voice clones in seconds.
-                  Free to start, no login required.
+                  {t('description')}
                 </p>
               </div>
             </div>

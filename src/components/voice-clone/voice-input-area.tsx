@@ -183,10 +183,9 @@ export function VoiceInputArea() {
               Read this sample text aloud:
             </h3>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              "Hello everyone! I'm trying out this amazing voice cloning
-              technology. This sample will help create a high-quality voice
-              model that captures my unique speaking style and tone. The more
-              natural I sound, the better the results will be."
+              "Hello everyone! I'm trying out Voice Clone technology to create
+              my own voice model. It's really convenient and I'm excited to see
+              how it works!"
             </p>
           </div>
         )}
