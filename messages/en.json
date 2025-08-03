@@ -698,9 +698,9 @@
     "aiCapabilities": {
       "title": "Voice Clone AI Capabilities",
       "subtitle": "Smarter Voice Cloning Powered by Advanced AI",
-      "description": "Voice Clone uses state-of-the-art neural networks and voice synthesis models to turn your voice samples into perfect, natural-sounding speech generation—fast, accurate, and effortless.",
+      "description": "Voice Clone uses advanced AI technology and voice synthesis models to turn your voice samples into perfect, natural-sounding speech generation—fast, accurate, and effortless.",
       "capability-1": "Advanced Voice Analysis – Voice Clone understands unique voice characteristics and translates them into personalized AI voice models",
-      "capability-2": "Neural Voice Synthesis – Automatically generates natural-sounding speech with proper intonation and emotion",
+      "capability-2": "Advanced Voice Synthesis – Automatically generates natural-sounding speech with proper intonation and emotion",
       "capability-3": "AI-Powered Voice Cloning – Create and manage multiple voice models without complex training processes",
       "capability-4": "Multi-language Support – Clone voice and generate speech in multiple languages you're comfortable with",
       "capability-5": "Context-Aware Speech Generation – Voice Clone intelligently adjusts tone and pacing based on text content and context"
