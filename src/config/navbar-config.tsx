@@ -112,27 +112,6 @@ export function getNavbarLinks(): NestedMenuItem[] {
       title: t('pages.title'),
       items: [
         {
-          title: t('pages.items.about.title'),
-          description: t('pages.items.about.description'),
-          icon: <BuildingIcon className="size-4 shrink-0" />,
-          href: Routes.About,
-          external: false,
-        },
-        {
-          title: t('pages.items.contact.title'),
-          description: t('pages.items.contact.description'),
-          icon: <MailIcon className="size-4 shrink-0" />,
-          href: Routes.Contact,
-          external: false,
-        },
-        {
-          title: t('pages.items.changelog.title'),
-          description: t('pages.items.changelog.description'),
-          icon: <ListChecksIcon className="size-4 shrink-0" />,
-          href: Routes.Changelog,
-          external: false,
-        },
-        {
           title: t('pages.items.cookiePolicy.title'),
           description: t('pages.items.cookiePolicy.description'),
           icon: <CookieIcon className="size-4 shrink-0" />,

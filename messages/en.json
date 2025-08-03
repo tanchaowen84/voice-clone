@@ -143,41 +143,7 @@
     "tryAgain": "Try again",
     "backToHome": "Back to home"
   },
-  "AboutPage": {
-    "title": "About",
-    "description": "This is MkSaaS, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better.",
-    "authorName": "MkSaaS",
-    "authorBio": "AI SaaS Boilerplate",
-    "introduction": "👋 Hi there! This is MkSaaS, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better. If you have any questions, welcome to contact me.",
-    "talkWithMe": "Talk with me",
-    "followMe": "Follow me on X"
-  },
-  "ChangelogPage": {
-    "title": "Changelog",
-    "description": "Stay up to date with the latest changes in our product",
-    "subtitle": "Stay up to date with the latest changes in our product"
-  },
-  "ContactPage": {
-    "title": "Contact",
-    "description": "We'll help you find the right plan for your business",
-    "subtitle": "We'll help you find the right plan for your business",
-    "form": {
-      "title": "Contact Us",
-      "description": "If you have any questions or feedback, please reach out to our team",
-      "name": "Name",
-      "email": "Email",
-      "message": "Message",
-      "submit": "Submit",
-      "submitting": "Submitting...",
-      "success": "Message sent successfully",
-      "fail": "Failed to send message",
-      "nameMinLength": "Name must be at least 3 characters",
-      "nameMaxLength": "Name must not exceed 30 characters",
-      "emailValidation": "Please enter a valid email address",
-      "messageMinLength": "Message must be at least 10 characters",
-      "messageMaxLength": "Message must not exceed 500 characters"
-    }
-  },
+
   "Newsletter": {
     "title": "Newsletter",
     "subtitle": "Join the community",
@@ -295,18 +261,6 @@
       "pages": {
         "title": "Pages",
         "items": {
-          "about": {
-            "title": "About",
-            "description": "Learn more about our company and mission"
-          },
-          "contact": {
-            "title": "Contact",
-            "description": "Get in touch with our team"
-          },
-          "changelog": {
-            "title": "Changelog",
-            "description": "See what's new in our latest updates"
-          },
           "cookiePolicy": {
             "title": "Cookie Policy",
             "description": "Learn about our cookie usage and privacy"
@@ -357,15 +311,7 @@
         "title": "Resources",
         "items": {
           "blog": "Blog",
-          "docs": "Documentation",
-          "changelog": "Changelog"
-        }
-      },
-      "company": {
-        "title": "Company",
-        "items": {
-          "about": "About",
-          "contact": "Contact"
+          "docs": "Documentation"
         }
       },
       "legal": {

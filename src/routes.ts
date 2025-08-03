@@ -12,10 +12,7 @@ export enum Routes {
   Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
   Blog = '/blog',
   Docs = '/docs',
-  About = '/about',
-  Contact = '/contact',
   Waitlist = '/waitlist',
-  Changelog = '/changelog',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
@@ -60,7 +57,6 @@ export enum Routes {
   LoginBlocks = '/blocks/login',
   SignupBlocks = '/blocks/sign-up',
   ForgotPasswordBlocks = '/blocks/forgot-password',
-  ContactBlocks = '/blocks/contact',
 }
 
 /**

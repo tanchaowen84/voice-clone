@@ -567,20 +567,6 @@ export const blocks: Block[] = [
     preview: '/preview/forgot-password/two',
     // code: loadCode('app/preview/forgot-password/two/page.tsx'),
   },
-  {
-    slug: 'contact',
-    title: 'one',
-    category: 'contact',
-    preview: '/preview/contact/one',
-    // code: loadCode('app/preview/contact/one/page.tsx'),
-  },
-  {
-    slug: 'contact',
-    title: 'two',
-    category: 'contact',
-    preview: '/preview/contact/two',
-    // code: loadCode('app/preview/contact/two/page.tsx'),
-  },
 ];
 
 export const categories = [...new Set(blocks.map((b) => b.category))];
