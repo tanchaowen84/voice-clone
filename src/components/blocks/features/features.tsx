@@ -30,24 +30,24 @@ export default function FeaturesSection() {
 
   const images = {
     'item-1': {
-      image: 'https://cdn.flowchartai.org/static/blocks/feature1.png',
-      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature1.png',
-      alt: 'Product Feature One',
+      image: '/features1.png',
+      darkImage: '/features1.png',
+      alt: 'Voice Clone Feature One',
     },
     'item-2': {
-      image: 'https://cdn.flowchartai.org/static/blocks/feature2.png',
-      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature2.png',
-      alt: 'Product Feature Two',
+      image: '/features2.png',
+      darkImage: '/features2.png',
+      alt: 'Voice Clone Feature Two',
     },
     'item-3': {
-      image: 'https://cdn.flowchartai.org/static/blocks/feature3.png',
-      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature3.png',
-      alt: 'Product Feature Three',
+      image: '/features3.png',
+      darkImage: '/features3.png',
+      alt: 'Voice Clone Feature Three',
     },
     'item-4': {
-      image: 'https://cdn.flowchartai.org/static/blocks/feature4.png',
-      darkImage: 'https://cdn.flowchartai.org/static/blocks/feature4.png',
-      alt: 'Product Feature Four',
+      image: '/features4.png',
+      darkImage: '/features4.png',
+      alt: 'Voice Clone Feature Four',
     },
   };
 

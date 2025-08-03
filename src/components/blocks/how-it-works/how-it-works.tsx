@@ -100,7 +100,7 @@ export default function HowItWorksSection() {
             <div className="bg-linear-to-b aspect-[4/3] relative rounded-2xl from-zinc-300 to-transparent p-px dark:from-zinc-700">
               <div className="h-full w-full rounded-[15px] bg-gradient-to-br from-muted/50 to-background overflow-hidden">
                 <Image
-                  src="https://cdn.flowchartai.org/static/blocks/howitworks1.png"
+                  src="/howitworks.png"
                   className="h-full w-full object-cover object-center"
                   alt="How Voice Clone Works - Step by Step Process"
                   width={800}

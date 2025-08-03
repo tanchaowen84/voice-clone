@@ -5,7 +5,18 @@ const CACHE_NAME = 'cnblocks-iframe-cache-v1'
 const URLS_TO_CACHE = [
     // Default assets that should be cached
     '/favicon.ico',
-    // Images used in iframes
+    '/favicon-16x16.png',
+    '/favicon-32x32.png',
+    '/logo.png',
+    '/logo-dark.png',
+    // VoiceClone specific images
+    '/features1.png',
+    '/features2.png',
+    '/features3.png',
+    '/features4.png',
+    '/howitworks.png',
+    '/aicapabilities.png',
+    // Legacy images (can be removed if not used elsewhere)
     '/payments.png',
     '/payments-light.png',
     '/origin-cal.png',

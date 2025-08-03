@@ -50,7 +50,7 @@ export function constructMetadata({
     icons: {
       icon: '/favicon.ico',
       shortcut: '/favicon-32x32.png',
-      apple: '/apple-touch-icon.png',
+      apple: '/favicon-16x16.png',
     },
     metadataBase: new URL(getBaseUrl()),
     manifest: `${getBaseUrl()}/manifest.webmanifest`,
