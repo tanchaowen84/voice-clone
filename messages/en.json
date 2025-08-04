@@ -57,66 +57,53 @@
   "PricePlans": {
     "free": {
       "name": "Free",
-      "description": "Start exploring AI-powered flowchart generation — for free, forever.",
+      "description": "Perfect for trying out our voice cloning technology",
       "features": {
-        "feature-1": "1 AI request per day",
-        "feature-2": "AI-assisted generation and editing",
-        "feature-3": "Unlimited diagram storage",
-        "feature-4": "Text and image input supported",
-        "feature-5": "Community support"
+        "feature-1": "1,000 characters per day",
+        "feature-2": "100 characters per request",
+        "feature-3": "Personal use only",
+        "feature-4": "Standard MP3 quality",
+        "feature-5": "15-second wait time",
+        "feature-6": "Community support"
       },
       "limits": {
-        "limit-1": "1 AI request per day",
-        "limit-2": "No technical support",
-        "limit-3": "Standard processing speed"
+        "limit-1": "1,000 characters per day",
+        "limit-2": "No commercial use",
+        "limit-3": "15-second wait time"
       }
     },
-    "hobby": {
-      "name": "Hobby",
-      "description": "Great for individuals who need more AI requests and light technical assistance.",
+    "basic": {
+      "name": "Basic",
+      "description": "Ideal for content creators and small businesses",
       "features": {
-        "feature-1": "500 AI requests per month",
-        "feature-2": "Full access to AI agent for generation and editing",
-        "feature-3": "Unlimited diagram storage",
-        "feature-4": "Text and image input supported",
-        "feature-5": "Email support (24–48h response, max 7 days)",
-        "feature-6": "All generated content belongs to the user"
+        "feature-1": "100,000 characters per month",
+        "feature-2": "1,000 characters per request",
+        "feature-3": "Commercial use allowed",
+        "feature-4": "Instant generation",
+        "feature-5": "High quality MP3",
+        "feature-6": "Email support"
       },
       "limits": {
-        "limit-1": "No priority support",
+        "limit-1": "100,000 characters per month",
         "limit-2": "Standard processing speed"
-      }
-    },
-    "professional": {
-      "name": "Professional",
-      "description": "Perfect for power users and professionals who want faster response and priority support.",
-      "features": {
-        "feature-1": "1000 AI requests per month",
-        "feature-2": "Priority AI processing",
-        "feature-3": "Unlimited diagram storage",
-        "feature-4": "Real-time AI-assisted editing",
-        "feature-5": "Email & technical support (under 24h, max 48h)",
-        "feature-6": "Text and image input supported",
-        "feature-7": "All generated content belongs to the user"
-      },
-      "limits": {
-        "limit-1": "For advanced or customized service needs, please contact our team directly",
-        "limit-2": "Does not include API access or enterprise features"
       }
     },
     "pro": {
       "name": "Pro",
-      "description": "Advanced features for professional users and teams.",
+      "description": "Perfect for professional teams and heavy usage",
       "features": {
-        "feature-1": "Unlimited AI requests",
-        "feature-2": "Priority processing and support",
-        "feature-3": "Advanced collaboration tools",
-        "feature-4": "Custom integrations",
-        "feature-5": "Enterprise-grade security"
+        "feature-1": "500,000 characters per month",
+        "feature-2": "2,000 characters per request",
+        "feature-3": "Commercial use allowed",
+        "feature-4": "Instant generation",
+        "feature-5": "High quality MP3 + WAV",
+        "feature-6": "Multiple audio formats",
+        "feature-7": "Priority processing",
+        "feature-8": "Priority email support"
       },
       "limits": {
-        "limit-1": "Advanced features require technical setup",
-        "limit-2": "Enterprise support available separately"
+        "limit-1": "500,000 characters per month",
+        "limit-2": "Priority processing included"
       }
     },
     "lifetime": {

@@ -126,40 +126,35 @@ export const websiteConfig: WebsiteConfig = {
       // },
 
       // ========== Creem Configuration ==========
-      pro: {
-        id: 'pro',
+      basic: {
+        id: 'basic',
         prices: [
           {
             type: PaymentTypes.SUBSCRIPTION,
-            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_MONTHLY!,
-            amount: 990,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BASIC_MONTHLY!,
+            amount: 1000, // $10.00
             currency: 'USD',
             interval: PlanIntervals.MONTH,
-          },
-          {
-            type: PaymentTypes.SUBSCRIPTION,
-            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_YEARLY!,
-            amount: 9900,
-            currency: 'USD',
-            interval: PlanIntervals.YEAR,
           },
         ],
         isFree: false,
         isLifetime: false,
         recommended: true,
       },
-      lifetime: {
-        id: 'lifetime',
+      pro: {
+        id: 'pro',
         prices: [
           {
-            type: PaymentTypes.ONE_TIME,
-            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_LIFETIME!,
-            amount: 19900,
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_MONTHLY!,
+            amount: 2500, // $25.00
             currency: 'USD',
+            interval: PlanIntervals.MONTH,
           },
         ],
         isFree: false,
-        isLifetime: true,
+        isLifetime: false,
+        recommended: false,
       },
     },
   },

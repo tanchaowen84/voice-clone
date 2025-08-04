@@ -16,6 +16,18 @@ export async function getDb() {
   return db;
 }
 
+// Export schema tables for easy access
+export const {
+  user,
+  session,
+  account,
+  verification,
+  payment,
+  creditsHistory,
+  userUsage,
+  monthlyUsage,
+} = schema;
+
 /**
  * Connect to Neon Database
  * https://orm.drizzle.team/docs/tutorials/drizzle-with-neon

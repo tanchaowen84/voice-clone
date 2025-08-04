@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp, integer, jsonb, date, uuid, unique, index } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -18,7 +18,12 @@ export const user = pgTable("user", {
 	country: text('country'),
 	credits: integer('credits').default(0),
 	metadata: jsonb('metadata').default('{}'),
-});
+	// Subscription system fields
+	planId: text('plan_id').default('free'),
+	planExpiresAt: timestamp('plan_expires_at'),
+}, (table) => ({
+	planIdIdx: index('user_plan_id_idx').on(table.planId),
+}));
 
 export const session = pgTable("session", {
 	id: text("id").primaryKey(),
@@ -88,3 +93,33 @@ export const creditsHistory = pgTable("credits_history", {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	metadata: jsonb('metadata').default('{}'),
 });
+
+// 用户每日使用统计表 (用于免费用户)
+export const userUsage = pgTable("user_usage", {
+	id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	usageDate: date('usage_date').notNull(),
+	charactersUsed: integer('characters_used').notNull().default(0),
+	requestsCount: integer('requests_count').notNull().default(0),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+	userDateIdx: index('user_usage_user_date_idx').on(table.userId, table.usageDate),
+	dateIdx: index('user_usage_date_idx').on(table.usageDate),
+	uniqueUserDate: unique('unique_user_daily_usage').on(table.userId, table.usageDate),
+}));
+
+// 用户每月使用统计表 (用于付费用户)
+export const monthlyUsage = pgTable("monthly_usage", {
+	id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+	monthYear: text('month_year').notNull(), // Format: 'YYYY-MM'
+	charactersUsed: integer('characters_used').notNull().default(0),
+	requestsCount: integer('requests_count').notNull().default(0),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+	userMonthIdx: index('monthly_usage_user_month_idx').on(table.userId, table.monthYear),
+	monthIdx: index('monthly_usage_month_idx').on(table.monthYear),
+	uniqueUserMonth: unique('unique_user_monthly_usage').on(table.userId, table.monthYear),
+}));
