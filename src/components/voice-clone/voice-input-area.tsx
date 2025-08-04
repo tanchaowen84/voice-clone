@@ -1,5 +1,7 @@
 'use client';
 
+import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
+import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
 import { useState } from 'react';
@@ -21,6 +23,7 @@ export function VoiceInputArea() {
     reset,
   } = useVoiceCloneStore();
 
+  const { waitingState } = useSubscriptionStore();
   const [textInput, setTextInput] = useState('');
 
   const handleGenerateSpeech = async () => {
@@ -86,17 +89,26 @@ export function VoiceInputArea() {
           <button
             type="button"
             onClick={handleGenerateSpeech}
-            disabled={isGenerating || !textInput.trim()}
+            disabled={
+              isGenerating || !textInput.trim() || waitingState.isWaiting
+            }
             className={`
               absolute right-3 bottom-3 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300
               ${
-                isGenerating || !textInput.trim()
+                isGenerating || !textInput.trim() || waitingState.isWaiting
                   ? 'bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
                   : 'bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
               }
             `}
           >
-            {isGenerating ? (
+            {waitingState.isWaiting ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="hidden sm:inline">
+                  Wait {waitingState.remainingTime}s
+                </span>
+              </div>
+            ) : isGenerating ? (
               <div className="flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <span className="hidden sm:inline">Generating...</span>
@@ -113,6 +125,9 @@ export function VoiceInputArea() {
             </div>
           )}
         </div>
+
+        {/* Free User Waiting Component */}
+        {waitingState.isWaiting && <FreeUserWaiting />}
 
         {/* Success Result - Single Neumorphic Container */}
         {generatedAudioUrl && (

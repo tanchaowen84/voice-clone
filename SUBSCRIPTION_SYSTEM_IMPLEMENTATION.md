@@ -85,7 +85,7 @@ CREATE TABLE monthly_usage (
 - 创建 `src/components/subscription/usage-progress.tsx`
 - 实现配额进度条
 - 添加使用量警告提示
-- 集成到主界面
+- 集成到dashboard
 
 #### 8. 升级引导界面
 - 创建 `src/components/subscription/limit-reached-modal.tsx`

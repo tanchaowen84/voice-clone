@@ -30,6 +30,7 @@ export interface VoiceCloneState {
   // Generation state
   isGenerating: boolean;
   generatedAudioUrl: string | null;
+  pendingAudioUrl: string | null; // 暂存的音频URL，等待完成后显示
 
   // Error handling
   error: string | null;
@@ -43,6 +44,7 @@ export interface VoiceCloneState {
   setGeneratedAudioUrl: (url: string | null) => void;
   setError: (error: string | null) => void;
   generateSpeech: (text: string) => Promise<void>;
+  showPendingResult: () => void;
   reset: () => void;
 }
 
@@ -58,6 +60,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
   recordedBlob: null,
   isGenerating: false,
   generatedAudioUrl: null,
+  pendingAudioUrl: null,
   error: null,
 
   /**
@@ -130,9 +133,21 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
    */
   generateSpeech: async (text: string) => {
     const state = get();
+    const subscriptionStore = useSubscriptionStore.getState();
+
+    // 检查是否在等待状态中
+    if (subscriptionStore.waitingState.isWaiting) {
+      console.log(
+        '⏳ [Voice Clone Store] Cannot generate speech while waiting'
+      );
+      set({
+        error: `Please wait ${subscriptionStore.waitingState.remainingTime} seconds before generating again.`,
+      });
+      return;
+    }
 
     try {
-      set({ isGenerating: true, error: null });
+      set({ isGenerating: true, error: null, generatedAudioUrl: null });
 
       // Get audio data (either from recorded blob or uploaded file)
       let audioData: File;
@@ -182,6 +197,11 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       }
 
       const { voiceId } = await createResponse.json();
+
+      // 在发送语音生成请求前，先检查用户计划并预先启动等待状态
+      console.log(
+        '🔍 [Voice Clone Store] Pre-checking user plan for waiting...'
+      );
 
       // Then generate speech with the created voice
       const generateResponse = await fetch('/api/voice-clone/generate', {
@@ -233,9 +253,33 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
         subscriptionStore.updateUsageAfterGeneration(
           responseData.billableCharacters || text.length
         );
-      }
 
-      set({ generatedAudioUrl: audioUrl });
+        // 如果是免费用户且有等待时间，启动等待状态并暂存结果
+        if (usageInfo.waitTime && usageInfo.waitTime > 0) {
+          console.log(
+            `⏳ [Voice Clone Store] Starting wait time: ${usageInfo.waitTime} seconds, audio result will be shown after waiting`
+          );
+
+          // 启动等待状态
+          subscriptionStore.startWaiting(usageInfo.waitTime);
+
+          // 暂存音频结果，等待完成后再显示
+          set({
+            pendingAudioUrl: audioUrl,
+            generatedAudioUrl: null, // 隐藏结果直到等待完成
+          });
+
+          console.log(
+            '⏳ [Voice Clone Store] Audio result stored, waiting for countdown to complete...'
+          );
+        } else {
+          // 付费用户或无等待时间，直接显示结果
+          set({ generatedAudioUrl: audioUrl });
+        }
+      } else {
+        // 没有使用量信息，直接显示结果
+        set({ generatedAudioUrl: audioUrl });
+      }
     } catch (error) {
       console.error('Speech generation error:', error);
       set({
@@ -258,7 +302,20 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       recordedBlob: null,
       isGenerating: false,
       generatedAudioUrl: null,
+      pendingAudioUrl: null,
       error: null,
     });
+  },
+
+  // 显示等待完成后的结果
+  showPendingResult: () => {
+    const state = get();
+    if (state.pendingAudioUrl) {
+      console.log('✅ [Voice Clone Store] Showing pending audio result');
+      set({
+        generatedAudioUrl: state.pendingAudioUrl,
+        pendingAudioUrl: null,
+      });
+    }
   },
 }));

@@ -1,14 +1,14 @@
 /**
  * 订阅状态管理 Store
- * 
+ *
  * 使用 Zustand 管理用户订阅信息、使用量状态和限制检查结果
  */
 
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 import type { PlanId, SubscriptionPlan } from '@/config/subscription-config';
 import { getPlanConfig } from '@/config/subscription-config';
 import type { UsageCheckResult, UserUsageStats } from '@/types/subscription';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 /**
  * 用户订阅信息
@@ -41,17 +41,17 @@ export interface UsageInfo {
 export interface SubscriptionState {
   // 订阅信息
   subscription: UserSubscriptionInfo | null;
-  
+
   // 使用量信息
   usage: UsageInfo | null;
-  
+
   // 最后一次检查结果
   lastUsageCheck: UsageCheckResult | null;
-  
+
   // 加载状态
   isLoading: boolean;
   error: string | null;
-  
+
   // 等待状态 (免费用户)
   waitingState: {
     isWaiting: boolean;
@@ -65,18 +65,18 @@ export interface SubscriptionState {
   setLastUsageCheck: (result: UsageCheckResult | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   // 等待相关
   startWaiting: (waitTime: number) => void;
   stopWaiting: () => void;
   updateWaitingTime: (remainingTime: number) => void;
-  
+
   // 使用量更新
   updateUsageAfterGeneration: (charactersUsed: number) => void;
-  
+
   // 重置状态
   reset: () => void;
-  
+
   // 计算方法
   calculateUsagePercentage: () => number;
   isNearUsageLimit: () => boolean;
@@ -104,7 +104,10 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
       // 设置订阅信息
       setSubscription: (subscription) => {
-        console.log('📋 [Subscription Store] Setting subscription:', subscription);
+        console.log(
+          '📋 [Subscription Store] Setting subscription:',
+          subscription
+        );
         set({ subscription, error: null });
       },
 
@@ -116,7 +119,10 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
       // 设置最后检查结果
       setLastUsageCheck: (result) => {
-        console.log('🔍 [Subscription Store] Setting last usage check:', result);
+        console.log(
+          '🔍 [Subscription Store] Setting last usage check:',
+          result
+        );
         set({ lastUsageCheck: result });
       },
 
@@ -133,7 +139,9 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
       // 开始等待
       startWaiting: (waitTime) => {
-        console.log(`⏳ [Subscription Store] Starting wait: ${waitTime} seconds`);
+        console.log(
+          `⏳ [Subscription Store] Starting wait: ${waitTime} seconds`
+        );
         set({
           waitingState: {
             isWaiting: true,
@@ -153,6 +161,20 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             totalWaitTime: 0,
           },
         });
+
+        // 通知voice-clone-store显示等待的结果
+        // 使用setTimeout确保状态更新完成后再触发
+        setTimeout(() => {
+          // 动态导入避免循环依赖
+          import('@/stores/voice-clone-store').then(
+            ({ useVoiceCloneStore }) => {
+              const voiceStore = useVoiceCloneStore.getState();
+              if (voiceStore.showPendingResult) {
+                voiceStore.showPendingResult();
+              }
+            }
+          );
+        }, 100);
       },
 
       // 更新等待时间
@@ -165,7 +187,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
               remainingTime: Math.max(0, remainingTime),
             },
           });
-          
+
           // 如果时间到了，自动停止等待
           if (remainingTime <= 0) {
             get().stopWaiting();
@@ -180,9 +202,11 @@ export const useSubscriptionStore = create<SubscriptionState>()(
           const newUsage = state.usage.currentUsage + charactersUsed;
           const newRemainingQuota = Math.max(0, state.usage.limit - newUsage);
           const newUsagePercentage = (newUsage / state.usage.limit) * 100;
-          
-          console.log(`📈 [Subscription Store] Updating usage: +${charactersUsed} chars, new total: ${newUsage}/${state.usage.limit}`);
-          
+
+          console.log(
+            `📈 [Subscription Store] Updating usage: +${charactersUsed} chars, new total: ${newUsage}/${state.usage.limit}`
+          );
+
           set({
             usage: {
               ...state.usage,
@@ -228,27 +252,30 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       // 是否可以使用服务
       canUseService: (textLength) => {
         const state = get();
-        
+
         // 检查是否在等待中
         if (state.waitingState.isWaiting) {
           return false;
         }
-        
+
         // 检查订阅和使用量
         if (!state.subscription || !state.usage) {
           return true; // 如果没有数据，默认允许（优雅降级）
         }
-        
+
         // 检查单次请求限制
-        if (textLength > state.subscription.planConfig.limits.maxCharactersPerRequest) {
+        if (
+          textLength >
+          state.subscription.planConfig.limits.maxCharactersPerRequest
+        ) {
           return false;
         }
-        
+
         // 检查配额限制
         if (state.usage.currentUsage + textLength > state.usage.limit) {
           return false;
         }
-        
+
         return true;
       },
 
@@ -256,19 +283,19 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       getUpgradeRecommendation: () => {
         const state = get();
         if (!state.subscription) return null;
-        
+
         const currentPlan = state.subscription.planId;
-        
+
         // 免费用户建议升级到 Basic
         if (currentPlan === 'free') {
           return 'basic';
         }
-        
+
         // Basic 用户建议升级到 Pro
         if (currentPlan === 'basic') {
           return 'pro';
         }
-        
+
         // Pro 用户已经是最高级别
         return null;
       },
@@ -289,7 +316,7 @@ export function createUsageInfoFromApiResponse(
   period: 'daily' | 'monthly'
 ): UsageInfo {
   const usagePercentage = limit > 0 ? (currentUsage / limit) * 100 : 0;
-  
+
   return {
     currentUsage,
     limit,
@@ -312,7 +339,7 @@ export function createSubscriptionInfo(
 ): UserSubscriptionInfo {
   const planConfig = getPlanConfig(planId);
   const isExpired = planExpiresAt ? new Date() > planExpiresAt : false;
-  
+
   return {
     userId,
     planId: isExpired ? 'free' : planId,
