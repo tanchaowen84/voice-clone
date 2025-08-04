@@ -1,3 +1,4 @@
+import { getAssetUrl, shouldUseCDN } from '@/config/cdn-config';
 import { routing } from '@/i18n/routing';
 import type { Locale } from 'next-intl';
 
@@ -80,17 +81,26 @@ export function getUrlWithLocaleInCallbackUrl(
 }
 
 /**
- * Get the URL of the image, if the image is a relative path, it will be prefixed with the base URL
+ * Get the URL of the image, with CDN support for static assets
  * @param image - The image URL
- * @returns The URL of the image
+ * @returns The URL of the image (CDN URL for static assets, base URL for others)
  */
 export function getImageUrl(image: string): string {
   if (!image || image.trim() === '') {
-    return `${getBaseUrl()}/og.png`;
+    return getAssetUrl('ogImage');
   }
+
+  // If it's already a full URL, return as is
   if (image.startsWith('http://') || image.startsWith('https://')) {
     return image;
   }
+
+  // Check if this asset should use CDN
+  if (shouldUseCDN(image)) {
+    return getAssetUrl(image);
+  }
+
+  // For non-CDN assets, use the base URL
   if (image.startsWith('/')) {
     return `${getBaseUrl()}${image}`;
   }

@@ -2,20 +2,21 @@
 const CACHE_NAME = 'cnblocks-iframe-cache-v1'
 
 // Add iframe URLs to this list to prioritize caching
+const CDN_BASE_URL = 'https://cdn.voice-clone.org';
 const URLS_TO_CACHE = [
-    // Default assets that should be cached
-    '/favicon.ico',
-    '/favicon-16x16.png',
-    '/favicon-32x32.png',
-    '/logo.png',
-    '/logo-dark.png',
-    // VoiceClone specific images
-    '/features1.png',
-    '/features2.png',
-    '/features3.png',
-    '/features4.png',
-    '/howitworks.png',
-    '/aicapabilities.png',
+    // CDN assets that should be cached
+    `${CDN_BASE_URL}/favicon.ico`,
+    `${CDN_BASE_URL}/favicon-16x16.png`,
+    `${CDN_BASE_URL}/favicon-32x32.png`,
+    `${CDN_BASE_URL}/logo.png`,
+    `${CDN_BASE_URL}/logo-dark.png`,
+    // VoiceClone specific images from CDN
+    `${CDN_BASE_URL}/features1.png`,
+    `${CDN_BASE_URL}/features2.png`,
+    `${CDN_BASE_URL}/features3.png`,
+    `${CDN_BASE_URL}/features4.png`,
+    `${CDN_BASE_URL}/howitworks.png`,
+    `${CDN_BASE_URL}/aicapabilities.png`,
     // Legacy images (can be removed if not used elsewhere)
     '/payments.png',
     '/payments-light.png',

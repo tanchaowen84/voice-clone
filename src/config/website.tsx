@@ -1,5 +1,6 @@
 import { PaymentTypes, PlanIntervals } from '@/payment/types';
 import type { WebsiteConfig } from '@/types';
+import { getAssetUrl } from './cdn-config';
 
 /**
  * website config, without translations
@@ -18,9 +19,9 @@ export const websiteConfig: WebsiteConfig = {
       enableSwitch: true,
     },
     images: {
-      ogImage: '/og.png',
-      logoLight: '/logo.png',
-      logoDark: '/logo-dark.png',
+      ogImage: getAssetUrl('ogImage'),
+      logoLight: getAssetUrl('logoLight'),
+      logoDark: getAssetUrl('logoDark'),
     },
     social: {
       github: 'https://github.com/voiceclone',

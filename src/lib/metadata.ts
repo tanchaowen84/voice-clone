@@ -1,3 +1,4 @@
+import { getAssetUrl } from '@/config/cdn-config';
 import { websiteConfig } from '@/config/website';
 import { defaultMessages } from '@/i18n/messages';
 import type { Metadata } from 'next';
@@ -48,9 +49,9 @@ export function constructMetadata({
       site: getBaseUrl(),
     },
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon-32x32.png',
-      apple: '/favicon-16x16.png',
+      icon: getAssetUrl('favicon'),
+      shortcut: getAssetUrl('favicon32'),
+      apple: getAssetUrl('favicon16'),
     },
     metadataBase: new URL(getBaseUrl()),
     manifest: `${getBaseUrl()}/manifest.webmanifest`,

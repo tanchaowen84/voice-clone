@@ -49,6 +49,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.flowchartai.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.voice-clone.org',
+      },
     ],
   },
 };

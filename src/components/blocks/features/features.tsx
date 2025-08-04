@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { getAssetUrl } from '@/config/cdn-config';
 import {
   ChartBarIncreasingIcon,
   Database,
@@ -30,23 +31,23 @@ export default function FeaturesSection() {
 
   const images = {
     'item-1': {
-      image: '/features1.png',
-      darkImage: '/features1.png',
+      image: getAssetUrl('features1'),
+      darkImage: getAssetUrl('features1'),
       alt: 'Voice Clone Feature One',
     },
     'item-2': {
-      image: '/features2.png',
-      darkImage: '/features2.png',
+      image: getAssetUrl('features2'),
+      darkImage: getAssetUrl('features2'),
       alt: 'Voice Clone Feature Two',
     },
     'item-3': {
-      image: '/features3.png',
-      darkImage: '/features3.png',
+      image: getAssetUrl('features3'),
+      darkImage: getAssetUrl('features3'),
       alt: 'Voice Clone Feature Three',
     },
     'item-4': {
-      image: '/features4.png',
-      darkImage: '/features4.png',
+      image: getAssetUrl('features4'),
+      darkImage: getAssetUrl('features4'),
       alt: 'Voice Clone Feature Four',
     },
   };
