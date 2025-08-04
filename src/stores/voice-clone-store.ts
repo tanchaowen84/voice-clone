@@ -3,6 +3,7 @@ import {
   isAudioConversionSupported,
 } from '@/utils/audio-converter';
 import { create } from 'zustand';
+import { useSubscriptionStore } from './subscription-store';
 
 /**
  * Voice clone input modes
@@ -196,10 +197,44 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       if (!generateResponse.ok) {
         const errorData = await generateResponse.json();
+
+        // 处理订阅限制错误
+        if (generateResponse.status === 429) {
+          // 使用量限制错误，更新订阅store状态
+          const subscriptionStore = useSubscriptionStore.getState();
+
+          if (errorData.waitTime && errorData.waitTime > 0) {
+            // 免费用户需要等待
+            subscriptionStore.startWaiting(errorData.waitTime);
+          }
+
+          // 设置详细的错误信息
+          const detailedError =
+            errorData.reason === 'DAILY_LIMIT_EXCEEDED'
+              ? `Daily limit reached (${errorData.currentUsage}/${errorData.limit} characters). ${errorData.waitTime ? `Please wait ${errorData.waitTime} seconds or ` : ''}upgrade to continue.`
+              : errorData.reason === 'MONTHLY_LIMIT_EXCEEDED'
+                ? `Monthly limit reached (${errorData.currentUsage}/${errorData.limit} characters). Please upgrade your plan.`
+                : errorData.reason === 'CHAR_LIMIT_EXCEEDED'
+                  ? `Text too long. Maximum ${errorData.limit} characters per request.`
+                  : errorData.error;
+
+          throw new Error(detailedError);
+        }
+
         throw new Error(errorData.error || 'Failed to generate speech');
       }
 
-      const { audioUrl } = await generateResponse.json();
+      const responseData = await generateResponse.json();
+      const { audioUrl, usageInfo } = responseData;
+
+      // 更新订阅store的使用量信息
+      if (usageInfo) {
+        const subscriptionStore = useSubscriptionStore.getState();
+        subscriptionStore.updateUsageAfterGeneration(
+          responseData.billableCharacters || text.length
+        );
+      }
+
       set({ generatedAudioUrl: audioUrl });
     } catch (error) {
       console.error('Speech generation error:', error);
