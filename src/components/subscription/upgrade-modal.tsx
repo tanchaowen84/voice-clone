@@ -125,7 +125,7 @@ export function UpgradeModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[9999]">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[9999] backdrop-blur-sm bg-white/95 dark:bg-slate-900/95 border-0 shadow-2xl">
         <DialogHeader>
           <div className="flex items-center justify-center gap-3 mb-8">
             <Zap className="h-7 w-7 text-purple-500" />
@@ -181,16 +181,16 @@ export function UpgradeModal({
                 {/* 计划卡片 - 扩展版 */}
                 <div className="w-full mx-6">
                   <div
-                    className={`relative border rounded-xl p-6 shadow-sm ${
+                    className={`relative border rounded-xl p-6 shadow-lg backdrop-blur-sm ${
                       currentPlan.recommended
-                        ? 'border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-900/20'
-                        : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'
+                        ? 'border-blue-200/50 dark:border-blue-700/50 bg-gradient-to-br from-blue-50/80 via-white/90 to-slate-50/80 dark:from-blue-900/20 dark:via-slate-900/90 dark:to-slate-800/90'
+                        : 'border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-br from-white/90 via-slate-50/90 to-white/90 dark:from-slate-900/90 dark:via-slate-800/90 dark:to-slate-900/90'
                     }`}
                   >
                     {/* 推荐标签 */}
                     {currentPlan.recommended && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <Badge className="bg-purple-500 text-white text-sm px-3 py-1">
+                        <Badge className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 shadow-lg border-0">
                           Most Popular
                         </Badge>
                       </div>
