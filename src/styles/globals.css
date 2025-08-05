@@ -73,6 +73,7 @@
   --font-mono: var(--font-noto-sans-mono);
   --font-serif: var(--font-noto-serif);
   --font-bricolage-grotesque: var(--font-bricolage-grotesque);
+  --font-playfair-display: var(--font-playfair-display);
 
   /* animate */
   --animate-shiny-text: shiny-text 8s infinite;
@@ -221,6 +222,7 @@
   --font-sans: var(--font-noto-sans);
   --font-serif: var(--font-noto-serif);
   --font-mono: var(--font-noto-sans-mono);
+  --font-playfair-display: var(--font-playfair-display);
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
@@ -273,6 +275,7 @@
   --font-sans: var(--font-noto-sans);
   --font-serif: var(--font-noto-serif);
   --font-mono: var(--font-noto-sans-mono);
+  --font-playfair-display: var(--font-playfair-display);
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
@@ -326,6 +329,10 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.font-playfair-display {
+  font-family: var(--font-playfair-display), serif;
 }
 
 /*

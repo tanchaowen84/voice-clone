@@ -3,6 +3,7 @@ import {
   Noto_Sans,
   Noto_Sans_Mono,
   Noto_Serif,
+  Playfair_Display,
 } from 'next/font/google';
 
 /**
@@ -61,5 +62,13 @@ export const fontBricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-bricolage-grotesque',
+  weight: ['400', '500', '600', '700'],
+});
+
+// https://fonts.google.com/specimen/Playfair+Display
+export const fontPlayfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair-display',
   weight: ['400', '500', '600', '700'],
 });

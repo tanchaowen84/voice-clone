@@ -4,6 +4,7 @@ import {
   fontNotoSans,
   fontNotoSansMono,
   fontNotoSerif,
+  fontPlayfairDisplay,
 } from '@/assets/fonts';
 import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
@@ -54,7 +55,8 @@ export default async function LocaleLayout({
           fontNotoSans.className,
           fontNotoSerif.variable,
           fontNotoSansMono.variable,
-          fontBricolageGrotesque.variable
+          fontBricolageGrotesque.variable,
+          fontPlayfairDisplay.variable
         )}
       >
         <NextIntlClientProvider>

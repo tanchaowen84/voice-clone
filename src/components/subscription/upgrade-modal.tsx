@@ -13,7 +13,7 @@ import { getExtendedPaidPlans } from '@/config/subscription-config';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
 import { useSubscriptionStore } from '@/stores/subscription-store';
-import { CheckCircleIcon, ChevronLeft, ChevronRight, Zap } from 'lucide-react';
+import { CheckCircleIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 /**
@@ -127,9 +127,10 @@ export function UpgradeModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[9999] backdrop-blur-sm bg-white/95 dark:bg-slate-900/95 border-0 shadow-2xl">
         <DialogHeader>
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <Zap className="h-7 w-7 text-purple-500" />
-            <DialogTitle className="text-2xl font-bold">{title}</DialogTitle>
+          <div className="flex items-center justify-center mb-8">
+            <DialogTitle className="text-3xl font-playfair-display font-semibold text-center leading-tight text-slate-800 dark:text-slate-100">
+              {title}
+            </DialogTitle>
           </div>
         </DialogHeader>
 
