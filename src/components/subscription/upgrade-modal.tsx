@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -14,13 +13,7 @@ import { getExtendedPaidPlans } from '@/config/subscription-config';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
 import { useSubscriptionStore } from '@/stores/subscription-store';
-import {
-  CheckCircleIcon,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Zap,
-} from 'lucide-react';
+import { CheckCircleIcon, ChevronLeft, ChevronRight, Zap } from 'lucide-react';
 import { useState } from 'react';
 
 /**
@@ -52,16 +45,12 @@ export function UpgradeModal({
   trigger = 'character_limit',
 }: UpgradeModalProps) {
   const currentUser = useCurrentUser();
-  const { subscription } = useSubscriptionStore();
 
   // 状态管理
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>(
     'month'
   );
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
-
-  // 添加调试日志
-  console.log('🔍 [UpgradeModal] Props:', { isOpen, trigger });
 
   // 获取付费计划
   const paidPlans = getExtendedPaidPlans(billingInterval);
@@ -114,7 +103,7 @@ export function UpgradeModal({
     }
   };
 
-  const { title, description } = getModalContent();
+  const { title } = getModalContent();
 
   // 轮播控制函数
   const goToPrevious = () => {
@@ -131,64 +120,28 @@ export function UpgradeModal({
 
   // 如果不应该显示，直接返回null
   if (!isOpen) {
-    console.log('🔍 [UpgradeModal] Not open, returning null');
     return null;
   }
 
-  console.log('🔍 [UpgradeModal] Rendering modal dialog');
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="relative">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-purple-500" />
-              <DialogTitle className="text-xl font-semibold">
-                {title}
-              </DialogTitle>
-            </div>
-            {/* 只保留一个关闭按钮 */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="absolute right-0 top-0 h-8 w-8 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[9999]">
+        <DialogHeader>
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <Zap className="h-7 w-7 text-purple-500" />
+            <DialogTitle className="text-2xl font-bold">{title}</DialogTitle>
           </div>
-          <DialogDescription className="text-base text-center">
-            {description}
-          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* 当前计划状态 */}
-          {subscription && (
-            <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-medium text-slate-900 dark:text-slate-100">
-                    Current Plan: {subscription.planConfig.name}
-                  </h4>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">
-                    {subscription.planConfig.description}
-                  </p>
-                </div>
-                <Badge variant="outline">{subscription.planConfig.name}</Badge>
-              </div>
-            </div>
-          )}
-
+        <div className="space-y-8">
           {/* 月/年切换组件 */}
           <div className="flex justify-center">
-            <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1.5">
               <Button
                 variant={billingInterval === 'month' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => handleBillingIntervalChange('month')}
-                className="px-4 py-2"
+                className="px-6 py-2.5 text-sm font-medium"
               >
                 Monthly
               </Button>
@@ -196,11 +149,11 @@ export function UpgradeModal({
                 variant={billingInterval === 'year' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => handleBillingIntervalChange('year')}
-                className="px-4 py-2"
+                className="px-6 py-2.5 text-sm font-medium"
               >
                 Yearly
                 {billingInterval === 'year' && (
-                  <Badge className="ml-2 bg-green-500 text-white text-xs">
+                  <Badge className="ml-2 bg-green-500 text-white text-xs px-2 py-1">
                     Save 17%
                   </Badge>
                 )}
@@ -219,46 +172,46 @@ export function UpgradeModal({
                     variant="ghost"
                     size="sm"
                     onClick={goToPrevious}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 h-10 w-10 p-0"
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 h-8 w-8 p-0"
                   >
-                    <ChevronLeft className="h-5 w-5" />
+                    <ChevronLeft className="h-4 w-4" />
                   </Button>
                 )}
 
-                {/* 计划卡片 */}
-                <div className="w-full max-w-md mx-8">
+                {/* 计划卡片 - 扩展版 */}
+                <div className="w-full mx-6">
                   <div
-                    className={`relative border rounded-lg p-6 ${
+                    className={`relative border rounded-xl p-6 shadow-sm ${
                       currentPlan.recommended
                         ? 'border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-900/20'
-                        : 'border-slate-200 dark:border-slate-700'
+                        : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'
                     }`}
                   >
                     {/* 推荐标签 */}
                     {currentPlan.recommended && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <Badge className="bg-purple-500 text-white">
+                        <Badge className="bg-purple-500 text-white text-sm px-3 py-1">
                           Most Popular
                         </Badge>
                       </div>
                     )}
 
-                    {/* 计划标题和价格 */}
+                    {/* 计划标题和价格 - 扩展版 */}
                     <div className="text-center mb-6">
-                      <h3 className="text-lg font-semibold mb-2">
+                      <h3 className="text-xl font-bold mb-3">
                         {currentPlan.displayName}
                       </h3>
-                      <div className="mb-2">
-                        <span className="text-3xl font-bold">
+                      <div className="mb-3">
+                        <span className="text-3xl font-bold text-slate-900 dark:text-slate-100">
                           {formatPrice(currentPlan.price, currentPlan.currency)}
                         </span>
                         {currentPlan.interval && (
-                          <span className="text-slate-600 dark:text-slate-400">
+                          <span className="text-slate-600 dark:text-slate-400 text-lg">
                             /{currentPlan.interval}
                           </span>
                         )}
                         {currentPlan.yearlyDiscount && (
-                          <div className="text-sm text-green-600 dark:text-green-400 mt-1">
+                          <div className="text-sm text-green-600 dark:text-green-400 mt-2 font-medium">
                             Save {currentPlan.yearlyDiscount}% with yearly
                             billing
                           </div>
@@ -269,17 +222,104 @@ export function UpgradeModal({
                       </p>
                     </div>
 
-                    {/* 功能列表 */}
+                    {/* 核心功能列表 - 扩展版 */}
                     <div className="space-y-3 mb-6">
-                      {currentPlan.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <CheckCircleIcon className="h-4 w-4 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">{feature}</span>
-                        </div>
-                      ))}
+                      {/* 根据计划显示丰富功能 */}
+                      {currentPlan.id === 'basic' ? (
+                        <>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              100,000 characters per month
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              1,000 characters per request
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Instant generation
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              High-quality voice cloning
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Multiple voice styles
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Email support
+                            </span>
+                          </div>
+                        </>
+                      ) : currentPlan.id === 'pro' ? (
+                        <>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              500,000 characters per month
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              2,000 characters per request
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Instant generation
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Premium voice quality
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Advanced voice customization
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-center gap-3">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              Priority support
+                            </span>
+                          </div>
+                        </>
+                      ) : (
+                        // 其他计划显示所有功能
+                        currentPlan.features.map((feature, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center gap-3"
+                          >
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span className="text-sm font-medium">
+                              {feature}
+                            </span>
+                          </div>
+                        ))
+                      )}
                     </div>
 
-                    {/* 升级按钮 */}
+                    {/* 升级按钮 - 扩展版 */}
                     <div className="mt-auto">
                       {currentUser ? (
                         <CheckoutButton
@@ -308,7 +348,7 @@ export function UpgradeModal({
                             interval: billingInterval,
                             trigger: trigger,
                           }}
-                          className="w-full"
+                          className="w-full py-3 text-base font-semibold"
                           variant={
                             currentPlan.recommended ? 'default' : 'outline'
                           }
@@ -316,7 +356,10 @@ export function UpgradeModal({
                           Upgrade to {currentPlan.name}
                         </CheckoutButton>
                       ) : (
-                        <Button className="w-full" disabled>
+                        <Button
+                          className="w-full py-3 text-base font-semibold"
+                          disabled
+                        >
                           Login Required
                         </Button>
                       )}
@@ -330,22 +373,22 @@ export function UpgradeModal({
                     variant="ghost"
                     size="sm"
                     onClick={goToNext}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 h-10 w-10 p-0"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 h-8 w-8 p-0"
                   >
-                    <ChevronRight className="h-5 w-5" />
+                    <ChevronRight className="h-4 w-4" />
                   </Button>
                 )}
               </div>
 
-              {/* 轮播指示器 */}
+              {/* 轮播指示器 - 紧凑版 */}
               {paidPlans.length > 1 && (
-                <div className="flex justify-center mt-4 space-x-2">
+                <div className="flex justify-center mt-2 space-x-1">
                   {paidPlans.map((_, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={() => setCurrentPlanIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-colors ${
+                      className={`w-1.5 h-1.5 rounded-full transition-colors ${
                         index === currentPlanIndex
                           ? 'bg-purple-500'
                           : 'bg-slate-300 dark:bg-slate-600'
@@ -356,21 +399,6 @@ export function UpgradeModal({
               )}
             </div>
           )}
-
-          {/* 底部说明 */}
-          <div className="text-center text-sm text-slate-600 dark:text-slate-400 space-y-2">
-            <p>✨ Instant activation • 💳 Secure payment • 🔄 Cancel anytime</p>
-            <p>
-              Need help choosing?{' '}
-              <Button
-                variant="link"
-                className="p-0 h-auto text-sm"
-                onClick={onClose}
-              >
-                Compare all features
-              </Button>
-            </p>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
