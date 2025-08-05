@@ -48,7 +48,7 @@ export function UpgradeModal({
 
   // 状态管理
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>(
-    'month'
+    'year'
   );
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
 
@@ -181,13 +181,7 @@ export function UpgradeModal({
 
                 {/* 计划卡片 - 扩展版 */}
                 <div className="w-full mx-6">
-                  <div
-                    className={`relative border rounded-xl p-6 shadow-lg backdrop-blur-sm ${
-                      currentPlan.recommended
-                        ? 'border-blue-200/50 dark:border-blue-700/50 bg-gradient-to-br from-blue-50/80 via-white/90 to-slate-50/80 dark:from-blue-900/20 dark:via-slate-900/90 dark:to-slate-800/90'
-                        : 'border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-br from-white/90 via-slate-50/90 to-white/90 dark:from-slate-900/90 dark:via-slate-800/90 dark:to-slate-900/90'
-                    }`}
-                  >
+                  <div className="relative border rounded-xl p-6 shadow-lg backdrop-blur-sm border-blue-200/50 dark:border-blue-700/50 bg-gradient-to-br from-blue-50/80 via-white/90 to-slate-50/80 dark:from-blue-900/20 dark:via-slate-900/90 dark:to-slate-800/90">
                     {/* 推荐标签 */}
                     {currentPlan.recommended && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -350,9 +344,7 @@ export function UpgradeModal({
                             trigger: trigger,
                           }}
                           className="w-full py-3 text-base font-semibold"
-                          variant={
-                            currentPlan.recommended ? 'default' : 'outline'
-                          }
+                          variant="default"
                         >
                           Upgrade to {currentPlan.name}
                         </CheckoutButton>
