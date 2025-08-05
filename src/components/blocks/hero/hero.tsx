@@ -72,7 +72,7 @@ export default function HeroSection() {
             </div>
 
             {/* Main Interface */}
-            <div className="mt-12 px-4">
+            <div className="mt-16 mb-20 px-4">
               <div className="max-w-5xl mx-auto">
                 {/* Voice Mode Switch */}
                 <NeumorphicModeSwitch />
