@@ -136,6 +136,13 @@ export const websiteConfig: WebsiteConfig = {
             currency: 'USD',
             interval: PlanIntervals.MONTH,
           },
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BASIC_YEARLY!,
+            amount: 10000, // $100.00 (10 months price for 12 months)
+            currency: 'USD',
+            interval: PlanIntervals.YEAR,
+          },
         ],
         isFree: false,
         isLifetime: false,
@@ -150,6 +157,13 @@ export const websiteConfig: WebsiteConfig = {
             amount: 2500, // $25.00
             currency: 'USD',
             interval: PlanIntervals.MONTH,
+          },
+          {
+            type: PaymentTypes.SUBSCRIPTION,
+            priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_YEARLY!,
+            amount: 25000, // $250.00 (10 months price for 12 months)
+            currency: 'USD',
+            interval: PlanIntervals.YEAR,
           },
         ],
         isFree: false,

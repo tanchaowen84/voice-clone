@@ -41,6 +41,22 @@ export function getPricePlans(): Record<string, PricePlan> {
     };
   }
 
+  if (priceConfig.plans.basic) {
+    plans.basic = {
+      ...priceConfig.plans.basic,
+      name: t('basic.name'),
+      description: t('basic.description'),
+      features: [
+        t('basic.features.feature-1'),
+        t('basic.features.feature-2'),
+        t('basic.features.feature-3'),
+        t('basic.features.feature-4'),
+        t('basic.features.feature-5'),
+      ],
+      limits: [t('basic.limits.limit-1'), t('basic.limits.limit-2')],
+    };
+  }
+
   if (priceConfig.plans.pro) {
     plans.pro = {
       ...priceConfig.plans.pro,

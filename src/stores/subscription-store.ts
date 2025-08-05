@@ -36,6 +36,14 @@ export interface UsageInfo {
 }
 
 /**
+ * 升级Modal触发原因
+ */
+export type UpgradeTrigger =
+  | 'character_limit' // 单次输入字数超出限制
+  | 'daily_limit' // 每日用量超限
+  | 'waiting_period'; // 等待期间点击升级
+
+/**
  * 订阅状态接口
  */
 export interface SubscriptionState {
@@ -59,6 +67,12 @@ export interface SubscriptionState {
     totalWaitTime: number;
   };
 
+  // 升级Modal状态
+  upgradeModal: {
+    isOpen: boolean;
+    trigger: UpgradeTrigger | null;
+  };
+
   // Actions
   setSubscription: (subscription: UserSubscriptionInfo | null) => void;
   setUsage: (usage: UsageInfo | null) => void;
@@ -70,6 +84,10 @@ export interface SubscriptionState {
   startWaiting: (waitTime: number) => void;
   stopWaiting: () => void;
   updateWaitingTime: (remainingTime: number) => void;
+
+  // 升级Modal管理
+  showUpgradeModal: (trigger: UpgradeTrigger) => void;
+  hideUpgradeModal: () => void;
 
   // 使用量更新
   updateUsageAfterGeneration: (charactersUsed: number) => void;
@@ -105,6 +123,12 @@ export const useSubscriptionStore = create<SubscriptionState>()(
         isWaiting: false,
         remainingTime: 0,
         totalWaitTime: 0,
+      },
+
+      // 升级Modal状态
+      upgradeModal: {
+        isOpen: false,
+        trigger: null,
       },
 
       // 设置订阅信息
@@ -471,6 +495,39 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
         // Pro 用户已经是最高级别
         return null;
+      },
+
+      // 显示升级Modal
+      showUpgradeModal: (trigger) => {
+        console.log(
+          `🚀 [Subscription Store] Showing upgrade modal with trigger: ${trigger}`
+        );
+        const newState = {
+          upgradeModal: {
+            isOpen: true,
+            trigger,
+          },
+        };
+        console.log('🔍 [Subscription Store] Setting modal state:', newState);
+        set(newState);
+
+        // 验证状态是否设置成功
+        const currentState = get();
+        console.log(
+          '🔍 [Subscription Store] Current modal state after set:',
+          currentState.upgradeModal
+        );
+      },
+
+      // 隐藏升级Modal
+      hideUpgradeModal: () => {
+        console.log('❌ [Subscription Store] Hiding upgrade modal');
+        set({
+          upgradeModal: {
+            isOpen: false,
+            trigger: null,
+          },
+        });
       },
     }),
     {

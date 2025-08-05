@@ -146,6 +146,21 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       return;
     }
 
+    // 检查免费用户的字符限制
+    if (
+      subscriptionStore.subscription?.planId === 'free' &&
+      text.length > 100
+    ) {
+      console.log(
+        `🚫 [Voice Clone Store] Free user character limit exceeded: ${text.length} > 100`
+      );
+      // 使用setTimeout避免在渲染过程中更新状态
+      setTimeout(() => {
+        subscriptionStore.showUpgradeModal('character_limit');
+      }, 0);
+      return;
+    }
+
     try {
       set({ isGenerating: true, error: null, generatedAudioUrl: null });
 
@@ -223,20 +238,37 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
           // 使用量限制错误，更新订阅store状态
           const subscriptionStore = useSubscriptionStore.getState();
 
+          // 根据错误类型弹出相应的升级modal
+          if (errorData.reason === 'DAILY_LIMIT_EXCEEDED') {
+            console.log(
+              '🚫 [Voice Clone Store] Daily limit exceeded, showing upgrade modal'
+            );
+            setTimeout(() => {
+              subscriptionStore.showUpgradeModal('daily_limit');
+            }, 0);
+            return; // 不抛出错误，直接返回
+          }
+
+          if (errorData.reason === 'CHAR_LIMIT_EXCEEDED') {
+            console.log(
+              '🚫 [Voice Clone Store] Character limit exceeded, showing upgrade modal'
+            );
+            setTimeout(() => {
+              subscriptionStore.showUpgradeModal('character_limit');
+            }, 0);
+            return; // 不抛出错误，直接返回
+          }
+
           if (errorData.waitTime && errorData.waitTime > 0) {
             // 免费用户需要等待
             subscriptionStore.startWaiting(errorData.waitTime);
           }
 
-          // 设置详细的错误信息
+          // 设置详细的错误信息（对于其他类型的错误）
           const detailedError =
-            errorData.reason === 'DAILY_LIMIT_EXCEEDED'
-              ? `Daily limit reached (${errorData.currentUsage}/${errorData.limit} characters). ${errorData.waitTime ? `Please wait ${errorData.waitTime} seconds or ` : ''}upgrade to continue.`
-              : errorData.reason === 'MONTHLY_LIMIT_EXCEEDED'
-                ? `Monthly limit reached (${errorData.currentUsage}/${errorData.limit} characters). Please upgrade your plan.`
-                : errorData.reason === 'CHAR_LIMIT_EXCEEDED'
-                  ? `Text too long. Maximum ${errorData.limit} characters per request.`
-                  : errorData.error;
+            errorData.reason === 'MONTHLY_LIMIT_EXCEEDED'
+              ? `Monthly limit reached (${errorData.currentUsage}/${errorData.limit} characters). Please upgrade your plan.`
+              : errorData.error;
 
           throw new Error(detailedError);
         }

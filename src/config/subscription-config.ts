@@ -1,6 +1,6 @@
 /**
  * 订阅系统配置文件
- * 
+ *
  * 定义了所有订阅计划的详细信息，包括价格、限制和功能特性
  */
 
@@ -14,19 +14,19 @@ export type PlanId = 'free' | 'basic' | 'pro';
  */
 export interface PlanLimits {
   // 字符配额限制
-  dailyCharacters?: number;      // 每日字符限制 (免费用户)
-  monthlyCharacters?: number;    // 每月字符限制 (付费用户)
-  
+  dailyCharacters?: number; // 每日字符限制 (免费用户)
+  monthlyCharacters?: number; // 每月字符限制 (付费用户)
+
   // 单次请求限制
   maxCharactersPerRequest: number;
-  
+
   // 功能权限
-  commercialUse: boolean;        // 是否允许商业使用
-  waitTime: number;              // 等待时间 (秒)
-  
+  commercialUse: boolean; // 是否允许商业使用
+  waitTime: number; // 等待时间 (秒)
+
   // 音频格式支持
   audioFormats: string[];
-  
+
   // 处理优先级
   priority: 'low' | 'normal' | 'high';
 }
@@ -38,25 +38,30 @@ export interface SubscriptionPlan {
   id: PlanId;
   name: string;
   displayName: string;
-  price: number;                 // 价格 (美分)
+  price: number; // 价格 (美分)
   currency: string;
   interval: 'month' | 'year' | null;
-  
+
   // 使用限制
   limits: PlanLimits;
-  
+
   // 功能特性列表 (用于展示)
   features: string[];
-  
+
   // 推荐标签
   recommended?: boolean;
-  
+
   // 描述信息
   description: string;
-  
+
   // 适用人群
   targetAudience: string;
 }
+
+/**
+ * 扩展的订阅计划ID类型，包含年付计划
+ */
+export type ExtendedPlanId = PlanId | 'basic_yearly' | 'pro_yearly';
 
 /**
  * 所有订阅计划配置
@@ -75,7 +80,7 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       commercialUse: false,
       waitTime: 15, // 15秒等待
       audioFormats: ['mp3'],
-      priority: 'low'
+      priority: 'low',
     },
     features: [
       '1,000 characters per day',
@@ -83,12 +88,12 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       'Personal use only',
       'Standard MP3 quality',
       '15-second wait time',
-      'Community support'
+      'Community support',
     ],
     description: 'Perfect for trying out our voice cloning technology',
-    targetAudience: 'Individual users, hobbyists'
+    targetAudience: 'Individual users, hobbyists',
   },
-  
+
   basic: {
     id: 'basic',
     name: 'Basic',
@@ -102,7 +107,7 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       commercialUse: true,
       waitTime: 0, // No wait time
       audioFormats: ['mp3'],
-      priority: 'normal'
+      priority: 'normal',
     },
     features: [
       '100,000 characters per month',
@@ -110,13 +115,13 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       'Commercial use allowed',
       'Instant generation',
       'High quality MP3',
-      'Email support'
+      'Email support',
     ],
     recommended: true,
     description: 'Ideal for content creators and small businesses',
-    targetAudience: 'Content creators, small businesses'
+    targetAudience: 'Content creators, small businesses',
   },
-  
+
   pro: {
     id: 'pro',
     name: 'Pro',
@@ -130,7 +135,7 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       commercialUse: true,
       waitTime: 0, // No wait time
       audioFormats: ['mp3', 'wav'],
-      priority: 'high'
+      priority: 'high',
     },
     features: [
       '500,000 characters per month',
@@ -140,11 +145,80 @@ export const SUBSCRIPTION_PLANS: Record<PlanId, SubscriptionPlan> = {
       'High quality MP3 + WAV',
       'Multiple audio formats',
       'Priority processing',
-      'Priority email support'
+      'Priority email support',
     ],
     description: 'Perfect for professional teams and heavy usage',
-    targetAudience: 'Professional teams, agencies, heavy users'
-  }
+    targetAudience: 'Professional teams, agencies, heavy users',
+  },
+} as const;
+
+/**
+ * 扩展的订阅计划配置，包含年付选项
+ */
+export const EXTENDED_SUBSCRIPTION_PLANS: Record<
+  ExtendedPlanId,
+  SubscriptionPlan & { yearlyDiscount?: number }
+> = {
+  ...SUBSCRIPTION_PLANS,
+
+  basic_yearly: {
+    id: 'basic',
+    name: 'Basic',
+    displayName: 'Basic Plan',
+    price: 10000, // $100.00 in cents (10 months price for 12 months)
+    currency: 'USD',
+    interval: 'year',
+    limits: {
+      monthlyCharacters: 100000, // 100K characters per month
+      maxCharactersPerRequest: 1000,
+      commercialUse: true,
+      waitTime: 0,
+      audioFormats: ['mp3'],
+      priority: 'normal',
+    },
+    features: [
+      '100,000 characters per month',
+      '1,000 characters per request',
+      'Commercial use allowed',
+      'Instant generation',
+      'High quality MP3',
+      'Email support',
+    ],
+    recommended: true,
+    description: 'Ideal for content creators and small businesses',
+    targetAudience: 'Content creators, small businesses',
+    yearlyDiscount: 17, // 17% discount (2 months free)
+  },
+
+  pro_yearly: {
+    id: 'pro',
+    name: 'Pro',
+    displayName: 'Pro Plan',
+    price: 25000, // $250.00 in cents (10 months price for 12 months)
+    currency: 'USD',
+    interval: 'year',
+    limits: {
+      monthlyCharacters: 500000, // 500K characters per month
+      maxCharactersPerRequest: 2000,
+      commercialUse: true,
+      waitTime: 0,
+      audioFormats: ['mp3', 'wav'],
+      priority: 'high',
+    },
+    features: [
+      '500,000 characters per month',
+      '2,000 characters per request',
+      'Commercial use allowed',
+      'Instant generation',
+      'High quality MP3 + WAV',
+      'Multiple audio formats',
+      'Priority processing',
+      'Priority email support',
+    ],
+    description: 'Perfect for professional teams and heavy usage',
+    targetAudience: 'Professional teams, agencies, heavy users',
+    yearlyDiscount: 17, // 17% discount (2 months free)
+  },
 } as const;
 
 /**
@@ -165,7 +239,30 @@ export function getAllPlans(): SubscriptionPlan[] {
  * 获取付费计划
  */
 export function getPaidPlans(): SubscriptionPlan[] {
-  return getAllPlans().filter(plan => plan.price > 0);
+  return getAllPlans().filter((plan) => plan.price > 0);
+}
+
+/**
+ * 获取扩展的付费计划（包含年付）
+ */
+export function getExtendedPaidPlans(
+  interval: 'month' | 'year' = 'month'
+): (SubscriptionPlan & { yearlyDiscount?: number })[] {
+  const plans = Object.values(EXTENDED_SUBSCRIPTION_PLANS).filter(
+    (plan) => plan.price > 0
+  );
+  return plans.filter((plan) => plan.interval === interval);
+}
+
+/**
+ * 获取计划的年付版本
+ */
+export function getYearlyPlan(
+  planId: PlanId
+): (SubscriptionPlan & { yearlyDiscount?: number }) | null {
+  if (planId === 'free') return null;
+  const yearlyPlanId = `${planId}_yearly` as ExtendedPlanId;
+  return EXTENDED_SUBSCRIPTION_PLANS[yearlyPlanId] || null;
 }
 
 /**
@@ -183,7 +280,7 @@ export function getDisplayPrice(planId: PlanId): string {
   if (plan.price === 0) {
     return 'Free';
   }
-  
+
   const price = (plan.price / 100).toFixed(2);
   return `$${price}/${plan.interval}`;
 }
@@ -211,19 +308,22 @@ export function comparePlans(planA: PlanId, planB: PlanId): number {
   const planOrder: Record<PlanId, number> = {
     free: 0,
     basic: 1,
-    pro: 2
+    pro: 2,
   };
-  
+
   return planOrder[planA] - planOrder[planB];
 }
 
 /**
  * 检查计划是否支持某个功能
  */
-export function planSupportsFeature(planId: PlanId, feature: keyof PlanLimits): boolean {
+export function planSupportsFeature(
+  planId: PlanId,
+  feature: keyof PlanLimits
+): boolean {
   const plan = getPlanConfig(planId);
   const value = plan.limits[feature];
-  
+
   switch (feature) {
     case 'commercialUse':
       return Boolean(value);
@@ -239,8 +339,8 @@ export function planSupportsFeature(planId: PlanId, feature: keyof PlanLimits): 
  */
 export function getPlanCharacterLimit(planId: PlanId): number {
   const plan = getPlanConfig(planId);
-  return planId === 'free' 
-    ? plan.limits.dailyCharacters! 
+  return planId === 'free'
+    ? plan.limits.dailyCharacters!
     : plan.limits.monthlyCharacters!;
 }
 
@@ -250,21 +350,21 @@ export function getPlanCharacterLimit(planId: PlanId): number {
 export const SUBSCRIPTION_CONFIG = {
   // 默认计划
   DEFAULT_PLAN: 'free' as PlanId,
-  
+
   // 试用期设置
   TRIAL_DAYS: 0, // 暂不提供试用期
-  
+
   // 宽限期设置 (订阅过期后的宽限期)
   GRACE_PERIOD_DAYS: 3,
-  
+
   // 使用量重置时间 (UTC)
-  DAILY_RESET_HOUR: 0,   // 每日0点重置
-  MONTHLY_RESET_DAY: 1,  // 每月1号重置
-  
+  DAILY_RESET_HOUR: 0, // 每日0点重置
+  MONTHLY_RESET_DAY: 1, // 每月1号重置
+
   // 缓存设置
   USAGE_CACHE_TTL: 60 * 1000, // 1分钟缓存
-  
+
   // 限制检查设置
   SOFT_LIMIT_WARNING_THRESHOLD: 0.8, // 80%时显示警告
-  HARD_LIMIT_THRESHOLD: 1.0,          // 100%时禁止使用
+  HARD_LIMIT_THRESHOLD: 1.0, // 100%时禁止使用
 } as const;

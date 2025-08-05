@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
  * 显示15秒倒计时加载条，与输入框长度一致的简约设计
  */
 export function FreeUserWaiting() {
-  const { waitingState, updateWaitingTime, stopWaiting } =
+  const { waitingState, updateWaitingTime, stopWaiting, showUpgradeModal } =
     useSubscriptionStore();
   const [timeLeft, setTimeLeft] = useState(waitingState.remainingTime);
 
@@ -25,12 +25,15 @@ export function FreeUserWaiting() {
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         const newTime = Math.max(0, prev - 1);
-        updateWaitingTime(newTime);
 
-        if (newTime === 0) {
-          clearInterval(interval);
-          stopWaiting();
-        }
+        // 使用setTimeout避免在渲染过程中更新状态
+        setTimeout(() => {
+          updateWaitingTime(newTime);
+
+          if (newTime === 0) {
+            stopWaiting();
+          }
+        }, 0);
 
         return newTime;
       });
@@ -110,8 +113,11 @@ export function FreeUserWaiting() {
           type="button"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 bg-gradient-to-br from-slate-500 to-indigo-500 text-white shadow-[3px_3px_6px_rgba(100,116,139,0.3),-3px_-3px_6px_rgba(99,102,241,0.3)] hover:shadow-[2px_2px_4px_rgba(100,116,139,0.4),-2px_-2px_4px_rgba(99,102,241,0.4)] active:shadow-[inset_2px_2px_4px_rgba(100,116,139,0.3),inset_-2px_-2px_4px_rgba(99,102,241,0.3)] hover:scale-105"
           onClick={() => {
-            // TODO: 集成升级流程
             console.log('🚀 [Free User Waiting] Upgrade button clicked');
+            // 使用setTimeout避免在渲染过程中更新状态
+            setTimeout(() => {
+              showUpgradeModal('waiting_period');
+            }, 0);
           }}
         >
           <Zap className="h-4 w-4" />
