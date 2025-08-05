@@ -74,6 +74,11 @@ export interface SubscriptionState {
   // 使用量更新
   updateUsageAfterGeneration: (charactersUsed: number) => void;
 
+  // 数据获取
+  fetchSubscriptionInfo: () => Promise<void>;
+  fetchUsageInfo: () => Promise<void>;
+  fetchAllData: () => Promise<void>;
+
   // 重置状态
   reset: () => void;
 
@@ -216,6 +221,174 @@ export const useSubscriptionStore = create<SubscriptionState>()(
               isNearLimit: newUsagePercentage >= 80,
               isOverLimit: newUsagePercentage >= 100,
             },
+          });
+        }
+      },
+
+      // 获取订阅信息
+      fetchSubscriptionInfo: async () => {
+        console.log('🔍 [Subscription Store] Fetching subscription info');
+        set({ isLoading: true, error: null });
+
+        try {
+          const response = await fetch('/api/subscription/usage', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          const subscription: UserSubscriptionInfo = {
+            userId: data.subscription.userId,
+            planId: data.subscription.planId,
+            planConfig: data.subscription.planConfig,
+            planExpiresAt: data.subscription.planExpiresAt
+              ? new Date(data.subscription.planExpiresAt)
+              : null,
+            isExpired: data.subscription.isExpired,
+          };
+
+          set({ subscription, isLoading: false });
+          console.log(
+            '✅ [Subscription Store] Successfully fetched subscription info'
+          );
+        } catch (error) {
+          console.error(
+            '❌ [Subscription Store] Failed to fetch subscription info:',
+            error
+          );
+          set({
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to fetch subscription info',
+            isLoading: false,
+          });
+        }
+      },
+
+      // 获取使用量信息
+      fetchUsageInfo: async () => {
+        console.log('📊 [Subscription Store] Fetching usage info');
+        set({ isLoading: true, error: null });
+
+        try {
+          const response = await fetch('/api/subscription/usage', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          const usage: UsageInfo = {
+            currentUsage: data.usage.currentUsage,
+            limit: data.usage.limit,
+            remainingQuota: data.usage.remainingQuota,
+            usagePercentage: data.usage.usagePercentage,
+            isNearLimit: data.usage.isNearLimit,
+            isOverLimit: data.usage.isOverLimit,
+            period: data.usage.period,
+            nextResetTime: new Date(data.usage.nextResetTime),
+          };
+
+          set({ usage, isLoading: false });
+          console.log(
+            '✅ [Subscription Store] Successfully fetched usage info'
+          );
+        } catch (error) {
+          console.error(
+            '❌ [Subscription Store] Failed to fetch usage info:',
+            error
+          );
+          set({
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to fetch usage info',
+            isLoading: false,
+          });
+        }
+      },
+
+      // 获取所有数据（订阅信息和使用量信息）
+      fetchAllData: async () => {
+        console.log('🔄 [Subscription Store] Fetching all subscription data');
+        set({ isLoading: true, error: null });
+
+        try {
+          const response = await fetch('/api/subscription/usage', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          // 设置订阅信息
+          const subscription: UserSubscriptionInfo = {
+            userId: data.subscription.userId,
+            planId: data.subscription.planId,
+            planConfig: data.subscription.planConfig,
+            planExpiresAt: data.subscription.planExpiresAt
+              ? new Date(data.subscription.planExpiresAt)
+              : null,
+            isExpired: data.subscription.isExpired,
+          };
+
+          // 设置使用量信息
+          const usage: UsageInfo = {
+            currentUsage: data.usage.currentUsage,
+            limit: data.usage.limit,
+            remainingQuota: data.usage.remainingQuota,
+            usagePercentage: data.usage.usagePercentage,
+            isNearLimit: data.usage.isNearLimit,
+            isOverLimit: data.usage.isOverLimit,
+            period: data.usage.period,
+            nextResetTime: new Date(data.usage.nextResetTime),
+          };
+
+          set({ subscription, usage, isLoading: false });
+          console.log('✅ [Subscription Store] Successfully fetched all data');
+        } catch (error) {
+          console.error(
+            '❌ [Subscription Store] Failed to fetch subscription data:',
+            error
+          );
+          set({
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to fetch subscription data',
+            isLoading: false,
           });
         }
       },

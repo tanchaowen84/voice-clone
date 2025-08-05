@@ -254,6 +254,14 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
           responseData.billableCharacters || text.length
         );
 
+        // 刷新最新的使用量数据
+        subscriptionStore.fetchAllData().catch((error) => {
+          console.warn(
+            '⚠️ [Voice Clone Store] Failed to refresh usage data:',
+            error
+          );
+        });
+
         // 如果是免费用户且有等待时间，启动等待状态并暂存结果
         if (usageInfo.waitTime && usageInfo.waitTime > 0) {
           console.log(

@@ -15,7 +15,8 @@
     "db:studio": "drizzle-kit studio",
     "docs": "content-collections build",
     "email": "email dev --dir src/mail/templates --port 3333",
-    "upload-assets": "node scripts/upload-static-assets.js"
+    "upload-assets": "node scripts/upload-static-assets.js",
+    "seed:usage": "node scripts/seed-usage.js"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.13",

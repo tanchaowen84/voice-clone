@@ -1,6 +1,7 @@
 'use client';
 
 import { CustomerPortalButton } from '@/components/pricing/customer-portal-button';
+import { UsageProgress } from '@/components/subscription/usage-progress';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -151,6 +152,10 @@ export default function BillingCard() {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
+      {/* Usage Progress Section */}
+      <UsageProgress />
+
+      {/* Current Plan Section */}
       <Card
         className={cn(
           'w-full max-w-lg md:max-w-xl overflow-hidden pt-6 pb-0 flex flex-col'
