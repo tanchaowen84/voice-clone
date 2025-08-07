@@ -38,7 +38,7 @@ export const websiteConfig: WebsiteConfig = {
     enableMagicUIPage: false,
   },
   routes: {
-    defaultLoginRedirect: '/dashboard',
+    defaultLoginRedirect: '/settings/profile',
   },
   analytics: {
     enableVercelAnalytics: false,

@@ -5,7 +5,7 @@ import type { NestedMenuItem } from '@/types';
 import {
   CircleUserRoundIcon,
   CreditCardIcon,
-  LayoutDashboardIcon,
+  // LayoutDashboardIcon, // Temporarily unused - dashboard disabled
   LockKeyholeIcon,
   Settings2Icon,
   SettingsIcon,
@@ -30,12 +30,13 @@ export function getSidebarLinks(): NestedMenuItem[] {
   const isDemo = process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true';
 
   return [
-    {
-      title: t('dashboard.title'),
-      icon: <LayoutDashboardIcon className="size-4 shrink-0" />,
-      href: Routes.Dashboard,
-      external: false,
-    },
+    // Dashboard temporarily disabled - using demo data
+    // {
+    //   title: t('dashboard.title'),
+    //   icon: <LayoutDashboardIcon className="size-4 shrink-0" />,
+    //   href: Routes.Dashboard,
+    //   external: false,
+    // },
     {
       title: t('admin.title'),
       icon: <SettingsIcon className="size-4 shrink-0" />,
