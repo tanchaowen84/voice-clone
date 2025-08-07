@@ -9,7 +9,7 @@ export enum Routes {
   // marketing pages
   FAQ = '/#faq',
   Features = '/#features',
-  Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
+  Pricing = '/#pricing', // pricing section in homepage
   Blog = '/blog',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',

@@ -78,7 +78,7 @@ export const createCheckoutAction = actionClient
         '/settings/billing?session_id={CHECKOUT_SESSION_ID}',
         locale
       );
-      const cancelUrl = getUrlWithLocale(Routes.Pricing, locale);
+      const cancelUrl = getUrlWithLocale(Routes.Root, locale);
       const params: CreateCheckoutParams = {
         planId,
         priceId,

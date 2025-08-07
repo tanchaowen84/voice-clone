@@ -18,7 +18,7 @@ This module provides a flexible payment integration with Stripe, supporting both
 - `/components/payment/customer-portal-button.tsx` - Button component to access Stripe customer portal
 - `/components/payment/pricing-card.tsx` - Component to display a single pricing plan
 - `/components/payment/pricing-table.tsx` - Component to display all pricing plans
-- `/app/[locale]/(marketing)/pricing/page.tsx` - Pricing page using the pricing table component
+- `/components/blocks/pricing/pricing.tsx` - Pricing section component used in homepage
 - `/app/[locale]/(dashboard)/settings/billing/page.tsx` - Account billing page to manage subscriptions
 
 ## Environment Variables
