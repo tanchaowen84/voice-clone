@@ -1,5 +1,5 @@
+import { VoiceDemoSection } from '@/components/demo/voice-demo-section';
 import { HeaderSection } from '@/components/layout/header-section';
-import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import { LocaleLink } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
@@ -26,37 +26,8 @@ export default function DemoSection() {
         />
 
         <div className="mt-12 space-y-8">
-          {/* Main Demo Video */}
-          <div className="bg-background w-full relative flex overflow-hidden rounded-2xl border p-2">
-            <div className="aspect-video bg-background relative w-full rounded-2xl">
-              <div className="size-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md relative">
-                <video
-                  className="size-full object-cover object-center"
-                  controls
-                  preload="metadata"
-                  poster="https://cdn.flowchartai.org/static/demo-thumbnail.png"
-                >
-                  <source
-                    src="https://cdn.flowchartai.org/static/demo.mp4"
-                    type="video/mp4"
-                  />
-                  <track
-                    kind="captions"
-                    src=""
-                    srcLang="en"
-                    label="English captions"
-                    default
-                  />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-            <BorderBeam
-              duration={6}
-              size={200}
-              className="from-transparent via-violet-700 to-transparent dark:via-white/50"
-            />
-          </div>
+          {/* Voice Demo Section */}
+          <VoiceDemoSection />
 
           {/* Demo Features */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -77,7 +48,7 @@ export default function DemoSection() {
           {/* CTA */}
           <div className="text-center">
             <Button asChild size="lg">
-              <LocaleLink href="/canvas">{t('tryItNow')}</LocaleLink>
+              <LocaleLink href="/#hero">{t('tryItNow')}</LocaleLink>
             </Button>
           </div>
         </div>
