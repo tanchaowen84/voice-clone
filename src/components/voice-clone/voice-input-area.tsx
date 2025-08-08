@@ -1,10 +1,11 @@
 'use client';
 
 import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
+import { getPlanConfig } from '@/config/subscription-config';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import { Download, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
 import { FileUploader } from './file-uploader';
 
@@ -23,8 +24,23 @@ export function VoiceInputArea() {
     reset,
   } = useVoiceCloneStore();
 
-  const { waitingState } = useSubscriptionStore();
+  const { subscription, waitingState, fetchAllData, showUpgradeModal } =
+    useSubscriptionStore();
   const [textInput, setTextInput] = useState('');
+
+  // Determine per-request max characters based on user's plan
+  const planMaxChars =
+    subscription?.planConfig.limits.maxCharactersPerRequest ??
+    getPlanConfig('free').limits.maxCharactersPerRequest;
+
+  // Ensure subscription info is loaded to reflect accurate limits
+  useEffect(() => {
+    if (!subscription) {
+      fetchAllData().catch(() => {
+        // noop: gracefully degrade to free limits when unauthenticated or API fails
+      });
+    }
+  }, [subscription, fetchAllData]);
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
@@ -65,10 +81,21 @@ export function VoiceInputArea() {
           <textarea
             id="speech-text-input"
             value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
+            onChange={(e) => {
+              const next = e.target.value;
+              if (next.length > planMaxChars) {
+                // Do not mutate the value; keep what's typed so user sees it's longer,
+                // but immediately trigger the upgrade modal and prevent state update.
+                // This avoids silent truncation and guides user to upgrade.
+                showUpgradeModal('character_limit');
+                return;
+              }
+              setTextInput(next);
+            }}
             placeholder="Type your message here..."
             className="w-full min-h-40 p-4 pr-44 pb-12 text-lg bg-transparent border-none outline-none resize-none placeholder:text-slate-400/60 dark:placeholder:text-slate-500/60 text-slate-700 dark:text-slate-300 rounded-2xl"
-            maxLength={200}
+            // Remove hard cap to avoid browser truncating; enforce via handler above
+            maxLength={undefined}
           />
 
           {/* Embedded Demo Text Button */}
@@ -82,7 +109,7 @@ export function VoiceInputArea() {
 
           {/* Embedded Character Count */}
           <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
-            {textInput.length}/200 characters
+            {Math.min(textInput.length, planMaxChars)}/{planMaxChars} characters
           </div>
 
           {/* Embedded Neumorphic Generate Button */}
