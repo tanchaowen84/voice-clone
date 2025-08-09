@@ -165,7 +165,7 @@ export const EXTENDED_SUBSCRIPTION_PLANS: Record<
     id: 'basic',
     name: 'Basic',
     displayName: 'Basic Plan',
-    price: 10000, // $100.00 in cents (10 months price for 12 months)
+    price: 7200, // $72.00 in cents => $6.00/month billed yearly (40% off)
     currency: 'USD',
     interval: 'year',
     limits: {
@@ -187,14 +187,14 @@ export const EXTENDED_SUBSCRIPTION_PLANS: Record<
     recommended: true,
     description: 'Ideal for content creators and small businesses',
     targetAudience: 'Content creators, small businesses',
-    yearlyDiscount: 17, // 17% discount (2 months free)
+    yearlyDiscount: 40, // 40% discount
   },
 
   pro_yearly: {
     id: 'pro',
     name: 'Pro',
     displayName: 'Pro Plan',
-    price: 25000, // $250.00 in cents (10 months price for 12 months)
+    price: 18000, // $180.00 in cents => $15.00/month billed yearly (40% off)
     currency: 'USD',
     interval: 'year',
     limits: {
@@ -217,7 +217,7 @@ export const EXTENDED_SUBSCRIPTION_PLANS: Record<
     ],
     description: 'Perfect for professional teams and heavy usage',
     targetAudience: 'Professional teams, agencies, heavy users',
-    yearlyDiscount: 17, // 17% discount (2 months free)
+    yearlyDiscount: 40, // 40% discount
   },
 } as const;
 

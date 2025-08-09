@@ -12,6 +12,7 @@ import {
 import { getExtendedPaidPlans } from '@/config/subscription-config';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { formatPrice } from '@/lib/formatter';
+import { findPlanByPlanId } from '@/lib/price-plan';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { CheckCircleIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
@@ -48,7 +49,7 @@ export function UpgradeModal({
 
   // 状态管理
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>(
-    'year'
+    'month'
   );
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
 
@@ -64,6 +65,28 @@ export function UpgradeModal({
   }
 
   const currentPlan = paidPlans[currentPlanIndex];
+
+  // Read trialPeriodDays from website price plans based on current plan & interval
+  const websitePlan = findPlanByPlanId(currentPlan?.id || 'basic');
+  const currentTrialDays = websitePlan?.prices.find(
+    (p) => p.interval === billingInterval
+  )?.trialPeriodDays;
+
+  // Price display: for yearly interval, show monthly price and label '/month'
+  const displayPriceCents =
+    currentPlan?.interval === 'year'
+      ? Math.round(currentPlan.price / 12)
+      : currentPlan?.price || 0;
+  const displayIntervalLabel =
+    currentPlan?.interval === 'year'
+      ? 'month'
+      : currentPlan?.interval || undefined;
+
+  // Compute yearly discount badge value for the toggle bar
+  const yearlyDiscountLabel =
+    billingInterval === 'year'
+      ? Math.max(...paidPlans.map((p) => p.yearlyDiscount || 0))
+      : 0;
 
   // 当切换billing interval时，重置到推荐计划
   const handleBillingIntervalChange = (newInterval: 'month' | 'year') => {
@@ -153,9 +176,9 @@ export function UpgradeModal({
                 className="px-6 py-2.5 text-sm font-medium"
               >
                 Yearly
-                {billingInterval === 'year' && (
+                {billingInterval === 'year' && yearlyDiscountLabel > 0 && (
                   <Badge className="ml-2 bg-green-500 text-white text-xs px-2 py-1">
-                    Save 17%
+                    Save {yearlyDiscountLabel}%
                   </Badge>
                 )}
               </Button>
@@ -198,11 +221,11 @@ export function UpgradeModal({
                       </h3>
                       <div className="mb-3">
                         <span className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-                          {formatPrice(currentPlan.price, currentPlan.currency)}
+                          {formatPrice(displayPriceCents, currentPlan.currency)}
                         </span>
-                        {currentPlan.interval && (
+                        {displayIntervalLabel && (
                           <span className="text-slate-600 dark:text-slate-400 text-lg">
-                            /{currentPlan.interval}
+                            /{displayIntervalLabel}
                           </span>
                         )}
                         {currentPlan.yearlyDiscount && (
@@ -215,6 +238,15 @@ export function UpgradeModal({
                       <p className="text-sm text-slate-600 dark:text-slate-400">
                         {currentPlan.description}
                       </p>
+                      {currentTrialDays && (
+                        <div className="mt-3">
+                          <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
+                            {billingInterval === 'year'
+                              ? `${currentTrialDays}-day money-back guarantee`
+                              : `${currentTrialDays}-day free trial`}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* 核心功能列表 - 扩展版 */}
@@ -346,7 +378,7 @@ export function UpgradeModal({
                           className="w-full py-3 text-base font-semibold"
                           variant="default"
                         >
-                          Upgrade to {currentPlan.name}
+                          Start trial
                         </CheckoutButton>
                       ) : (
                         <Button

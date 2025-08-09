@@ -190,12 +190,16 @@ export function PricingCard({
               metadata={metadata}
               className="mt-4 w-full cursor-pointer"
             >
-              {plan.isLifetime ? t('getLifetimeAccess') : t('getStarted')}
+              {plan.isLifetime
+                ? t('getLifetimeAccess')
+                : hasTrialPeriod
+                  ? t('startTrial')
+                  : t('getStarted')}
             </CheckoutButton>
           ) : (
             <LoginWrapper mode="modal" asChild callbackUrl={currentPath}>
               <Button variant="default" className="mt-4 w-full cursor-pointer">
-                {t('getStarted')}
+                {hasTrialPeriod ? t('startTrial') : t('getStarted')}
               </Button>
             </LoginWrapper>
           )
@@ -216,7 +220,9 @@ export function PricingCard({
               className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
             bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm"
             >
-              {t('daysTrial', { days: price.trialPeriodDays as number })}
+              {interval === PlanIntervals.YEAR
+                ? `${price.trialPeriodDays as number}-day money-back guarantee`
+                : t('daysTrial', { days: price.trialPeriodDays as number })}
             </span>
           </div>
         )}

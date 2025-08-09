@@ -135,6 +135,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 1000, // $10.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
+            trialPeriodDays: 7,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
@@ -142,6 +143,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 7200, // $6.00 per month billed yearly (40% off => $72/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
+            trialPeriodDays: 7,
           },
         ],
         isFree: false,
@@ -157,6 +159,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 2500, // $25.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
+            trialPeriodDays: 7,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
@@ -164,6 +167,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 18000, // $15.00 per month billed yearly (40% off => $180/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
+            trialPeriodDays: 7,
           },
         ],
         isFree: false,
