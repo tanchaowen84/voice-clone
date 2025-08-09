@@ -143,7 +143,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 7200, // $6.00 per month billed yearly (40% off => $72/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
-            trialPeriodDays: 7,
+            trialPeriodDays: 14, // money-back guarantee (yearly)
           },
         ],
         isFree: false,
@@ -167,7 +167,7 @@ export const websiteConfig: WebsiteConfig = {
             amount: 18000, // $15.00 per month billed yearly (40% off => $180/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
-            trialPeriodDays: 7,
+            trialPeriodDays: 14, // money-back guarantee (yearly)
           },
         ],
         isFree: false,
