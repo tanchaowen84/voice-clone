@@ -2,7 +2,7 @@
 
 /**
  * Upload Static Assets to Cloudflare R2
- * 
+ *
  * This script uploads the specified static assets to your Cloudflare R2 bucket
  * using the configured CDN domain.
  */
@@ -25,6 +25,23 @@ const config = {
   forcePathStyle: process.env.STORAGE_FORCE_PATH_STYLE !== 'false',
 };
 
+// Helper: recursively collect files under a directory (relative to public)
+function listFilesRecursively(relativeDir) {
+  const dirFullPath = path.join(process.cwd(), 'public', relativeDir);
+  if (!fs.existsSync(dirFullPath)) return [];
+  const entries = fs.readdirSync(dirFullPath, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const relPath = path.join(relativeDir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...listFilesRecursively(relPath));
+    } else {
+      files.push(relPath.replace(/\\/g, '/'));
+    }
+  }
+  return files;
+}
+
 // Assets to upload (relative to public directory)
 const ASSETS_TO_UPLOAD = [
   'aicapabilities.png',
@@ -39,6 +56,8 @@ const ASSETS_TO_UPLOAD = [
   'logo.png',
   'logo-dark.png',
   'og.png',
+  // Include all audio files under /public/audio for CDN acceleration
+  ...listFilesRecursively('audio'),
 ];
 
 // Initialize S3 client for Cloudflare R2
@@ -58,7 +77,7 @@ const s3Client = new S3Client({
  */
 async function uploadFile(filePath) {
   const fullPath = path.join(process.cwd(), 'public', filePath);
-  
+
   // Check if file exists
   if (!fs.existsSync(fullPath)) {
     console.error(`❌ File not found: ${fullPath}`);
@@ -68,10 +87,10 @@ async function uploadFile(filePath) {
   try {
     // Read file
     const fileContent = fs.readFileSync(fullPath);
-    
+
     // Determine content type
     const contentType = mime.lookup(filePath) || 'application/octet-stream';
-    
+
     // Upload to R2
     const command = new PutObjectCommand({
       Bucket: config.bucketName,
@@ -96,11 +115,20 @@ async function uploadFile(filePath) {
  */
 async function uploadAllAssets() {
   console.log('🚀 Starting static assets upload to Cloudflare R2...\n');
-  
+
   // Validate configuration
-  if (!config.endpoint || !config.accessKeyId || !config.secretAccessKey || !config.bucketName) {
-    console.error('❌ Missing required environment variables. Please check your .env file.');
-    console.error('Required variables: STORAGE_ENDPOINT, STORAGE_ACCESS_KEY_ID, STORAGE_SECRET_ACCESS_KEY, STORAGE_BUCKET_NAME');
+  if (
+    !config.endpoint ||
+    !config.accessKeyId ||
+    !config.secretAccessKey ||
+    !config.bucketName
+  ) {
+    console.error(
+      '❌ Missing required environment variables. Please check your .env file.'
+    );
+    console.error(
+      'Required variables: STORAGE_ENDPOINT, STORAGE_ACCESS_KEY_ID, STORAGE_SECRET_ACCESS_KEY, STORAGE_BUCKET_NAME'
+    );
     process.exit(1);
   }
 
@@ -132,7 +160,9 @@ async function uploadAllAssets() {
     process.exit(1);
   } else {
     console.log('\n🎉 All assets uploaded successfully!');
-    console.log(`🔗 Your assets are now available at: https://cdn.voice-clone.org/`);
+    console.log(
+      '🔗 Your assets are now available at: https://cdn.voice-clone.org/'
+    );
   }
 }
 
