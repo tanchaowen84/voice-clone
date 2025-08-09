@@ -2,8 +2,15 @@
 
 import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
 import { getPlanConfig } from '@/config/subscription-config';
+import { authClient } from '@/lib/auth-client';
+import { useAuthModalStore } from '@/stores/auth-modal-store';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
+import {
+  clearPendingAudio,
+  loadPendingAudio,
+  savePendingAudio,
+} from '@/utils/pending-media';
 import { Download, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
@@ -22,7 +29,15 @@ export function VoiceInputArea() {
     error,
     generateSpeech,
     reset,
+    audioFile,
+    recordedBlob,
+    setAudioFile,
+    setRecordedBlob,
   } = useVoiceCloneStore();
+
+  const { data: session } = authClient.useSession();
+  const { open: openAuthModal, setPending: setAuthPending } =
+    useAuthModalStore();
 
   const { subscription, waitingState, fetchAllData, showUpgradeModal } =
     useSubscriptionStore();
@@ -44,6 +59,34 @@ export function VoiceInputArea() {
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
+
+    // Intercept unauthenticated users: open login modal and mark pending
+    if (!session?.user) {
+      setAuthPending(textInput, 'generate');
+      // Persist media (audio) for recovery across full reloads
+      if (inputMode === 'record' || inputMode === 'upload') {
+        try {
+          if (recordedBlob) {
+            await savePendingAudio({
+              blob: recordedBlob,
+              fileName: 'recorded-voice.webm',
+              mimeType: recordedBlob.type || 'audio/webm',
+              source: 'recorded',
+            });
+          } else if (audioFile) {
+            await savePendingAudio({
+              blob: audioFile,
+              fileName: (audioFile as File).name || 'uploaded-audio',
+              mimeType: audioFile.type || 'application/octet-stream',
+              source: 'uploaded',
+            });
+          }
+        } catch {}
+      }
+      openAuthModal();
+      return;
+    }
+
     await generateSpeech(textInput);
   };
 
@@ -68,6 +111,43 @@ export function VoiceInputArea() {
       'Transform your text into natural-sounding speech with AI voice cloning technology.'
     );
   };
+
+  // Auto-continue after login success
+  useEffect(() => {
+    const handler = async (e: Event) => {
+      const ce = e as CustomEvent<{
+        pendingAction?: string;
+        pendingText?: string;
+      }>;
+      const nextText = ce.detail?.pendingText || textInput;
+
+      // Try to rehydrate pending audio from IndexedDB if any
+      try {
+        const rec = await loadPendingAudio();
+        if (rec) {
+          if (rec.source === 'recorded') {
+            setRecordedBlob(rec.blob);
+          } else {
+            const file = new File([rec.blob], rec.fileName, {
+              type: rec.mimeType,
+            });
+            setAudioFile(file);
+          }
+          await clearPendingAudio();
+        }
+      } catch {}
+
+      if (nextText && nextText.trim()) {
+        generateSpeech(nextText);
+      }
+    };
+    window.addEventListener('auth:login_success', handler as EventListener);
+    return () =>
+      window.removeEventListener(
+        'auth:login_success',
+        handler as EventListener
+      );
+  }, [generateSpeech, textInput]);
 
   // Show text input interface when audio is ready
   if (currentStep === 'generate') {

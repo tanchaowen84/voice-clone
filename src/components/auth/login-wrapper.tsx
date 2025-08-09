@@ -28,6 +28,7 @@ export const LoginWrapper = ({
   const router = useLocaleRouter();
   const [mounted, setMounted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // NOTE: We now have a global AuthModalProvider; this local modal remains for navbar buttons.
 
   useEffect(() => {
     setMounted(true);

@@ -3,6 +3,7 @@ import {
   isAudioConversionSupported,
 } from '@/utils/audio-converter';
 import { create } from 'zustand';
+import { useAuthModalStore } from './auth-modal-store';
 import { useSubscriptionStore } from './subscription-store';
 
 /**
@@ -231,6 +232,14 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       });
 
       if (!generateResponse.ok) {
+        // Handle 401: require auth → open login modal and set pending
+        if (generateResponse.status === 401) {
+          const authStore = useAuthModalStore.getState();
+          authStore.setPending(text, 'generate');
+          authStore.open();
+          return; // stop further handling
+        }
+
         const errorData = await generateResponse.json();
 
         // 处理订阅限制错误
