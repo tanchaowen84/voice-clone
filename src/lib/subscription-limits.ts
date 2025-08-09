@@ -5,10 +5,10 @@
  */
 
 import { type PlanId, getPlanConfig } from '@/config/subscription-config';
-import { getDb, monthlyUsage, user, userUsage } from '@/db/index';
+import { getDb, monthlyUsage, payment, user, userUsage } from '@/db/index';
 import { auth } from '@/lib/auth';
 import type { UsageCheckResult } from '@/types/subscription';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 import { headers } from 'next/headers';
 
 /**
@@ -36,34 +36,88 @@ export async function getCurrentUser() {
 }
 
 /**
- * 获取用户订阅信息
+ * 获取用户订阅信息（以 payment 为单一事实来源推导）
+ * 优先从 payment 表推导有效订阅；若无有效记录则回退到 user 表字段；最终兜底为 free
  */
 export async function getUserSubscription(userId: string) {
   try {
     const db = await getDb();
+
+    // 1) 尝试从 payment 记录推导有效订阅
+    // 说明：仅考虑订阅（subscription）类型；不处理 lifetime/one_time
+    const payments = await db
+      .select()
+      .from(payment)
+      .where(eq(payment.userId, userId))
+      .orderBy(desc(payment.createdAt));
+
+    // 辅助函数：判断一条 payment 是否代表当前有效订阅
+    const isActiveSubscription = (p: any): boolean => {
+      if (p.type !== 'subscription') return false;
+      // 仅接受 active/trialing；如果 canceled 但未到期且 cancelAtPeriodEnd=true 也视为有效
+      const status = p.status as string;
+      const now = new Date();
+      const periodEnd = p.periodEnd ? new Date(p.periodEnd) : null;
+      if (status === 'active' || status === 'trialing') return true;
+      if (
+        status === 'canceled' &&
+        p.cancelAtPeriodEnd &&
+        periodEnd &&
+        now < periodEnd
+      ) {
+        return true;
+      }
+      return false;
+    };
+
+    const effectivePayment = payments.find(isActiveSubscription);
+    if (effectivePayment) {
+      // 通过 priceId 反查 plan
+      const { findPlanByPriceId } = await import('@/lib/price-plan');
+      const plan = findPlanByPriceId(effectivePayment.priceId);
+      const planId = (plan?.id || 'free') as PlanId;
+      const planExpiresAt = effectivePayment.periodEnd
+        ? new Date(effectivePayment.periodEnd)
+        : null;
+
+      console.log(
+        `📋 [Subscription] Derived from payments, user ${userId} plan: ${planId}, expires: ${planExpiresAt}`
+      );
+
+      return {
+        userId,
+        planId,
+        planExpiresAt,
+        isExpired: false,
+      };
+    }
+
+    // 2) 若无有效 payment，回退到 user 表
     const userRecord = await db
-      .select({
-        planId: user.planId,
-        planExpiresAt: user.planExpiresAt,
-      })
+      .select({ planId: user.planId, planExpiresAt: user.planExpiresAt })
       .from(user)
       .where(eq(user.id, userId))
       .limit(1);
 
     if (userRecord.length === 0) {
       console.warn(`⚠️ [Subscription] User ${userId} not found in database`);
-      return null;
+      // 兜底 free
+      return {
+        userId,
+        planId: 'free' as PlanId,
+        planExpiresAt: null,
+        isExpired: false,
+      };
     }
 
     const { planId, planExpiresAt } = userRecord[0];
     const currentPlanId = (planId || 'free') as PlanId;
 
-    // 检查订阅是否过期
     const isExpired = planExpiresAt && new Date() > planExpiresAt;
-    const effectivePlanId = isExpired ? 'free' : currentPlanId;
+    const effectivePlanId = isExpired ? ('free' as PlanId) : currentPlanId;
 
     console.log(
-      `📋 [Subscription] User ${userId} plan: ${currentPlanId} -> ${effectivePlanId} (expired: ${isExpired})`
+      `📋 [Subscription] Fallback to user record, user ${userId} plan: ${currentPlanId} -> ${effectivePlanId} (expired: ${isExpired})`
     );
 
     return {
@@ -74,7 +128,13 @@ export async function getUserSubscription(userId: string) {
     };
   } catch (error) {
     console.error('❌ [Subscription] Error getting user subscription:', error);
-    return null;
+    // 兜底 free
+    return {
+      userId,
+      planId: 'free' as PlanId,
+      planExpiresAt: null,
+      isExpired: false,
+    };
   }
 }
 

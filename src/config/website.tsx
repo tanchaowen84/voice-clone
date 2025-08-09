@@ -132,14 +132,14 @@ export const websiteConfig: WebsiteConfig = {
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BASIC_MONTHLY!,
-            amount: 1000, // $10.00
+            amount: 1000, // $10.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BASIC_YEARLY!,
-            amount: 10000, // $100.00 (10 months price for 12 months)
+            amount: 7200, // $6.00 per month billed yearly (40% off => $72/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
           },
@@ -154,14 +154,14 @@ export const websiteConfig: WebsiteConfig = {
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_MONTHLY!,
-            amount: 2500, // $25.00
+            amount: 2500, // $25.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
             priceId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO_YEARLY!,
-            amount: 25000, // $250.00 (10 months price for 12 months)
+            amount: 18000, // $15.00 per month billed yearly (40% off => $180/year)
             currency: 'USD',
             interval: PlanIntervals.YEAR,
           },
