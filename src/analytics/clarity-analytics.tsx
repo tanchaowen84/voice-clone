@@ -23,8 +23,8 @@ import Script from 'next/script';
 export function ClarityAnalytics() {
   const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
-  // Only load in production and if project ID is configured
-  if (process.env.NODE_ENV !== 'production' || !clarityProjectId) {
+  // Always load when project ID is configured
+  if (!clarityProjectId) {
     return null;
   }
 
