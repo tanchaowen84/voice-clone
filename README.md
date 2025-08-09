@@ -1,183 +1,122 @@
-# MkSaaS
+# Voice Clone (Community Edition)
 
-Make AI SaaS in a weekend.
+> Turn your text into natural‑sounding speech with AI voice cloning. Self‑host in minutes.
 
-The complete Next.js boilerplate for building profitable SaaS, with auth, payments, i18n, newsletter, dashboard, blog, docs, themes, SEO and more.
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org)
+[![Better Auth](https://img.shields.io/badge/Auth-Better%20Auth-6A5ACD)](https://www.better-auth.com)
+[![Zustand](https://img.shields.io/badge/State-Zustand-8A2BE2)](https://zustand-demo.pmnd.rs/)
+[![Speechify](https://img.shields.io/badge/API-Speechify-00BFFF)](https://speechify.com)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-## Author
+---
 
-This project is created by [Fox](https://x.com/indie_maker_fox), the founder of [MkSaaS](https://mksaas.com) and [Mkdirs](https://mkdirs.com). The official X account for [MkSaaS](https://mksaas.com) is [@mksaascom](https://x.com/mksaascom), you can follow this account for the updates about MkSaaS.
+## 🚀 Why this project
+- Open, modern, and production‑grade voice cloning app you can deploy yourself
+- Simple auth + clean UX + fair free‑plan throttling, great for customization
+- Based on stable, well‑documented stack: Next.js 15, Better Auth, Zustand, Radix UI, Tailwind
 
-## Documentation
+---
 
-The documentation is available on the [website](https://mksaas.com/docs). It includes guides, tutorials, and detailed explanations of the code. I designed it to be as beginner-friendly as possible, so you can start making money from day one.
+## ✨ Highlights
+- 🔒 Social login (Google / GitHub)
+- ⚡ One‑click “Generate”, with login‑before‑action interception
+- 🔁 Auto‑continue after OAuth callback (text and audio auto‑restore)
+- 🔉 Voice clone + TTS via Speechify (MP3 Data URL)
+- 🌐 i18n, dark mode, accessibility, SEO friendly
+- 🧱 Clean state stores; easy to extend limits/billing
 
-If you found anything that could be improved, please let me know.
+---
 
-## Links
+## 📦 Tech Stack
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Auth | Better Auth (Google/GitHub) |
+| State | Zustand |
+| UI | Radix UI + Tailwind |
+| i18n | next-intl |
+| TTS/Clone | Speechify API |
 
-- 🔥 website: [mksaas.com](https://mksaas.com)
-- 🌐 demo: [demo.mksaas.com](https://demo.mksaas.com)
-- 📚 documentation: [mksaas.com/docs](https://mksaas.com/docs)
-- 🗓️ roadmap: [mksaas roadmap](https://mksaas.link/roadmap)
-- 👨‍💻 discord: [mksaas.link/discord](https://mksaas.link/discord)
-- 📹 video (WIP): [mksaas.link/youtube](https://mksaas.link/youtube)
+---
 
-## Repositories
+## 🏗️ Quick Deploy (Community)
+> Use pnpm. The app always runs on port 3000.
 
-By default, you should have access to all four repositories. If you find that you're unable to access any of them, please don't hesitate to reach out to me, and I'll assist you in resolving the issue.
+```bash
+# 1) Install
+pnpm install
 
-- [mksaas-template (ready)](https://github.com/MkSaaSHQ/mksaas-template): https://demo.mksaas.com
-- [mksaas-blog (ready)](https://github.com/MkSaaSHQ/mksaas-blog): https://mksaas.me
-- [mksaas-haitang (ready)](https://github.com/MkSaaSHQ/mksaas-haitang): https://haitang.app
-- [mksaas-app (WIP)](https://github.com/MkSaaSHQ/mksaas-app): https://mksaas.app
+# 2) Configure env
+cp env.example .env
+# Fill: BASE_URL, BETTER_AUTH_SECRET, Google/GitHub OAuth, SPEECHIFY_API_TOKEN, DATABASE_URL
 
-## Notice
+# 3) Initialize DB (Drizzle)
+pnpm db:generate && pnpm db:migrate
 
-> If you have any questions, please [submit an issue](https://github.com/MkSaaSHQ/mksaas-template/issues/new), or contact me at [support@mksaas.com](mailto:support@mksaas.com).
-
-> If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
-
-> When submitting any content to the issues or discussions of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
-
-## License
-
-For any details on the license, please refer to the [License](LICENSE) file.
-
-# Feature Toggle Control System
-
-## Implementation (2025-06-16)
-
-### 1. Configuration-Based Feature Control
-- ✅ Added `enableDocsPage` feature toggle in `src/config/website.tsx`
-- ✅ Added `enableAIPages` feature toggle in `src/config/website.tsx`
-- ✅ Added `enableMagicUIPage` feature toggle in `src/config/website.tsx`
-- ✅ Extended `FeaturesConfig` type definition in `src/types/index.d.ts`
-- ✅ Set docs page to disabled by default (`enableDocsPage: false`)
-- ✅ Set AI pages to disabled by default (`enableAIPages: false`)
-- ✅ Set MagicUI page to disabled by default (`enableMagicUIPage: false`)
-
-### 2. Route-Level Control
-- ✅ Implemented `notFound()` check in `src/app/[locale]/docs/layout.tsx`
-- ✅ Implemented `notFound()` check in `src/app/[locale]/(marketing)/ai/layout.tsx`
-- ✅ Implemented `notFound()` check in `src/app/[locale]/(marketing)/(pages)/magicui/page.tsx`
-- ✅ Docs pages return standard 404 when feature is disabled
-- ✅ AI pages return standard 404 when feature is disabled
-- ✅ MagicUI page returns standard 404 when feature is disabled
-- ✅ SEO-friendly approach - pages truly "don't exist" when disabled
-
-### 3. Navigation Control
-- ✅ Modified `src/config/navbar-config.tsx` for conditional docs link display
-- ✅ AI navigation links already commented out in navbar
-- ✅ MagicUI navigation links already commented out in navbar
-- ✅ Modified `src/config/footer-config.tsx` for conditional docs link in footer
-- ✅ No AI links found in footer (confirmed clean)
-- ✅ No MagicUI links found in footer (confirmed clean)
-
-- ✅ Links only appear when respective features are enabled
-
-### 4. SEO and Sitemap Control
-- ✅ Updated `src/app/sitemap.ts` with dynamic route generation
-- ✅ Docs pages excluded from sitemap when feature is disabled
-- ✅ AI pages excluded from sitemap when feature is disabled
-- ✅ MagicUI page excluded from sitemap when feature is disabled
-
-- ✅ Search engines won't discover disabled pages
-
-### 5. Technical Implementation
-- **Dual Control Strategy**: Route-level blocking + Link-level hiding
-- **Zero Code Deletion**: All page files remain intact
-- **Configuration Driven**: Single toggle controls entire feature
-- **SEO Optimized**: No 404 errors affecting search rankings
-
-### 6. Current Status
-- 🔒 **Docs Feature**: DISABLED (`enableDocsPage: false`)
-  - ❌ Navigation links hidden
-  - ❌ Footer links hidden  
-  - ❌ Direct access returns 404
-  - ❌ Excluded from sitemap
-  - ✅ Code files preserved
-
-- 🔒 **AI Features**: DISABLED (`enableAIPages: false`)
-  - ❌ Navigation links hidden (already commented)
-  - ❌ Direct access to /ai/* returns 404
-  - ❌ Excluded from sitemap
-  - ✅ Code files preserved
-  - ✅ Covers all AI pages: text, image, video, audio
-
-- 🔒 **MagicUI Feature**: DISABLED (`enableMagicUIPage: false`)
-  - ❌ Navigation links hidden (already commented)
-  - ❌ Direct access to /magicui returns 404
-  - ❌ Excluded from sitemap
-  - ✅ Code files preserved
-  - ✅ Single showcase page with multiple UI components
-
-
-
-### 7. Usage
-To enable docs feature:
-```typescript
-// src/config/website.tsx
-features: {
-  enableDocsPage: true,  // Enable docs functionality
-}
+# 4) Run (port 3000)
+pnpm dev
 ```
 
-To enable AI features:
-```typescript
-// src/config/website.tsx
-features: {
-  enableAIPages: true,   // Enable AI functionality
-}
+> For production, deploy to Vercel or any Node 18+/20+ platform. Configure the same environment variables.
+
+---
+
+## ⚙️ Minimal Config
+- NEXT_PUBLIC_BASE_URL: http://your-domain:3000
+- DATABASE_URL: Postgres connection string
+- BETTER_AUTH_SECRET: generate with `openssl rand -base64 32`
+- GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
+- GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET
+- SPEECHIFY_API_TOKEN
+
+---
+
+## 🧪 Usage
+1. Record or upload voice
+2. Enter text and click Generate
+3. If not logged in, sign in with Google/GitHub; generation continues automatically after redirect
+4. Download the MP3
+
+---
+
+## 🗺️ Project Map
+```
+src/
+  app/[locale]/            # localized layouts & routes
+  app/api/voice-clone/     # API: create / generate / voices
+  components/              # UI & feature components
+  stores/                  # zustand stores (voice/subscription/payment/auth-modal)
+  lib/                     # auth client, utils
 ```
 
-To enable MagicUI feature:
-```typescript
-// src/config/website.tsx
-features: {
-  enableMagicUIPage: true,   // Enable MagicUI functionality
-}
-```
+---
+
+## 📜 License
+- Apache-2.0. See [LICENSE](./LICENSE)
 
 
 
-To disable features:
-```typescript
-// src/config/website.tsx
-features: {
-  enableDocsPage: false, // Disable docs functionality
-  enableAIPages: false,  // Disable AI functionality
-  enableMagicUIPage: false,  // Disable MagicUI functionality
 
-}
-```
+## Environment Variables
+> Minimal variables to run the Community Edition.
 
-This system can be extended to control any page or feature in the template while maintaining code integrity and providing excellent SEO performance.
+| Key | Example | Notes |
+|---|---|---|
+| NEXT_PUBLIC_BASE_URL | http://localhost:3000 | Public base URL |
+| DATABASE_URL | postgres://user:pass@host:5432/db | Drizzle/DB connection |
+| BETTER_AUTH_SECRET | (random 32 bytes) | Generate with `openssl rand -base64 32` |
+| GOOGLE_CLIENT_ID | x.apps.googleusercontent.com | OAuth |
+| GOOGLE_CLIENT_SECRET | ***** | OAuth |
+| GITHUB_CLIENT_ID | ***** | OAuth |
+| GITHUB_CLIENT_SECRET | ***** | OAuth |
+| SPEECHIFY_API_TOKEN | **** | Voice clone/TTS |
 
-# Creem Payment Integration Updates
+> Optional: Stripe/Creem keys if you plan to enable payments later.
 
-## Recent Fixes (2025-06-14)
 
-### 1. Customer Portal Implementation
-- ✅ Fixed Creem customer portal API response parsing
-- ✅ Changed from `data.url` to `data.customer_portal_link` to match Creem API
-- ✅ Enhanced debugging for portal creation process
 
-### 2. Webhook Processing Improvements  
-- ✅ Added comprehensive webhook debugging
-- ✅ Enhanced signature verification with detailed logging
-- ✅ Added handling for empty webhook bodies (common with ngrok/proxy setups)
-- ✅ Improved error categorization and logging
 
-### 3. Technical Details
-- **Customer Portal**: Creem API returns `{"customer_portal_link": "https://..."}` format
-- **Webhook Signatures**: Using `creem-signature` header with HMAC-SHA256 verification
-- **Empty Body Handling**: Gracefully skip processing empty webhook requests (test/proxy requests)
 
-### 4. Known Issues Resolved
-- ❌ ~~Customer portal returning empty URL~~ → ✅ Fixed API response parsing
-- ❌ ~~Webhook signature verification failures~~ → ✅ Added empty body detection
-- ❌ ~~Frontend compatibility issues~~ → ✅ Maintained backward compatibility
 
 ## Development Notes
 - All webhook events are properly logged with detailed debugging information
@@ -186,7 +125,7 @@ This system can be extended to control any page or feature in the template while
 
 # Legal Policy Documents Compliance Review
 
-## Privacy Policy Upgrade (85/100 Score)
+## Privacy Policy Upgrade 
 **Date**: 2025-01-27
 **Status**: ✅ Completed
 
@@ -207,7 +146,7 @@ Completely rewrote the privacy policy from 30/100 to 85/100 compliance score:
 - Automated decision-making disclosures
 - Contact information and complaint procedures
 
-## Cookie Policy Upgrade (85/100 Score)
+## Cookie Policy Upgrade
 **Date**: 2025-01-27
 **Status**: ✅ Completed
 
@@ -264,10 +203,3 @@ Completely rewrote the Terms of Service from 40/100 to 85/100 compliance score:
 - SLA (Service Level Agreement) - to be confirmed later
 - Enterprise customer terms - not needed initially
 
-## Legal Compliance Summary
-- **Privacy Policy**: 30/100 → 85/100 (+55 points improvement)
-- **Cookie Policy**: 25/100 → 85/100 (+60 points improvement)  
-- **Terms of Service**: 40/100 → 85/100 (+45 points improvement)
-- **Overall Risk Level**: High Risk → Low Risk
-- **International Compliance**: ✅ EU, UK, California, Global
-- **Technical Stack Coverage**: ✅ All services properly documented
