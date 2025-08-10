@@ -5,11 +5,11 @@ date: 2025-03-10T00:00:00.000Z
 published: true
 ---
 
-*Last updated: 2025-08-09*
+*Last updated: 2025-08-10*
 
 ## Introduction
 
-This Privacy Policy explains how voice clone ("we," "our," or "us") collects, uses, and protects your personal information when you use our services. We are committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other international privacy regulations.
+This Privacy Policy explains how VoiceClone ("we," "our," or "us") collects, uses, and protects your personal information when you use our services. We are committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other international privacy regulations.
 
 By using our services, you agree to the collection and use of information in accordance with this policy.
 
@@ -84,21 +84,24 @@ We process your personal data based on the following legal grounds:
 We work with trusted third-party service providers to deliver our services:
 
 ### Payment Processing
-- **Provider**: Creem
+- **Provider**: Creem (acts as our Merchant of Record, “MoR”)
 - **Data Shared**: Billing information, transaction details
 - **Purpose**: Secure payment processing and subscription management
-- **Data Location**: Singapore and other regions as required
-- **Protection**: Industry-standard encryption and security measures
+- **Data Location**: We do not assert storage locations for Creem‑processed data. Refer to Creem’s Privacy Policy for current information.
+- **Protection**: We do not store full payment card numbers. Creem and its payment processing partners handle card data using industry-standard encryption and security measures.
+- **Controller Role**: As MoR, Creem independently processes transaction‑related data (e.g., tax, refunds/chargebacks, and receipts) as an independent controller.
+- **Billing Descriptor**: Charges may appear on your statement as "CREEM.IO* STORE".
+- **Customer Portal**: View orders and manage subscriptions via Creem’s My Orders (Customer Portal).
 
 ### AI Services
-- **Providers**: Third-party AI services supporting voice cloning and text-to-speech
+- **Providers**: Third-party AI services supporting VoiceClone and text-to-speech
 - **Data Shared**: Voice samples you upload, text input for TTS, and generated audio as needed to provide the service
-- **Purpose**: Voice cloning and text-to-speech generation
+- **Purpose**: VoiceClone and text-to-speech generation
 - **Data Retention**: Limited to providing the service; see provider policies for details
 - **Protection**: Secure API connections and data handling agreements
 
 ### Voice Samples and Synthetic Voice
-By using the Services, you consent to our processing of your voice samples, text inputs, and generated audio solely to provide voice cloning and text-to-speech features. You may stop using the Services at any time and request deletion of related data as described in this Privacy Policy.
+By using the Services, you consent to our processing of your voice samples, text inputs, and generated audio solely to provide VoiceClone and text-to-speech features. You may stop using the Services at any time and request deletion of related data as described in this Privacy Policy.
 
 
 ### Email Services (Optional)
@@ -109,17 +112,40 @@ By using the Services, you consent to our processing of your voice samples, text
 - **Protection**: Secure transmission and storage
 
 ### Analytics
-- **Provider**: Self-hosted Plausible Analytics
-- **Data Shared**: Anonymized usage statistics
+- **Provider**: Plausible (Self-hosted)
+- **Data Shared**: Anonymized usage statistics; no cookies and no personal tracking
 - **Purpose**: Understanding service usage and performance
 - **Data Location**: Our controlled infrastructure
-- **Protection**: Privacy-focused analytics without personal tracking
+- **Protection**: Privacy-focused analytics designed without personal data collection
+
+### Behavior Analytics (Session Replay)
+- **Provider**: Microsoft Clarity
+- **Data Shared**: Page views, clicks, scrolls, device/browser data, and session replay events. We configure masking to prevent capture of sensitive fields and can add custom masking of elements.
+- **Purpose**: UX analysis via heatmaps and session recordings to improve usability
+- **Data Retention**: Session recordings kept up to 30 days; heatmaps and favorited/labeled sessions retained up to 13 months (per Clarity settings)
+- **Protection**: Data masking options (Relaxed/Balanced/Strict) and selective element masking to avoid PII capture
+
+### Web Analytics (Google Analytics 4)
+- **Provider**: Google Analytics
+- **Consent**: For users in the EEA, we implement Google Consent Mode v2 so Google tags adapt to your consent choices; non‑essential tags only load after consent is granted.
+- **IP Addresses**: GA4 does not log or store IP addresses.
+- **Data Retention**: User‑level retention options of 2 or 14 months (admin‑configurable).
+- **Purpose**: Aggregate traffic measurement and product analytics
+
+### Search & Webmaster Tools
+- **Provider**: Google Search Console
+- **Data Shared**: Site ownership/verification data, sitemaps, and aggregated search performance metrics. For privacy, low‑volume or sensitive queries may be omitted from reports.
+- **Purpose**: Index coverage monitoring, crawl diagnostics, search performance reporting
+- **Protection**: Access‑controlled via Google account permissions
+
+- **Provider**: Bing Webmaster Tools
+- **Data Shared**: Site verification artifacts, sitemaps, and aggregated search performance/diagnostics
+- **Purpose**: Indexing insights, keyword performance, and crawl diagnostics for Bing
+- **Protection**: Access‑controlled via Microsoft account permissions
 
 ### Infrastructure
-- **Cloud Providers**: [AWS/Google Cloud/Other - to be specified]
-- **Data Shared**: All service data as necessary for operations
-- **Purpose**: Hosting, storage, and service delivery
-- **Protection**: Enterprise-grade security and encryption
+- **Hosting**: Vercel — hosting and delivery of our web application. Compliance measures include SOC 2 Type 2 audits and other controls described in Vercel’s security documentation and Data Processing Agreement.
+- **Object Storage**: Cloudflare R2 — storage of files needed to deliver the Service (for example, assets or generated content). Data is encrypted in transit and at rest by default. Where appropriate, Cloudflare’s Data Localization features (Regional Services and Customer Metadata Boundary) may be used to keep specified data/metadata within selected regions.
 
 ## Data Retention
 
@@ -137,9 +163,10 @@ We retain your personal data only as long as necessary for the purposes outlined
 
 As a global service, we may transfer your personal data to countries outside your residence, including:
 
-- **United States**: For AI processing and some infrastructure services
-- **Singapore**: For payment processing through Creem
-- **European Union**: For users in EU/EEA regions when possible
+- **United States**: For core infrastructure, hosting, and some AI processing
+- **European Union/EEA**: Regional processing where configured or required by law
+- **Payments (Creem)**: Transactions are handled by our Merchant of Record, Creem. For Creem’s service locations and processors, see Creem’s Privacy Policy. Where required, transfers rely on safeguards such as Standard Contractual Clauses (SCCs) or adequacy decisions.
+- **Other Regions**: Depending on your location and the services you use, processing may occur in additional jurisdictions in compliance with applicable law
 
 We ensure appropriate safeguards for international transfers through:
 - **Adequacy Decisions**: Transfers to countries with adequate protection
@@ -201,10 +228,7 @@ In the event of a data breach, we will:
 - **Remediation**: Take steps to prevent future incidents
 
 ## Children's Privacy
-
-Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we discover that we have collected personal information from a child under 13, we will delete it immediately.
-
-If you are a parent or guardian and believe your child has provided us with personal information, please contact us at support@voice-clone.org.
+Our Services are not intended for children. In the United States, we do not knowingly collect personal information from children under 13. In the EEA/UK, if we rely on consent, we do not knowingly collect personal data from children under 16 (or the lower age provided by local law, but never below 13). If you believe a child has provided personal information, please contact support@voice-clone.org and we will delete it promptly.
 
 ## Cookies and Tracking
 
@@ -219,6 +243,8 @@ We use cookies and similar technologies to enhance your experience. For detailed
 - Analytics and performance monitoring
 - Feature enhancement and personalization
 - Marketing and advertising (if applicable)
+
+**EEA/UK Visitors**: Optional cookies are disabled by default and will only be set after you provide consent via our cookie banner. You can withdraw consent at any time.
 
 You can manage cookie preferences through your browser settings or our cookie consent banner.
 
@@ -235,6 +261,12 @@ You can manage your communication preferences:
 - **Account Settings**: Update preferences in your user account
 - **Unsubscribe Links**: Use links in emails to opt-out
 - **Contact Us**: Email support@voice-clone.org for assistance
+
+## Subscriptions & Cancellations
+
+You can cancel an active subscription at any time. Cancellation takes effect immediately and you will no longer be charged. To manage subscriptions, update your payment method, or view invoices, use Creem’s Customer Portal (“My Orders”).
+
+Refunds and chargeback handling are managed by our Merchant of Record (Creem). If you believe you were charged in error or need a refund, submit a request via the Customer Portal and/or contact support as directed there.
 
 ## Automated Decision Making
 
@@ -259,12 +291,11 @@ We may update this Privacy Policy from time to time to reflect changes in our pr
 
 ## Contact Information
 
-### Data Protection Officer
-For privacy-related inquiries, contact our Data Protection Officer:
+### Data Controller
 - **Email**: support@voice-clone.org
-- **Address**:
+- **EU Representative (GDPR Art. 27)**: Not appointed at this time; this section will be updated if/when appointed.
 
-### General Privacy Inquiries
+### Privacy Contact
 - **Email**: support@voice-clone.org
 - **Website**: /privacy
 - **Response Time**: Within 5 business days for general inquiries
