@@ -18,8 +18,8 @@ function getEnabledStaticRoutes(): string[] {
     '/privacy',
     '/terms',
     '/cookie',
-    '/auth/login',
-    '/auth/register',
+    // Exclude auth routes from sitemap because these pages redirect to home
+    // and should not be indexed
   ];
 
   // 条件性添加页面路由
