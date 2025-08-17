@@ -96,6 +96,13 @@ export default function AudioEnhancerPage() {
     document.body.removeChild(a);
   }
 
+  function resetFlow() {
+    setFile(null);
+    setEnhancedUrl(null);
+    setError(null);
+    setIsDragOver(false);
+  }
+
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
       {/* Hero */}
@@ -183,31 +190,31 @@ export default function AudioEnhancerPage() {
 
       {/* Step 3: Result */}
       {enhancedUrl && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium">Enhanced</h3>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={onDownloadEnhanced}
-              disabled={!enhancedUrl}
-            >
+            <Button size="sm" variant="outline" onClick={onDownloadEnhanced}>
               <Download className="h-4 w-4" /> Download
             </Button>
           </div>
+
           <div className="rounded-md">
-            {/* WaveSurfer-based player */}
             <WaveAudioPlayer src={enhancedUrl!} />
+          </div>
+
+          {/* Call-to-action: use again */}
+          <div className="pt-2 border-t flex items-center justify-center">
+            <Button onClick={resetFlow}>Enhance another audio</Button>
           </div>
         </div>
       )}
 
       {/* Global Action Bar */}
-      {!isLoading && (
+      {!isLoading && !enhancedUrl && (
         <div className="mt-6 flex items-center justify-center gap-3">
-          <label htmlFor="file">
-            <Button variant="outline">Change</Button>
-          </label>
+          <Button variant="outline" onClick={resetFlow}>
+            Clear
+          </Button>
           <Button onClick={onEnhance} disabled={!file}>
             <span className="inline-flex items-center gap-2">
               Enhance <UploadCloud className="h-4 w-4" />
