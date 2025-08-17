@@ -1,67 +1,66 @@
 'use client';
 
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Download, Loader2, UploadCloud } from 'lucide-react';
+
+import {
+  Download,
+  Loader2,
+  Mic,
+  Sparkles,
+  UploadCloud,
+  Volume2,
+  Waves,
+} from 'lucide-react';
 import { useState } from 'react';
 
 export default function AudioEnhancerPage() {
   const [file, setFile] = useState<File | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [originalUrl, setOriginalUrl] = useState<string | null>(null);
-  const [enhancedUrl, setEnhancedUrl] = useState<string | null>(null);
-  const [rawResponse, setRawResponse] = useState<any>(null);
 
-  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0] ?? null;
+  const [enhancedUrl, setEnhancedUrl] = useState<string | null>(null);
+
+  function onFilePicked(f: File | null) {
     setFile(f);
     setError(null);
     setEnhancedUrl(null);
-    setRawResponse(null);
-    if (f) setOriginalUrl(URL.createObjectURL(f));
+  }
+
+  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    onFilePicked(e.target.files?.[0] ?? null);
+  }
+
+  function onDrop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    setIsDragOver(false);
+    const list = e.dataTransfer?.files ? Array.from(e.dataTransfer.files) : [];
+    const f = list[0];
+    if (f && f.type?.startsWith('audio/')) onFilePicked(f);
+    else setError('Please drop an audio file.');
   }
 
   async function onEnhance() {
     try {
+      if (!file) return setError('Please select an audio file first.');
       setIsLoading(true);
       setError(null);
       setEnhancedUrl(null);
-      setRawResponse(null);
-
-      if (!file) {
-        setError('Please select an audio file first.');
-        return;
-      }
 
       const formData = new FormData();
       formData.append('audio', file);
-
       const resp = await fetch('/api/tools/audio-enhancer', {
         method: 'POST',
         body: formData,
       });
-
       const data = await resp.json();
-      setRawResponse(data);
-
-      if (!resp.ok) {
-        setError(data?.error || 'Failed to enhance audio.');
-        return;
-      }
+      if (!resp.ok) return setError(data?.error || 'Failed to enhance audio.');
 
       const url = extractAudioUrl(data?.data);
-      if (url) {
-        setEnhancedUrl(url);
-      } else {
-        // Fallback: keep JSON visible for manual inspection
-        setError(
-          'Enhanced audio URL not found in response. See raw output below.'
-        );
-      }
+      if (url) setEnhancedUrl(url);
+      else setError('Enhanced audio URL not found in response.');
     } catch (e: any) {
       setError(e?.message || 'Unexpected error.');
     } finally {
@@ -70,29 +69,17 @@ export default function AudioEnhancerPage() {
   }
 
   function extractAudioUrl(data: any): string | null {
-    // Try common patterns in Gradio output
-    const candidates: string[] = [];
-
-    function collect(val: any) {
-      if (!val) return;
-      if (typeof val === 'string') {
-        candidates.push(val);
-      } else if (Array.isArray(val)) {
-        val.forEach(collect);
-      } else if (typeof val === 'object') {
-        for (const k of Object.keys(val)) {
-          collect(val[k]);
-        }
-      }
-    }
-
-    collect(data);
-
-    // Prefer data URLs or http(s) links that look like audio
-    for (const c of candidates) {
-      if (typeof c !== 'string') continue;
-      if (c.startsWith('data:audio')) return c;
-      if (c.startsWith('http://') || c.startsWith('https://')) return c;
+    const c: string[] = [];
+    const walk = (v: any) => {
+      if (!v) return;
+      if (typeof v === 'string') c.push(v);
+      else if (Array.isArray(v)) v.forEach(walk);
+      else if (typeof v === 'object') Object.values(v).forEach(walk);
+    };
+    walk(data);
+    for (const s of c) {
+      if (s.startsWith('data:audio')) return s;
+      if (s.startsWith('http://') || s.startsWith('https://')) return s;
     }
     return null;
   }
@@ -101,118 +88,134 @@ export default function AudioEnhancerPage() {
     if (!enhancedUrl) return;
     const a = document.createElement('a');
     a.href = enhancedUrl;
-    a.download = 'enhanced-audio'; // extension may be inferred by browser
+    a.download = 'enhanced-audio';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   }
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Audio Enhancer</h1>
+    <div className="container mx-auto max-w-5xl px-4 py-12">
+      {/* Hero */}
+      <div className="mb-10 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
+          <Sparkles className="h-3.5 w-3.5" /> Online Audio Enhancer
+        </div>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight">
+          Free Audio Enhancer
+        </h1>
+        <p className="mt-2 text-muted-foreground">
+          Remove noise and improve clarity. No account required.
+        </p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+          <Badge variant="secondary">
+            <Waves className="h-3.5 w-3.5" /> Noise remover
+          </Badge>
+          <Badge variant="secondary">
+            <Volume2 className="h-3.5 w-3.5" /> Loudness fix
+          </Badge>
+          <Badge variant="secondary">
+            <Mic className="h-3.5 w-3.5" /> Hum reduction
+          </Badge>
+        </div>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Upload & Enhance</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="audio">Audio File</Label>
-            <div className="flex items-center gap-3">
-              <Input
-                id="audio"
-                type="file"
-                accept="audio/*"
-                onChange={onFileChange}
-              />
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={onEnhance}
-                disabled={!file || isLoading}
-              >
-                {isLoading ? (
-                  <span className="inline-flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" /> Enhancing
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-2">
-                    <UploadCloud className="h-4 w-4" /> Enhance
-                  </span>
-                )}
+      {/* Step 1: Upload */}
+      {!file && !isLoading && !enhancedUrl && (
+        <div
+          className={`relative rounded-xl border border-dashed p-8 text-center transition-colors ${isDragOver ? 'bg-accent/40' : 'bg-background'}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragOver(true);
+          }}
+          onDragLeave={() => setIsDragOver(false)}
+          onDrop={onDrop}
+        >
+          <input
+            id="file"
+            type="file"
+            accept="audio/*"
+            onChange={onFileChange}
+            className="hidden"
+          />
+          <UploadCloud className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
+          <p className="text-sm">Choose a file or drag it here</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Supported formats: .mp3, .wav, .flac
+          </p>
+          <div className="mt-4 flex items-center justify-center gap-3">
+            <label htmlFor="file">
+              <Button asChild>
+                <span>Select Audio</span>
               </Button>
-            </div>
+            </label>
           </div>
-
-          {error && <div className="text-sm text-red-600">{error}</div>}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <h2 className="text-sm font-medium">Original</h2>
-              <div className="rounded-md border p-3">
-                {originalUrl ? (
-                  <audio controls className="w-full" src={originalUrl}>
-                    <track
-                      kind="captions"
-                      src=""
-                      srcLang="en"
-                      label="English captions"
-                    />
-                  </audio>
-                ) : (
-                  <div className="text-sm text-muted-foreground">
-                    No file selected
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-medium">Enhanced</h2>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={onDownloadEnhanced}
-                  disabled={!enhancedUrl}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Download className="h-4 w-4" /> Download
-                  </span>
-                </Button>
-              </div>
-              <div className="rounded-md border p-3">
-                {enhancedUrl ? (
-                  <audio controls className="w-full" src={enhancedUrl}>
-                    <track
-                      kind="captions"
-                      src=""
-                      srcLang="en"
-                      label="English captions"
-                    />
-                  </audio>
-                ) : (
-                  <div className="text-sm text-muted-foreground">
-                    No result yet
-                  </div>
-                )}
-              </div>
-            </div>
+          <div className="mt-6">
+            <Alert>
+              <AlertDescription>
+                Max upload ~150MB or 10 minutes recommended. Upgrade to increase
+                limits.
+              </AlertDescription>
+            </Alert>
           </div>
+          {error && (
+            <div className="mt-3">
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            </div>
+          )}
+        </div>
+      )}
 
-          <Separator />
+      {/* Step 2: Enhancing */}
+      {file && isLoading && (
+        <div className="rounded-xl border p-8 text-center">
+          <Loader2 className="mx-auto mb-3 h-8 w-8 animate-spin" />
+          <p className="text-sm">Enhancing your audio...</p>
+        </div>
+      )}
 
-          <div className="space-y-2">
-            <h2 className="text-sm font-medium">Raw Response (debug)</h2>
-            <pre className="text-xs rounded-md border p-3 overflow-auto max-h-80 bg-muted">
-              {rawResponse
-                ? JSON.stringify(rawResponse, null, 2)
-                : 'No response yet'}
-            </pre>
+      {/* Step 3: Result */}
+      {enhancedUrl && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium">Enhanced</h3>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={onDownloadEnhanced}
+              disabled={!enhancedUrl}
+            >
+              <Download className="h-4 w-4" /> Download
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-md border p-3">
+            <audio controls className="w-full" src={enhancedUrl}>
+              <track
+                kind="captions"
+                src=""
+                srcLang="en"
+                label="English captions"
+              />
+            </audio>
+          </div>
+        </div>
+      )}
+
+      {/* Action Bar when file chosen but not loading */}
+      {file && !isLoading && !enhancedUrl && (
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <label htmlFor="file">
+            <Button variant="outline">Change</Button>
+          </label>
+          <Button onClick={onEnhance}>
+            <span className="inline-flex items-center gap-2">
+              Enhance <UploadCloud className="h-4 w-4" />
+            </span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
