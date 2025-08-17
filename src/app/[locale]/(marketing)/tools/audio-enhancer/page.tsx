@@ -6,15 +6,17 @@ import { Button } from '@/components/ui/button';
 
 import { WaveAudioPlayer } from '@/components/media/wave-audio-player';
 
+import { BlurFade } from '@/components/magicui/blur-fade';
 import {
-  Download,
-  Loader2,
-  Mic,
-  Sparkles,
-  UploadCloud,
-  Volume2,
-  Waves,
-} from 'lucide-react';
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import seoContent from '@/content/tools/audio-enhancer.en.json';
+
+import { Download, Loader2, Sparkles, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
 
 export default function AudioEnhancerPage() {
@@ -40,7 +42,7 @@ export default function AudioEnhancerPage() {
     setIsDragOver(false);
     const list = e.dataTransfer?.files ? Array.from(e.dataTransfer.files) : [];
     const f = list[0];
-    if (f && f.type?.startsWith('audio/')) onFilePicked(f);
+    if (f?.type?.startsWith('audio/')) onFilePicked(f);
     else setError('Please drop an audio file.');
   }
 
@@ -106,28 +108,31 @@ export default function AudioEnhancerPage() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
       {/* Hero */}
-      <div className="mb-10 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
-          <Sparkles className="h-3.5 w-3.5" /> Online Audio Enhancer
+      <BlurFade>
+        <div className="mb-10 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
+            <Sparkles className="h-3.5 w-3.5" /> {seoContent.hero.title}
+          </div>
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight">
+            {seoContent.hero.title}
+          </h1>
+          <p className="mt-2 text-muted-foreground">
+            {seoContent.hero.subtitle}
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            {seoContent.hero.bullets.map((b, i) => (
+              <Badge key={b + i} variant="secondary">
+                {b}
+              </Badge>
+            ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Button asChild>
+              <a href={seoContent.cta.href}>{seoContent.cta.label}</a>
+            </Button>
+          </div>
         </div>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight">
-          Free Audio Enhancer
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Remove noise and improve clarity. No account required.
-        </p>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-          <Badge variant="secondary">
-            <Waves className="h-3.5 w-3.5" /> Noise remover
-          </Badge>
-          <Badge variant="secondary">
-            <Volume2 className="h-3.5 w-3.5" /> Loudness fix
-          </Badge>
-          <Badge variant="secondary">
-            <Mic className="h-3.5 w-3.5" /> Hum reduction
-          </Badge>
-        </div>
-      </div>
+      </BlurFade>
 
       {/* Upload Panel */}
       {!isLoading && !enhancedUrl && (
@@ -222,6 +227,156 @@ export default function AudioEnhancerPage() {
           </Button>
         </div>
       )}
+
+      {/* SEO Content: Structured Sections (JSON-driven) */}
+      <section className="mt-16 space-y-12">
+        {/* Problems */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.problems.title}
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-3xl">
+              {seoContent.problems.intro}
+            </p>
+          </div>
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {seoContent.problems.items.map((it, i) => (
+              <BlurFade key={it.title + i} delay={i * 0.06}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{it.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{it.body}</p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+            ))}
+          </div>
+        </BlurFade>
+
+        {/* How it works */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.howItWorks.title}
+            </h2>
+            <div className="space-y-1 text-sm text-muted-foreground max-w-3xl">
+              {seoContent.howItWorks.paragraphs.map((p, i) => (
+                <BlurFade key={i} delay={i * 0.05}>
+                  <p>{p}</p>
+                </BlurFade>
+              ))}
+            </div>
+          </div>
+        </BlurFade>
+
+        {/* Audience */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.audience.title}
+            </h2>
+            <ul className="grid grid-cols-1 gap-1 pl-5 text-sm text-muted-foreground md:grid-cols-2 list-disc">
+              {seoContent.audience.items.map((t, i) => (
+                <li key={t + i}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </BlurFade>
+
+        {/* Steps timeline */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">{seoContent.steps.title}</h2>
+            <ol className="space-y-2 text-sm text-muted-foreground">
+              {seoContent.steps.items.map((t, i) => (
+                <li key={t + i} className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-medium">
+                    {i + 1}
+                  </span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="text-xs text-muted-foreground">
+              {seoContent.steps.tip}
+            </p>
+          </div>
+        </BlurFade>
+
+        {/* Best practices */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.bestPractices.title}
+            </h2>
+            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+              {seoContent.bestPractices.items.map((t, i) => (
+                <li key={t + i}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </BlurFade>
+
+        {/* Compatibility */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.compatibility.title}
+            </h2>
+            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+              {seoContent.compatibility.items.map((t, i) => (
+                <li key={t + i}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </BlurFade>
+
+        {/* Privacy */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.privacy.title}
+            </h2>
+            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+              {seoContent.privacy.items.map((t, i) => (
+                <li key={t + i}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </BlurFade>
+
+        {/* FAQ */}
+        <BlurFade>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">{seoContent.faq.title}</h2>
+            <Accordion type="single" collapsible className="w-full">
+              {seoContent.faq.items.map((f, i) => (
+                <AccordionItem key={f.q + i} value={`item-${i}`}>
+                  <AccordionTrigger className="text-left">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </BlurFade>
+
+        {/* Bottom CTA */}
+        <div className="pt-2">
+          <a
+            className="inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium"
+            href={seoContent.cta.href}
+          >
+            {seoContent.cta.label}
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

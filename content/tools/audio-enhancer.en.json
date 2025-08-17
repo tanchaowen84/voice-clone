@@ -1,0 +1,100 @@
+{
+  "hero": {
+    "title": "Free Online Audio Enhancer",
+    "subtitle": "Remove noise and echo while preserving natural voice clarity. No login required.",
+    "bullets": [
+      "One-click cleanup",
+      "Natural speech (anti-artifact)",
+      "Podcast-friendly loudness",
+      "MP3/WAV/FLAC support"
+    ],
+    "primaryCta": "Upload Audio",
+    "secondaryCta": "Try Sample"
+  },
+  "problems": {
+    "title": "Fix Real-World Audio Problems",
+    "intro": "Remove background noise and echo while keeping your voice natural. Clean up hiss, hum, clicks, and uneven loudness so your audience can focus on the message.",
+    "items": [
+      { "title": "Remove Background Noise", "body": "Cut constant hiss, hum, fan, and traffic noise to uncover your voice." },
+      { "title": "Reduce Room Echo", "body": "De-reverb recordings from untreated rooms for clearer speech." },
+      { "title": "Tame Sibilance & Mouth Noises", "body": "Reduce harsh \"s\" sounds and lip smacks for a smooth, natural tone." },
+      { "title": "Repair Clicks & Pops", "body": "Fix minor clicks and pops without dulling the voice." },
+      { "title": "Loudness Leveling for Podcasts", "body": "Make voices more even and easier to listen to over time." },
+      { "title": "Keep It Natural", "body": "Balance denoising and clarity to avoid metallic \"underwater\" artifacts." }
+    ]
+  },
+  "howItWorks": {
+    "title": "How It Works (In Plain English)",
+    "paragraphs": [
+      "We use modern speech enhancement to reduce noise and echo while keeping your voice natural and intelligible.",
+      "Workflow: upload your file → enhance → preview A/B → download the cleaned track.",
+      "Supported formats: MP3, WAV, FLAC, OGG. Recommended size: up to 50MB. No account required."
+    ]
+  },
+  "audience": {
+    "title": "Who It’s For",
+    "items": [
+      "Podcasters and hosts",
+      "YouTubers and Shorts creators",
+      "Online courses and lectures",
+      "Interviews and field recordings",
+      "Voiceovers and narrations"
+    ]
+  },
+  "steps": {
+    "title": "Enhance in 3 Steps",
+    "items": [
+      "Upload your audio file",
+      "Click Enhance and preview the result",
+      "Download the cleaned track"
+    ],
+    "tip": "Tip: For best results, use clips 30–120 seconds long."
+  },
+  "bestPractices": {
+    "title": "Best Practices for Clearer Recordings",
+    "items": [
+      "Keep a steady mic distance and angle; use a pop filter or windscreen.",
+      "Reduce room reflections with soft furnishings.",
+      "Avoid clipping; set a healthy input level.",
+      "For podcasts, aim around −16 LUFS to keep loudness consistent.",
+      "For extreme noise or echo, consider re‑recording or advanced DAW tools."
+    ]
+  },
+  "compatibility": {
+    "title": "Compatibility & Limits",
+    "items": [
+      "Formats: MP3, WAV, FLAC, OGG; file size up to 50MB.",
+      "Recommended duration: 30–120 seconds per clip.",
+      "Stereo is preserved; exports in common formats for easy editing.",
+      "Works on modern desktop and mobile browsers."
+    ]
+  },
+  "privacy": {
+    "title": "Privacy & Data Handling",
+    "items": [
+      "Temporary processing for enhancement only.",
+      "Your audio isn’t used to train models.",
+      "No login required."
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {"q": "Will denoising make my voice sound metallic?", "a": "We balance noise reduction with intelligibility to keep your voice natural. Extreme noise may still cause artifacts—lighter cleanup or re‑recording can help."},
+      {"q": "Can it remove 50/60Hz electrical hum?", "a": "Yes, typical hum and low‑frequency rumble can be reduced effectively."},
+      {"q": "How much echo can it reduce?", "a": "Moderate room echo can be improved; very strong reverb may require re‑recording or advanced tools."},
+      {"q": "Will it improve very noisy recordings?", "a": "It helps, but extremely low signal‑to‑noise sources are challenging. Capture the best possible audio at the source when you can."},
+      {"q": "Is the output podcast‑ready for loudness?", "a": "Results are leveled for comfortable listening. For strict platform specs, double‑check LUFS before publishing."},
+      {"q": "What file formats and sizes are supported?", "a": "MP3, WAV, FLAC, OGG; up to 50MB per file."},
+      {"q": "Do you store my audio?", "a": "Processing is temporary and purpose‑only; audio is not used to train models."},
+      {"q": "How long does processing take?", "a": "Most files enhance in seconds to a couple of minutes, depending on length and network conditions."},
+      {"q": "Can I adjust enhancement strength?", "a": "The default setting avoids over‑processing. For advanced control, consider a DAW workflow."},
+      {"q": "Can I use it for music?", "a": "It’s optimized for speech; light cleanup on music may work, but detailed music restoration is better done in a DAW."}
+    ]
+  },
+  "cta": {
+    "label": "Enhance Your Audio Now",
+    "href": "#file"
+  }
+}
+
