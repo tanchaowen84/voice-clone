@@ -1,54 +1,54 @@
 {
   "hero": {
     "title": "Free Online Audio Enhancer",
-    "subtitle": "Remove noise and echo while preserving natural voice clarity. No login required.",
+    "subtitle": "Professional audio enhancer tool to remove noise and echo while preserving natural voice clarity. Our advanced AI voice enhancer works instantly - no login required.",
     "bullets": [
-      "One-click cleanup",
-      "Natural speech (anti-artifact)",
-      "Podcast-friendly loudness",
-      "MP3/WAV/FLAC support"
+      "Audio enhancer free - one-click cleanup",
+      "AI voice enhancer with natural speech",
+      "Professional audio enhancer for podcasts",
+      "Voice enhancer online - MP3/WAV/FLAC support"
     ],
     "primaryCta": "Upload Audio",
     "secondaryCta": "Try Sample"
   },
   "problems": {
-    "title": "Fix Real-World Audio Problems",
-    "intro": "Remove background noise and echo while keeping your voice natural. We fix the common issues that make speech tiring to listen to—no heavy setup needed.",
+    "title": "Fix Real-World Audio Problems with Our Audio Enhancer",
+    "intro": "Our audio enhancer free tool removes background noise and echo while keeping your voice natural. This professional AI voice enhancer fixes common audio issues that make speech tiring to listen to—no heavy setup needed for this voice enhancer online solution.",
     "items": [
       {
         "title": "Remove Background Noise",
-        "body": "Cut constant hiss, hum, AC and traffic bed without muffling the voice. The enhancer learns the noise profile and attenuates it between words while preserving breath and presence."
+        "body": "Cut constant hiss, hum, AC and traffic bed without muffling the voice. Our audio enhancer learns the noise profile and attenuates it between words while preserving breath and presence."
       },
       {
         "title": "Reduce Room Echo",
-        "body": "Tame small‑room reverb and flutter echo so words start and stop crisply. Consonants remain sharp while long tails are gently reduced, improving intelligibility."
+        "body": "Tame small‑room reverb and flutter echo so words start and stop crisply. This voice enhancer keeps consonants sharp while long tails are gently reduced, improving intelligibility."
       },
       {
         "title": "Tame Sibilance & Mouth Noises",
-        "body": "Light de‑essing softens harsh 's' and 'sh' sounds. Clicks, lip smacks and minor crackles are smoothed so the listener focuses on the content, not artifacts."
+        "body": "Light de‑essing softens harsh 's' and 'sh' sounds. Our AI voice enhancer smooths clicks, lip smacks and minor crackles so the listener focuses on the content, not artifacts."
       },
       {
         "title": "Repair Clicks & Pops",
-        "body": "Removes minor digital glitches and microphone pops. Subtle restoration avoids over‑processing that can smear transients or make speech sound 'underwater'."
+        "body": "Removes minor digital glitches and microphone pops. Our audio enhancer free tool uses subtle restoration to avoid over‑processing that can smear transients or make speech sound 'underwater'."
       },
       {
         "title": "Loudness Leveling for Podcasts",
-        "body": "Levels uneven speakers to a comfortable, consistent perceived loudness. You get a steady listening experience across episodes and segments."
+        "body": "Levels uneven speakers to a comfortable, consistent perceived loudness. This voice enhancer online gives you a steady listening experience across episodes and segments."
       },
       {
         "title": "Keep It Natural",
-        "body": "We prioritize clarity over brute force noise gating. The output remains open and natural, avoiding the 'pumping' or 'chirping' artifacts typical of aggressive cleaners."
+        "body": "We prioritize clarity over brute force noise gating. Our audio enhancer AI keeps output open and natural, avoiding the 'pumping' or 'chirping' artifacts typical of aggressive cleaners."
       }
     ]
   },
   "howItWorks": {
-    "title": "How It Works (In Plain English)",
+    "title": "How Our Audio Enhancer AI Works",
     "paragraphs": [
-      "We use modern speech enhancement to reduce noise and echo while keeping your voice natural and intelligible.",
-      "Workflow: upload your file → enhance → preview A/B → download the cleaned track.",
-      "Supported formats: MP3, WAV, FLAC, OGG. Recommended size: up to 50MB. No account required.",
-      "Under the hood: adaptive noise profiling + dereverberation designed for speech, followed by light de‑essing and loudness smoothing.",
-      "Why it sounds natural: the model prioritizes consonant clarity and avoids over‑aggressive gating that causes pumping or underwater tones."
+      "Our audio enhancer free tool uses modern AI voice enhancer technology to reduce noise and echo while keeping your voice natural and intelligible. This voice enhancer online delivers professional results instantly.",
+      "Simple audio enhancer workflow: upload your file → enhance with our AI voice enhancer → preview A/B comparison → download the cleaned track from our audio enhancer.",
+      "Our audio enhancer online supports multiple formats: MP3, WAV, FLAC, OGG. Recommended size: up to 50MB. No account required for this professional voice enhancer tool.",
+      "Advanced audio enhancer AI technology: adaptive noise profiling + dereverberation designed for speech, followed by light de‑essing and loudness smoothing in our voice enhancer.",
+      "Why our AI voice enhancer sounds natural: the model prioritizes consonant clarity and avoids over‑aggressive gating that causes pumping or underwater tones, making it the best audio enhancer free solution."
     ]
   },
   "audience": {
@@ -72,67 +72,67 @@
     "tip": "Tip: For best results, use clips 30–120 seconds long.",
     "details": [
       {
-        "title": "Upload",
-        "body": "Drag a file or click Select Audio. We accept MP3, WAV, FLAC and keep the original sample rate when possible. For faster preview, use 30–120s clips during editing."
+        "title": "Upload to Audio Enhancer",
+        "body": "Drag a file or click Select Audio. Our voice enhancer accepts MP3, WAV, FLAC and keeps the original sample rate when possible. For faster audio enhancer preview, use 30–120s clips during editing."
       },
       {
-        "title": "Enhance & A/B",
-        "body": "Click Enhance to start. When finished, use the player to compare and focus on the noise floor, reverb tail, and consonant clarity. If artifacts appear, try a shorter segment or a cleaner source."
+        "title": "Enhance & A/B Compare",
+        "body": "Click Enhance to start our AI voice enhancer. When finished, use the player to compare and focus on the noise floor, reverb tail, and consonant clarity. If artifacts appear, try a shorter segment or a cleaner source."
       },
       {
         "title": "Download & Publish",
-        "body": "Export the cleaned track. Stereo is preserved; import into your editor or DAW. For podcasts, normalize the final mix around −16 LUFS (mono around −19)."
+        "body": "Export the cleaned track from our audio enhancer free tool. Stereo is preserved; import into your editor or DAW. For podcasts, normalize the final mix around −16 LUFS (mono around −19)."
       }
     ]
   },
   "bestPractices": {
-    "title": "Best Practices for Clearer Recordings",
+    "title": "Best Practices for Our Audio Enhancer AI",
     "items": [
-      "Keep a steady mic distance and angle; use a pop filter or windscreen.",
-      "Reduce room reflections with soft furnishings.",
-      "Avoid clipping; set a healthy input level.",
-      "For podcasts, aim around −16 LUFS to keep loudness consistent.",
-      "For extreme noise or echo, consider re‑recording or advanced DAW tools.",
-      "Record in a quiet room; turn off AC or fans and close windows.",
-      "Place the mic 10–20 cm from the mouth, slightly off‑axis to reduce plosives.",
-      "Record 5–10 seconds of room tone at the start to help any cleaner learn the noise floor."
+      "Keep a steady mic distance and angle; use a pop filter or windscreen for better audio enhancer results.",
+      "Reduce room reflections with soft furnishings to help our voice enhancer work optimally.",
+      "Avoid clipping; set a healthy input level before using the audio enhancer free tool.",
+      "For podcasts, aim around −16 LUFS to keep loudness consistent with our AI voice enhancer.",
+      "For extreme noise or echo, consider re‑recording or advanced DAW tools alongside our audio enhancer.",
+      "Record in a quiet room; turn off AC or fans and close windows for best voice enhancer online results.",
+      "Place the mic 10–20 cm from the mouth, slightly off‑axis to reduce plosives before audio enhancer processing.",
+      "Record 5–10 seconds of room tone at the start to help our audio enhancer AI learn the noise floor."
     ]
   },
   "compatibility": {
-    "title": "Compatibility & Limits",
+    "title": "Audio Enhancer AI Compatibility & Limits",
     "items": [
-      "Formats: MP3, WAV, FLAC, OGG; file size up to 50MB.",
-      "Recommended duration: 30–120 seconds per clip.",
-      "Stereo is preserved; exports in common formats for easy editing.",
-      "Works on modern desktop and mobile browsers.",
-      "Sample rates: 22.05–48 kHz supported; we avoid unnecessary resampling.",
-      "Channels: mono and stereo; multichannel mixes will be downmixed to stereo.",
-      "Language: optimized for speech in any language; best with clear articulation."
+      "Audio enhancer formats: MP3, WAV, FLAC, OGG; file size up to 50MB for our voice enhancer tool.",
+      "Optimal audio enhancer duration: 30–120 seconds per clip for best AI voice enhancer results.",
+      "Our audio enhancer free tool preserves stereo; exports in common formats for easy editing.",
+      "This voice enhancer online works on modern desktop and mobile browsers - audio enhancer free access.",
+      "Audio enhancer sample rates: 22.05–48 kHz supported; our AI voice enhancer avoids unnecessary resampling.",
+      "Voice enhancer channels: mono and stereo; multichannel mixes will be downmixed to stereo.",
+      "Our audio enhancer AI is optimized for speech in any language; best results with clear articulation."
     ]
   },
   "privacy": {
-    "title": "Privacy & Data Handling",
+    "title": "Audio Enhancer Privacy & Data Handling",
     "items": [
-      "Temporary processing for enhancement only.",
-      "Your audio isn’t used to train models.",
-      "No login required.",
-      "Files are automatically cleared after processing except cached previews in your browser."
+      "Temporary processing for audio enhancer enhancement only.",
+      "Your audio isn’t used to train our AI voice enhancer models.",
+      "No login required for this voice enhancer online tool.",
+      "Files are automatically cleared after audio enhancer processing except cached previews in your browser."
     ]
   },
   "faq": {
     "title": "Frequently Asked Questions",
     "items": [
       {
-        "q": "Will denoising make my voice sound metallic?",
-        "a": "We balance noise reduction with intelligibility to keep your voice natural. Extreme noise may still cause artifacts—lighter cleanup or re‑recording can help."
+        "q": "Will this audio enhancer free tool make my voice sound metallic?",
+        "a": "Our AI voice enhancer balances noise reduction with intelligibility to keep your voice natural. This professional audio enhancer avoids metallic artifacts—for extreme noise, try lighter cleanup or re‑recording."
       },
       {
-        "q": "Can it remove 50/60Hz electrical hum?",
-        "a": "Yes, typical hum and low‑frequency rumble can be reduced effectively."
+        "q": "Can this voice enhancer online remove 50/60Hz electrical hum?",
+        "a": "Yes, our audio enhancer free tool effectively reduces typical hum and low‑frequency rumble using advanced AI voice enhancer algorithms."
       },
       {
-        "q": "How much echo can it reduce?",
-        "a": "Moderate room echo can be improved; very strong reverb may require re‑recording or advanced tools."
+        "q": "How much echo can this audio enhancer AI reduce?",
+        "a": "Our voice enhancer can improve moderate room echo significantly; very strong reverb may require re‑recording or additional tools beyond this audio enhancer free solution."
       },
       {
         "q": "Will it improve very noisy recordings?",
@@ -173,8 +173,8 @@
     ]
   },
   "cta": {
-    "label": "Enhance Your Audio Now",
-    "href": "#file"
+    "label": "Try Voice Clone",
+    "href": "/"
   },
   "useCases": {
     "title": "Practical Use Cases",
