@@ -13,14 +13,32 @@
   },
   "problems": {
     "title": "Fix Real-World Audio Problems",
-    "intro": "Remove background noise and echo while keeping your voice natural. Clean up hiss, hum, clicks, and uneven loudness so your audience can focus on the message.",
+    "intro": "Remove background noise and echo while keeping your voice natural. We fix the common issues that make speech tiring to listen to—no heavy setup needed.",
     "items": [
-      { "title": "Remove Background Noise", "body": "Cut constant hiss, hum, fan, and traffic noise to uncover your voice." },
-      { "title": "Reduce Room Echo", "body": "De-reverb recordings from untreated rooms for clearer speech." },
-      { "title": "Tame Sibilance & Mouth Noises", "body": "Reduce harsh \"s\" sounds and lip smacks for a smooth, natural tone." },
-      { "title": "Repair Clicks & Pops", "body": "Fix minor clicks and pops without dulling the voice." },
-      { "title": "Loudness Leveling for Podcasts", "body": "Make voices more even and easier to listen to over time." },
-      { "title": "Keep It Natural", "body": "Balance denoising and clarity to avoid metallic \"underwater\" artifacts." }
+      {
+        "title": "Remove Background Noise",
+        "body": "Cut constant hiss, hum, AC and traffic bed without muffling the voice. The enhancer learns the noise profile and attenuates it between words while preserving breath and presence."
+      },
+      {
+        "title": "Reduce Room Echo",
+        "body": "Tame small‑room reverb and flutter echo so words start and stop crisply. Consonants remain sharp while long tails are gently reduced, improving intelligibility."
+      },
+      {
+        "title": "Tame Sibilance & Mouth Noises",
+        "body": "Light de‑essing softens harsh 's' and 'sh' sounds. Clicks, lip smacks and minor crackles are smoothed so the listener focuses on the content, not artifacts."
+      },
+      {
+        "title": "Repair Clicks & Pops",
+        "body": "Removes minor digital glitches and microphone pops. Subtle restoration avoids over‑processing that can smear transients or make speech sound 'underwater'."
+      },
+      {
+        "title": "Loudness Leveling for Podcasts",
+        "body": "Levels uneven speakers to a comfortable, consistent perceived loudness. You get a steady listening experience across episodes and segments."
+      },
+      {
+        "title": "Keep It Natural",
+        "body": "We prioritize clarity over brute force noise gating. The output remains open and natural, avoiding the 'pumping' or 'chirping' artifacts typical of aggressive cleaners."
+      }
     ]
   },
   "howItWorks": {
@@ -28,7 +46,9 @@
     "paragraphs": [
       "We use modern speech enhancement to reduce noise and echo while keeping your voice natural and intelligible.",
       "Workflow: upload your file → enhance → preview A/B → download the cleaned track.",
-      "Supported formats: MP3, WAV, FLAC, OGG. Recommended size: up to 50MB. No account required."
+      "Supported formats: MP3, WAV, FLAC, OGG. Recommended size: up to 50MB. No account required.",
+      "Under the hood: adaptive noise profiling + dereverberation designed for speech, followed by light de‑essing and loudness smoothing.",
+      "Why it sounds natural: the model prioritizes consonant clarity and avoids over‑aggressive gating that causes pumping or underwater tones."
     ]
   },
   "audience": {
@@ -48,7 +68,22 @@
       "Click Enhance and preview the result",
       "Download the cleaned track"
     ],
-    "tip": "Tip: For best results, use clips 30–120 seconds long."
+
+    "tip": "Tip: For best results, use clips 30–120 seconds long.",
+    "details": [
+      {
+        "title": "Upload",
+        "body": "Drag a file or click Select Audio. We accept MP3, WAV, FLAC and keep the original sample rate when possible. For faster preview, use 30–120s clips during editing."
+      },
+      {
+        "title": "Enhance & A/B",
+        "body": "Click Enhance to start. When finished, use the player to compare and focus on the noise floor, reverb tail, and consonant clarity. If artifacts appear, try a shorter segment or a cleaner source."
+      },
+      {
+        "title": "Download & Publish",
+        "body": "Export the cleaned track. Stereo is preserved; import into your editor or DAW. For podcasts, normalize the final mix around −16 LUFS (mono around −19)."
+      }
+    ]
   },
   "bestPractices": {
     "title": "Best Practices for Clearer Recordings",
@@ -57,7 +92,10 @@
       "Reduce room reflections with soft furnishings.",
       "Avoid clipping; set a healthy input level.",
       "For podcasts, aim around −16 LUFS to keep loudness consistent.",
-      "For extreme noise or echo, consider re‑recording or advanced DAW tools."
+      "For extreme noise or echo, consider re‑recording or advanced DAW tools.",
+      "Record in a quiet room; turn off AC or fans and close windows.",
+      "Place the mic 10–20 cm from the mouth, slightly off‑axis to reduce plosives.",
+      "Record 5–10 seconds of room tone at the start to help any cleaner learn the noise floor."
     ]
   },
   "compatibility": {
@@ -66,7 +104,10 @@
       "Formats: MP3, WAV, FLAC, OGG; file size up to 50MB.",
       "Recommended duration: 30–120 seconds per clip.",
       "Stereo is preserved; exports in common formats for easy editing.",
-      "Works on modern desktop and mobile browsers."
+      "Works on modern desktop and mobile browsers.",
+      "Sample rates: 22.05–48 kHz supported; we avoid unnecessary resampling.",
+      "Channels: mono and stereo; multichannel mixes will be downmixed to stereo.",
+      "Language: optimized for speech in any language; best with clear articulation."
     ]
   },
   "privacy": {
@@ -74,27 +115,166 @@
     "items": [
       "Temporary processing for enhancement only.",
       "Your audio isn’t used to train models.",
-      "No login required."
+      "No login required.",
+      "Files are automatically cleared after processing except cached previews in your browser."
     ]
   },
   "faq": {
     "title": "Frequently Asked Questions",
     "items": [
-      {"q": "Will denoising make my voice sound metallic?", "a": "We balance noise reduction with intelligibility to keep your voice natural. Extreme noise may still cause artifacts—lighter cleanup or re‑recording can help."},
-      {"q": "Can it remove 50/60Hz electrical hum?", "a": "Yes, typical hum and low‑frequency rumble can be reduced effectively."},
-      {"q": "How much echo can it reduce?", "a": "Moderate room echo can be improved; very strong reverb may require re‑recording or advanced tools."},
-      {"q": "Will it improve very noisy recordings?", "a": "It helps, but extremely low signal‑to‑noise sources are challenging. Capture the best possible audio at the source when you can."},
-      {"q": "Is the output podcast‑ready for loudness?", "a": "Results are leveled for comfortable listening. For strict platform specs, double‑check LUFS before publishing."},
-      {"q": "What file formats and sizes are supported?", "a": "MP3, WAV, FLAC, OGG; up to 50MB per file."},
-      {"q": "Do you store my audio?", "a": "Processing is temporary and purpose‑only; audio is not used to train models."},
-      {"q": "How long does processing take?", "a": "Most files enhance in seconds to a couple of minutes, depending on length and network conditions."},
-      {"q": "Can I adjust enhancement strength?", "a": "The default setting avoids over‑processing. For advanced control, consider a DAW workflow."},
-      {"q": "Can I use it for music?", "a": "It’s optimized for speech; light cleanup on music may work, but detailed music restoration is better done in a DAW."}
+      {
+        "q": "Will denoising make my voice sound metallic?",
+        "a": "We balance noise reduction with intelligibility to keep your voice natural. Extreme noise may still cause artifacts—lighter cleanup or re‑recording can help."
+      },
+      {
+        "q": "Can it remove 50/60Hz electrical hum?",
+        "a": "Yes, typical hum and low‑frequency rumble can be reduced effectively."
+      },
+      {
+        "q": "How much echo can it reduce?",
+        "a": "Moderate room echo can be improved; very strong reverb may require re‑recording or advanced tools."
+      },
+      {
+        "q": "Will it improve very noisy recordings?",
+        "a": "It helps, but extremely low signal‑to‑noise sources are challenging. Capture the best possible audio at the source when you can."
+      },
+      {
+        "q": "Is the output podcast‑ready for loudness?",
+        "a": "Results are leveled for comfortable listening. For strict platform specs, double‑check LUFS before publishing."
+      },
+      {
+        "q": "What file formats and sizes are supported?",
+        "a": "MP3, WAV, FLAC, OGG; up to 50MB per file."
+      },
+      {
+        "q": "Do you store my audio?",
+        "a": "Processing is temporary and purpose‑only; audio is not used to train models."
+      },
+      {
+        "q": "How long does processing take?",
+        "a": "Most files enhance in seconds to a couple of minutes, depending on length and network conditions."
+      },
+      {
+        "q": "Can I adjust enhancement strength?",
+        "a": "The default setting avoids over‑processing. For advanced control, consider a DAW workflow."
+      },
+      {
+        "q": "Can I use it for music?",
+        "a": "It’s optimized for speech; light cleanup on music may work, but detailed music restoration is better done in a DAW."
+      },
+      {
+        "q": "What if the result breathes or pumps?",
+        "a": "This can happen when background noise is very dynamic. Try trimming to the spoken sections, or record more consistent room tone."
+      },
+      {
+        "q": "Will it fix clipping distortion?",
+        "a": "Severe clipping cannot be fully repaired. Reduce input gain during recording and keep peaks below 0 dBFS."
+      }
     ]
   },
   "cta": {
     "label": "Enhance Your Audio Now",
     "href": "#file"
+  },
+  "useCases": {
+    "title": "Practical Use Cases",
+    "items": [
+      {
+        "title": "Podcasts & Interviews",
+        "bullets": [
+          "Level guest and host voices for consistent loudness.",
+          "Reduce room echo from untreated rooms.",
+          "Remove hiss/hum from USB mics or interfaces."
+        ]
+      },
+      {
+        "title": "YouTube & Shorts",
+        "bullets": [
+          "Clean talking‑head audio without complex editing.",
+          "Keep consonants crisp for mobile playback.",
+          "Export ready for quick cutdowns."
+        ]
+      },
+      {
+        "title": "Courses & Meetings",
+        "bullets": [
+          "Improve intelligibility of lectures and webinars.",
+          "Tame keyboard clicks and fan noise.",
+          "Great for screen‑recorded tutorials."
+        ]
+      },
+      {
+        "title": "Field & Voiceover",
+        "bullets": [
+          "Reduce traffic/AC rumble from location shoots.",
+          "Repair minor clicks/pops in VO.",
+          "Prep takes before mixing in a DAW."
+        ]
+      }
+    ]
+  },
+  "troubleshooting": {
+    "title": "Troubleshooting",
+    "items": [
+      {
+        "title": "Result sounds metallic",
+        "bullets": [
+          "Try a shorter segment focused on speech.",
+          "Reduce background music level before enhancement.",
+          "Record more consistent room tone."
+        ]
+      },
+      {
+        "title": "Echo still present",
+        "bullets": [
+          "Move closer to the mic (10–20 cm).",
+          "Add curtains/rugs/sofa to reduce reflections.",
+          "Record in a smaller room or closet."
+        ]
+      },
+      {
+        "title": "Clicks/pops remain",
+        "bullets": [
+          "Remove harsh edits at zero‑crossing points.",
+          "Use a pop filter and stable cable connections.",
+          "Apply a gentle de‑click in your DAW afterwards."
+        ]
+      }
+    ]
+  },
+  "techSpecs": {
+    "title": "Technical Specs",
+    "items": [
+      "Noise reduction + dereverberation optimized for speech.",
+      "Light de‑essing and perceptual loudness smoothing.",
+      "Sample rates 22.05–48 kHz; mono/stereo supported.",
+      "Output preserves original duration and timing for easy re‑sync."
+    ]
+  },
+  "ui": {
+    "upload": {
+      "prompt": "Choose a file or drag it here",
+      "supported": "Supported formats: .mp3, .wav, .flac",
+      "selectLabel": "Select Audio",
+      "selectedPrefix": "Selected:",
+      "changeHint": "You can change the file or click Enhance below."
+    },
+    "enhancing": { "label": "Enhancing your audio..." },
+    "result": {
+      "title": "Enhanced",
+      "download": "Download",
+      "useAgain": "Enhance another audio"
+    },
+    "actions": {
+      "clear": "Clear",
+      "enhance": "Enhance"
+    },
+    "errors": {
+      "dropAudio": "Please drop an audio file.",
+      "selectFirst": "Please select an audio file first.",
+      "enhanceFailed": "Failed to enhance audio.",
+      "noUrl": "Enhanced audio URL not found in response.",
+      "unexpected": "Unexpected error."
+    }
   }
 }
-

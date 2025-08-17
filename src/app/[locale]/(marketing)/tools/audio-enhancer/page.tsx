@@ -43,12 +43,12 @@ export default function AudioEnhancerPage() {
     const list = e.dataTransfer?.files ? Array.from(e.dataTransfer.files) : [];
     const f = list[0];
     if (f?.type?.startsWith('audio/')) onFilePicked(f);
-    else setError('Please drop an audio file.');
+    else setError(seoContent.ui.errors.dropAudio);
   }
 
   async function onEnhance() {
     try {
-      if (!file) return setError('Please select an audio file first.');
+      if (!file) return setError(seoContent.ui.errors.selectFirst);
       setIsLoading(true);
       setError(null);
       setEnhancedUrl(null);
@@ -60,13 +60,14 @@ export default function AudioEnhancerPage() {
         body: formData,
       });
       const data = await resp.json();
-      if (!resp.ok) return setError(data?.error || 'Failed to enhance audio.');
+      if (!resp.ok)
+        return setError(data?.error || seoContent.ui.errors.enhanceFailed);
 
       const url = extractAudioUrl(data?.data);
       if (url) setEnhancedUrl(url);
-      else setError('Enhanced audio URL not found in response.');
+      else setError(seoContent.ui.errors.noUrl);
     } catch (e: any) {
-      setError(e?.message || 'Unexpected error.');
+      setError(e?.message || seoContent.ui.errors.unexpected);
     } finally {
       setIsLoading(false);
     }
@@ -155,23 +156,25 @@ export default function AudioEnhancerPage() {
           <UploadCloud className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
           {!file ? (
             <>
-              <p className="text-sm">Choose a file or drag it here</p>
+              <p className="text-sm">{seoContent.ui.upload.prompt}</p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Supported formats: .mp3, .wav, .flac
+                {seoContent.ui.upload.supported}
               </p>
               <div className="mt-4 flex items-center justify-center gap-3">
                 <label htmlFor="file">
                   <Button asChild>
-                    <span>Select Audio</span>
+                    <span>{seoContent.ui.upload.selectLabel}</span>
                   </Button>
                 </label>
               </div>
             </>
           ) : (
             <>
-              <p className="text-sm font-medium">Selected: {file.name}</p>
+              <p className="text-sm font-medium">
+                {seoContent.ui.upload.selectedPrefix} {file.name}
+              </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                You can change the file or click Enhance below.
+                {seoContent.ui.upload.changeHint}
               </p>
             </>
           )}
@@ -189,7 +192,7 @@ export default function AudioEnhancerPage() {
       {file && isLoading && (
         <div className="rounded-xl border p-8 text-center">
           <Loader2 className="mx-auto mb-3 h-8 w-8 animate-spin" />
-          <p className="text-sm">Enhancing your audio...</p>
+          <p className="text-sm">{seoContent.ui.enhancing.label}</p>
         </div>
       )}
 
@@ -197,9 +200,11 @@ export default function AudioEnhancerPage() {
       {enhancedUrl && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-medium">Enhanced</h3>
+            <h3 className="text-sm font-medium">
+              {seoContent.ui.result.title}
+            </h3>
             <Button size="sm" variant="outline" onClick={onDownloadEnhanced}>
-              <Download className="h-4 w-4" /> Download
+              <Download className="h-4 w-4" /> {seoContent.ui.result.download}
             </Button>
           </div>
 
@@ -209,7 +214,7 @@ export default function AudioEnhancerPage() {
 
           {/* Call-to-action: use again */}
           <div className="pt-2 border-t flex items-center justify-center">
-            <Button onClick={resetFlow}>Enhance another audio</Button>
+            <Button onClick={resetFlow}>{seoContent.ui.result.useAgain}</Button>
           </div>
         </div>
       )}
@@ -218,11 +223,12 @@ export default function AudioEnhancerPage() {
       {!isLoading && !enhancedUrl && (
         <div className="mt-6 flex items-center justify-center gap-3">
           <Button variant="outline" onClick={resetFlow}>
-            Clear
+            {seoContent.ui.actions.clear}
           </Button>
           <Button onClick={onEnhance} disabled={!file}>
             <span className="inline-flex items-center gap-2">
-              Enhance <UploadCloud className="h-4 w-4" />
+              {seoContent.ui.actions.enhance}{' '}
+              <UploadCloud className="h-4 w-4" />
             </span>
           </Button>
         </div>
@@ -232,11 +238,11 @@ export default function AudioEnhancerPage() {
       <section className="mt-16 space-y-12">
         {/* Problems */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.problems.title}
             </h2>
-            <p className="text-sm text-muted-foreground max-w-3xl">
+            <p className="text-sm text-muted-foreground max-w-3xl mx-auto">
               {seoContent.problems.intro}
             </p>
           </div>
@@ -258,11 +264,11 @@ export default function AudioEnhancerPage() {
 
         {/* How it works */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.howItWorks.title}
             </h2>
-            <div className="space-y-1 text-sm text-muted-foreground max-w-3xl">
+            <div className="space-y-2 text-sm text-muted-foreground max-w-3xl mx-auto text-left">
               {seoContent.howItWorks.paragraphs.map((p, i) => (
                 <BlurFade key={i} delay={i * 0.05}>
                   <p>{p}</p>
@@ -274,11 +280,11 @@ export default function AudioEnhancerPage() {
 
         {/* Audience */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.audience.title}
             </h2>
-            <ul className="grid grid-cols-1 gap-1 pl-5 text-sm text-muted-foreground md:grid-cols-2 list-disc">
+            <ul className="mx-auto grid max-w-3xl grid-cols-1 gap-1 text-left text-sm text-muted-foreground md:grid-cols-2 list-none">
               {seoContent.audience.items.map((t, i) => (
                 <li key={t + i}>{t}</li>
               ))}
@@ -288,11 +294,14 @@ export default function AudioEnhancerPage() {
 
         {/* Steps timeline */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-4 text-center">
             <h2 className="text-2xl font-semibold">{seoContent.steps.title}</h2>
-            <ol className="space-y-2 text-sm text-muted-foreground">
+            <ol className="mx-auto max-w-2xl space-y-2 text-sm text-muted-foreground">
               {seoContent.steps.items.map((t, i) => (
-                <li key={t + i} className="flex items-start gap-3">
+                <li
+                  key={t + i}
+                  className="flex items-start justify-center gap-3"
+                >
                   <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-medium">
                     {i + 1}
                   </span>
@@ -303,16 +312,35 @@ export default function AudioEnhancerPage() {
             <p className="text-xs text-muted-foreground">
               {seoContent.steps.tip}
             </p>
+            {seoContent.steps.details && (
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3 text-left">
+                {seoContent.steps.details.map((d: any, i: number) => (
+                  <Card key={d.title + i}>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-muted text-muted-foreground text-[10px]">
+                          {i + 1}
+                        </span>
+                        {d.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">{d.body}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </BlurFade>
 
         {/* Best practices */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.bestPractices.title}
             </h2>
-            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+            <ul className="mx-auto max-w-3xl space-y-1 text-left text-sm text-muted-foreground list-none">
               {seoContent.bestPractices.items.map((t, i) => (
                 <li key={t + i}>{t}</li>
               ))}
@@ -320,13 +348,80 @@ export default function AudioEnhancerPage() {
           </div>
         </BlurFade>
 
+        {/* Use Cases */}
+        <BlurFade>
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.useCases.title}
+            </h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {seoContent.useCases.items.map((group: any, i: number) => (
+                <Card key={group.title + i}>
+                  <CardHeader>
+                    <CardTitle>{group.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-none text-sm text-muted-foreground space-y-1">
+                      {group.bullets.map((b: string, j: number) => (
+                        <li key={b + j}>{b}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </BlurFade>
+
+        {/* Troubleshooting */}
+        <BlurFade>
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.troubleshooting.title}
+            </h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {seoContent.troubleshooting.items.map((it: any, i: number) => (
+                <Card key={it.title + i}>
+                  <CardHeader>
+                    <CardTitle>{it.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-none text-sm text-muted-foreground space-y-1">
+                      {it.bullets.map((b: string, j: number) => (
+                        <li key={b + j}>{b}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </BlurFade>
+
+        {/* Technical Specs */}
+        <BlurFade>
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-semibold">
+              {seoContent.techSpecs.title}
+            </h2>
+            <div className="mx-auto max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground">
+              {seoContent.techSpecs.items.map((t: string, i: number) => (
+                <div key={t + i} className="flex items-start gap-2">
+                  <span className="inline-block w-2 h-2 bg-primary/60 rounded-full mt-2 flex-shrink-0" />
+                  <span>{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </BlurFade>
+
         {/* Compatibility */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.compatibility.title}
             </h2>
-            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+            <ul className="mx-auto max-w-3xl space-y-1 text-sm text-muted-foreground list-none">
               {seoContent.compatibility.items.map((t, i) => (
                 <li key={t + i}>{t}</li>
               ))}
@@ -336,11 +431,11 @@ export default function AudioEnhancerPage() {
 
         {/* Privacy */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">
               {seoContent.privacy.title}
             </h2>
-            <ul className="space-y-1 pl-5 text-sm text-muted-foreground list-disc">
+            <ul className="mx-auto max-w-3xl space-y-1 text-sm text-muted-foreground list-none">
               {seoContent.privacy.items.map((t, i) => (
                 <li key={t + i}>{t}</li>
               ))}
@@ -350,9 +445,13 @@ export default function AudioEnhancerPage() {
 
         {/* FAQ */}
         <BlurFade>
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2 className="text-2xl font-semibold">{seoContent.faq.title}</h2>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full mx-auto max-w-3xl text-left"
+            >
               {seoContent.faq.items.map((f, i) => (
                 <AccordionItem key={f.q + i} value={`item-${i}`}>
                   <AccordionTrigger className="text-left">
