@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getAssetUrl } from '@/config/cdn-config';
 import seoContent from '@/content/tools/audio-enhancer.en.json';
 
 import { Download, Loader2, Sparkles, UploadCloud } from 'lucide-react';
@@ -228,6 +229,59 @@ export default function AudioEnhancerClient() {
           </Button>
         </div>
       )}
+
+      {/* Demo Section */}
+      <BlurFade delay={0.2}>
+        <div className="mt-16 mb-12 rounded-xl border bg-card p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Audio Enhancer Demo - Before & After
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Listen to the difference our AI voice enhancer makes
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Before Audio */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <h3 className="font-medium text-sm">Before (Original Audio)</h3>
+              </div>
+              <div className="rounded-md border bg-background p-3">
+                <WaveAudioPlayer src={getAssetUrl('/audio/in.wav')} />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Raw recording with background noise and echo
+              </p>
+            </div>
+
+            {/* After Audio */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <h3 className="font-medium text-sm">
+                  After (Audio Enhancer Free)
+                </h3>
+              </div>
+              <div className="rounded-md border bg-background p-3">
+                <WaveAudioPlayer src={getAssetUrl('/audio/out.wav')} />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Clean, professional audio with noise removed
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 text-center">
+            <p className="text-xs text-muted-foreground">
+              Experience the power of our audio enhancer AI with your own files
+              above
+            </p>
+          </div>
+        </div>
+      </BlurFade>
 
       {/* SEO Content: Structured Sections (JSON-driven) */}
       <section className="mt-16 space-y-12">
