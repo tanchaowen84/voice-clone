@@ -4,6 +4,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
+import { WaveAudioPlayer } from '@/components/media/wave-audio-player';
+
 import {
   Download,
   Loader2,
@@ -193,15 +195,9 @@ export default function AudioEnhancerPage() {
               <Download className="h-4 w-4" /> Download
             </Button>
           </div>
-          <div className="rounded-md border p-3">
-            <audio controls className="w-full" src={enhancedUrl}>
-              <track
-                kind="captions"
-                src=""
-                srcLang="en"
-                label="English captions"
-              />
-            </audio>
+          <div className="rounded-md">
+            {/* WaveSurfer-based player */}
+            <WaveAudioPlayer src={enhancedUrl!} />
           </div>
         </div>
       )}
