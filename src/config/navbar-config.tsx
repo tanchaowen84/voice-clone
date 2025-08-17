@@ -30,6 +30,11 @@ export function getNavbarLinks(): NestedMenuItem[] {
       external: false,
     },
     {
+      title: 'Tools',
+      href: Routes.Tools,
+      external: false,
+    },
+    {
       title: t('blog.title'),
       href: Routes.Blog,
       external: false,

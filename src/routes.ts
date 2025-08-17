@@ -11,6 +11,8 @@ export enum Routes {
   Features = '/#features',
   Pricing = '/#pricing', // pricing section in homepage
   Blog = '/blog',
+  Tools = '/tools',
+  ToolsAudioEnhancer = '/tools/audio-enhancer',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
