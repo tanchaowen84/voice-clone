@@ -120,8 +120,8 @@ export default function AudioEnhancerPage() {
         </div>
       </div>
 
-      {/* Step 1: Upload */}
-      {!file && !isLoading && !enhancedUrl && (
+      {/* Upload Panel */}
+      {!isLoading && !enhancedUrl && (
         <div
           className={`relative rounded-xl border border-dashed p-8 text-center transition-colors ${isDragOver ? 'bg-accent/40' : 'bg-background'}`}
           onDragOver={(e) => {
@@ -139,25 +139,28 @@ export default function AudioEnhancerPage() {
             className="hidden"
           />
           <UploadCloud className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
-          <p className="text-sm">Choose a file or drag it here</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Supported formats: .mp3, .wav, .flac
-          </p>
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <label htmlFor="file">
-              <Button asChild>
-                <span>Select Audio</span>
-              </Button>
-            </label>
-          </div>
-          <div className="mt-6">
-            <Alert>
-              <AlertDescription>
-                Max upload ~150MB or 10 minutes recommended. Upgrade to increase
-                limits.
-              </AlertDescription>
-            </Alert>
-          </div>
+          {!file ? (
+            <>
+              <p className="text-sm">Choose a file or drag it here</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Supported formats: .mp3, .wav, .flac
+              </p>
+              <div className="mt-4 flex items-center justify-center gap-3">
+                <label htmlFor="file">
+                  <Button asChild>
+                    <span>Select Audio</span>
+                  </Button>
+                </label>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-sm font-medium">Selected: {file.name}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                You can change the file or click Enhance below.
+              </p>
+            </>
+          )}
           {error && (
             <div className="mt-3">
               <Alert variant="destructive">
@@ -203,13 +206,13 @@ export default function AudioEnhancerPage() {
         </div>
       )}
 
-      {/* Action Bar when file chosen but not loading */}
-      {file && !isLoading && !enhancedUrl && (
+      {/* Global Action Bar */}
+      {!isLoading && (
         <div className="mt-6 flex items-center justify-center gap-3">
           <label htmlFor="file">
             <Button variant="outline">Change</Button>
           </label>
-          <Button onClick={onEnhance}>
+          <Button onClick={onEnhance} disabled={!file}>
             <span className="inline-flex items-center gap-2">
               Enhance <UploadCloud className="h-4 w-4" />
             </span>
