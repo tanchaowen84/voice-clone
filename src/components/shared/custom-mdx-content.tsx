@@ -1,6 +1,7 @@
 import { ImageWrapper } from '@/components/docs/image-wrapper';
 import { Wrapper } from '@/components/docs/wrapper';
 import { YoutubeVideo } from '@/components/docs/youtube-video';
+import { LocaleLink } from '@/i18n/navigation';
 import { MDXContent } from '@content-collections/mdx/react';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Callout } from 'fumadocs-ui/components/callout';
@@ -45,6 +46,7 @@ export async function CustomMDXContent({
     Files,
     blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
     img: ImageWrapper,
+    a: (props: any) => <LocaleLink {...props} />, // use localized Link for MDX anchor tags
     ...customComponents,
   };
 
