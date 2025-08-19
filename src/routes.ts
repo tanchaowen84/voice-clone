@@ -13,7 +13,7 @@ export enum Routes {
   Blog = '/blog',
   Tools = '/tools',
   ToolsAudioEnhancer = '/tools/audio-enhancer',
-  ToolsVoiceRecorder = '/tools/voice-recorder',
+  ToolsVoiceRecorder = '/tools/online-voice-recorder',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',
