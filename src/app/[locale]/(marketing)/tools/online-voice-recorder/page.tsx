@@ -1,4 +1,3 @@
-import seoContent from '@/../content/tools/online-voice-recorder.en.json';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -12,8 +11,9 @@ export async function generateMetadata({
   const { locale } = await params;
 
   return constructMetadata({
-    title: `${seoContent.hero.title} - Free Browser-Based Recording Tool`,
-    description: seoContent.hero.description,
+    title: 'Free Online Voice Recorder | Real-time Waveform',
+    description:
+      'Free online voice recorder with real-time waveform. Record high-quality audio in browser, no login required. Export WAV instantly. Perfect for podcasters.',
     canonicalUrl: getUrlWithLocale('/tools/online-voice-recorder', locale),
   });
 }
