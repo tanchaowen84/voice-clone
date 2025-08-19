@@ -2,13 +2,12 @@
   "hero": {
     "title": "Free Online Voice Recorder",
     "subtitle": "Professional online voice recorder with real-time waveform visualization and instant WAV export",
-    "description": "Record high-quality audio directly in your browser with our advanced online voice recorder. No login required, privacy-first design, and instant WAV export. This free online voice recorder is perfect for podcasters, content creators, meetings, interviews, and voice memos. Our browser-based voice recorder online delivers studio-quality results with real-time audio visualization.",
+    "description": "Record high-quality audio directly in your browser with our advanced online voice recorder. No login required, privacy-first design, and instant WAV export. Perfect for podcasters, content creators, and professionals.",
     "bullets": [
-      "Online voice recorder free - no registration needed",
-      "Real-time waveform in our voice recorder online tool",
-      "Professional WAV export from online voice recorder",
-      "Privacy-first online voice recorder - local processing only",
-      "Cross-platform voice recorder online compatibility"
+      "No registration required",
+      "Real-time waveform visualization",
+      "Professional WAV export",
+      "Privacy-first local processing"
     ],
     "cta": {
       "primary": "Start Recording Now",
@@ -18,7 +17,7 @@
   "features": {
     "title": "Advanced Online Voice Recorder Features",
     "subtitle": "Professional-grade voice recorder online capabilities for content creators and professionals",
-    "intro": "Our online voice recorder free tool combines real-time audio visualization with professional recording quality. This voice recorder online solution delivers everything you need for podcasting, content creation, and professional audio capture without downloads or registration.",
+    "intro": "Professional recording quality with real-time visualization. Everything you need for podcasting, content creation, and audio capture without downloads.",
     "items": [
       {
         "title": "Real-time Waveform Visualization",
@@ -55,7 +54,7 @@
   "howItWorks": {
     "title": "How Our Online Voice Recorder Works",
     "subtitle": "Professional voice recorder online workflow in 4 simple steps",
-    "intro": "Our online voice recorder free tool uses advanced browser technology to capture high-quality audio directly in your device. This voice recorder online process ensures professional results without software downloads or complex setup.",
+    "intro": "Advanced browser technology captures high-quality audio directly in your device. Professional results without downloads or setup.",
     "steps": [
       {
         "step": 1,
@@ -82,7 +81,7 @@
   "useCases": {
     "title": "Professional Online Voice Recorder Applications",
     "subtitle": "Versatile voice recorder online solution for creators, professionals, and students",
-    "intro": "Our online voice recorder free tool serves diverse recording needs across industries. From podcasting to education, this voice recorder online delivers professional results for any audio capture scenario.",
+    "intro": "Versatile recording solution for diverse needs across industries. Professional results for any audio capture scenario.",
     "items": [
       {
         "title": "Podcast Recording & Production",
@@ -119,7 +118,7 @@
   "bestPractices": {
     "title": "Best Practices for Online Voice Recorder Success",
     "subtitle": "Professional tips to maximize your voice recorder online results",
-    "intro": "Get the most from our online voice recorder free tool with these proven techniques. These voice recorder online best practices ensure professional-quality recordings every time.",
+    "intro": "Proven techniques for professional-quality recordings every time.",
     "items": [
       "Position your microphone 6-8 inches from your mouth for optimal online voice recorder input levels and clarity.",
       "Use a quiet environment and close windows/doors to minimize background noise in your voice recorder online sessions.",
@@ -134,7 +133,7 @@
   "privacy": {
     "title": "Online Voice Recorder Privacy & Security",
     "subtitle": "Complete control over your audio data with our secure voice recorder online",
-    "intro": "Our online voice recorder free tool prioritizes your privacy with local processing and zero data collection. This voice recorder online approach ensures your sensitive audio content remains completely private.",
+    "intro": "Local processing and zero data collection ensure your sensitive audio content remains completely private.",
     "points": [
       "All recording and processing happens locally in your browser - our online voice recorder never uploads your audio",
       "No audio data is transmitted to our servers during voice recorder online sessions",
@@ -147,7 +146,7 @@
   "techSpecs": {
     "title": "Online Voice Recorder Technical Specifications",
     "subtitle": "Professional-grade voice recorder online capabilities and compatibility",
-    "intro": "Our online voice recorder free tool delivers professional audio quality with broad compatibility. These voice recorder online specifications ensure reliable performance across all devices and browsers.",
+    "intro": "Professional audio quality with broad compatibility across all devices and browsers.",
     "specs": [
       {
         "label": "Browser Compatibility",
@@ -232,7 +231,7 @@
   "cta": {
     "title": "Ready to Start Recording with Our Online Voice Recorder?",
     "subtitle": "Professional voice recorder online results are just one click away",
-    "description": "Join thousands of content creators, podcasters, journalists, educators, and business professionals who trust our online voice recorder free tool for their audio recording needs. Experience the convenience of browser-based recording with our advanced voice recorder online technology.",
+    "description": "Join thousands of content creators, podcasters, and professionals who trust our online voice recorder for their audio recording needs.",
     "buttons": {
       "primary": "Start Recording Now",
       "secondary": "Enhance Existing Audio"
