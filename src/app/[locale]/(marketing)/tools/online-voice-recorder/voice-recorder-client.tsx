@@ -234,9 +234,9 @@ export default function VoiceRecorderClient() {
             {seoContent.hero.description}
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {seoContent.hero.features.map((feature, index) => (
+            {seoContent.hero.bullets.map((bullet, index) => (
               <Badge key={index} variant="secondary" className="text-xs">
-                {feature}
+                {bullet}
               </Badge>
             ))}
           </div>
@@ -439,8 +439,11 @@ export default function VoiceRecorderClient() {
             <h2 className="text-2xl font-semibold mb-4">
               {seoContent.features.title}
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
               {seoContent.features.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.features.intro}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {seoContent.features.items.map((feature, index) => (
@@ -481,8 +484,11 @@ export default function VoiceRecorderClient() {
             <h2 className="text-2xl font-semibold mb-4">
               {seoContent.howItWorks.title}
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
               {seoContent.howItWorks.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.howItWorks.intro}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {seoContent.howItWorks.steps.map((step, index) => (
@@ -511,8 +517,11 @@ export default function VoiceRecorderClient() {
             <h2 className="text-2xl font-semibold mb-4">
               {seoContent.useCases.title}
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
               {seoContent.useCases.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.useCases.intro}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {seoContent.useCases.items.map((useCase, index) => (
@@ -550,14 +559,45 @@ export default function VoiceRecorderClient() {
           </section>
         </BlurFade>
 
-        {/* Privacy Section */}
+        {/* Best Practices Section */}
         <BlurFade delay={0.5}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.bestPractices.title}
+            </h2>
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
+              {seoContent.bestPractices.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.bestPractices.intro}
+            </p>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                {seoContent.bestPractices.items.map((tip, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-4 rounded-lg bg-muted/50"
+                  >
+                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{tip}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* Privacy Section */}
+        <BlurFade delay={0.6}>
           <section className="text-center">
             <h2 className="text-2xl font-semibold mb-4">
               {seoContent.privacy.title}
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
               {seoContent.privacy.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.privacy.intro}
             </p>
             <div className="max-w-3xl mx-auto">
               <Card className="p-8">
@@ -577,12 +617,42 @@ export default function VoiceRecorderClient() {
           </section>
         </BlurFade>
 
+        {/* Technical Specifications Section */}
+        <BlurFade delay={0.7}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.techSpecs.title}
+            </h2>
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
+              {seoContent.techSpecs.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.techSpecs.intro}
+            </p>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {seoContent.techSpecs.specs.map((spec, index) => (
+                  <Card key={index} className="p-4 text-left">
+                    <div className="font-medium text-sm mb-2">{spec.label}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {spec.value}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        </BlurFade>
+
         {/* FAQ Section */}
-        <BlurFade delay={0.6}>
+        <BlurFade delay={0.8}>
           <section className="text-center">
             <h2 className="text-2xl font-semibold mb-4">
               {seoContent.faq.title}
             </h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {seoContent.faq.subtitle}
+            </p>
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="text-left">
                 {seoContent.faq.items.map((faq, index) => (
@@ -601,7 +671,7 @@ export default function VoiceRecorderClient() {
         </BlurFade>
 
         {/* CTA Section */}
-        <BlurFade delay={0.7}>
+        <BlurFade delay={0.9}>
           <section className="text-center">
             <Card className="p-12 bg-gradient-to-r from-primary/5 to-primary/10">
               <h2 className="text-2xl font-semibold mb-4">
