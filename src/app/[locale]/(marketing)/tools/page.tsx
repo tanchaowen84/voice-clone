@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { LocaleLink } from "@/i18n/navigation";
-import { Routes } from "@/routes";
-import { ArrowRight, Sparkles } from "lucide-react";
-import Head from "next/head";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { LocaleLink } from '@/i18n/navigation';
+import { Routes } from '@/routes';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import Head from 'next/head';
 
 export default function ToolsPage() {
   return (
@@ -36,10 +36,33 @@ export default function ToolsPage() {
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <p className="text-sm text-muted-foreground">
-                Enhance audio quality with our online enhancer powered by DeepFilterNet.
+                Enhance audio quality with our online enhancer powered by
+                DeepFilterNet.
               </p>
               <div>
                 <LocaleLink href={Routes.ToolsAudioEnhancer}>
+                  <Button>
+                    <span className="inline-flex items-center gap-2">
+                      Open <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </Button>
+                </LocaleLink>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Voice Recorder */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Voice Recorder</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4">
+              <p className="text-sm text-muted-foreground">
+                Record high-quality audio directly in your browser with
+                real-time waveform visualization.
+              </p>
+              <div>
+                <LocaleLink href={Routes.ToolsVoiceRecorder}>
                   <Button>
                     <span className="inline-flex items-center gap-2">
                       Open <ArrowRight className="h-4 w-4" />
@@ -54,4 +77,3 @@ export default function ToolsPage() {
     </div>
   );
 }
-
