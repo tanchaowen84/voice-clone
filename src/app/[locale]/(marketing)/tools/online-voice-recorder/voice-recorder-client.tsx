@@ -1,15 +1,42 @@
 'use client';
 
+import seoContent from '@/../content/tools/online-voice-recorder.en.json';
 import { BlurFade } from '@/components/magicui/blur-fade';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { Routes } from '@/routes';
 import {
   convertWebMToWAV,
   isAudioConversionSupported,
 } from '@/utils/audio-converter';
-import { Download, Mic, Pause, Play, Square, Trash2 } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle,
+  Download,
+  Globe,
+  Lock,
+  MessageSquare,
+  Mic,
+  Music,
+  Pause,
+  Play,
+  Shield,
+  Square,
+  Trash2,
+  Users,
+  Video,
+  Zap,
+} from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 
@@ -57,7 +84,6 @@ export default function VoiceRecorderClient() {
           cursorColor: '#94a3b8',
           barWidth: 2,
           barGap: 1,
-          responsive: true,
           normalize: true,
         });
 
@@ -199,23 +225,31 @@ export default function VoiceRecorderClient() {
       <BlurFade>
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-semibold tracking-tight mb-4">
-            Online Voice Recorder
+            {seoContent.hero.title}
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Record high-quality audio directly in your browser with real-time
-            waveform visualization. Perfect for voice memos, interviews,
-            podcasts, and more.
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            {seoContent.hero.subtitle}
           </p>
+          <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
+            {seoContent.hero.description}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {seoContent.hero.features.map((feature, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {feature}
+              </Badge>
+            ))}
+          </div>
         </div>
       </BlurFade>
 
       {/* Main Recording Interface */}
       <BlurFade delay={0.1}>
-        <Card className="mb-8">
+        <Card className="mb-8" data-testid="voice-recorder">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Mic className="h-5 w-5" />
-              Voice Recorder
+              Online Voice Recorder
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -396,6 +430,210 @@ export default function VoiceRecorderClient() {
           </CardContent>
         </Card>
       </BlurFade>
+
+      {/* SEO Content Sections */}
+      <div className="mt-16 space-y-16">
+        {/* Features Section */}
+        <BlurFade delay={0.2}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.features.title}
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {seoContent.features.subtitle}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {seoContent.features.items.map((feature, index) => (
+                <Card key={index} className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    {feature.icon === 'shield' && (
+                      <Shield className="h-5 w-5 text-primary" />
+                    )}
+                    {feature.icon === 'lock' && (
+                      <Lock className="h-5 w-5 text-primary" />
+                    )}
+                    {feature.icon === 'download' && (
+                      <Download className="h-5 w-5 text-primary" />
+                    )}
+                    {feature.icon === 'enhance' && (
+                      <Zap className="h-5 w-5 text-primary" />
+                    )}
+                    {feature.icon === 'waveform' && (
+                      <Mic className="h-5 w-5 text-primary" />
+                    )}
+                    {feature.icon === 'devices' && (
+                      <Globe className="h-5 w-5 text-primary" />
+                    )}
+                    <h3 className="font-medium">{feature.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* How It Works Section */}
+        <BlurFade delay={0.3}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.howItWorks.title}
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {seoContent.howItWorks.subtitle}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {seoContent.howItWorks.steps.map((step, index) => (
+                <div key={index} className="relative">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold mb-4">
+                      {step.step}
+                    </div>
+                    <h3 className="font-medium mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {step.description}
+                    </p>
+                  </div>
+                  {index < seoContent.howItWorks.steps.length - 1 && (
+                    <ArrowRight className="hidden lg:block absolute top-6 -right-3 h-4 w-4 text-muted-foreground" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* Use Cases Section */}
+        <BlurFade delay={0.4}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.useCases.title}
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {seoContent.useCases.subtitle}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {seoContent.useCases.items.map((useCase, index) => (
+                <Card
+                  key={index}
+                  className="p-6 hover:shadow-lg transition-shadow"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    {useCase.icon === 'microphone' && (
+                      <Mic className="h-5 w-5 text-primary" />
+                    )}
+                    {useCase.icon === 'meeting' && (
+                      <Users className="h-5 w-5 text-primary" />
+                    )}
+                    {useCase.icon === 'content' && (
+                      <Video className="h-5 w-5 text-primary" />
+                    )}
+                    {useCase.icon === 'memo' && (
+                      <MessageSquare className="h-5 w-5 text-primary" />
+                    )}
+                    {useCase.icon === 'language' && (
+                      <Globe className="h-5 w-5 text-primary" />
+                    )}
+                    {useCase.icon === 'music' && (
+                      <Music className="h-5 w-5 text-primary" />
+                    )}
+                    <h3 className="font-medium">{useCase.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {useCase.description}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* Privacy Section */}
+        <BlurFade delay={0.5}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.privacy.title}
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {seoContent.privacy.subtitle}
+            </p>
+            <div className="max-w-3xl mx-auto">
+              <Card className="p-8">
+                <div className="flex items-center justify-center mb-6">
+                  <Shield className="h-12 w-12 text-primary" />
+                </div>
+                <ul className="space-y-3 text-left">
+                  {seoContent.privacy.points.map((point, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* FAQ Section */}
+        <BlurFade delay={0.6}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.faq.title}
+            </h2>
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="text-left">
+                {seoContent.faq.items.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger className="text-left">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </section>
+        </BlurFade>
+
+        {/* CTA Section */}
+        <BlurFade delay={0.7}>
+          <section className="text-center">
+            <Card className="p-12 bg-gradient-to-r from-primary/5 to-primary/10">
+              <h2 className="text-2xl font-semibold mb-4">
+                {seoContent.cta.title}
+              </h2>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                {seoContent.cta.description}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => {
+                    document
+                      .querySelector('[data-testid="voice-recorder"]')
+                      ?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <Mic className="h-4 w-4" />
+                  {seoContent.cta.buttons.primary}
+                </Button>
+                <LocaleLink href={Routes.ToolsAudioEnhancer}>
+                  <Button variant="outline" size="lg" className="gap-2">
+                    <Zap className="h-4 w-4" />
+                    {seoContent.cta.buttons.secondary}
+                  </Button>
+                </LocaleLink>
+              </div>
+            </Card>
+          </section>
+        </BlurFade>
+      </div>
     </div>
   );
 }

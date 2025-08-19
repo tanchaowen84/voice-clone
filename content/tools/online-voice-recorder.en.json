@@ -1,0 +1,229 @@
+{
+  "hero": {
+    "title": "Online Voice Recorder",
+    "subtitle": "Professional browser-based recording with real-time waveform visualization",
+    "description": "Record high-quality audio directly in your browser. No login required, privacy-first design, and export to WAV format. Perfect for podcasters, content creators, meetings, and voice memos.",
+    "features": [
+      "No login or registration required",
+      "Real-time waveform visualization",
+      "Export to WAV format (high quality)",
+      "Privacy-first: all processing happens locally",
+      "Compatible with Chrome, Safari, Firefox, Edge"
+    ],
+    "cta": {
+      "primary": "Start Recording",
+      "secondary": "Enhance Audio Quality"
+    }
+  },
+  "features": {
+    "title": "Professional Recording Features",
+    "subtitle": "Everything you need for high-quality voice recording",
+    "items": [
+      {
+        "title": "Real-time Waveform",
+        "description": "Watch your audio levels and waveform in real-time as you record, ensuring optimal recording quality.",
+        "icon": "waveform"
+      },
+      {
+        "title": "No Login Required",
+        "description": "Start recording immediately without creating accounts or providing personal information.",
+        "icon": "shield"
+      },
+      {
+        "title": "Privacy-First Design",
+        "description": "All audio processing happens locally in your browser. Your recordings never leave your device.",
+        "icon": "lock"
+      },
+      {
+        "title": "WAV Export",
+        "description": "Download your recordings in high-quality WAV format, compatible with all audio editing software.",
+        "icon": "download"
+      },
+      {
+        "title": "Cross-Platform Compatible",
+        "description": "Works seamlessly on Windows, Mac, iOS, Android, and all modern browsers.",
+        "icon": "devices"
+      },
+      {
+        "title": "Audio Enhancement Ready",
+        "description": "Recorded audio can be instantly enhanced with our AI-powered Audio Enhancer tool.",
+        "icon": "enhance"
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "How to Record Audio Online",
+    "subtitle": "Simple 4-step process to create professional recordings",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Grant Microphone Access",
+        "description": "Click 'Start Recording' and allow microphone permissions when prompted by your browser."
+      },
+      {
+        "step": 2,
+        "title": "Record with Visual Feedback",
+        "description": "Watch the real-time waveform as you speak. Pause and resume recording as needed."
+      },
+      {
+        "step": 3,
+        "title": "Preview Your Recording",
+        "description": "Listen to your recording with our built-in player and waveform visualization."
+      },
+      {
+        "step": 4,
+        "title": "Download or Enhance",
+        "description": "Download as WAV file or use our Audio Enhancer to remove background noise and improve quality."
+      }
+    ]
+  },
+  "useCases": {
+    "title": "Perfect for Every Recording Need",
+    "subtitle": "From professional content creation to personal voice memos",
+    "items": [
+      {
+        "title": "Podcast Recording",
+        "description": "Record podcast episodes, interviews, or voice-overs with professional-grade waveform monitoring.",
+        "icon": "microphone"
+      },
+      {
+        "title": "Meeting Notes",
+        "description": "Capture important meetings, lectures, or interviews for later transcription and review.",
+        "icon": "meeting"
+      },
+      {
+        "title": "Content Creation",
+        "description": "Create voice-overs for videos, audio content for social media, or narration for presentations.",
+        "icon": "content"
+      },
+      {
+        "title": "Voice Memos",
+        "description": "Quickly capture ideas, reminders, or thoughts with instant recording and playback.",
+        "icon": "memo"
+      },
+      {
+        "title": "Language Learning",
+        "description": "Practice pronunciation and speaking skills with visual feedback from the waveform display.",
+        "icon": "language"
+      },
+      {
+        "title": "Music & Audio",
+        "description": "Record musical ideas, vocal melodies, or acoustic instruments with high-quality output.",
+        "icon": "music"
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Your Privacy is Our Priority",
+    "subtitle": "Complete control over your audio data",
+    "points": [
+      "All recording and processing happens locally in your browser",
+      "No audio data is uploaded to our servers",
+      "No account creation or personal information required",
+      "Recordings are only saved when you choose to download them",
+      "No tracking, cookies, or data collection during recording"
+    ]
+  },
+  "techSpecs": {
+    "title": "Technical Specifications",
+    "subtitle": "Professional-grade recording capabilities",
+    "specs": [
+      {
+        "label": "Supported Browsers",
+        "value": "Chrome, Safari, Firefox, Edge (latest versions)"
+      },
+      {
+        "label": "Export Format",
+        "value": "WAV (uncompressed, high quality)"
+      },
+      {
+        "label": "Audio Quality",
+        "value": "Up to 48kHz sample rate, 16-bit depth"
+      },
+      {
+        "label": "Recording Length",
+        "value": "No artificial time limits (browser memory dependent)"
+      },
+      {
+        "label": "File Size",
+        "value": "Approximately 10MB per minute (WAV format)"
+      },
+      {
+        "label": "Platform Support",
+        "value": "Windows, macOS, iOS, Android, Linux"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Do I need to create an account to use the voice recorder?",
+        "answer": "No account required! You can start recording immediately without any registration or login process."
+      },
+      {
+        "question": "Is my audio data safe and private?",
+        "answer": "Absolutely. All recording and processing happens locally in your browser. Your audio never leaves your device unless you choose to download it."
+      },
+      {
+        "question": "What audio format does the recorder export?",
+        "answer": "The recorder exports high-quality WAV files, which are compatible with all audio editing software and provide the best sound quality."
+      },
+      {
+        "question": "Why can't I hear anything or see the waveform moving?",
+        "answer": "Make sure you've granted microphone permissions and check that your microphone is working. Try speaking closer to your microphone or adjusting your system's input volume."
+      },
+      {
+        "question": "Can I use this on my phone or tablet?",
+        "answer": "Yes! The voice recorder works on iOS Safari, Android Chrome, and other modern mobile browsers with microphone support."
+      },
+      {
+        "question": "How can I improve the quality of my recordings?",
+        "answer": "For best results, record in a quiet environment close to your microphone. After recording, you can use our Audio Enhancer tool to remove background noise and improve clarity."
+      },
+      {
+        "question": "Is there a time limit for recordings?",
+        "answer": "There's no artificial time limit, but very long recordings may be limited by your browser's available memory. For extended recordings, consider recording in segments."
+      },
+      {
+        "question": "Can I edit my recordings after recording?",
+        "answer": "The recorder focuses on high-quality capture. For editing, download your WAV file and use audio editing software, or try our Audio Enhancer for noise reduction and quality improvements."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Start Recording?",
+    "subtitle": "Professional voice recording is just one click away",
+    "description": "Join thousands of content creators, podcasters, and professionals who trust our online voice recorder for their audio needs.",
+    "buttons": {
+      "primary": "Start Recording Now",
+      "secondary": "Enhance Existing Audio"
+    }
+  },
+  "ui": {
+    "recording": {
+      "startButton": "Start Recording",
+      "stopButton": "Stop Recording",
+      "pauseButton": "Pause",
+      "resumeButton": "Resume",
+      "playButton": "Play",
+      "downloadButton": "Download WAV",
+      "clearButton": "Clear",
+      "recordAgainButton": "Record Again"
+    },
+    "status": {
+      "ready": "Ready to record...",
+      "recording": "Recording...",
+      "paused": "Recording paused",
+      "completed": "Recording completed",
+      "loading": "Loading waveform...",
+      "converting": "Converting...",
+      "downloadHint": "Download will be converted to WAV format for better compatibility"
+    },
+    "errors": {
+      "microphoneAccess": "Failed to access microphone. Please check permissions.",
+      "audioVisualization": "Failed to initialize audio visualization",
+      "downloadFailed": "Failed to download recording. Please try again."
+    }
+  }
+}
