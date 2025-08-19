@@ -5,6 +5,10 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import {
+  convertWebMToWAV,
+  isAudioConversionSupported,
+} from '@/utils/audio-converter';
 import { Download, Mic, Pause, Play, Square, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
@@ -14,6 +18,7 @@ export default function VoiceRecorderClient() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Use react-voice-visualizer for recording and real-time visualization
   const recorderControls = useVoiceVisualizer();
@@ -121,16 +126,47 @@ export default function VoiceRecorderClient() {
   }, [isPlaying, audioUrl]);
 
   // Download recorded audio
-  const downloadRecording = useCallback(() => {
-    if (recordedBlob) {
-      const url = URL.createObjectURL(recordedBlob);
+  const downloadRecording = useCallback(async () => {
+    if (!recordedBlob) return;
+
+    setIsDownloading(true);
+    try {
+      let downloadBlob = recordedBlob;
+      let fileName = `voice-recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}`;
+
+      // Try to convert to WAV format for better compatibility
+      if (isAudioConversionSupported()) {
+        try {
+          console.log('Converting WebM to WAV...');
+          downloadBlob = await convertWebMToWAV(recordedBlob);
+          fileName += '.wav';
+          console.log('Conversion successful');
+        } catch (conversionError) {
+          console.warn(
+            'WAV conversion failed, downloading as WebM:',
+            conversionError
+          );
+          fileName += '.webm';
+        }
+      } else {
+        console.warn('Audio conversion not supported, downloading as WebM');
+        fileName += '.webm';
+      }
+
+      // Create download link
+      const url = URL.createObjectURL(downloadBlob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `voice-recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+      setError('Failed to download recording. Please try again.');
+    } finally {
+      setIsDownloading(false);
     }
   }, [recordedBlob]);
 
@@ -316,9 +352,10 @@ export default function VoiceRecorderClient() {
                     onClick={downloadRecording}
                     size="lg"
                     className="gap-2"
+                    disabled={isDownloading}
                   >
                     <Download className="h-4 w-4" />
-                    Download
+                    {isDownloading ? 'Converting...' : 'Download WAV'}
                   </Button>
                   <Button
                     onClick={clearRecording}
@@ -344,9 +381,16 @@ export default function VoiceRecorderClient() {
 
             {/* Recording Status */}
             {recordedBlob && (
-              <div className="text-center text-sm text-muted-foreground">
-                Recording completed • Duration: {formatTime(recordingTime)} •
-                Size: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
+              <div className="text-center text-sm text-muted-foreground space-y-1">
+                <div>
+                  Recording completed • Duration: {formatTime(recordingTime)} •
+                  Size: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
+                </div>
+                <div className="text-xs">
+                  {isAudioConversionSupported()
+                    ? 'Download will be converted to WAV format for better compatibility'
+                    : 'Download will be in WebM format'}
+                </div>
               </div>
             )}
           </CardContent>
