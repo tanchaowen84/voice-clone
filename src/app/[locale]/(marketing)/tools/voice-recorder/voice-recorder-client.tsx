@@ -7,42 +7,48 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Download, Mic, Pause, Play, Square, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { VoiceVisualizer, useVoiceVisualizer } from 'react-voice-visualizer';
 
 export default function VoiceRecorderClient() {
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
-  const [audioLevel, setAudioLevel] = useState(0);
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  // Use react-voice-visualizer for recording and real-time visualization
+  const recorderControls = useVoiceVisualizer();
+  const {
+    recordedBlob,
+    recordingTime,
+    isRecordingInProgress,
+    isPausedRecording,
+    startRecording,
+    stopRecording,
+    togglePauseResume,
+  } = recorderControls;
+
   const waveformRef = useRef<HTMLDivElement | null>(null);
   const waveSurferRef = useRef<any>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const analyserRef = useRef<AnalyserNode | null>(null);
-  const animationRef = useRef<number | null>(null);
 
-  // Initialize wavesurfer for real-time recording visualization
+  // Initialize wavesurfer for playback after recording
   useEffect(() => {
     let disposed = false;
-    (async () => {
+
+    const initWaveSurfer = async () => {
       try {
         const WaveSurfer = (await import('wavesurfer.js')).default;
         if (disposed || !waveformRef.current) return;
+
+        // Destroy existing instance if any
+        if (waveSurferRef.current) {
+          waveSurferRef.current.destroy();
+        }
 
         const ws = WaveSurfer.create({
           container: waveformRef.current,
           height: 80,
           waveColor: '#cbd5e1',
-          progressColor: '#ef4444',
+          progressColor: '#7c3aed',
           cursorColor: '#94a3b8',
           barWidth: 2,
           barGap: 1,
@@ -58,11 +64,17 @@ export default function VoiceRecorderClient() {
         ws.on('finish', () => setIsPlaying(false));
 
         setIsReady(true);
+        console.log('WaveSurfer initialized successfully');
       } catch (err) {
         console.error('WaveSurfer initialization failed:', err);
         setError('Failed to initialize audio visualization');
       }
-    })();
+    };
+
+    // Initialize when not recording and container is available
+    if (!isRecordingInProgress && !isPausedRecording && waveformRef.current) {
+      initWaveSurfer();
+    }
 
     return () => {
       disposed = true;
@@ -71,28 +83,23 @@ export default function VoiceRecorderClient() {
         waveSurferRef.current = null;
       }
     };
-  }, []);
+  }, [isRecordingInProgress, isPausedRecording]);
 
-  // Timer for recording duration
+  // Handle recorded blob from react-voice-visualizer
   useEffect(() => {
-    if (isRecording && !isPaused) {
-      timerRef.current = setInterval(() => {
-        setRecordingTime((prev) => prev + 1);
-      }, 1000);
-    } else {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    }
+    if (recordedBlob && waveSurferRef.current && isReady) {
+      const url = URL.createObjectURL(recordedBlob);
+      setAudioUrl(url);
 
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [isRecording, isPaused]);
+      // Small delay to ensure DOM is updated
+      setTimeout(() => {
+        if (waveSurferRef.current) {
+          console.log('Loading audio into wavesurfer:', url);
+          waveSurferRef.current.load(url);
+        }
+      }, 100);
+    }
+  }, [recordedBlob, isReady]);
 
   // Format time display
   const formatTime = (seconds: number) => {
@@ -100,132 +107,6 @@ export default function VoiceRecorderClient() {
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-
-  // Audio level monitoring for real-time visualization
-  const startAudioLevelMonitoring = useCallback(
-    (stream: MediaStream) => {
-      try {
-        const audioContext = new (
-          window.AudioContext || (window as any).webkitAudioContext
-        )();
-        const analyser = audioContext.createAnalyser();
-        const microphone = audioContext.createMediaStreamSource(stream);
-
-        analyser.fftSize = 256;
-        analyser.smoothingTimeConstant = 0.8;
-        microphone.connect(analyser);
-
-        audioContextRef.current = audioContext;
-        analyserRef.current = analyser;
-
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-        const updateAudioLevel = () => {
-          if (analyserRef.current && isRecording) {
-            analyserRef.current.getByteFrequencyData(dataArray);
-            const average =
-              dataArray.reduce((sum, value) => sum + value, 0) /
-              dataArray.length;
-            setAudioLevel(average / 255); // Normalize to 0-1
-            animationRef.current = requestAnimationFrame(updateAudioLevel);
-          }
-        };
-
-        updateAudioLevel();
-      } catch (err) {
-        console.error('Failed to start audio level monitoring:', err);
-      }
-    },
-    [isRecording]
-  );
-
-  // Start recording
-  const startRecording = useCallback(async () => {
-    try {
-      setError(null);
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-        },
-      });
-
-      streamRef.current = stream;
-      chunksRef.current = [];
-
-      // Start audio level monitoring for real-time visualization
-      startAudioLevelMonitoring(stream);
-
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: 'audio/webm;codecs=opus',
-      });
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunksRef.current.push(event.data);
-        }
-      };
-
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        setAudioBlob(blob);
-        const url = URL.createObjectURL(blob);
-        setAudioUrl(url);
-
-        // Stop audio level monitoring
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-          animationRef.current = null;
-        }
-        if (audioContextRef.current) {
-          audioContextRef.current.close();
-          audioContextRef.current = null;
-        }
-        setAudioLevel(0);
-
-        // Load the recorded audio into wavesurfer for playback
-        if (waveSurferRef.current) {
-          waveSurferRef.current.load(url);
-        }
-      };
-
-      mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start(100); // Collect data every 100ms
-      setIsRecording(true);
-      setRecordingTime(0);
-    } catch (err) {
-      console.error('Failed to start recording:', err);
-      setError('Failed to access microphone. Please check permissions.');
-    }
-  }, [startAudioLevelMonitoring]);
-
-  // Stop recording
-  const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      setIsPaused(false);
-
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-      }
-    }
-  }, [isRecording]);
-
-  // Pause/Resume recording
-  const togglePauseRecording = useCallback(() => {
-    if (mediaRecorderRef.current) {
-      if (isPaused) {
-        mediaRecorderRef.current.resume();
-        setIsPaused(false);
-      } else {
-        mediaRecorderRef.current.pause();
-        setIsPaused(true);
-      }
-    }
-  }, [isPaused]);
 
   // Play/Pause recorded audio
   const togglePlayback = useCallback(() => {
@@ -241,8 +122,8 @@ export default function VoiceRecorderClient() {
 
   // Download recorded audio
   const downloadRecording = useCallback(() => {
-    if (audioBlob) {
-      const url = URL.createObjectURL(audioBlob);
+    if (recordedBlob) {
+      const url = URL.createObjectURL(recordedBlob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `voice-recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
@@ -251,30 +132,27 @@ export default function VoiceRecorderClient() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
-  }, [audioBlob]);
+  }, [recordedBlob]);
 
   // Clear recording
   const clearRecording = useCallback(() => {
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
     }
-    setAudioBlob(null);
     setAudioUrl(null);
     setIsPlaying(false);
-    setRecordingTime(0);
     if (waveSurferRef.current) {
       waveSurferRef.current.empty();
     }
-  }, [audioUrl]);
+    // Clear the react-voice-visualizer recording
+    recorderControls.clearCanvas();
+  }, [audioUrl, recorderControls]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (audioUrl) {
         URL.revokeObjectURL(audioUrl);
-      }
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
       }
     };
   }, [audioUrl]);
@@ -314,76 +192,83 @@ export default function VoiceRecorderClient() {
 
             {/* Waveform Visualization */}
             <div className="relative">
-              <div
-                ref={waveformRef}
-                className={cn(
-                  'w-full rounded-lg border bg-background/50',
-                  !isReady && 'min-h-[80px] flex items-center justify-center'
-                )}
-              >
-                {!isReady && (
-                  <div className="text-sm text-muted-foreground">
-                    Loading audio visualization...
-                  </div>
-                )}
-              </div>
+              {/* Show react-voice-visualizer during recording */}
+              {(isRecordingInProgress || isPausedRecording) && (
+                <div className="relative">
+                  <VoiceVisualizer
+                    controls={recorderControls}
+                    height={80}
+                    backgroundColor="transparent"
+                    mainBarColor="#ef4444"
+                    secondaryBarColor="#fca5a5"
+                    speed={3}
+                    barWidth={2}
+                    gap={1}
+                    rounded={2}
+                    isControlPanelShown={false}
+                    isDownloadAudioButtonShown={false}
+                  />
 
-              {/* Recording indicator and real-time audio level */}
-              {isRecording && (
-                <>
+                  {/* Recording indicator */}
                   <div className="absolute top-2 right-2 flex items-center gap-2">
                     <div
                       className={cn(
                         'w-3 h-3 rounded-full animate-pulse',
-                        isPaused ? 'bg-yellow-500' : 'bg-red-500'
+                        isPausedRecording ? 'bg-yellow-500' : 'bg-red-500'
                       )}
                     />
                     <span className="text-sm font-mono">
                       {formatTime(recordingTime)}
                     </span>
                   </div>
+                </div>
+              )}
 
-                  {/* Real-time audio level visualization */}
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">
-                        Level:
-                      </span>
-                      <div className="flex-1 h-2 bg-background/50 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 transition-all duration-100"
-                          style={{ width: `${audioLevel * 100}%` }}
-                        />
-                      </div>
+              {/* Show wavesurfer for playback after recording */}
+              {!isRecordingInProgress && !isPausedRecording && (
+                <div
+                  ref={waveformRef}
+                  className={cn(
+                    'w-full rounded-lg border bg-background/50 min-h-[80px]',
+                    !isReady &&
+                      !recordedBlob &&
+                      'flex items-center justify-center'
+                  )}
+                >
+                  {!isReady && !recordedBlob && (
+                    <div className="text-sm text-muted-foreground">
+                      Ready to record...
                     </div>
-                  </div>
-                </>
+                  )}
+                  {recordedBlob && !isReady && (
+                    <div className="text-sm text-muted-foreground flex items-center justify-center">
+                      Loading waveform...
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
             {/* Control Buttons */}
             <div className="flex items-center justify-center gap-4">
-              {!isRecording && !audioBlob && (
-                <Button
-                  onClick={startRecording}
-                  size="lg"
-                  className="gap-2"
-                  disabled={!isReady}
-                >
-                  <Mic className="h-4 w-4" />
-                  Start Recording
-                </Button>
-              )}
+              {!isRecordingInProgress &&
+                !isPausedRecording &&
+                !recordedBlob && (
+                  <Button onClick={startRecording} size="lg" className="gap-2">
+                    <Mic className="h-4 w-4" />
+                    Start Recording
+                  </Button>
+                )}
 
-              {isRecording && (
+              {(isRecordingInProgress || isPausedRecording) && (
                 <>
                   <Button
-                    onClick={togglePauseRecording}
+                    onClick={togglePauseResume}
                     variant="outline"
                     size="lg"
                     className="gap-2"
                   >
-                    {isPaused ? (
+                    {isPausedRecording ? (
                       <>
                         <Play className="h-4 w-4" />
                         Resume
@@ -407,7 +292,7 @@ export default function VoiceRecorderClient() {
                 </>
               )}
 
-              {audioBlob && (
+              {recordedBlob && !isRecordingInProgress && !isPausedRecording && (
                 <>
                   <Button
                     onClick={togglePlayback}
@@ -458,10 +343,10 @@ export default function VoiceRecorderClient() {
             </div>
 
             {/* Recording Status */}
-            {audioBlob && (
+            {recordedBlob && (
               <div className="text-center text-sm text-muted-foreground">
                 Recording completed • Duration: {formatTime(recordingTime)} •
-                Size: {(audioBlob.size / 1024 / 1024).toFixed(2)} MB
+                Size: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
               </div>
             )}
           </CardContent>
