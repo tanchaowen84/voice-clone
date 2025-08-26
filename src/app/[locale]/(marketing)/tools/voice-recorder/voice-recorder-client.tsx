@@ -57,7 +57,6 @@ export default function VoiceRecorderClient() {
           cursorColor: '#94a3b8',
           barWidth: 2,
           barGap: 1,
-          responsive: true,
           normalize: true,
         });
 

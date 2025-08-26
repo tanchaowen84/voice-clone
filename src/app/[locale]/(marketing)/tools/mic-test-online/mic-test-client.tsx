@@ -13,7 +13,6 @@ import {
   MicOff,
   Play,
   RefreshCw,
-  Settings,
   Square,
   Volume2,
   VolumeX,
@@ -589,28 +588,6 @@ export default function MicTestClient() {
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh Page
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start"
-                  onClick={() => {
-                    if (navigator.userAgent.includes('Chrome')) {
-                      window.open(
-                        'chrome://settings/content/microphone',
-                        '_blank'
-                      );
-                    } else if (navigator.userAgent.includes('Firefox')) {
-                      window.open('about:preferences#privacy', '_blank');
-                    } else {
-                      alert(
-                        'Please check your browser settings for microphone permissions'
-                      );
-                    }
-                  }}
-                >
-                  <Settings className="h-4 w-4 mr-2" />
-                  Browser Settings
                 </Button>
               </div>
             </div>
