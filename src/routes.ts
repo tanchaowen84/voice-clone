@@ -14,6 +14,7 @@ export enum Routes {
   Tools = '/tools',
   ToolsAudioEnhancer = '/tools/audio-enhancer',
   ToolsVoiceRecorder = '/tools/online-voice-recorder',
+  ToolsMicTest = '/tools/mic-test-online',
   Roadmap = 'https://mksaas.link/roadmap',
   CookiePolicy = '/cookie',
   PrivacyPolicy = '/privacy',

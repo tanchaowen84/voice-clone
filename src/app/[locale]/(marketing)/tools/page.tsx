@@ -72,6 +72,28 @@ export default function ToolsPage() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Mic Test */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Mic Test Online</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4">
+              <p className="text-sm text-muted-foreground">
+                Test your microphone instantly. Check volume levels, audio
+                quality, and device compatibility right in your browser.
+              </p>
+              <div>
+                <LocaleLink href={Routes.ToolsMicTest}>
+                  <Button>
+                    <span className="inline-flex items-center gap-2">
+                      Open <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </Button>
+                </LocaleLink>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>
