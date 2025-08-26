@@ -4,6 +4,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import seoContent from '@/content/tools/mic-test-online.en.json';
 import { cn } from '@/lib/utils';
 import {
   AlertCircle,
@@ -389,12 +390,11 @@ export default function MicTestClient() {
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-10">
-      {/* Header */}
+      {/* Hero Section */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-4">Mic Test Online</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Test your microphone instantly. Check volume levels, audio quality,
-          and device compatibility right in your browser.
+        <h1 className="text-4xl font-bold mb-4">{seoContent.hero.title}</h1>
+        <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          {seoContent.hero.subtitle}
         </p>
       </div>
 
@@ -605,32 +605,461 @@ export default function MicTestClient() {
         </CardContent>
       </Card>
 
+      {/* Common Problems Section */}
+      <div className="mb-16">
+        <Card className="p-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-4">
+              Fix Common Microphone Problems Before They Ruin Your Call
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
+              Don't let microphone issues embarrass you in important meetings or
+              ruin your recordings. Test your mic now to avoid these common
+              problems.
+            </p>
+
+            {/* Common Issues */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-sm mb-1">
+                    People Can't Hear You in Zoom/Teams
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Wrong microphone selected or permissions blocked
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-sm mb-1">
+                    Audio Cuts Out During Recording
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Microphone sensitivity too low or hardware issues
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-sm mb-1">
+                    Gaming/Discord Voice Chat Problems
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Headset microphone not detected or poor quality
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-sm mb-1">
+                    Podcast/Streaming Audio Issues
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Background noise, echo, or inconsistent volume levels
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
       {/* Features Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        <Card className="text-center p-6">
-          <Mic className="h-8 w-8 text-primary mx-auto mb-3" />
-          <h3 className="font-medium mb-2">Real-time Testing</h3>
-          <p className="text-sm text-muted-foreground">
-            Instant feedback on your microphone's volume levels and audio
-            quality
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">
+            {seoContent.features.title}
+          </h2>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            {seoContent.features.subtitle}
           </p>
-        </Card>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            {seoContent.features.intro}
+          </p>
+        </div>
 
-        <Card className="text-center p-6">
-          <Volume2 className="h-8 w-8 text-primary mx-auto mb-3" />
-          <h3 className="font-medium mb-2">Waveform Visualization</h3>
-          <p className="text-sm text-muted-foreground">
-            Real-time audio waveform shows your microphone's frequency response
-            and volume levels
-          </p>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {seoContent.features.items.map((feature, index) => (
+            <Card key={index} className="text-center p-6 h-full">
+              <div className="flex flex-col h-full">
+                {feature.icon === 'waveform' && (
+                  <Volume2 className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
+                {feature.icon === 'shield' && (
+                  <CheckCircle className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
+                {feature.icon === 'record' && (
+                  <Play className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
+                {feature.icon === 'devices' && (
+                  <HelpCircle className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
+                {feature.icon === 'analytics' && (
+                  <Volume2 className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
+                {feature.icon === 'lock' && (
+                  <CheckCircle className="h-8 w-8 text-primary mx-auto mb-4" />
+                )}
 
-        <Card className="text-center p-6">
-          <Play className="h-8 w-8 text-primary mx-auto mb-3" />
-          <h3 className="font-medium mb-2">Recording Test</h3>
-          <p className="text-sm text-muted-foreground">
-            Record and playback a sample to verify your microphone quality
+                <h3 className="font-semibold mb-3 text-lg">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground flex-grow">
+                  {feature.description}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* How It Works Section */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">
+            {seoContent.howItWorks.title}
+          </h2>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            {seoContent.howItWorks.subtitle}
           </p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            {seoContent.howItWorks.intro}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {seoContent.howItWorks.steps.map((step, index) => (
+            <Card key={index} className="p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                  {step.step}
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2 text-lg">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* When to Test Your Microphone */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">
+            When Should You Test Your Microphone?
+          </h2>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            Don't wait until it's too late. Test your microphone in these
+            critical situations.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <Volume2 className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2 text-lg">
+                  Before Important Video Calls
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Test 5 minutes before your Zoom, Teams, or Google Meet calls.
+                  Avoid the embarrassment of "Can you hear me?" moments during
+                  client presentations or job interviews.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <Mic className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2 text-lg">
+                  After Buying New Equipment
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  New headset, USB microphone, or gaming headphones? Test
+                  immediately to ensure they work properly and return defective
+                  products within the warranty period.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <Play className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2 text-lg">
+                  Before Recording Content
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Podcasters, YouTubers, and streamers: test your mic before
+                  hitting record. Prevent wasted hours re-recording due to poor
+                  audio quality or technical issues.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <HelpCircle className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2 text-lg">
+                  When Troubleshooting Issues
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Friends complaining they can't hear you in Discord? Microphone
+                  suddenly stopped working? Use our test to quickly identify if
+                  it's a hardware or software problem.
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+
+      {/* Quick Solutions Section */}
+      <div className="mb-16">
+        <Card className="p-8">
+          <h2 className="text-2xl font-bold mb-6">
+            Quick Microphone Fixes That Actually Work
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-semibold mb-4 text-lg">Windows Users</h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">
+                      Check Privacy Settings
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Settings → Privacy → Microphone → Allow apps to access
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Update Audio Drivers</p>
+                    <p className="text-xs text-muted-foreground">
+                      Device Manager → Audio inputs → Update driver
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Set Default Device</p>
+                    <p className="text-xs text-muted-foreground">
+                      Sound settings → Choose input device
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4 text-lg">Mac Users</h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">
+                      Check System Preferences
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Security & Privacy → Microphone → Allow browser
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Reset Audio Settings</p>
+                    <p className="text-xs text-muted-foreground">
+                      Sound → Input → Select correct microphone
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Restart Core Audio</p>
+                    <p className="text-xs text-muted-foreground">
+                      Terminal: sudo killall coreaudiod
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-800">
+              <strong>Still having issues?</strong> Try our mic test first to
+              determine if it's a hardware or software problem. This will save
+              you time troubleshooting the wrong component.
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      {/* Comprehensive Mic Test Guide */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">
+            Complete Mic Test Online Guide
+          </h2>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            Everything you need to know about microphone test online procedures
+            and best practices.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold mb-4">
+              Why Use Our Mic Test Online Tool?
+            </h3>
+            <div className="space-y-3 text-sm">
+              <p>
+                Our mic test online platform provides instant microphone testing
+                without downloads or installations. This microphone test online
+                solution works directly in your browser, making it the most
+                convenient way to test your microphone before important calls or
+                recordings.
+              </p>
+              <p>
+                Unlike other microphone test online tools, our mic test online
+                service offers real-time waveform visualization, allowing you to
+                see exactly how your microphone responds to different audio
+                levels. This advanced microphone test online feature helps
+                identify issues that basic mic test tools might miss.
+              </p>
+              <p>
+                Whether you need a quick mic test online for a Zoom meeting or
+                comprehensive microphone test online analysis for content
+                creation, our tool provides accurate results every time. The mic
+                test online process is completely free and requires no
+                registration.
+              </p>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold mb-4">
+              Best Practices for Mic Test Online
+            </h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">Test in Quiet Environment</p>
+                  <p className="text-muted-foreground">
+                    Perform your mic test online in a quiet room to get accurate
+                    results from our microphone test online tool.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">Speak at Normal Volume</p>
+                  <p className="text-muted-foreground">
+                    Use your regular speaking voice during the microphone test
+                    online to simulate real-world usage.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">Test Multiple Scenarios</p>
+                  <p className="text-muted-foreground">
+                    Try different distances and angles during your mic test
+                    online to find optimal positioning.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">Use Recording Playback</p>
+                  <p className="text-muted-foreground">
+                    Always test the recording playback feature in our microphone
+                    test online tool to hear your actual audio quality.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+
+      {/* Device Compatibility */}
+      <div className="mb-16">
+        <Card className="p-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-4">
+              Mic Test Online Device Compatibility
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
+              Our microphone test online tool works seamlessly across all
+              devices and platforms. Test your microphone online regardless of
+              your setup.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <h3 className="font-semibold mb-3">Desktop Computers</h3>
+              <p className="text-sm text-muted-foreground">
+                Full mic test online functionality on Windows, Mac, and Linux.
+                Our microphone test online tool supports USB microphones,
+                built-in mics, and professional audio interfaces.
+              </p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold mb-3">Mobile Devices</h3>
+              <p className="text-sm text-muted-foreground">
+                Complete microphone test online experience on iOS and Android.
+                Test your phone's built-in microphone or connected headsets with
+                our mobile-optimized mic test online interface.
+              </p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold mb-3">Gaming Headsets</h3>
+              <p className="text-sm text-muted-foreground">
+                Perfect for testing gaming headsets and wireless earbuds. Our
+                mic test online tool helps gamers verify their microphone works
+                properly for Discord, Steam, and other platforms.
+              </p>
+            </div>
+          </div>
         </Card>
       </div>
     </div>
