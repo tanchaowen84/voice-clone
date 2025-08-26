@@ -31,6 +31,115 @@ interface MicTestState {
   isPlaying: boolean;
 }
 
+// Real-time waveform component for microphone visualization
+function RealtimeWaveform({
+  analyserNode,
+  isActive,
+}: {
+  analyserNode: AnalyserNode | null;
+  isActive: boolean;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!analyserNode || !isActive || !canvasRef.current) {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+    const bufferLength = analyserNode.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    const draw = () => {
+      if (!analyserNode || !isActive) return;
+
+      analyserNode.getByteFrequencyData(dataArray);
+
+      // Clear canvas with dark background
+      ctx.fillStyle = 'rgb(9, 9, 11)'; // zinc-950
+      ctx.fillRect(0, 0, rect.width, rect.height);
+
+      // Calculate bar dimensions
+      const numBars = Math.min(64, bufferLength); // Limit bars for better visual
+      const barWidth = rect.width / numBars - 2;
+      const barGap = 2;
+
+      for (let i = 0; i < numBars; i++) {
+        // Sample data points for smoother visualization
+        const dataIndex = Math.floor((i * bufferLength) / numBars);
+        const barHeight = (dataArray[dataIndex] / 255) * rect.height * 0.9;
+
+        const x = i * (barWidth + barGap);
+        const y = rect.height - barHeight;
+
+        // Create dynamic gradient based on frequency intensity
+        const intensity = dataArray[dataIndex] / 255;
+        const gradient = ctx.createLinearGradient(0, y, 0, rect.height);
+
+        if (intensity > 0.7) {
+          // High intensity - green to yellow
+          gradient.addColorStop(0, '#10b981'); // emerald-500
+          gradient.addColorStop(0.5, '#f59e0b'); // amber-500
+          gradient.addColorStop(1, '#ef4444'); // red-500
+        } else if (intensity > 0.3) {
+          // Medium intensity - blue to purple
+          gradient.addColorStop(0, '#3b82f6'); // blue-500
+          gradient.addColorStop(0.5, '#8b5cf6'); // violet-500
+          gradient.addColorStop(1, '#a855f7'); // purple-500
+        } else {
+          // Low intensity - subtle gray to blue
+          gradient.addColorStop(0, '#6b7280'); // gray-500
+          gradient.addColorStop(1, '#3b82f6'); // blue-500
+        }
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        // Add subtle glow effect for active bars
+        if (intensity > 0.1) {
+          ctx.shadowColor = intensity > 0.5 ? '#8b5cf6' : '#3b82f6';
+          ctx.shadowBlur = intensity * 10;
+          ctx.fillRect(x, y, barWidth, barHeight);
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      animationFrameRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
+  }, [analyserNode, isActive]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-20 rounded-lg border bg-zinc-950 shadow-inner"
+      style={{ width: '100%', height: '80px' }}
+    />
+  );
+}
+
 export default function MicTestClient() {
   const [state, setState] = useState<MicTestState>({
     isPermissionGranted: false,
@@ -339,31 +448,41 @@ export default function MicTestClient() {
                 </Button>
               </div>
 
-              {/* Volume Level Display */}
+              {/* Real-time Waveform Display */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {getVolumeIcon()}
-                    <span className="font-medium">Volume Level</span>
+                    <span className="font-medium">Audio Waveform</span>
                   </div>
                   <span className="text-sm font-mono">
                     {Math.round(state.audioLevel)}%
                   </span>
                 </div>
 
+                {/* Real-time waveform visualization */}
                 <div className="relative">
-                  <Progress value={state.audioLevel} className="h-4" />
-                  <div
-                    className={cn(
-                      'absolute top-0 left-0 h-4 rounded-full transition-all duration-100',
-                      getVolumeColor()
-                    )}
-                    style={{ width: `${state.audioLevel}%` }}
+                  <RealtimeWaveform
+                    analyserNode={analyserRef.current}
+                    isActive={state.isTestingMic}
                   />
+
+                  {/* Overlay volume indicator */}
+                  <div className="absolute top-2 right-2 flex items-center gap-2 bg-black/50 px-2 py-1 rounded text-white text-xs">
+                    <div
+                      className={cn(
+                        'w-2 h-2 rounded-full',
+                        state.audioLevel > 0
+                          ? 'bg-green-400 animate-pulse'
+                          : 'bg-gray-400'
+                      )}
+                    />
+                    <span>{Math.round(state.audioLevel)}%</span>
+                  </div>
                 </div>
 
                 <p className="text-sm text-muted-foreground text-center">
-                  Speak into your microphone to see the volume level
+                  Speak into your microphone to see the real-time waveform
                 </p>
               </div>
 
@@ -522,9 +641,10 @@ export default function MicTestClient() {
 
         <Card className="text-center p-6">
           <Volume2 className="h-8 w-8 text-primary mx-auto mb-3" />
-          <h3 className="font-medium mb-2">Volume Monitoring</h3>
+          <h3 className="font-medium mb-2">Waveform Visualization</h3>
           <p className="text-sm text-muted-foreground">
-            Visual volume meter shows your microphone's sensitivity in real-time
+            Real-time audio waveform shows your microphone's frequency response
+            and volume levels
           </p>
         </Card>
 
