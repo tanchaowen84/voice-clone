@@ -164,45 +164,72 @@ export default function EchoRemoverClient() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
-                isDragOver
-                  ? 'border-primary bg-primary/5'
-                  : 'border-muted-foreground/25 hover:border-primary/50'
-              }`}
-              onDrop={onDrop}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setIsDragOver(true);
-              }}
-              onDragLeave={() => setIsDragOver(false)}
-              onClick={() => document.getElementById('audio-upload')?.click()}
-            >
-              <UploadCloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-lg mb-2">
-                Drag and drop your audio file here, or click to browse
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Supports WAV, MP3, FLAC, OGG formats (max 50MB)
-              </p>
-              <input
-                type="file"
-                accept="audio/*"
-                onChange={onFileChange}
-                className="hidden"
-                id="audio-upload"
-              />
-              <Button variant="outline" className="pointer-events-none">
-                Choose File
-              </Button>
-            </div>
-
-            {file && (
-              <div className="mt-4 p-4 bg-muted rounded-lg">
-                <p className="font-medium">Selected file:</p>
-                <p className="text-sm text-muted-foreground">
-                  {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+            {!file ? (
+              <div
+                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+                  isDragOver
+                    ? 'border-primary bg-primary/5'
+                    : 'border-muted-foreground/25 hover:border-primary/50'
+                }`}
+                onDrop={onDrop}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(true);
+                }}
+                onDragLeave={() => setIsDragOver(false)}
+                onClick={() => document.getElementById('audio-upload')?.click()}
+              >
+                <UploadCloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-lg mb-2">
+                  Drag and drop your audio file here, or click to browse
                 </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Supports WAV, MP3, FLAC, OGG formats (max 50MB)
+                </p>
+                <input
+                  type="file"
+                  accept="audio/*"
+                  onChange={onFileChange}
+                  className="hidden"
+                  id="audio-upload"
+                />
+                <Button variant="outline" className="pointer-events-none">
+                  Choose File
+                </Button>
+              </div>
+            ) : (
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Selected file:</p>
+                    <p className="text-sm text-muted-foreground">
+                      {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setFile(null);
+                      setError(null);
+                      setEnhancedUrl(null);
+                      // Reset the file input
+                      const input = document.getElementById(
+                        'audio-upload'
+                      ) as HTMLInputElement;
+                      if (input) input.value = '';
+                    }}
+                  >
+                    Change File
+                  </Button>
+                </div>
+                <input
+                  type="file"
+                  accept="audio/*"
+                  onChange={onFileChange}
+                  className="hidden"
+                  id="audio-upload"
+                />
               </div>
             )}
 
