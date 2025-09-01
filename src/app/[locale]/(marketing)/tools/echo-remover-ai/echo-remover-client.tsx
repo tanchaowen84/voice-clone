@@ -1,10 +1,10 @@
 'use client';
 
+import { BlurFade } from '@/components/magicui/blur-fade';
+import { WaveAudioPlayer } from '@/components/media/wave-audio-player';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { WaveAudioPlayer } from '@/components/media/wave-audio-player';
-import { BlurFade } from '@/components/magicui/blur-fade';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getAssetUrl } from '@/config/cdn-config';
 import { Download, Loader2, Sparkles, UploadCloud } from 'lucide-react';
@@ -18,13 +18,34 @@ export default function EchoRemoverClient() {
   const [enhancedUrl, setEnhancedUrl] = useState<string | null>(null);
 
   function onFilePicked(f: File | null) {
+    if (!f) {
+      setFile(null);
+      setError(null);
+      setEnhancedUrl(null);
+      return;
+    }
+
+    // Validate file type
+    if (!f.type.startsWith('audio/')) {
+      setError('Please select an audio file (WAV, MP3, FLAC, OGG)');
+      return;
+    }
+
+    // Validate file size (50MB limit)
+    const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+    if (f.size > maxSize) {
+      setError('File size must be less than 50MB');
+      return;
+    }
+
     setFile(f);
     setError(null);
     setEnhancedUrl(null);
   }
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    onFilePicked(e.target.files?.[0] ?? null);
+    const selectedFile = e.target.files?.[0] ?? null;
+    onFilePicked(selectedFile);
   }
 
   function onDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -32,17 +53,46 @@ export default function EchoRemoverClient() {
     setIsDragOver(false);
     const list = e.dataTransfer?.files ? Array.from(e.dataTransfer.files) : [];
     const f = list[0];
-    if (f?.type?.startsWith('audio/')) onFilePicked(f);
-    else setError('Please drop an audio file');
+    if (f) {
+      onFilePicked(f);
+    } else {
+      setError('No file was dropped');
+    }
+  }
+
+  function extractAudioUrl(data: any): string | null {
+    const candidates: string[] = [];
+    const walk = (v: any) => {
+      if (!v) return;
+      if (
+        typeof v === 'string' &&
+        (v.startsWith('http') || v.startsWith('blob:'))
+      ) {
+        candidates.push(v);
+      } else if (Array.isArray(v)) {
+        v.forEach(walk);
+      } else if (typeof v === 'object') {
+        Object.values(v).forEach(walk);
+      }
+    };
+    walk(data);
+    return (
+      candidates.find(
+        (url) =>
+          url.includes('.wav') || url.includes('.mp3') || url.includes('audio')
+      ) ||
+      candidates[0] ||
+      null
+    );
   }
 
   async function onRemoveEcho() {
-    if (!file) return;
-
-    setIsLoading(true);
-    setError(null);
-
     try {
+      if (!file) return setError('Please select an audio file first');
+      setIsLoading(true);
+      setError(null);
+      setEnhancedUrl(null);
+
       const formData = new FormData();
       formData.append('audio', file);
 
@@ -51,20 +101,21 @@ export default function EchoRemoverClient() {
         body: formData,
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to remove echo');
+        return setError(data?.error || 'Failed to remove echo');
       }
 
-      const result = await response.json();
-      
-      if (result.success && result.data && result.data[0]) {
-        setEnhancedUrl(result.data[0].url || result.data[0]);
+      const url = extractAudioUrl(data?.data);
+      if (url) {
+        setEnhancedUrl(url);
       } else {
-        throw new Error('Invalid response format');
+        setError('No audio URL found in response');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Echo removal failed:', err);
-      setError(err instanceof Error ? err.message : 'Failed to remove echo');
+      setError(err?.message || 'Unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +123,7 @@ export default function EchoRemoverClient() {
 
   function downloadEnhanced() {
     if (!enhancedUrl) return;
-    
+
     const link = document.createElement('a');
     link.href = enhancedUrl;
     link.download = `echo-removed-${file?.name || 'audio'}.wav`;
@@ -91,7 +142,7 @@ export default function EchoRemoverClient() {
             <h1 className="text-4xl font-bold">Echo Remover AI</h1>
           </div>
           <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Remove echo and reverb from your audio files instantly with AI. 
+            Remove echo and reverb from your audio files instantly with AI.
             Perfect for podcasts, interviews, and voice recordings.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -114,7 +165,7 @@ export default function EchoRemoverClient() {
           </CardHeader>
           <CardContent>
             <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
                 isDragOver
                   ? 'border-primary bg-primary/5'
                   : 'border-muted-foreground/25 hover:border-primary/50'
@@ -125,6 +176,7 @@ export default function EchoRemoverClient() {
                 setIsDragOver(true);
               }}
               onDragLeave={() => setIsDragOver(false)}
+              onClick={() => document.getElementById('audio-upload')?.click()}
             >
               <UploadCloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
               <p className="text-lg mb-2">
@@ -140,11 +192,9 @@ export default function EchoRemoverClient() {
                 className="hidden"
                 id="audio-upload"
               />
-              <label htmlFor="audio-upload">
-                <Button variant="outline" className="cursor-pointer">
-                  Choose File
-                </Button>
-              </label>
+              <Button variant="outline" className="pointer-events-none">
+                Choose File
+              </Button>
             </div>
 
             {file && (
@@ -209,10 +259,7 @@ export default function EchoRemoverClient() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <WaveAudioPlayer
-                  src={enhancedUrl}
-                  title="Echo Removed Audio"
-                />
+                <WaveAudioPlayer src={enhancedUrl} title="Echo Removed Audio" />
                 <Button onClick={downloadEnhanced} className="w-full" size="lg">
                   <Download className="h-4 w-4 mr-2" />
                   Download Echo-Free Audio
