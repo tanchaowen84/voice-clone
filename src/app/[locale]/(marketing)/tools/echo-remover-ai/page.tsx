@@ -13,7 +13,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: 'Echo Remover AI Free - Remove Echo from Audio Online',
     description:
-      'Professional AI echo remover removes echo and reverb from audio instantly. Free echo remover AI tool for podcasts, videos. Remove echo online - no login required.',
+      'Free AI echo remover tool removes echo and reverb from audio instantly. Perfect for podcasts, videos, interviews. No registration required.',
     canonicalUrl: getUrlWithLocale('/tools/echo-remover-ai', locale),
   });
 }
