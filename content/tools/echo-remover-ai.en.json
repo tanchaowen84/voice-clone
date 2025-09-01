@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "title": "Echo Remover AI Free - Remove Echo from Audio Online",
+    "description": "Professional AI echo remover removes echo and reverb from audio instantly. Free echo remover AI tool for podcasts, videos. Remove echo online - no login required.",
+    "keywords": "echo remover ai, remove echo from audio, echo removal tool, reverb remover, audio echo remover, free echo remover, ai echo removal, online echo remover"
+  },
+  "hero": {
+    "title": "Echo Remover AI",
+    "subtitle": "Remove echo and reverb from your audio files instantly with AI. Perfect for podcasts, interviews, and voice recordings.",
+    "badges": [
+      "AI Powered",
+      "No Registration", 
+      "Free to Use",
+      "Instant Results"
+    ]
+  },
+  "ui": {
+    "upload": {
+      "title": "Upload Audio File",
+      "dragText": "Drag and drop your audio file here, or click to browse",
+      "supportText": "Supports WAV, MP3, FLAC, OGG formats (max 50MB)",
+      "chooseFile": "Choose File"
+    },
+    "process": {
+      "title": "Remove Echo",
+      "button": "Remove Echo with AI",
+      "processing": "Removing Echo..."
+    },
+    "results": {
+      "title": "Echo Removed Successfully",
+      "download": "Download Echo-Free Audio"
+    },
+    "errors": {
+      "dropAudio": "Please drop an audio file",
+      "uploadFailed": "Failed to remove echo",
+      "invalidFormat": "Invalid response format"
+    }
+  },
+  "features": [
+    {
+      "title": "AI-Powered Echo Removal",
+      "description": "Advanced AI algorithms specifically designed to identify and remove echo and reverb from audio recordings."
+    },
+    {
+      "title": "Multiple Format Support",
+      "description": "Works with WAV, MP3, FLAC, OGG and other popular audio formats up to 50MB in size."
+    },
+    {
+      "title": "Instant Processing",
+      "description": "Get your echo-free audio in seconds. No waiting in queues or lengthy processing times."
+    },
+    {
+      "title": "Free to Use",
+      "description": "No registration required. Upload, process, and download your enhanced audio completely free."
+    }
+  ]
+}

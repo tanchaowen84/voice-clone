@@ -51,6 +51,28 @@ export default function ToolsPage() {
             </CardContent>
           </Card>
 
+          {/* Echo Remover AI */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Echo Remover AI</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4">
+              <p className="text-sm text-muted-foreground">
+                Remove echo and reverb from audio files instantly with AI.
+                Perfect for podcasts and voice recordings.
+              </p>
+              <div>
+                <LocaleLink href={Routes.ToolsEchoRemover}>
+                  <Button>
+                    <span className="inline-flex items-center gap-2">
+                      Open <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </Button>
+                </LocaleLink>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Voice Recorder */}
           <Card>
             <CardHeader>
