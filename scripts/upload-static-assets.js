@@ -59,6 +59,7 @@ const ASSETS_TO_UPLOAD = [
   // Blog & author images
   'images/avatars/voice-clone.png',
   'images/blog/voice-enhancer.png',
+  'images/blog/how-to-clone-a-voice-for-free.png',
   // Include all audio files under /public/audio for CDN acceleration
   ...listFilesRecursively('audio'),
 ];
