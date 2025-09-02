@@ -9,12 +9,14 @@ interface WaveAudioPlayerProps {
   src: string;
   className?: string;
   height?: number;
+  title?: string;
 }
 
 export function WaveAudioPlayer({
   src,
   className,
   height = 72,
+  title,
 }: WaveAudioPlayerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const waveRef = useRef<any>(null);
@@ -91,8 +93,8 @@ export function WaveAudioPlayer({
   if (failed) {
     // Fallback to native audio if library not available
     return (
-      <div className={cn('rounded-md border p-3', className)}>
-        <audio controls className="w-full" src={src}>
+      <div className={cn('rounded-md border p-3', className)} aria-label={title}>
+        <audio controls className="w-full" src={src} title={title}>
           <track kind="captions" src="" srcLang="en" label="English captions" />
         </audio>
       </div>
@@ -100,7 +102,7 @@ export function WaveAudioPlayer({
   }
 
   return (
-    <div className={cn('rounded-md border p-3', className)}>
+    <div className={cn('rounded-md border p-3', className)} aria-label={title}>
       <div ref={containerRef} className="w-full" />
       <div className="mt-3 flex items-center justify-between">
         <Button

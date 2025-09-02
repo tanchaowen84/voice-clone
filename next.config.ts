@@ -69,4 +69,11 @@ const withNextIntl = createNextIntlPlugin();
  *
  * https://www.content-collections.dev/docs/quickstart/next
  */
-export default withContentCollections(withNextIntl(nextConfig));
+// Allow skipping content-collections during builds when the CLI misbehaves
+// Set SKIP_CONTENT_COLLECTIONS=true to bypass the plugin while keeping default behavior unchanged
+const maybeWithContentCollections =
+  process.env.SKIP_CONTENT_COLLECTIONS === 'true'
+    ? ((config: NextConfig) => config)
+    : withContentCollections;
+
+export default maybeWithContentCollections(withNextIntl(nextConfig));
