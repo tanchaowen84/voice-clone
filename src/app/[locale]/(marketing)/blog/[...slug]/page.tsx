@@ -88,10 +88,8 @@ export async function generateMetadata({
     notFound();
   }
 
-  const t = await getTranslations({ locale, namespace: 'Metadata' });
-
   return constructMetadata({
-    title: `${post.title} | ${t('title')}`,
+    title: post.title,
     description: post.description,
     canonicalUrl: getUrlWithLocale(post.slug, locale),
     image: post.image,
