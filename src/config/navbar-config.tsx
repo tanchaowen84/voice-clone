@@ -2,7 +2,15 @@
 
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
-import { CookieIcon, FileTextIcon, ShieldCheckIcon } from 'lucide-react';
+import {
+  AudioLinesIcon,
+  CookieIcon,
+  FileTextIcon,
+  MicIcon,
+  RadioIcon,
+  ShieldCheckIcon,
+  VolumeXIcon,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 /**
@@ -30,9 +38,37 @@ export function getNavbarLinks(): NestedMenuItem[] {
       external: false,
     },
     {
-      title: 'Tools',
-      href: Routes.Tools,
-      external: false,
+      title: t('tools.title'),
+      items: [
+        {
+          title: t('tools.items.audioEnhancer.title'),
+          description: t('tools.items.audioEnhancer.description'),
+          icon: <AudioLinesIcon className="size-4 shrink-0" />,
+          href: Routes.ToolsAudioEnhancer,
+          external: false,
+        },
+        {
+          title: t('tools.items.echoRemover.title'),
+          description: t('tools.items.echoRemover.description'),
+          icon: <VolumeXIcon className="size-4 shrink-0" />,
+          href: Routes.ToolsEchoRemover,
+          external: false,
+        },
+        {
+          title: t('tools.items.voiceRecorder.title'),
+          description: t('tools.items.voiceRecorder.description'),
+          icon: <RadioIcon className="size-4 shrink-0" />,
+          href: Routes.ToolsVoiceRecorder,
+          external: false,
+        },
+        {
+          title: t('tools.items.micTest.title'),
+          description: t('tools.items.micTest.description'),
+          icon: <MicIcon className="size-4 shrink-0" />,
+          href: Routes.ToolsMicTest,
+          external: false,
+        },
+      ],
     },
     {
       title: t('blog.title'),

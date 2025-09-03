@@ -219,6 +219,27 @@
       "blog": {
         "title": "Blog"
       },
+      "tools": {
+        "title": "Tools",
+        "items": {
+          "audioEnhancer": {
+            "title": "Audio Enhancer",
+            "description": "Enhance and improve your audio quality with AI"
+          },
+          "echoRemover": {
+            "title": "Echo Remover",
+            "description": "Remove echo and reverb from your recordings"
+          },
+          "voiceRecorder": {
+            "title": "Voice Recorder",
+            "description": "Record high-quality voice audio online"
+          },
+          "micTest": {
+            "title": "Mic Test",
+            "description": "Test your microphone and audio setup"
+          }
+        }
+      },
       "pages": {
         "title": "Pages",
         "items": {
