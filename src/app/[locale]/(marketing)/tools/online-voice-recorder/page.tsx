@@ -1,4 +1,5 @@
 import AdsenseScript from '@/components/ads/adsense';
+import { BackToHomeCTA } from '@/components/shared/back-to-home-cta';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -26,6 +27,10 @@ export default function OnlineVoiceRecorderPage() {
     <>
       <AdsenseScript />
       <VoiceRecorderClient />
+      <BackToHomeCTA
+        title="Record More Professional Audio"
+        description="Discover our full range of AI-powered audio tools for content creators and professionals."
+      />
     </>
   );
 }

@@ -48,6 +48,31 @@ export function getFooterLinks(): NestedMenuItem[] {
         },
       ],
     },
+    {
+      title: t('tools.title'),
+      items: [
+        {
+          title: t('tools.items.audioEnhancer'),
+          href: Routes.ToolsAudioEnhancer,
+          external: false,
+        },
+        {
+          title: t('tools.items.echoRemover'),
+          href: Routes.ToolsEchoRemover,
+          external: false,
+        },
+        {
+          title: t('tools.items.voiceRecorder'),
+          href: Routes.ToolsVoiceRecorder,
+          external: false,
+        },
+        {
+          title: t('tools.items.micTest'),
+          href: Routes.ToolsMicTest,
+          external: false,
+        },
+      ],
+    },
 
     {
       title: t('legal.title'),

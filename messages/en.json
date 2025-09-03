@@ -274,6 +274,15 @@
           "blog": "Blog"
         }
       },
+      "tools": {
+        "title": "Tools",
+        "items": {
+          "audioEnhancer": "Audio Enhancer",
+          "echoRemover": "Echo Remover",
+          "voiceRecorder": "Voice Recorder",
+          "micTest": "Mic Test"
+        }
+      },
       "legal": {
         "title": "Legal",
         "items": {

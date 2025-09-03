@@ -1,4 +1,5 @@
 import AdsenseScript from '@/components/ads/adsense';
+import { BackToHomeCTA } from '@/components/shared/back-to-home-cta';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -26,6 +27,10 @@ export default function MicTestPage() {
     <>
       <AdsenseScript />
       <MicTestClient />
+      <BackToHomeCTA
+        title="Test More Audio Equipment"
+        description="Use our other professional audio tools to enhance your recording setup and content quality."
+      />
     </>
   );
 }

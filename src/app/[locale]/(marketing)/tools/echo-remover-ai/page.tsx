@@ -1,4 +1,5 @@
 import AdsenseScript from '@/components/ads/adsense';
+import { BackToHomeCTA } from '@/components/shared/back-to-home-cta';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -26,6 +27,10 @@ export default function EchoRemoverPage() {
     <>
       <AdsenseScript />
       <EchoRemoverClient />
+      <BackToHomeCTA
+        title="Remove Echo from More Audio"
+        description="Explore our complete suite of AI audio tools for professional content creation."
+      />
     </>
   );
 }
