@@ -9,6 +9,7 @@ import { HowItWorksSection } from '@/components/blocks/how-it-works';
 import PricingSection from '@/components/blocks/pricing/pricing';
 import { UseCasesSection } from '@/components/blocks/use-cases';
 
+import AdsenseScript from '@/components/ads/adsense';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -36,6 +37,7 @@ export async function generateMetadata({
 export default async function HomePage() {
   return (
     <>
+      <AdsenseScript />
       <div className="flex flex-col">
         <HeroSection />
 

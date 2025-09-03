@@ -1,3 +1,4 @@
+import AdsenseScript from '@/components/ads/adsense';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -18,4 +19,13 @@ export async function generateMetadata({
   });
 }
 
-export { default } from './echo-remover-client';
+import EchoRemoverClient from './echo-remover-client';
+
+export default function EchoRemoverPage() {
+  return (
+    <>
+      <AdsenseScript />
+      <EchoRemoverClient />
+    </>
+  );
+}

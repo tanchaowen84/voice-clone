@@ -6,7 +6,7 @@ import {
   fontNotoSerif,
   fontPlayfairDisplay,
 } from '@/assets/fonts';
-import AdsenseScript from '@/components/ads/adsense';
+
 import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
 import {
@@ -52,7 +52,6 @@ export default async function LocaleLayout({
       <head>
         <AffonsoScript />
         <PromotekitScript />
-        <AdsenseScript />
       </head>
 
       <body

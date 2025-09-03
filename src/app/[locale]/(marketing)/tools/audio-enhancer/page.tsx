@@ -1,3 +1,4 @@
+import AdsenseScript from '@/components/ads/adsense';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -18,4 +19,13 @@ export async function generateMetadata({
   });
 }
 
-export { default } from './audio-enhancer-client';
+import AudioEnhancerClient from './audio-enhancer-client';
+
+export default function AudioEnhancerPage() {
+  return (
+    <>
+      <AdsenseScript />
+      <AudioEnhancerClient />
+    </>
+  );
+}

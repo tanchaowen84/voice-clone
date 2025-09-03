@@ -1,3 +1,4 @@
+import AdsenseScript from '@/components/ads/adsense';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -18,4 +19,13 @@ export async function generateMetadata({
   });
 }
 
-export { default } from './voice-recorder-client';
+import VoiceRecorderClient from './voice-recorder-client';
+
+export default function OnlineVoiceRecorderPage() {
+  return (
+    <>
+      <AdsenseScript />
+      <VoiceRecorderClient />
+    </>
+  );
+}
