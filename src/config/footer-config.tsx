@@ -94,5 +94,15 @@ export function getFooterLinks(): NestedMenuItem[] {
         },
       ],
     },
+    {
+      title: t('friends.title'),
+      items: [
+        {
+          title: t('friends.items.veriia'),
+          href: 'https://detectordeia.pro',
+          external: true,
+        },
+      ],
+    },
   ];
 }

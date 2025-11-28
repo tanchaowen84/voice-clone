@@ -311,6 +311,12 @@
           "privacyPolicy": "Privacy Policy",
           "termsOfService": "Terms of Service"
         }
+      },
+      "friends": {
+        "title": "Friends",
+        "items": {
+          "veriia": "VeriIA"
+        }
       }
     },
     "avatar": {
