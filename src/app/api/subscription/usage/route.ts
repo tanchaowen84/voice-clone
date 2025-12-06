@@ -1,5 +1,9 @@
-import { getCurrentUser, getUserSubscription, getUserUsage } from '@/lib/subscription-limits';
 import { getPlanConfig } from '@/config/subscription-config';
+import {
+  getCurrentUser,
+  getUserSubscription,
+  getUserUsage,
+} from '@/lib/subscription-limits';
 import { NextResponse } from 'next/server';
 
 /**
@@ -23,7 +27,9 @@ export async function GET() {
     // 2. 获取用户订阅信息
     const subscription = await getUserSubscription(currentUser.id);
     if (!subscription) {
-      console.log(`⚠️ [Usage API] No subscription found for user ${currentUser.id}`);
+      console.log(
+        `⚠️ [Usage API] No subscription found for user ${currentUser.id}`
+      );
       return NextResponse.json(
         { error: 'No subscription found' },
         { status: 404 }
@@ -44,7 +50,7 @@ export async function GET() {
     if (subscription.planId === 'free') {
       limit = planConfig.limits.dailyCharacters!;
       period = 'daily';
-      
+
       // 计算下次重置时间（明天0点）
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -53,7 +59,7 @@ export async function GET() {
     } else {
       limit = planConfig.limits.monthlyCharacters!;
       period = 'monthly';
-      
+
       // 计算下次重置时间（下个月1号0点）
       const nextMonth = new Date();
       nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -83,7 +89,7 @@ export async function GET() {
         planExpiresAt: subscription.planExpiresAt,
         isExpired: subscription.isExpired,
       },
-      
+
       // 使用量信息
       usage: {
         currentUsage,
@@ -94,7 +100,7 @@ export async function GET() {
         isOverLimit,
         period,
         nextResetTime: nextResetTime.toISOString(),
-        
+
         // 额外的统计信息
         requestsCount: usage.requestsCount,
         periodKey: usage.periodKey,
@@ -106,14 +112,13 @@ export async function GET() {
     );
 
     return NextResponse.json(responseData);
-
   } catch (error) {
     console.error('❌ [Usage API] Error fetching usage data:', error);
-    
+
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to fetch usage data',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -140,17 +145,18 @@ export async function POST() {
     // 这里可以添加缓存清理逻辑
     // 目前直接返回最新数据
     const response = await GET();
-    
-    console.log(`✅ [Usage API] Usage data refreshed for user ${currentUser.id}`);
-    return response;
 
+    console.log(
+      `✅ [Usage API] Usage data refreshed for user ${currentUser.id}`
+    );
+    return response;
   } catch (error) {
     console.error('❌ [Usage API] Error refreshing usage data:', error);
-    
+
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to refresh usage data',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

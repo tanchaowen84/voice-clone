@@ -62,11 +62,15 @@ export function validateAudioFile(file: File): ValidationResult {
 
   // Add warnings for suboptimal formats
   if (file.type === 'audio/mp3' && file.size < 1024 * 1024) {
-    warnings.push('MP3 files under 1MB may have low quality. Consider using a higher bitrate.');
+    warnings.push(
+      'MP3 files under 1MB may have low quality. Consider using a higher bitrate.'
+    );
   }
 
   if (file.type === 'audio/ogg') {
-    warnings.push('OGG format may have compatibility issues. WAV or MP3 is recommended.');
+    warnings.push(
+      'OGG format may have compatibility issues. WAV or MP3 is recommended.'
+    );
   }
 
   return {
@@ -78,18 +82,20 @@ export function validateAudioFile(file: File): ValidationResult {
 /**
  * Get audio file metadata using Web Audio API
  */
-export async function getAudioMetadata(file: File): Promise<AudioMetadata | null> {
+export async function getAudioMetadata(
+  file: File
+): Promise<AudioMetadata | null> {
   try {
     // Create audio element to get basic metadata
     const audio = new Audio();
     const url = URL.createObjectURL(file);
-    
+
     return new Promise((resolve) => {
       audio.addEventListener('loadedmetadata', () => {
         const metadata: AudioMetadata = {
           duration: audio.duration,
         };
-        
+
         URL.revokeObjectURL(url);
         resolve(metadata);
       });
@@ -110,7 +116,9 @@ export async function getAudioMetadata(file: File): Promise<AudioMetadata | null
 /**
  * Comprehensive audio file validation with metadata
  */
-export async function validateAudioFileWithMetadata(file: File): Promise<ValidationResult> {
+export async function validateAudioFileWithMetadata(
+  file: File
+): Promise<ValidationResult> {
   // First, do basic validation
   const basicValidation = validateAudioFile(file);
   if (!basicValidation.isValid) {
@@ -124,19 +132,27 @@ export async function validateAudioFileWithMetadata(file: File): Promise<Validat
   if (metadata) {
     // Check duration
     if (metadata.duration < 10) {
-      warnings.push('Audio is shorter than 10 seconds. Longer recordings (30+ seconds) produce better voice clones.');
+      warnings.push(
+        'Audio is shorter than 10 seconds. Longer recordings (30+ seconds) produce better voice clones.'
+      );
     } else if (metadata.duration > 300) {
-      warnings.push('Audio is longer than 5 minutes. Consider using a shorter clip for faster processing.');
+      warnings.push(
+        'Audio is longer than 5 minutes. Consider using a shorter clip for faster processing.'
+      );
     }
 
     // Optimal duration range
     if (metadata.duration >= 30 && metadata.duration <= 120) {
       // This is the sweet spot - no warning needed
     } else if (metadata.duration < 30) {
-      warnings.push('For best results, use audio clips between 30-120 seconds long.');
+      warnings.push(
+        'For best results, use audio clips between 30-120 seconds long.'
+      );
     }
   } else {
-    warnings.push('Could not read audio metadata. The file may be corrupted or in an unsupported format.');
+    warnings.push(
+      'Could not read audio metadata. The file may be corrupted or in an unsupported format.'
+    );
   }
 
   return {

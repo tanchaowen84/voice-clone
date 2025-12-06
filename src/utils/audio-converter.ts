@@ -11,24 +11,28 @@
 export async function convertWebMToWAV(webmBlob: Blob): Promise<Blob> {
   try {
     // Create audio context
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    
+    const audioContext = new (
+      window.AudioContext || (window as any).webkitAudioContext
+    )();
+
     // Convert blob to array buffer
     const arrayBuffer = await webmBlob.arrayBuffer();
-    
+
     // Decode audio data
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    
+
     // Convert to WAV format
     const wavBlob = await audioBufferToWAV(audioBuffer);
-    
+
     // Close audio context to free resources
     await audioContext.close();
-    
+
     return wavBlob;
   } catch (error) {
     console.error('Error converting WebM to WAV:', error);
-    throw new Error('Failed to convert audio format. Please try recording again.');
+    throw new Error(
+      'Failed to convert audio format. Please try recording again.'
+    );
   }
 }
 
@@ -41,10 +45,10 @@ async function audioBufferToWAV(audioBuffer: AudioBuffer): Promise<Blob> {
   const numberOfChannels = audioBuffer.numberOfChannels;
   const sampleRate = audioBuffer.sampleRate;
   const length = audioBuffer.length;
-  
+
   // Create interleaved buffer
   const interleavedBuffer = new Float32Array(length * numberOfChannels);
-  
+
   // Interleave channels
   for (let channel = 0; channel < numberOfChannels; channel++) {
     const channelData = audioBuffer.getChannelData(channel);
@@ -52,29 +56,33 @@ async function audioBufferToWAV(audioBuffer: AudioBuffer): Promise<Blob> {
       interleavedBuffer[i * numberOfChannels + channel] = channelData[i];
     }
   }
-  
+
   // Convert to 16-bit PCM
   const pcmBuffer = new Int16Array(interleavedBuffer.length);
   for (let i = 0; i < interleavedBuffer.length; i++) {
     // Clamp values to [-1, 1] and convert to 16-bit
     const sample = Math.max(-1, Math.min(1, interleavedBuffer[i]));
-    pcmBuffer[i] = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
+    pcmBuffer[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
   }
-  
+
   // Create WAV header
-  const wavHeader = createWAVHeader(pcmBuffer.length * 2, sampleRate, numberOfChannels);
-  
+  const wavHeader = createWAVHeader(
+    pcmBuffer.length * 2,
+    sampleRate,
+    numberOfChannels
+  );
+
   // Combine header and data
   const wavBuffer = new ArrayBuffer(wavHeader.length + pcmBuffer.length * 2);
   const view = new Uint8Array(wavBuffer);
-  
+
   // Copy header
   view.set(wavHeader, 0);
-  
+
   // Copy PCM data
   const pcmView = new Uint8Array(pcmBuffer.buffer);
   view.set(pcmView, wavHeader.length);
-  
+
   return new Blob([wavBuffer], { type: 'audio/wav' });
 }
 
@@ -85,15 +93,19 @@ async function audioBufferToWAV(audioBuffer: AudioBuffer): Promise<Blob> {
  * @param numberOfChannels - Number of audio channels
  * @returns Uint8Array - The WAV header
  */
-function createWAVHeader(dataLength: number, sampleRate: number, numberOfChannels: number): Uint8Array {
+function createWAVHeader(
+  dataLength: number,
+  sampleRate: number,
+  numberOfChannels: number
+): Uint8Array {
   const header = new ArrayBuffer(44);
   const view = new DataView(header);
-  
+
   // RIFF chunk descriptor
   writeString(view, 0, 'RIFF');
   view.setUint32(4, 36 + dataLength, true); // File size - 8
   writeString(view, 8, 'WAVE');
-  
+
   // fmt sub-chunk
   writeString(view, 12, 'fmt ');
   view.setUint32(16, 16, true); // Sub-chunk size
@@ -103,11 +115,11 @@ function createWAVHeader(dataLength: number, sampleRate: number, numberOfChannel
   view.setUint32(28, sampleRate * numberOfChannels * 2, true); // Byte rate
   view.setUint16(32, numberOfChannels * 2, true); // Block align
   view.setUint16(34, 16, true); // Bits per sample
-  
+
   // data sub-chunk
   writeString(view, 36, 'data');
   view.setUint32(40, dataLength, true); // Data size
-  
+
   return new Uint8Array(header);
 }
 

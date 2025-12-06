@@ -2,7 +2,11 @@
  * 订阅系统类型定义
  */
 
-import type { PlanId, PlanLimits, SubscriptionPlan } from '@/config/subscription-config';
+import type {
+  PlanId,
+  PlanLimits,
+  SubscriptionPlan,
+} from '@/config/subscription-config';
 
 /**
  * 用户订阅信息
@@ -60,12 +64,12 @@ export interface UsageCheckResult {
 /**
  * 使用限制原因
  */
-export type UsageLimitReason = 
-  | 'CHAR_LIMIT_EXCEEDED'           // 单次请求字符超限
-  | 'DAILY_LIMIT_EXCEEDED'          // 每日配额超限
-  | 'MONTHLY_LIMIT_EXCEEDED'        // 每月配额超限
-  | 'PLAN_EXPIRED'                  // 订阅过期
-  | 'INVALID_PLAN';                 // 无效计划
+export type UsageLimitReason =
+  | 'CHAR_LIMIT_EXCEEDED' // 单次请求字符超限
+  | 'DAILY_LIMIT_EXCEEDED' // 每日配额超限
+  | 'MONTHLY_LIMIT_EXCEEDED' // 每月配额超限
+  | 'PLAN_EXPIRED' // 订阅过期
+  | 'INVALID_PLAN'; // 无效计划
 
 /**
  * 用户当前使用情况
@@ -73,7 +77,7 @@ export type UsageLimitReason =
 export interface UserUsageStats {
   planId: PlanId;
   planConfig: SubscriptionPlan;
-  
+
   // 当前使用量
   currentUsage: {
     daily?: {
@@ -89,14 +93,14 @@ export interface UserUsageStats {
       resetTime: Date;
     };
   };
-  
+
   // 使用百分比
   usagePercentage: number;
-  
+
   // 是否接近限制
   isNearLimit: boolean;
   isOverLimit: boolean;
-  
+
   // 下次重置时间
   nextResetTime: Date;
 }
@@ -133,7 +137,7 @@ export type BillingInterval = 'month' | 'year';
 /**
  * 支付状态
  */
-export type PaymentStatus = 
+export type PaymentStatus =
   | 'pending'
   | 'succeeded'
   | 'failed'
@@ -223,4 +227,8 @@ export interface SubscriptionApiResponse<T = any> {
 }
 
 // 重新导出配置类型
-export type { PlanId, PlanLimits, SubscriptionPlan } from '@/config/subscription-config';
+export type {
+  PlanId,
+  PlanLimits,
+  SubscriptionPlan,
+} from '@/config/subscription-config';

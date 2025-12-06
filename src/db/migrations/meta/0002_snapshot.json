@@ -93,12 +93,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -170,12 +166,8 @@
           "name": "credits_history_user_id_user_id_fk",
           "tableFrom": "credits_history",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -280,12 +272,8 @@
           "name": "monthly_usage_user_id_user_id_fk",
           "tableFrom": "monthly_usage",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -295,10 +283,7 @@
         "unique_user_monthly_usage": {
           "name": "unique_user_monthly_usage",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id",
-            "month_year"
-          ]
+          "columns": ["user_id", "month_year"]
         }
       },
       "policies": {},
@@ -421,12 +406,8 @@
           "name": "payment_user_id_user_id_fk",
           "tableFrom": "payment",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -502,12 +483,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -517,9 +494,7 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -665,16 +640,12 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "user_creem_customer_id_unique": {
           "name": "user_creem_customer_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "creem_customer_id"
-          ]
+          "columns": ["creem_customer_id"]
         }
       },
       "policies": {},
@@ -775,12 +746,8 @@
           "name": "user_usage_user_id_user_id_fk",
           "tableFrom": "user_usage",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -790,10 +757,7 @@
         "unique_user_daily_usage": {
           "name": "unique_user_daily_usage",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id",
-            "usage_date"
-          ]
+          "columns": ["user_id", "usage_date"]
         }
       },
       "policies": {},

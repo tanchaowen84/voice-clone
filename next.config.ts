@@ -73,7 +73,7 @@ const withNextIntl = createNextIntlPlugin();
 // Set SKIP_CONTENT_COLLECTIONS=true to bypass the plugin while keeping default behavior unchanged
 const maybeWithContentCollections =
   process.env.SKIP_CONTENT_COLLECTIONS === 'true'
-    ? ((config: NextConfig) => config)
+    ? (config: NextConfig) => config
     : withContentCollections;
 
 export default maybeWithContentCollections(withNextIntl(nextConfig));

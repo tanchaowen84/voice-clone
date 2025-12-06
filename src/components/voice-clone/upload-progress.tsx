@@ -1,7 +1,7 @@
 'use client';
 
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, Upload, AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, Upload } from 'lucide-react';
 
 interface UploadProgressProps {
   progress: number;
@@ -14,7 +14,12 @@ interface UploadProgressProps {
  * Upload Progress Component
  * Shows upload progress with visual feedback
  */
-export function UploadProgress({ progress, status, fileName, error }: UploadProgressProps) {
+export function UploadProgress({
+  progress,
+  status,
+  fileName,
+  error,
+}: UploadProgressProps) {
   const getStatusIcon = () => {
     switch (status) {
       case 'uploading':
@@ -62,12 +67,9 @@ export function UploadProgress({ progress, status, fileName, error }: UploadProg
           {getStatusText()}
         </span>
       </div>
-      
+
       {status === 'uploading' && (
-        <Progress 
-          value={progress} 
-          className="w-full h-2"
-        />
+        <Progress value={progress} className="w-full h-2" />
       )}
     </div>
   );
