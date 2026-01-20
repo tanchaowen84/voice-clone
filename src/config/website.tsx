@@ -135,7 +135,6 @@ export const websiteConfig: WebsiteConfig = {
             amount: 1000, // $10.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
-            trialPeriodDays: 7,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,
@@ -159,7 +158,6 @@ export const websiteConfig: WebsiteConfig = {
             amount: 2500, // $25.00 per month
             currency: 'USD',
             interval: PlanIntervals.MONTH,
-            trialPeriodDays: 7,
           },
           {
             type: PaymentTypes.SUBSCRIPTION,

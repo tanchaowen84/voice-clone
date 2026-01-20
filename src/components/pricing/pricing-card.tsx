@@ -112,6 +112,7 @@ export function PricingCard({
   const isPaidPlan = !plan.isFree && !!price;
   // check if plan has a trial period, period is greater than 0
   const hasTrialPeriod = price?.trialPeriodDays && price.trialPeriodDays > 0;
+  const hasFreeTrial = hasTrialPeriod && interval === PlanIntervals.MONTH;
 
   return (
     <Card
@@ -192,14 +193,14 @@ export function PricingCard({
             >
               {plan.isLifetime
                 ? t('getLifetimeAccess')
-                : hasTrialPeriod
+                : hasFreeTrial
                   ? t('startTrial')
                   : t('getStarted')}
             </CheckoutButton>
           ) : (
             <LoginWrapper mode="modal" asChild callbackUrl={currentPath}>
               <Button variant="default" className="mt-4 w-full cursor-pointer">
-                {hasTrialPeriod ? t('startTrial') : t('getStarted')}
+                {hasFreeTrial ? t('startTrial') : t('getStarted')}
               </Button>
             </LoginWrapper>
           )
