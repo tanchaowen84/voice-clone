@@ -46,9 +46,9 @@
       "getStartedForFree": "Get Started For Free",
       "getLifetimeAccess": "Get Lifetime Access",
       "getStarted": "Get Started",
-      "startTrial": "Start trial",
+      "startTrial": "Get Started",
       "notAvailable": "Not Available",
-      "daysTrial": "{days}-day free trial"
+      "daysTrial": "{days}-day money-back guarantee"
     },
     "CheckoutButton": {
       "loading": "Loading...",
@@ -417,7 +417,7 @@
         "description": "Manage your subscription and billing details",
         "status": {
           "active": "Active",
-          "trial": "Trial",
+          "trial": "Active",
           "canceled": "Canceled",
           "free": "Free",
           "lifetime": "Lifetime"
@@ -438,7 +438,7 @@
         },
         "price": "Price:",
         "nextBillingDate": "Next billing date:",
-        "trialEnds": "Trial ends:",
+        "trialEnds": "Current period ends:",
         "serviceEnds": "Service ends:",
         "freePlanMessage": "You are currently on the free plan with limited features",
         "lifetimeMessage": "You have lifetime access to all premium features",

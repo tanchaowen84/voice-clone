@@ -72,7 +72,6 @@ export function UpgradeModal({
     (p) => p.interval === billingInterval
   )?.trialPeriodDays;
   const hasTrialPeriod = Boolean(currentTrialDays && currentTrialDays > 0);
-  const hasFreeTrial = hasTrialPeriod && billingInterval === 'month';
 
   // Price display: for yearly interval, show monthly price and label '/month'
   const displayPriceCents =
@@ -243,9 +242,7 @@ export function UpgradeModal({
                       {hasTrialPeriod && (
                         <div className="mt-3">
                           <span className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm">
-                            {billingInterval === 'year'
-                              ? `${currentTrialDays as number}-day money-back guarantee`
-                              : `${currentTrialDays as number}-day free trial`}
+                            {`${currentTrialDays as number}-day money-back guarantee`}
                           </span>
                         </div>
                       )}
@@ -380,7 +377,7 @@ export function UpgradeModal({
                           className="w-full py-3 text-base font-semibold"
                           variant="default"
                         >
-                          {hasFreeTrial ? 'Start free trial' : 'Upgrade now'}
+                          Upgrade now
                         </CheckoutButton>
                       ) : (
                         <Button

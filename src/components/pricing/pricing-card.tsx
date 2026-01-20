@@ -112,7 +112,6 @@ export function PricingCard({
   const isPaidPlan = !plan.isFree && !!price;
   // check if plan has a trial period, period is greater than 0
   const hasTrialPeriod = price?.trialPeriodDays && price.trialPeriodDays > 0;
-  const hasFreeTrial = hasTrialPeriod && interval === PlanIntervals.MONTH;
 
   return (
     <Card
@@ -193,14 +192,12 @@ export function PricingCard({
             >
               {plan.isLifetime
                 ? t('getLifetimeAccess')
-                : hasFreeTrial
-                  ? t('startTrial')
-                  : t('getStarted')}
+                : t('getStarted')}
             </CheckoutButton>
           ) : (
             <LoginWrapper mode="modal" asChild callbackUrl={currentPath}>
               <Button variant="default" className="mt-4 w-full cursor-pointer">
-                {hasFreeTrial ? t('startTrial') : t('getStarted')}
+                {t('getStarted')}
               </Button>
             </LoginWrapper>
           )
@@ -221,9 +218,7 @@ export function PricingCard({
               className="inline-block px-2.5 py-1.5 text-xs font-medium rounded-md 
             bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800 shadow-sm"
             >
-              {interval === PlanIntervals.YEAR
-                ? `${price.trialPeriodDays as number}-day money-back guarantee`
-                : t('daysTrial', { days: price.trialPeriodDays as number })}
+              {`${price.trialPeriodDays as number}-day money-back guarantee`}
             </span>
           </div>
         )}
