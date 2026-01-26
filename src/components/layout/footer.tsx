@@ -85,6 +85,21 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               </ul>
             </div>
           ))}
+          <div className="col-span-1 md:col-span-1 flex items-start">
+            <a
+              href="https://saasbrowser.com/en/saas/1159749/voice-clone"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex"
+            >
+              <img
+                src="https://files.saasbrowser.com/rzh4ckv0qtl1yskhhwwpx8j3tt2q"
+                alt="Voice Clone - SaaS Browser"
+                width="200"
+                height="133"
+              />
+            </a>
+          </div>
         </div>
       </Container>
 
