@@ -1,6 +1,5 @@
 'use client';
 
-import { NeumorphicModeSwitch } from '@/components/voice-clone/neumorphic-mode-switch';
 import { TextToSpeechPanel } from '@/components/voice-clone/text-to-speech-panel';
 import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
 import { motion } from 'framer-motion';
@@ -125,11 +124,7 @@ export default function HeroSection() {
                 {featureMode === 'tts' ? (
                   <TextToSpeechPanel />
                 ) : (
-                  <>
-                    {/* Voice Clone internal mode switch: Record / Upload */}
-                    <NeumorphicModeSwitch />
-                    <VoiceInputArea />
-                  </>
+                  <VoiceInputArea />
                 )}
               </div>
             </div>
