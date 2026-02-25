@@ -1,11 +1,16 @@
 'use client';
 
 import { NeumorphicModeSwitch } from '@/components/voice-clone/neumorphic-mode-switch';
+import { TextToSpeechPanel } from '@/components/voice-clone/text-to-speech-panel';
 import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
+import { motion } from 'framer-motion';
+import { Mic, Type } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('HomePage.hero');
+  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>('tts');
 
   return (
     <>
@@ -74,11 +79,58 @@ export default function HeroSection() {
             {/* Main Interface */}
             <div className="mt-16 mb-20 px-4">
               <div className="max-w-5xl mx-auto">
-                {/* Voice Mode Switch */}
-                <NeumorphicModeSwitch />
+                {/* Home Feature Switch */}
+                <div className="flex items-center justify-center mb-8">
+                  <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-2 shadow-[8px_8px_16px_#d1d5db,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1e293b,-8px_-8px_16px_#334155]">
+                    <motion.div
+                      className="absolute top-2 h-12 bg-gradient-to-br from-white to-slate-50 dark:from-slate-700 dark:to-slate-600 rounded-xl shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#334155]"
+                      initial={false}
+                      animate={{
+                        x: featureMode === 'tts' ? 2 : 146,
+                        width: 144,
+                      }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
 
-                {/* Dynamic Content Area */}
-                <VoiceInputArea />
+                    <div className="relative flex">
+                      <button
+                        type="button"
+                        onClick={() => setFeatureMode('tts')}
+                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
+                          featureMode === 'tts'
+                            ? 'text-slate-900 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-400'
+                        }`}
+                      >
+                        <Type className="h-4 w-4" />
+                        Text to Speech
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setFeatureMode('voice-clone')}
+                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
+                          featureMode === 'voice-clone'
+                            ? 'text-slate-900 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-400'
+                        }`}
+                      >
+                        <Mic className="h-4 w-4" />
+                        Voice Clone
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {featureMode === 'tts' ? (
+                  <TextToSpeechPanel />
+                ) : (
+                  <>
+                    {/* Voice Clone internal mode switch: Record / Upload */}
+                    <NeumorphicModeSwitch />
+                    <VoiceInputArea />
+                  </>
+                )}
               </div>
             </div>
           </div>
