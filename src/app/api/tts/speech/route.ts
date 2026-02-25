@@ -19,13 +19,16 @@ const CONTENT_TYPE_BY_FORMAT: Record<string, string> = {
   pcm: 'audio/wav',
 };
 
-const ALLOWED_AUDIO_FORMATS = new Set(['wav', 'mp3', 'ogg', 'aac', 'pcm']);
-const ALLOWED_MODELS = new Set([
+const ALLOWED_AUDIO_FORMATS = ['wav', 'mp3', 'ogg', 'aac'] as const;
+const ALLOWED_MODELS = [
   'simba-base',
   'simba-english',
   'simba-multilingual',
   'simba-turbo',
-]);
+] as const;
+
+type AllowedAudioFormat = (typeof ALLOWED_AUDIO_FORMATS)[number];
+type AllowedModel = (typeof ALLOWED_MODELS)[number];
 
 function asString(value: unknown): string | null {
   return typeof value === 'string' ? value : null;
@@ -64,14 +67,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!ALLOWED_AUDIO_FORMATS.has(audioFormat)) {
+    if (!ALLOWED_AUDIO_FORMATS.includes(audioFormat as AllowedAudioFormat)) {
       return NextResponse.json(
-        { error: 'Invalid audioFormat. Allowed: wav, mp3, ogg, aac, pcm' },
+        { error: 'Invalid audioFormat. Allowed: wav, mp3, ogg, aac' },
         { status: 400 }
       );
     }
 
-    if (!ALLOWED_MODELS.has(model)) {
+    if (!ALLOWED_MODELS.includes(model as AllowedModel)) {
       return NextResponse.json(
         {
           error:
@@ -80,6 +83,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const safeAudioFormat = audioFormat as AllowedAudioFormat;
+    const safeModel = model as AllowedModel;
 
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -106,8 +112,8 @@ export async function POST(request: NextRequest) {
       input,
       voiceId,
       language,
-      audioFormat,
-      model,
+      audioFormat: safeAudioFormat,
+      model: safeModel,
       options: {
         textNormalization: true,
         loudnessNormalization: false,
