@@ -1,3 +1,9 @@
+import {
+  checkUsageLimit,
+  getCurrentUser,
+  getUsageLimitErrorMessage,
+  updateUsageStats,
+} from '@/lib/subscription-limits';
 import { SpeechifyClient } from '@speechify/api';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -13,6 +19,18 @@ const CONTENT_TYPE_BY_FORMAT: Record<string, string> = {
   pcm: 'audio/wav',
 };
 
+const ALLOWED_AUDIO_FORMATS = new Set(['wav', 'mp3', 'ogg', 'aac', 'pcm']);
+const ALLOWED_MODELS = new Set([
+  'simba-base',
+  'simba-english',
+  'simba-multilingual',
+  'simba-turbo',
+]);
+
+function asString(value: unknown): string | null {
+  return typeof value === 'string' ? value : null;
+}
+
 export async function POST(request: NextRequest) {
   try {
     if (!token) {
@@ -24,16 +42,63 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    const input = (body?.input || '').trim();
-    const voiceId = (body?.voiceId || body?.voice_id || process.env.SPEECHIFY_DEFAULT_VOICE_ID || 'george').trim();
-    const language = body?.language || 'en-US';
-    const audioFormat = body?.audioFormat || body?.audio_format || 'mp3';
-    const model = body?.model || (language.startsWith('en') ? 'simba-english' : 'simba-multilingual');
+    const inputRaw = asString(body?.input);
+    const voiceIdRaw = asString(body?.voiceId) ?? asString(body?.voice_id);
+    const languageRaw = asString(body?.language);
+    const audioFormatRaw = asString(body?.audioFormat) ?? asString(body?.audio_format);
+    const modelRaw = asString(body?.model);
 
-    if (!input || !voiceId) {
+    const input = (inputRaw ?? '').trim();
+    const voiceId =
+      (voiceIdRaw ?? process.env.SPEECHIFY_DEFAULT_VOICE_ID ?? 'george').trim();
+    const language = (languageRaw ?? 'en-US').trim();
+    const audioFormat = (audioFormatRaw ?? 'mp3').trim();
+    const model = (
+      modelRaw ?? (language.startsWith('en') ? 'simba-english' : 'simba-multilingual')
+    ).trim();
+
+    if (!inputRaw || !input || !voiceIdRaw || !voiceId) {
       return NextResponse.json(
-        { error: 'Missing required fields: input and voiceId' },
+        { error: 'Missing required string fields: input and voiceId' },
         { status: 400 }
+      );
+    }
+
+    if (!ALLOWED_AUDIO_FORMATS.has(audioFormat)) {
+      return NextResponse.json(
+        { error: 'Invalid audioFormat. Allowed: wav, mp3, ogg, aac, pcm' },
+        { status: 400 }
+      );
+    }
+
+    if (!ALLOWED_MODELS.has(model)) {
+      return NextResponse.json(
+        {
+          error:
+            'Invalid model. Allowed: simba-base, simba-english, simba-multilingual, simba-turbo',
+        },
+        { status: 400 }
+      );
+    }
+
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
+    const usageCheck = await checkUsageLimit(input, currentUser.id);
+    if (!usageCheck.allowed) {
+      const errorMessage = getUsageLimitErrorMessage(usageCheck);
+      return NextResponse.json(
+        {
+          error: errorMessage,
+          reason: usageCheck.reason,
+          waitTime: usageCheck.waitTime,
+          currentUsage: usageCheck.currentUsage,
+          limit: usageCheck.limit,
+          remainingQuota: usageCheck.remainingQuota,
+        },
+        { status: 429 }
       );
     }
 
@@ -56,6 +121,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const billableCharactersCount = response.billableCharactersCount ?? input.length;
+    await updateUsageStats(currentUser.id, billableCharactersCount);
+
     const normalizedFormat = response.audioFormat || audioFormat;
     const contentType = CONTENT_TYPE_BY_FORMAT[normalizedFormat] || 'audio/mpeg';
     const audioUrl = `data:${contentType};base64,${response.audioData}`;
@@ -63,7 +131,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       audioUrl,
       audioFormat: normalizedFormat,
-      billableCharactersCount: response.billableCharactersCount ?? input.length,
+      billableCharactersCount,
+      usageInfo: {
+        currentUsage: (usageCheck.currentUsage || 0) + billableCharactersCount,
+        limit: usageCheck.limit,
+        remainingQuota: Math.max(
+          0,
+          (usageCheck.remainingQuota || 0) - billableCharactersCount
+        ),
+        waitTime: usageCheck.waitTime,
+      },
     });
   } catch (error) {
     console.error('[TTS Speech API] failed:', error);
