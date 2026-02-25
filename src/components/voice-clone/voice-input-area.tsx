@@ -6,19 +6,23 @@ import { authClient } from '@/lib/auth-client';
 import { useAuthModalStore } from '@/stores/auth-modal-store';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
+import type { InputMode } from '@/stores/voice-clone-store';
 import {
   clearPendingAudio,
   loadPendingAudio,
   savePendingAudio,
 } from '@/utils/pending-media';
-import { Download, Loader2 } from 'lucide-react';
+import { Download, Loader2, Mic, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
 import { FileUploader } from './file-uploader';
 
+const SAMPLE_SCRIPT =
+  "\"Hello everyone! I'm trying out Voice Clone technology to create my own voice model. It's really convenient and I'm excited to see how it works!\"";
+
 /**
  * Voice Input Area Component
- * Dynamically renders content based on inputMode and currentStep
+ * Voice Clone flow: choose mode -> provide sample -> enter text -> generate -> result
  */
 export function VoiceInputArea() {
   const {
@@ -33,6 +37,7 @@ export function VoiceInputArea() {
     recordedBlob,
     setAudioFile,
     setRecordedBlob,
+    setInputMode,
   } = useVoiceCloneStore();
 
   const { data: session } = authClient.useSession();
@@ -42,6 +47,10 @@ export function VoiceInputArea() {
   const { subscription, waitingState, fetchAllData, showUpgradeModal } =
     useSubscriptionStore();
   const [textInput, setTextInput] = useState('');
+
+  const hasVoiceSample = Boolean(audioFile || recordedBlob);
+  const canGenerate =
+    currentStep === 'generate' && hasVoiceSample && textInput.trim().length > 0;
 
   // Determine per-request max characters based on user's plan
   const planMaxChars =
@@ -112,6 +121,10 @@ export function VoiceInputArea() {
     );
   };
 
+  const handleModeChange = (mode: InputMode) => {
+    setInputMode(mode);
+  };
+
   // Auto-continue after login success
   useEffect(() => {
     const handler = async (e: Event) => {
@@ -147,173 +160,212 @@ export function VoiceInputArea() {
         'auth:login_success',
         handler as EventListener
       );
-  }, [generateSpeech, textInput]);
+  }, [generateSpeech, setAudioFile, setRecordedBlob, textInput]);
 
-  // Show text input interface when audio is ready
-  if (currentStep === 'generate') {
-    return (
-      <div className="space-y-8">
-        {/* Single Neumorphic Input Container with Embedded Elements */}
-        <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
-          {/* Subtle gradient overlay for purple tint */}
-          <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
-
-          <textarea
-            id="speech-text-input"
-            value={textInput}
-            onChange={(e) => {
-              const next = e.target.value;
-              if (next.length > planMaxChars) {
-                // Do not mutate the value; keep what's typed so user sees it's longer,
-                // but immediately trigger the upgrade modal and prevent state update.
-                // This avoids silent truncation and guides user to upgrade.
-                showUpgradeModal('character_limit');
-                return;
-              }
-              setTextInput(next);
-            }}
-            placeholder="Type your message here..."
-            className="w-full min-h-40 p-4 pr-44 pb-12 text-lg bg-transparent border-none outline-none resize-none placeholder:text-slate-400/60 dark:placeholder:text-slate-500/60 text-slate-700 dark:text-slate-300 rounded-2xl"
-            // Remove hard cap to avoid browser truncating; enforce via handler above
-            maxLength={undefined}
-          />
-
-          {/* Embedded Demo Text Button */}
+  return (
+    <div className="relative rounded-3xl border border-white/60 bg-gradient-to-br from-slate-50/90 to-slate-100/85 p-4 shadow-[10px_10px_30px_rgba(148,163,184,0.18)] backdrop-blur-sm dark:border-slate-700/70 dark:from-slate-900/90 dark:to-slate-800/90 sm:p-6 lg:p-8">
+      <div className="space-y-6">
+        <div className="mx-auto flex w-full max-w-sm rounded-2xl border border-slate-200/80 bg-white/75 p-1 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70">
           <button
             type="button"
-            onClick={handleDemoText}
-            className="absolute left-3 bottom-3 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-300 bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]"
+            onClick={() => handleModeChange('record')}
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
+              inputMode === 'record'
+                ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+            }`}
           >
-            Demo Text
+            <Mic className="h-4 w-4" />
+            Record
           </button>
-
-          {/* Embedded Character Count */}
-          <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
-            {Math.min(textInput.length, planMaxChars)}/{planMaxChars} characters
-          </div>
-
-          {/* Embedded Neumorphic Generate Button */}
           <button
             type="button"
-            onClick={handleGenerateSpeech}
-            disabled={
-              isGenerating || !textInput.trim() || waitingState.isWaiting
-            }
-            className={`
-              absolute right-3 bottom-3 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300
-              ${
-                isGenerating || !textInput.trim() || waitingState.isWaiting
-                  ? 'bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
-                  : 'bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569]'
-              }
-            `}
+            onClick={() => handleModeChange('upload')}
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
+              inputMode === 'upload'
+                ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900'
+                : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+            }`}
           >
-            {waitingState.isWaiting ? (
-              <div className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="hidden sm:inline">
-                  Wait {waitingState.remainingTime}s
-                </span>
-              </div>
-            ) : isGenerating ? (
-              <div className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="hidden sm:inline">Generating...</span>
-              </div>
-            ) : (
-              'Generate'
-            )}
+            <Upload className="h-4 w-4" />
+            Upload
           </button>
-
-          {/* Error Display - Only show when there's an error */}
-          {error && (
-            <div className="absolute left-3 top-3 text-xs text-red-600 dark:text-red-400 font-medium">
-              {error}
-            </div>
-          )}
         </div>
 
-        {/* Free User Waiting Component */}
-        {waitingState.isWaiting && <FreeUserWaiting />}
-
-        {/* Success Result - Single Neumorphic Container */}
-        {generatedAudioUrl && (
-          <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#1e293b,inset_-6px_-6px_12px_#475569]">
-            {/* Subtle gradient overlay for purple tint */}
-            <div className="absolute inset-4 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
-
-            {/* Audio Player */}
-            <div className="mb-6 relative z-10">
-              <audio
-                controls
-                src={generatedAudioUrl}
-                className="w-full max-w-md mx-auto [&::-webkit-media-controls-panel]:bg-transparent [&::-webkit-media-controls-play-button]:opacity-80 [&::-webkit-media-controls-timeline]:opacity-80"
-              >
-                <track
-                  kind="captions"
-                  src=""
-                  srcLang="en"
-                  label="English captions"
-                />
-                Your browser does not support the audio element.
-              </audio>
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+          <section className="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700/80 dark:bg-slate-900/70 sm:p-5">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Step 1
+              </p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                Provide Voice Sample
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {inputMode === 'record'
+                  ? 'Record a short clean clip to capture tone and pronunciation.'
+                  : 'Upload a clear voice recording. 15 to 30 seconds works best.'}
+              </p>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-4 justify-center relative z-10">
-              {/* Download Button */}
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200"
-              >
-                <Download className="h-4 w-4" />
-                Download Audio
-              </button>
-
-              {/* Start Over Button */}
-              <button
-                type="button"
-                onClick={handleStartOver}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-500 dark:to-slate-600 text-slate-700 dark:text-slate-200 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#1e293b,-3px_-3px_6px_#475569] hover:shadow-[2px_2px_4px_#d1d5db,-2px_-2px_4px_#ffffff] dark:hover:shadow-[2px_2px_4px_#1e293b,-2px_-2px_4px_#475569] active:shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#475569] transition-all duration-200"
-              >
-                Start Over
-              </button>
+            <div className="mt-4">
+              {currentStep === 'input' ? (
+                inputMode === 'record' ? (
+                  <EnhancedVoiceRecorder />
+                ) : (
+                  <FileUploader />
+                )
+              ) : (
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 text-sm text-emerald-800 dark:border-emerald-700/70 dark:bg-emerald-900/20 dark:text-emerald-200">
+                  <p className="font-semibold">Voice sample ready</p>
+                  <p className="mt-1">
+                    Your {inputMode === 'record' ? 'recording' : 'upload'} is
+                    attached. You can now generate speech on the right.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleModeChange(inputMode)}
+                    className="mt-3 rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-200 dark:hover:bg-emerald-800/40"
+                  >
+                    Use another sample
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+
+            <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/60 p-4 dark:border-slate-600 dark:bg-slate-800/50">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Sample script hint
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                {SAMPLE_SCRIPT}
+              </p>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700/80 dark:bg-slate-900/70 sm:p-5">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Step 2
+              </p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                Enter Text and Generate
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Type what you want to hear in your cloned voice.
+              </p>
+            </div>
+
+            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-700 dark:bg-slate-800/60">
+              <textarea
+                id="speech-text-input"
+                value={textInput}
+                onChange={(e) => {
+                  const next = e.target.value;
+                  if (next.length > planMaxChars) {
+                    // Do not mutate the value; keep what's typed so user sees it's longer,
+                    // but immediately trigger the upgrade modal and prevent state update.
+                    showUpgradeModal('character_limit');
+                    return;
+                  }
+                  setTextInput(next);
+                }}
+                placeholder={
+                  currentStep === 'generate'
+                    ? 'Type your message here...'
+                    : 'Complete Step 1 to unlock text generation.'
+                }
+                disabled={currentStep !== 'generate'}
+                className="min-h-44 w-full resize-none rounded-lg border-none bg-transparent p-2 text-base text-slate-800 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed disabled:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500 dark:disabled:text-slate-500"
+                maxLength={undefined}
+              />
+
+              <div className="mt-3 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onClick={handleDemoText}
+                  disabled={currentStep !== 'generate'}
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                >
+                  Demo Text
+                </button>
+                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  {Math.min(textInput.length, planMaxChars)}/{planMaxChars}{' '}
+                  characters
+                </p>
+              </div>
+            </div>
+
+            {error && (
+              <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/20 dark:text-red-300">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={handleGenerateSpeech}
+              disabled={isGenerating || !canGenerate || waitingState.isWaiting}
+              className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
+            >
+              {waitingState.isWaiting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Wait {waitingState.remainingTime}s
+                </>
+              ) : isGenerating ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                'Generate'
+              )}
+            </button>
+
+            {currentStep !== 'generate' && (
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                Upload or record a voice sample to continue.
+              </p>
+            )}
+
+            {waitingState.isWaiting && <FreeUserWaiting />}
+
+            {generatedAudioUrl && (
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+                <audio controls src={generatedAudioUrl} className="w-full">
+                  <track
+                    kind="captions"
+                    src=""
+                    srcLang="en"
+                    label="English captions"
+                  />
+                  Your browser does not support the audio element.
+                </audio>
+
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={handleDownload}
+                    className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download Audio
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleStartOver}
+                    className="inline-flex h-10 flex-1 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                  >
+                    Start Over
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
       </div>
-    );
-  }
-
-  // Show input interface based on mode
-  if (currentStep === 'input') {
-    return (
-      <div className="space-y-6">
-        {inputMode === 'record' ? (
-          // Enhanced Recording Interface with Siri Wave
-          <EnhancedVoiceRecorder />
-        ) : (
-          // Upload Interface
-          <FileUploader />
-        )}
-
-        {/* Sample text guidance - only show in record mode */}
-        {inputMode === 'record' && (
-          <div className="text-center space-y-3">
-            <h3 className="font-semibold text-foreground mb-3">
-              Read this sample text aloud:
-            </h3>
-            <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              "Hello everyone! I'm trying out Voice Clone technology to create
-              my own voice model. It's really convenient and I'm excited to see
-              how it works!"
-            </p>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 }
