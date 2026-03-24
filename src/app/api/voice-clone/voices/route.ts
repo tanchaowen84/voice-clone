@@ -5,14 +5,134 @@ const client = new SpeechifyClient({
   token: process.env.SPEECHIFY_API_TOKEN || '',
 });
 
-export async function GET() {
+type SpeechifyVoice = Awaited<
+  ReturnType<typeof client.tts.voices.list>
+>[number];
+
+type NormalizedVoiceModel = {
+  languages: Array<{
+    locale: string;
+    previewAudio: string | null;
+  }>;
+  name: string;
+};
+
+type NormalizedVoice = {
+  avatarImage: string | null;
+  displayName: string;
+  gender: SpeechifyVoice['gender'];
+  id: string;
+  locale: string;
+  models: NormalizedVoiceModel[];
+  previewAudio: string | null;
+  tags: string[];
+  type: SpeechifyVoice['type'];
+};
+
+function normalizeOptionalString(
+  value: string | null | undefined
+): string | null {
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const normalizedValue = value.trim();
+  return normalizedValue.length > 0 ? normalizedValue : null;
+}
+
+function normalizeString(
+  value: string | null | undefined,
+  fallback = ''
+): string {
+  return normalizeOptionalString(value) ?? fallback;
+}
+
+function normalizeTags(tags: string[] | null | undefined): string[] {
+  return (tags ?? []).map((tag) => tag.trim()).filter((tag) => tag.length > 0);
+}
+
+function normalizeVoice(voice: SpeechifyVoice): NormalizedVoice {
+  return {
+    id: normalizeString(voice.id),
+    displayName: normalizeString(voice.displayName),
+    avatarImage: normalizeOptionalString(voice.avatarImage),
+    locale: normalizeString(voice.locale),
+    gender: voice.gender,
+    tags: normalizeTags(voice.tags),
+    previewAudio: normalizeOptionalString(voice.previewAudio),
+    type: voice.type,
+    models: (voice.models ?? []).map((model) => ({
+      name: normalizeString(model.name),
+      languages: (model.languages ?? []).map((language) => ({
+        locale: normalizeString(language.locale),
+        previewAudio: normalizeOptionalString(language.previewAudio),
+      })),
+    })),
+  };
+}
+
+function matchesLocaleFilter(
+  voiceLocale: string,
+  localeFilter: string
+): boolean {
+  if (!localeFilter) {
+    return true;
+  }
+
+  const normalizedVoiceLocale = voiceLocale.toLowerCase();
+  const normalizedLocaleFilter = localeFilter.toLowerCase();
+
+  return (
+    normalizedVoiceLocale === normalizedLocaleFilter ||
+    normalizedVoiceLocale.startsWith(`${normalizedLocaleFilter}-`) ||
+    normalizedVoiceLocale.startsWith(`${normalizedLocaleFilter}_`)
+  );
+}
+
+function matchesSearchFilter(
+  voice: NormalizedVoice,
+  searchFilter: string
+): boolean {
+  if (!searchFilter) {
+    return true;
+  }
+
+  const normalizedSearchFilter = searchFilter.toLowerCase();
+  const searchHaystacks = [
+    voice.id,
+    voice.displayName,
+    voice.locale,
+    voice.gender,
+    voice.type,
+    ...voice.tags,
+    ...voice.models.map((model) => model.name),
+    ...voice.models.flatMap((model) =>
+      model.languages.map((language) => language.locale)
+    ),
+  ];
+
+  return searchHaystacks.some((value) =>
+    value.toLowerCase().includes(normalizedSearchFilter)
+  );
+}
+
+export async function GET(request: NextRequest) {
   try {
-    // Get list of available voices
+    const searchFilter =
+      request.nextUrl.searchParams.get('search')?.trim() ?? '';
+    const localeFilter =
+      request.nextUrl.searchParams.get('locale')?.trim() ?? '';
     const voices = await client.tts.voices.list();
+    const normalizedVoices = voices.map(normalizeVoice);
+    const filteredVoices = normalizedVoices.filter(
+      (voice) =>
+        matchesLocaleFilter(voice.locale, localeFilter) &&
+        matchesSearchFilter(voice, searchFilter)
+    );
 
     return NextResponse.json({
       success: true,
-      voices: voices,
+      voices: filteredVoices,
     });
   } catch (error) {
     console.error('Failed to fetch voices:', error);
