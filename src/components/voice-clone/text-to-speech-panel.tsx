@@ -1,6 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +18,6 @@ import {
   Globe2,
   Loader2,
   Search,
-  Sparkles,
   Volume2,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -28,7 +26,7 @@ import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
 const DEFAULT_VOICE =
   process.env.NEXT_PUBLIC_SPEECHIFY_DEFAULT_VOICE_ID || 'george';
 const DEFAULT_LANGUAGE = 'en-US';
-const RECOMMENDED_VOICE_LIMIT = 5;
+const RECOMMENDED_VOICE_LIMIT = 3;
 
 const LANGUAGE_LABELS: Record<string, string> = {
   'en-US': 'English (US)',
@@ -200,28 +198,11 @@ function isVoicePickerVoice(
   return Boolean(voice);
 }
 
-function createFallbackVoice(
-  voiceId: string,
-  language: string
-): VoicePickerVoice {
-  return {
-    avatarImage: null,
-    displayName: voiceId,
-    id: voiceId,
-    locale: language,
-    locales: [language],
-    previewAudio: null,
-    tags: [getLanguageLabel(language)],
-    type: null,
-  };
-}
-
 export function TextToSpeechPanel() {
   const [text, setText] = useState('');
   const [voiceId, setVoiceId] = useState(DEFAULT_VOICE);
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showAllVoices, setShowAllVoices] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const [voices, setVoices] = useState<VoicePickerVoice[]>([]);
@@ -363,11 +344,7 @@ export function TextToSpeechPanel() {
     return filteredVoices.slice(0, RECOMMENDED_VOICE_LIMIT);
   }, [filteredVoices]);
 
-  const isBrowsingFullLibrary = showAllVoices || Boolean(searchValue);
-  const visibleVoices = isBrowsingFullLibrary ? filteredVoices : featuredVoices;
-  const selectedVoice =
-    voices.find((voice) => voice.id === voiceId) ||
-    createFallbackVoice(voiceId, language);
+  const visibleVoices = searchValue ? filteredVoices : featuredVoices;
 
   const stopPreviewAudio = () => {
     if (!previewAudioRef.current) {
@@ -516,63 +493,13 @@ export function TextToSpeechPanel() {
         </div>
 
         <div className="rounded-[28px] bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff] dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 dark:shadow-[inset_4px_4px_8px_#1e293b,inset_-4px_-4px_8px_#475569]">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
-                Voice
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-50">
-                Pick a voice fast
-              </h3>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-                Start with curated picks, then search the full library when you
-                need something specific.
-              </p>
-            </div>
-
-            <Badge
-              variant="outline"
-              className="rounded-full border-slate-200/80 bg-white/70 px-3 py-1 text-[11px] text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300"
-            >
-              {voices.length || 1} voices
-            </Badge>
-          </div>
-
-          <div className="mt-4 rounded-[24px] border border-white/70 bg-white/80 p-4 shadow-sm dark:border-slate-700/80 dark:bg-slate-950/55">
-            <div className="flex items-center gap-3">
-              <Avatar className="size-12 border border-slate-200/80 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                <AvatarImage
-                  src={selectedVoice.avatarImage || undefined}
-                  alt={selectedVoice.displayName}
-                />
-                <AvatarFallback className="bg-gradient-to-br from-rose-100 via-amber-100 to-sky-100 text-sm font-semibold text-slate-700 dark:from-rose-300/20 dark:via-amber-300/15 dark:to-sky-300/20 dark:text-slate-100">
-                  {selectedVoice.displayName.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-50">
-                    {selectedVoice.displayName}
-                  </p>
-                  <Sparkles className="size-3.5 text-amber-500" />
-                </div>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                  Voice ID: {selectedVoice.id}
-                </p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {selectedVoice.tags.slice(0, 3).map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className="rounded-full border-slate-200/80 bg-slate-50/80 text-[11px] text-slate-600 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              Voice
+            </p>
+            <h3 className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-50">
+              Choose a voice
+            </h3>
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_140px]">
@@ -582,7 +509,7 @@ export function TextToSpeechPanel() {
                 aria-label="Search voices"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search voices, tags, or IDs"
+                placeholder="Search voices"
                 className="h-11 rounded-2xl border-slate-200/80 bg-white/70 pl-9 shadow-sm dark:border-slate-700 dark:bg-slate-950/55"
               />
             </div>
@@ -604,31 +531,8 @@ export function TextToSpeechPanel() {
             </Select>
           </div>
 
-          <div className="mt-4 flex items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <p>
-              {isBrowsingFullLibrary
-                ? `${visibleVoices.length} matching voices`
-                : `Recommended voices for ${getLanguageLabel(language)}`}
-            </p>
-
-            {filteredVoices.length > RECOMMENDED_VOICE_LIMIT &&
-              !searchValue && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setShowAllVoices((currentValue) => !currentValue)
-                  }
-                  className="font-medium text-slate-700 transition hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
-                >
-                  {showAllVoices
-                    ? 'Show curated picks'
-                    : `Browse all ${filteredVoices.length}`}
-                </button>
-              )}
-          </div>
-
-          <div className="mt-3 rounded-[24px] border border-white/70 bg-white/70 p-2 shadow-sm dark:border-slate-700/80 dark:bg-slate-950/45">
-            <ScrollArea className="h-[320px]">
+          <div className="mt-4 rounded-[24px] border border-white/70 bg-white/70 p-2 shadow-sm dark:border-slate-700/80 dark:bg-slate-950/45">
+            <ScrollArea className="h-[214px]">
               <div className="space-y-2.5 pr-3">
                 {isLoadingVoices ? (
                   Array.from({ length: 3 }).map((_, index) => (
