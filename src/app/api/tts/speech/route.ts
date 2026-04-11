@@ -5,9 +5,10 @@ import {
   updateUsageStats,
 } from '@/lib/subscription-limits';
 import { SpeechifyClient } from '@speechify/api';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-const token = process.env.SPEECHIFY_API_KEY || process.env.SPEECHIFY_API_TOKEN || '';
+const token =
+  process.env.SPEECHIFY_API_KEY || process.env.SPEECHIFY_API_TOKEN || '';
 
 const client = new SpeechifyClient({ token });
 
@@ -48,16 +49,21 @@ export async function POST(request: NextRequest) {
     const inputRaw = asString(body?.input);
     const voiceIdRaw = asString(body?.voiceId) ?? asString(body?.voice_id);
     const languageRaw = asString(body?.language);
-    const audioFormatRaw = asString(body?.audioFormat) ?? asString(body?.audio_format);
+    const audioFormatRaw =
+      asString(body?.audioFormat) ?? asString(body?.audio_format);
     const modelRaw = asString(body?.model);
 
     const input = (inputRaw ?? '').trim();
-    const voiceId =
-      (voiceIdRaw ?? process.env.SPEECHIFY_DEFAULT_VOICE_ID ?? 'george').trim();
+    const voiceId = (
+      voiceIdRaw ??
+      process.env.SPEECHIFY_DEFAULT_VOICE_ID ??
+      'george'
+    ).trim();
     const language = (languageRaw ?? 'en-US').trim();
     const audioFormat = (audioFormatRaw ?? 'mp3').trim();
     const model = (
-      modelRaw ?? (language.startsWith('en') ? 'simba-english' : 'simba-multilingual')
+      modelRaw ??
+      (language.startsWith('en') ? 'simba-english' : 'simba-multilingual')
     ).trim();
 
     if (!inputRaw || !input || !voiceIdRaw || !voiceId) {
@@ -89,7 +95,10 @@ export async function POST(request: NextRequest) {
 
     const currentUser = await getCurrentUser();
     if (!currentUser) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
     }
 
     const usageCheck = await checkUsageLimit(input, currentUser.id);
@@ -127,11 +136,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const billableCharactersCount = response.billableCharactersCount ?? input.length;
+    const billableCharactersCount =
+      response.billableCharactersCount ?? input.length;
     await updateUsageStats(currentUser.id, billableCharactersCount);
 
     const normalizedFormat = response.audioFormat || audioFormat;
-    const contentType = CONTENT_TYPE_BY_FORMAT[normalizedFormat] || 'audio/mpeg';
+    const contentType =
+      CONTENT_TYPE_BY_FORMAT[normalizedFormat] || 'audio/mpeg';
     const audioUrl = `data:${contentType};base64,${response.audioData}`;
 
     return NextResponse.json({
@@ -150,6 +161,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('[TTS Speech API] failed:', error);
-    return NextResponse.json({ error: 'Failed to synthesize speech' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to synthesize speech' },
+      { status: 500 }
+    );
   }
 }

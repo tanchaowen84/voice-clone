@@ -150,7 +150,7 @@ export function VoiceInputArea() {
         }
       } catch {}
 
-      if (nextText && nextText.trim()) {
+      if (nextText?.trim()) {
         generateSpeech(nextText);
       }
     };

@@ -211,7 +211,7 @@
   "Marketing": {
     "navbar": {
       "features": {
-        "title": "Features"
+        "title": "Use Cases"
       },
       "pricing": {
         "title": "Pricing"
@@ -284,7 +284,7 @@
       "product": {
         "title": "Product",
         "items": {
-          "features": "Features",
+          "features": "Use Cases",
           "pricing": "Pricing",
           "faq": "FAQ"
         }
@@ -523,36 +523,45 @@
     "title": "Voice Clone",
     "description": "Clone voice with AI technology, simply and effortlessly",
     "hero": {
-      "title": "Voice Clone - Transform Your Voice with AI",
-      "description": "Create natural-sounding speech from any text using your own voice. Simple, fast, and no experience needed.",
-      "introduction": "Introducing Voice Clone",
-      "primary": "Start Voice Cloning",
-      "secondary": "See Demo"
+      "title": "Clone your voice and turn scripts into ready-to-publish audio",
+      "description": "Record or upload a short sample, build a reusable voice model, and generate natural speech for videos, lessons, demos, and repeatable production work.",
+      "introduction": "AI voice cloning workspace",
+      "primary": "Open the Voice Clone Workspace",
+      "secondary": "Hear Sample Voices",
+      "proofs": {
+        "item-1": "Record or upload directly in the browser",
+        "item-2": "Generate new takes from text instead of re-recording",
+        "item-3": "Keep one voice consistent across repeat content"
+      },
+      "featureTabs": {
+        "voiceClone": "Voice Clone",
+        "tts": "Text to Speech"
+      }
     },
     "logocloud": {
       "title": "Your favorite companies are our partners"
     },
     "useCases": {
       "title": "Voice Clone Use Cases",
-      "subtitle": "Let AI Voice Cloning Handle the Heavy Lifting",
-      "description": "Voice Clone helps you create natural-sounding speech for any purpose. Clone voice for content creation, education, business, and more—faster and easier than ever before.",
+      "subtitle": "Where Voice Clone fits into real production workflows",
+      "description": "The homepage only keeps the highest-value scenarios. Each one maps to repeatable audio work where reusable voice output saves time and keeps delivery consistent.",
       "tryNow": "Start Voice Cloning Now",
       "items": {
         "item-1": {
-          "title": "Content Creation",
-          "description": "Transform your content workflow with AI voice cloning. Create podcast episodes, YouTube narrations, and audiobook recordings using your cloned voice. Perfect for content creators who want consistent, professional voiceovers without recording every time."
+          "title": "Content and media production",
+          "description": "Turn scripts into podcast reads, YouTube narration, audiobook updates, and creator voiceovers without reopening a recording session for every revision."
         },
         "item-2": {
-          "title": "Education & E-Learning",
-          "description": "Enhance online learning with personalized voice content. Clone voice to create course materials, language learning content, and educational videos. Teachers and educators can scale their voice presence across multiple lessons and platforms."
+          "title": "Courses, tutorials, and training",
+          "description": "Keep lessons, walkthroughs, and onboarding material in one recognizable voice even when you need to refresh content regularly."
         },
         "item-3": {
-          "title": "Business & Marketing",
-          "description": "Elevate your brand voice with consistent AI voice cloning. Create professional presentations, product demos, customer service messages, and marketing videos. Maintain brand consistency across all voice communications."
+          "title": "Product demos and business messaging",
+          "description": "Produce product explainers, sales demos, launch assets, and customer-facing updates with a repeatable brand voice across channels."
         },
         "item-4": {
-          "title": "Accessibility & Assistive Technology",
-          "description": "Empower individuals with speech difficulties through voice cloning technology. Restore lost voices, create personalized communication aids, and provide voice assistance for those who need it. AI voice clone technology for meaningful impact."
+          "title": "Accessibility and personal voice recovery",
+          "description": "Create a more personal assistive voice, preserve familiar speech patterns, or keep an archive-ready voice available for future use."
         },
         "item-5": {
           "title": "Entertainment & Media",
@@ -565,22 +574,22 @@
       }
     },
     "demo": {
-      "title": "See Voice Clone in Action",
-      "subtitle": "From Voice to Clone in Seconds",
-      "description": "Watch how Voice Clone turns your voice sample into natural-sounding speech generation — no recording studio or professional equipment needed.",
+      "title": "Product Proof",
+      "subtitle": "Hear the output quality before you commit",
+      "description": "Sample voices and workflow proof replace long explanation blocks. You can judge quality, range, and production fit before starting your own clone.",
       "tryItNow": "Try Voice Clone Now",
       "features": {
         "feature-1": {
-          "title": "Simple Voice Recording",
-          "description": "Simply record your voice sample or upload an audio file — no professional equipment or studio setup required"
+          "title": "Listen before you start",
+          "description": "Use the demo voices above as immediate proof of output quality and pacing."
         },
         "feature-2": {
-          "title": "AI-Powered Voice Cloning",
-          "description": "Voice Clone automatically analyzes and creates your personalized voice model using advanced AI voice cloning technology"
+          "title": "No studio setup required",
+          "description": "Short, clean recordings are enough to begin the voice cloning workflow."
         },
         "feature-3": {
-          "title": "Instant Text-to-Speech",
-          "description": "Generate natural speech from any text using your cloned voice. Perfect quality, instant results, unlimited possibilities"
+          "title": "Move from sample to script",
+          "description": "After your sample is ready, generate new lines from text instead of recording every revision."
         }
       }
     },
@@ -630,28 +639,28 @@
       "capability-5": "Context-Aware Speech Generation – Voice Clone intelligently adjusts tone and pacing based on text content and context"
     },
     "comparison": {
-      "title": "Why Choose Voice Clone?",
-      "subtitle": "See the Difference",
-      "description": "Compare Voice Clone with traditional voice generation tools and see why professionals choose us.",
+      "title": "Trust Layer",
+      "subtitle": "Why teams switch to a reusable voice workflow",
+      "description": "This is the value story in one screen: less manual recording, faster revisions, and clearer control over repeat audio production.",
       "traditional": {
-        "title": "Traditional Voice Tools",
-        "subtitle": "Time-consuming and complex",
-        "item-1": "Hours of professional recording and editing",
-        "item-2": "Steep learning curve for audio production software",
-        "item-3": "Difficult voice consistency across projects",
-        "item-4": "Manual re-recording when content changes",
+        "title": "Traditional production",
+        "subtitle": "Manual recording creates friction every time content changes",
+        "item-1": "Re-record lines whenever a script changes or a detail needs fixing.",
+        "item-2": "Manage separate takes, edits, and exports by hand across projects.",
+        "item-3": "Fight to keep pacing, pronunciation, and tone consistent over time.",
+        "item-4": "Lose time every time you need a localized, updated, or alternate version.",
         "item-5": "Limited voice options and expensive voice actors",
         "item-6": "Complex audio file management and storage",
         "item-7": "Expensive studio time and equipment costs",
         "item-8": "Platform-specific audio format compatibility issues"
       },
       "voiceclone": {
-        "title": "Voice Clone",
-        "subtitle": "Fast, intelligent, and intuitive",
-        "item-1": "Generate voice clones in seconds with AI",
-        "item-2": "Simple voice upload - no training needed",
-        "item-3": "Built-in voice library and easy management",
-        "item-4": "AI-assisted voice model updates and improvements",
+        "title": "Voice Clone workflow",
+        "subtitle": "One voice model gives you faster output and fewer repeated steps",
+        "item-1": "Record or upload once, then reuse the same voice across repeat content.",
+        "item-2": "Generate fresh takes from text instead of reopening recording sessions.",
+        "item-3": "Keep a more consistent brand, creator, or assistive voice across channels.",
+        "item-4": "Move from proof to pricing to generation without extra navigation or dead ends.",
         "item-5": "Unlimited voice models and smart speech generation",
         "item-6": "Automatic voice backup and cloud synchronization",
         "item-7": "Affordable pricing with generous free tier",
@@ -761,12 +770,12 @@
     },
     "pricing": {
       "title": "Pricing",
-      "subtitle": "Pricing",
-      "description": "Choose the plan that works best for you"
+      "subtitle": "Choose a plan when you are ready to scale output",
+      "description": "Start with the free tier, then move up only when you need more generation volume or production capacity."
     },
     "faqs": {
       "title": "FAQ",
-      "subtitle": "Frequently Asked Questions",
+      "subtitle": "Questions people ask before they start voice cloning",
       "items": {
         "item-1": {
           "question": "Is there a free version of Voice Clone?",
@@ -901,9 +910,9 @@
       }
     },
     "calltoaction": {
-      "title": "Ready to Clone Your Voice with AI?",
-      "description": "Start creating your own voice clones with Voice Clone AI technology today",
-      "primaryButton": "Start Voice Cloning",
+      "title": "Ready to try the workflow on your own audio?",
+      "description": "Jump back to the live workspace, add a voice sample, and generate speech from text without leaving the homepage.",
+      "primaryButton": "Start in the Workspace",
       "secondaryButton": "Learn More"
     }
   },

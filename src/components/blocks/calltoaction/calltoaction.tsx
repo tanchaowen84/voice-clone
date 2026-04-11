@@ -21,16 +21,10 @@ export default function CallToActionSection() {
           </h2>
           <p className="mt-4 text-muted-foreground">{t('description')}</p>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <div className="mt-12 flex justify-center">
             <Button asChild size="lg">
-              <LocaleLink href="/canvas">
+              <LocaleLink href="/#hero-workspace">
                 <span>{t('primaryButton')}</span>
-              </LocaleLink>
-            </Button>
-
-            <Button asChild size="lg" variant="outline">
-              <LocaleLink href="/">
-                <span>{t('secondaryButton')}</span>
               </LocaleLink>
             </Button>
           </div>

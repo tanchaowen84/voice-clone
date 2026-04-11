@@ -89,7 +89,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             <a
               href="https://saasbrowser.com/en/saas/1159749/voice-clone"
               target="_blank"
-              rel="noopener"
+              rel="noreferrer noopener"
               className="inline-flex"
             >
               <img

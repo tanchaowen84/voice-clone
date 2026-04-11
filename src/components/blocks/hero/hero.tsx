@@ -1,15 +1,24 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { TextToSpeechPanel } from '@/components/voice-clone/text-to-speech-panel';
 import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
+import { LocaleLink } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
-import { Mic, Type } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Mic, PlayCircle, Type } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('HomePage.hero');
-  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>('tts');
+  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>(
+    'voice-clone'
+  );
+  const proofItems = [
+    t('proofs.item-1'),
+    t('proofs.item-2'),
+    t('proofs.item-3'),
+  ];
 
   return (
     <>
@@ -63,6 +72,10 @@ export default function HeroSection() {
           <div className="relative pt-12">
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
+                <div className="inline-flex items-center rounded-full border border-white/70 bg-white/75 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/70 dark:text-slate-200">
+                  {t('introduction')}
+                </div>
+
                 {/* title with gradient */}
                 <h1 className="mt-8 text-balance text-4xl font-bricolage-grotesque lg:text-5xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
                   {t('title')}
@@ -72,11 +85,39 @@ export default function HeroSection() {
                 <p className="mx-auto mt-6 max-w-5xl text-balance text-xl text-foreground leading-relaxed">
                   {t('description')}
                 </p>
+
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                  <Button asChild size="lg" className="gap-2">
+                    <LocaleLink href="/#hero-workspace">
+                      {t('primary')}
+                      <ArrowRight className="h-4 w-4" />
+                    </LocaleLink>
+                  </Button>
+
+                  <Button asChild size="lg" variant="outline" className="gap-2">
+                    <LocaleLink href="/#demo">
+                      {t('secondary')}
+                      <PlayCircle className="h-4 w-4" />
+                    </LocaleLink>
+                  </Button>
+                </div>
+
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                  {proofItems.map((item) => (
+                    <div
+                      key={item}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-sm text-slate-700 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/65 dark:text-slate-200"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Main Interface */}
-            <div className="mt-16 mb-20 px-4">
+            <div id="hero-workspace" className="mt-16 mb-20 scroll-mt-24 px-4">
               <div className="max-w-5xl mx-auto">
                 {/* Home Feature Switch */}
                 <div className="flex items-center justify-center mb-8">
@@ -85,26 +126,17 @@ export default function HeroSection() {
                       className="absolute top-2 h-12 bg-gradient-to-br from-white to-slate-50 dark:from-slate-700 dark:to-slate-600 rounded-xl shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#334155]"
                       initial={false}
                       animate={{
-                        x: featureMode === 'tts' ? 2 : 146,
+                        x: featureMode === 'voice-clone' ? 2 : 146,
                         width: 144,
                       }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
 
                     <div className="relative flex">
-                      <button
-                        type="button"
-                        onClick={() => setFeatureMode('tts')}
-                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
-                          featureMode === 'tts'
-                            ? 'text-slate-900 dark:text-slate-100'
-                            : 'text-slate-500 dark:text-slate-400'
-                        }`}
-                      >
-                        <Type className="h-4 w-4" />
-                        Text to Speech
-                      </button>
-
                       <button
                         type="button"
                         onClick={() => setFeatureMode('voice-clone')}
@@ -115,16 +147,29 @@ export default function HeroSection() {
                         }`}
                       >
                         <Mic className="h-4 w-4" />
-                        Voice Clone
+                        {t('featureTabs.voiceClone')}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setFeatureMode('tts')}
+                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
+                          featureMode === 'tts'
+                            ? 'text-slate-900 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-400'
+                        }`}
+                      >
+                        <Type className="h-4 w-4" />
+                        {t('featureTabs.tts')}
                       </button>
                     </div>
                   </div>
                 </div>
 
-                {featureMode === 'tts' ? (
-                  <TextToSpeechPanel />
-                ) : (
+                {featureMode === 'voice-clone' ? (
                   <VoiceInputArea />
+                ) : (
+                  <TextToSpeechPanel />
                 )}
               </div>
             </div>

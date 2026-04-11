@@ -13,13 +13,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import {
-  Download,
-  Globe2,
-  Loader2,
-  Search,
-  Volume2,
-} from 'lucide-react';
+import { Download, Globe2, Loader2, Search, Volume2 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
 

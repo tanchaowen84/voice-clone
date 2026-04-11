@@ -53,7 +53,10 @@ export function VoicePickerCard({
               : 'border-slate-200/80 bg-white dark:border-slate-700 dark:bg-slate-900'
           )}
         >
-          <AvatarImage src={voice.avatarImage || undefined} alt={voice.displayName} />
+          <AvatarImage
+            src={voice.avatarImage || undefined}
+            alt={voice.displayName}
+          />
           <AvatarFallback
             className={cn(
               'text-[11px] font-semibold',
@@ -66,7 +69,9 @@ export function VoicePickerCard({
           </AvatarFallback>
         </Avatar>
 
-        <span className="truncate text-sm font-medium">{voice.displayName}</span>
+        <span className="truncate text-sm font-medium">
+          {voice.displayName}
+        </span>
       </button>
 
       <Button
@@ -82,7 +87,15 @@ export function VoicePickerCard({
         onClick={() => onPreviewToggle(voice)}
         disabled={!voice.previewAudio}
       >
-        {voice.previewAudio ? isPreviewing ? <Pause className="size-4" /> : <Play className="size-4" /> : <Volume2 className="size-4" />}
+        {voice.previewAudio ? (
+          isPreviewing ? (
+            <Pause className="size-4" />
+          ) : (
+            <Play className="size-4" />
+          )
+        ) : (
+          <Volume2 className="size-4" />
+        )}
       </Button>
     </div>
   );

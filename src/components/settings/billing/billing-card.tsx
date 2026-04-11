@@ -215,7 +215,6 @@ export default function BillingCard() {
                   {t('nextBillingDate')} {nextBillingDate}
                 </div>
               )}
-
             </div>
           )}
         </CardContent>
