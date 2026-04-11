@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 
-export type PendingAction = 'none' | 'generate';
+export type PendingAction = 'none' | 'tts_generate' | 'voice_clone_generate';
 
 interface AuthModalState {
   isOpen: boolean;
@@ -31,7 +31,10 @@ export const useAuthModalStore = create<AuthModalState>((set, get) => ({
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
 
-  setPending: (text: string, action: PendingAction = 'generate') => {
+  setPending: (
+    text: string,
+    action: PendingAction = 'voice_clone_generate'
+  ) => {
     set({ pendingText: text, pendingAction: action });
     // persist a lightweight payload for safety (in case of unexpected reload)
     try {

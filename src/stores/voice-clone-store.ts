@@ -235,7 +235,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
         // Handle 401: require auth → open login modal and set pending
         if (generateResponse.status === 401) {
           const authStore = useAuthModalStore.getState();
-          authStore.setPending(text, 'generate');
+          authStore.setPending(text, 'voice_clone_generate');
           authStore.open();
           return; // stop further handling
         }
