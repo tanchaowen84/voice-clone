@@ -3,7 +3,10 @@
 import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
 import { getPlanConfig } from '@/config/subscription-config';
 import { authClient } from '@/lib/auth-client';
-import { useAuthModalStore } from '@/stores/auth-modal-store';
+import {
+  type PendingAction,
+  useAuthModalStore,
+} from '@/stores/auth-modal-store';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useVoiceCloneStore } from '@/stores/voice-clone-store';
 import type { InputMode } from '@/stores/voice-clone-store';
@@ -71,7 +74,7 @@ export function VoiceInputArea() {
 
     // Intercept unauthenticated users: open login modal and mark pending
     if (!session?.user) {
-      setAuthPending(textInput, 'generate');
+      setAuthPending(textInput, 'voice_clone_generate');
       // Persist media (audio) for recovery across full reloads
       if (inputMode === 'record' || inputMode === 'upload') {
         try {
@@ -129,9 +132,12 @@ export function VoiceInputArea() {
   useEffect(() => {
     const handler = async (e: Event) => {
       const ce = e as CustomEvent<{
-        pendingAction?: string;
+        pendingAction?: PendingAction;
         pendingText?: string;
       }>;
+      if (ce.detail?.pendingAction !== 'voice_clone_generate') {
+        return;
+      }
       const nextText = ce.detail?.pendingText || textInput;
 
       // Try to rehydrate pending audio from IndexedDB if any
@@ -150,7 +156,7 @@ export function VoiceInputArea() {
         }
       } catch {}
 
-      if (nextText && nextText.trim()) {
+      if (nextText?.trim()) {
         generateSpeech(nextText);
       }
     };

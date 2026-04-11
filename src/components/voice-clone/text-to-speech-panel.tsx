@@ -12,14 +12,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import {
-  Download,
-  Globe2,
-  Loader2,
-  Search,
-  Volume2,
-} from 'lucide-react';
+  type PendingAction,
+  useAuthModalStore,
+} from '@/stores/auth-modal-store';
+import { Download, Globe2, Loader2, Search, Volume2 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
 
@@ -213,6 +212,9 @@ export function TextToSpeechPanel() {
     string | null
   >(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
+  const { data: session } = authClient.useSession();
+  const { open: openAuthModal, setPending: setAuthPending } =
+    useAuthModalStore();
 
   const charCount = useMemo(() => text.length, [text]);
   const searchValue = searchQuery.trim().toLowerCase();
@@ -402,8 +404,8 @@ export function TextToSpeechPanel() {
     );
   };
 
-  const handleGenerate = async () => {
-    if (!text.trim()) {
+  const requestSpeech = async (inputText: string) => {
+    if (!inputText.trim()) {
       return;
     }
 
@@ -418,7 +420,7 @@ export function TextToSpeechPanel() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          input: text,
+          input: inputText,
           voiceId,
           language,
           audioFormat: 'mp3',
@@ -430,6 +432,12 @@ export function TextToSpeechPanel() {
 
       const data = await response.json();
       if (!response.ok) {
+        if (response.status === 401) {
+          setAuthPending(inputText, 'tts_generate');
+          openAuthModal();
+          return;
+        }
+
         throw new Error(data?.error || 'Failed to generate speech');
       }
 
@@ -444,6 +452,47 @@ export function TextToSpeechPanel() {
       setIsGenerating(false);
     }
   };
+
+  const handleGenerate = async () => {
+    if (!text.trim()) {
+      return;
+    }
+
+    if (!session?.user) {
+      setAuthPending(text, 'tts_generate');
+      openAuthModal();
+      return;
+    }
+
+    await requestSpeech(text);
+  };
+
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent<{
+        pendingAction?: PendingAction;
+        pendingText?: string;
+      }>;
+
+      if (customEvent.detail?.pendingAction !== 'tts_generate') {
+        return;
+      }
+
+      const nextText = customEvent.detail?.pendingText || text;
+      if (!nextText.trim()) {
+        return;
+      }
+
+      void requestSpeech(nextText);
+    };
+
+    window.addEventListener('auth:login_success', handler as EventListener);
+    return () =>
+      window.removeEventListener(
+        'auth:login_success',
+        handler as EventListener
+      );
+  }, [requestSpeech, text]);
 
   const handleDownload = () => {
     if (!audioUrl) {

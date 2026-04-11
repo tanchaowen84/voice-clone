@@ -49,7 +49,7 @@ export function AuthEvents() {
   }, []);
 
   useEffect(() => {
-    if (session?.user && pendingAction === 'generate' && pendingText) {
+    if (session?.user && pendingAction !== 'none' && pendingText) {
       // Dispatch a custom event; the voice-clone page listens and resumes
       window.dispatchEvent(
         new CustomEvent('auth:login_success', {
