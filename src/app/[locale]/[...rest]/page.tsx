@@ -1,5 +1,11 @@
 import { notFound } from 'next/navigation';
 
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [];
+}
+
 /**
  * Catching unknown routes
  *
