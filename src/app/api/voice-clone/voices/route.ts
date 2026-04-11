@@ -5,6 +5,8 @@ const client = new SpeechifyClient({
   token: process.env.SPEECHIFY_API_TOKEN || '',
 });
 
+const VOICE_CACHE_TTL_MS = 1000 * 60 * 30;
+
 type SpeechifyVoice = Awaited<
   ReturnType<typeof client.tts.voices.list>
 >[number];
@@ -28,6 +30,14 @@ type NormalizedVoice = {
   tags: string[];
   type: SpeechifyVoice['type'];
 };
+
+type VoiceCacheEntry = {
+  expiresAt: number;
+  voices: NormalizedVoice[];
+};
+
+let voiceCache: VoiceCacheEntry | null = null;
+let voiceCachePromise: Promise<NormalizedVoice[]> | null = null;
 
 function normalizeOptionalString(
   value: string | null | undefined
@@ -116,24 +126,68 @@ function matchesSearchFilter(
   );
 }
 
+function getCachedVoices() {
+  if (!voiceCache) {
+    return null;
+  }
+
+  if (voiceCache.expiresAt <= Date.now()) {
+    voiceCache = null;
+    return null;
+  }
+
+  return voiceCache.voices;
+}
+
+async function getVoices() {
+  const cachedVoices = getCachedVoices();
+  if (cachedVoices) {
+    return cachedVoices;
+  }
+
+  if (!voiceCachePromise) {
+    voiceCachePromise = client.tts.voices
+      .list()
+      .then((voices) => voices.map(normalizeVoice))
+      .then((voices) => {
+        voiceCache = {
+          expiresAt: Date.now() + VOICE_CACHE_TTL_MS,
+          voices,
+        };
+        return voices;
+      })
+      .finally(() => {
+        voiceCachePromise = null;
+      });
+  }
+
+  return voiceCachePromise;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchFilter =
       request.nextUrl.searchParams.get('search')?.trim() ?? '';
     const localeFilter =
       request.nextUrl.searchParams.get('locale')?.trim() ?? '';
-    const voices = await client.tts.voices.list();
-    const normalizedVoices = voices.map(normalizeVoice);
+    const normalizedVoices = await getVoices();
     const filteredVoices = normalizedVoices.filter(
       (voice) =>
         matchesLocaleFilter(voice.locale, localeFilter) &&
         matchesSearchFilter(voice, searchFilter)
     );
 
-    return NextResponse.json({
-      success: true,
-      voices: filteredVoices,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        voices: filteredVoices,
+      },
+      {
+        headers: {
+          'Cache-Control': 'private, max-age=300, stale-while-revalidate=1800',
+        },
+      }
+    );
   } catch (error) {
     console.error('Failed to fetch voices:', error);
     return NextResponse.json(
