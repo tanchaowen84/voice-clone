@@ -8,8 +8,11 @@ import HeroSection from '@/components/blocks/hero/hero';
 import { HowItWorksSection } from '@/components/blocks/how-it-works';
 import PricingSection from '@/components/blocks/pricing/pricing';
 import { UseCasesSection } from '@/components/blocks/use-cases';
+import { JsonLd } from '@/components/seo/json-ld';
 
 import AdsenseScript from '@/components/ads/adsense';
+import { getAssetUrl } from '@/config/cdn-config';
+import { defaultMessages } from '@/i18n/messages';
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -34,9 +37,40 @@ export async function generateMetadata({
   });
 }
 
-export default async function HomePage() {
+function getHomePageJsonLd(locale: Locale) {
+  const pageUrl = getUrlWithLocale('', locale);
+  const brandName = defaultMessages.Metadata.name;
+  const logoUrl = getAssetUrl('logoLight', true);
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        name: brandName,
+        url: pageUrl,
+      },
+      {
+        '@type': 'Organization',
+        name: brandName,
+        url: pageUrl,
+        logo: logoUrl,
+      },
+    ],
+  };
+}
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const jsonLd = getHomePageJsonLd(locale);
+
   return (
     <>
+      <JsonLd data={jsonLd} />
       <AdsenseScript />
       <div className="flex flex-col">
         <HeroSection />
