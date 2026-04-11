@@ -212,7 +212,8 @@ export function TextToSpeechPanel() {
     string | null
   >(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending: isSessionPending } =
+    authClient.useSession();
   const { open: openAuthModal, setPending: setAuthPending } =
     useAuthModalStore();
 
@@ -458,7 +459,7 @@ export function TextToSpeechPanel() {
       return;
     }
 
-    if (!session?.user) {
+    if (!isSessionPending && !session?.user) {
       setAuthPending(text, 'tts_generate');
       openAuthModal();
       return;
