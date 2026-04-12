@@ -1,16 +1,17 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { Clock, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-/**
- * 免费用户等待组件
- *
- * 显示15秒倒计时加载条，与输入框长度一致的简约设计
- */
-export function FreeUserWaiting() {
-  const { waitingState, updateWaitingTime, stopWaiting, showUpgradeModal } =
+interface FreeUserWaitingProps {
+  className?: string;
+  variant?: 'default' | 'compact';
+}
+
+function useWaitingCountdown() {
+  const { waitingState, updateWaitingTime, showUpgradeModal } =
     useSubscriptionStore();
   const [timeLeft, setTimeLeft] = useState(waitingState.remainingTime);
 
@@ -29,10 +30,6 @@ export function FreeUserWaiting() {
         // 使用setTimeout避免在渲染过程中更新状态
         setTimeout(() => {
           updateWaitingTime(newTime);
-
-          if (newTime === 0) {
-            stopWaiting();
-          }
         }, 0);
 
         return newTime;
@@ -40,16 +37,7 @@ export function FreeUserWaiting() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [
-    waitingState.isWaiting,
-    waitingState.remainingTime,
-    updateWaitingTime,
-    stopWaiting,
-  ]);
-
-  if (!waitingState.isWaiting) {
-    return null;
-  }
+  }, [waitingState.isWaiting, waitingState.remainingTime, updateWaitingTime]);
 
   const progress =
     waitingState.totalWaitTime > 0
@@ -57,8 +45,85 @@ export function FreeUserWaiting() {
         100
       : 0;
 
+  return {
+    progress,
+    showUpgradeModal,
+    timeLeft,
+    waitingState,
+  };
+}
+
+/**
+ * 免费用户等待组件
+ *
+ * 显示15秒倒计时加载条，与输入框长度一致的简约设计
+ */
+export function FreeUserWaiting({
+  className,
+  variant = 'default',
+}: FreeUserWaitingProps = {}) {
+  const { progress, showUpgradeModal, timeLeft, waitingState } =
+    useWaitingCountdown();
+
+  if (!waitingState.isWaiting) {
+    return null;
+  }
+
+  if (variant === 'compact') {
+    return (
+      <div
+        className={cn(
+          'rounded-[24px] border border-slate-200/80 bg-white/75 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950/55',
+          className
+        )}
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
+              Free plan
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+              Generating your preview
+            </p>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
+              Your free preview unlocks in {timeLeft}s. Upgrade to skip the
+              wait.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              setTimeout(() => {
+                showUpgradeModal('waiting_period');
+              }, 0);
+            }}
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+          >
+            <Zap className="h-3.5 w-3.5" />
+            Upgrade
+          </button>
+        </div>
+
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+            <span>Ready in {timeLeft}s</span>
+            <span>{Math.round(progress)}%</span>
+          </div>
+
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-fuchsia-500 transition-all duration-1000 ease-linear"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-4">
+    <div className={cn('space-y-4', className)}>
       {/* 等待提示文本 */}
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400">
