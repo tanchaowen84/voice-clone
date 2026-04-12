@@ -4,7 +4,6 @@ import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
   SelectContent,
@@ -29,7 +28,8 @@ import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
 const DEFAULT_VOICE =
   process.env.NEXT_PUBLIC_SPEECHIFY_DEFAULT_VOICE_ID || 'george';
 const DEFAULT_LANGUAGE = 'en-US';
-const RECOMMENDED_VOICE_LIMIT = 3;
+const VOICE_CACHE_STORAGE_KEY = 'voice-clone-tts-voices';
+const VOICE_CACHE_TTL_MS = 1000 * 60 * 30;
 
 const LANGUAGE_LABELS: Record<string, string> = {
   'en-US': 'English (US)',
@@ -68,6 +68,27 @@ type VoiceApiRecord = {
 type VoiceApiResponse = {
   voices?: unknown;
 };
+
+type VoiceCacheEntry = {
+  expiresAt: number;
+  voices: VoicePickerVoice[];
+};
+
+let voiceCache: VoiceCacheEntry | null = null;
+
+function clearStoredVoiceCache() {
+  voiceCache = null;
+
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(VOICE_CACHE_STORAGE_KEY);
+  } catch {
+    // Ignore storage quota and privacy-mode failures.
+  }
+}
 
 function getLanguageLabel(locale: string) {
   if (LANGUAGE_LABELS[locale]) {
@@ -201,6 +222,94 @@ function isVoicePickerVoice(
   return Boolean(voice);
 }
 
+function isCachedVoicePickerVoice(voice: unknown): voice is VoicePickerVoice {
+  if (!voice || typeof voice !== 'object') {
+    return false;
+  }
+
+  const record = voice as Partial<VoicePickerVoice>;
+
+  return (
+    typeof record.id === 'string' &&
+    typeof record.displayName === 'string' &&
+    typeof record.locale === 'string' &&
+    Array.isArray(record.locales) &&
+    record.locales.every((locale) => typeof locale === 'string') &&
+    Array.isArray(record.tags) &&
+    record.tags.every((tag) => typeof tag === 'string') &&
+    (typeof record.avatarImage === 'string' || record.avatarImage === null) &&
+    (typeof record.previewAudio === 'string' || record.previewAudio === null) &&
+    (typeof record.type === 'string' || record.type === null)
+  );
+}
+
+function readCachedVoices() {
+  if (voiceCache && voiceCache.expiresAt > Date.now()) {
+    return voiceCache.voices;
+  }
+
+  voiceCache = null;
+
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const storedCache = window.localStorage.getItem(VOICE_CACHE_STORAGE_KEY);
+    if (!storedCache) {
+      return null;
+    }
+
+    const parsedCache = JSON.parse(storedCache) as Partial<VoiceCacheEntry>;
+    if (
+      typeof parsedCache.expiresAt !== 'number' ||
+      parsedCache.expiresAt <= Date.now() ||
+      !Array.isArray(parsedCache.voices)
+    ) {
+      clearStoredVoiceCache();
+      return null;
+    }
+
+    const cachedVoices = parsedCache.voices.filter(isCachedVoicePickerVoice);
+    if (!cachedVoices.length) {
+      clearStoredVoiceCache();
+      return null;
+    }
+
+    voiceCache = {
+      expiresAt: parsedCache.expiresAt,
+      voices: cachedVoices,
+    };
+
+    return cachedVoices;
+  } catch {
+    clearStoredVoiceCache();
+    return null;
+  }
+}
+
+function writeCachedVoices(voices: VoicePickerVoice[]) {
+  const nextCache = {
+    expiresAt: Date.now() + VOICE_CACHE_TTL_MS,
+    voices,
+  };
+
+  voiceCache = nextCache;
+
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(
+      VOICE_CACHE_STORAGE_KEY,
+      JSON.stringify(nextCache)
+    );
+  } catch {
+    // Ignore storage quota and privacy-mode failures.
+  }
+}
+
 export function TextToSpeechPanel() {
   const [text, setText] = useState('');
   const [voiceId, setVoiceId] = useState(DEFAULT_VOICE);
@@ -255,9 +364,39 @@ export function TextToSpeechPanel() {
 
   useEffect(() => {
     const controller = new AbortController();
+    const cachedVoices = readCachedVoices();
+
+    const applyVoices = (nextVoices: VoicePickerVoice[]) => {
+      setVoices(nextVoices);
+
+      if (!nextVoices.length) {
+        setVoiceError('No voices are available right now.');
+        return;
+      }
+
+      setVoiceError(null);
+      setVoiceId((currentVoiceId) => {
+        if (nextVoices.some((voice) => voice.id === currentVoiceId)) {
+          return currentVoiceId;
+        }
+
+        return (
+          nextVoices.find((voice) => voice.id === DEFAULT_VOICE)?.id ||
+          nextVoices[0].id
+        );
+      });
+    };
+
+    if (cachedVoices?.length) {
+      applyVoices(cachedVoices);
+      setIsLoadingVoices(false);
+    }
 
     const loadVoices = async () => {
-      setIsLoadingVoices(true);
+      if (!cachedVoices?.length) {
+        setIsLoadingVoices(true);
+      }
+
       setVoiceError(null);
 
       try {
@@ -274,25 +413,14 @@ export function TextToSpeechPanel() {
           ? data.voices.map(normalizeVoice).filter(isVoicePickerVoice)
           : [];
 
-        setVoices(nextVoices);
-
-        if (!nextVoices.length) {
-          setVoiceError('No voices are available right now.');
+        writeCachedVoices(nextVoices);
+        applyVoices(nextVoices);
+      } catch (fetchError) {
+        if (controller.signal.aborted) {
           return;
         }
 
-        setVoiceId((currentVoiceId) => {
-          if (nextVoices.some((voice) => voice.id === currentVoiceId)) {
-            return currentVoiceId;
-          }
-
-          return (
-            nextVoices.find((voice) => voice.id === DEFAULT_VOICE)?.id ||
-            nextVoices[0].id
-          );
-        });
-      } catch (fetchError) {
-        if (controller.signal.aborted) {
+        if (cachedVoices?.length) {
           return;
         }
 
@@ -396,11 +524,7 @@ export function TextToSpeechPanel() {
     });
   }, [language, searchValue, sortedVoices]);
 
-  const featuredVoices = useMemo(() => {
-    return filteredVoices.slice(0, RECOMMENDED_VOICE_LIMIT);
-  }, [filteredVoices]);
-
-  const visibleVoices = searchValue ? filteredVoices : featuredVoices;
+  const visibleVoices = filteredVoices;
 
   const stopPreviewAudio = () => {
     if (!previewAudioRef.current) {
@@ -699,8 +823,8 @@ export function TextToSpeechPanel() {
           </div>
 
           <div className="mt-4 rounded-[24px] border border-white/70 bg-white/70 p-2 shadow-sm dark:border-slate-700/80 dark:bg-slate-950/45">
-            <ScrollArea className="h-[214px]">
-              <div className="space-y-2.5 pr-3">
+            <div className="max-h-[214px] overflow-y-auto overscroll-contain pr-1">
+              <div className="space-y-2.5">
                 {isLoadingVoices ? (
                   Array.from({ length: 3 }).map((_, index) => (
                     <div
@@ -731,7 +855,7 @@ export function TextToSpeechPanel() {
                   </div>
                 )}
               </div>
-            </ScrollArea>
+            </div>
           </div>
 
           {voiceError && (
