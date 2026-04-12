@@ -1,5 +1,6 @@
 'use client';
 
+import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,12 +13,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { getPlanConfig } from '@/config/subscription-config';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import {
   type PendingAction,
   useAuthModalStore,
 } from '@/stores/auth-modal-store';
+import { useSubscriptionStore } from '@/stores/subscription-store';
+import { useTextToSpeechStore } from '@/stores/text-to-speech-store';
 import { Download, Globe2, Loader2, Search, Volume2 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
@@ -202,11 +206,8 @@ export function TextToSpeechPanel() {
   const [voiceId, setVoiceId] = useState(DEFAULT_VOICE);
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const [voices, setVoices] = useState<VoicePickerVoice[]>([]);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [voiceError, setVoiceError] = useState<string | null>(null);
   const [activePreviewVoiceId, setActivePreviewVoiceId] = useState<
     string | null
@@ -216,9 +217,41 @@ export function TextToSpeechPanel() {
     authClient.useSession();
   const { open: openAuthModal, setPending: setAuthPending } =
     useAuthModalStore();
+  const {
+    fetchAllData,
+    showUpgradeModal,
+    startWaiting,
+    subscription,
+    updateUsageAfterGeneration,
+    waitingState,
+  } = useSubscriptionStore();
+  const {
+    clearAudio,
+    error,
+    generatedAudioUrl: audioUrl,
+    isGenerating,
+    pendingAudioUrl,
+    revealPendingAudio,
+    setError,
+    setGeneratedAudioUrl,
+    setIsGenerating,
+    setPendingAudioUrl,
+  } = useTextToSpeechStore();
 
   const charCount = useMemo(() => text.length, [text]);
   const searchValue = searchQuery.trim().toLowerCase();
+  const sessionUserId = session?.user?.id;
+  const freePlanConfig = getPlanConfig('free');
+  const freePlanCharacterLimit =
+    subscription?.planId === 'free'
+      ? subscription.planConfig.limits.maxCharactersPerRequest
+      : freePlanConfig.limits.maxCharactersPerRequest;
+  const freePlanWaitTime =
+    subscription?.planId === 'free'
+      ? subscription.planConfig.limits.waitTime
+      : freePlanConfig.limits.waitTime;
+  const isFreeUser = Boolean(sessionUserId && subscription?.planId === 'free');
+  const showUpgradePrompt = isFreeUser && !waitingState.isWaiting;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -290,6 +323,26 @@ export function TextToSpeechPanel() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!sessionUserId) {
+      return;
+    }
+
+    if (subscription?.userId === sessionUserId) {
+      return;
+    }
+
+    fetchAllData().catch(() => {
+      // noop: gracefully fall back to default free-plan messaging
+    });
+  }, [fetchAllData, sessionUserId, subscription?.userId]);
+
+  useEffect(() => {
+    if (!waitingState.isWaiting && pendingAudioUrl) {
+      revealPendingAudio();
+    }
+  }, [pendingAudioUrl, revealPendingAudio, waitingState.isWaiting]);
 
   const languageOptions = useMemo(() => {
     const locales = new Set<string>(Object.keys(LANGUAGE_LABELS));
@@ -412,7 +465,7 @@ export function TextToSpeechPanel() {
 
     setIsGenerating(true);
     setError(null);
-    setAudioUrl(null);
+    clearAudio();
 
     try {
       const response = await fetch('/api/tts/speech', {
@@ -439,10 +492,41 @@ export function TextToSpeechPanel() {
           return;
         }
 
+        if (response.status === 429) {
+          if (data?.reason === 'CHAR_LIMIT_EXCEEDED') {
+            showUpgradeModal('character_limit');
+            return;
+          }
+
+          if (
+            data?.reason === 'DAILY_LIMIT_EXCEEDED' ||
+            data?.reason === 'MONTHLY_LIMIT_EXCEEDED'
+          ) {
+            showUpgradeModal('daily_limit');
+            return;
+          }
+        }
+
         throw new Error(data?.error || 'Failed to generate speech');
       }
 
-      setAudioUrl(data.audioUrl || null);
+      const nextAudioUrl = data.audioUrl || null;
+      const billableCharacters =
+        data.billableCharactersCount || inputText.length;
+      const waitTime = data?.usageInfo?.waitTime || 0;
+
+      updateUsageAfterGeneration(billableCharacters);
+      fetchAllData().catch(() => {
+        // noop: best effort refresh for usage and plan messaging
+      });
+
+      if (waitTime > 0) {
+        setPendingAudioUrl(nextAudioUrl);
+        startWaiting(waitTime);
+        return;
+      }
+
+      setGeneratedAudioUrl(nextAudioUrl);
     } catch (generationError) {
       setError(
         generationError instanceof Error
@@ -455,7 +539,7 @@ export function TextToSpeechPanel() {
   };
 
   const handleGenerate = async () => {
-    if (!text.trim()) {
+    if (!text.trim() || waitingState.isWaiting) {
       return;
     }
 
@@ -511,7 +595,7 @@ export function TextToSpeechPanel() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-[minmax(0,1.6fr)_minmax(320px,1fr)]">
-        <div className="rounded-[28px] bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff] dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 dark:shadow-[inset_4px_4px_8px_#1e293b,inset_-4px_-4px_8px_#475569]">
+        <div className="flex h-full flex-col rounded-[28px] bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff] dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 dark:shadow-[inset_4px_4px_8px_#1e293b,inset_-4px_-4px_8px_#475569]">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
@@ -533,16 +617,49 @@ export function TextToSpeechPanel() {
             </Badge>
           </div>
 
-          <Textarea
-            id="tts-text"
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            placeholder="Type what you want to say..."
-            className="mt-4 min-h-52 rounded-[24px] border-slate-200/80 bg-white/75 px-4 py-4 text-base shadow-sm dark:border-slate-700 dark:bg-slate-950/60"
-          />
+          <div className="mt-4 flex flex-1 flex-col">
+            <Textarea
+              id="tts-text"
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              placeholder="Type what you want to say..."
+              className="min-h-52 flex-1 rounded-[24px] border-slate-200/80 bg-white/75 px-4 py-4 text-base shadow-sm dark:border-slate-700 dark:bg-slate-950/60"
+            />
+
+            {waitingState.isWaiting ? (
+              <FreeUserWaiting className="mt-4" variant="compact" />
+            ) : showUpgradePrompt ? (
+              <div className="mt-4 rounded-[24px] border border-slate-200/80 bg-white/75 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950/55">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
+                      Free plan
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+                      Skip the free wait for instant TTS
+                    </p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
+                      {freePlanCharacterLimit} chars per request and a{' '}
+                      {freePlanWaitTime}s wait on free. Upgrade to generate
+                      instantly.
+                    </p>
+                  </div>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => showUpgradeModal('waiting_period')}
+                    className="rounded-full border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                  >
+                    Upgrade
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
 
-        <div className="rounded-[28px] bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff] dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 dark:shadow-[inset_4px_4px_8px_#1e293b,inset_-4px_-4px_8px_#475569]">
+        <div className="flex h-full flex-col rounded-[28px] bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff] dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 dark:shadow-[inset_4px_4px_8px_#1e293b,inset_-4px_-4px_8px_#475569]">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               Voice
@@ -626,13 +743,23 @@ export function TextToSpeechPanel() {
           <Button
             type="button"
             onClick={handleGenerate}
-            disabled={isGenerating || !text.trim() || !voiceId.trim()}
+            disabled={
+              isGenerating ||
+              waitingState.isWaiting ||
+              !text.trim() ||
+              !voiceId.trim()
+            }
             className={cn(
               'mt-4 h-11 w-full rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-lg shadow-slate-300/40 hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:shadow-slate-950/20 dark:hover:bg-slate-100',
-              isGenerating && 'cursor-wait'
+              (isGenerating || waitingState.isWaiting) && 'cursor-wait'
             )}
           >
-            {isGenerating ? (
+            {waitingState.isWaiting ? (
+              <span className="inline-flex items-center gap-2">
+                <Loader2 className="size-4 animate-spin" />
+                Wait {waitingState.remainingTime}s
+              </span>
+            ) : isGenerating ? (
               <span className="inline-flex items-center gap-2">
                 <Loader2 className="size-4 animate-spin" />
                 Generating
