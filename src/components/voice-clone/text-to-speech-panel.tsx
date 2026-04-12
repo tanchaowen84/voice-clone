@@ -322,6 +322,7 @@ export function TextToSpeechPanel() {
     string | null
   >(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
+  const previousSessionUserIdRef = useRef<string | null>(null);
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
   const { open: openAuthModal, setPending: setAuthPending } =
@@ -341,6 +342,7 @@ export function TextToSpeechPanel() {
     isGenerating,
     pendingAudioUrl,
     revealPendingAudio,
+    reset,
     setError,
     setGeneratedAudioUrl,
     setIsGenerating,
@@ -451,6 +453,25 @@ export function TextToSpeechPanel() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const previousSessionUserId = previousSessionUserIdRef.current;
+
+    if (!sessionUserId) {
+      if (previousSessionUserId) {
+        reset();
+      }
+
+      previousSessionUserIdRef.current = null;
+      return;
+    }
+
+    if (previousSessionUserId && previousSessionUserId !== sessionUserId) {
+      reset();
+    }
+
+    previousSessionUserIdRef.current = sessionUserId;
+  }, [reset, sessionUserId]);
 
   useEffect(() => {
     if (!sessionUserId) {
