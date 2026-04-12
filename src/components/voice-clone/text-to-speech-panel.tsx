@@ -72,6 +72,20 @@ type VoiceCacheEntry = {
 
 let voiceCache: VoiceCacheEntry | null = null;
 
+function clearStoredVoiceCache() {
+  voiceCache = null;
+
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(VOICE_CACHE_STORAGE_KEY);
+  } catch {
+    // Ignore storage quota and privacy-mode failures.
+  }
+}
+
 function getLanguageLabel(locale: string) {
   if (LANGUAGE_LABELS[locale]) {
     return LANGUAGE_LABELS[locale];
@@ -230,6 +244,8 @@ function readCachedVoices() {
     return voiceCache.voices;
   }
 
+  voiceCache = null;
+
   if (typeof window === 'undefined') {
     return null;
   }
@@ -246,15 +262,13 @@ function readCachedVoices() {
       parsedCache.expiresAt <= Date.now() ||
       !Array.isArray(parsedCache.voices)
     ) {
-      window.localStorage.removeItem(VOICE_CACHE_STORAGE_KEY);
-      voiceCache = null;
+      clearStoredVoiceCache();
       return null;
     }
 
     const cachedVoices = parsedCache.voices.filter(isCachedVoicePickerVoice);
     if (!cachedVoices.length) {
-      window.localStorage.removeItem(VOICE_CACHE_STORAGE_KEY);
-      voiceCache = null;
+      clearStoredVoiceCache();
       return null;
     }
 
@@ -265,8 +279,7 @@ function readCachedVoices() {
 
     return cachedVoices;
   } catch {
-    window.localStorage.removeItem(VOICE_CACHE_STORAGE_KEY);
-    voiceCache = null;
+    clearStoredVoiceCache();
     return null;
   }
 }

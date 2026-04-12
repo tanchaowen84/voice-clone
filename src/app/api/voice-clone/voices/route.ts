@@ -38,6 +38,13 @@ type VoiceCacheEntry = {
 
 let voiceCache: VoiceCacheEntry | null = null;
 let voiceCachePromise: Promise<NormalizedVoice[]> | null = null;
+let voiceCacheVersion = 0;
+
+function invalidateVoiceCache() {
+  voiceCacheVersion += 1;
+  voiceCache = null;
+  voiceCachePromise = null;
+}
 
 function normalizeOptionalString(
   value: string | null | undefined
@@ -132,7 +139,7 @@ function getCachedVoices() {
   }
 
   if (voiceCache.expiresAt <= Date.now()) {
-    voiceCache = null;
+    invalidateVoiceCache();
     return null;
   }
 
@@ -146,18 +153,25 @@ async function getVoices() {
   }
 
   if (!voiceCachePromise) {
+    const cacheVersion = voiceCacheVersion;
+
     voiceCachePromise = client.tts.voices
       .list()
       .then((voices) => voices.map(normalizeVoice))
       .then((voices) => {
-        voiceCache = {
-          expiresAt: Date.now() + VOICE_CACHE_TTL_MS,
-          voices,
-        };
+        if (cacheVersion === voiceCacheVersion) {
+          voiceCache = {
+            expiresAt: Date.now() + VOICE_CACHE_TTL_MS,
+            voices,
+          };
+        }
+
         return voices;
       })
       .finally(() => {
-        voiceCachePromise = null;
+        if (cacheVersion === voiceCacheVersion) {
+          voiceCachePromise = null;
+        }
       });
   }
 
@@ -207,6 +221,7 @@ export async function DELETE(request: NextRequest) {
 
     // Delete the voice
     await client.tts.voices.delete(voiceId);
+    invalidateVoiceCache();
 
     return NextResponse.json({
       success: true,
