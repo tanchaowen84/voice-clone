@@ -21,7 +21,14 @@ import {
 } from '@/stores/auth-modal-store';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { useTextToSpeechStore } from '@/stores/text-to-speech-store';
-import { Download, Globe2, Loader2, Search, Volume2 } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Download,
+  Globe2,
+  Loader2,
+  Search,
+  Volume2,
+} from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { VoicePickerCard, type VoicePickerVoice } from './voice-picker-card';
 
@@ -794,9 +801,12 @@ export function TextToSpeechPanel() {
                     type="button"
                     variant="outline"
                     onClick={() => showUpgradeModal('waiting_period')}
-                    className="rounded-full border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                    className="rounded-full border-0 bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 px-4 text-xs font-semibold text-white shadow-[0_14px_28px_-12px_rgba(249,115,22,0.95)] ring-1 ring-orange-200/70 transition-all hover:-translate-y-0.5 hover:from-amber-300 hover:via-orange-500 hover:to-rose-500 hover:text-white hover:shadow-[0_18px_36px_-14px_rgba(249,115,22,1)] focus-visible:ring-2 focus-visible:ring-orange-400/70 dark:ring-orange-400/30 dark:shadow-[0_16px_34px_-16px_rgba(251,146,60,0.85)]"
                   >
-                    Upgrade
+                    <span className="inline-flex items-center gap-1.5">
+                      Upgrade
+                      <ArrowUpRight className="size-3.5" />
+                    </span>
                   </Button>
                 </div>
               </div>

@@ -107,6 +107,23 @@ export interface SubscriptionState {
   getUpgradeRecommendation: () => PlanId | null;
 }
 
+const initialWaitingState = {
+  isWaiting: false,
+  remainingTime: 0,
+  totalWaitTime: 0,
+};
+
+function getWaitingStateForSubscription(
+  subscription: UserSubscriptionInfo | null,
+  currentWaitingState: SubscriptionState['waitingState']
+) {
+  if (subscription && subscription.planId !== 'free') {
+    return { ...initialWaitingState };
+  }
+
+  return currentWaitingState;
+}
+
 /**
  * 订阅状态管理 Store
  */
@@ -119,11 +136,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       lastUsageCheck: null,
       isLoading: false,
       error: null,
-      waitingState: {
-        isWaiting: false,
-        remainingTime: 0,
-        totalWaitTime: 0,
-      },
+      waitingState: { ...initialWaitingState },
 
       // 升级Modal状态
       upgradeModal: {
@@ -137,7 +150,14 @@ export const useSubscriptionStore = create<SubscriptionState>()(
           '📋 [Subscription Store] Setting subscription:',
           subscription
         );
-        set({ subscription, error: null });
+        set((state) => ({
+          subscription,
+          error: null,
+          waitingState: getWaitingStateForSubscription(
+            subscription,
+            state.waitingState
+          ),
+        }));
       },
 
       // 设置使用量信息
@@ -168,6 +188,12 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
       // 开始等待
       startWaiting: (waitTime) => {
+        const { subscription } = get();
+        if (subscription && subscription.planId !== 'free') {
+          set({ waitingState: { ...initialWaitingState } });
+          return;
+        }
+
         console.log(
           `⏳ [Subscription Store] Starting wait: ${waitTime} seconds`
         );
@@ -184,11 +210,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       stopWaiting: () => {
         console.log('✅ [Subscription Store] Stopping wait');
         set({
-          waitingState: {
-            isWaiting: false,
-            remainingTime: 0,
-            totalWaitTime: 0,
-          },
+          waitingState: { ...initialWaitingState },
         });
 
         // 通知voice-clone-store显示等待的结果
@@ -282,7 +304,14 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             isExpired: data.subscription.isExpired,
           };
 
-          set({ subscription, isLoading: false });
+          set((state) => ({
+            subscription,
+            isLoading: false,
+            waitingState: getWaitingStateForSubscription(
+              subscription,
+              state.waitingState
+            ),
+          }));
           console.log(
             '✅ [Subscription Store] Successfully fetched subscription info'
           );
@@ -400,7 +429,15 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             nextResetTime: new Date(data.usage.nextResetTime),
           };
 
-          set({ subscription, usage, isLoading: false });
+          set((state) => ({
+            subscription,
+            usage,
+            isLoading: false,
+            waitingState: getWaitingStateForSubscription(
+              subscription,
+              state.waitingState
+            ),
+          }));
           console.log('✅ [Subscription Store] Successfully fetched all data');
         } catch (error) {
           console.error(
@@ -426,11 +463,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
           lastUsageCheck: null,
           isLoading: false,
           error: null,
-          waitingState: {
-            isWaiting: false,
-            remainingTime: 0,
-            totalWaitTime: 0,
-          },
+          waitingState: { ...initialWaitingState },
         });
       },
 
