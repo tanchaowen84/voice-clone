@@ -10,6 +10,9 @@ interface FreeUserWaitingProps {
   variant?: 'default' | 'compact';
 }
 
+const freePlanUpgradeButtonClass =
+  'inline-flex items-center justify-center gap-2 rounded-full border-0 bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_16px_34px_rgba(249,115,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:from-amber-300 hover:via-orange-400 hover:to-rose-400 hover:shadow-[0_20px_40px_rgba(244,114,182,0.28)] focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950';
+
 function useWaitingCountdown() {
   const { waitingState, updateWaitingTime, showUpgradeModal } =
     useSubscriptionStore();
@@ -73,7 +76,7 @@ export function FreeUserWaiting({
     return (
       <div
         className={cn(
-          'rounded-[24px] border border-slate-200/80 bg-white/75 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950/55',
+          'rounded-[24px] border border-amber-200/80 bg-gradient-to-r from-amber-50 via-orange-50 to-rose-50 p-4 shadow-[0_18px_45px_rgba(249,115,22,0.14)] dark:border-amber-500/30 dark:from-amber-950/45 dark:via-orange-950/35 dark:to-rose-950/35',
           className
         )}
       >
@@ -98,7 +101,10 @@ export function FreeUserWaiting({
                 showUpgradeModal('waiting_period');
               }, 0);
             }}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+            className={cn(
+              freePlanUpgradeButtonClass,
+              'shrink-0 px-4 py-2 text-xs font-semibold'
+            )}
           >
             <Zap className="h-3.5 w-3.5" />
             Upgrade
@@ -176,7 +182,10 @@ export function FreeUserWaiting({
       <div className="text-center">
         <button
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 bg-gradient-to-br from-slate-500 to-indigo-500 text-white shadow-[3px_3px_6px_rgba(100,116,139,0.3),-3px_-3px_6px_rgba(99,102,241,0.3)] hover:shadow-[2px_2px_4px_rgba(100,116,139,0.4),-2px_-2px_4px_rgba(99,102,241,0.4)] active:shadow-[inset_2px_2px_4px_rgba(100,116,139,0.3),inset_-2px_-2px_4px_rgba(99,102,241,0.3)] hover:scale-105"
+          className={cn(
+            freePlanUpgradeButtonClass,
+            'rounded-xl px-4 py-2 text-sm font-semibold'
+          )}
           onClick={() => {
             console.log('🚀 [Free User Waiting] Upgrade button clicked');
             // 使用setTimeout避免在渲染过程中更新状态

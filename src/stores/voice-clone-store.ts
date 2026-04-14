@@ -135,9 +135,12 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
   generateSpeech: async (text: string) => {
     const state = get();
     const subscriptionStore = useSubscriptionStore.getState();
+    const isWaitingForFreePlan =
+      subscriptionStore.waitingState.isWaiting &&
+      subscriptionStore.subscription?.planId === 'free';
 
     // 检查是否在等待状态中
-    if (subscriptionStore.waitingState.isWaiting) {
+    if (isWaitingForFreePlan) {
       console.log(
         '⏳ [Voice Clone Store] Cannot generate speech while waiting'
       );
@@ -309,25 +312,33 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
             `⏳ [Voice Clone Store] Starting wait time: ${usageInfo.waitTime} seconds, audio result will be shown after waiting`
           );
 
-          // 启动等待状态
-          subscriptionStore.startWaiting(usageInfo.waitTime);
-
-          // 暂存音频结果，等待完成后再显示
-          set({
-            pendingAudioUrl: audioUrl,
-            generatedAudioUrl: null, // 隐藏结果直到等待完成
-          });
-
-          console.log(
-            '⏳ [Voice Clone Store] Audio result stored, waiting for countdown to complete...'
+          const waitStarted = subscriptionStore.startWaiting(
+            usageInfo.waitTime
           );
+
+          if (waitStarted) {
+            // 暂存音频结果，等待完成后再显示
+            set({
+              pendingAudioUrl: audioUrl,
+              generatedAudioUrl: null, // 隐藏结果直到等待完成
+            });
+
+            console.log(
+              '⏳ [Voice Clone Store] Audio result stored, waiting for countdown to complete...'
+            );
+          } else {
+            set({
+              generatedAudioUrl: audioUrl,
+              pendingAudioUrl: null,
+            });
+          }
         } else {
           // 付费用户或无等待时间，直接显示结果
-          set({ generatedAudioUrl: audioUrl });
+          set({ generatedAudioUrl: audioUrl, pendingAudioUrl: null });
         }
       } else {
         // 没有使用量信息，直接显示结果
-        set({ generatedAudioUrl: audioUrl });
+        set({ generatedAudioUrl: audioUrl, pendingAudioUrl: null });
       }
     } catch (error) {
       console.error('Speech generation error:', error);
