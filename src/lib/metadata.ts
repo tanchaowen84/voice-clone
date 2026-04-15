@@ -13,12 +13,14 @@ export function constructMetadata({
   canonicalUrl,
   image,
   noIndex = false,
+  robots,
 }: {
   title?: string;
   description?: string;
   canonicalUrl?: string;
   image?: string;
   noIndex?: boolean;
+  robots?: Metadata['robots'];
 } = {}): Metadata {
   title = title || defaultMessages.Metadata.title;
   description = description || defaultMessages.Metadata.description;
@@ -55,11 +57,15 @@ export function constructMetadata({
     },
     metadataBase: new URL(getBaseUrl()),
     manifest: `${getBaseUrl()}/manifest.webmanifest`,
-    ...(noIndex && {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }),
+    ...(robots
+      ? { robots }
+      : noIndex
+        ? {
+            robots: {
+              index: false,
+              follow: false,
+            },
+          }
+        : {}),
   };
 }

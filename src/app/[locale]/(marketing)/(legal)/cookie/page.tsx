@@ -29,7 +29,10 @@ export async function generateMetadata({
     title: page.title + ' | ' + t('title'),
     description: page.description,
     canonicalUrl: getUrlWithLocale('/cookie', locale),
-    noIndex: true,
+    robots: {
+      index: true,
+      follow: true,
+    },
   });
 }
 
