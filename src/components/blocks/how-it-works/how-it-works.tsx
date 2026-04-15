@@ -113,7 +113,7 @@ export default function HowItWorksSection() {
 
         <div className="mt-12 text-center">
           <Button asChild size="lg" className="gap-2">
-            <LocaleLink href="/canvas">
+            <LocaleLink href="/#hero">
               {t('getStarted')}
               <ChevronRight className="!size-4" />
             </LocaleLink>
