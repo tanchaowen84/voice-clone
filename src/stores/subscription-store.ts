@@ -81,7 +81,7 @@ export interface SubscriptionState {
   setError: (error: string | null) => void;
 
   // 等待相关
-  startWaiting: (waitTime: number) => void;
+  startWaiting: (waitTime: number) => boolean;
   stopWaiting: () => void;
   updateWaitingTime: (remainingTime: number) => void;
 
@@ -107,6 +107,31 @@ export interface SubscriptionState {
   getUpgradeRecommendation: () => PlanId | null;
 }
 
+const initialWaitingState = {
+  isWaiting: false,
+  remainingTime: 0,
+  totalWaitTime: 0,
+};
+
+function flushPendingResults() {
+  setTimeout(() => {
+    void Promise.all([
+      import('@/stores/text-to-speech-store'),
+      import('@/stores/voice-clone-store'),
+    ])
+      .then(([textToSpeechModule, voiceCloneModule]) => {
+        textToSpeechModule.useTextToSpeechStore.getState().revealPendingAudio();
+        voiceCloneModule.useVoiceCloneStore.getState().showPendingResult();
+      })
+      .catch((error) => {
+        console.warn(
+          '⚠️ [Subscription Store] Failed to flush pending results:',
+          error
+        );
+      });
+  }, 100);
+}
+
 /**
  * 订阅状态管理 Store
  */
@@ -119,11 +144,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       lastUsageCheck: null,
       isLoading: false,
       error: null,
-      waitingState: {
-        isWaiting: false,
-        remainingTime: 0,
-        totalWaitTime: 0,
-      },
+      waitingState: { ...initialWaitingState },
 
       // 升级Modal状态
       upgradeModal: {
@@ -137,7 +158,23 @@ export const useSubscriptionStore = create<SubscriptionState>()(
           '📋 [Subscription Store] Setting subscription:',
           subscription
         );
-        set({ subscription, error: null });
+        const shouldClearWaiting = Boolean(
+          subscription &&
+            subscription.planId !== 'free' &&
+            get().waitingState.isWaiting
+        );
+
+        set((state) => ({
+          subscription,
+          error: null,
+          waitingState: shouldClearWaiting
+            ? { ...initialWaitingState }
+            : state.waitingState,
+        }));
+
+        if (shouldClearWaiting) {
+          flushPendingResults();
+        }
       },
 
       // 设置使用量信息
@@ -168,6 +205,22 @@ export const useSubscriptionStore = create<SubscriptionState>()(
 
       // 开始等待
       startWaiting: (waitTime) => {
+        const { subscription } = get();
+
+        if (waitTime <= 0) {
+          set({ waitingState: { ...initialWaitingState } });
+          return false;
+        }
+
+        if (subscription && subscription.planId !== 'free') {
+          console.log(
+            `⏭️ [Subscription Store] Skipping free wait for paid plan ${subscription.planId}`
+          );
+          set({ waitingState: { ...initialWaitingState } });
+          flushPendingResults();
+          return false;
+        }
+
         console.log(
           `⏳ [Subscription Store] Starting wait: ${waitTime} seconds`
         );
@@ -178,32 +231,16 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             totalWaitTime: waitTime,
           },
         });
+        return true;
       },
 
       // 停止等待
       stopWaiting: () => {
         console.log('✅ [Subscription Store] Stopping wait');
         set({
-          waitingState: {
-            isWaiting: false,
-            remainingTime: 0,
-            totalWaitTime: 0,
-          },
+          waitingState: { ...initialWaitingState },
         });
-
-        // 通知voice-clone-store显示等待的结果
-        // 使用setTimeout确保状态更新完成后再触发
-        setTimeout(() => {
-          // 动态导入避免循环依赖
-          import('@/stores/voice-clone-store').then(
-            ({ useVoiceCloneStore }) => {
-              const voiceStore = useVoiceCloneStore.getState();
-              if (voiceStore.showPendingResult) {
-                voiceStore.showPendingResult();
-              }
-            }
-          );
-        }, 100);
+        flushPendingResults();
       },
 
       // 更新等待时间
@@ -282,7 +319,20 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             isExpired: data.subscription.isExpired,
           };
 
-          set({ subscription, isLoading: false });
+          const shouldClearWaiting =
+            subscription.planId !== 'free' && get().waitingState.isWaiting;
+
+          set((state) => ({
+            subscription,
+            isLoading: false,
+            waitingState: shouldClearWaiting
+              ? { ...initialWaitingState }
+              : state.waitingState,
+          }));
+
+          if (shouldClearWaiting) {
+            flushPendingResults();
+          }
           console.log(
             '✅ [Subscription Store] Successfully fetched subscription info'
           );
@@ -400,7 +450,21 @@ export const useSubscriptionStore = create<SubscriptionState>()(
             nextResetTime: new Date(data.usage.nextResetTime),
           };
 
-          set({ subscription, usage, isLoading: false });
+          const shouldClearWaiting =
+            subscription.planId !== 'free' && get().waitingState.isWaiting;
+
+          set((state) => ({
+            subscription,
+            usage,
+            isLoading: false,
+            waitingState: shouldClearWaiting
+              ? { ...initialWaitingState }
+              : state.waitingState,
+          }));
+
+          if (shouldClearWaiting) {
+            flushPendingResults();
+          }
           console.log('✅ [Subscription Store] Successfully fetched all data');
         } catch (error) {
           console.error(
@@ -426,11 +490,7 @@ export const useSubscriptionStore = create<SubscriptionState>()(
           lastUsageCheck: null,
           isLoading: false,
           error: null,
-          waitingState: {
-            isWaiting: false,
-            remainingTime: 0,
-            totalWaitTime: 0,
-          },
+          waitingState: { ...initialWaitingState },
         });
       },
 
@@ -449,9 +509,11 @@ export const useSubscriptionStore = create<SubscriptionState>()(
       // 是否可以使用服务
       canUseService: (textLength) => {
         const state = get();
+        const isWaitingForFreePlan =
+          state.waitingState.isWaiting && state.subscription?.planId === 'free';
 
         // 检查是否在等待中
-        if (state.waitingState.isWaiting) {
+        if (isWaitingForFreePlan) {
           return false;
         }
 
