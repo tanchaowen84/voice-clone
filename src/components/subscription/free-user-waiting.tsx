@@ -1,5 +1,9 @@
 'use client';
 
+import {
+  freePlanUpgradeButtonClassName,
+  freePlanUpgradePanelClassName,
+} from '@/components/subscription/free-plan-upgrade-styles';
 import { cn } from '@/lib/utils';
 import { useSubscriptionStore } from '@/stores/subscription-store';
 import { Clock, Zap } from 'lucide-react';
@@ -71,21 +75,18 @@ export function FreeUserWaiting({
 
   if (variant === 'compact') {
     return (
-      <div
-        className={cn(
-          'rounded-[24px] border border-slate-200/80 bg-white/75 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950/55',
-          className
-        )}
-      >
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div className={cn(freePlanUpgradePanelClassName, 'p-4', className)}>
+        <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 translate-x-1/3 -translate-y-1/3 rounded-full bg-sky-300/35 blur-3xl dark:bg-sky-400/15" />
+
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-700 dark:text-sky-200">
               Free plan
             </p>
-            <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <p className="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-50">
               Generating your preview
             </p>
-            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-200">
               Your free preview unlocks in {timeLeft}s. Upgrade to skip the
               wait.
             </p>
@@ -98,22 +99,25 @@ export function FreeUserWaiting({
                 showUpgradeModal('waiting_period');
               }, 0);
             }}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+            className={cn(
+              freePlanUpgradeButtonClassName,
+              'shrink-0 px-4 py-2 text-xs font-semibold'
+            )}
           >
             <Zap className="h-3.5 w-3.5" />
             Upgrade
           </button>
         </div>
 
-        <div className="mt-4">
-          <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+        <div className="relative mt-4">
+          <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-300">
             <span>Ready in {timeLeft}s</span>
             <span>{Math.round(progress)}%</span>
           </div>
 
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/70 dark:bg-slate-900/70">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-fuchsia-500 transition-all duration-1000 ease-linear"
+              className="h-full rounded-full bg-gradient-to-r from-sky-400 via-indigo-500 to-violet-500 transition-all duration-1000 ease-linear"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -176,7 +180,10 @@ export function FreeUserWaiting({
       <div className="text-center">
         <button
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 bg-gradient-to-br from-slate-500 to-indigo-500 text-white shadow-[3px_3px_6px_rgba(100,116,139,0.3),-3px_-3px_6px_rgba(99,102,241,0.3)] hover:shadow-[2px_2px_4px_rgba(100,116,139,0.4),-2px_-2px_4px_rgba(99,102,241,0.4)] active:shadow-[inset_2px_2px_4px_rgba(100,116,139,0.3),inset_-2px_-2px_4px_rgba(99,102,241,0.3)] hover:scale-105"
+          className={cn(
+            freePlanUpgradeButtonClassName,
+            'rounded-xl px-4 py-2 text-sm font-semibold'
+          )}
           onClick={() => {
             console.log('🚀 [Free User Waiting] Upgrade button clicked');
             // 使用setTimeout避免在渲染过程中更新状态

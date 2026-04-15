@@ -1,5 +1,9 @@
 'use client';
 
+import {
+  freePlanUpgradeButtonClassName,
+  freePlanUpgradePanelClassName,
+} from '@/components/subscription/free-plan-upgrade-styles';
 import { FreeUserWaiting } from '@/components/subscription/free-user-waiting';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -361,8 +365,17 @@ export function TextToSpeechPanel() {
     subscription?.planId === 'free'
       ? subscription.planConfig.limits.waitTime
       : freePlanConfig.limits.waitTime;
-  const isFreeUser = Boolean(sessionUserId && subscription?.planId === 'free');
-  const showUpgradePrompt = isFreeUser && !waitingState.isWaiting;
+  const isGuestUser = !isSessionPending && !sessionUserId;
+  const isFreePlanUser = Boolean(
+    sessionUserId && subscription?.planId === 'free'
+  );
+  const isWaitingForFreePlan =
+    waitingState.isWaiting && subscription?.planId === 'free';
+  const showUpgradePrompt =
+    !isWaitingForFreePlan && (isGuestUser || isFreePlanUser);
+  const freePlanPromptDescription = isGuestUser
+    ? `Guest access starts on the free plan with ${freePlanCharacterLimit} chars per request and a ${freePlanWaitTime}s wait. Upgrade to unlock instant generation.`
+    : `${freePlanCharacterLimit} chars per request and a ${freePlanWaitTime}s wait on free. Upgrade to generate instantly.`;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -488,10 +501,10 @@ export function TextToSpeechPanel() {
   }, [fetchAllData, sessionUserId, subscription?.userId]);
 
   useEffect(() => {
-    if (!waitingState.isWaiting && pendingAudioUrl) {
+    if (!isWaitingForFreePlan && pendingAudioUrl) {
       revealPendingAudio();
     }
-  }, [pendingAudioUrl, revealPendingAudio, waitingState.isWaiting]);
+  }, [isWaitingForFreePlan, pendingAudioUrl, revealPendingAudio]);
 
   const languageOptions = useMemo(() => {
     const locales = new Set<string>(Object.keys(LANGUAGE_LABELS));
@@ -666,9 +679,12 @@ export function TextToSpeechPanel() {
       });
 
       if (waitTime > 0) {
-        setPendingAudioUrl(nextAudioUrl);
-        startWaiting(waitTime);
-        return;
+        const waitStarted = startWaiting(waitTime);
+
+        if (waitStarted) {
+          setPendingAudioUrl(nextAudioUrl);
+          return;
+        }
       }
 
       setGeneratedAudioUrl(nextAudioUrl);
@@ -684,7 +700,7 @@ export function TextToSpeechPanel() {
   };
 
   const handleGenerate = async () => {
-    if (!text.trim() || waitingState.isWaiting) {
+    if (!text.trim() || isWaitingForFreePlan) {
       return;
     }
 
@@ -771,30 +787,37 @@ export function TextToSpeechPanel() {
               className="min-h-52 flex-1 rounded-[24px] border-slate-200/80 bg-white/75 px-4 py-4 text-base shadow-sm dark:border-slate-700 dark:bg-slate-950/60"
             />
 
-            {waitingState.isWaiting ? (
+            {isWaitingForFreePlan ? (
               <FreeUserWaiting className="mt-4" variant="compact" />
             ) : showUpgradePrompt ? (
-              <div className="mt-4 rounded-[24px] border border-slate-200/80 bg-white/75 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950/55">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div
+                className={cn(
+                  freePlanUpgradePanelClassName,
+                  'relative z-10 mt-4 p-4'
+                )}
+              >
+                <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 translate-x-1/3 -translate-y-1/3 rounded-full bg-sky-300/35 blur-3xl dark:bg-sky-400/15" />
+
+                <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="min-w-0">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-700 dark:text-sky-200">
                       Free plan
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+                    <p className="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-50">
                       Skip the free wait for instant TTS
                     </p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
-                      {freePlanCharacterLimit} chars per request and a{' '}
-                      {freePlanWaitTime}s wait on free. Upgrade to generate
-                      instantly.
+                    <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-200">
+                      {freePlanPromptDescription}
                     </p>
                   </div>
 
                   <Button
                     type="button"
-                    variant="outline"
                     onClick={() => showUpgradeModal('waiting_period')}
-                    className="rounded-full border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                    className={cn(
+                      freePlanUpgradeButtonClassName,
+                      'shrink-0 px-5 text-xs font-semibold'
+                    )}
                   >
                     Upgrade
                   </Button>
@@ -890,16 +913,16 @@ export function TextToSpeechPanel() {
             onClick={handleGenerate}
             disabled={
               isGenerating ||
-              waitingState.isWaiting ||
+              isWaitingForFreePlan ||
               !text.trim() ||
               !voiceId.trim()
             }
             className={cn(
               'mt-4 h-11 w-full rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-lg shadow-slate-300/40 hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:shadow-slate-950/20 dark:hover:bg-slate-100',
-              (isGenerating || waitingState.isWaiting) && 'cursor-wait'
+              (isGenerating || isWaitingForFreePlan) && 'cursor-wait'
             )}
           >
-            {waitingState.isWaiting ? (
+            {isWaitingForFreePlan ? (
               <span className="inline-flex items-center gap-2">
                 <Loader2 className="size-4 animate-spin" />
                 Wait {waitingState.remainingTime}s

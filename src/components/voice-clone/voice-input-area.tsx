@@ -33,9 +33,11 @@ export function VoiceInputArea() {
     currentStep,
     isGenerating,
     generatedAudioUrl,
+    pendingAudioUrl,
     error,
     generateSpeech,
     reset,
+    showPendingResult,
     audioFile,
     recordedBlob,
     setAudioFile,
@@ -50,6 +52,8 @@ export function VoiceInputArea() {
   const { subscription, waitingState, fetchAllData, showUpgradeModal } =
     useSubscriptionStore();
   const [textInput, setTextInput] = useState('');
+  const isWaitingForFreePlan =
+    waitingState.isWaiting && subscription?.planId === 'free';
 
   const hasVoiceSample = Boolean(audioFile || recordedBlob);
   const canGenerate =
@@ -68,6 +72,12 @@ export function VoiceInputArea() {
       });
     }
   }, [subscription, fetchAllData]);
+
+  useEffect(() => {
+    if (!isWaitingForFreePlan && pendingAudioUrl) {
+      showPendingResult();
+    }
+  }, [isWaitingForFreePlan, pendingAudioUrl, showPendingResult]);
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
@@ -311,10 +321,10 @@ export function VoiceInputArea() {
             <button
               type="button"
               onClick={handleGenerateSpeech}
-              disabled={isGenerating || !canGenerate || waitingState.isWaiting}
+              disabled={isGenerating || !canGenerate || isWaitingForFreePlan}
               className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200 dark:disabled:bg-slate-700 dark:disabled:text-slate-500"
             >
-              {waitingState.isWaiting ? (
+              {isWaitingForFreePlan ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Wait {waitingState.remainingTime}s
@@ -335,7 +345,7 @@ export function VoiceInputArea() {
               </p>
             )}
 
-            {waitingState.isWaiting && <FreeUserWaiting />}
+            {isWaitingForFreePlan && <FreeUserWaiting />}
 
             {generatedAudioUrl && (
               <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
