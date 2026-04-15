@@ -15,6 +15,7 @@
     "db:studio": "drizzle-kit studio",
     "docs": "content-collections build",
     "email": "email dev --dir src/mail/templates --port 3333",
+    "indexnow:submit": "tsx scripts/submit-indexnow.ts",
     "upload-assets": "node scripts/upload-static-assets.js",
     "seed:usage": "node scripts/seed-usage.js"
   },
