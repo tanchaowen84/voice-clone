@@ -1,7 +1,8 @@
 import { websiteConfig } from '@/config/website';
 import { getLocalePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { allCategories, allPosts } from 'content-collections';
+import { Routes } from '@/routes';
+import { allPosts } from 'content-collections';
 import type { MetadataRoute } from 'next';
 import type { Locale } from 'next-intl';
 import { getBaseUrl } from '../lib/urls/urls';
@@ -30,6 +31,15 @@ function getEnabledStaticRoutes(): string[] {
   return [...baseRoutes, ...conditionalRoutes];
 }
 
+function getToolRoutes(): string[] {
+  return [
+    Routes.ToolsAudioEnhancer,
+    Routes.ToolsEchoRemover,
+    Routes.ToolsVoiceRecorder,
+    Routes.ToolsMicTest,
+  ];
+}
+
 /**
  * Generate a sitemap for the website
  *
@@ -54,11 +64,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  // add categories
+  // add tool detail pages
   sitemapList.push(
-    ...allCategories.flatMap((category: { slug: string }) =>
+    ...getToolRoutes().flatMap((route) =>
       routing.locales.map((locale) => ({
-        url: getUrl(`/blog/category/${category.slug}`, locale),
+        url: getUrl(route, locale),
         lastModified: new Date(),
         priority: 0.8,
         changeFrequency: 'weekly' as const,
@@ -84,42 +94,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly' as const,
       });
     }
-  });
-
-  // add paginated category pages
-  routing.locales.forEach((locale) => {
-    const localeCategories = allCategories.filter(
-      (category) => category.locale === locale
-    );
-    localeCategories.forEach((category) => {
-      // posts in this category and locale
-      const postsInCategory = allPosts.filter(
-        (post) =>
-          post.locale === locale &&
-          post.published &&
-          post.categories.some((cat) => cat && cat.slug === category.slug)
-      );
-      const totalPages = Math.max(
-        1,
-        Math.ceil(postsInCategory.length / websiteConfig.blog.paginationSize)
-      );
-      // /blog/category/[slug] (first page)
-      sitemapList.push({
-        url: getUrl(`/blog/category/${category.slug}`, locale),
-        lastModified: new Date(),
-        priority: 0.8,
-        changeFrequency: 'weekly' as const,
-      });
-      // /blog/category/[slug]/page/[page] (from 2)
-      for (let page = 2; page <= totalPages; page++) {
-        sitemapList.push({
-          url: getUrl(`/blog/category/${category.slug}/page/${page}`, locale),
-          lastModified: new Date(),
-          priority: 0.8,
-          changeFrequency: 'weekly' as const,
-        });
-      }
-    });
   });
 
   // add posts (single post pages)
