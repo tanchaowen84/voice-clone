@@ -14,12 +14,10 @@ type Href = Parameters<typeof getLocalePathname>[0]['href'];
 function getEnabledStaticRoutes(): string[] {
   const baseRoutes = [
     '/',
-    '/blog',
-    '/privacy',
-    '/terms',
-    '/cookie',
-    // Exclude auth routes from sitemap because these pages redirect to home
-    // and should not be indexed
+    '/tools/audio-enhancer',
+    '/tools/echo-remover-ai',
+    '/tools/online-voice-recorder',
+    '/tools/mic-test-online',
   ];
 
   // 条件性添加页面路由
@@ -55,18 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly' as const,
       }));
     })
-  );
-
-  // add categories
-  sitemapList.push(
-    ...allCategories.flatMap((category: { slug: string }) =>
-      routing.locales.map((locale) => ({
-        url: getUrl(`/blog/category/${category.slug}`, locale),
-        lastModified: new Date(),
-        priority: 0.8,
-        changeFrequency: 'weekly' as const,
-      }))
-    )
   );
 
   // add paginated blog list pages
