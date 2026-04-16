@@ -25,12 +25,17 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-  return constructMetadata({
-    title: page.title + ' | ' + t('title'),
-    description: page.description,
-    canonicalUrl: getUrlWithLocale('/cookie', locale),
-    noIndex: true,
-  });
+  return {
+    ...constructMetadata({
+      title: page.title + ' | ' + t('title'),
+      description: page.description,
+      canonicalUrl: getUrlWithLocale('/cookie', locale),
+    }),
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 export default async function CookiePolicyPage(props: NextPageProps) {

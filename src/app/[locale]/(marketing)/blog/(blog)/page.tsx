@@ -15,12 +15,17 @@ export async function generateMetadata({ params }: BlogPageProps) {
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const pt = await getTranslations({ locale, namespace: 'BlogPage' });
   const canonicalPath = '/blog';
-  return constructMetadata({
-    title: `${pt('title')} | ${t('title')}`,
-    description: pt('description'),
-    canonicalUrl: getUrlWithLocale(canonicalPath, locale),
-    noIndex: true,
-  });
+  return {
+    ...constructMetadata({
+      title: `${pt('title')} | ${t('title')}`,
+      description: pt('description'),
+      canonicalUrl: getUrlWithLocale(canonicalPath, locale),
+    }),
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 interface BlogPageProps {
