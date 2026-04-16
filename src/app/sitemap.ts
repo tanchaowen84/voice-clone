@@ -14,12 +14,9 @@ type Href = Parameters<typeof getLocalePathname>[0]['href'];
 function getEnabledStaticRoutes(): string[] {
   const baseRoutes = [
     '/',
-    '/blog',
-    '/privacy',
-    '/terms',
-    '/cookie',
     // Exclude auth routes from sitemap because these pages redirect to home
     // and should not be indexed
+    // Exclude noindex,follow pages from sitemap to avoid indexation conflicts
   ];
 
   // 条件性添加页面路由
