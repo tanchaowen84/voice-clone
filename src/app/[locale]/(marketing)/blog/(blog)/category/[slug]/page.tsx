@@ -35,11 +35,17 @@ export async function generateMetadata({ params }: BlogCategoryPageProps) {
   }
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const canonicalPath = `/blog/category/${slug}`;
-  return constructMetadata({
-    title: `${category.name} | ${t('title')}`,
-    description: category.description,
-    canonicalUrl: getUrlWithLocale(canonicalPath, locale),
-  });
+  return {
+    ...constructMetadata({
+      title: `${category.name} | ${t('title')}`,
+      description: category.description,
+      canonicalUrl: getUrlWithLocale(canonicalPath, locale),
+    }),
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
 }
 
 interface BlogCategoryPageProps {
