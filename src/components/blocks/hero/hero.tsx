@@ -1,15 +1,29 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { TextToSpeechPanel } from '@/components/voice-clone/text-to-speech-panel';
 import { VoiceInputArea } from '@/components/voice-clone/voice-input-area';
 import { motion } from 'framer-motion';
 import { Mic, Type } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('HomePage.hero');
-  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>('tts');
+  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>(
+    'voice-clone'
+  );
+  const interfaceRef = useRef<HTMLDivElement>(null);
+
+  const selectFeatureMode = (mode: 'tts' | 'voice-clone') => {
+    setFeatureMode(mode);
+    window.requestAnimationFrame(() => {
+      interfaceRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  };
 
   return (
     <>
@@ -72,11 +86,35 @@ export default function HeroSection() {
                 <p className="mx-auto mt-6 max-w-5xl text-balance text-xl text-foreground leading-relaxed">
                   {t('description')}
                 </p>
+
+                <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <Button
+                    type="button"
+                    size="lg"
+                    onClick={() => selectFeatureMode('voice-clone')}
+                  >
+                    <Mic className="h-4 w-4" />
+                    {t('primary')}
+                  </Button>
+                  <Button
+                    type="button"
+                    size="lg"
+                    variant="outline"
+                    onClick={() => selectFeatureMode('tts')}
+                  >
+                    <Type className="h-4 w-4" />
+                    {t('secondary')}
+                  </Button>
+                </div>
+
+                <p className="mx-auto mt-3 max-w-3xl text-sm text-muted-foreground">
+                  {t('safetyNote')}
+                </p>
               </div>
             </div>
 
             {/* Main Interface */}
-            <div className="mt-16 mb-20 px-4">
+            <div ref={interfaceRef} className="mt-16 mb-20 scroll-mt-24 px-4">
               <div className="max-w-5xl mx-auto">
                 {/* Home Feature Switch */}
                 <div className="flex items-center justify-center mb-8">
@@ -88,7 +126,11 @@ export default function HeroSection() {
                         x: featureMode === 'tts' ? 2 : 146,
                         width: 144,
                       }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
 
                     <div className="relative flex">
