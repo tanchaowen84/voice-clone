@@ -415,15 +415,36 @@ export default function VoiceRecorderClient() {
 
             {/* Recording Status */}
             {recordedBlob && (
-              <div className="text-center text-sm text-muted-foreground space-y-1">
-                <div>
-                  Recording completed • Duration: {formatTime(recordingTime)} •
-                  Size: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
+              <div className="space-y-4">
+                <div className="text-center text-sm text-muted-foreground space-y-1">
+                  <div>
+                    Recording completed • Duration: {formatTime(recordingTime)}{' '}
+                    • Size: {(recordedBlob.size / 1024 / 1024).toFixed(2)} MB
+                  </div>
+                  <div className="text-xs">
+                    {isAudioConversionSupported()
+                      ? 'Download will be converted to WAV format for better compatibility'
+                      : 'Download will be in WebM format'}
+                  </div>
                 </div>
-                <div className="text-xs">
-                  {isAudioConversionSupported()
-                    ? 'Download will be converted to WAV format for better compatibility'
-                    : 'Download will be in WebM format'}
+
+                <div className="rounded-lg border bg-muted/40 p-4 text-left">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-sm font-medium">
+                        {seoContent.recordingComplete.title}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {seoContent.recordingComplete.description}
+                      </p>
+                    </div>
+                    <LocaleLink href={Routes.Root}>
+                      <Button variant="outline" className="gap-2">
+                        {seoContent.recordingComplete.button}
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </LocaleLink>
+                  </div>
                 </div>
               </div>
             )}
@@ -433,6 +454,50 @@ export default function VoiceRecorderClient() {
 
       {/* SEO Content Sections */}
       <div className="mt-16 space-y-16">
+        {/* Voice Clone Sample Workflow */}
+        <BlurFade delay={0.15}>
+          <section className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              {seoContent.sampleWorkflow.title}
+            </h2>
+            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
+              {seoContent.sampleWorkflow.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground mb-8 max-w-3xl mx-auto">
+              {seoContent.sampleWorkflow.intro}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {seoContent.sampleWorkflow.steps.map((step, index) => (
+                <Card key={index} className="p-6 text-left">
+                  <div className="flex items-center gap-3 mb-3">
+                    {step.icon === 'mic' && (
+                      <Mic className="h-5 w-5 text-primary" />
+                    )}
+                    {step.icon === 'download' && (
+                      <Download className="h-5 w-5 text-primary" />
+                    )}
+                    {step.icon === 'clone' && (
+                      <Zap className="h-5 w-5 text-primary" />
+                    )}
+                    <h3 className="font-medium">{step.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {step.description}
+                  </p>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-6">
+              <LocaleLink href={Routes.Root}>
+                <Button variant="outline" size="lg" className="gap-2">
+                  {seoContent.sampleWorkflow.button}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </LocaleLink>
+            </div>
+          </section>
+        </BlurFade>
+
         {/* Features Section */}
         <BlurFade delay={0.2}>
           <section className="text-center">
@@ -693,9 +758,9 @@ export default function VoiceRecorderClient() {
                   <Mic className="h-4 w-4" />
                   {seoContent.cta.buttons.primary}
                 </Button>
-                <LocaleLink href={Routes.ToolsAudioEnhancer}>
+                <LocaleLink href={Routes.Root}>
                   <Button variant="outline" size="lg" className="gap-2">
-                    <Zap className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" />
                     {seoContent.cta.buttons.secondary}
                   </Button>
                 </LocaleLink>

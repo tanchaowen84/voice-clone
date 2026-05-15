@@ -1,23 +1,51 @@
 {
   "hero": {
-    "title": "Free Online Voice Recorder",
-    "subtitle": "Professional online voice recorder with real-time waveform visualization and instant WAV export",
-    "description": "Record high-quality audio directly in your browser with our advanced online voice recorder. No login required, privacy-first design, and instant WAV export. Perfect for podcasters, content creators, and professionals.",
+    "title": "Free Online Voice Recorder for WAV Voice Samples",
+    "subtitle": "Record voice online in your browser with waveform preview, no signup, and local export",
+    "description": "Capture a clear voice memo, podcast take, interview clip, or voice clone sample directly in your browser. Preview your waveform, download the recording, and use it in the next step of your audio workflow.",
     "bullets": [
+      "Browser voice recorder",
       "No registration required",
-      "Real-time waveform visualization",
-      "Professional WAV export",
-      "Privacy-first local processing"
+      "Real-time waveform preview",
+      "Voice clone sample prep"
     ],
     "cta": {
       "primary": "Start Recording Now",
-      "secondary": "Enhance Your Audio"
+      "secondary": "Use with Voice Clone"
     }
   },
+  "recordingComplete": {
+    "title": "Use this recording as a voice clone sample",
+    "description": "Download the cleanest take, then open Voice Clone and upload the file as your voice sample. A clear 15 to 30 second clip works best.",
+    "button": "Open Voice Clone"
+  },
+  "sampleWorkflow": {
+    "title": "Record a Voice Sample for Voice Cloning",
+    "subtitle": "A simple browser recorder for the step before voice cloning",
+    "intro": "Many people searching for an online voice recorder need a clean sample they can reuse. This page keeps capture simple, then points you to the existing Voice Clone workflow when your sample is ready.",
+    "steps": [
+      {
+        "title": "Record a clean sample",
+        "description": "Use a quiet room, keep your mic close, and speak naturally for 15 to 30 seconds. The waveform helps you avoid long silence or clipping.",
+        "icon": "mic"
+      },
+      {
+        "title": "Download your take",
+        "description": "Save the best recording locally as WAV when supported, with WebM fallback when your browser cannot convert the file.",
+        "icon": "download"
+      },
+      {
+        "title": "Continue in Voice Clone",
+        "description": "Open the Voice Clone workflow on the homepage, choose Voice Clone, and upload your downloaded recording as the sample.",
+        "icon": "clone"
+      }
+    ],
+    "button": "Continue to Voice Clone"
+  },
   "features": {
-    "title": "Advanced Online Voice Recorder Features",
-    "subtitle": "Professional-grade voice recorder online capabilities for content creators and professionals",
-    "intro": "Professional recording quality with real-time visualization. Everything you need for podcasting, content creation, and audio capture without downloads.",
+    "title": "Online Voice Recorder Features",
+    "subtitle": "Record, preview, and export voice audio without installing an app",
+    "intro": "Use the recorder for quick memos, narration, podcast clips, interviews, and clean sample capture before voice cloning.",
     "items": [
       {
         "title": "Real-time Waveform Visualization",
@@ -36,7 +64,7 @@
       },
       {
         "title": "Professional WAV Export",
-        "description": "Download your recordings in uncompressed, high-quality WAV format from our online voice recorder. This voice recorder online tool preserves audio fidelity at up to 48kHz sample rate, making it perfect for professional podcasting, content creation, and audio editing workflows.",
+        "description": "Download your recordings as WAV when browser conversion is supported, with WebM fallback for compatibility. This makes the recorder practical for podcasting, content creation, and voice sample workflows.",
         "icon": "download"
       },
       {
@@ -53,8 +81,8 @@
   },
   "howItWorks": {
     "title": "How Our Online Voice Recorder Works",
-    "subtitle": "Professional voice recorder online workflow in 4 simple steps",
-    "intro": "Advanced browser technology captures high-quality audio directly in your device. Professional results without downloads or setup.",
+    "subtitle": "Record voice online in 4 simple steps",
+    "intro": "Your browser captures the audio, shows a live waveform, and lets you preview the take before export.",
     "steps": [
       {
         "step": 1,
@@ -73,8 +101,8 @@
       },
       {
         "step": 4,
-        "title": "Export or Enhance Your Audio",
-        "description": "Download your recording as a high-quality WAV file from our voice recorder online, or use our integrated Audio Enhancer to remove background noise, reduce echo, and improve overall audio quality before export."
+        "title": "Export or Use the Sample",
+        "description": "Download your recording as WAV when supported, or keep the browser's WebM format. Use the file for editing, transcription, or as a clean sample in the Voice Clone workflow."
       }
     ]
   },
@@ -85,7 +113,7 @@
     "items": [
       {
         "title": "Podcast Recording & Production",
-        "description": "Record podcast episodes, interviews, and voice-overs with our professional online voice recorder. The real-time waveform helps maintain consistent audio levels, while WAV export ensures broadcast-quality output. Perfect for solo episodes, remote interviews, and voice-over work that requires our voice recorder online precision.",
+        "description": "Record podcast intros, short episodes, interview clips, and voice-overs with a browser voice recorder. The real-time waveform helps maintain consistent audio levels before you download the final take.",
         "icon": "microphone"
       },
       {
@@ -95,8 +123,13 @@
       },
       {
         "title": "Content Creation & Social Media",
-        "description": "Create voice-overs for YouTube videos, TikTok content, Instagram stories, and presentations using our versatile online voice recorder. The real-time visualization helps you deliver consistent performance, while professional WAV export integrates seamlessly with video editing workflows.",
+        "description": "Create voice-overs for YouTube videos, TikTok content, Instagram stories, and presentations. The preview step helps you catch background noise or uneven volume before export.",
         "icon": "content"
+      },
+      {
+        "title": "Voice Clone Sample Capture",
+        "description": "Record a short, clean spoken sample before using the Voice Clone workflow. Download the best take, then upload it as your sample on the homepage.",
+        "icon": "microphone"
       },
       {
         "title": "Voice Memos & Quick Notes",
@@ -132,14 +165,14 @@
   },
   "privacy": {
     "title": "Online Voice Recorder Privacy & Security",
-    "subtitle": "Complete control over your audio data with our secure voice recorder online",
-    "intro": "Local processing and zero data collection ensure your sensitive audio content remains completely private.",
+    "subtitle": "The recording flow is local to your browser",
+    "intro": "The recorder is designed for local capture and export, so you stay in control of the audio file you create.",
     "points": [
-      "All recording and processing happens locally in your browser - our online voice recorder never uploads your audio",
-      "No audio data is transmitted to our servers during voice recorder online sessions",
+      "Recording and preview happen locally in your browser during the recorder session",
+      "The recorder does not upload your raw audio while you record or preview a take",
       "No account creation, registration, or personal information required for our online voice recorder",
       "Recordings are only saved when you choose to download them from our voice recorder online tool",
-      "No tracking, cookies, or data collection during online voice recorder usage",
+      "You choose whether to reuse the downloaded file in another tool such as Voice Clone",
       "Your microphone access is controlled by browser permissions - our voice recorder online respects your privacy settings"
     ]
   },
@@ -154,7 +187,7 @@
       },
       {
         "label": "Export Format",
-        "value": "WAV (uncompressed, broadcast quality) - professional voice recorder online output"
+        "value": "WAV when browser conversion is supported, with WebM fallback"
       },
       {
         "label": "Audio Quality",
@@ -208,7 +241,11 @@
       },
       {
         "question": "How can I improve recording quality with this online voice recorder?",
-        "answer": "For best results with our voice recorder online, record in a quiet environment 6-8 inches from your microphone. Use headphones to monitor audio quality, and maintain consistent speaking volume. After recording, use our integrated Audio Enhancer to remove background noise and improve clarity."
+        "answer": "For best results with our voice recorder online, record in a quiet environment 6-8 inches from your microphone. Use headphones if needed, watch the waveform for clipping, and maintain consistent speaking volume."
+      },
+      {
+        "question": "Can I use this online voice recorder to make a voice clone sample?",
+        "answer": "Yes. Record a clear 15 to 30 second spoken sample, download the best take, then open the Voice Clone workflow on the homepage and upload it as your sample."
       },
       {
         "question": "Is there a time limit for this online voice recorder?",
@@ -229,12 +266,12 @@
     ]
   },
   "cta": {
-    "title": "Ready to Start Recording with Our Online Voice Recorder?",
-    "subtitle": "Professional voice recorder online results are just one click away",
-    "description": "Join thousands of content creators, podcasters, and professionals who trust our online voice recorder for their audio recording needs.",
+    "title": "Ready to Record a Clean Voice Sample?",
+    "subtitle": "Start with a browser recording, then continue to Voice Clone",
+    "description": "Use the recorder for a quick capture, download the best take, and bring it into your next audio workflow.",
     "buttons": {
       "primary": "Start Recording Now",
-      "secondary": "Enhance Existing Audio"
+      "secondary": "Continue to Voice Clone"
     }
   },
   "ui": {

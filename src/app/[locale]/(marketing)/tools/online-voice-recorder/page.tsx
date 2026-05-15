@@ -13,9 +13,9 @@ export async function generateMetadata({
   const { locale } = await params;
 
   return constructMetadata({
-    title: 'Free Online Voice Recorder | Real-time Waveform',
+    title: 'Free Online Voice Recorder | Record WAV Voice Samples',
     description:
-      'Free online voice recorder with real-time waveform. Record high-quality audio in browser, no login required. Export WAV instantly. Perfect for podcasters.',
+      'Record voice online in your browser with waveform preview, no signup, and WAV/WebM export. Capture podcasts, memos, or a clean voice sample for voice cloning.',
     canonicalUrl: getUrlWithLocale('/tools/online-voice-recorder', locale),
   });
 }
@@ -28,8 +28,9 @@ export default function OnlineVoiceRecorderPage() {
       <AdsenseScript />
       <VoiceRecorderClient />
       <BackToHomeCTA
-        title="Record More Professional Audio"
-        description="Discover our full range of AI-powered audio tools for content creators and professionals."
+        title="Turn a Clean Recording into a Voice Clone"
+        description="Download a short voice sample, then continue to the Voice Clone workflow to generate speech with your own voice."
+        buttonText="Open Voice Clone"
       />
     </>
   );
