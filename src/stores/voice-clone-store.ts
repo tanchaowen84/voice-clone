@@ -1,3 +1,4 @@
+import { trackVoiceCloneActivation } from '@/analytics/activation-events';
 import {
   convertWebMToWAV,
   isAudioConversionSupported,
@@ -135,6 +136,12 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
   generateSpeech: async (text: string) => {
     const state = get();
     const subscriptionStore = useSubscriptionStore.getState();
+    const characterCount = text.trim().length;
+    const inputMode = state.recordedBlob
+      ? 'record'
+      : state.audioFile
+        ? 'upload'
+        : state.inputMode;
     const isWaitingForFreePlan =
       subscriptionStore.waitingState.isWaiting &&
       subscriptionStore.subscription?.planId === 'free';
@@ -165,8 +172,28 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       return;
     }
 
+    let failureTracked = false;
+
+    const trackFailure = (failureReason: string, waitTime?: number | null) => {
+      failureTracked = true;
+      trackVoiceCloneActivation('failure', {
+        characterCount,
+        failureReason,
+        inputMode,
+        planId: subscriptionStore.subscription?.planId,
+        source: 'voice_clone_panel',
+        waitTime,
+      });
+    };
+
     try {
       set({ isGenerating: true, error: null, generatedAudioUrl: null });
+      trackVoiceCloneActivation('start', {
+        characterCount,
+        inputMode,
+        planId: subscriptionStore.subscription?.planId,
+        source: 'voice_clone_panel',
+      });
 
       // Get audio data (either from recorded blob or uploaded file)
       let audioData: File;
@@ -212,6 +239,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       if (!createResponse.ok) {
         const errorData = await createResponse.json();
+        trackFailure('voice_clone_create_failed');
         throw new Error(errorData.error || 'Failed to create voice clone');
       }
 
@@ -237,6 +265,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
       if (!generateResponse.ok) {
         // Handle 401: require auth → open login modal and set pending
         if (generateResponse.status === 401) {
+          trackFailure('auth_required');
           const authStore = useAuthModalStore.getState();
           authStore.setPending(text, 'voice_clone_generate');
           authStore.open();
@@ -255,6 +284,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
             console.log(
               '🚫 [Voice Clone Store] Daily limit exceeded, showing upgrade modal'
             );
+            trackFailure('daily_limit_exceeded');
             setTimeout(() => {
               subscriptionStore.showUpgradeModal('daily_limit');
             }, 0);
@@ -265,6 +295,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
             console.log(
               '🚫 [Voice Clone Store] Character limit exceeded, showing upgrade modal'
             );
+            trackFailure('character_limit_exceeded');
             setTimeout(() => {
               subscriptionStore.showUpgradeModal('character_limit');
             }, 0);
@@ -273,6 +304,7 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
           if (errorData.waitTime && errorData.waitTime > 0) {
             // 免费用户需要等待
+            trackFailure('wait_time_required', errorData.waitTime);
             subscriptionStore.startWaiting(errorData.waitTime);
           }
 
@@ -290,6 +322,13 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       const responseData = await generateResponse.json();
       const { audioUrl, usageInfo } = responseData;
+      trackVoiceCloneActivation('success', {
+        characterCount,
+        inputMode,
+        planId: subscriptionStore.subscription?.planId,
+        source: 'voice_clone_panel',
+        waitTime: usageInfo?.waitTime || 0,
+      });
 
       // 更新订阅store的使用量信息
       if (usageInfo) {
@@ -341,6 +380,10 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
         set({ generatedAudioUrl: audioUrl, pendingAudioUrl: null });
       }
     } catch (error) {
+      if (!failureTracked) {
+        trackFailure('generation_request_failed');
+      }
+
       console.error('Speech generation error:', error);
       set({
         error:

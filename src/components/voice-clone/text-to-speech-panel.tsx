@@ -1,5 +1,6 @@
 'use client';
 
+import { trackTextToSpeechActivation } from '@/analytics/activation-events';
 import {
   freePlanUpgradeButtonClassName,
   freePlanUpgradePanelClassName,
@@ -621,9 +622,36 @@ export function TextToSpeechPanel() {
       return;
     }
 
+    const characterCount = inputText.trim().length;
+    const model = language.startsWith('en')
+      ? 'simba-english'
+      : 'simba-multilingual';
+    let failureTracked = false;
+
+    const trackFailure = (failureReason: string) => {
+      failureTracked = true;
+      trackTextToSpeechActivation('failure', {
+        audioFormat: 'mp3',
+        characterCount,
+        failureReason,
+        language,
+        model,
+        planId: subscription?.planId,
+        source: 'text_to_speech_panel',
+      });
+    };
+
     setIsGenerating(true);
     setError(null);
     clearAudio();
+    trackTextToSpeechActivation('start', {
+      audioFormat: 'mp3',
+      characterCount,
+      language,
+      model,
+      planId: subscription?.planId,
+      source: 'text_to_speech_panel',
+    });
 
     try {
       const response = await fetch('/api/tts/speech', {
@@ -636,15 +664,14 @@ export function TextToSpeechPanel() {
           voiceId,
           language,
           audioFormat: 'mp3',
-          model: language.startsWith('en')
-            ? 'simba-english'
-            : 'simba-multilingual',
+          model,
         }),
       });
 
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
+          trackFailure('auth_required');
           setAuthPending(inputText, 'tts_generate');
           openAuthModal();
           return;
@@ -652,6 +679,7 @@ export function TextToSpeechPanel() {
 
         if (response.status === 429) {
           if (data?.reason === 'CHAR_LIMIT_EXCEEDED') {
+            trackFailure('character_limit_exceeded');
             showUpgradeModal('character_limit');
             return;
           }
@@ -660,9 +688,12 @@ export function TextToSpeechPanel() {
             data?.reason === 'DAILY_LIMIT_EXCEEDED' ||
             data?.reason === 'MONTHLY_LIMIT_EXCEEDED'
           ) {
+            trackFailure(data.reason.toLowerCase());
             showUpgradeModal('daily_limit');
             return;
           }
+
+          trackFailure('rate_limited');
         }
 
         throw new Error(data?.error || 'Failed to generate speech');
@@ -677,6 +708,15 @@ export function TextToSpeechPanel() {
       fetchAllData().catch(() => {
         // noop: best effort refresh for usage and plan messaging
       });
+      trackTextToSpeechActivation('success', {
+        audioFormat: data.audioFormat || 'mp3',
+        characterCount,
+        language,
+        model,
+        planId: subscription?.planId,
+        source: 'text_to_speech_panel',
+        waitTime,
+      });
 
       if (waitTime > 0) {
         const waitStarted = startWaiting(waitTime);
@@ -689,6 +729,10 @@ export function TextToSpeechPanel() {
 
       setGeneratedAudioUrl(nextAudioUrl);
     } catch (generationError) {
+      if (!failureTracked) {
+        trackFailure('generation_request_failed');
+      }
+
       setError(
         generationError instanceof Error
           ? generationError.message
