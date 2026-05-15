@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: BlogPageProps) {
       canonicalUrl: getUrlWithLocale(canonicalPath, locale),
     }),
     robots: {
-      index: false,
+      index: true,
       follow: true,
     },
   };
