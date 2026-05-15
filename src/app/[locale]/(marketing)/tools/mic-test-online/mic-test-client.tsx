@@ -1,5 +1,11 @@
 'use client';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,12 +15,15 @@ import { cn } from '@/lib/utils';
 import {
   AlertCircle,
   CheckCircle,
+  Headphones,
   HelpCircle,
   Mic,
   MicOff,
+  Music,
   Play,
   RefreshCw,
   Square,
+  Users,
   Volume2,
   VolumeX,
 } from 'lucide-react';
@@ -388,6 +397,19 @@ export default function MicTestClient() {
     return 'bg-green-500';
   };
 
+  const getUseCaseIcon = (icon: string) => {
+    if (icon === 'meeting') {
+      return <Users className="h-6 w-6 text-primary flex-shrink-0" />;
+    }
+    if (icon === 'gaming') {
+      return <Headphones className="h-6 w-6 text-primary flex-shrink-0" />;
+    }
+    if (icon === 'music') {
+      return <Music className="h-6 w-6 text-primary flex-shrink-0" />;
+    }
+    return <Mic className="h-6 w-6 text-primary flex-shrink-0" />;
+  };
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-10">
       {/* Hero Section */}
@@ -752,6 +774,39 @@ export default function MicTestClient() {
         </div>
       </div>
 
+      {/* Use Cases Section */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">
+            {seoContent.useCases.title}
+          </h2>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            {seoContent.useCases.subtitle}
+          </p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            {seoContent.useCases.intro}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {seoContent.useCases.items.map((useCase, index) => (
+            <Card key={index} className="p-6 h-full">
+              <div className="flex items-start gap-4">
+                {getUseCaseIcon(useCase.icon)}
+                <div>
+                  <h3 className="font-semibold mb-2 text-lg">
+                    {useCase.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {useCase.description}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+
       {/* When to Test Your Microphone */}
       <div className="mb-16">
         <div className="text-center mb-12">
@@ -925,6 +980,29 @@ export default function MicTestClient() {
               you time troubleshooting the wrong component.
             </p>
           </div>
+        </Card>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="mb-16">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-4">{seoContent.faq.title}</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            {seoContent.faq.subtitle}
+          </p>
+        </div>
+
+        <Card className="p-6">
+          <Accordion type="single" collapsible className="w-full text-left">
+            {seoContent.faq.items.map((faq, index) => (
+              <AccordionItem key={faq.question} value={`faq-${index}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </Card>
       </div>
 
