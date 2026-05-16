@@ -1,4 +1,8 @@
 import {
+  trackVoiceCloneCompleted,
+  trackVoiceCloneStarted,
+} from '@/analytics/activation-events';
+import {
   convertWebMToWAV,
   isAudioConversionSupported,
 } from '@/utils/audio-converter';
@@ -135,6 +139,12 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
   generateSpeech: async (text: string) => {
     const state = get();
     const subscriptionStore = useSubscriptionStore.getState();
+    const characterCount = text.trim().length;
+    const inputMode = state.recordedBlob
+      ? 'record'
+      : state.audioFile
+        ? 'upload'
+        : state.inputMode;
     const isWaitingForFreePlan =
       subscriptionStore.waitingState.isWaiting &&
       subscriptionStore.subscription?.planId === 'free';
@@ -167,6 +177,12 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
     try {
       set({ isGenerating: true, error: null, generatedAudioUrl: null });
+      trackVoiceCloneStarted({
+        characterCount,
+        inputMode,
+        planId: subscriptionStore.subscription?.planId,
+        source: 'voice_clone_panel',
+      });
 
       // Get audio data (either from recorded blob or uploaded file)
       let audioData: File;
@@ -290,6 +306,16 @@ export const useVoiceCloneStore = create<VoiceCloneState>((set, get) => ({
 
       const responseData = await generateResponse.json();
       const { audioUrl, usageInfo } = responseData;
+
+      if (audioUrl) {
+        trackVoiceCloneCompleted({
+          characterCount,
+          inputMode,
+          planId: subscriptionStore.subscription?.planId,
+          source: 'voice_clone_panel',
+          waitTime: usageInfo?.waitTime || 0,
+        });
+      }
 
       // 更新订阅store的使用量信息
       if (usageInfo) {
