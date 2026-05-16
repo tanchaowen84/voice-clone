@@ -66,7 +66,7 @@ export default function FaqSection() {
     },
     {
       id: 'item-8',
-      icon: 'users',
+      icon: 'shield-check',
       question: t('items.item-8.question'),
       answer: t('items.item-8.answer'),
     },

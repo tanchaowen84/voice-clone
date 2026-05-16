@@ -15,13 +15,13 @@ import {
   loadPendingAudio,
   savePendingAudio,
 } from '@/utils/pending-media';
-import { Download, Loader2, Mic, Upload } from 'lucide-react';
+import { Download, Loader2, Mic, ShieldCheck, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
 import { FileUploader } from './file-uploader';
 
 const SAMPLE_SCRIPT =
-  "\"Hello everyone! I'm trying out Voice Clone technology to create my own voice model. It's really convenient and I'm excited to see how it works!\"";
+  '"This is my voice sample for Voice Clone. I am testing a short script so I can generate clean narration from text."';
 
 /**
  * Voice Input Area Component
@@ -38,6 +38,7 @@ export function VoiceInputArea() {
     generateSpeech,
     reset,
     showPendingResult,
+    setError,
     audioFile,
     recordedBlob,
     setAudioFile,
@@ -52,12 +53,16 @@ export function VoiceInputArea() {
   const { subscription, waitingState, fetchAllData, showUpgradeModal } =
     useSubscriptionStore();
   const [textInput, setTextInput] = useState('');
+  const [hasVoicePermission, setHasVoicePermission] = useState(false);
   const isWaitingForFreePlan =
     waitingState.isWaiting && subscription?.planId === 'free';
 
   const hasVoiceSample = Boolean(audioFile || recordedBlob);
   const canGenerate =
-    currentStep === 'generate' && hasVoiceSample && textInput.trim().length > 0;
+    currentStep === 'generate' &&
+    hasVoiceSample &&
+    hasVoicePermission &&
+    textInput.trim().length > 0;
 
   // Determine per-request max characters based on user's plan
   const planMaxChars =
@@ -81,6 +86,10 @@ export function VoiceInputArea() {
 
   const handleGenerateSpeech = async () => {
     if (!textInput.trim()) return;
+    if (!hasVoicePermission) {
+      setError('Please confirm you have permission to use this voice sample.');
+      return;
+    }
 
     // Intercept unauthenticated users: open login modal and mark pending
     if (!session?.user) {
@@ -126,6 +135,7 @@ export function VoiceInputArea() {
   const handleStartOver = () => {
     reset();
     setTextInput('');
+    setHasVoicePermission(false);
   };
 
   const handleDemoText = () => {
@@ -146,6 +156,12 @@ export function VoiceInputArea() {
         pendingText?: string;
       }>;
       if (ce.detail?.pendingAction !== 'voice_clone_generate') {
+        return;
+      }
+      if (!hasVoicePermission) {
+        setError(
+          'Please confirm you have permission to use this voice sample.'
+        );
         return;
       }
       const nextText = ce.detail?.pendingText || textInput;
@@ -176,11 +192,28 @@ export function VoiceInputArea() {
         'auth:login_success',
         handler as EventListener
       );
-  }, [generateSpeech, setAudioFile, setRecordedBlob, textInput]);
+  }, [
+    generateSpeech,
+    hasVoicePermission,
+    setAudioFile,
+    setError,
+    setRecordedBlob,
+    textInput,
+  ]);
 
   return (
     <div className="relative rounded-3xl border border-white/60 bg-gradient-to-br from-slate-50/90 to-slate-100/85 p-4 shadow-[10px_10px_30px_rgba(148,163,184,0.18)] backdrop-blur-sm dark:border-slate-700/70 dark:from-slate-900/90 dark:to-slate-800/90 sm:p-6 lg:p-8">
       <div className="space-y-6">
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/75 px-4 py-3 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-100">
+          <div className="flex gap-3">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
+            <p>
+              Start here: record or upload a voice sample you have permission to
+              use, type the text, then generate speech from that voice.
+            </p>
+          </div>
+        </div>
+
         <div className="mx-auto flex w-full max-w-sm rounded-2xl border border-slate-200/80 bg-white/75 p-1 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70">
           <button
             type="button"
@@ -219,8 +252,8 @@ export function VoiceInputArea() {
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-300">
                 {inputMode === 'record'
-                  ? 'Record a short clean clip to capture tone and pronunciation.'
-                  : 'Upload a clear voice recording. 15 to 30 seconds works best.'}
+                  ? 'Record a short clean clip of your own voice or a voice you have permission to use.'
+                  : 'Upload a clear permitted voice recording. 15 to 30 seconds works best.'}
               </p>
             </div>
 
@@ -268,7 +301,7 @@ export function VoiceInputArea() {
                 Enter Text and Generate
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Type what you want to hear in your cloned voice.
+                Type what you want to hear in the cloned voice.
               </p>
             </div>
 
@@ -312,6 +345,21 @@ export function VoiceInputArea() {
               </div>
             </div>
 
+            <label className="mt-4 flex items-start gap-3 rounded-xl border border-slate-200 bg-white/80 px-3 py-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200">
+              <input
+                type="checkbox"
+                checked={hasVoicePermission}
+                onChange={(event) =>
+                  setHasVoicePermission(event.target.checked)
+                }
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-slate-900"
+              />
+              <span>
+                I confirm I own this voice sample or have permission to use it
+                for voice cloning.
+              </span>
+            </label>
+
             {error && (
               <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/20 dark:text-red-300">
                 {error}
@@ -335,13 +383,18 @@ export function VoiceInputArea() {
                   Generating...
                 </>
               ) : (
-                'Generate'
+                'Generate cloned speech'
               )}
             </button>
 
             {currentStep !== 'generate' && (
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 Upload or record a voice sample to continue.
+              </p>
+            )}
+            {currentStep === 'generate' && !hasVoicePermission && (
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                Confirm voice permission to enable generation.
               </p>
             )}
 
