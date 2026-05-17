@@ -1,5 +1,6 @@
 'use client';
 
+import { trackTextToSpeechGenerated } from '@/analytics/activation-events';
 import {
   freePlanUpgradeButtonClassName,
   freePlanUpgradePanelClassName,
@@ -621,6 +622,11 @@ export function TextToSpeechPanel() {
       return;
     }
 
+    const characterCount = inputText.trim().length;
+    const model = language.startsWith('en')
+      ? 'simba-english'
+      : 'simba-multilingual';
+
     setIsGenerating(true);
     setError(null);
     clearAudio();
@@ -636,9 +642,7 @@ export function TextToSpeechPanel() {
           voiceId,
           language,
           audioFormat: 'mp3',
-          model: language.startsWith('en')
-            ? 'simba-english'
-            : 'simba-multilingual',
+          model,
         }),
       });
 
@@ -677,6 +681,18 @@ export function TextToSpeechPanel() {
       fetchAllData().catch(() => {
         // noop: best effort refresh for usage and plan messaging
       });
+
+      if (nextAudioUrl) {
+        trackTextToSpeechGenerated({
+          audioFormat: data.audioFormat || 'mp3',
+          characterCount,
+          language,
+          model,
+          planId: subscription?.planId,
+          source: 'text_to_speech_panel',
+          waitTime,
+        });
+      }
 
       if (waitTime > 0) {
         const waitStarted = startWaiting(waitTime);
