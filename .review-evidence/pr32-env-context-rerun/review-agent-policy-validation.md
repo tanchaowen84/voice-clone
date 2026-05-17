@@ -64,5 +64,6 @@ Write Back：
 - rework 完成后必须新建二次 review issue 或确认已有未完成二次 review issue，再由 review-agent 复核。
 
 清理：
-- 测试结束后关闭本地 server。
-- 测试结束后清理临时 worktree。
+- chrome:Chrome tab 已 finalize。
+- 本地 server `127.0.0.1:32134` 已关闭。
+- 临时 worktree 已移除。
