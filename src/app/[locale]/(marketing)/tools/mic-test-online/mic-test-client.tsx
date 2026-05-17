@@ -5,9 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import seoContent from '@/content/tools/mic-test-online.en.json';
+import { LocaleLink } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { Routes } from '@/routes';
 import {
   AlertCircle,
+  ArrowRight,
   CheckCircle,
   HelpCircle,
   Mic,
@@ -30,6 +33,27 @@ interface MicTestState {
   recordedBlob: Blob | null;
   isPlaying: boolean;
 }
+
+const relatedTools = [
+  {
+    title: 'Record a clean voice sample',
+    description:
+      'Use the online voice recorder when you need a saved WAV after your mic check.',
+    href: Routes.ToolsVoiceRecorder,
+  },
+  {
+    title: 'Enhance noisy recordings',
+    description:
+      'Try the audio enhancer after recording if your sample has background noise.',
+    href: Routes.ToolsAudioEnhancer,
+  },
+  {
+    title: 'Reduce echo and reverb',
+    description:
+      'Use echo remover when playback sounds roomy or distant after the mic test.',
+    href: Routes.ToolsEchoRemover,
+  },
+] as const;
 
 // Real-time waveform component for microphone visualization
 function RealtimeWaveform({
@@ -393,8 +417,11 @@ export default function MicTestClient() {
       {/* Hero Section */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-4">{seoContent.hero.title}</h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+        <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
           {seoContent.hero.subtitle}
+        </p>
+        <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
+          {seoContent.hero.description}
         </p>
       </div>
 
@@ -538,6 +565,36 @@ export default function MicTestClient() {
         </CardContent>
       </Card>
 
+      {/* Related Audio Tools */}
+      <section className="mb-8">
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold">Continue Your Audio Check</h2>
+          <p className="text-sm text-muted-foreground mt-2">
+            Once your microphone works in the browser, these related tools help
+            you record, clean, or reuse the audio.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {relatedTools.map((tool) => (
+            <LocaleLink key={tool.href} href={tool.href}>
+              <Card className="h-full transition-colors hover:border-primary">
+                <CardContent className="p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-semibold mb-2">{tool.title}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {tool.description}
+                      </p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
+                  </div>
+                </CardContent>
+              </Card>
+            </LocaleLink>
+          ))}
+        </div>
+      </section>
+
       {/* Troubleshooting Section */}
       <Card>
         <CardHeader>
@@ -639,7 +696,7 @@ export default function MicTestClient() {
                     Audio Cuts Out During Recording
                   </h3>
                   <p className="text-xs text-muted-foreground">
-                    Microphone sensitivity too low or hardware issues
+                    Input level too low or another app using the mic
                   </p>
                 </div>
               </div>
@@ -651,7 +708,7 @@ export default function MicTestClient() {
                     Gaming/Discord Voice Chat Problems
                   </h3>
                   <p className="text-xs text-muted-foreground">
-                    Headset microphone not detected or poor quality
+                    Wrong input selected, Bluetooth routing, or low input gain
                   </p>
                 </div>
               </div>
@@ -794,8 +851,8 @@ export default function MicTestClient() {
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   New headset, USB microphone, or gaming headphones? Test
-                  immediately to ensure they work properly and return defective
-                  products within the warranty period.
+                  immediately to confirm the browser can see the input before a
+                  call or recording.
                 </p>
               </div>
             </div>
@@ -830,8 +887,9 @@ export default function MicTestClient() {
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Friends complaining they can't hear you in Discord? Microphone
-                  suddenly stopped working? Use our test to quickly identify if
-                  it's a hardware or software problem.
+                  suddenly missing from your browser? Use this test to check
+                  browser access, input level, and playback before changing more
+                  settings.
                 </p>
               </div>
             </div>
@@ -921,8 +979,8 @@ export default function MicTestClient() {
           <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-sm text-blue-800">
               <strong>Still having issues?</strong> Try our mic test first to
-              determine if it's a hardware or software problem. This will save
-              you time troubleshooting the wrong component.
+              check browser access, input level, and playback before changing
+              system settings.
             </p>
           </div>
         </Card>
@@ -954,18 +1012,15 @@ export default function MicTestClient() {
                 recordings.
               </p>
               <p>
-                Unlike other microphone test online tools, our mic test online
-                service offers real-time waveform visualization, allowing you to
-                see exactly how your microphone responds to different audio
-                levels. This advanced microphone test online feature helps
-                identify issues that basic mic test tools might miss.
+                The waveform and level meter let you see how your browser is
+                receiving input as you speak. That makes it easier to notice
+                muted input, very low volume, or a wrong selected device before
+                you join a call or start recording.
               </p>
               <p>
-                Whether you need a quick mic test online for a Zoom meeting or
-                comprehensive microphone test online analysis for content
-                creation, our tool provides accurate results every time. The mic
-                test online process is completely free and requires no
-                registration.
+                Whether you need a quick mic test online for a Zoom meeting or a
+                practical microphone test before content creation, the process
+                is completely free and requires no registration.
               </p>
             </div>
           </Card>
@@ -980,8 +1035,8 @@ export default function MicTestClient() {
                 <div>
                   <p className="font-medium">Test in Quiet Environment</p>
                   <p className="text-muted-foreground">
-                    Perform your mic test online in a quiet room to get accurate
-                    results from our microphone test online tool.
+                    Perform your mic test online in a quiet room to get a
+                    clearer playback sample.
                   </p>
                 </div>
               </div>
@@ -1028,9 +1083,9 @@ export default function MicTestClient() {
               Mic Test Online Device Compatibility
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
-              Our microphone test online tool works seamlessly across all
-              devices and platforms. Test your microphone online regardless of
-              your setup.
+              The microphone test works in modern browsers that support
+              microphone access. Use it on common desktop and mobile setups
+              before calls, recordings, streams, or voice samples.
             </p>
           </div>
 
@@ -1040,7 +1095,7 @@ export default function MicTestClient() {
               <p className="text-sm text-muted-foreground">
                 Full mic test online functionality on Windows, Mac, and Linux.
                 Our microphone test online tool supports USB microphones,
-                built-in mics, and professional audio interfaces.
+                built-in mics, and external audio interfaces.
               </p>
             </div>
             <div className="text-center">
@@ -1054,14 +1109,33 @@ export default function MicTestClient() {
             <div className="text-center">
               <h3 className="font-semibold mb-3">Gaming Headsets</h3>
               <p className="text-sm text-muted-foreground">
-                Perfect for testing gaming headsets and wireless earbuds. Our
-                mic test online tool helps gamers verify their microphone works
-                properly for Discord, Steam, and other platforms.
+                Useful for testing gaming headsets and wireless earbuds before
+                Discord, Steam, and other voice chat sessions.
               </p>
             </div>
           </div>
         </Card>
       </div>
+
+      {/* FAQ Section */}
+      <section className="mb-16">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-4">{seoContent.faq.title}</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Short answers for people checking whether this microphone test fits
+            their setup.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {seoContent.faq.items.map((item) => (
+            <Card key={item.question} className="p-6">
+              <h3 className="font-semibold mb-2">{item.question}</h3>
+              <p className="text-sm text-muted-foreground">{item.answer}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
