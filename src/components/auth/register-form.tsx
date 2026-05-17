@@ -1,5 +1,6 @@
 'use client';
 
+import { trackSignupCompleted } from '@/analytics/activation-events';
 import { AuthCard } from '@/components/auth/auth-card';
 import { FormError } from '@/components/shared/form-error';
 import { FormSuccess } from '@/components/shared/form-success';
@@ -100,6 +101,10 @@ export const RegisterForm = ({
         onSuccess: (ctx) => {
           // sign up success, user information stored in ctx.data
           // console.log("register, success:", ctx.data);
+          trackSignupCompleted({
+            method: 'email',
+            source: 'register_form',
+          });
           setSuccess(t('checkEmail'));
 
           // add affonso affiliate
