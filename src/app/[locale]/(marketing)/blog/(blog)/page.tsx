@@ -21,10 +21,6 @@ export async function generateMetadata({ params }: BlogPageProps) {
       description: pt('description'),
       canonicalUrl: getUrlWithLocale(canonicalPath, locale),
     }),
-    robots: {
-      index: false,
-      follow: true,
-    },
   };
 }
 
