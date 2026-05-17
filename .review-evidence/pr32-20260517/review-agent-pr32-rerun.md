@@ -52,4 +52,9 @@ Local paths are backup only. Use the GitHub/Gist URL and PR/Linear comments as t
 
 ## Cleanup
 
-Server and worktree cleanup recorded after write-back.
+Cleanup recorded after write-back:
+
+- chrome:Chrome tab finalized.
+- Local server on port `32132` stopped; `lsof -ti tcp:32132` returned empty.
+- Temporary worktree `/tmp/voiceclone-pr32-review-rerun` removed; `git worktree list` no longer shows it.
+- PR #32 remained open, non-draft, with no auto-merge request.
