@@ -21,7 +21,7 @@ import { EnhancedVoiceRecorder } from './enhanced-voice-recorder';
 import { FileUploader } from './file-uploader';
 
 const SAMPLE_SCRIPT =
-  "\"Hello everyone! I'm trying out Voice Clone technology to create my own voice model. It's really convenient and I'm excited to see how it works!\"";
+  '"This is my voice sample for Voice Clone. I am testing a short script so I can generate clean narration from text."';
 
 /**
  * Voice Input Area Component
@@ -181,6 +181,13 @@ export function VoiceInputArea() {
   return (
     <div className="relative rounded-3xl border border-white/60 bg-gradient-to-br from-slate-50/90 to-slate-100/85 p-4 shadow-[10px_10px_30px_rgba(148,163,184,0.18)] backdrop-blur-sm dark:border-slate-700/70 dark:from-slate-900/90 dark:to-slate-800/90 sm:p-6 lg:p-8">
       <div className="space-y-6">
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/75 px-4 py-3 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-100">
+          <p>
+            Start here: record or upload a voice sample, type the text, then
+            generate speech from that voice.
+          </p>
+        </div>
+
         <div className="mx-auto flex w-full max-w-sm rounded-2xl border border-slate-200/80 bg-white/75 p-1 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70">
           <button
             type="button"
@@ -268,7 +275,7 @@ export function VoiceInputArea() {
                 Enter Text and Generate
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Type what you want to hear in your cloned voice.
+                Type what you want to hear in the cloned voice.
               </p>
             </div>
 
@@ -335,7 +342,7 @@ export function VoiceInputArea() {
                   Generating...
                 </>
               ) : (
-                'Generate'
+                'Generate cloned speech'
               )}
             </button>
 

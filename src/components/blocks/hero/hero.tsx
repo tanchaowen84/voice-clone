@@ -9,7 +9,9 @@ import { useState } from 'react';
 
 export default function HeroSection() {
   const t = useTranslations('HomePage.hero');
-  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>('tts');
+  const [featureMode, setFeatureMode] = useState<'tts' | 'voice-clone'>(
+    'voice-clone'
+  );
 
   return (
     <>
@@ -72,6 +74,20 @@ export default function HeroSection() {
                 <p className="mx-auto mt-6 max-w-5xl text-balance text-xl text-foreground leading-relaxed">
                   {t('description')}
                 </p>
+
+                <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200">
+                  <span className="rounded-full border border-white/70 bg-white/70 px-3 py-1 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+                    {t('stepRecord')}
+                  </span>
+                  <span className="text-slate-400">+</span>
+                  <span className="rounded-full border border-white/70 bg-white/70 px-3 py-1 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+                    {t('stepText')}
+                  </span>
+                  <span className="text-slate-400">=</span>
+                  <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-800 shadow-sm dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200">
+                    {t('stepGenerate')}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -85,26 +101,17 @@ export default function HeroSection() {
                       className="absolute top-2 h-12 bg-gradient-to-br from-white to-slate-50 dark:from-slate-700 dark:to-slate-600 rounded-xl shadow-[inset_2px_2px_4px_#d1d5db,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1e293b,inset_-2px_-2px_4px_#334155]"
                       initial={false}
                       animate={{
-                        x: featureMode === 'tts' ? 2 : 146,
+                        x: featureMode === 'voice-clone' ? 2 : 146,
                         width: 144,
                       }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
 
                     <div className="relative flex">
-                      <button
-                        type="button"
-                        onClick={() => setFeatureMode('tts')}
-                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
-                          featureMode === 'tts'
-                            ? 'text-slate-900 dark:text-slate-100'
-                            : 'text-slate-500 dark:text-slate-400'
-                        }`}
-                      >
-                        <Type className="h-4 w-4" />
-                        Text to Speech
-                      </button>
-
                       <button
                         type="button"
                         onClick={() => setFeatureMode('voice-clone')}
@@ -116,6 +123,19 @@ export default function HeroSection() {
                       >
                         <Mic className="h-4 w-4" />
                         Voice Clone
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setFeatureMode('tts')}
+                        className={`relative z-10 flex items-center justify-center gap-2 w-[144px] py-3 rounded-xl text-sm font-medium transition-all ${
+                          featureMode === 'tts'
+                            ? 'text-slate-900 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-400'
+                        }`}
+                      >
+                        <Type className="h-4 w-4" />
+                        Text to Speech
                       </button>
                     </div>
                   </div>

@@ -1,7 +1,12 @@
 import { betterFetch } from '@better-fetch/fetch';
 import createMiddleware from 'next-intl/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
-import { LOCALES, routing } from './i18n/routing';
+import {
+  DEFAULT_LOCALE,
+  LOCALE_COOKIE_NAME,
+  LOCALES,
+  routing,
+} from './i18n/routing';
 import type { Session } from './lib/auth-types';
 import {
   DEFAULT_LOGIN_REDIRECT,
@@ -80,7 +85,43 @@ export default async function middleware(req: NextRequest) {
   }
 
   // Apply intlMiddleware for all routes
+  if (LOCALES.length === 1) {
+    console.log('<< middleware end, applying single locale routing');
+    return handleSingleLocaleRouting(req);
+  }
+
   console.log('<< middleware end, applying intlMiddleware');
+  return intlMiddleware(req);
+}
+
+function handleSingleLocaleRouting(req: NextRequest) {
+  const { nextUrl } = req;
+  const localePrefix = `/${DEFAULT_LOCALE}`;
+  const hasLocalePrefix =
+    nextUrl.pathname === localePrefix ||
+    nextUrl.pathname.startsWith(`${localePrefix}/`);
+  const isInternalLocaleRewrite =
+    req.headers.get('X-NEXT-INTL-LOCALE') === DEFAULT_LOCALE;
+
+  if (hasLocalePrefix) {
+    if (isInternalLocaleRewrite) {
+      return NextResponse.next();
+    }
+
+    const redirectUrl = nextUrl.clone();
+    redirectUrl.pathname =
+      nextUrl.pathname === localePrefix
+        ? '/'
+        : nextUrl.pathname.slice(localePrefix.length);
+
+    const response = NextResponse.redirect(redirectUrl);
+    response.cookies.set(LOCALE_COOKIE_NAME, DEFAULT_LOCALE, {
+      path: '/',
+      sameSite: 'lax',
+    });
+    return response;
+  }
+
   return intlMiddleware(req);
 }
 
@@ -88,7 +129,7 @@ export default async function middleware(req: NextRequest) {
  * Get the pathname of the request (e.g. /zh/dashboard to /dashboard)
  */
 function getPathnameWithoutLocale(pathname: string, locales: string[]): string {
-  const localePattern = new RegExp(`^/(${locales.join('|')})/`);
+  const localePattern = new RegExp(`^/(${locales.join('|')})(/|$)`);
   return pathname.replace(localePattern, '/');
 }
 

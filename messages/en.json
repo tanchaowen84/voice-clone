@@ -523,11 +523,14 @@
     "title": "Voice Clone",
     "description": "Clone voice with AI technology, simply and effortlessly",
     "hero": {
-      "title": "Voice Clone - Transform Your Voice with AI",
-      "description": "Create natural-sounding speech from any text using your own voice. Simple, fast, and no experience needed.",
+      "title": "Voice Clone Your Own Voice, Then Generate Speech",
+      "description": "Record or upload a voice sample, type your script, and create natural-sounding audio from the homepage.",
       "introduction": "Introducing Voice Clone",
       "primary": "Start Voice Cloning",
-      "secondary": "See Demo"
+      "secondary": "See Demo",
+      "stepRecord": "Record or upload voice",
+      "stepText": "Type text",
+      "stepGenerate": "Generate speech"
     },
     "logocloud": {
       "title": "Your favorite companies are our partners"
@@ -901,9 +904,9 @@
       }
     },
     "calltoaction": {
-      "title": "Ready to Clone Your Voice with AI?",
-      "description": "Start creating your own voice clones with Voice Clone AI technology today",
-      "primaryButton": "Start Voice Cloning",
+      "title": "Ready to Generate Speech from Your Voice?",
+      "description": "Record or upload a voice sample, add your script, and create your first cloned-voice audio.",
+      "primaryButton": "Start with Voice Clone",
       "secondaryButton": "Learn More"
     }
   },
