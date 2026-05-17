@@ -427,8 +427,74 @@ export default function VoiceRecorderClient() {
                 </div>
               </div>
             )}
+
+            {recordedBlob && (
+              <div className="rounded-lg border bg-muted/40 p-5 text-center space-y-4">
+                <div className="space-y-2">
+                  <div className="text-xs font-medium uppercase tracking-wide text-primary">
+                    {seoContent.voiceCloneBridge.eyebrow}
+                  </div>
+                  <h3 className="text-lg font-semibold">
+                    {seoContent.voiceCloneBridge.completionTitle}
+                  </h3>
+                  <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                    {seoContent.voiceCloneBridge.description}
+                  </p>
+                  <p className="text-xs text-muted-foreground max-w-2xl mx-auto">
+                    {seoContent.voiceCloneBridge.privacyNote}
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <LocaleLink href={seoContent.voiceCloneBridge.href}>
+                    <Button size="lg" className="gap-2">
+                      <ArrowRight className="h-4 w-4" />
+                      {seoContent.voiceCloneBridge.primaryCta}
+                    </Button>
+                  </LocaleLink>
+                  <LocaleLink href={Routes.ToolsAudioEnhancer}>
+                    <Button variant="outline" size="lg" className="gap-2">
+                      <Zap className="h-4 w-4" />
+                      {seoContent.voiceCloneBridge.secondaryCta}
+                    </Button>
+                  </LocaleLink>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+      </BlurFade>
+
+      <BlurFade delay={0.15}>
+        <section className="rounded-lg border bg-muted/30 p-6 text-center">
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <div className="text-xs font-medium uppercase tracking-wide text-primary">
+              {seoContent.voiceCloneBridge.eyebrow}
+            </div>
+            <h2 className="text-2xl font-semibold">
+              {seoContent.voiceCloneBridge.title}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {seoContent.voiceCloneBridge.description}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {seoContent.voiceCloneBridge.privacyNote}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+              <LocaleLink href={seoContent.voiceCloneBridge.href}>
+                <Button className="gap-2">
+                  <ArrowRight className="h-4 w-4" />
+                  {seoContent.voiceCloneBridge.primaryCta}
+                </Button>
+              </LocaleLink>
+              <LocaleLink href={Routes.ToolsAudioEnhancer}>
+                <Button variant="outline" className="gap-2">
+                  <Zap className="h-4 w-4" />
+                  {seoContent.voiceCloneBridge.secondaryCta}
+                </Button>
+              </LocaleLink>
+            </div>
+          </div>
+        </section>
       </BlurFade>
 
       {/* SEO Content Sections */}

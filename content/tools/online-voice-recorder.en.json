@@ -78,6 +78,16 @@
       }
     ]
   },
+  "voiceCloneBridge": {
+    "eyebrow": "Next step for your own voice",
+    "title": "Record a clean sample for Voice Clone",
+    "completionTitle": "Your recording is ready for the next step",
+    "description": "When you have a clear recording of your own voice, download the WAV file and open Voice Clone to create a personal voice model for text-to-speech. Use only voice recordings you own or have permission to use.",
+    "privacyNote": "This recorder keeps audio in your browser. The Voice Clone link is a manual next step, not an automatic upload.",
+    "primaryCta": "Use this recording with Voice Clone",
+    "secondaryCta": "Clean the recording first",
+    "href": "/#hero"
+  },
   "useCases": {
     "title": "Professional Online Voice Recorder Applications",
     "subtitle": "Versatile voice recorder online solution for creators, professionals, and students",
