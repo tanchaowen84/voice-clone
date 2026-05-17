@@ -1,12 +1,12 @@
 {
   "meta": {
     "title": "Echo Remover AI Free - Remove Echo from Audio Online",
-    "description": "Professional AI echo remover removes echo and reverb from audio instantly. Free echo remover AI tool for podcasts, videos. Remove echo online - no login required.",
-    "keywords": "echo remover ai, remove echo from audio, echo removal tool, reverb remover, audio echo remover, free echo remover, ai echo removal, online echo remover"
+    "description": "Use a free echo remover AI to remove echo from audio online. Upload MP3, WAV, FLAC, or OGG to reduce room echo and reverb for podcasts, videos, and interviews.",
+    "keywords": "echo remover ai, echo remover from audio, remove echo from audio, reverb remover, remove reverb from audio, audio echo remover, free echo remover, online echo remover"
   },
   "hero": {
-    "title": "Echo Remover AI",
-    "subtitle": "Remove echo and reverb from your audio files instantly with AI. Perfect for podcasts, interviews, and voice recordings.",
+    "title": "Echo Remover AI for Audio",
+    "subtitle": "Remove echo from audio online and reduce room reverb in podcasts, interviews, videos, and voice recordings.",
     "badges": [
       "AI Powered",
       "No Registration",
@@ -27,8 +27,8 @@
       "processing": "Removing Echo..."
     },
     "results": {
-      "title": "Echo Removed Successfully",
-      "download": "Download Echo-Free Audio"
+      "title": "Echo Reduced Successfully",
+      "download": "Download Processed Audio"
     },
     "errors": {
       "dropAudio": "Please drop an audio file",
@@ -38,8 +38,8 @@
   },
   "features": [
     {
-      "title": "AI-Powered Echo Removal",
-      "description": "Advanced AI algorithms specifically designed to identify and remove echo and reverb from audio recordings."
+      "title": "AI Echo and Reverb Reduction",
+      "description": "Reduce room echo and reverb from speech-heavy recordings while keeping the voice as natural as possible."
     },
     {
       "title": "Multiple Format Support",
@@ -47,7 +47,7 @@
     },
     {
       "title": "Instant Processing",
-      "description": "Get your echo-free audio in seconds. No waiting in queues or lengthy processing times."
+      "description": "Upload, process, preview, and download cleaner audio directly from the browser."
     },
     {
       "title": "Free to Use",

@@ -6,9 +6,67 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getAssetUrl } from '@/config/cdn-config';
+import { LocaleLink } from '@/i18n/navigation';
+import { Routes } from '@/routes';
 import { Download, Loader2, Sparkles, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
+
+const echoProblems = [
+  {
+    title: 'Room Echo in Voice Recordings',
+    body: 'Reduce the hollow sound caused by hard walls, empty rooms, and desk reflections so speech feels closer and easier to understand.',
+  },
+  {
+    title: 'Podcast and Interview Reverb',
+    body: 'Clean up guest audio, remote interviews, and home podcast takes when the voice is clear but the room adds a distracting tail.',
+  },
+  {
+    title: 'Video and Webinar Audio',
+    body: 'Use it after extracting audio from a video, screen recording, online class, or webinar where echo makes spoken content tiring.',
+  },
+  {
+    title: 'Voiceover Cleanup',
+    body: 'Improve narration, course audio, and creator voiceovers before publishing, editing, or sending the track to a client.',
+  },
+];
+
+const echoSteps = [
+  {
+    title: 'Upload Your Audio',
+    body: 'Choose an MP3, WAV, FLAC, or OGG file up to 50MB. Short speech clips usually preview faster.',
+  },
+  {
+    title: 'Remove Echo with AI',
+    body: 'The tool focuses on room echo and reverb while trying to keep the original voice natural.',
+  },
+  {
+    title: 'Preview and Download',
+    body: 'Listen to the processed result, then download the echo-reduced audio for your editor or publishing workflow.',
+  },
+];
+
+const faqItems = [
+  {
+    q: 'Is this a free echo remover AI?',
+    a: 'Yes. You can upload a supported audio file and reduce moderate room echo or reverb online without creating an account.',
+  },
+  {
+    q: 'Can it remove echo from podcast or video audio?',
+    a: 'Yes. It is built for speech-heavy recordings like podcasts, interviews, voiceovers, webinars, and extracted video audio where the main voice is still clear.',
+  },
+  {
+    q: 'What file formats are supported?',
+    a: 'The uploader accepts common audio formats including MP3, WAV, FLAC, and OGG, with a maximum file size of 50MB.',
+  },
+  {
+    q: 'Is this also a reverb remover?',
+    a: 'It can reduce room reverb and echo tails in many voice recordings, but very heavy reverb, distortion, or clipping may still need re-recording or manual editing.',
+  },
+  {
+    q: 'Will it remove background noise too?',
+    a: 'This page focuses on echo and room reverb. For hiss, hum, fan noise, or broader speech cleanup, try the audio enhancer as a separate pass.',
+  },
+];
 
 export default function EchoRemoverClient() {
   const [file, setFile] = useState<File | null>(null);
@@ -126,7 +184,7 @@ export default function EchoRemoverClient() {
 
     const link = document.createElement('a');
     link.href = enhancedUrl;
-    link.download = `echo-removed-${file?.name || 'audio'}.wav`;
+    link.download = `echo-reduced-${file?.name || 'audio'}.wav`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -139,17 +197,18 @@ export default function EchoRemoverClient() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="h-8 w-8 text-primary" />
-            <h1 className="text-4xl font-bold">Echo Remover AI</h1>
+            <h1 className="text-4xl font-bold">Echo Remover AI for Audio</h1>
           </div>
           <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Remove echo and reverb from your audio files instantly with AI.
-            Perfect for podcasts, interviews, and voice recordings.
+            Remove echo from audio online and reduce room reverb in podcasts,
+            interviews, videos, and voice recordings. Upload a file, process it
+            with AI, then download the cleaner track.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mb-8">
-            <Badge variant="secondary">AI Powered</Badge>
+            <Badge variant="secondary">Echo Remover from Audio</Badge>
+            <Badge variant="secondary">Reverb Reduction</Badge>
             <Badge variant="secondary">No Registration</Badge>
-            <Badge variant="secondary">Free to Use</Badge>
-            <Badge variant="secondary">Instant Results</Badge>
+            <Badge variant="secondary">MP3/WAV/FLAC/OGG</Badge>
           </div>
         </div>
       </BlurFade>
@@ -281,15 +340,15 @@ export default function EchoRemoverClient() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Download className="h-5 w-5" />
-                Echo Removed Successfully
+                Echo Reduced Successfully
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <WaveAudioPlayer src={enhancedUrl} title="Echo Removed Audio" />
+                <WaveAudioPlayer src={enhancedUrl} title="Processed Audio" />
                 <Button onClick={downloadEnhanced} className="w-full" size="lg">
                   <Download className="h-4 w-4 mr-2" />
-                  Download Echo-Free Audio
+                  Download Processed Audio
                 </Button>
               </div>
             </CardContent>
@@ -300,412 +359,191 @@ export default function EchoRemoverClient() {
       {/* Content Section */}
       <BlurFade delay={0.5}>
         <div className="mt-16 space-y-12">
-          {/* What is Echo Remover AI */}
           <section>
             <h2 className="text-3xl font-bold mb-6">
-              What is Echo Remover AI?
+              Remove Echo from Audio Online
             </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p>
-                Our <strong>echo remover AI</strong> is a cutting-edge
-                artificial intelligence tool designed to eliminate unwanted echo
-                and reverb from your audio recordings. Whether you're dealing
-                with podcast recordings, video calls, interviews, or
-                voice-overs, this advanced <strong>echo remover</strong> uses
-                sophisticated AI algorithms to analyze and remove echo artifacts
-                while preserving the natural quality of your voice.
+                This echo remover AI is built for people who need a quick way to
+                reduce room echo, reverb, and hollow-sounding voice recordings
+                before publishing. It works directly in the browser: upload your
+                audio, run the AI cleanup, then download the processed file.
               </p>
               <p>
-                Unlike traditional audio editing software that requires
-                technical expertise, our AI-powered{' '}
-                <strong>echo remover</strong> works automatically. Simply upload
-                your audio file, and our intelligent system will identify echo
-                patterns and remove them instantly, giving you
-                professional-quality results in seconds.
+                The tool is best for speech-first content such as podcasts,
+                interviews, voiceovers, webinars, lectures, and video audio
+                where the speaker is audible but the room sound is distracting.
+                It is not a replacement for full audio mastering, and it will
+                not fully repair clipped, distorted, or extremely noisy source
+                files.
               </p>
             </div>
           </section>
 
-          {/* How Does Echo Remover AI Work */}
           <section>
             <h2 className="text-3xl font-bold mb-6">
-              How Does Our Echo Remover Work?
+              Echo and Reverb Problems It Can Help With
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {echoProblems.map((item) => (
+                <Card key={item.title}>
+                  <CardHeader>
+                    <CardTitle className="text-xl">{item.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{item.body}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-bold mb-6">
+              How to Remove Echo from Audio
+            </h2>
+            <div className="grid gap-6 md:grid-cols-3">
+              {echoSteps.map((step, index) => (
+                <Card key={step.title}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm text-primary">
+                        {index + 1}
+                      </span>
+                      {step.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{step.body}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-bold mb-6">
+              Echo Remover vs Audio Enhancer
             </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p>
-                Our <strong>echo remover AI</strong> employs advanced machine
-                learning models trained on thousands of audio samples to
-                recognize and eliminate echo patterns. The AI analyzes your
-                audio file in real-time, identifying the original sound waves
-                and distinguishing them from echo reflections.
+                Use this page when your main problem is echo or reverb from the
+                room. If the recording also has hiss, hum, fan noise, mouth
+                clicks, or general background noise, try the{' '}
+                <LocaleLink
+                  href={Routes.ToolsAudioEnhancer}
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  audio enhancer
+                </LocaleLink>{' '}
+                as a separate cleanup pass.
               </p>
               <p>
-                The process involves three key steps: First, the{' '}
-                <strong>echo remover</strong> scans your audio to detect echo
-                signatures and reverb patterns. Second, it applies intelligent
-                filtering to separate the direct audio from the reflected
-                sounds. Finally, it reconstructs the clean audio while
-                maintaining the original voice characteristics and natural
-                dynamics.
-              </p>
-              <p>
-                This sophisticated approach ensures that while echo is removed
-                effectively, your voice retains its warmth, clarity, and natural
-                tone. The result is professional-quality audio that sounds like
-                it was recorded in a treated acoustic environment.
+                For new recordings, start with a cleaner capture. The{' '}
+                <LocaleLink
+                  href={Routes.ToolsVoiceRecorder}
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  online voice recorder
+                </LocaleLink>{' '}
+                helps record speech in the browser, and the{' '}
+                <LocaleLink
+                  href={Routes.ToolsMicTest}
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  mic test tool
+                </LocaleLink>{' '}
+                can confirm that your input device is working before you record.
               </p>
             </div>
           </section>
 
-          {/* Common Echo Problems */}
           <section>
             <h2 className="text-3xl font-bold mb-6">
-              Common Echo Problems This Tool Solves
+              Tips for Better Echo Removal Results
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl">Room Echo</CardTitle>
+                  <CardTitle className="text-xl">
+                    Start with a Clear Voice
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Hard surfaces in untreated rooms create unwanted
-                    reflections. Our <strong>echo remover AI</strong>{' '}
-                    effectively eliminates these room acoustics issues, making
-                    your recordings sound professional regardless of your
-                    recording environment.
-                  </p>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Keep the speaker louder than the echo or room tone.
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Avoid clipped peaks because distortion cannot be fully
+                      repaired.
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Use WAV or high-quality MP3 when you have a choice.
+                    </li>
+                  </ul>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl">Video Call Echo</CardTitle>
+                  <CardTitle className="text-xl">
+                    Test a Short Segment First
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Recorded video calls often suffer from echo due to poor
-                    audio setups. This <strong>echo remover</strong> can clean
-                    up these recordings, making them suitable for content
-                    creation or professional presentations.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Podcast Reverb</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Home podcast setups frequently produce reverb and echo. Our
-                    AI-powered <strong>echo remover</strong> transforms amateur
-                    recordings into broadcast-quality audio that engages
-                    listeners.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Interview Echo</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Remote interviews and phone recordings often have echo
-                    issues. This <strong>echo remover AI</strong> ensures your
-                    important conversations are clear and professional-sounding.
-                  </p>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Try 30 to 120 seconds before processing a full episode.
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Compare the output for clarity, reverb tail, and natural
+                      voice tone.
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      Keep the original file so you can reprocess or edit later.
+                    </li>
+                  </ul>
                 </CardContent>
               </Card>
             </div>
           </section>
 
-          {/* Benefits */}
-          <section>
-            <h2 className="text-3xl font-bold mb-6">
-              Why Choose Our Echo Remover AI?
-            </h2>
-            <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p>
-                Professional audio editing traditionally requires expensive
-                software and years of experience. Our{' '}
-                <strong>echo remover AI</strong> democratizes audio enhancement,
-                making professional-quality results accessible to everyone.
-                Whether you're a content creator, podcaster, educator, or
-                business professional, this tool delivers consistent,
-                high-quality results.
-              </p>
-              <p>
-                The AI-powered approach means you don't need to understand
-                complex audio engineering concepts. The{' '}
-                <strong>echo remover</strong> automatically adjusts its
-                processing based on your specific audio characteristics,
-                ensuring optimal results every time. This intelligent adaptation
-                is what sets our tool apart from generic audio filters.
-              </p>
-              <p>
-                Speed is another crucial advantage. While manual echo removal
-                can take hours of careful editing, our{' '}
-                <strong>echo remover AI</strong> processes your files in
-                seconds. This efficiency makes it perfect for content creators
-                who need to process multiple recordings quickly without
-                compromising quality.
-              </p>
-            </div>
-          </section>
-
-          {/* Use Cases */}
-          <section>
-            <h2 className="text-3xl font-bold mb-6">
-              Perfect for These Scenarios
-            </h2>
-            <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                <div className="w-2 h-2 bg-primary rounded-full mt-3" />
-                <div>
-                  <h3 className="font-semibold mb-2">Content Creators</h3>
-                  <p className="text-muted-foreground">
-                    YouTube creators, TikTok producers, and social media
-                    influencers use our <strong>echo remover</strong> to ensure
-                    their voice-overs and talking head videos sound professional
-                    and engaging.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                <div className="w-2 h-2 bg-primary rounded-full mt-3" />
-                <div>
-                  <h3 className="font-semibold mb-2">Podcasters</h3>
-                  <p className="text-muted-foreground">
-                    Independent podcasters rely on this{' '}
-                    <strong>echo remover AI</strong> to transform home
-                    recordings into broadcast-quality audio that keeps listeners
-                    engaged throughout entire episodes.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                <div className="w-2 h-2 bg-primary rounded-full mt-3" />
-                <div>
-                  <h3 className="font-semibold mb-2">Business Professionals</h3>
-                  <p className="text-muted-foreground">
-                    Sales teams, trainers, and consultants use our{' '}
-                    <strong>echo remover</strong> to clean up recorded
-                    presentations, client calls, and training materials for
-                    professional distribution.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                <div className="w-2 h-2 bg-primary rounded-full mt-3" />
-                <div>
-                  <h3 className="font-semibold mb-2">Educators</h3>
-                  <p className="text-muted-foreground">
-                    Teachers and online course creators utilize this{' '}
-                    <strong>echo remover AI</strong> to ensure their educational
-                    content is clear and easy to understand, improving student
-                    learning outcomes.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Technical Advantages */}
-          <section>
-            <h2 className="text-3xl font-bold mb-6">
-              Advanced AI Technology Behind Our Echo Remover
-            </h2>
-            <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p>
-                Our <strong>echo remover AI</strong> utilizes state-of-the-art
-                deep learning algorithms specifically trained on diverse
-                acoustic environments. The neural network architecture can
-                distinguish between direct sound waves and their reflections
-                with remarkable precision, ensuring that your voice remains
-                natural while unwanted echoes are eliminated.
-              </p>
-              <p>
-                The AI model processes audio in multiple frequency bands
-                simultaneously, allowing the <strong>echo remover</strong> to
-                handle complex acoustic scenarios where traditional filters
-                fail. This multi-band approach preserves the tonal
-                characteristics of your voice while targeting specific echo
-                frequencies for removal.
-              </p>
-              <p>
-                Unlike conventional echo cancellation methods that rely on
-                simple delay-based algorithms, our{' '}
-                <strong>echo remover AI</strong> analyzes the spectral content
-                and temporal patterns of your audio. This intelligent analysis
-                enables the system to adapt to different room acoustics and
-                recording conditions automatically.
-              </p>
-            </div>
-          </section>
-
-          {/* Best Practices */}
-          <section>
-            <h2 className="text-3xl font-bold mb-6">
-              Tips for Optimal Echo Removal Results
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">
-                  Recording Quality Tips
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Use the highest quality recording format available (WAV
-                    preferred over MP3)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Ensure the speaker's voice is significantly louder than the
-                    echo
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Avoid heavily compressed audio files for best{' '}
-                    <strong>echo remover</strong> performance
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Keep background noise to a minimum during recording
-                  </li>
-                </ul>
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Processing Guidelines</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Process shorter segments (under 10 minutes) for faster
-                    results
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Test the <strong>echo remover AI</strong> on a small sample
-                    first
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Compare before and after results to ensure quality
-                    improvement
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                    Save your original files as backup before processing
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQ Section */}
           <section>
             <h2 className="text-3xl font-bold mb-6">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    How effective is the echo remover AI compared to manual
-                    editing?
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Our <strong>echo remover AI</strong> delivers results
-                    comparable to professional audio engineers in a fraction of
-                    the time. While manual editing can take hours and requires
-                    expertise, our AI processes files in seconds with consistent
-                    quality. The <strong>echo remover</strong> is particularly
-                    effective for moderate to severe echo issues that would be
-                    challenging to fix manually.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    What types of echo can this tool remove?
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    The <strong>echo remover AI</strong> can handle various
-                    types of acoustic reflections including room echo, reverb,
-                    slap-back echo, and flutter echo. It works best with speech
-                    recordings where the direct voice signal is stronger than
-                    the reflected sound. The tool is optimized for common
-                    recording environments like home offices, conference rooms,
-                    and untreated spaces.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    Does the echo remover affect voice quality?
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Our advanced <strong>echo remover</strong> is designed to
-                    preserve natural voice characteristics while removing
-                    unwanted reflections. The AI analyzes frequency content and
-                    applies selective processing to maintain vocal warmth and
-                    clarity. Most users find that their processed audio sounds
-                    more professional and clearer than the original recording.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    Can I use this echo remover AI for music or only speech?
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    While the <strong>echo remover AI</strong> is optimized for
-                    speech and vocal content, it can also improve music
-                    recordings with echo issues. However, results may vary
-                    depending on the complexity of the musical arrangement. For
-                    best results with music, we recommend testing on a short
-                    sample first to evaluate the output quality.
-                  </p>
-                </CardContent>
-              </Card>
+              {faqItems.map((item) => (
+                <Card key={item.q}>
+                  <CardHeader>
+                    <CardTitle className="text-lg">{item.q}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{item.a}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </section>
 
-          {/* Getting Started */}
           <section>
             <h2 className="text-3xl font-bold mb-6">
-              Get Started with Echo Removal
+              Start with the Echo Remover Above
             </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p>
-                Using our <strong>echo remover AI</strong> is incredibly simple.
-                Upload your audio file using the interface above, click the
-                enhancement button, and download your echo-free audio in
-                seconds. The tool supports all major audio formats including
-                WAV, MP3, FLAC, and OGG files up to 50MB.
-              </p>
-              <p>
-                For best results, ensure your original recording has the
-                speaker's voice clearly audible above the echo. While our{' '}
-                <strong>echo remover</strong> is highly effective, starting with
-                the highest quality source material will always yield the best
-                results.
-              </p>
-              <p>
-                Ready to transform your audio? Upload your file now and
-                experience the power of AI-driven echo removal. Join thousands
-                of creators who trust our <strong>echo remover AI</strong> for
-                their professional audio needs.
+                Upload your audio file in the panel above, click Remove Echo
+                with AI, and download the cleaner version when processing
+                finishes. For best results, use a recording where the speaker is
+                clear and the unwanted echo sits behind the voice instead of
+                covering it.
               </p>
             </div>
           </section>
