@@ -524,7 +524,7 @@
     "description": "Clone voice with AI technology, simply and effortlessly",
     "hero": {
       "title": "Voice Clone Your Own Voice, Then Generate Speech",
-      "description": "Record or upload a voice sample you have permission to use, type your script, and create natural-sounding audio from the homepage.",
+      "description": "Record or upload a voice sample, type your script, and create natural-sounding audio from the homepage.",
       "introduction": "Introducing Voice Clone",
       "primary": "Start Voice Cloning",
       "secondary": "See Demo",
@@ -800,8 +800,8 @@
           "answer": "Upload clear, high-quality voice samples with good audio quality. Speak naturally and include varied expressions. Voice Clone's AI will analyze your voice characteristics and create an accurate voice model."
         },
         "item-8": {
-          "question": "Can I clone someone else's voice?",
-          "answer": "Only use voice samples you own or have permission to use. Voice Clone is designed for consent-based voice cloning, not impersonation or identity deception."
+          "question": "Can teams share voice clones and collaborate?",
+          "answer": "Currently, Voice Clone is built for individual use with personal voice libraries. Team collaboration and shared voice workspaces are part of our future roadmap."
         },
         "item-9": {
           "question": "Can I clone voice from existing audio files?",
@@ -905,9 +905,9 @@
     },
     "calltoaction": {
       "title": "Ready to Generate Speech from Your Voice?",
-      "description": "Record or upload a permitted voice sample, add your script, and create your first cloned-voice audio.",
+      "description": "Record or upload a voice sample, add your script, and create your first cloned-voice audio.",
       "primaryButton": "Start with Voice Clone",
-      "secondaryButton": "Review FAQ"
+      "secondaryButton": "Learn More"
     }
   },
   "AITextPage": {

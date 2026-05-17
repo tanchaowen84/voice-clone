@@ -29,7 +29,7 @@ export default function CallToActionSection() {
             </Button>
 
             <Button asChild size="lg" variant="outline">
-              <LocaleLink href="/#faqs">
+              <LocaleLink href="/">
                 <span>{t('secondaryButton')}</span>
               </LocaleLink>
             </Button>

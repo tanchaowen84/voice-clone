@@ -3,7 +3,6 @@ import { defineRouting } from 'next-intl/routing';
 
 export const DEFAULT_LOCALE = websiteConfig.i18n.defaultLocale;
 export const LOCALES = Object.keys(websiteConfig.i18n.locales);
-const localePrefix = LOCALES.length === 1 ? 'never' : 'as-needed';
 
 // The name of the cookie that is used to determine the locale
 export const LOCALE_COOKIE_NAME = 'NEXT_LOCALE';
@@ -29,5 +28,5 @@ export const routing = defineRouting({
   },
   // The prefix to use for the locale in the URL
   // https://next-intl.dev/docs/routing#locale-prefix
-  localePrefix,
+  localePrefix: 'as-needed',
 });

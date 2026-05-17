@@ -100,8 +100,14 @@ function handleSingleLocaleRouting(req: NextRequest) {
   const hasLocalePrefix =
     nextUrl.pathname === localePrefix ||
     nextUrl.pathname.startsWith(`${localePrefix}/`);
+  const isInternalLocaleRewrite =
+    req.headers.get('X-NEXT-INTL-LOCALE') === DEFAULT_LOCALE;
 
   if (hasLocalePrefix) {
+    if (isInternalLocaleRewrite) {
+      return NextResponse.next();
+    }
+
     const redirectUrl = nextUrl.clone();
     redirectUrl.pathname =
       nextUrl.pathname === localePrefix
@@ -116,25 +122,7 @@ function handleSingleLocaleRouting(req: NextRequest) {
     return response;
   }
 
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set('X-NEXT-INTL-LOCALE', DEFAULT_LOCALE);
-
-  const rewriteUrl = nextUrl.clone();
-  rewriteUrl.pathname =
-    nextUrl.pathname === '/'
-      ? localePrefix
-      : `${localePrefix}${nextUrl.pathname}`;
-
-  const response = NextResponse.rewrite(rewriteUrl, {
-    request: {
-      headers: requestHeaders,
-    },
-  });
-  response.cookies.set(LOCALE_COOKIE_NAME, DEFAULT_LOCALE, {
-    path: '/',
-    sameSite: 'lax',
-  });
-  return response;
+  return intlMiddleware(req);
 }
 
 /**
